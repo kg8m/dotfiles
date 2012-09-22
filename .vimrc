@@ -90,8 +90,8 @@ set expandtab
 set autoindent
 set smartindent
 set backspace=indent,eol,start
-"set foldmethod=indent  " zo: open, zc: close, zR: open all, zM: close all
-set foldminlines=5
+" set foldmethod=indent  " zo: open, zc: close, zR: open all, zM: close all
+" set foldminlines=5
 
 " search
 set hlsearch
@@ -235,16 +235,18 @@ endfunction
 "----------------------------------------------
 
 " align.vim
-noremap ,a :Align<Space>
 let g:Align_xstrlen = 3
+noremap ,a :Align<Space>
 
 " incbufswitch-color.vim
 noremap ,i :IncBufSwitch<Cr>
 
 " mru.vim
-noremap ,m :MRU<Cr>
-let MRU_Window_Height = 20
-let MRU_Max_Entries   = 500
+" noremap ,m :MRU<Cr>
+" let MRU_Window_Height = 20
+" let MRU_Max_Entries   = 500
+" replace mru.vim by unite.vim
+nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
 
 " neocomplcache.vim
 "let g:neocomplcache_enable_at_startup = 1
@@ -261,15 +263,17 @@ map ,C <Plug>(operator-decamelize)
 let g:rails_level=4
 autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
 autocmd User Rails Rnavcommand ssupport spec/support -suffix=.rb
-"autocmd User Rails Rnavcommand config config
 
 " rubytest.vim
 let g:rubytest_in_remote = 1
 
 " unite.vim
 let g:unite_winheight = 50
-let g:unite_source_file_mru_limit = 500
 let g:unite_source_history_yank_enable = 1
+let g:unite_source_directory_mru_limit = 500
+let g:unite_source_file_mru_limit = 500
+call unite#custom_source("directory_mru", "max_candidates", 500)
+call unite#custom_source("file_mru", "max_candidates", 500)
 nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
 nnoremap <silent> ,uo :<C-u>Unite outline<CR>
 nnoremap <silent> ,uc :<C-u>Unite webcolorname<CR>
@@ -285,7 +289,17 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
   nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
 
 " vimshell
-noremap ,s :VimShell<Cr>
+noremap ,s :VimShellPop<Cr>
+
+if has('win32') || has('win64')
+  let g:_user_name = $USERNAME
+elseif
+  let g:_user_name = $USER
+endif
+
+let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
+let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
+let g:vimshell_prompt = '% '
 
 " zencoding.vim
 " command: <C-y>,
@@ -308,25 +322,17 @@ let g:user_zen_settings = {
 "----------------------------------------------
 
 " for GUI Vim
-if has('gui')
+if has('win32')
   gui
   set nobackup
   set guioptions-=T
-  "set lines=65
-  "set columns=240
+  " set lines=65
+  " set columns=240
 
-  "colorscheme torte
   colorscheme molokai
-
 
   nmap <C-v> <C-v>
   nmap <C-y> <C-y>
-
-  "nnoremap ,r :source ~\_gvimrc<CR>
-
-  " indent_guides.vim
-  "autocmd VimEnter * :IndentGuidesToggle
-  "let g:indent_guides_guide_size = 1
 
   " save window's size and position
   " http://vim-users.jp/2010/01/hack120/
