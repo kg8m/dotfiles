@@ -1,3 +1,93 @@
+"----------------------------------------------
+
+let s:is_windows = has('win32') || has('win64')
+
+
+"----------------------------------------------
+
+" neobundle.vim
+" https://github.com/Shougo/shougo-s-github/blob/master/vim/.vimrc
+
+set nocompatible
+filetype off
+
+if s:is_windows
+  if has('vim_starting')
+    set runtimepath+=~/vimfiles/bundle/neobundle.vim/
+  endif
+
+  call neobundle#rc(expand('~/vimfiles/bundle/'))
+elseif
+  if has('vim_starting')
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
+  endif
+
+  call neobundle#rc(expand('~/.vim/bundle/'))
+endif
+
+NeoBundle 'Shougo/vimproc', {
+        \   'build' : {
+        \     'windows' : 'echo "Sorry, cannot update vimproc binary file in Windows."',
+        \     'cygwin' : 'make -f make_cygwin.mak',
+        \     'mac' : 'make -f make_mac.mak',
+        \     'unix' : 'make -f make_unix.mak',
+        \   },
+        \ }
+NeoBundle 'Shougo/neobundle.vim'
+
+" plugins from github
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'vim-scripts/AutoClose'
+NeoBundle 'Shougo/neocomplcache', { 'depends' : 'Shougo/neocomplcache-snippets-complete' }
+NeoBundle 'tyru/operator-camelize.vim'
+NeoBundle 'vim-scripts/svn-diff.vim'  " will be forked
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'osyo-manga/unite-filetype'
+NeoBundle 'Shougo/unite-help'
+NeoBundle 'h1mesuke/unite-outline'
+NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'pasela/unite-webcolorname'
+NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'michaeljsmith/vim-indent-object'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'kana/vim-operator-replace'
+NeoBundle 'kana/vim-operator-user'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'janx/vim-rubytest'
+NeoBundle 'anyakichi/vim-surround'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'thinca/vim-unite-history'
+NeoBundle 'hrsh7th/vim-unite-vcs'
+NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
+NeoBundle 'Shougo/vimshell'
+NeoBundle 'mattn/zencoding-vim'
+
+" plugins from vim.org
+NeoBundle 'Align'
+NeoBundle 'EnhCommentify.vim'
+NeoBundle 'matchit.zip'
+NeoBundle 'sudo.vim'
+
+" colorschemes
+NeoBundle 'hail2u/h2u_colorscheme'  " for printing
+NeoBundle 'tomasr/molokai'
+
+" syntaxes
+NeoBundle 'http://vimperator-labs.googlecode.com/hg/vimperator/contrib/vim/'  " FIXME: vimperator.vim
+
+filetype plugin indent on
+
+if !s:is_windows && !has('gui_running')
+  if neobundle#exists_not_installed_bundles()
+    echomsg 'Not installed bundles : ' .
+          \ string(neobundle#get_not_installed_bundle_names())
+    echomsg 'Please execute ":NeoBundleInstall" command.'
+    "finish
+  endif
+endif
+
 
 "----------------------------------------------
 
@@ -238,9 +328,6 @@ endfunction
 let g:Align_xstrlen = 3
 noremap ,a :Align<Space>
 
-" incbufswitch-color.vim
-noremap ,i :IncBufSwitch<Cr>
-
 " mru.vim
 " noremap ,m :MRU<Cr>
 " let MRU_Window_Height = 20
@@ -249,14 +336,57 @@ noremap ,i :IncBufSwitch<Cr>
 nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
 
 " neocomplcache.vim
-"let g:neocomplcache_enable_at_startup = 1
-"let g:NeoComplCache_SnippetsDir = '~/.vim/snippets'
-"imap <silent> <TAB> <Plug>(neocomplcache_snippets_expand)
-"smap <silent> <TAB> <Plug>(neocomplcache_snippets_expand)
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 0
+" Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 0
+" Use underbar completion.
+let g:neocomplcache_enable_underbar_completion = 0
+" Use fuzzy completion.
+let g:neocomplcache_enable_fuzzy_completion = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+" Set auto completion length.
+let g:neocomplcache_auto_completion_start_length = 2
+" Set manual completion length.
+let g:neocomplcache_manual_completion_start_length = 0
+" Set minimum keyword length.
+let g:neocomplcache_min_keyword_length = 3
+let g:neocomplcache_enable_cursor_hold_i = 0
+let g:neocomplcache_cursor_hold_i_time = 300
+let g:neocomplcache_enable_insert_char_pre = 0
+let g:neocomplcache_enable_prefetch = 0
+
+if !exists('g:neocomplcache_keyword_patterns')
+  let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '[0-9a-zA-Z:#_]\+'
+let g:neocomplcache_keyword_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+if s:is_windows
+  let g:neocomplcache_snippets_dir = '~/vimfiles/snippets'
+elseif
+  let g:neocomplcache_snippets_dir = '~/.vim/snippets'
+endif
+
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.php = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.mail = '^\s*\w\+'
+let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplcache_caching_limit_file_size = 500000
 
 " operator-camelize.vim
 map ,c <Plug>(operator-camelize)
 map ,C <Plug>(operator-decamelize)
+
+" qbuf.vim
+" replace qbuf.vim by unite.vim
+nnoremap <F4> :<C-u>Unite buffer<CR>
 
 " rails.vim
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
@@ -289,9 +419,9 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
   nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
 
 " vimshell
-noremap ,s :VimShellPop<Cr>
+noremap ,s :VimShell<Cr>
 
-if has('win32') || has('win64')
+if s:is_windows
   let g:_user_name = $USERNAME
 elseif
   let g:_user_name = $USER
@@ -322,12 +452,10 @@ let g:user_zen_settings = {
 "----------------------------------------------
 
 " for GUI Vim
-if has('win32')
+if has('gui_running') || has('win32') || has('win64')
   gui
   set nobackup
   set guioptions-=T
-  " set lines=65
-  " set columns=240
 
   colorscheme molokai
 
