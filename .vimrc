@@ -17,7 +17,7 @@ if s:is_windows
   endif
 
   call neobundle#rc(expand('~/vimfiles/bundle/'))
-elseif
+else
   if has('vim_starting')
     set runtimepath+=~/.vim/bundle/neobundle.vim/
   endif
@@ -367,7 +367,7 @@ let g:neocomplcache_keyword_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 if s:is_windows
   let g:neocomplcache_snippets_dir = '~/vimfiles/snippets'
-elseif
+else
   let g:neocomplcache_snippets_dir = '~/.vim/snippets'
 endif
 
@@ -423,7 +423,7 @@ noremap ,s :VimShell<Cr>
 
 if s:is_windows
   let g:_user_name = $USERNAME
-elseif
+else
   let g:_user_name = $USER
 endif
 
