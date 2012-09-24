@@ -229,11 +229,6 @@ augroup CheckTimeHook
   autocmd InsertLeave * :checktime
 augroup END
 
-" filetype
-filetype on
-filetype indent on
-filetype plugin on
-
 " IME
 " augroup InsModeImEnable
 "   autocmd!
