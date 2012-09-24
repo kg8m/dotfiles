@@ -72,7 +72,7 @@ NeoBundle 'sudo.vim'
 
 " colorschemes
 NeoBundle 'hail2u/h2u_colorscheme'  " for printing
-NeoBundle 'tomasr/molokai'
+NeoBundle 'kg8m/molokai'
 
 " syntaxes
 " NeoBundle 'http://vimperator-labs.googlecode.com/hg/vimperator/contrib/vim/'  " FIXME: vimperator.vim
