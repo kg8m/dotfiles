@@ -75,7 +75,7 @@ NeoBundle 'hail2u/h2u_colorscheme'  " for printing
 NeoBundle 'tomasr/molokai'
 
 " syntaxes
-NeoBundle 'http://vimperator-labs.googlecode.com/hg/vimperator/contrib/vim/'  " FIXME: vimperator.vim
+" NeoBundle 'http://vimperator-labs.googlecode.com/hg/vimperator/contrib/vim/'  " FIXME: vimperator.vim
 
 filetype plugin indent on
 
