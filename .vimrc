@@ -362,7 +362,7 @@ let g:neocomplcache_enable_prefetch = 0
 if !exists('g:neocomplcache_keyword_patterns')
   let g:neocomplcache_keyword_patterns = {}
 endif
-let g:neocomplcache_keyword_patterns['default'] = '[0-9a-zA-Z:#_]\+'
+let g:neocomplcache_keyword_patterns['default'] = '[0-9a-zA-Z_]\+'
 let g:neocomplcache_keyword_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 if s:is_windows
