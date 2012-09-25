@@ -54,19 +54,27 @@ setopt noautoremoveslash                     # 最後のスラッシュを自動
 # prevent careless logout
 setopt ignore_eof
 
+# completion candidates include aliases
+setopt complete_aliases
+
 # https://github.com/Shougo/shougo-s-github/blob/master/.zshrc
 zstyle ':completion:*' matcher-list \
        '' \
        'm:{a-z}={A-Z}' \
        'l:|=* r:|[.,_-]=* r:|=* m:{a-z}={A-Z}'
 
+# http://d.hatena.ne.jp/tarao/20100531/1275322620
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' keep-prefix
+zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate _list _history
+
 # http://subtech.g.hatena.ne.jp/secondlife/20110222/1298354852
 # <C-r> for incremental history search
 # wild cards enabled
-bindkey '^r' history-incremental-pattern-search-backward
+bindkey '^R' history-incremental-pattern-search-backward
 
 # http://news.mynavi.jp/column/zsh/004/
-# コマンド履歴検索
+# search command history
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
