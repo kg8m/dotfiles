@@ -331,10 +331,12 @@ noremap ,a :Align<Space>
 nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
 
 " neocomplcache.vim
+inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 " Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
-let g:neocomplcache_enable_smart_case = 0
+let g:neocomplcache_enable_smart_case = 1
 " Use camel case completion.
 let g:neocomplcache_enable_camel_case_completion = 0
 " Use underbar completion.
