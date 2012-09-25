@@ -93,7 +93,7 @@ SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 # and show vi keybind mode at prompt
 prompt_time="%{${fg[green]}%}(%D{%Y/%m/%d %H:%M:%S})"
 prompt_user="[%n@%m]"
-prompt_current_dir="%~"
+prompt_current_dir="%{${fg[yellow]}%}%~"
 prompt_self="%{${reset_color}%}%(!.#.%#) "
 
 set_prompt() {
