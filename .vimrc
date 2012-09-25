@@ -395,12 +395,12 @@ autocmd User Rails Rnavcommand ssupport spec/support -suffix=.rb
 let g:rubytest_in_remote = 1
 
 " unite.vim
-let g:unite_winheight = 50
+let g:unite_winheight = 70
 let g:unite_source_history_yank_enable = 1
-let g:unite_source_directory_mru_limit = 500
-let g:unite_source_file_mru_limit = 500
-call unite#custom_source("directory_mru", "max_candidates", 500)
-call unite#custom_source("file_mru", "max_candidates", 500)
+let g:unite_source_directory_mru_limit = 1000
+let g:unite_source_file_mru_limit = 1000
+call unite#custom_source("directory_mru", "max_candidates", 1000)
+call unite#custom_source("file_mru", "max_candidates", 1000)
 nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
 nnoremap <silent> ,uo :<C-u>Unite outline<CR>
 nnoremap <silent> ,uc :<C-u>Unite webcolorname<CR>
