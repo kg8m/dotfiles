@@ -7,6 +7,7 @@ case ${UID} in
 esac
 
 export SVN_EDITOR=vim
+export GIT_EDITOR=vim
 export RUBYGEMS_PATH='/usr/local/lib/ruby/gems/1.8/gems/'
 
 HISTFILE=~/.zsh_histfile
