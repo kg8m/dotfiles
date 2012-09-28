@@ -62,6 +62,7 @@ NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'hrsh7th/vim-unite-vcs'
 NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
+NeoBundle 'benmills/vimux'
 NeoBundle 'mattn/zencoding-vim'
 
 " plugins from vim.org
