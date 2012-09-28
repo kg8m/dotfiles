@@ -55,17 +55,14 @@ NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'thinca/vim-ref'
-NeoBundle 'janx/vim-rubytest'
 NeoBundle 'tpope/vim-surround'
-"NeoBundle 'jgdavey/vim-turbux'
+NeoBundle 'jgdavey/vim-turbux'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'hrsh7th/vim-unite-vcs'
-"NeoBundle 'skalnik/vim-vroom'
 NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
-"NeoBundle 'benmills/vimux'
-"NeoBundle 'pgr0ss/vimux-ruby-test'
+NeoBundle 'benmills/vimux'
 NeoBundle 'mattn/zencoding-vim'
 
 " plugins from vim.org
@@ -434,6 +431,11 @@ endif
 let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
 let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
 let g:vimshell_prompt = '% '
+
+" vimux
+  " turbux keymap like rubytest
+  noremap <Leader>t SendFocusedTestToTmux
+  noremap <Leader>T SendTestToTmux
 
 " zencoding.vim
 " command: <C-y>,
