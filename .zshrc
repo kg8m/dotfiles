@@ -106,12 +106,12 @@ set_prompt() {
   esac
 
   PROMPT="${prompt_time} ${prompt_mode} ${prompt_user} ${prompt_current_dir}"$'\n'"${prompt_self}"
-  zle reset-prompt
 }
 set_prompt
 
 function zle-keymap-select {
   set_prompt
+  zle reset-prompt
 }
 zle -N zle-keymap-select
 
