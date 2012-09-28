@@ -56,13 +56,16 @@ NeoBundle 'kana/vim-operator-user'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'janx/vim-rubytest'
-NeoBundle 'anyakichi/vim-surround'
+NeoBundle 'tpope/vim-surround'
+"NeoBundle 'jgdavey/vim-turbux'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'hrsh7th/vim-unite-vcs'
+"NeoBundle 'skalnik/vim-vroom'
 NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
-NeoBundle 'benmills/vimux'
+"NeoBundle 'benmills/vimux'
+"NeoBundle 'pgr0ss/vimux-ruby-test'
 NeoBundle 'mattn/zencoding-vim'
 
 " plugins from vim.org
