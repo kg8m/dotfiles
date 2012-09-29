@@ -432,11 +432,6 @@ let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
 let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
 let g:vimshell_prompt = '% '
 
-" vimux
-  " turbux keymap like rubytest
-  noremap <Leader>t SendFocusedTestToTmux
-  noremap <Leader>T SendTestToTmux
-
 " zencoding.vim
 " command: <C-y>,
 let g:user_zen_settings = {
