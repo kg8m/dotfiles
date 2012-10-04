@@ -657,8 +657,12 @@ function vi-vis-reset() {
 }
 
 # aliases
+alias -g G="| grep"
 alias -g V="| vim -R -"
 alias -g FFTEST="TESTOPTS='--runner=failfast'"
+
+alias g='git'
+alias s='svn'
 
 alias rm='rm -i'
 alias ls='ls --color -a'
@@ -695,7 +699,7 @@ function execute_with_echo {
   eval ${cmd};
 }
 
-function diff {
+function sdiff {
   execute_with_echo "svn diff --diff-cmd /usr/bin/diff -x '-U 10' V";
 }
 
