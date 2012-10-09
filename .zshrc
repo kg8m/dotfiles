@@ -745,7 +745,7 @@ function logb {
   rev_from=$2;
   rev_to=$3;
 
-  execute_with_echo "svn log ${TARGET_REPOSITORY_URL}/${brance}/ -r ${rev_from}:${rev_to}";
+  execute_with_echo "svn log ${TARGET_REPOSITORY_URL}/branches/${branch}/ -r ${rev_from}:${rev_to}";
 }
 
 function logt {
