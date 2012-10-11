@@ -46,7 +46,7 @@ setopt correct                               # スペルチェック
 setopt brace_ccl                             # {a-c} を a b c に展開する機能を使えるようにする
 setopt NO_flow_control                       # Ctrl+S/Ctrl+Q によるフロー制御を使わないようにする
 setopt hist_ignore_space                     # コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
-setopt interactive_comments                  # コマンドラインでも                                                # 以降をコメントと見なす
+setopt interactive_comments                  # コマンドラインでも # 以降をコメントと見なす
 setopt mark_dirs                             # ファイル名の展開でディレクトリにマッチした場合末尾に / を付加する
 setopt hist_no_store                         # history (fc -l) コマンドをヒストリリストから取り除く。
 setopt list_packed                           # 補完候補を詰めて表示
