@@ -64,6 +64,7 @@ NeoBundle 'hrsh7th/vim-unite-vcs'
 NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'benmills/vimux'
+NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'mattn/zencoding-vim'
 
 " plugins from vim.org
@@ -432,6 +433,9 @@ endif
 let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
 let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
 let g:vimshell_prompt = '% '
+
+" yankring
+let g:yankring_max_history = 500
 
 " zencoding.vim
 " command: <C-y>,
