@@ -69,6 +69,9 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*' keep-prefix
 zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate _list _history
 
+# http://d.hatena.ne.jp/mollifier/20101227/p1
+autoload -Uz zmv
+
 # http://subtech.g.hatena.ne.jp/secondlife/20110222/1298354852
 # <C-r> for incremental history search
 # wild cards enabled
@@ -94,7 +97,7 @@ SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 # and show vi keybind mode at prompt
 prompt_time="%{${fg[green]}%}(%D{%Y/%m/%d %H:%M:%S})"
 prompt_user="[%n@%m]"
-prompt_current_dir="%{${fg[yellow]}%}%~"
+prompt_current_dir="%{${fg[cyan]}%}%~"
 prompt_self="%{${reset_color}%}%(!.#.%#) "
 
 set_prompt() {
