@@ -134,6 +134,9 @@ kterm*|xterm*)
   ;;
 esac
 
+# http://memo.officebrook.net/20090316.html
+bindkey -a 'q' push-line
+
 # http://zshscreenvimvimpwget.blog27.fc2.com/blog-entry-3.html
 # make keybind like vim
 #vim-visual-modeを実装
@@ -766,6 +769,24 @@ function migrate {
   fi
 
   execute_with_echo ${cmd};
+}
+
+function tmux_setup_default {
+  tmux new-session -d -s default -n tests
+  tmux new-window -t default:2 -n main
+  tmux new-window -t default:3 -n commands
+  tmux new-window -t default:4 -n irb
+
+  tmux split-window -h -t default:tests
+  tmux split-window -h -t default:tests
+  tmux split-window -h -t default:tests
+  tmux select-layout -t default:tests even-horizontal
+
+  tmux split-window -h -t default:main
+  tmux select-layout -t default:main main-vertical
+
+  tmux select-window -t default:main
+  tmux attach-session -t default
 }
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
