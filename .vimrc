@@ -388,6 +388,7 @@ nnoremap <F4> :<C-u>Unite buffer<CR>
 " rails.vim
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
 let g:rails_level=4
+autocmd User Rails Rnavcommand helper app/helpers -suffix=.rb  " for hoge_builder.rb
 autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
 autocmd User Rails Rnavcommand ssupport spec/support -suffix=.rb
 
