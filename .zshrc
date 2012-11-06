@@ -673,7 +673,7 @@ alias s='svn'
 alias rm='rm -i'
 alias ls='ls --color -a'
 alias ll='ls -l'
-alias rak='rak -C 3 --sort-files'
+alias rak='rak --sort-files'
 alias rak_app='rak -k "db\/|spec\/|test\/"'
 
 alias cdb='cd ~/apps/${APP_NAME}/branch'
