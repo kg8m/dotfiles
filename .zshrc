@@ -95,9 +95,9 @@ SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 # prompt as ({current_time}) {vi_mode} [{user_name}@{hostname}] {current_directory}\n% (# if root user)
 # and show vi keybind mode at prompt
-prompt_time="%{${fg[green]}%}(%D{%Y/%m/%d %H:%M:%S})"
+prompt_time="%{${fg[cyan]}%}(%D{%Y/%m/%d %H:%M:%S})"
 prompt_user="[%n@%m]"
-prompt_current_dir="%{${fg[cyan]}%}%~"
+prompt_current_dir="%{${fg[blue]}%}%~"
 prompt_self="%{${reset_color}%}%(!.#.%#) "
 
 set_prompt() {
