@@ -196,6 +196,7 @@ set incsearch
 autocmd BufRead,BufNewFile *.html.erb set filetype=eruby.html
 
 " colorscheme
+let g:molokai_original = 1
 colorscheme molokai
 
 " make listchars visible
