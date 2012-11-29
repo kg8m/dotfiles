@@ -38,8 +38,10 @@ NeoBundle 'Shougo/neobundle.vim'
 " plugins from github
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'vim-scripts/AutoClose'
-NeoBundle 'Shougo/neocomplcache', { 'depends' : 'Shougo/neocomplcache-snippets-complete' }
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neosnippet'
 NeoBundle 'tyru/operator-camelize.vim'
+NeoBundle 'honza/snipmate-snippets'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'osyo-manga/unite-filetype'
@@ -48,7 +50,7 @@ NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'pasela/unite-webcolorname'
 NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'tpope/vim-endwise'
+"NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
 NeoBundle 'pangloss/vim-javascript'
@@ -378,6 +380,12 @@ if !exists('g:neocomplcache_omni_patterns')
 endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_caching_limit_file_size = 500000
+
+" neosnippet
+imap <expr><CR> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 
 " operator-camelize.vim
 map ,c <Plug>(operator-camelize)
