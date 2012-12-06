@@ -85,6 +85,17 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
+# http://blog.w32.jp/2012/09/zsh.html
+# ignore particular commands from history
+zshaddhistory() {
+  local line=${1%%$'\n'}
+  local cmd=${line%% *}
+
+  [[   ${cmd} != (rm)
+    && ${cmd} != (cap)
+  ]]
+}
+
 # http://blog.blueblack.net/item_207
 # prompt styles
 autoload colors
