@@ -388,8 +388,8 @@ if has('conceal')
 endif
 
 " operator-camelize.vim
-map ,c <Plug>(operator-camelize)
-map ,C <Plug>(operator-decamelize)
+map ,C <Plug>(operator-camelize)
+map ,c <Plug>(operator-decamelize)
 
 " qbuf.vim
 " replace qbuf.vim by unite.vim
