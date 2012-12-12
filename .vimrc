@@ -405,6 +405,11 @@ autocmd User Rails Rnavcommand ssupport spec/support -suffix=.rb
 " rubytest.vim
 let g:rubytest_in_remote = 1
 
+" turbux
+let g:no_turbux_mappings = 1
+map <leader>T <Plug>SendTestToTmux
+map <leader>t <Plug>SendFocusedTestToTmux
+
 " unite.vim
 let g:unite_winheight = 70
 let g:unite_source_history_yank_enable = 1
@@ -440,6 +445,9 @@ endif
 let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
 let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
 let g:vimshell_prompt = '% '
+
+" vimux
+let g:VimuxHeight = 30
 
 " yankring
 let g:yankring_max_history = 500
