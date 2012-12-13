@@ -784,6 +784,7 @@ function migrate {
   fi
 
   execute_with_echo ${cmd};
+  execute_with_echo "rake db:test:prepare";
 }
 
 function tmux_setup_default {
