@@ -275,6 +275,10 @@ function! SVNDiff()
   goto 1
 endfunction
 
+" continuous paste
+" http://qiita.com/items/bd97a9b963dae40b63f5
+vnoremap <silent> <C-p> "0p<CR>"
+
 " ,w => erase spaces of EOL for selected
 vnoremap ,w :s/\s\+$//ge<Cr>
 
