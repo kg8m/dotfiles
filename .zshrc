@@ -93,6 +93,7 @@ zshaddhistory() {
 
   [[   ${cmd} != (rm)
     && ${cmd} != (cap)
+    && ${cmd} != (rake)
   ]]
 }
 
