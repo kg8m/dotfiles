@@ -38,9 +38,11 @@ NeoBundle 'Shougo/neobundle.vim'
 " plugins from github
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'vim-scripts/AutoClose'
-NeoBundle 'Shougo/neocomplcache', { 'depends' : 'Shougo/neocomplcache-snippets-complete' }
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neosnippet'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'chrisbra/Recover.vim'
+NeoBundle 'honza/snipmate-snippets'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'osyo-manga/unite-filetype'
@@ -49,7 +51,8 @@ NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'pasela/unite-webcolorname'
 NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'tpope/vim-endwise'
+"NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
+NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'kana/vim-operator-replace'
@@ -64,6 +67,7 @@ NeoBundle 'hrsh7th/vim-unite-vcs'
 NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'benmills/vimux'
+NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'mattn/zencoding-vim'
 
 " plugins from vim.org
@@ -195,6 +199,7 @@ set incsearch
 autocmd BufRead,BufNewFile *.html.erb set filetype=eruby.html
 
 " colorscheme
+let g:molokai_original = 1
 colorscheme molokai
 
 " make listchars visible
@@ -270,6 +275,10 @@ function! SVNDiff()
   execute "normal :r!LANG=ja_JP.UTF8 svn diff\n"
   goto 1
 endfunction
+
+" continuous paste
+" http://qiita.com/items/bd97a9b963dae40b63f5
+vnoremap <silent> <C-p> "0p<CR>"
 
 " ,w => erase spaces of EOL for selected
 vnoremap ,w :s/\s\+$//ge<Cr>
@@ -361,8 +370,9 @@ let g:neocomplcache_enable_prefetch = 0
 if !exists('g:neocomplcache_keyword_patterns')
   let g:neocomplcache_keyword_patterns = {}
 endif
-let g:neocomplcache_keyword_patterns['default'] = '[0-9a-zA-Z_]\+'
-let g:neocomplcache_keyword_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+" let g:neocomplcache_keyword_patterns.ruby = '\h\w*\|:\h\w*\|^=\%(b\%[egin]\|e\%[nd]\)\|\%(@@\|[:$@]\)\h\w*\|\h\w*\%(::\w*\)*[!?]\?'
+let g:neocomplcache_keyword_patterns.ruby = '\h\w*'
 
 if s:is_windows
   let g:neocomplcache_snippets_dir = '~/vimfiles/snippets'
@@ -374,14 +384,17 @@ if !exists('g:neocomplcache_omni_patterns')
   let g:neocomplcache_omni_patterns = {}
 endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.php = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.mail = '^\s*\w\+'
-let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 let g:neocomplcache_caching_limit_file_size = 500000
 
+" neosnippet
+imap <expr><CR> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
 " operator-camelize.vim
-map ,c <Plug>(operator-camelize)
-map ,C <Plug>(operator-decamelize)
+map ,C <Plug>(operator-camelize)
+map ,c <Plug>(operator-decamelize)
 
 " qbuf.vim
 " replace qbuf.vim by unite.vim
@@ -390,11 +403,17 @@ nnoremap <F4> :<C-u>Unite buffer<CR>
 " rails.vim
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
 let g:rails_level=4
+autocmd User Rails Rnavcommand helper app/helpers -suffix=.rb  " for hoge_builder.rb
 autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
 autocmd User Rails Rnavcommand ssupport spec/support -suffix=.rb
 
 " rubytest.vim
 let g:rubytest_in_remote = 1
+
+" turbux
+let g:no_turbux_mappings = 1
+map <leader>T <Plug>SendTestToTmux
+map <leader>t <Plug>SendFocusedTestToTmux
 
 " unite.vim
 let g:unite_winheight = 70
@@ -414,7 +433,6 @@ nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
 nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
   " unite plugins
-  nnoremap <silent> ,us :<C-u>Unite svn/status<CR>
   nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
 
 " vimfiler
@@ -432,6 +450,12 @@ endif
 let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
 let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
 let g:vimshell_prompt = '% '
+
+" vimux
+let g:VimuxHeight = 30
+
+" yankring
+let g:yankring_max_history = 500
 
 " zencoding.vim
 " command: <C-y>,

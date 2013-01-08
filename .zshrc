@@ -46,7 +46,7 @@ setopt correct                               # スペルチェック
 setopt brace_ccl                             # {a-c} を a b c に展開する機能を使えるようにする
 setopt NO_flow_control                       # Ctrl+S/Ctrl+Q によるフロー制御を使わないようにする
 setopt hist_ignore_space                     # コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
-setopt interactive_comments                  # コマンドラインでも                                                # 以降をコメントと見なす
+setopt interactive_comments                  # コマンドラインでも # 以降をコメントと見なす
 setopt mark_dirs                             # ファイル名の展開でディレクトリにマッチした場合末尾に / を付加する
 setopt hist_no_store                         # history (fc -l) コマンドをヒストリリストから取り除く。
 setopt list_packed                           # 補完候補を詰めて表示
@@ -69,6 +69,9 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*' keep-prefix
 zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate _list _history
 
+# http://d.hatena.ne.jp/mollifier/20101227/p1
+autoload -Uz zmv
+
 # http://subtech.g.hatena.ne.jp/secondlife/20110222/1298354852
 # <C-r> for incremental history search
 # wild cards enabled
@@ -82,6 +85,18 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
+# http://blog.w32.jp/2012/09/zsh.html
+# ignore particular commands from history
+zshaddhistory() {
+  local line=${1%%$'\n'}
+  local cmd=${line%% *}
+
+  [[   ${cmd} != (rm)
+    && ${cmd} != (cap)
+    && ${cmd} != (rake)
+  ]]
+}
+
 # http://blog.blueblack.net/item_207
 # prompt styles
 autoload colors
@@ -92,9 +107,9 @@ SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 # prompt as ({current_time}) {vi_mode} [{user_name}@{hostname}] {current_directory}\n% (# if root user)
 # and show vi keybind mode at prompt
-prompt_time="%{${fg[green]}%}(%D{%Y/%m/%d %H:%M:%S})"
+prompt_time="%{${fg[cyan]}%}(%D{%Y/%m/%d %H:%M:%S})"
 prompt_user="[%n@%m]"
-prompt_current_dir="%{${fg[yellow]}%}%~"
+prompt_current_dir="%{${fg[blue]}%}%~"
 prompt_self="%{${reset_color}%}%(!.#.%#) "
 
 set_prompt() {
@@ -130,6 +145,9 @@ kterm*|xterm*)
   zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
   ;;
 esac
+
+# http://memo.officebrook.net/20090316.html
+bindkey -a 'q' push-line
 
 # http://zshscreenvimvimpwget.blog27.fc2.com/blog-entry-3.html
 # make keybind like vim
@@ -657,13 +675,17 @@ function vi-vis-reset() {
 }
 
 # aliases
+alias -g G="| grep"
 alias -g V="| vim -R -"
 alias -g FFTEST="TESTOPTS='--runner=failfast'"
+
+alias g='git'
+alias s='svn'
 
 alias rm='rm -i'
 alias ls='ls --color -a'
 alias ll='ls -l'
-alias rak='rak -C 3 --sort-files'
+alias rak='rak --sort-files'
 alias rak_app='rak -k "db\/|spec\/|test\/"'
 
 alias cdb='cd ~/apps/${APP_NAME}/branch'
@@ -682,11 +704,15 @@ alias prepare='execute_with_echo "rake db:test:prepare"'
 alias rake_units='      execute_with_echo "TEST_ENV_NUMBER=2 rake test:units $1"'
 alias rake_functionals='execute_with_echo "TEST_ENV_NUMBER=3 rake test:functionals $1"'
 alias rake_integration='execute_with_echo "TEST_ENV_NUMBER=4 rake test:integration $1"'
+alias rake_js='         execute_with_echo "rake test:js"'
 alias frake='execute_with_echo "rake FFTEST"'
 alias frake_units='      execute_with_echo "rake_units FFTEST"'
 alias frake_functionals='execute_with_echo "rake_functionals FFTEST"'
 alias frake_integration='execute_with_echo "rake_integration FFTEST"'
 alias mrake='execute_with_echo "migrate; execute_with_echo rake"'
+alias rake_models='     execute_with_echo "TEST_ENV_NUMBER=2 rake spec:models"'
+alias rake_controllers='execute_with_echo "TEST_ENV_NUMBER=3 rake spec:controllers"'
+alias rake_helpers='    execute_with_echo "TEST_ENV_NUMBER=4 rake spec:helpers"'
 
 function execute_with_echo {
   cmd=$1;
@@ -695,7 +721,7 @@ function execute_with_echo {
   eval ${cmd};
 }
 
-function diff {
+function sdiff {
   execute_with_echo "svn diff --diff-cmd /usr/bin/diff -x '-U 10' V";
 }
 
@@ -741,7 +767,7 @@ function logb {
   rev_from=$2;
   rev_to=$3;
 
-  execute_with_echo "svn log ${TARGET_REPOSITORY_URL}/${brance}/ -r ${rev_from}:${rev_to}";
+  execute_with_echo "svn log ${TARGET_REPOSITORY_URL}/branches/${branch}/ -r ${rev_from}:${rev_to}";
 }
 
 function logt {
@@ -759,6 +785,25 @@ function migrate {
   fi
 
   execute_with_echo ${cmd};
+  execute_with_echo "rake db:test:prepare";
+}
+
+function tmux_setup_default {
+  tmux new-session -d -s default
+  tmux new-window -t default:2
+  tmux new-window -t default:3
+  tmux new-window -t default:4
+
+  tmux split-window -h -t default:1
+  tmux split-window -h -t default:1
+  tmux split-window -h -t default:1
+  tmux select-layout -t default:1 even-horizontal
+
+  tmux split-window -h -t default:2
+  tmux select-layout -t default:2 main-vertical
+
+  tmux select-window -t default:2
+  tmux attach-session -t default
 }
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
