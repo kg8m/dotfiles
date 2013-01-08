@@ -40,6 +40,7 @@ NeoBundle 'mileszs/ack.vim'
 NeoBundle 'vim-scripts/AutoClose'
 NeoBundle 'Shougo/neocomplcache', { 'depends' : 'Shougo/neocomplcache-snippets-complete' }
 NeoBundle 'tyru/operator-camelize.vim'
+NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'osyo-manga/unite-filetype'
