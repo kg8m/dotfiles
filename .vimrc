@@ -36,8 +36,10 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'Shougo/neobundle.vim'
 
 " plugins from github
+NeoBundle 'kg8m/.vim'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'vim-scripts/AutoClose'
+NeoBundle 'kg8m/moin.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'tyru/operator-camelize.vim'
