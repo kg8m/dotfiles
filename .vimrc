@@ -457,6 +457,7 @@ let g:vimshell_prompt = '% '
 
 " vimux
 let g:VimuxHeight = 30
+autocmd VimLeavePre * :VimuxCloseRunner
 
 " yankring
 let g:yankring_max_history = 500
