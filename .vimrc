@@ -39,6 +39,7 @@ NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'kg8m/.vim'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'vim-scripts/AutoClose'
+NeoBundle 'sjl/gundo.vim'
 NeoBundle 'kg8m/moin.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
@@ -46,13 +47,13 @@ NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'honza/snipmate-snippets'
 NeoBundle 'kg8m/svn-diff.vim'
+NeoBundle 'vim-scripts/Unicode-RST-Tables'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'osyo-manga/unite-filetype'
 NeoBundle 'Shougo/unite-help'
 NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'pasela/unite-webcolorname'
-NeoBundle 'Lokaltog/vim-easymotion'
 "NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
@@ -77,6 +78,7 @@ NeoBundle 'mattn/zencoding-vim'
 NeoBundle 'Align'
 NeoBundle 'EnhCommentify.vim'
 NeoBundle 'matchit.zip'
+NeoBundle 'sequence'
 NeoBundle 'sudo.vim'
 
 " colorschemes
@@ -290,11 +292,6 @@ vnoremap ,w :s/\s\+$//ge<Cr>
 " http://vim-users.jp/2009/11/hack104/
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<Cr><Cr>
 
-" increments
-nnoremap <silent> co :ContinuousNumber <C-a><CR>
-vnoremap <silent> co :ContinuousNumber <C-a><CR>
-command! -count -nargs=1 ContinuousNumber let c = col('.')|for n in range(1, <count>?<count>-line('.'):1)|exec 'normal! j' . n . <q-args>|call cursor('.', c)|endfor
-
 
 "----------------------------------------------
 
@@ -336,6 +333,9 @@ endfunction
 " align.vim
 let g:Align_xstrlen = 3
 noremap ,a :Align<Space>
+
+" gundo
+nnoremap <F5> :GundoToggle<CR>
 
 " mru.vim
 " noremap ,m :MRU<Cr>
@@ -412,6 +412,12 @@ autocmd User Rails Rnavcommand ssupport spec/support -suffix=.rb
 
 " rubytest.vim
 let g:rubytest_in_remote = 1
+
+" sequence
+vmap ,,a <plug>SequenceV_Increment
+vmap ,,x <plug>SequenceV_Decrement
+nmap ,,a <plug>SequenceN_Increment
+nmap ,,x <plug>SequenceN_Decrement
 
 " turbux
 let g:no_turbux_mappings = 1
