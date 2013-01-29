@@ -40,7 +40,6 @@ NeoBundle 'kg8m/.vim'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'taichouchou2/alpaca_complete', {
         \   'depends' : ['tpope/vim-rails', 'Shougo/neocomplcache'],
-        \   'build' : 'echo "Install alpaca_complete gem."',
         \ },
 NeoBundle 'vim-scripts/AutoClose'
 NeoBundle 'sjl/gundo.vim'
