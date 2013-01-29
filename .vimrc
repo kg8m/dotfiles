@@ -28,16 +28,20 @@ endif
 NeoBundle 'Shougo/vimproc', {
         \   'build' : {
         \     'windows' : 'echo "Sorry, cannot update vimproc binary file in Windows."',
-        \     'cygwin' : 'make -f make_cygwin.mak',
-        \     'mac' : 'make -f make_mac.mak',
-        \     'unix' : 'make -f make_unix.mak',
+        \     'cygwin'  : 'make -f make_cygwin.mak',
+        \     'mac'     : 'make -f make_mac.mak',
+        \     'unix'    : 'make -f make_unix.mak',
         \   },
-        \ }
+        \ },
 NeoBundle 'Shougo/neobundle.vim'
 
 " plugins from github
 NeoBundle 'kg8m/.vim'
 NeoBundle 'mileszs/ack.vim'
+NeoBundle 'taichouchou2/alpaca_complete', {
+        \   'depends' : ['tpope/vim-rails', 'Shougo/neocomplcache'],
+        \   'build' : 'echo "Install alpaca_complete gem."',
+        \ },
 NeoBundle 'vim-scripts/AutoClose'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'kg8m/moin.vim'
