@@ -52,6 +52,9 @@ setopt hist_no_store                         # history (fc -l) コマンドを�
 setopt list_packed                           # 補完候補を詰めて表示
 setopt noautoremoveslash                     # 最後のスラッシュを自動的に削除しない
 
+# follow original file/directory via symbolic link
+setopt chase_links
+
 # prevent careless logout
 setopt ignore_eof
 
