@@ -42,6 +42,7 @@ NeoBundle 'taichouchou2/alpaca_complete', {
         \   'depends' : ['tpope/vim-rails', 'Shougo/neocomplcache'],
         \ },
 NeoBundle 'vim-scripts/AutoClose'
+NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'kg8m/moin.vim'
 NeoBundle 'Shougo/neocomplcache'
