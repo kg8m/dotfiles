@@ -404,6 +404,10 @@ endif
 map ,C <Plug>(operator-camelize)
 map ,c <Plug>(operator-decamelize)
 
+" QuickBuf
+" replace QuickBuf by unite
+nnoremap <F4> :<C-u>Unite buffer<CR>
+
 " rails.vim
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
 let g:rails_level=4
