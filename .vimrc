@@ -48,6 +48,7 @@ NeoBundle 'kg8m/moin.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'tyru/operator-camelize.vim'
+NeoBundle 'vim-scripts/QuickBuf'
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'honza/snipmate-snippets'
 NeoBundle 'kg8m/svn-diff.vim'
@@ -402,10 +403,6 @@ endif
 " operator-camelize.vim
 map ,C <Plug>(operator-camelize)
 map ,c <Plug>(operator-decamelize)
-
-" qbuf.vim
-" replace qbuf.vim by unite.vim
-nnoremap <F4> :<C-u>Unite buffer<CR>
 
 " rails.vim
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
