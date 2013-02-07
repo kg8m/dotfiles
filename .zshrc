@@ -689,7 +689,7 @@ alias rm='rm -i'
 alias ls='ls --color -a'
 alias ll='ls -l'
 alias rak='rak --sort-files'
-alias rak_app='rak -k "db\/|spec\/|test\/"'
+alias rak_app="rak -k 'db/|log/|public/|spec/|test/|tmp/|vendor/'"
 
 alias cdb='cd ~/apps/${APP_NAME}/branch'
 alias cdt='cd ~/apps/${APP_NAME}/trunk'
