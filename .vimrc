@@ -227,7 +227,7 @@ au BufNewFile,BufRead * match ZenkakuSpace /Å@/
 set restorescreen
 
 " clipboard
-set clipboard=unnamed
+" set clipboard=unnamed
 
 " move
 set whichwrap=b,s,h,l,<,>,[,],~
