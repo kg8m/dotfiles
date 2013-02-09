@@ -67,7 +67,14 @@ NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'thinca/vim-ref'
+NeoBundle 'vim-ruby/vim-ruby', {
+        \   'autoload' : {
+        \     'mappings' : '<Plug>(ref-keyword)',
+        \     'filetypes' : 'ruby'
+        \   },
+        \ },
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'rhysd/vim-textobj-ruby'
 NeoBundle 'jgdavey/vim-turbux'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'thinca/vim-unite-history'
@@ -379,8 +386,6 @@ if !exists('g:neocomplcache_keyword_patterns')
   let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-" let g:neocomplcache_keyword_patterns.ruby = '\h\w*\|:\h\w*\|^=\%(b\%[egin]\|e\%[nd]\)\|\%(@@\|[:$@]\)\h\w*\|\h\w*\%(::\w*\)*[!?]\?'
-let g:neocomplcache_keyword_patterns.ruby = '\h\w*'
 
 if s:is_windows
   let g:neocomplcache_snippets_dir = '~/vimfiles/snippets'
