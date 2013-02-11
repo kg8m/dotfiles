@@ -44,6 +44,7 @@ NeoBundle 'taichouchou2/alpaca_complete', {
 NeoBundle 'vim-scripts/AutoClose'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'sjl/gundo.vim'
+NeoBundle 'othree/javascript-libraries-syntax.vim'
 NeoBundle 'kg8m/moin.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
@@ -62,7 +63,7 @@ NeoBundle 'pasela/unite-webcolorname'
 "NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
-NeoBundle 'pangloss/vim-javascript'
+"NeoBundle 'pangloss/vim-javascript'  trying othree/javascript-libraries-syntax
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'tpope/vim-rails'
