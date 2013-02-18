@@ -92,6 +92,7 @@ NeoBundle 'mattn/zencoding-vim'
 " plugins from vim.org
 NeoBundle 'Align'
 NeoBundle 'EnhCommentify.vim'
+NeoBundle 'eruby.vim'
 NeoBundle 'matchit.zip'
 NeoBundle 'sequence'
 NeoBundle 'sudo.vim'
@@ -214,9 +215,6 @@ set hlsearch
 set ignorecase
 set smartcase
 set incsearch
-
-" syntax
-autocmd BufRead,BufNewFile *.html.erb set filetype=eruby.html
 
 " colorscheme
 let g:molokai_original = 1
