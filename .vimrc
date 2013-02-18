@@ -101,9 +101,6 @@ NeoBundle 'sudo.vim'
 NeoBundle 'hail2u/h2u_colorscheme'  " for printing
 NeoBundle 'kg8m/molokai'
 
-" syntaxes
-" NeoBundle 'http://vimperator-labs.googlecode.com/hg/vimperator/contrib/vim/'  " FIXME: vimperator.vim
-
 filetype plugin indent on
 
 if !s:is_windows && !has('gui_running')
