@@ -439,6 +439,7 @@ let g:unite_source_directory_mru_limit = 1000
 let g:unite_source_file_mru_limit = 1000
 call unite#custom_source("directory_mru", "max_candidates", 1000)
 call unite#custom_source("file_mru", "max_candidates", 1000)
+call unite#custom_filters('buffer', ['sorter_word'])
 nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
 nnoremap <silent> ,uo :<C-u>Unite outline<CR>
 nnoremap <silent> ,uc :<C-u>Unite webcolorname<CR>
