@@ -455,7 +455,7 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
   " nnoremap <silent> ,uv :<C-u>UniteVersions status:!<CR>
 
 " vimfiler
-noremap ,e :VimFilerBufferDir<Cr>
+noremap ,e :VimFilerBufferDir -quit<Cr>
 
 " vimshell
 noremap ,s :VimShell<Cr>
