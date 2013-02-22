@@ -1,0 +1,147 @@
+"" vim: set ft=vimperator:
+
+" ------------------------------------------------------------
+" 基本設定
+" ------------------------------------------------------------
+
+" ブラウザのタイトル
+set titlestring="Mozilla Firefox"
+
+" キャレットを太めに
+set! ui.caretWidth=7
+
+" ステータスラインのスタイル
+hi StatusLine color: #000;
+
+" ページのアクセスキーを無効化
+set! ui.key.generalAccessKey=0
+
+" 検索語のハイライト
+set hlsearch
+
+" Beep設定オフ
+set visualbell
+hi Bell display: none;
+
+" 補完設定
+set autocomplete
+set complete=sl
+
+" クイックリンク関連
+set hintchars=fjklasdhguionmerwc
+hi Hint padding: 1px 5px; background: -moz-linear-gradient(top, #ffffff, #f1f1f1 1%, #f1f1f1 50%, #dfdfdf 99%, #cccccc); border: 1px solid #222; border-radius: 3px; font-family: monospace; font-size: 10px; color: #222; text-shadow: 0 1px 0 #fff; text-transform: uppercase;
+
+" Next/Previous Link
+set nextpattern=\bnext\b,\bmore\b,^next$,^次(の)?ページ,\b次.*,^次へ$,→\b,^>$,^(>>|≫)$,^(>|≫),(>|≫)$
+set previouspattern=\bprev|previous\b,^prev$,^前(の)?ページ,\b前.*,^前へ$,\b←,^<$,^(<<|≪)$,^(<|≪),(<|≪)$
+
+" IME Controller
+:style -name commandline-ime chrome://* #liberator-commandline-command input { ime-mode: inactive; }
+
+" エディタ
+" It's All Text!のホットキーが<C-q>
+set editor=C:/Shortcuts/gvim73.lnk
+inoremap <C-q> <Ins><C-q><Ins>
+
+
+" ------------------------------------------------------------
+" キーマップ設定
+" ------------------------------------------------------------
+
+" ,r で .vimperatorrc をリロード
+map ,r :source ~/.vimperatorrc<Cr>
+
+" 検索補完関連
+nnoremap s :set<Space>cpt=s<Cr>:open<Space>google<Space>
+nnoremap <S-s> :set<Space>cpt=s<Cr>:tabopen<Space>google<Space>
+nnoremap t :set<Space>cpt=slt<Cr>:tabopen<Space>
+nnoremap o :set<Space>cpt=slt<Cr>:open<Space>
+
+" URL中の数字を++/--
+noremap + <C-a>
+javascript << EOM
+mappings.addUserMap(
+  [modes.NORMAL], ["-"], "- to <C-x>",
+  function(){events.feedkeys("<C-x>", true);},
+  {rhs:"<C-x>", noremap:true}
+);
+EOM
+
+" OSのキーバインドを一部再現
+noremap <C-a> i<C-a>
+inoremap <C-a> <Ins><C-a><Ins>
+inoremap <C-w> <Ins><C-w><Ins>
+cnoremap <C-a> <Ins><C-a><Ins>
+
+" ソース表示
+map <C-S-u> i<C-u>
+
+" ロケーションバーにフォーカス
+map <C-l> <A-d>
+
+" 誤操作防止
+inoremap <C-n> <Esc><C-n>
+inoremap <C-p> <Esc><C-p>
+
+" <Esc><Esc>で検索ハイライト解除
+nnoremap <Esc><Esc> :noh<Cr>
+
+" ,p で印刷プレビュー
+noremap ,p :emenu ファイル.印刷プレビュー<Cr>
+
+" ,o でURLを一気に開く
+nnoremap ,o :emenu ファイル.Open Multiple Locations...<Cr>
+
+" :emenu ツール.Evernote に追加
+
+
+" ------------------------------------------------------------
+" プラグイン関連
+" ------------------------------------------------------------
+
+" for _smooziee.js
+" default = [400, 20]
+let g:smooziee_scroll_amount=350
+let g:smooziee_scroll_interval=25
+
+" for copy.js
+javascript << EOM
+liberator.globalVariables.copy_templates = [
+  { label: 'titleAndURL',    value: '%TITLE%\n%URL%',              map: 'Y' },
+  { label: 'title',          value: '%TITLE%',                     map: ',y' },
+  { label: 'anchor',         value: '<a href="%URL%">%TITLE%</a>', map: ',a' },
+  { label: 'selanchor',      value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
+  { label: 'htmlblockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
+  { label: 'ASIN',           value: 'copy ASIN code from Amazon',
+    custom: function(){ return content.document.getElementById('ASIN').value; }},
+
+  { label: 'myQuote',        value: '<blockquote>\n  %HTMLSEL%\n</blockquote>\n<p class="p-cite"><cite>From: <a href="%URL%">%TITLE%</a></cite></p>' },
+  { label: 'kinikijiAnchor', value: '<p class="p-news">&raquo;&nbsp;<a href="%URL%">%TITLE%</a></p>' },
+  { label: 'myAmazon',       value: 'Copied: Amazon Affiliate Link',
+    custom: function(){ return '<a href="http://www.amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value + '/kgtk-22/" class="amazon">' + content.document.title + '</a>'; }
+  },
+  { label: 'tracLink',       value: '[%URL% %TITLE%]',             map: ',t' }
+];
+EOM
+
+" for feedSomeKeys_3.js
+command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
+lazy fmaps -u='mail\.google\.com/mail' c / y f j k n p o u e x s r a t # [ ] z * ? gl gi gs gt gd ga gc
+lazy fmaps -u='www\.google\.(co\.jp|com)/reader' -events=vkeypress a j k n o p m s v A r S N P X O gh ga gs gt gu u ? / J K <Space>
+lazy fmaps -u='www\.google\.com/calendar' -events=vkeydown t a d w m x c e <Del> / + q s ? j k r
+lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
+
+" for websearch.js
+javascript <<EOM
+liberator.globalVariables.webSearchTemplates = [
+  { names: ['weblio'], description: 'translate keywords by weblio', url: 'http://ejje.weblio.jp/content/%KEYWORD%' }
+];
+EOM
+
+
+" ------------------------------------------------------------
+source ~/.vimperatorrc.local
+
+
+" ------------------------------------------------------------
+echo ".vimperatorrc sourced"
