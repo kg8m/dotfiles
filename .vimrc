@@ -83,6 +83,7 @@ NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'hrsh7th/vim-unite-vcs'
 NeoBundle 'hrsh7th/vim-versions'
+NeoBundle 'superbrothers/vim-vimperator'
 NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'benmills/vimux'
