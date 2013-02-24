@@ -63,6 +63,7 @@ NeoBundle 'pasela/unite-webcolorname'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 "NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
+NeoBundle 'tobiassvn/vim-gemfile'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
 "NeoBundle 'pangloss/vim-javascript'  trying othree/javascript-libraries-syntax
