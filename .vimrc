@@ -386,6 +386,7 @@ if !exists('g:neocomplcache_keyword_patterns')
   let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+let g:neocomplcache_keyword_patterns['ruby'] = '\h\w*'
 
 if s:is_windows
   let g:neocomplcache_snippets_dir = '~/vimfiles/snippets'
