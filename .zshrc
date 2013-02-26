@@ -5,8 +5,7 @@ case ${UID} in
     LANG=C
     ;;
 esac
-
-export SVN_EDITOR=vim
+export SVN_EDITOR="sh ~/svn_editor.sh"  # FIXME: when file does not exist
 export GIT_EDITOR=vim
 export RUBYGEMS_PATH='/usr/local/lib/ruby/gems/1.8/gems/'
 
