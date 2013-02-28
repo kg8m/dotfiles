@@ -60,6 +60,7 @@ NeoBundle 'Shougo/unite-help'
 NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'pasela/unite-webcolorname'
+NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 "NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
