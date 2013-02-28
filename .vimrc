@@ -263,6 +263,13 @@ augroup END
 
 "----------------------------------------------
 
+" http://vim-users.jp/2009/05/hack17/
+" :Rename newfilename.ext
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+
+
+"----------------------------------------------
+
 " ,r => reload .vimrc
 nnoremap ,r :source ~/.vimrc<Cr>
 
