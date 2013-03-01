@@ -350,18 +350,49 @@ endfunction
 
 "----------------------------------------------
 
-" align.vim
-let g:Align_xstrlen = 3
-noremap ,a :Align<Space>
+" align.vim (replaced by alignta)
+"let g:Align_xstrlen = 3
+noremap ,a :Alignta<Space>
+
+" alignta
+vnoremap ,ua :<C-u>Unite alignta:arguments<CR>
+let g:unite_source_alignta_preset_arguments = [
+  \ ["Align at '=>'", '=>'],
+  \ ["Align at non-whitespace characters", '<- -r \S\+/g'],
+  \ ["Align at '='", '=>\='],
+  \ ["Align at ':'", '01 :'],
+  \ ["Align at '|'", '|' ],
+  \ ["Align at ')'", '0 )' ],
+  \ ["Align at ']'", '0 ]' ],
+  \ ["Align at '}'", '}' ],
+\]
+let s:comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
+let g:unite_source_alignta_preset_options = [
+  \ ["Justify Left", '<<' ],
+  \ ["Justify Center", '||' ],
+  \ ["Justify Right", '>>' ],
+  \ ["Justify None", '==' ],
+  \ ["Shift Left", '<-' ],
+  \ ["Shift Right", '->' ],
+  \ ["Shift Left [Tab]", '<--'],
+  \ ["Shift Right [Tab]", '-->'],
+  \ ["Margin 0:0", '0' ],
+  \ ["Margin 0:1", '01' ],
+  \ ["Margin 1:0", '10' ],
+  \ ["Margin 1:1", '1' ],
+  \
+  \ 'v/' . s:comment_leadings,
+  \ 'g/' . s:comment_leadings,
+\]
+unlet s:comment_leadings
 
 " gundo
 nnoremap <F5> :GundoToggle<CR>
 
-" mru.vim
+" mru.vim (replaced  by unite.vim)
 " noremap ,m :MRU<Cr>
 " let MRU_Window_Height = 20
 " let MRU_Max_Entries   = 500
-" replace mru.vim by unite.vim
 nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
 
 " neocomplcache.vim
@@ -418,8 +449,7 @@ endif
 map ,C <Plug>(operator-camelize)
 map ,c <Plug>(operator-decamelize)
 
-" QuickBuf
-" replace QuickBuf by unite
+" QuickBuf (replaced by unite)
 nnoremap <F4> :<C-u>Unite buffer<CR>
 
 " rails.vim
