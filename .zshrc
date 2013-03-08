@@ -733,6 +733,16 @@ function sdiff {
   execute_with_echo "svn diff --diff-cmd /usr/bin/diff -x '-U 10' V";
 }
 
+function slog {
+  if (($# == 1)) then
+    _limit=$1;
+  else
+    _limit="10";
+  fi
+
+  execute_with_echo "svn log -r HEAD:1 --limit ${_limit}";
+}
+
 function diffb {
   date=`date +"%y%m%d"`;
 
