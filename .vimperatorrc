@@ -131,6 +131,9 @@ lazy fmaps -u='www\.google\.(co\.jp|com)/reader' -events=vkeypress a j k n o p m
 lazy fmaps -u='www\.google\.com/calendar' -events=vkeydown t a d w m x c e <Del> / + q s ? j k r
 lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
 
+" for twittperator
+let g:twittperator_use_ssl_connection_for_api_ep = 1
+
 " for websearch.js
 javascript <<EOM
 liberator.globalVariables.webSearchTemplates = [
