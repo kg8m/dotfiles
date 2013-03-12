@@ -475,6 +475,7 @@ map <leader>t <Plug>SendFocusedTestToTmux
 
 " unite.vim
 let g:unite_winheight = 70
+let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_directory_mru_limit = 1000
 let g:unite_source_file_mru_limit = 1000
