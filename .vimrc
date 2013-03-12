@@ -1,6 +1,7 @@
 "----------------------------------------------
 
 let s:is_windows = has('win32') || has('win64')
+let s:in_tmux    = exists('$TMUX')
 
 
 "----------------------------------------------
@@ -78,6 +79,7 @@ NeoBundle 'vim-ruby/vim-ruby', {
         \     'filetypes' : 'ruby'
         \   },
         \ },
+NeoBundle 'kg8m/vim-rubytest'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'rhysd/vim-textobj-ruby'
 NeoBundle 'jgdavey/vim-turbux'
@@ -460,7 +462,11 @@ autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.r
 autocmd User Rails Rnavcommand ssupport spec/support -suffix=.rb
 
 " rubytest.vim
-let g:rubytest_in_remote = 1
+let g:no_rubytest_mappings = 1
+if !s:in_tmux
+  map <leader>T <Plug>RubyFileRun
+  map <leader>t <Plug>RubyTestRun
+endif
 
 " sequence
 vmap ,,a <plug>SequenceV_Increment
@@ -470,8 +476,10 @@ nmap ,,x <plug>SequenceN_Decrement
 
 " turbux
 let g:no_turbux_mappings = 1
-map <leader>T <Plug>SendTestToTmux
-map <leader>t <Plug>SendFocusedTestToTmux
+if s:in_tmux
+  map <leader>T <Plug>SendTestToTmux
+  map <leader>t <Plug>SendFocusedTestToTmux
+endif
 
 " unite.vim
 let g:unite_winheight = 70
@@ -519,7 +527,9 @@ let g:vimshell_prompt = '% '
 
 " vimux
 let g:VimuxHeight = 30
-autocmd VimLeavePre * :VimuxCloseRunner
+if s:in_tmux
+  autocmd VimLeavePre * :VimuxCloseRunner
+endif
 
 " yankring
 let g:yankring_max_history = 500
