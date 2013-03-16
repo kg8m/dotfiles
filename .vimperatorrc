@@ -29,7 +29,7 @@ set complete=sl
 
 " クイックリンク関連
 set hintchars=fjklasdhguionmerwc
-hi Hint padding: 1px 5px; background: -moz-linear-gradient(top, #ffffff, #f1f1f1 1%, #f1f1f1 50%, #dfdfdf 99%, #cccccc); border: 1px solid #222; border-radius: 3px; font-family: monospace; font-size: 10px; color: #222; text-shadow: 0 1px 0 #fff; text-transform: uppercase;
+hi Hint padding: 1px 5px; background: -moz-linear-gradient(top, #ffffff, #f1f1f1 1%, #f1f1f1 50%, #dfdfdf 99%, #cccccc); border: 1px solid #222; border-radius: 3px; font-family: monospace; font-size: 12px; color: #222; text-shadow: 0 1px 0 #fff; text-transform: uppercase; white-space: nowrap;
 
 " Next/Previous Link
 set nextpattern=\bnext\b,\bmore\b,^next$,^次(の)?ページ,\b次.*,^次へ$,→\b,^>$,^(>>|≫)$,^(>|≫),(>|≫)$
@@ -126,9 +126,9 @@ EOM
 
 " for feedSomeKeys_3.js
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
-lazy fmaps -u='mail\.google\.com/mail' c / y f j k n p o u e x s r a t # [ ] z * ? gl gi gs gt gd ga gc
-lazy fmaps -u='www\.google\.(co\.jp|com)/reader' -events=vkeypress a j k n o p m s v A r S N P X O gh ga gs gt gu u ? / J K <Space>
-lazy fmaps -u='www\.google\.com/calendar' -events=vkeydown t a d w m x c e <Del> / + q s ? j k r
+lazy fmaps -u='mail\.google\.com/mail' c / y f j k n p o u e x r a t # [ ] z * ? gl gi gs gt gd ga gc
+lazy fmaps -u='www\.google\.(co\.jp|com)/reader' -events=vkeypress a j k n o p m s v A r N P X O gh ga gs gt gu u ? / J K <Space>
+lazy fmaps -u='www\.google\.com/calendar' -events=vkeydown t a d w m x c e <Del> / + q ? j k r
 lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
 
 " for twittperator
