@@ -362,7 +362,8 @@ let g:unite_source_alignta_preset_arguments = [
   \ ["Align at '=>'", '=>'],
   \ ["Align at /\S/", '<- -r \S\+/g'],
   \ ["Align at '='",  '=>\='],
-  \ ["Align at ':'",  '01 :'],
+  \ ["Align at ':hoge'",  '10 :'],
+  \ ["Align at 'hoge:'",  '01 :'],
   \ ["Align at '|'",  '|'],
   \ ["Align at ')'",  '0 )'],
   \ ["Align at ']'",  '0 ]'],
@@ -400,23 +401,15 @@ nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
 " neocomplcache.vim
 inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-" Use neocomplcache.
+
 let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
 let g:neocomplcache_enable_smart_case = 1
-" Use camel case completion.
 let g:neocomplcache_enable_camel_case_completion = 0
-" Use underbar completion.
 let g:neocomplcache_enable_underbar_completion = 0
-" Use fuzzy completion.
 let g:neocomplcache_enable_fuzzy_completion = 1
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-" Set auto completion length.
+let g:neocomplcache_min_syntax_length = 2
 let g:neocomplcache_auto_completion_start_length = 2
-" Set manual completion length.
 let g:neocomplcache_manual_completion_start_length = 0
-" Set minimum keyword length.
 let g:neocomplcache_min_keyword_length = 3
 let g:neocomplcache_enable_cursor_hold_i = 0
 let g:neocomplcache_cursor_hold_i_time = 300
