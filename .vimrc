@@ -489,6 +489,7 @@ let g:unite_source_grep_search_word_highlight = 'Special'
 call unite#custom_source("directory_mru", "max_candidates", 1000)
 call unite#custom_source("file_mru", "max_candidates", 1000)
 call unite#custom_source('buffer', 'sorters', 'sorter_word')
+autocmd VimLeavePre * call unite#sources#outline#remove_cache_files()
 nnoremap ,ug :<C-u>Unite grep:./::
 nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
 nnoremap <silent> ,uo :<C-u>Unite outline<CR>
