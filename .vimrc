@@ -220,7 +220,7 @@ set hlsearch
 set ignorecase
 set smartcase
 set incsearch
-highlight Search cterm=reverse ctermbg=none ctermfg=none
+highlight Search ctermbg=brown ctermfg=white
 
 " make listchars visible
 set list
