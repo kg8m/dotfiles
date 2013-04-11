@@ -104,6 +104,10 @@ nnoremap ,o :emenu ファイル.Open Multiple Locations...<Cr>
 let g:smooziee_scroll_amount=350
 let g:smooziee_scroll_interval=25
 
+" for amazon_simple_uri.js
+" なんてあさましいっ!!
+let g:amazon_asamashi = "kgtk-22"
+
 " for copy.js
 javascript << EOM
 liberator.globalVariables.copy_templates = [
