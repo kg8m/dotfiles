@@ -181,6 +181,10 @@ if has('vim_starting')
   syntax on
 endif
 
+" colorscheme
+let g:molokai_original = 1
+colorscheme molokai
+
 set showmatch
 set nu
 set showmode
@@ -188,8 +192,6 @@ set showcmd
 highlight Visual ctermbg=darkgray
 set cursorline
 set cursorcolumn
-highlight CursorLine cterm=reverse
-highlight CursorColumn cterm=reverse
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorcolumn nocursorline
@@ -218,10 +220,7 @@ set hlsearch
 set ignorecase
 set smartcase
 set incsearch
-
-" colorscheme
-let g:molokai_original = 1
-colorscheme molokai
+highlight Search cterm=reverse ctermbg=none ctermfg=none
 
 " make listchars visible
 set list
