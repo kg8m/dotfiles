@@ -389,6 +389,9 @@ let g:unite_source_alignta_preset_options = [
 \]
 unlet s:comment_leadings
 
+" EnhCommentify
+let g:EnhCommentifyBindInInsert = 'no'
+
 " gundo
 nnoremap <F5> :GundoToggle<CR>
 
