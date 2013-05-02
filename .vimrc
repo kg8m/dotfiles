@@ -52,7 +52,6 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'tyru/operator-camelize.vim'
 "NeoBundle 'vim-scripts/QuickBuf'
 NeoBundle 'chrisbra/Recover.vim'
-NeoBundle 'honza/snipmate-snippets'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
 NeoBundle 'Shougo/unite.vim'
@@ -81,6 +80,7 @@ NeoBundle 'vim-ruby/vim-ruby', {
         \   },
         \ },
 NeoBundle 'kg8m/vim-rubytest'
+NeoBundle 'honza/vim-snippets'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'rhysd/vim-textobj-ruby'
 NeoBundle 'jgdavey/vim-turbux'
