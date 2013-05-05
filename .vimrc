@@ -72,6 +72,7 @@ NeoBundle 'tobiassvn/vim-gemfile'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
 "NeoBundle 'pangloss/vim-javascript'  trying othree/javascript-libraries-syntax
+NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'thinca/vim-qfreplace'
