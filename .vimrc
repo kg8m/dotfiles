@@ -84,6 +84,7 @@ NeoBundle 'vim-ruby/vim-ruby', {
         \   },
         \ },
 NeoBundle 'kg8m/vim-rubytest'
+NeoBundle 'thinca/vim-singleton'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'rhysd/vim-textobj-ruby'
@@ -500,6 +501,13 @@ vmap ,,a <plug>SequenceV_Increment
 vmap ,,x <plug>SequenceV_Decrement
 nmap ,,a <plug>SequenceN_Increment
 nmap ,,x <plug>SequenceN_Decrement
+" }}}
+
+" singleton "{{{
+if has('gui_running')
+  let g:singleton#opener = 'drop'
+  call singleton#enable()
+endif
 " }}}
 
 " turbux "{{{
