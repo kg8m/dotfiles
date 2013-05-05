@@ -591,7 +591,7 @@ let g:user_zen_settings = {
 
 " ----------------------------------------------
 " GUI settings "{{{
-if has('gui_running') || has('win32') || has('win64')
+if has('gui_running')
   gui
   set nobackup
   set guioptions-=T
