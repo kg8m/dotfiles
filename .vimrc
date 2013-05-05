@@ -1,14 +1,12 @@
-"----------------------------------------------
-
+" ----------------------------------------------
+" initialize "{{{
 let s:is_windows = has('win32') || has('win64')
 let s:in_tmux    = exists('$TMUX')
+" }}}
 
-
-"----------------------------------------------
-
-" neobundle.vim
+" ----------------------------------------------
+" neobundle "{{{
 " https://github.com/Shougo/shougo-s-github/blob/master/vim/.vimrc
-
 set nocompatible
 filetype off
 
@@ -44,6 +42,7 @@ NeoBundle 'taichouchou2/alpaca_complete', {
         \ },
 NeoBundle 'vim-scripts/AutoClose'
 NeoBundle 'rhysd/clever-f.vim'
+NeoBundle 'LeafCage/foldCC'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim'
 NeoBundle 'kg8m/moin.vim'
@@ -117,11 +116,10 @@ if !s:is_windows && !has('gui_running')
     "finish
   endif
 endif
+" }}}
 
-
-"----------------------------------------------
-
-" encoding
+" ----------------------------------------------
+" encoding "{{{
 " http://www.kawaz.jp/pukiwiki/?vim#cb691f26
 if &encoding !=# 'utf-8'
   set encoding=japan
@@ -171,12 +169,10 @@ set fileformats=unix,dos,mac
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
+" }}}
 
-
-"----------------------------------------------
-
-" general looks
-
+" ----------------------------------------------
+" general looks "{{{
 if has('vim_starting')
   syntax on
 endif
@@ -201,27 +197,6 @@ set scrolloff=3
 set showbreak=++++
 set iskeyword& iskeyword+=-
 
-" status line
-set laststatus=2
-set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
-
-" spaces, indents
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set autoindent
-set smartindent
-set backspace=indent,eol,start
-" set foldmethod=indent  " zo: open, zc: close, zR: open all, zM: close all
-" set foldminlines=5
-
-" search
-set hlsearch
-set ignorecase
-set smartcase
-set incsearch
-highlight Search ctermbg=brown ctermfg=white
-
 " make listchars visible
 set list
 set listchars=tab:>\ ,eol:\ ,trail:_
@@ -229,10 +204,41 @@ set listchars=tab:>\ ,eol:\ ,trail:_
 " make ZenkakuSpace visible
 highlight ZenkakuSpace cterm=underline ctermfg=lightblue gui=underline guifg=blue
 au BufNewFile,BufRead * match ZenkakuSpace /Å@/
+" }}}
 
+" ----------------------------------------------
+" status line "{{{
+set laststatus=2
+set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
+" }}}
 
-"----------------------------------------------
+" ----------------------------------------------
+" spaces, indents "{{{
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set autoindent
+set smartindent
+set backspace=indent,eol,start
 
+" folding
+set foldmethod=marker  " zo: open, zc: close, zR: open all, zM: close all
+" set foldminlines=5
+set foldcolumn=5
+set fillchars=vert:\|
+" }}}
+
+" ----------------------------------------------
+" search "{{{
+set hlsearch
+set ignorecase
+set smartcase
+set incsearch
+highlight Search ctermbg=brown ctermfg=white
+" }}}
+
+" ----------------------------------------------
+" controls "{{{
 " restore screen
 set restorescreen
 
@@ -262,17 +268,17 @@ augroup END
 "   autocmd InsertEnter,CmdwinEnter * set noimdisable
 "   autocmd InsertLeave,CmdwinLeave * set imdisable
 " augroup END
+" }}}
 
-
-"----------------------------------------------
-
+" ----------------------------------------------
+" commands "{{{
 " http://vim-users.jp/2009/05/hack17/
 " :Rename newfilename.ext
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+" }}}
 
-
-"----------------------------------------------
-
+" ----------------------------------------------
+" keymappings "{{{
 " ,r => reload .vimrc
 nnoremap ,r :source ~/.vimrc<Cr>
 
@@ -298,7 +304,7 @@ nnoremap ,h :colorscheme h2u_white<Cr>:TOhtml
 nmap ,d :call SVNDiff()<Cr>
 function! SVNDiff()
   edit diff
-  silent! setlocal ft=diff nobackup noswf buftype=nofile
+  silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
   execute "normal :r!LANG=ja_JP.UTF8 svn diff\n"
   goto 1
 endfunction
@@ -313,11 +319,10 @@ vnoremap ,w :s/\s\+$//ge<Cr>
 " search for selected
 " http://vim-users.jp/2009/11/hack104/
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<Cr><Cr>
+" }}}
 
-
-"----------------------------------------------
-
-" change status line color when insert mode
+" ----------------------------------------------
+" change status line color when insert mode "{{{
 " http://sites.google.com/site/fudist/Home/vim-nihongo-ban/vim-color#color-insertmode
 let g:hi_insert = 'highlight StatusLine ctermfg=black ctermbg=yellow cterm=none guifg=black guibg=darkyellow gui=bold'
 
@@ -348,15 +353,16 @@ function! s:GetHighlight(hi)
   let hl = substitute(hl, 'xxx', '', '')
   return hl
 endfunction
+" }}}
 
-
-"----------------------------------------------
-
-" align.vim (replaced by alignta)
+" ----------------------------------------------
+" plugins "{{{
+" align.vim (replaced by alignta) "{{{
 "let g:Align_xstrlen = 3
 noremap ,a :Alignta<Space>
+" }}}
 
-" alignta
+" alignta "{{{
 vnoremap ,ua :<C-u>Unite alignta:arguments<CR>
 let g:unite_source_alignta_preset_arguments = [
   \ ["Align at '=>'", '=>'],
@@ -388,20 +394,28 @@ let g:unite_source_alignta_preset_options = [
   \ 'g/' . s:comment_leadings,
 \]
 unlet s:comment_leadings
+" }}}
 
-" EnhCommentify
+" EnhCommentify "{{{
 let g:EnhCommentifyBindInInsert = 'no'
+" }}}
 
-" gundo
+" foldCC "{{{
+set foldtext=FoldCCtext()
+" }}}
+
+" gundo "{{{
 nnoremap <F5> :GundoToggle<CR>
+" }}}
 
-" mru.vim (replaced  by unite.vim)
+" mru.vim (replaced  by unite.vim) "{{{
 " noremap ,m :MRU<Cr>
 " let MRU_Window_Height = 20
 " let MRU_Max_Entries   = 500
 nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
+" }}}
 
-" neocomplcache.vim
+" neocomplcache.vim "{{{
 inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
@@ -436,48 +450,56 @@ if !exists('g:neocomplcache_omni_patterns')
 endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_caching_limit_file_size = 500000
+" }}}
 
-" neosnippet
+" neosnippet "{{{
 imap <expr><CR> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+" }}}
 
-" operator-camelize.vim
+" operator-camelize.vim "{{{
 map ,C <Plug>(operator-camelize)
 map ,c <Plug>(operator-decamelize)
+" }}}
 
-" QuickBuf (replaced by unite)
+" QuickBuf (replaced by unite) "{{{
 nnoremap <F4> :<C-u>Unite buffer<CR>
+" }}}
 
-" rails.vim
+" rails.vim "{{{
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
 let g:rails_level=4
 autocmd User Rails Rnavcommand helper app/helpers -suffix=.rb  " for hoge_builder.rb
 autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
 autocmd User Rails Rnavcommand ssupport spec/support -suffix=.rb
+" }}}
 
-" rubytest.vim
+" rubytest.vim "{{{
 let g:no_rubytest_mappings = 1
 if !s:in_tmux
   map <leader>T <Plug>RubyFileRun
   map <leader>t <Plug>RubyTestRun
 endif
+" }}}
 
-" sequence
+" sequence "{{{
 vmap ,,a <plug>SequenceV_Increment
 vmap ,,x <plug>SequenceV_Decrement
 nmap ,,a <plug>SequenceN_Increment
 nmap ,,x <plug>SequenceN_Decrement
+" }}}
 
-" turbux
+" turbux "{{{
 let g:no_turbux_mappings = 1
 if s:in_tmux
   map <leader>T <Plug>SendTestToTmux
   map <leader>t <Plug>SendFocusedTestToTmux
 endif
+" }}}
 
-" unite.vim
+" unite.vim "{{{
 let g:unite_winheight = 70
 let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
@@ -506,11 +528,13 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
   " unite plugins
   nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
   " nnoremap <silent> ,uv :<C-u>UniteVersions status:!<CR>
+" }}}
 
-" vimfiler
+" vimfiler "{{{
 noremap ,e :VimFilerBufferDir -quit<Cr>
+" }}}
 
-" vimshell
+" vimshell "{{{
 noremap ,s :VimShell<Cr>
 
 if s:is_windows
@@ -522,17 +546,20 @@ endif
 let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
 let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
 let g:vimshell_prompt = '% '
+" }}}
 
-" vimux
+" vimux "{{{
 let g:VimuxHeight = 30
 if s:in_tmux
   autocmd VimLeavePre * :VimuxCloseRunner
 endif
+" }}}
 
-" yankring
+" yankring "{{{
 let g:yankring_max_history = 500
+" }}}
 
-" zencoding.vim
+" zencoding.vim "{{{
 " command: <C-y>,
 let g:user_zen_settings = {
 \ 'indentation' : '  ',
@@ -548,11 +575,11 @@ let g:user_zen_settings = {
 \   },
 \ },
 \}
+" }}}
+" }}}
 
-
-"----------------------------------------------
-
-" for GUI Vim
+" ----------------------------------------------
+" GUI settings "{{{
 if has('gui_running') || has('win32') || has('win64')
   gui
   set nobackup
@@ -583,6 +610,4 @@ if has('gui_running') || has('win32') || has('win64')
     execute 'source' g:save_window_file
   endif
 endif
-
-
-"----------------------------------------------
+" }}}
