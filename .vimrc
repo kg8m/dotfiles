@@ -267,6 +267,12 @@ augroup CheckTimeHook
   autocmd InsertLeave * :checktime
 augroup END
 
+" move as shown
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+
 " IME
 " augroup InsModeImEnable
 "   autocmd!
