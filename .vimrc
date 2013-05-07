@@ -245,14 +245,12 @@ set incsearch
 
 " ----------------------------------------------
 " controls "{{{
-" restore screen
 set restorescreen
-
-" clipboard
 " set clipboard=unnamed
 
-" move
-set whichwrap=b,s,h,l,<,>,[,],~
+" backup, recover
+set nobackup
+set directory=~/tmp
 
 " undo
 set hidden
@@ -267,6 +265,9 @@ augroup CheckTimeHook
   autocmd InsertEnter * :checktime
   autocmd InsertLeave * :checktime
 augroup END
+
+" move
+set whichwrap=b,s,h,l,<,>,[,],~
 
 " move as shown
 nnoremap j gj
@@ -601,7 +602,6 @@ let g:user_zen_settings = {
 " GUI settings "{{{
 if has('gui_running')
   gui
-  set nobackup
   set guioptions-=T
 
   colorscheme molokai
