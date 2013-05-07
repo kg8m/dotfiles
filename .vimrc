@@ -241,7 +241,6 @@ set hlsearch
 set ignorecase
 set smartcase
 set incsearch
-highlight Search ctermbg=brown ctermfg=white
 " }}}
 
 " ----------------------------------------------
