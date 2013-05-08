@@ -192,7 +192,6 @@ set showmatch
 set nu
 set showmode
 set showcmd
-highlight Visual ctermbg=darkgray
 set cursorline
 set cursorcolumn
 augroup cch
