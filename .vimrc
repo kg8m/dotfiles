@@ -232,6 +232,12 @@ set foldmethod=marker  " zo: open, zc: close, zR: open all, zM: close all
 " set foldminlines=5
 set foldcolumn=5
 set fillchars=vert:\|
+
+autocmd FileType ruby :set foldmethod=syntax
+
+" http://d.hatena.ne.jp/gnarl/20120308/1331180615
+autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 " }}}
 
 " ----------------------------------------------
