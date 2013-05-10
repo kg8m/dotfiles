@@ -229,6 +229,7 @@ set backspace=indent,eol,start
 
 " folding
 set foldmethod=marker  " zo: open, zc: close, zR: open all, zM: close all
+set foldopen=hor
 " set foldminlines=5
 set foldcolumn=5
 set fillchars=vert:\|
