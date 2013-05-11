@@ -611,8 +611,6 @@ if has('gui_running')
   gui
   set guioptions-=T
 
-  colorscheme molokai
-
   nmap <C-v> <C-v>
   nmap <C-y> <C-y>
 
