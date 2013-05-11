@@ -113,7 +113,7 @@ javascript << EOM
 liberator.globalVariables.copy_templates = [
   { label: 'titleAndURL',    value: '%TITLE%\n%URL%',              map: 'Y' },
   { label: 'title',          value: '%TITLE%',                     map: ',y' },
-  { label: 'anchor',         value: '<a href="%URL%">%TITLE%</a>', map: ',a' },
+  { label: 'anchor',         value: '<a href="%URL%">%TITLE%</a>', map: ',ya' },
   { label: 'selanchor',      value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
   { label: 'htmlblockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
   { label: 'ASIN',           value: 'copy ASIN code from Amazon',
@@ -124,7 +124,7 @@ liberator.globalVariables.copy_templates = [
   { label: 'myAmazon',       value: 'Copied: Amazon Affiliate Link',
     custom: function(){ return '<a href="http://www.amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value + '/kgtk-22/" class="amazon">' + content.document.title + '</a>'; }
   },
-  { label: 'tracLink',       value: '[%URL% %TITLE%]',             map: ',t' }
+  { label: 'tracLink',       value: '[%URL% %TITLE%]',             map: ',yt' }
 ];
 EOM
 
