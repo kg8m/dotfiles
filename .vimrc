@@ -125,6 +125,13 @@ if !s:is_windows && !has('gui_running')
 endif
 " }}}
 
+" singleton "{{{
+if has('gui_running') && !singleton#is_master()
+  let g:singleton#opener = 'drop'
+  call singleton#enable()
+endif
+" }}}
+
 " ----------------------------------------------
 " encoding "{{{
 " http://www.kawaz.jp/pukiwiki/?vim#cb691f26
@@ -509,13 +516,6 @@ vmap ,,a <plug>SequenceV_Increment
 vmap ,,x <plug>SequenceV_Decrement
 nmap ,,a <plug>SequenceN_Increment
 nmap ,,x <plug>SequenceN_Decrement
-" }}}
-
-" singleton "{{{
-if has('gui_running')
-  let g:singleton#opener = 'drop'
-  call singleton#enable()
-endif
 " }}}
 
 " turbux "{{{
