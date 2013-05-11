@@ -124,7 +124,8 @@ liberator.globalVariables.copy_templates = [
   { label: 'myAmazon',       value: 'Copied: Amazon Affiliate Link',
     custom: function(){ return '<a href="http://www.amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value + '/kgtk-22/" class="amazon">' + content.document.title + '</a>'; }
   },
-  { label: 'tracLink',       value: '[%URL% %TITLE%]',             map: ',yt' }
+  { label: 'tracLink',       value: '[%URL% %TITLE%]',             map: ',yt' },
+  { label: 'markdownLink',   value: '[%TITLE%](%URL%)',            map: ',ym' },
 ];
 EOM
 
