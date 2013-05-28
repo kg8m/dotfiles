@@ -238,7 +238,7 @@ set backspace=indent,eol,start
 set foldmethod=marker  " zo: open, zc: close, zR: open all, zM: close all
 set foldopen=hor
 " set foldminlines=5
-set foldcolumn=5
+set foldcolumn=3
 set fillchars=vert:\|
 
 autocmd FileType ruby :set foldmethod=syntax
@@ -428,6 +428,8 @@ let g:EnhCommentifyBindInInsert = 'no'
 " }}}
 
 " foldCC "{{{
+let g:foldCCtext_enable_autofdc_adjuster = 1
+let g:foldCCtext_maxchars = 120
 set foldtext=FoldCCtext()
 " }}}
 
