@@ -82,6 +82,20 @@ function migrate {
   execute_with_echo "rake db:test:clone_structure";
 }
 
+function mysql_current {
+  base_dirname='branch'
+  dirname=`basename \`pwd\``
+
+  if [ "${dirname}" = "${base_dirname}" ]; then
+    dbname="${APP_NAME}"
+  else
+    dbname="${APP_NAME}_${dirname}"
+  fi
+
+  execute_with_echo "mysql -u root ${dbname}";
+}
+
+
 function tmux_setup_default {
   tmux new-session -d -s default
   tmux new-window -t default:2
