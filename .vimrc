@@ -73,6 +73,7 @@ NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
 "NeoBundle 'pangloss/vim-javascript'  trying othree/javascript-libraries-syntax
 NeoBundle 'plasticboy/vim-markdown'
+"NeoBundle 'amdt/vim-niji'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'thinca/vim-qfreplace'
@@ -486,6 +487,10 @@ imap <expr><CR> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" :
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+" }}}
+
+" niji "{{{
+"let g:niji_matching_filetypes = ['javascript', 'ruby', 'vim']
 " }}}
 
 " operator-camelize.vim "{{{
