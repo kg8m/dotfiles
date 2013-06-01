@@ -126,6 +126,7 @@ if !s:is_windows && !has('gui_running')
 endif
 " }}}
 
+" ----------------------------------------------
 " singleton "{{{
 if has('gui_running') && !singleton#is_master()
   let g:singleton#opener = 'drop'
