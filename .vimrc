@@ -206,7 +206,7 @@ augroup cch
   autocmd WinLeave * set nocursorcolumn nocursorline
   autocmd WinEnter,BufRead * set cursorcolumn cursorline
 augroup END
-set scrolloff=3
+set scrolloff=15
 set showbreak=++++
 set iskeyword& iskeyword+=-
 
