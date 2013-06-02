@@ -73,6 +73,7 @@ NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
 "NeoBundle 'pangloss/vim-javascript'  trying othree/javascript-libraries-syntax
 NeoBundle 'plasticboy/vim-markdown'
+"NeoBundle 'amdt/vim-niji'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'thinca/vim-qfreplace'
@@ -125,6 +126,7 @@ if !s:is_windows && !has('gui_running')
 endif
 " }}}
 
+" ----------------------------------------------
 " singleton "{{{
 if has('gui_running') && !singleton#is_master()
   let g:singleton#opener = 'drop'
@@ -222,7 +224,7 @@ au BufNewFile,BufRead * match ZenkakuSpace /Å@/
 " ----------------------------------------------
 " status line "{{{
 set laststatus=2
-set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
+set statusline=[#%n]\ %<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
 " }}}
 
 " ----------------------------------------------
@@ -486,6 +488,10 @@ imap <expr><CR> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" :
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+" }}}
+
+" niji "{{{
+"let g:niji_matching_filetypes = ['javascript', 'ruby', 'vim']
 " }}}
 
 " operator-camelize.vim "{{{
