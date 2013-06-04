@@ -103,7 +103,6 @@ NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'mattn/zencoding-vim'
 
 " plugins from vim.org
-NeoBundle 'Align'
 NeoBundle 'EnhCommentify.vim'
 NeoBundle 'eruby.vim'
 NeoBundle 'matchit.zip'
