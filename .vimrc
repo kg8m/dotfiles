@@ -463,6 +463,7 @@ let g:neocomplcache_enable_cursor_hold_i = 0
 let g:neocomplcache_cursor_hold_i_time = 300
 let g:neocomplcache_enable_insert_char_pre = 0
 let g:neocomplcache_enable_prefetch = 0
+let g:neocomplcache_force_overwrite_completefunc = 1
 
 if !exists('g:neocomplcache_keyword_patterns')
   let g:neocomplcache_keyword_patterns = {}
@@ -505,10 +506,35 @@ nnoremap <F4> :<C-u>Unite buffer<CR>
 
 " rails.vim "{{{
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
-let g:rails_level=4
-autocmd User Rails Rnavcommand helper app/helpers -suffix=.rb  " for hoge_builder.rb
-autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
-autocmd User Rails Rnavcommand ssupport spec/support -suffix=.rb
+autocmd FileType ruby set path+=test/lib
+let g:rails_level = 4
+let g:rails_projections = {
+  \   "app/controllers/shared/*.rb": {
+  \     "test": [
+  \       "test/functional/shared/%s_test.rb",
+  \       "test/functional/shared/%s_tests.rb",
+  \     ],
+  \   },
+  \   "app/helpers/*_builder.rb": {
+  \     "command": "helper",
+  \   },
+  \   "app/models/finder/*_finder.rb": {
+  \     "command": "finder",
+  \     "test":    [
+  \       "test/unit/%s_finder_test.rb",
+  \     ]
+  \   },
+  \   "spec/fabricators/*_fabricator.rb": {
+  \     "command":   "fabricator",
+  \     "affinity":  "model",
+  \     "alternate": "app/models/%s.rb",
+  \     "related":   "db/schema.rb#%p",
+  \     "test":      "spec/models/%s_spec.rb",
+  \   },
+  \   "spec/support/*.rb": {
+  \     "command": "support",
+  \   },
+  \ }
 " }}}
 
 " rubytest.vim "{{{
