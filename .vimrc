@@ -552,6 +552,10 @@ nmap ,,a <plug>SequenceN_Increment
 nmap ,,x <plug>SequenceN_Decrement
 " }}}
 
+" table-mode "{{{
+let g:table_mode_map_prefix = ',t'
+" }}}
+
 " turbux "{{{
 let g:no_turbux_mappings = 1
 if s:in_tmux
