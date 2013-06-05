@@ -50,6 +50,7 @@ NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'tyru/operator-camelize.vim'
 "NeoBundle 'vim-scripts/QuickBuf'
+NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
@@ -502,6 +503,16 @@ map ,c <Plug>(operator-decamelize)
 
 " QuickBuf (replaced by unite) "{{{
 nnoremap <F4> :<C-u>Unite buffer<CR>
+" }}}
+
+" rainbow_parentheses "{{{
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 " }}}
 
 " rails.vim "{{{
