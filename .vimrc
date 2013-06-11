@@ -608,6 +608,7 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
 " }}}
 
 " vimfiler "{{{
+let g:vimfiler_safe_mode_by_default = 0
 noremap ,e :VimFilerBufferDir -quit<Cr>
 " }}}
 
