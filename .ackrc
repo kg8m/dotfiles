@@ -1,3 +1,5 @@
+--pager=less -R
+--smart-case
 --type-set=rails
 --type-add=rails=.haml
 --type-add=rails=.feature
