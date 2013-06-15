@@ -50,6 +50,7 @@ NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'tyru/operator-camelize.vim'
 "NeoBundle 'vim-scripts/QuickBuf'
+"NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
@@ -89,6 +90,8 @@ NeoBundle 'kg8m/vim-rubytest'
 NeoBundle 'thinca/vim-singleton'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'dhruvasagar/vim-table-mode'
+NeoBundle 'kana/vim-textobj-jabraces'
 NeoBundle 'rhysd/vim-textobj-ruby'
 NeoBundle 'jgdavey/vim-turbux'
 NeoBundle 'kana/vim-textobj-user'
@@ -103,7 +106,6 @@ NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'mattn/zencoding-vim'
 
 " plugins from vim.org
-NeoBundle 'Align'
 NeoBundle 'EnhCommentify.vim'
 NeoBundle 'eruby.vim'
 NeoBundle 'matchit.zip'
@@ -208,7 +210,7 @@ augroup cch
   autocmd WinLeave * set nocursorcolumn nocursorline
   autocmd WinEnter,BufRead * set cursorcolumn cursorline
 augroup END
-set scrolloff=3
+set scrolloff=15
 set showbreak=++++
 set iskeyword& iskeyword+=-
 
@@ -468,6 +470,7 @@ let g:neocomplcache_enable_cursor_hold_i = 0
 let g:neocomplcache_cursor_hold_i_time = 300
 let g:neocomplcache_enable_insert_char_pre = 0
 let g:neocomplcache_enable_prefetch = 0
+let g:neocomplcache_force_overwrite_completefunc = 1
 
 if !exists('g:neocomplcache_keyword_patterns')
   let g:neocomplcache_keyword_patterns = {}
@@ -508,12 +511,50 @@ map ,c <Plug>(operator-decamelize)
 nnoremap <F4> :<C-u>Unite buffer<CR>
 " }}}
 
-" rails.vim "{{{
+" rainbow_parentheses "{{{
+"let g:rbpt_max = 16
+"let g:rbpt_loadcmd_toggle = 0
+
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
+" }}}
+
+" rails "{{{
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
-let g:rails_level=4
-autocmd User Rails Rnavcommand helper app/helpers -suffix=.rb  " for hoge_builder.rb
-autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
-autocmd User Rails Rnavcommand ssupport spec/support -suffix=.rb
+autocmd FileType ruby set path+=test/lib
+let g:rails_level = 4
+let g:rails_projections = {
+  \   "app/controllers/shared/*.rb": {
+  \     "test": [
+  \       "test/functional/shared/%s_test.rb",
+  \       "test/functional/shared/%s_tests.rb",
+  \     ],
+  \   },
+  \   "app/helpers/*_builder.rb": {
+  \     "command": "helper",
+  \   },
+  \   "app/models/*_counter.rb": {
+  \     "command": "counter",
+  \   },
+  \   "app/models/finder/*.rb": {
+  \     "command": "finder",
+  \     "test":    [
+  \       "test/unit/%s_test.rb",
+  \     ]
+  \   },
+  \   "spec/fabricators/*_fabricator.rb": {
+  \     "command":   "fabricator",
+  \     "affinity":  "model",
+  \     "alternate": "app/models/%s.rb",
+  \     "related":   "db/schema.rb#%p",
+  \     "test":      "spec/models/%s_spec.rb",
+  \   },
+  \   "spec/support/*.rb": {
+  \     "command": "support",
+  \   },
+  \ }
 " }}}
 
 " rubytest.vim "{{{
@@ -529,6 +570,10 @@ vmap ,,a <plug>SequenceV_Increment
 vmap ,,x <plug>SequenceV_Decrement
 nmap ,,a <plug>SequenceN_Increment
 nmap ,,x <plug>SequenceN_Decrement
+" }}}
+
+" table-mode "{{{
+let g:table_mode_map_prefix = ',t'
 " }}}
 
 " turbux "{{{
@@ -571,6 +616,7 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
 " }}}
 
 " vimfiler "{{{
+let g:vimfiler_safe_mode_by_default = 0
 noremap ,e :VimFilerBufferDir -quit<Cr>
 " }}}
 
