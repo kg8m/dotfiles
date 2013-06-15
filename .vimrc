@@ -326,6 +326,11 @@ nnoremap ,cu :set fileencoding=utf-8<Cr>:set fileformat=unix
 " ,c<S-u> => reload with utf-8
 nnoremap ,c<S-u> :e ++enc=utf-8
 
+" hankaku <=> zenkaku
+" http://nanasi.jp/articles/vim/hz_ja_vim.html
+vnoremap ,ch :HzjaConvert han_ascii
+vnoremap ,cz :HzjaConvert zen_kana
+
 " ,h => TOhtml
 nnoremap ,h :colorscheme h2u_white<Cr>:TOhtml
 
