@@ -540,9 +540,6 @@ let g:rails_projections = {
   \   },
   \   "app/models/finder/*.rb": {
   \     "command": "finder",
-  \     "test":    [
-  \       "test/unit/%s_test.rb",
-  \     ]
   \   },
   \   "spec/fabricators/*_fabricator.rb": {
   \     "command":   "fabricator",
