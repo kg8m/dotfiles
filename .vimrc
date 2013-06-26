@@ -538,6 +538,9 @@ let g:rails_projections = {
   \   "app/models/*_counter.rb": {
   \     "command": "counter",
   \   },
+  \   "app/models/*_type.rb": {
+  \     "command": "type",
+  \   },
   \   "app/models/finder/*.rb": {
   \     "command": "finder",
   \   },
