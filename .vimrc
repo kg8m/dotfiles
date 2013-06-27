@@ -101,7 +101,7 @@ NeoBundle 'hrsh7th/vim-versions'
 NeoBundle 'superbrothers/vim-vimperator'
 NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
-NeoBundle 'benmills/vimux', { 'rev': '8e091d6' }
+NeoBundle 'benmills/vimux'
 NeoBundle 'vim-scripts/YankRing.vim'
 NeoBundle 'mattn/zencoding-vim'
 
