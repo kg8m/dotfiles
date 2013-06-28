@@ -345,6 +345,10 @@ function! SVNDiff()
   goto 1
 endfunction
 
+" copy/paste by clipboard
+vnoremap ,y "*y
+nnoremap ,p "*p
+
 " continuous paste
 " http://qiita.com/items/bd97a9b963dae40b63f5
 vnoremap <silent> <C-p> "0p<CR>"
@@ -692,5 +696,12 @@ if has('gui_running')
   if filereadable(g:save_window_file)
     execute 'source' g:save_window_file
   endif
+endif
+" }}}
+
+" ----------------------------------------------
+" external sources "{{{
+if filereadable(expand('~/.vimrc.local'))
+  source ~/.vimrc.local
 endif
 " }}}

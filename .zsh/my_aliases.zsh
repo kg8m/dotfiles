@@ -5,6 +5,12 @@ alias -g FFTEST="TESTOPTS='--runner=failfast'"
 alias g='git'
 alias s='svn'
 
+if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
+  macvim_cmd='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+  alias vi=${macvim_cmd}
+  alias vim=${macvim_cmd}
+fi
+
 alias rm='rm -i'
 alias ls='ls --color -a'
 alias ll='ls -l'
