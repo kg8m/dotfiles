@@ -133,7 +133,7 @@ EOM
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
 lazy fmaps -u='mail\.google\.com/mail' c / y f j k n p o u e x r a t # [ ] z * ? gl gi gs gt gd ga gc
 lazy fmaps -u='www\.google\.com/calendar' -events=vkeydown t a d w m x c e <Del> / + q ? j k r
-lazy fmaps -u='cloud\.feedly\.com' gm ga gg gl <S-j> <S-k> / r j k n p o v <S-m> m x s c <S-v>
+lazy fmaps -u='cloud\.feedly\.com' ? gm ga gg gl <S-j> <S-k> a r j k n p o v m x s b <S-v>
 lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
 
 " for twittperator
