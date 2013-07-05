@@ -233,6 +233,7 @@ set statusline=[#%n]\ %<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ 
 " spaces, indents "{{{
 set tabstop=2
 set shiftwidth=2
+set textwidth=0
 set expandtab
 set autoindent
 set smartindent

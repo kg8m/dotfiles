@@ -111,12 +111,14 @@ let g:amazon_asamashi = "kgtk-22"
 " for copy.js
 javascript << EOM
 liberator.globalVariables.copy_templates = [
-  { label: 'titleAndURL',    value: '%TITLE%\n%URL%',              map: 'Y' },
-  { label: 'title',          value: '%TITLE%',                     map: ',y' },
-  { label: 'anchor',         value: '<a href="%URL%">%TITLE%</a>', map: ',ya' },
-  { label: 'selanchor',      value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
-  { label: 'htmlblockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
-  { label: 'ASIN',           value: 'copy ASIN code from Amazon',
+  { label: 'urlWithoutEncode', value: 'copy the URL without encoding',
+    custom: function(){ return buffer.URL }, map: 'yy' },
+  { label: 'titleAndURL',      value: '%TITLE%\n%URL%',              map: 'Y' },
+  { label: 'title',            value: '%TITLE%',                     map: ',y' },
+  { label: 'anchor',           value: '<a href="%URL%">%TITLE%</a>', map: ',ya' },
+  { label: 'selanchor',        value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
+  { label: 'htmlblockquote',   value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
+  { label: 'ASIN',             value: 'copy ASIN code from Amazon',
     custom: function(){ return content.document.getElementById('ASIN').value; }},
 
   { label: 'myQuote',        value: '<blockquote>\n  %HTMLSEL%\n</blockquote>\n<p class="p-cite"><cite>From: <a href="%URL%">%TITLE%</a></cite></p>' },
