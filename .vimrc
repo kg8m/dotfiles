@@ -533,10 +533,10 @@ let g:rails_projections = {
   \   "app/models/*_counter.rb": {
   \     "command": "counter",
   \   },
-  \   "app/models/finder/*_finder.rb": {
+  \   "app/models/finder/*.rb": {
   \     "command": "finder",
   \     "test":    [
-  \       "test/unit/%s_finder_test.rb",
+  \       "test/unit/%s_test.rb",
   \     ]
   \   },
   \   "spec/fabricators/*_fabricator.rb": {
