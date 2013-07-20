@@ -99,8 +99,6 @@ nnoremap ,o :emenu ファイル.Open Multiple Locations...<Cr>
 " プラグイン関連
 " ------------------------------------------------------------
 
-loadplugins
-
 " for _smooziee.js
 " default = [400, 20]
 let g:smooziee_scroll_amount=350
@@ -114,8 +112,8 @@ let g:amazon_asamashi = "kgtk-22"
 javascript << EOM
 liberator.globalVariables.copy_templates = [
   { label: 'urlWithoutEncode', value: 'copy the URL without encoding',
-    custom: function(){ return buffer.URL }, map: 'yy' },
-  { label: 'titleAndURL',      value: '%TITLE%\n%URL%',              map: 'Y' },
+    custom: function(){ return buffer.URL },                         map: 'yy' },
+  { label: 'titleAndURL',      value: '%TITLE%\n%URL%',              map: '<S-y>' },
   { label: 'title',            value: '%TITLE%',                     map: ',y' },
   { label: 'anchor',           value: '<a href="%URL%">%TITLE%</a>', map: ',ya' },
   { label: 'selanchor',        value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
@@ -128,8 +126,8 @@ liberator.globalVariables.copy_templates = [
   { label: 'myAmazon',       value: 'Copied: Amazon Affiliate Link',
     custom: function(){ return '<a href="http://www.amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value + '/kgtk-22/" class="amazon">' + content.document.title + '</a>'; }
   },
-  { label: 'tracLink',       value: '[%URL% %TITLE%]',             map: ',yt' },
-  { label: 'markdownLink',   value: '[%TITLE%](%URL%)',            map: ',ym' },
+  { label: 'tracLink',     value: '[%URL% %TITLE%]',  map: ',yt' },
+  { label: 'markdownLink', value: '[%TITLE%](%URL%)', map: ',ym' },
 ];
 EOM
 
@@ -139,6 +137,27 @@ lazy fmaps -u='mail\.google\.com/mail' c / y f j k n p o u e x r a t # [ ] z * ?
 lazy fmaps -u='www\.google\.com/calendar' -events=vkeydown t a d w m x c e <Del> / + q ? j k r
 lazy fmaps -u='cloud\.feedly\.com' ? gm ga gg gl <S-j> <S-k> a r j k n p o v m x s b <S-v>
 lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
+
+" for twittperator
+let g:twittperator_use_ssl_connection_for_api_ep = 1
+
+" for websearch.js
+javascript <<EOM
+liberator.globalVariables.webSearchTemplates = [
+  { names: ['weblio'], description: 'translate keywords by weblio', url: 'http://ejje.weblio.jp/content/%KEYWORD%' }
+];
+EOM
+
+
+" ------------------------------------------------------------
+source ~/.vimperatorrc.local
+
+
+" ------------------------------------------------------------
+" settingsg after loadplugins
+" ------------------------------------------------------------
+
+loadplugins
 
 " for hints-ext
 " http://d.hatena.ne.jp/caisui/20110724/1311495886
@@ -154,20 +173,6 @@ javascript << EOM
   hints.addSimpleMap("<C-l>", function(){ this.relocation(); });
 })();
 EOM
-
-" for twittperator
-let g:twittperator_use_ssl_connection_for_api_ep = 1
-
-" for websearch.js
-javascript <<EOM
-liberator.globalVariables.webSearchTemplates = [
-  { names: ['weblio'], description: 'translate keywords by weblio', url: 'http://ejje.weblio.jp/content/%KEYWORD%' }
-];
-EOM
-
-
-" ------------------------------------------------------------
-source ~/.vimperatorrc.local
 
 
 " ------------------------------------------------------------
