@@ -516,7 +516,7 @@ nnoremap <F4> :<C-u>Unite buffer<CR>
 "au Syntax * RainbowParenthesesLoadBraces
 " }}}
 
-" rails.vim "{{{
+" rails "{{{
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
 autocmd FileType ruby set path+=test/lib
 let g:rails_level = 4
@@ -529,6 +529,9 @@ let g:rails_projections = {
   \   },
   \   "app/helpers/*_builder.rb": {
   \     "command": "helper",
+  \   },
+  \   "app/models/*_counter.rb": {
+  \     "command": "counter",
   \   },
   \   "app/models/finder/*_finder.rb": {
   \     "command": "finder",
