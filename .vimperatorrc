@@ -29,7 +29,7 @@ set complete=sl
 
 " クイックリンク関連
 set hintchars=fjklasdhguionmerwc
-hi Hint padding: 1px 5px; background: -moz-linear-gradient(top, #ffffff, #f1f1f1 1%, #f1f1f1 50%, #dfdfdf 99%, #cccccc); border: 1px solid #222; border-radius: 3px; font-family: monospace; font-size: 12px; color: #222; text-shadow: 0 1px 0 #fff; text-transform: uppercase; white-space: nowrap;
+" hi Hint padding: 1px 5px; background: -moz-linear-gradient(top, #ffffff, #f1f1f1 1%, #f1f1f1 50%, #dfdfdf 99%, #cccccc); border: 1px solid #222; border-radius: 3px; font-family: monospace; font-size: 12px; color: #222; text-shadow: 0 1px 0 #fff; text-transform: uppercase; white-space: nowrap;
 
 " Next/Previous Link
 set nextpattern=\bnext\b,\bmore\b,^next$,^次(の)?ページ,\b次.*,^次へ$,→\b,^>$,^(>>|≫)$,^(>|≫),(>|≫)$
@@ -111,12 +111,14 @@ let g:amazon_asamashi = "kgtk-22"
 " for copy.js
 javascript << EOM
 liberator.globalVariables.copy_templates = [
-  { label: 'titleAndURL',    value: '%TITLE%\n%URL%',              map: 'Y' },
-  { label: 'title',          value: '%TITLE%',                     map: ',y' },
-  { label: 'anchor',         value: '<a href="%URL%">%TITLE%</a>', map: ',ya' },
-  { label: 'selanchor',      value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
-  { label: 'htmlblockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
-  { label: 'ASIN',           value: 'copy ASIN code from Amazon',
+  { label: 'urlWithoutEncode', value: 'copy the URL without encoding',
+    custom: function(){ return buffer.URL },                         map: 'yy' },
+  { label: 'titleAndURL',      value: '%TITLE%\n%URL%',              map: '<S-y>' },
+  { label: 'title',            value: '%TITLE%',                     map: ',y' },
+  { label: 'anchor',           value: '<a href="%URL%">%TITLE%</a>', map: ',ya' },
+  { label: 'selanchor',        value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
+  { label: 'htmlblockquote',   value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
+  { label: 'ASIN',             value: 'copy ASIN code from Amazon',
     custom: function(){ return content.document.getElementById('ASIN').value; }},
 
   { label: 'myQuote',        value: '<blockquote>\n  %HTMLSEL%\n</blockquote>\n<p class="p-cite"><cite>From: <a href="%URL%">%TITLE%</a></cite></p>' },
@@ -124,8 +126,8 @@ liberator.globalVariables.copy_templates = [
   { label: 'myAmazon',       value: 'Copied: Amazon Affiliate Link',
     custom: function(){ return '<a href="http://www.amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value + '/kgtk-22/" class="amazon">' + content.document.title + '</a>'; }
   },
-  { label: 'tracLink',       value: '[%URL% %TITLE%]',             map: ',yt' },
-  { label: 'markdownLink',   value: '[%TITLE%](%URL%)',            map: ',ym' },
+  { label: 'tracLink',     value: '[%URL% %TITLE%]',  map: ',yt' },
+  { label: 'markdownLink', value: '[%TITLE%](%URL%)', map: ',ym' },
 ];
 EOM
 
@@ -133,7 +135,7 @@ EOM
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
 lazy fmaps -u='mail\.google\.com/mail' c / y f j k n p o u e x r a t # [ ] z * ? gl gi gs gt gd ga gc
 lazy fmaps -u='www\.google\.com/calendar' -events=vkeydown t a d w m x c e <Del> / + q ? j k r
-lazy fmaps -u='cloud\.feedly\.com' gm ga gg gl <S-j> <S-k> / r j k n p o v <S-m> m x s c <S-v>
+lazy fmaps -u='cloud\.feedly\.com' ? gm ga gg gl <S-j> <S-k> a r j k n p o v m x s b <S-v>
 lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
 
 " for twittperator
@@ -149,6 +151,28 @@ EOM
 
 " ------------------------------------------------------------
 source ~/.vimperatorrc.local
+
+
+" ------------------------------------------------------------
+" settingsg after loadplugins
+" ------------------------------------------------------------
+
+loadplugins
+
+" for hints-ext
+" http://d.hatena.ne.jp/caisui/20110724/1311495886
+" http://d.hatena.ne.jp/caisui/20120715/1342331929
+" http://d.hatena.ne.jp/caisui/20130527/1369660189
+let use_hints_ext_hinttags = 1
+let use_hints_ext_extendedhinttags = 1
+let use_hints_ext_tranform = 1
+autocmd VimperatorEnter ".*" :hi -a HintExt padding: 1px 5px; background: -moz-linear-gradient(top, #ffffff, #f1f1f1 1%, #f1f1f1 50%, #dfdfdf 99%, #cccccc); border: 1px solid #666; border-radius: 3px; font-family: monospace; font-size: 12px; color: #666; text-shadow: 0 1px 0 #fff; text-transform: uppercase; white-space: nowrap;
+javascript << EOM
+(function() {
+  // hint node 重なり除去
+  hints.addSimpleMap("<C-l>", function(){ this.relocation(); });
+})();
+EOM
 
 
 " ------------------------------------------------------------
