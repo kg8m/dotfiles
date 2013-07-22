@@ -360,6 +360,9 @@ vnoremap ,w :s/\s\+$//ge<Cr>
 " search for selected
 " http://vim-users.jp/2009/11/hack104/
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<Cr><Cr>
+
+" prevent unconscious operation
+inoremap <C-w> <Esc><C-w>
 " }}}
 
 " ----------------------------------------------
