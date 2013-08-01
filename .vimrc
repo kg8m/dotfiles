@@ -86,6 +86,7 @@ NeoBundle 'vim-ruby/vim-ruby', {
         \     'filetypes' : 'ruby'
         \   },
         \ },
+NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
 NeoBundle 'kg8m/vim-rubytest'
 NeoBundle 'thinca/vim-singleton'
 NeoBundle 'honza/vim-snippets'
