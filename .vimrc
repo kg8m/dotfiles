@@ -619,8 +619,8 @@ nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
 nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
   " unite plugins
-  nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
-  " nnoremap <silent> ,uv :<C-u>UniteVersions status:!<CR>
+  " nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
+  nnoremap <silent> ,uv :<C-u>UniteVersions status<CR>
 " }}}
 
 " vimfiler "{{{
