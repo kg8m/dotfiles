@@ -166,7 +166,7 @@ loadplugins
 let use_hints_ext_hinttags = 1
 let use_hints_ext_extendedhinttags = 1
 let use_hints_ext_tranform = 1
-autocmd VimperatorEnter ".*" :hi -a HintExt padding: 1px 5px; background: -moz-linear-gradient(top, #ffffff, #f1f1f1 1%, #f1f1f1 50%, #dfdfdf 99%, #cccccc); border: 1px solid #666; border-radius: 3px; font-family: monospace; font-size: 12px; color: #666; text-shadow: 0 1px 0 #fff; text-transform: uppercase; white-space: nowrap;
+autocmd VimperatorEnter ".*" :hi -a HintExt opacity: 0.75;
 javascript << EOM
 (function() {
   // hint node 重なり除去
