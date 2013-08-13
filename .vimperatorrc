@@ -166,7 +166,7 @@ loadplugins
 let use_hints_ext_hinttags = 1
 let use_hints_ext_extendedhinttags = 1
 let use_hints_ext_tranform = 1
-autocmd VimperatorEnter ".*" :hi -a HintExt opacity: 0.75;
+autocmd VimperatorEnter ".*" :hi -a HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fff;
 javascript << EOM
 (function() {
   // hint node 重なり除去
