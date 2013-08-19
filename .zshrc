@@ -154,6 +154,17 @@ kterm*|xterm*)
   ;;
 esac
 
+# http://mint.hateblo.jp/entry/2012/12/17/175553
+autoload -U add-zsh-hook
+set_tmux_window_name() {
+  if [ $TMUX ]; then
+    local _pwd=${PWD:t}
+    tmux rename-window "$_pwd"
+  fi
+}
+set_tmux_window_name
+add-zsh-hook precmd set_tmux_window_name
+
 # http://memo.officebrook.net/20090316.html
 bindkey -a 'q' push-line
 
