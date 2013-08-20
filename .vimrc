@@ -212,7 +212,7 @@ augroup cch
   autocmd WinEnter,BufRead * set cursorcolumn cursorline
 augroup END
 set scrolloff=15
-set showbreak=++++
+" set showbreak=++++
 set iskeyword& iskeyword+=-
 
 " make listchars visible
