@@ -4,6 +4,9 @@
 " 基本設定
 " ------------------------------------------------------------
 
+" http://d.hatena.ne.jp/blooo/20100121/1264058591
+colorscheme sweets_blooo
+
 " ブラウザのタイトル
 set titlestring="Mozilla Firefox"
 
@@ -166,7 +169,7 @@ loadplugins
 let use_hints_ext_hinttags = 1
 let use_hints_ext_extendedhinttags = 1
 let use_hints_ext_tranform = 1
-autocmd VimperatorEnter ".*" :hi -a HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fff;
+autocmd VimperatorEnter ".*" :hi -a HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fff; font-size: 15px; font-weight: normal;
 javascript << EOM
 (function() {
   // hint node 重なり除去
