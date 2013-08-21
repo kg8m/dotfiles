@@ -4,8 +4,7 @@
 " 基本設定
 " ------------------------------------------------------------
 
-" http://d.hatena.ne.jp/blooo/20100121/1264058591
-colorscheme sweets_blooo
+colorscheme solarized
 
 " ブラウザのタイトル
 set titlestring="Mozilla Firefox"
