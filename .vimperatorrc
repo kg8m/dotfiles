@@ -168,13 +168,15 @@ loadplugins
 let use_hints_ext_hinttags = 1
 let use_hints_ext_extendedhinttags = 1
 let use_hints_ext_tranform = 1
-autocmd VimperatorEnter ".*" :hi -a HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fff; font-size: 15px; font-weight: normal;
+autocmd VimperatorEnter ".*" :hi -a HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 15px; font-weight: normal;
 javascript << EOM
 (function() {
   // hint node 重なり除去
   hints.addSimpleMap("<C-l>", function(){ this.relocation(); });
 })();
 EOM
+
+hi StatusLine color: #839496; font-weight: normal; font-size: 12pt;
 
 
 " ------------------------------------------------------------
