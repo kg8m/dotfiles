@@ -1,3 +1,4 @@
 --pager=less -R
 --smart-case
 -a
+--ignore-dir=log
