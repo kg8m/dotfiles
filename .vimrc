@@ -92,6 +92,7 @@ NeoBundle 'thinca/vim-singleton'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'dhruvasagar/vim-table-mode'
+NeoBundle 'deris/vim-textobj-enclosedsyntax', { 'depends' : 'kana/vim-textobj-user' }
 NeoBundle 'kana/vim-textobj-jabraces'
 NeoBundle 'rhysd/vim-textobj-ruby'
 NeoBundle 'jgdavey/vim-turbux'
