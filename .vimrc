@@ -45,6 +45,7 @@ NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev' : '4f63ea4f78' }
+NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
@@ -222,7 +223,7 @@ set listchars=tab:>\ ,eol:\ ,trail:_
 
 " make ZenkakuSpace visible
 highlight ZenkakuSpace cterm=underline ctermfg=lightblue gui=underline guifg=blue
-au BufNewFile,BufRead * match ZenkakuSpace /Å@/
+au BufNewFile,BufRead * match ZenkakuSpace /¬Å@/
 " }}}
 
 " ----------------------------------------------
@@ -472,6 +473,26 @@ set foldtext=FoldCCtext()
 
 " gundo "{{{
 nnoremap <F5> :GundoToggle<CR>
+" }}}
+
+" lightline "{{{
+let g:lightline = {
+    \ 'active': {
+    \   'left': [
+    \     [ 'mode', 'paste' ],
+    \     [ 'bufnum', 'readonly', 'absolutepath', 'modified' ],
+    \     [ 'filetype', 'fileencoding', 'fileformat' ],
+    \     [ 'percent' ],
+    \     [ 'lineinfo' ],
+    \   ],
+    \   'right': [
+    \   ],
+    \ },
+    \ 'component': {
+    \   'bufnum': '#%n'
+    \ },
+    \ 'colorscheme': 'wombat',
+\ }
 " }}}
 
 " mru.vim (replaced  by unite.vim) "{{{
