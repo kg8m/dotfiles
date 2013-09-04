@@ -62,6 +62,7 @@ NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'pasela/unite-webcolorname'
 NeoBundle 'h1mesuke/vim-alignta'
+NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 "NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
@@ -459,6 +460,13 @@ let g:unite_source_alignta_preset_options = [
   \ 'g/' . s:comment_leadings,
 \]
 unlet s:comment_leadings
+" }}}
+
+" anzu "{{{
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
 " }}}
 
 " EnhCommentify "{{{
