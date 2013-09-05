@@ -146,7 +146,29 @@ let g:twittperator_use_ssl_connection_for_api_ep = 1
 " for websearch.js
 javascript <<EOM
 liberator.globalVariables.webSearchTemplates = [
-  { names: ['weblio'], description: 'translate keywords by weblio', url: 'http://ejje.weblio.jp/content/%KEYWORD%' }
+  {
+    names:       ['weblio'],
+    description: 'Translate keywords by weblio',
+    url:         'http://ejje.weblio.jp/content/%KEYWORD%',
+  },
+  {
+    names:             ['ruby'],
+    description:       'Search Ruby documents on APIdock',
+    url:               'http://apidock.com/ruby/search?query=%KEYWORD%',
+    urlWithoutKeyword: 'http://apidock.com/ruby',
+  },
+  {
+    names:             ['rails'],
+    description:       'Search Rails documents on APIdock',
+    url:               'http://apidock.com/rails/search?query=%KEYWORD%',
+    urlWithoutKeyword: 'http://apidock.com/rails',
+  },
+  {
+    names:             ['github'],
+    description:       'Search keywords on Github',
+    url:               'https://github.com/search?q=%KEYWORD%',
+    urlWithoutKeyword: 'https://github.com/kg8m',
+  },
 ];
 EOM
 
