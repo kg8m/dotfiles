@@ -1,5 +1,6 @@
 alias -g G="| grep"
 alias -g V="| view -"
+alias -g DIFF_MINIMAL="--diff-cmd /usr/bin/diff -x '-b -B -U 10'"
 alias -g FFTEST="TESTOPTS='--runner=failfast'"
 
 alias g='git'
@@ -45,3 +46,5 @@ alias rake_models='     execute_with_echo "TEST_ENV_NUMBER=2 rake spec:models"'
 alias rake_controllers='execute_with_echo "TEST_ENV_NUMBER=3 rake spec:controllers"'
 alias rake_helpers='    execute_with_echo "TEST_ENV_NUMBER=4 rake spec:helpers"'
 alias ruby_multitest='ruby -I ${RUBYGEMS_PATH}rake-*/lib ${RUBYGEMS_PATH}rake-*/lib/rake/rake_test_loader.rb'
+
+alias reload='source ~/.zshrc; echo "~/.zshrc sourced."'
