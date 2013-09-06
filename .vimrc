@@ -1,5 +1,7 @@
 " ----------------------------------------------
 " initialize "{{{
+scriptencoding utf-8
+
 let s:is_windows = has('win32') || has('win64')
 let s:in_tmux    = exists('$TMUX')
 " }}}
@@ -223,8 +225,8 @@ set list
 set listchars=tab:>\ ,eol:\ ,trail:_
 
 " make ZenkakuSpace visible
-highlight ZenkakuSpace cterm=underline ctermfg=lightblue gui=underline guifg=blue
-au BufNewFile,BufRead * match ZenkakuSpace /@/
+highlight ZenkakuSpace cterm=underline ctermfg=lightblue ctermbg=none gui=underline guifg=blue guibg=none
+au BufNewFile,BufRead * match ZenkakuSpace /　/
 " }}}
 
 " ----------------------------------------------
@@ -244,18 +246,20 @@ set smartindent
 set backspace=indent,eol,start
 
 " folding
-set foldmethod=marker  " zo: open, zc: close, zR: open all, zM: close all
-set foldopen=hor
-" set foldminlines=5
-set foldcolumn=3
-set fillchars=vert:\|
+if has('vim_starting')
+  set foldmethod=marker  " zo: open, zc: close, zR: open all, zM: close all
+  set foldopen=hor
+  set foldminlines=3
+  set foldcolumn=3
+  set fillchars=vert:\|
 
-autocmd FileType ruby :set foldmethod=syntax
-autocmd FileType yaml :set foldmethod=indent
+  autocmd FileType ruby :set foldmethod=syntax
+  autocmd FileType yaml :set foldmethod=indent
 
-" http://d.hatena.ne.jp/gnarl/20120308/1331180615
-autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+  " http://d.hatena.ne.jp/gnarl/20120308/1331180615
+  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+  autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+endif
 " }}}
 
 " ----------------------------------------------
@@ -293,10 +297,10 @@ augroup END
 set whichwrap=b,s,h,l,<,>,[,],~
 
 " move as shown
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
+" nnoremap j gj
+" nnoremap k gk
+" nnoremap gj j
+" nnoremap gk k
 
 " IME
 " augroup InsModeImEnable
@@ -346,7 +350,7 @@ nnoremap <Esc><Esc> :noh<Cr>
 noremap ,v :vsplit<Cr>
 
 " ,cu => UTF-8 and LF (UNIX)
-nnoremap ,cu :set fileencoding=utf-8<Cr>:set fileformat=unix
+nnoremap ,cu :set fileencoding=utf-8 fileformat=unix
 
 " ,c<S-u> => reload with utf-8
 nnoremap ,c<S-u> :e ++enc=utf-8
