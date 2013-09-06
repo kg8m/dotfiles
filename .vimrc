@@ -44,6 +44,11 @@ NeoBundle 'taichouchou2/alpaca_complete', {
         \ },
 NeoBundle 'vim-scripts/AutoClose'
 NeoBundle 'rhysd/clever-f.vim'
+NeoBundleLazy 'lilydjwg/colorizer', {
+            \   'autoload': {
+            \     'filetypes': ['eruby', 'haml', 'html', 'css', 'javascript'],
+            \   },
+            \ },
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev' : '4f63ea4f78' }
