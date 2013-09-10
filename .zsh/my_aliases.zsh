@@ -1,5 +1,5 @@
 alias -g G="| grep"
-alias -g V="| vim -R -"
+alias -g V="| view -"
 alias -g FFTEST="TESTOPTS='--runner=failfast'"
 
 alias g='git'
