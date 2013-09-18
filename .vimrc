@@ -230,8 +230,7 @@ set list
 set listchars=tab:>\ ,eol:\ ,trail:_
 
 " make ZenkakuSpace visible
-highlight ZenkakuSpace cterm=underline ctermfg=lightblue ctermbg=NONE gui=underline guifg=cyan guibg=NONE
-au BufNewFile,BufRead * match ZenkakuSpace /　/
+au BufNewFile,BufRead * match Underlined /　/
 " }}}
 
 " ----------------------------------------------
