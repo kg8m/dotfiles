@@ -49,6 +49,7 @@ NeoBundleLazy 'lilydjwg/colorizer', {
             \     'filetypes': ['eruby', 'haml', 'html', 'css', 'javascript'],
             \   },
             \ },
+NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev' : '4f63ea4f78' }
@@ -114,7 +115,6 @@ NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'benmills/vimux', { 'rev' : '8e091d6' }
 NeoBundle 'vim-scripts/YankRing.vim'
-NeoBundle 'mattn/zencoding-vim'
 
 " plugins from vim.org
 NeoBundle 'EnhCommentify.vim'
@@ -711,22 +711,25 @@ endif
 let g:yankring_max_history = 500
 " }}}
 
-" zencoding.vim "{{{
+" emmet (zencoding) "{{{
 " command: <C-y>,
-let g:user_zen_settings = {
-\ 'indentation' : '  ',
-\ 'lang' : 'ja',
-\ 'javascript' : {
-\   'snippets' : {
-\     'jq' : "$(function() {\n  ${cursor}${child}\n});",
-\     'jq:each' : "$.each(arr, function(index, item)\n  ${child}\n});",
-\     'fn' : "(function() {\n  ${cursor}\n})();",
-\     'tm' : "setTimeout(function() {\n  ${cursor}\n}, 100);",
-\     'if' : "if (${cursor}) {\n};",
-\     'ife' : "if (${cursor}) {\n} else if (${cursor}) {\n} else {\n};",
-\   },
-\ },
-\}
+let g:user_emmet_settings = {
+  \   'indentation' : '  ',
+  \   'lang' : 'ja',
+  \   'eruby' : {
+  \     'extends' : 'html',
+  \   },
+  \   'javascript' : {
+  \     'snippets' : {
+  \       'jq' : "$(function() {\n  ${cursor}${child}\n});",
+  \       'jq:each' : "$.each(arr, function(index, item)\n  ${child}\n});",
+  \       'fn' : "(function() {\n  ${cursor}\n})();",
+  \       'tm' : "setTimeout(function() {\n  ${cursor}\n}, 100);",
+  \       'if' : "if (${cursor}) {\n};",
+  \       'ife' : "if (${cursor}) {\n} else if (${cursor}) {\n} else {\n};",
+  \     },
+  \   },
+  \ }
 " }}}
 " }}}
 
