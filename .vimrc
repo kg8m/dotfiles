@@ -57,6 +57,7 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
+NeoBundle 'kg8m/open-browser.vim'
 NeoBundle 'tyru/operator-camelize.vim'
 "NeoBundle 'vim-scripts/QuickBuf'
 "NeoBundle 'kien/rainbow_parentheses.vim'
@@ -565,6 +566,17 @@ endif
 
 " niji "{{{
 "let g:niji_matching_filetypes = ['javascript', 'ruby', 'vim']
+" }}}
+
+" open-browser "{{{
+let g:openbrowser_browser_commands = [
+  \   {
+  \     "name": "ssh",
+  \     "args": "ssh main 'open {uri}'",
+  \   }
+  \ ]
+nmap ,g <Plug>(openbrowser-open)
+vmap ,g <Plug>(openbrowser-open)
 " }}}
 
 " operator-camelize.vim "{{{
