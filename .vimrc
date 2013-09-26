@@ -101,6 +101,7 @@ NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
 NeoBundle 'kg8m/vim-rubytest'
 NeoBundle 'thinca/vim-singleton'
 NeoBundle 'honza/vim-snippets'
+NeoBundle 'nishigori/vim-sunday'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'deris/vim-textobj-enclosedsyntax', { 'depends' : 'kana/vim-textobj-user' }
