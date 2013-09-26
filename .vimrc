@@ -46,7 +46,7 @@ NeoBundle 'vim-scripts/AutoClose'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundleLazy 'lilydjwg/colorizer', {
             \   'autoload': {
-            \     'filetypes': ['eruby', 'haml', 'html', 'css', 'javascript'],
+            \     'filetypes': ['eruby', 'haml', 'html', 'css', 'javascript', 'diff'],
             \   },
             \ },
 NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
