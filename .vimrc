@@ -51,7 +51,7 @@ NeoBundleLazy 'lilydjwg/colorizer', {
             \ },
 NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
-NeoBundle 'sjl/gundo.vim'
+"NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev' : '4f63ea4f78' }
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
@@ -117,6 +117,9 @@ NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'benmills/vimux', { 'rev' : '8e091d6' }
 NeoBundle 'vim-scripts/YankRing.vim'
+
+" plugins from bitbucket
+NeoBundle 'https://bitbucket.org/heavenshell/gundo.vim'
 
 " plugins from vim.org
 NeoBundle 'EnhCommentify.vim'
@@ -491,6 +494,9 @@ set foldtext=FoldCCtext()
 " }}}
 
 " gundo "{{{
+" http://d.hatena.ne.jp/heavenshell/20120218/1329532535
+" r => show diff preview
+let g:gundo_auto_preview = 0
 nnoremap <F5> :GundoToggle<CR>
 " }}}
 
