@@ -6,7 +6,7 @@ function execute_with_echo {
 }
 
 function sdiff {
-  execute_with_echo "svn diff --diff-cmd /usr/bin/diff -x '-U 10' | view -c 'set filetype=diff' -";
+  execute_with_echo "svn diff --diff-cmd /usr/bin/diff -x '-U 10 $1' | view -c 'set filetype=diff' -";
 }
 
 function slog {
