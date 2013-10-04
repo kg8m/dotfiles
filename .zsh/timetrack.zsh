@@ -5,7 +5,18 @@ autoload -U add-zsh-hook 2>/dev/null || return
 __timetrack_threshold=10  # seconds
 read -r -d '' __timetrack_target_commands <<EOF
 ruby
+ruby_multitest
 rake
+rake_units
+rake_functionals
+rake_integration
+frake_units
+frake_functionals
+frake_integration
+rake_models
+rake_controllers
+rake_helpers
+migrate
 make
 EOF
 
