@@ -23,20 +23,9 @@ function __my_preexec_end_timetrack() {
   local exec_time
   local command=$__timetrack_command
   local prog=$(echo $command|awk '{print $1}')
-  local notify_method
   local message
 
   export __timetrack_end=`date +%s`
-
-  if test -n "${REMOTEHOST}${SSH_CONNECTION}"; then
-    notify_method="remotehost"
-  elif which growlnotify >/dev/null 2>&1; then
-    notify_method="growlnotify"
-  elif which notify-send >/dev/null 2>&1; then
-    notify_method="notify-send"
-  else
-    return
-  fi
 
   if [ -z "$__timetrack_start" ] || [ -z "$__timetrack_threshold" ]; then
     return
