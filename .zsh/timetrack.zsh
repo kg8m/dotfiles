@@ -43,23 +43,20 @@ function __my_preexec_end_timetrack() {
   fi
 
   for target_command in $(echo $__timetrack_target_commands); do
-    [ "$prog" = "$target_command" ]
+    if [ "$prog" = "$target_command" ]; then
 
-    exec_time=$((__timetrack_end-__timetrack_start))
-    if [ -z "$command" ]; then
-      command="<UNKNOWN>"
+      exec_time=$((__timetrack_end-__timetrack_start))
+      message="[$USER@$HOST] Command finished!\nTime: $exec_time seconds\nCOMMAND: $command"
+
+      if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
+        ssh main "echo '$message' | growlnotify -n 'ZSH timetracker' --appIcon iTerm -s"
+      fi
+
+      unset __timetrack_start
+      unset __timetrack_command
+
+      return
     fi
-
-    message="[$USER@$HOST] Command finished!\nTime: $exec_time seconds\nCOMMAND: $command"
-
-    if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
-      ssh main "echo '$message' | growlnotify -n 'ZSH timetracker' --appIcon iTerm -s"
-    fi
-
-    unset __timetrack_start
-    unset __timetrack_command
-
-    return
   done
 }
 
