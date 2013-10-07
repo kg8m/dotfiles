@@ -17,7 +17,13 @@ rake_models
 rake_controllers
 rake_helpers
 migrate
+mysql
+mysqldump
+pv
 make
+yum
+cat
+zcat
 EOF
 
 export __timetrack_threshold
