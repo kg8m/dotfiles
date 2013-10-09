@@ -454,7 +454,7 @@ noremap ,a :Alignta<Space>
 vnoremap ,ua :<C-u>Unite alignta:arguments<CR>
 let g:unite_source_alignta_preset_arguments = [
   \ ["Align at '=>'", '=>'],
-  \ ["Align at /\S/", '<- -r \S\+/g'],
+  \ ["Align at /\S/", '-r \S\+/g'],
   \ ["Align at '='",  '=>\='],
   \ ["Align at ':hoge'",  '10 :'],
   \ ["Align at 'hoge:'",  '01 :'],
