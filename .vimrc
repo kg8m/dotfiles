@@ -478,6 +478,8 @@ let g:unite_source_alignta_preset_options = [
   \ ["Margin 1:0",        '10'],
   \ ["Margin 1:1",        '1'],
   \
+  \ ["Regexp", '-r {regexp}/{regexp_options}'],
+  \
   \ 'v/' . s:comment_leadings,
   \ 'g/' . s:comment_leadings,
 \]
