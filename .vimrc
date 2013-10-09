@@ -49,6 +49,7 @@ NeoBundleLazy 'lilydjwg/colorizer', {
             \     'filetypes': ['eruby', 'haml', 'html', 'css', 'javascript', 'diff'],
             \   },
             \ },
+NeoBundle 'rhysd/conflict-marker.vim'
 NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
 "NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
