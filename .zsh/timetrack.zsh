@@ -16,6 +16,7 @@ frake_integration
 rake_models
 rake_controllers
 rake_helpers
+prepare
 migrate
 mysql
 mysqldump
