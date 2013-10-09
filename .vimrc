@@ -85,6 +85,11 @@ NeoBundle 'tobiassvn/vim-gemfile'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
 "NeoBundle 'pangloss/vim-javascript'  trying othree/javascript-libraries-syntax
+NeoBundleLazy 'jelera/vim-javascript-syntax', {
+            \   'autoload': {
+            \     'filetypes': ['javascript'],
+            \   }
+            \ }
 NeoBundle 'plasticboy/vim-markdown'
 "NeoBundle 'amdt/vim-niji'
 NeoBundle 'kana/vim-operator-replace'
@@ -264,8 +269,9 @@ if has('vim_starting')
   set foldcolumn=3
   set fillchars=vert:\|
 
-  autocmd FileType ruby :set foldmethod=syntax
-  autocmd FileType yaml :set foldmethod=indent
+  autocmd FileType ruby set foldmethod=syntax
+  autocmd FileType yaml set foldmethod=indent
+  autocmd FileType javascript call JavaScriptFold()
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
