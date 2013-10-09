@@ -82,7 +82,7 @@ NeoBundle 'thinca/vim-ft-help_fold'
 NeoBundle 'thinca/vim-ft-markdown_fold'
 NeoBundle 'thinca/vim-ft-svn_diff'
 NeoBundle 'thinca/vim-ft-vim_fold'
-NeoBundle 'tobiassvn/vim-gemfile'
+NeoBundle 'muz/vim-gemfile'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
 "NeoBundle 'pangloss/vim-javascript'  trying othree/javascript-libraries-syntax
