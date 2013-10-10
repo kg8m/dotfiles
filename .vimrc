@@ -73,7 +73,7 @@ NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'pasela/unite-webcolorname'
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'osyo-manga/vim-anzu'
-NeoBundle 'jgdavey/vim-blockle'
+NeoBundle 'kg8m/vim-blockle'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 "NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
@@ -497,12 +497,8 @@ nmap # <Plug>(anzu-sharp-with-echo)
 " }}}
 
 " blockle "{{{
-function! FormatAfterBlockToggle()
-  let l:pos = getpos(".")
-  silent! s/ {\( \(|\)\)\?/{\2/
-  :call setpos(".", pos)
-endfunction
-nmap ,b <Plug>BlockToggle :call FormatAfterBlockToggle()<Cr>
+let g:blockle_mapping = ",b"
+let g:blockle_erase_spaces_around_starting_brace = 1
 " }}}
 
 " EnhCommentify "{{{
