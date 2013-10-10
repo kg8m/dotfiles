@@ -497,7 +497,12 @@ nmap # <Plug>(anzu-sharp-with-echo)
 " }}}
 
 " blockle "{{{
-let g:blockle_mapping = ',b'
+function! FormatAfterBlockToggle()
+  let l:pos = getpos(".")
+  silent! s/ {\( \(|\)\)\?/{\2/
+  :call setpos(".", pos)
+endfunction
+nmap ,b <Plug>BlockToggle :call FormatAfterBlockToggle()<Cr>
 " }}}
 
 " EnhCommentify "{{{
