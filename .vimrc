@@ -519,18 +519,20 @@ nnoremap <F5> :GundoToggle<CR>
 " }}}
 
 " lightline "{{{
+let s:lightline_elements = {
+\ 'left': [
+\   [ 'mode', 'paste' ],
+\   [ 'bufnum', 'readonly', 'absolutepath', 'modified' ],
+\   [ 'filetype', 'fileencoding', 'fileformat' ],
+\   [ 'percent' ],
+\   [ 'lineinfo' ],
+\ ],
+\ 'right': [
+\ ],
+\}
 let g:lightline = {
-    \ 'active': {
-    \   'left': [
-    \     [ 'mode', 'paste' ],
-    \     [ 'bufnum', 'readonly', 'absolutepath', 'modified' ],
-    \     [ 'filetype', 'fileencoding', 'fileformat' ],
-    \     [ 'percent' ],
-    \     [ 'lineinfo' ],
-    \   ],
-    \   'right': [
-    \   ],
-    \ },
+    \ 'active': s:lightline_elements,
+    \ 'inactive': s:lightline_elements,
     \ 'component': {
     \   'bufnum': '#%n'
     \ },
