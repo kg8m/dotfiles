@@ -52,7 +52,7 @@ function __my_preexec_end_timetrack() {
     if [ "$prog" = "$target_command" ]; then
 
       exec_time=$((__timetrack_end-__timetrack_start))
-      message="[$USER@$HOST] Command finished!\nTime: $exec_time seconds\nCOMMAND: $command"
+      message="[$USER@$HOST] Command finished!\nTime: $exec_time seconds\nCommand: $command"
 
       if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
         ssh main "echo '$message' | growlnotify -n 'ZSH timetracker' --appIcon iTerm -s"
