@@ -6,7 +6,7 @@ function execute_with_echo {
 }
 
 function sdiff {
-  execute_with_echo "svn diff --diff-cmd /usr/bin/diff -x '-U 10' V";
+  execute_with_echo "svn diff --diff-cmd /usr/bin/diff -x '-U 10 $1' | view -c 'set filetype=diff' -";
 }
 
 function slog {
@@ -95,7 +95,6 @@ function mysql_current {
   execute_with_echo "mysql -u root ${dbname}";
 }
 
-
 function tmux_setup_default {
   tmux new-session -d -s default
   tmux new-window -t default:2
@@ -131,3 +130,9 @@ function extract() {
   esac
 }
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
+
+function color_pallet() {
+  execute_with_echo 'for c in {000..255}; do echo -n "\e[38;05;${c};48;05;000m $c" ; [ $(($c%16)) -eq 15 ] && echo; done; echo "\e[38;05;255;48;05;000m"'
+  execute_with_echo 'for c in {000..255}; do echo -n "\e[38;05;255;48;05;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo; done; echo "\e[38;05;255;48;05;000m"'
+  execute_with_echo 'for c in {000..255}; do echo -n "\e[38;05;000;48;05;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo; done; echo "\e[38;05;255;48;05;000m"'
+}

@@ -46,12 +46,12 @@ NeoBundle 'vim-scripts/AutoClose'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundleLazy 'lilydjwg/colorizer', {
             \   'autoload': {
-            \     'filetypes': ['eruby', 'haml', 'html', 'css', 'javascript'],
+            \     'filetypes': ['eruby', 'haml', 'html', 'css', 'javascript', 'diff'],
             \   },
             \ },
 NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
-NeoBundle 'sjl/gundo.vim'
+"NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev' : '4f63ea4f78' }
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
@@ -102,6 +102,7 @@ NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
 NeoBundle 'kg8m/vim-rubytest'
 NeoBundle 'thinca/vim-singleton'
 NeoBundle 'honza/vim-snippets'
+NeoBundle 'nishigori/vim-sunday'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'deris/vim-textobj-enclosedsyntax', { 'depends' : 'kana/vim-textobj-user' }
@@ -117,6 +118,9 @@ NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'benmills/vimux', { 'rev' : '8e091d6' }
 NeoBundle 'vim-scripts/YankRing.vim'
+
+" plugins from bitbucket
+NeoBundle 'https://bitbucket.org/heavenshell/gundo.vim'
 
 " plugins from vim.org
 NeoBundle 'EnhCommentify.vim'
@@ -245,6 +249,7 @@ set statusline=[#%n]\ %<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ 
 " spaces, indents "{{{
 set tabstop=2
 set shiftwidth=2
+set formatoptions=q
 set textwidth=0
 set expandtab
 set autoindent
@@ -494,6 +499,9 @@ set foldtext=FoldCCtext()
 " }}}
 
 " gundo "{{{
+" http://d.hatena.ne.jp/heavenshell/20120218/1329532535
+" r => show diff preview
+let g:gundo_auto_preview = 0
 nnoremap <F5> :GundoToggle<CR>
 " }}}
 
