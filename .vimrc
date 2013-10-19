@@ -255,12 +255,15 @@ set statusline=[#%n]\ %<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ 
 " spaces, indents "{{{
 set tabstop=2
 set shiftwidth=2
-set formatoptions=q
 set textwidth=0
 set expandtab
 set autoindent
 set smartindent
 set backspace=indent,eol,start
+
+" formatoptions
+autocmd FileType * setlocal fo+=q fo+=2 fo+=l fo+=1 fo+=j
+autocmd FileType * setlocal fo-=t fo-=c fo-=r fo-=o fo-=a fo-=b
 
 " folding
 if has('vim_starting')
