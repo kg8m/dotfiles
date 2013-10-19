@@ -279,7 +279,7 @@ if has('vim_starting')
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-  autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+  autocmd BufWritePost,FileWritePost,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 endif
 " }}}
 
@@ -457,7 +457,7 @@ noremap ,a :Alignta<Space>
 vnoremap ,ua :<C-u>Unite alignta:arguments<CR>
 let g:unite_source_alignta_preset_arguments = [
   \ ["Align at '=>'", '=>'],
-  \ ["Align at /\S/", '<- -r \S\+/g'],
+  \ ["Align at /\S/", '-r \S\+/g'],
   \ ["Align at '='",  '=>\='],
   \ ["Align at ':hoge'",  '10 :'],
   \ ["Align at 'hoge:'",  '01 :'],
@@ -480,6 +480,8 @@ let g:unite_source_alignta_preset_options = [
   \ ["Margin 0:1",        '01'],
   \ ["Margin 1:0",        '10'],
   \ ["Margin 1:1",        '1'],
+  \
+  \ ["Regexp", '-r {regexp}/{regexp_options}'],
   \
   \ 'v/' . s:comment_leadings,
   \ 'g/' . s:comment_leadings,
