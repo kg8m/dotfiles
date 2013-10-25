@@ -258,7 +258,7 @@ set smartindent
 set backspace=indent,eol,start
 
 " formatoptions
-autocmd FileType * setlocal fo+=q fo+=2 fo+=l fo+=1 fo+=j
+autocmd FileType * setlocal fo+=q fo+=2 fo+=l
 autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
 autocmd FileType text,mkd,moin setlocal fo-=r fo-=o
 
