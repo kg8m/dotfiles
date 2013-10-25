@@ -44,11 +44,7 @@ NeoBundle 'taichouchou2/alpaca_complete', {
         \ },
 NeoBundle 'vim-scripts/AutoClose'
 NeoBundle 'rhysd/clever-f.vim'
-NeoBundleLazy 'lilydjwg/colorizer', {
-            \   'autoload': {
-            \     'filetypes': ['eruby', 'haml', 'html', 'css', 'javascript', 'diff'],
-            \   },
-            \ },
+NeoBundle 'lilydjwg/colorizer'
 NeoBundle 'rhysd/conflict-marker.vim'
 NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
@@ -500,6 +496,12 @@ nmap # <Plug>(anzu-sharp-with-echo)
 " blockle "{{{
 let g:blockle_mapping = ",b"
 let g:blockle_erase_spaces_around_starting_brace = 1
+" }}}
+
+" colorizer "{{{
+let g:colorizer_startup = 0
+let s:colorizer_target_filetypes = ['eruby', 'haml', 'html', 'css', 'scss', 'javascript', 'diff']
+autocmd WinEnter,BufEnter,BufRead,BufNewFile * if index(s:colorizer_target_filetypes, &ft) >= 0 | ColorHighlight | else | ColorClear | endif
 " }}}
 
 " EnhCommentify "{{{
