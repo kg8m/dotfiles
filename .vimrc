@@ -106,7 +106,6 @@ NeoBundle 'thinca/vim-singleton'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'nishigori/vim-sunday'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'deris/vim-textobj-enclosedsyntax', { 'depends' : 'kana/vim-textobj-user' }
 NeoBundle 'kana/vim-textobj-jabraces'
 NeoBundle 'rhysd/vim-textobj-ruby'
@@ -242,12 +241,6 @@ au BufNewFile,BufRead * match Underlined /　/
 " }}}
 
 " ----------------------------------------------
-" status line "{{{
-set laststatus=2
-set statusline=[#%n]\ %<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).'\|'.&ff.']'}\ \ %l/%L\ (%P)%m%=%{strftime(\"%Y/%m/%d\ %H:%M\")}
-" }}}
-
-" ----------------------------------------------
 " spaces, indents "{{{
 set tabstop=2
 set shiftwidth=2
@@ -257,13 +250,13 @@ set autoindent
 set smartindent
 set backspace=indent,eol,start
 
-" formatoptions
-autocmd FileType * setlocal fo+=q fo+=2 fo+=l
-autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
-autocmd FileType text,mkd,moin setlocal fo-=r fo-=o
-
-" folding
 if has('vim_starting')
+  " formatoptions
+  autocmd FileType * setlocal fo+=q fo+=2 fo+=l
+  autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
+  autocmd FileType text,mkd,moin setlocal fo-=r fo-=o
+
+  " folding
   set foldmethod=marker  " zo: open, zc: close, zR: open all, zM: close all
   set foldopen=hor
   set foldminlines=3
@@ -362,7 +355,7 @@ nnoremap ,r :source ~/.vimrc<Cr>
 nnoremap ,<S-r> :set noreadonly
 
 " <Esc><Esc> => nohilight
-nnoremap <Esc><Esc> :noh<Cr>
+nnoremap <Esc><Esc> :nohlsearch<Cr>
 
 " ,v => vsplit
 noremap ,v :vsplit<Cr>
@@ -396,7 +389,8 @@ nnoremap ,p "*p
 
 " continuous paste
 " http://qiita.com/items/bd97a9b963dae40b63f5
-vnoremap <silent> <C-p> "0p<CR>"
+" vnoremap <silent> <C-p> "0p<CR>"
+" use operator-replace: "r" mapping
 
 " ,w => erase spaces of EOL for selected
 vnoremap ,w :s/\s\+$//ge<Cr>
@@ -410,46 +404,7 @@ inoremap <C-w> <Esc><C-w>
 " }}}
 
 " ----------------------------------------------
-" change status line color when insert mode "{{{
-" http://sites.google.com/site/fudist/Home/vim-nihongo-ban/vim-color#color-insertmode
-let g:hi_insert = 'highlight StatusLine ctermfg=black ctermbg=yellow cterm=none guifg=black guibg=darkyellow gui=bold'
-
-if has('syntax')
-  augroup InsertHook
-    autocmd!
-    autocmd InsertEnter * call s:StatusLine('Enter')
-    autocmd InsertLeave * call s:StatusLine('Leave')
-  augroup END
-endif
-
-let s:slhlcmd = ''
-function! s:StatusLine(mode)
-  if a:mode == 'Enter'
-    silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
-    silent exec g:hi_insert
-  else
-    highlight clear StatusLine
-    silent exec s:slhlcmd
-  endif
-endfunction
-
-function! s:GetHighlight(hi)
-  redir => hl
-  exec 'highlight '.a:hi
-  redir END
-  let hl = substitute(hl, '[\r\n]', '', 'g')
-  let hl = substitute(hl, 'xxx', '', '')
-  return hl
-endfunction
-" }}}
-
-" ----------------------------------------------
 " plugins "{{{
-" align.vim (replaced by alignta) "{{{
-"let g:Align_xstrlen = 3
-noremap ,a :Alignta<Space>
-" }}}
-
 " alignta "{{{
 vnoremap ,ua :<C-u>Unite alignta:arguments<CR>
 let g:unite_source_alignta_preset_arguments = [
@@ -543,14 +498,7 @@ let g:lightline = {
 \ }
 " }}}
 
-" mru.vim (replaced  by unite.vim) "{{{
-" noremap ,m :MRU<Cr>
-" let MRU_Window_Height = 20
-" let MRU_Max_Entries   = 500
-nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
-" }}}
-
-" neocomplcache.vim "{{{
+" neocomplcache "{{{
 inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
@@ -595,10 +543,6 @@ if has('conceal')
 endif
 " }}}
 
-" niji "{{{
-"let g:niji_matching_filetypes = ['javascript', 'ruby', 'vim']
-" }}}
-
 " open-browser "{{{
 let g:openbrowser_browser_commands = [
   \   {
@@ -610,23 +554,14 @@ nmap ,g <Plug>(openbrowser-open)
 vmap ,g <Plug>(openbrowser-open)
 " }}}
 
-" operator-camelize.vim "{{{
+" operator-camelize "{{{
 map ,C <Plug>(operator-camelize)
 map ,c <Plug>(operator-decamelize)
 " }}}
 
-" QuickBuf (replaced by unite) "{{{
-nnoremap <F4> :<C-u>Unite buffer<CR>
-" }}}
-
-" rainbow_parentheses "{{{
-"let g:rbpt_max = 16
-"let g:rbpt_loadcmd_toggle = 0
-
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
+" operator-replace "{{{
+nmap r <Plug>(operator-replace)
+vmap r <Plug>(operator-replace)
 " }}}
 
 " rails "{{{
@@ -665,7 +600,7 @@ let g:rails_projections = {
   \ }
 " }}}
 
-" rubytest.vim "{{{
+" rubytest "{{{
 let g:no_rubytest_mappings = 1
 if !s:in_tmux
   map <leader>T <Plug>RubyFileRun
@@ -680,10 +615,6 @@ nmap ,,a <plug>SequenceN_Increment
 nmap ,,x <plug>SequenceN_Decrement
 " }}}
 
-" table-mode "{{{
-let g:table_mode_map_prefix = ',t'
-" }}}
-
 " turbux "{{{
 let g:no_turbux_mappings = 1
 if s:in_tmux
@@ -692,10 +623,11 @@ if s:in_tmux
 endif
 " }}}
 
-" unite.vim "{{{
+" unite "{{{
 let g:unite_winheight = 70
 let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
+let g:unite_source_history_yank_limit = 300
 let g:unite_source_directory_mru_limit = 1000
 let g:unite_source_file_mru_limit = 1000
 let g:unite_source_grep_command = 'ack'
@@ -721,6 +653,10 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
   " unite plugins
   " nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
   nnoremap <silent> ,uv :<C-u>UniteVersions status:!<CR>
+
+  " other unite keymappings: they used to be for plugins replaced by unite
+  nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
+  nnoremap <F4> :<C-u>Unite buffer<CR>
 " }}}
 
 " vimfiler "{{{
