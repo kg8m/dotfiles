@@ -25,6 +25,12 @@ make
 yum
 cat
 zcat
+scp
+rsync
+svn
+git
+s
+g
 EOF
 
 export __timetrack_threshold
