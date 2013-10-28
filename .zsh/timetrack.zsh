@@ -27,6 +27,10 @@ cat
 zcat
 scp
 rsync
+EOF
+
+# not used. it is just my note.
+read -r -d '' __timetrack_ignored_commands <<EOF
 svn
 git
 s
