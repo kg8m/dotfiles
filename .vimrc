@@ -477,6 +477,7 @@ nnoremap <F5> :GundoToggle<CR>
 " }}}
 
 " lightline "{{{
+set laststatus=2
 let s:lightline_elements = {
 \ 'left': [
 \   [ 'mode', 'paste' ],
