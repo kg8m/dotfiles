@@ -483,8 +483,7 @@ let s:lightline_elements = {
 \   [ 'mode', 'paste' ],
 \   [ 'bufnum', 'readonly', 'absolutepath', 'modified' ],
 \   [ 'filetype', 'fileencoding', 'fileformat' ],
-\   [ 'percent' ],
-\   [ 'lineinfo' ],
+\   [ 'lineinfo_with_percent' ],
 \ ],
 \ 'right': [
 \ ],
@@ -493,7 +492,8 @@ let g:lightline = {
     \ 'active': s:lightline_elements,
     \ 'inactive': s:lightline_elements,
     \ 'component': {
-    \   'bufnum': '#%n'
+    \   'bufnum': '#%n',
+    \   'lineinfo_with_percent': '%3l/%L(%3p%%) : %-2v',
     \ },
     \ 'colorscheme': 'wombat',
 \ }
