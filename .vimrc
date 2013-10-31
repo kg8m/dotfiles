@@ -663,7 +663,18 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
       \ }
 
     function! l:action.func(candidates)
-      call unite#take_action("open", a:candidates)
+      for l:candidate in a:candidates
+        let l:candidate.action__path = candidate.source__args.path . '/' . l:candidate.action__status.path
+        let l:candidate.action__directory = unite#util#path2directory(l:candidate.action__path)
+
+        if l:candidate.action__path == l:candidate.action__directory
+          let l:candidate.kind = 'directory'
+          call unite#take_action("vimfiler", l:candidate)
+        else
+          let l:candidate.kind = 'file'
+          call unite#take_action("open", l:candidate)
+        endif
+      endfor
     endfunction
 
     call unite#custom#action("versions/git/status,versions/svn/status", "open", l:action)
