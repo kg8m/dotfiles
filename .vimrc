@@ -656,6 +656,20 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
   " unite plugins
   " nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
   nnoremap <silent> ,uv :<C-u>UniteVersions status:!<CR>
+  function! AddActionsToVersions()
+    let l:action = {
+      \   "description" : "open files",
+      \   "is_selectable" : 1,
+      \ }
+
+    function! l:action.func(candidates)
+      call unite#take_action("open", a:candidates)
+    endfunction
+
+    call unite#custom#action("versions/git/status,versions/svn/status", "open", l:action)
+  endfunction
+  call AddActionsToVersions()
+  call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
 
   " other unite keymappings: they used to be for plugins replaced by unite
   nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
