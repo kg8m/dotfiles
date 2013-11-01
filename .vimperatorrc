@@ -94,8 +94,6 @@ noremap ,p :emenu ファイル.印刷プレビュー<Cr>
 " ,o でURLを一気に開く
 nnoremap ,o :emenu ファイル.Open Multiple Locations...<Cr>
 
-" :emenu ツール.Evernote に追加
-
 
 " ------------------------------------------------------------
 " プラグイン関連
