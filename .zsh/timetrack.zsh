@@ -1,5 +1,5 @@
 # http://qiita.com/hayamiz/items/d64730b61b7918fbb970
-
+return
 autoload -U add-zsh-hook 2>/dev/null || return
 
 __timetrack_threshold=10  # seconds
