@@ -10,6 +10,7 @@ rake
 rake_units
 rake_functionals
 rake_integration
+frake
 frake_units
 frake_functionals
 frake_integration

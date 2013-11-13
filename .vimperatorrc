@@ -69,6 +69,10 @@ mappings.addUserMap(
 );
 EOM
 
+" タブ移動（タブからタブへの移動ではなく、タブの位置変更）
+noremap <C-j> :tabmove +1<Cr>
+noremap <C-k> :tabmove -1<Cr>
+
 " OSのキーバインドを一部再現
 noremap <C-a> i<C-a>
 inoremap <C-a> <Ins><C-a><Ins>
@@ -93,8 +97,6 @@ noremap ,p :emenu ファイル.印刷プレビュー<Cr>
 
 " ,o でURLを一気に開く
 nnoremap ,o :emenu ファイル.Open Multiple Locations...<Cr>
-
-" :emenu ツール.Evernote に追加
 
 
 " ------------------------------------------------------------

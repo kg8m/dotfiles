@@ -408,6 +408,7 @@ inoremap <C-w> <Esc><C-w>
 " ----------------------------------------------
 " plugins "{{{
 " alignta "{{{
+noremap ,a :Alignta<Space>
 vnoremap ,ua :<C-u>Unite alignta:arguments<CR>
 let g:unite_source_alignta_preset_arguments = [
   \ ["Align at '=>'", '=>'],
@@ -420,7 +421,7 @@ let g:unite_source_alignta_preset_arguments = [
   \ ["Align at ']'",  '0 ]'],
   \ ["Align at '}'",  '}'],
 \]
-let s:comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
+let s:alignta_comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
 let g:unite_source_alignta_preset_options = [
   \ ["Justify Left",      '<<'],
   \ ["Justify Center",    '||'],
@@ -437,10 +438,10 @@ let g:unite_source_alignta_preset_options = [
   \
   \ ["Regexp", '-r {regexp}/{regexp_options}'],
   \
-  \ 'v/' . s:comment_leadings,
-  \ 'g/' . s:comment_leadings,
+  \ 'v/' . s:alignta_comment_leadings,
+  \ 'g/' . s:alignta_comment_leadings,
 \]
-unlet s:comment_leadings
+unlet s:alignta_comment_leadings
 " }}}
 
 " anzu "{{{
