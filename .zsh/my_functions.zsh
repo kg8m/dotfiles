@@ -6,6 +6,14 @@ function execute_with_echo {
 }
 
 function sdiff {
+  _sdiff
+}
+
+function sdiff_minimal {
+  _sdiff "-b -B"
+}
+
+function _sdiff {
   execute_with_echo "svn diff --diff-cmd /usr/bin/diff -x '-U 10 $1' | view -c 'set filetype=diff' -";
 }
 
