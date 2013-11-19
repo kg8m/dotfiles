@@ -353,28 +353,11 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 " ,r => reload .vimrc
 nnoremap ,r :source ~/.vimrc<Cr>
 
-" ,<S-r> => set noreadonly
-nnoremap ,<S-r> :set noreadonly
-
 " <Esc><Esc> => nohilight
 nnoremap <Esc><Esc> :nohlsearch<Cr>
 
 " ,v => vsplit
 noremap ,v :vsplit<Cr>
-
-" ,cu => UTF-8 and LF (UNIX)
-nnoremap ,cu :set fileencoding=utf-8 fileformat=unix
-
-" ,c<S-u> => reload with utf-8
-nnoremap ,c<S-u> :e ++enc=utf-8
-
-" hankaku <=> zenkaku
-" http://nanasi.jp/articles/vim/hz_ja_vim.html
-vnoremap ,ch :HzjaConvert han_ascii
-vnoremap ,cz :HzjaConvert zen_kana
-
-" ,h => TOhtml
-nnoremap ,h :colorscheme h2u_white<Cr>:TOhtml
 
 " svn diff
 nmap ,d :call SVNDiff()<Cr>
@@ -388,11 +371,6 @@ endfunction
 " copy/paste by clipboard
 vnoremap ,y "*y
 nnoremap ,p "*p
-
-" continuous paste
-" http://qiita.com/items/bd97a9b963dae40b63f5
-" vnoremap <silent> <C-p> "0p<CR>"
-" use operator-replace: "r" mapping
 
 " ,w => erase spaces of EOL for selected
 vnoremap ,w :s/\s\+$//ge<Cr>
@@ -653,6 +631,58 @@ nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
 nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+
+" unite-shortcut "{{{
+  " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
+  " http://d.hatena.ne.jp/tyru/20120110/prompt
+  map <silent> ,us :<C-u>Unite menu:shortcuts<CR>
+  let g:unite_source_menu_menus = {}
+  let g:unite_source_menu_menus.shortcuts = {
+    \   "description" : "shortcuts"
+    \ }
+
+vnoremap ,ch :HzjaConvert han_ascii
+vnoremap ,cz :HzjaConvert zen_kana
+  " http://nanasi.jp/articles/vim/hz_ja_vim.html
+  let g:unite_source_menu_menus.shortcuts.candidates = [
+    \   ["[String Utility] ASCII to Hankaku", "'<,'>HzjaConvert han_ascii"],
+    \   ["[String Utility] Kana to Zenkaku",  "'<,'>HzjaConvert zen_kana"],
+    \
+    \   ["[Encoding for Load] latin1",      "edit ++enc=latin1"],
+    \   ["[Encoding for Load] cp932",       "edit ++enc=cp932"],
+    \   ["[Encoding for Load] shift-jis",   "edit ++enc=shift-jis"],
+    \   ["[Encoding for Load] iso-2022-jp", "edit ++enc=iso-2022-jp"],
+    \   ["[Encoding for Load] euc-jp",      "edit ++enc=euc-jp"],
+    \   ["[Encoding for Load] utf-8",       "edit ++enc=utf-8"],
+    \
+    \   ["[Set encoding] latin1",      "set fenc=latin1"],
+    \   ["[Set encoding] cp932",       "set fenc=cp932"],
+    \   ["[Set encoding] shift-jis",   "set fenc=shift-jis"],
+    \   ["[Set encoding] iso-2022-jp", "set fenc=iso-2022-jp"],
+    \   ["[Set encoding] euc-jp",      "set fenc=euc-jp"],
+    \   ["[Set encoding] utf-8",       "set fenc=utf-8"],
+    \
+    \   ["[Set File Format] dos",  "set ff=dos"],
+    \   ["[Set File Format] unix", "set ff=unix"],
+    \   ["[Set File Format] mac",  "set ff=mac"],
+    \
+    \   ["[Manipulate File] set noreadonly",  "set noreadonly"],
+    \   ["[Manipulate File] to HTML",         "colorscheme h2u_white | TOhtml"],
+    \
+    \   ["[System] Remove",     "!rm %"],
+    \   ["[System] SVN Remove", "!svn rm %"],
+    \ ]
+
+  function! g:unite_source_menu_menus.shortcuts.map(key, value)
+    let [word, value] = a:value
+
+    return {
+         \   'word' : word,
+         \   'kind' : 'command',
+         \   'action__command' : value,
+         \ }
+  endfunction
+" }}}
 
   " unite plugins
   " nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
