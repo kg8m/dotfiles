@@ -49,6 +49,7 @@ NeoBundle 'rhysd/conflict-marker.vim'
 NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
 "NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
+NeoBundle 'sk1418/HowMuch'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev' : '4f63ea4f78' }
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
@@ -455,6 +456,11 @@ set foldtext=FoldCCtext()
 " r => show diff preview
 let g:gundo_auto_preview = 0
 nnoremap <F5> :GundoToggle<CR>
+" }}}
+
+" HowMuch "{{{
+" replace expr with result
+vmap ,? <Plug>AutoCalcReplace
 " }}}
 
 " lightline "{{{
