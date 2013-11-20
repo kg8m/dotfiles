@@ -655,12 +655,12 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
     \   ["[String Utility] All to Zenkaku          ", "'<,'>Zenkaku"],
     \   ["[String Utility] Kana to Zenkaku         ", "'<,'>HzjaConvert zen_kana"],
     \
-    \   ["[Reload with Encoding as] latin1         ", "edit ++enc=latin1"],
-    \   ["[Reload with Encoding as] cp932          ", "edit ++enc=cp932"],
-    \   ["[Reload with Encoding as] shift-jis      ", "edit ++enc=shift-jis"],
-    \   ["[Reload with Encoding as] iso-2022-jp    ", "edit ++enc=iso-2022-jp"],
-    \   ["[Reload with Encoding as] euc-jp         ", "edit ++enc=euc-jp"],
-    \   ["[Reload with Encoding as] utf-8          ", "edit ++enc=utf-8"],
+    \   ["[Reload with Encoding] latin1            ", "edit ++enc=latin1"],
+    \   ["[Reload with Encoding] cp932             ", "edit ++enc=cp932"],
+    \   ["[Reload with Encoding] shift-jis         ", "edit ++enc=shift-jis"],
+    \   ["[Reload with Encoding] iso-2022-jp       ", "edit ++enc=iso-2022-jp"],
+    \   ["[Reload with Encoding] euc-jp            ", "edit ++enc=euc-jp"],
+    \   ["[Reload with Encoding] utf-8             ", "edit ++enc=utf-8"],
     \
     \   ["[Set Encoding] latin1                    ", "set fenc=latin1"],
     \   ["[Set Encoding] cp932                     ", "set fenc=cp932"],
