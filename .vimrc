@@ -691,7 +691,7 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
   endfunction
 " }}}
 
-  " unite plugins
+" unite plugins "{{{
   " nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
   nnoremap <silent> ,uv :<C-u>UniteVersions status:!<CR>
   function! AddActionsToVersions()
@@ -723,6 +723,7 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
   " other unite keymappings: they used to be for plugins replaced by unite
   nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
   nnoremap <F4> :<C-u>Unite buffer<CR>
+" }}}
 " }}}
 
 " vimfiler "{{{
