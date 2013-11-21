@@ -12,9 +12,6 @@ set titlestring="Mozilla Firefox"
 " キャレットを太めに
 set! ui.caretWidth=7
 
-" ステータスラインのスタイル
-hi StatusLine color: #000;
-
 " ページのアクセスキーを無効化
 set! ui.key.generalAccessKey=0
 
@@ -199,8 +196,6 @@ javascript << EOM
   hints.addSimpleMap("<C-l>", function(){ this.relocation(); });
 })();
 EOM
-
-hi StatusLine color: #839496; font-weight: normal; font-size: 12pt;
 
 
 " ------------------------------------------------------------
