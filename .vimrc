@@ -647,8 +647,6 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
     \   "description" : "shortcuts"
     \ }
 
-vnoremap ,ch :HzjaConvert han_ascii
-vnoremap ,cz :HzjaConvert zen_kana
   " http://nanasi.jp/articles/vim/hz_ja_vim.html
   let g:unite_source_menu_menus.shortcuts.candidates = [
     \   ["[String Utility] ASCII to Hankaku", "'<,'>HzjaConvert han_ascii"],
