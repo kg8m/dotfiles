@@ -365,8 +365,7 @@ nmap ,d :call SVNDiff()<Cr>
 function! SVNDiff()
   edit diff
   silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
-  execute "normal :r!LANG=ja_JP.UTF8 svn diff\n"
-  goto 1
+  execute "normal :r!svn diff\n"
 endfunction
 
 " copy/paste by clipboard
