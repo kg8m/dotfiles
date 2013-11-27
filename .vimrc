@@ -649,35 +649,35 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
 
   " http://nanasi.jp/articles/vim/hz_ja_vim.html
   let g:unite_source_menu_menus.shortcuts.candidates = [
-    \   ["[String Utility] All to Hankaku", "'<,'>Hankaku"],
+    \   ["[String Utility] All to Hankaku          ", "'<,'>Hankaku"],
     \   ["[String Utility] Alphanumerics to Hankaku", "'<,'>HzjaConvert han_eisu"],
-    \   ["[String Utility] ASCII to Hankaku", "'<,'>HzjaConvert han_ascii"],
-    \   ["[String Utility] All to Zenkaku", "'<,'>Zenkaku"],
-    \   ["[String Utility] Kana to Zenkaku ", "'<,'>HzjaConvert zen_kana"],
+    \   ["[String Utility] ASCII to Hankaku        ", "'<,'>HzjaConvert han_ascii"],
+    \   ["[String Utility] All to Zenkaku          ", "'<,'>Zenkaku"],
+    \   ["[String Utility] Kana to Zenkaku         ", "'<,'>HzjaConvert zen_kana"],
     \
-    \   ["[Encoding for Load] latin1       ", "edit ++enc=latin1"],
-    \   ["[Encoding for Load] cp932        ", "edit ++enc=cp932"],
-    \   ["[Encoding for Load] shift-jis    ", "edit ++enc=shift-jis"],
-    \   ["[Encoding for Load] iso-2022-jp  ", "edit ++enc=iso-2022-jp"],
-    \   ["[Encoding for Load] euc-jp       ", "edit ++enc=euc-jp"],
-    \   ["[Encoding for Load] utf-8        ", "edit ++enc=utf-8"],
+    \   ["[Encoding for Load] latin1               ", "edit ++enc=latin1"],
+    \   ["[Encoding for Load] cp932                ", "edit ++enc=cp932"],
+    \   ["[Encoding for Load] shift-jis            ", "edit ++enc=shift-jis"],
+    \   ["[Encoding for Load] iso-2022-jp          ", "edit ++enc=iso-2022-jp"],
+    \   ["[Encoding for Load] euc-jp               ", "edit ++enc=euc-jp"],
+    \   ["[Encoding for Load] utf-8                ", "edit ++enc=utf-8"],
     \
-    \   ["[Set encoding] latin1            ", "set fenc=latin1"],
-    \   ["[Set encoding] cp932             ", "set fenc=cp932"],
-    \   ["[Set encoding] shift-jis         ", "set fenc=shift-jis"],
-    \   ["[Set encoding] iso-2022-jp       ", "set fenc=iso-2022-jp"],
-    \   ["[Set encoding] euc-jp            ", "set fenc=euc-jp"],
-    \   ["[Set encoding] utf-8             ", "set fenc=utf-8"],
+    \   ["[Set encoding] latin1                    ", "set fenc=latin1"],
+    \   ["[Set encoding] cp932                     ", "set fenc=cp932"],
+    \   ["[Set encoding] shift-jis                 ", "set fenc=shift-jis"],
+    \   ["[Set encoding] iso-2022-jp               ", "set fenc=iso-2022-jp"],
+    \   ["[Set encoding] euc-jp                    ", "set fenc=euc-jp"],
+    \   ["[Set encoding] utf-8                     ", "set fenc=utf-8"],
     \
-    \   ["[Set File Format] dos            ", "set ff=dos"],
-    \   ["[Set File Format] unix           ", "set ff=unix"],
-    \   ["[Set File Format] mac            ", "set ff=mac"],
+    \   ["[Set File Format] dos                    ", "set ff=dos"],
+    \   ["[Set File Format] unix                   ", "set ff=unix"],
+    \   ["[Set File Format] mac                    ", "set ff=mac"],
     \
-    \   ["[Manipulate File] set noreadonly ", "set noreadonly"],
-    \   ["[Manipulate File] to HTML        ", "colorscheme h2u_white | TOhtml"],
+    \   ["[Manipulate File] set noreadonly         ", "set noreadonly"],
+    \   ["[Manipulate File] to HTML                ", "colorscheme h2u_white | TOhtml"],
     \
-    \   ["[System] Remove                  ", "!rm %"],
-    \   ["[System] SVN Remove              ", "!svn rm %"],
+    \   ["[System] Remove                          ", "!rm %"],
+    \   ["[System] SVN Remove                      ", "!svn rm %"],
     \ ]
 
   function! g:unite_source_menu_menus.shortcuts.map(key, value)
