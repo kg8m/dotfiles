@@ -460,6 +460,7 @@ nnoremap <F5> :GundoToggle<CR>
 " HowMuch "{{{
 " replace expr with result
 vmap ,? <Plug>AutoCalcReplace
+let g:HowMuch_scale = 5
 " }}}
 
 " lightline "{{{
