@@ -649,7 +649,10 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
 
   " http://nanasi.jp/articles/vim/hz_ja_vim.html
   let g:unite_source_menu_menus.shortcuts.candidates = [
+    \   ["[String Utility] All to Hankaku", "'<,'>Hankaku"],
+    \   ["[String Utility] Alphanumerics to Hankaku", "'<,'>HzjaConvert han_eisu"],
     \   ["[String Utility] ASCII to Hankaku", "'<,'>HzjaConvert han_ascii"],
+    \   ["[String Utility] All to Zenkaku", "'<,'>Zenkaku"],
     \   ["[String Utility] Kana to Zenkaku ", "'<,'>HzjaConvert zen_kana"],
     \
     \   ["[Encoding for Load] latin1       ", "edit ++enc=latin1"],
