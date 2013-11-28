@@ -611,6 +611,17 @@ if s:in_tmux
 endif
 " }}}
 
+" Unicode-RST-Tables "{{{
+let g:no_rst_table_maps = 0
+if has("python3")
+  noremap <silent> ,,c :python3 CreateTable()<CR>
+  noremap <silent> ,,f :python3 FixTable()<CR>
+elseif has("python")
+  noremap <silent> ,,c :python  CreateTable()<CR>
+  noremap <silent> ,,f :python  FixTable()<CR>
+endif
+" }}}
+
 " unite "{{{
 let g:unite_winheight = 70
 let g:unite_cursor_line_highlight = 'CursorLine'
