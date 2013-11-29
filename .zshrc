@@ -113,8 +113,8 @@ zshaddhistory() {
 # prompt styles
 autoload colors
 colors
-PROMPT2="${fg[green]}%_> ${reset_color}"
-SPROMPT="${fg[yellow]}correct: %R -> %r [nyae]? ${reset_color}"
+PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
+SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 
 # https://github.com/yonchu/zsh-vcs-prompt
 source ~/.zsh/zsh-vcs-prompt/zshrc.sh
@@ -124,8 +124,8 @@ ZSH_VCS_PROMPT_ENABLE_CACHING='true'
 # prompt as ({current_time}) [{vi_mode}] {user_name}@{hostname} : {current_directory_path}\n% (# if root user)
 prompt_time=$'\e[48;05;024m'"(%D{%Y/%m/%d %H:%M:%S})"$'\e[48;05;000m'
 prompt_user=$'\e[38;05;009m'"%n@%m"
-prompt_current_dir=$'\e[38;05;030m'"%~${reset_color}"
-prompt_self="${reset_color}%(!.#.%#) ${reset_color}"
+prompt_current_dir=$'\e[38;05;030m'"%~"$'%{${reset_color}%}'
+prompt_self=$'%{${reset_color}%}'"%(!.#.%#) "
 
 set_prompt() {
   local prompt_mode="INSERT"
