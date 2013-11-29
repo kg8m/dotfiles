@@ -119,7 +119,7 @@ NeoBundle 'superbrothers/vim-vimperator'
 NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'benmills/vimux', { 'rev' : '8e091d6' }
-NeoBundle 'vim-scripts/YankRing.vim'
+NeoBundle 'LeafCage/yankround.vim'
 
 " plugins from bitbucket
 NeoBundle 'https://bitbucket.org/heavenshell/gundo.vim'
@@ -763,8 +763,11 @@ if s:in_tmux
 endif
 " }}}
 
-" yankring "{{{
-let g:yankring_max_history = 500
+" yankround "{{{
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
 " }}}
 
 " emmet (zencoding) "{{{
