@@ -116,6 +116,7 @@ colors
 PROMPT2="${fg[green]}%_> ${reset_color}"
 SPROMPT="${fg[yellow]}correct: %R -> %r [nyae]? ${reset_color}"
 
+# https://github.com/yonchu/zsh-vcs-prompt
 source ~/.zsh/zsh-vcs-prompt/zshrc.sh
 ZSH_VCS_PROMPT_ENABLE_CACHING='true'
 
