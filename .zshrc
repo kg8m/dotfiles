@@ -116,11 +116,14 @@ colors
 PROMPT2="${fg[green]}%_> ${reset_color}"
 SPROMPT="${fg[yellow]}correct: %R -> %r [nyae]? ${reset_color}"
 
+source ~/.zsh/zsh-vcs-prompt/zshrc.sh
+ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 # prompt as ({current_time}) [{vi_mode}] {user_name}@{hostname} : {current_directory_path}\n% (# if root user)
 prompt_time=$'\e[48;05;024m'"(%D{%Y/%m/%d %H:%M:%S})"$'\e[48;05;000m'
 prompt_user=$'\e[38;05;009m'"%n@%m"
-prompt_current_dir=$'\e[38;05;030m'"%~"
+prompt_current_dir=$'\e[38;05;030m'"%~${reset_color}"
 prompt_self="${reset_color}%(!.#.%#) ${reset_color}"
 
 set_prompt() {
@@ -132,7 +135,7 @@ set_prompt() {
     ;;
   esac
 
-  PROMPT="${prompt_time} "$'\e[38;05;245m'"[${prompt_mode}] ${prompt_user}"$'\e[38;05;245m'" : ${prompt_current_dir} "$'\n'"${prompt_self}"
+  PROMPT="${prompt_time} "$'\e[38;05;245m'"[${prompt_mode}] ${prompt_user}"$'\e[38;05;245m'" : ${prompt_current_dir} "$'$(vcs_super_info)\n'"${prompt_self}"
 }
 set_prompt
 
