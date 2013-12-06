@@ -389,15 +389,15 @@ inoremap <C-w> <Esc><C-w>
 noremap ,a :Alignta<Space>
 vnoremap ,ua :<C-u>Unite alignta:arguments<CR>
 let g:unite_source_alignta_preset_arguments = [
-  \ ["Align at '=>'", '=>'],
-  \ ["Align at /\S/", '-r \S\+/g'],
-  \ ["Align at '='",  '=>\='],
-  \ ["Align at ':hoge'",  '10 :'],
-  \ ["Align at 'hoge:'",  '01 :'],
-  \ ["Align at '|'",  '|'],
-  \ ["Align at ')'",  '0 )'],
-  \ ["Align at ']'",  '0 ]'],
-  \ ["Align at '}'",  '}'],
+  \ ["Align at '=>'     --  `=>`",        '=>'],
+  \ ["Align at /\S/     --  `-r \S\+/g`", '-r \S\+/g'],
+  \ ["Align at '='      --  `=>\=`",      '=>\='],
+  \ ["Align at ':hoge'  --  `10 :`",      '10 :'],
+  \ ["Align at 'hoge:'  --  `01 :`",      '01 :'],
+  \ ["Align at '|'      --  `|`",         '|'],
+  \ ["Align at ')'      --  `0 )`",       '0 )'],
+  \ ["Align at ']'      --  `0 ]`",       '0 ]'],
+  \ ["Align at '}'      --  `}`",         '}'],
 \]
 let s:alignta_comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
 let g:unite_source_alignta_preset_options = [
