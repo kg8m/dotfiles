@@ -803,7 +803,7 @@ if has('gui_running')
 
   " save window's size and position
   " http://vim-users.jp/2010/01/hack120/
-  let g:save_window_file = expand('~/.vimwinpos')
+  let s:save_window_file = expand('~/.vimwinpos')
   augroup SaveWindow
     autocmd!
     autocmd VimLeavePre * call s:save_window()
@@ -813,12 +813,12 @@ if has('gui_running')
         \ 'set lines=' . &lines,
         \ 'winpos ' . getwinposx() . ' ' . getwinposy(),
         \ ]
-      call writefile(options, g:save_window_file)
+      call writefile(options, s:save_window_file)
     endfunction
   augroup END
 
-  if filereadable(g:save_window_file)
-    execute 'source' g:save_window_file
+  if has('vim_starting') && filereadable(s:save_window_file)
+    execute 'source' s:save_window_file
   endif
 endif
 " }}}
