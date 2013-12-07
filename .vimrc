@@ -564,6 +564,8 @@ imap <expr><CR> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
+let g:neosnippet#snippets_directory = "~/.vim/bundle/.vim/snippets"
 " }}}
 
 " open-browser "{{{
