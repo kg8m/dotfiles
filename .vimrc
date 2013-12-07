@@ -17,19 +17,11 @@ endfunction
 set nocompatible
 filetype off
 
-if s:is_windows
-  if has('vim_starting')
-    set runtimepath+=~/vimfiles/bundle/neobundle.vim/
-  endif
-
-  call neobundle#rc(expand('~/vimfiles/bundle/'))
-else
-  if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
-  endif
-
-  call neobundle#rc(expand('~/.vim/bundle/'))
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
+
+call neobundle#rc(expand('~/.vim/bundle/'))
 
 NeoBundle 'Shougo/vimproc', {
         \   'build' : {
