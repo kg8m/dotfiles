@@ -4,6 +4,11 @@ scriptencoding utf-8
 
 let s:is_windows = has('win32') || has('win64')
 let s:in_tmux    = exists('$TMUX')
+
+" http://rhysd.hatenablog.com/entry/2013/08/24/223438
+function! s:meet_neocomplete_requirements()
+  return has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
+endfunction
 " }}}
 
 " ----------------------------------------------
@@ -53,7 +58,15 @@ NeoBundle 'sk1418/HowMuch'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev' : '4f63ea4f78' }
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
-NeoBundle 'Shougo/neocomplcache'
+
+if s:meet_neocomplete_requirements()
+  NeoBundleFetch 'Shougo/neocomplcache.vim'
+  NeoBundle 'Shougo/neocomplete.vim'
+else
+  NeoBundle 'Shougo/neocomplcache.vim'
+  NeoBundleFetch 'Shougo/neocomplete.vim'
+endif
+
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'kg8m/open-browser.vim'
 NeoBundle 'tyru/operator-camelize.vim'
@@ -486,47 +499,76 @@ let g:lightline = {
 \ }
 " }}}
 
-" neocomplcache "{{{
-imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+" neocomplcache/neocomplete "{{{
+if s:meet_neocomplete_requirements()
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#enable_fuzzy_completion = 1
+  let g:neocomplete#sources#syntax#min_keyword_length = 2
+  let g:neocomplete#auto_completion_start_length = 2
+  let g:neocomplete#manual_completion_start_length = 0
+  let g:neocomplete#min_keyword_length = 3
+  let g:neocomplete#enable_cursor_hold_i = 0
+  let g:neocomplete#cursor_hold_i_time = 300
+  let g:neocomplete#enable_insert_char_pre = 0
+  let g:neocomplete#enable_prefetch = 0
+  let g:neocomplete#force_overwrite_completefunc = 1
 
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_camel_case_completion = 0
-let g:neocomplcache_enable_underbar_completion = 0
-let g:neocomplcache_enable_fuzzy_completion = 1
-let g:neocomplcache_min_syntax_length = 2
-let g:neocomplcache_auto_completion_start_length = 2
-let g:neocomplcache_manual_completion_start_length = 0
-let g:neocomplcache_min_keyword_length = 3
-let g:neocomplcache_enable_cursor_hold_i = 0
-let g:neocomplcache_cursor_hold_i_time = 300
-let g:neocomplcache_enable_insert_char_pre = 0
-let g:neocomplcache_enable_prefetch = 0
-let g:neocomplcache_force_overwrite_completefunc = 1
+  if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+  let g:neocomplete#keyword_patterns['ruby'] = '\h\w*'
 
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-let g:neocomplcache_keyword_patterns['ruby'] = '\h\w*'
+  if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+  endif
+  let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
-if s:is_windows
-  let g:neocomplcache_snippets_dir = '~/vimfiles/snippets'
+  let g:sources#buffer#cache_limit_size = 500000
 else
-  let g:neocomplcache_snippets_dir = '~/.vim/snippets'
+  let g:neocomplcache_enable_at_startup = 1
+  let g:neocomplcache_enable_smart_case = 1
+  let g:neocomplcache_enable_camel_case_completion = 0
+  let g:neocomplcache_enable_underbar_completion = 0
+  let g:neocomplcache_enable_fuzzy_completion = 1
+  let g:neocomplcache_min_syntax_length = 2
+  let g:neocomplcache_auto_completion_start_length = 2
+  let g:neocomplcache_manual_completion_start_length = 0
+  let g:neocomplcache_min_keyword_length = 3
+  let g:neocomplcache_enable_cursor_hold_i = 0
+  let g:neocomplcache_cursor_hold_i_time = 300
+  let g:neocomplcache_enable_insert_char_pre = 0
+  let g:neocomplcache_enable_prefetch = 0
+  let g:neocomplcache_force_overwrite_completefunc = 1
+
+  if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+  endif
+  let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+  let g:neocomplcache_keyword_patterns['ruby'] = '\h\w*'
+
+  if !exists('g:neocomplcache_omni_patterns')
+    let g:neocomplcache_omni_patterns = {}
+  endif
+  let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+
+  let g:neocomplcache_caching_limit_file_size = 500000
 endif
 
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplcache_caching_limit_file_size = 500000
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " }}}
 
 " neosnippet "{{{
+imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 imap <expr><CR> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
+
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
