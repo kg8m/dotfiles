@@ -796,7 +796,7 @@ let g:user_emmet_settings = {
 " GUI settings "{{{
 if has('gui_running')
   gui
-  set guioptions-=T
+  set guioptions=none
 
   nmap <C-v> <C-v>
   nmap <C-y> <C-y>
