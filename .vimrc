@@ -649,6 +649,7 @@ nmap ,,x <plug>SequenceN_Decrement
 
 " startify "{{{
 let g:startify_enable_special = 1
+let g:startify_change_to_dir  = 0
 " https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
 let g:startify_custom_header = [
   \   '                      .',
