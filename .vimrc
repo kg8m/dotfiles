@@ -110,6 +110,7 @@ NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
 NeoBundle 'kg8m/vim-rubytest'
 NeoBundle 'thinca/vim-singleton'
 NeoBundle 'honza/vim-snippets'
+NeoBundle 'mhinz/vim-startify'
 NeoBundle 'nishigori/vim-sunday'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'deris/vim-textobj-enclosedsyntax', { 'depends' : 'kana/vim-textobj-user' }
@@ -493,6 +494,8 @@ let g:lightline = {
 
 " neocomplcache/neocomplete "{{{
 if s:meet_neocomplete_requirements()
+  let s:use_neocomplete_message = "Neocomplete's requirements are meeted; use neocomplete"
+
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#enable_smart_case = 1
   let g:neocomplete#enable_fuzzy_completion = 1
@@ -519,6 +522,9 @@ if s:meet_neocomplete_requirements()
 
   let g:sources#buffer#cache_limit_size = 500000
 else
+  let s:use_neocomplete_message = "Neocomplete's requirements are NOT meeted; use neocomplcache"
+
+
   let g:neocomplcache_enable_at_startup = 1
   let g:neocomplcache_enable_smart_case = 1
   let g:neocomplcache_enable_camel_case_completion = 0
@@ -638,6 +644,38 @@ vmap ,,a <plug>SequenceV_Increment
 vmap ,,x <plug>SequenceV_Decrement
 nmap ,,a <plug>SequenceN_Increment
 nmap ,,x <plug>SequenceN_Decrement
+" }}}
+
+" startify "{{{
+let g:startify_enable_special = 1
+" https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
+let g:startify_custom_header = [
+  \   '                      .',
+  \   '      ##############..... ##############',
+  \   '      ##############......##############',
+  \   '        ##########..........##########',
+  \   '        ##########........##########',
+  \   '        ##########.......##########',
+  \   '        ##########.....##########..',
+  \   '        ##########....##########.....',
+  \   '      ..##########..##########.........',
+  \   '    ....##########.#########.............',
+  \   '      ..################JJJ............',
+  \   '        ################.............',
+  \   '        ##############.JJJ.JJJJJJJJJJ',
+  \   '        ############...JJ...JJ..JJ  JJ',
+  \   '        ##########....JJ...JJ..JJ  JJ',
+  \   '        ########......JJJ..JJJ JJJ JJJ',
+  \   '        ######    .........',
+  \   '                    .....',
+  \   '                      .',
+  \   '',
+  \   '',
+  \   '     * Vim version: ' . v:version,
+  \   '     * ' . s:use_neocomplete_message,
+  \   '',
+  \   '',
+  \ ]
 " }}}
 
 " turbux "{{{
