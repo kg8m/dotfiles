@@ -234,7 +234,7 @@ set cursorcolumn
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorcolumn nocursorline
-  autocmd WinEnter,BufRead * set cursorcolumn cursorline
+  autocmd WinEnter,BufEnter,BufRead,BufNewFile * set cursorcolumn cursorline
 augroup END
 set scrolloff=15
 " set showbreak=++++
