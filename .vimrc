@@ -396,15 +396,16 @@ inoremap <C-w> <Esc><C-w>
 noremap ,a :Alignta<Space>
 vnoremap ,ua :<C-u>Unite alignta:arguments<CR>
 let g:unite_source_alignta_preset_arguments = [
-  \ ["Align at '=>'     --  `=>`",       '=>'],
-  \ ["Align at /\S/     --  `\S\+`",     '\S\+'],
-  \ ["Align at '='      --  `=>\=`",     '=>\='],
-  \ ["Align at ':hoge'  --  `10 :`",     '10 :'],
-  \ ["Align at 'hoge:'  --  `01 \w\+:`", '01 \w\+:'],
-  \ ["Align at '|'      --  `|`",        '|'],
-  \ ["Align at ')'      --  `0 )`",      '0 )'],
-  \ ["Align at ']'      --  `0 ]`",      '0 ]'],
-  \ ["Align at '}'      --  `}`",        '}'],
+  \ ["Align at '=>'     --  `=>`",          '=>'],
+  \ ["Align at /\\S/    --  `\\S\\+`",      '\S\+'],
+  \ ["Align at '='      --  `=>\\=`",       '=>\='],
+  \ ["Align at ':hoge'  --  `10 :`",        '10 :'],
+  \ ["Align at 'hoge:'  --  `00 \\w\\+: `", '00 \w\+: '],
+  \ ["Align at '|'      --  `|`",           '|'],
+  \ ["Align at ')'      --  `0 )`",         '0 )'],
+  \ ["Align at ']'      --  `0 ]`",         '0 ]'],
+  \ ["Align at '}'      --  `}`",           '}'],
+  \ ["Align at 'hoge,'  --  `00 \\w\\+, ` -- not working", '00 \w\+, '],
 \]
 let s:alignta_comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
 let g:unite_source_alignta_preset_options = [
@@ -501,7 +502,7 @@ if s:meet_neocomplete_requirements()
   let g:neocomplete#enable_smart_case = 1
   let g:neocomplete#enable_fuzzy_completion = 1
   let g:neocomplete#sources#syntax#min_keyword_length = 2
-  let g:neocomplete#auto_completion_start_length = 2
+  let g:neocomplete#auto_completion_start_length = 1
   let g:neocomplete#manual_completion_start_length = 0
   let g:neocomplete#min_keyword_length = 3
   let g:neocomplete#enable_cursor_hold_i = 0
@@ -532,7 +533,7 @@ else
   let g:neocomplcache_enable_underbar_completion = 0
   let g:neocomplcache_enable_fuzzy_completion = 1
   let g:neocomplcache_min_syntax_length = 2
-  let g:neocomplcache_auto_completion_start_length = 2
+  let g:neocomplcache_auto_completion_start_length = 1
   let g:neocomplcache_manual_completion_start_length = 0
   let g:neocomplcache_min_keyword_length = 3
   let g:neocomplcache_enable_cursor_hold_i = 0
@@ -618,6 +619,11 @@ let g:rails_projections = {
   \   },
   \   "app/models/finder/*.rb": {
   \     "command": "finder",
+  \   },
+  \   "script/*": {
+  \     "test": [
+  \       "test/unit/%s_test.rb",
+  \     ],
   \   },
   \   "spec/fabricators/*_fabricator.rb": {
   \     "command":   "fabricator",
