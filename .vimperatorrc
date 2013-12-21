@@ -53,6 +53,8 @@ map ,r :source ~/.vimperatorrc<Cr>
 " 検索補完関連
 nnoremap s :set<Space>cpt=s<Cr>:open<Space>google<Space>
 nnoremap <S-s> :set<Space>cpt=s<Cr>:tabopen<Space>google<Space>
+nnoremap a :set<Space>cpt=s<Cr>:open<Space>amazon<Space>
+nnoremap <S-a> :set<Space>cpt=s<Cr>:tabopen<Space>amazon<Space>
 nnoremap t :set<Space>cpt=slt<Cr>:tabopen<Space>
 nnoremap o :set<Space>cpt=slt<Cr>:open<Space>
 
