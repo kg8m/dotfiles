@@ -388,6 +388,10 @@ vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<Cr><C
 
 " prevent unconscious operation
 inoremap <C-w> <Esc><C-w>
+
+" increment/decrement
+nnoremap + <C-a>
+nnoremap - <C-x>
 " }}}
 
 " ----------------------------------------------
