@@ -27,6 +27,7 @@ cat
 zcat
 scp
 rsync
+time
 EOF
 
 # not used. it is just my note.
