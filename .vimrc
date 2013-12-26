@@ -393,6 +393,12 @@ inoremap <C-w> <Esc><C-w>
 " increment/decrement
 nnoremap + <C-a>
 nnoremap - <C-x>
+
+" emacs like moving in INSERT mode
+imap <C-h> <Left>
+imap <C-j> <Down>
+imap <C-k> <Up>
+imap <C-l> <Right>
 " }}}
 
 " ----------------------------------------------
