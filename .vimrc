@@ -79,6 +79,7 @@ NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'kg8m/vim-blockle'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'haya14busa/vim-easymotion'
 "NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
 NeoBundle 'thinca/vim-ft-diff_fold'
 NeoBundle 'thinca/vim-ft-help_fold'
@@ -450,6 +451,18 @@ let g:blockle_erase_spaces_around_starting_brace = 1
 let g:colorizer_startup = 0
 let s:colorizer_target_filetypes = ['eruby', 'haml', 'html', 'css', 'scss', 'javascript', 'diff']
 autocmd WinEnter,BufEnter,BufRead,BufNewFile * if index(s:colorizer_target_filetypes, &ft) >= 0 | ColorHighlight | else | ColorClear | endif
+" }}}
+
+" easymotion "{{{
+" http://haya14busa.com/vim-lazymotion-on-speed/
+let g:EasyMotion_do_mapping  = 0
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_smartcase   = 1
+let g:EasyMotion_use_upper   = 1
+let g:EasyMotion_keys        = 'HKLYUIOPNM,QWERTZXCVBASDGJF;'
+nmap ,f <Plug>(easymotion-s)
+vmap ,f <Plug>(easymotion-s)
+omap ,f <Plug>(easymotion-s)
 " }}}
 
 " EnhCommentify "{{{
