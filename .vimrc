@@ -441,6 +441,10 @@ imap <C-h> <Left>
 imap <C-j> <Down>
 imap <C-k> <Up>
 imap <C-l> <Right>
+
+" Page scroll in INSERT mode
+imap <expr><C-f> "\<PageDown>"
+imap <expr><C-b> "\<PageUp>"
 " }}}
 
 " ----------------------------------------------
