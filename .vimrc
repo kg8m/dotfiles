@@ -416,10 +416,10 @@ augroup END
 set whichwrap=b,s,h,l,<,>,[,],~
 
 " move as shown
-" nnoremap j gj
-" nnoremap k gk
-" nnoremap gj j
-" nnoremap gk k
+" nmap j gj
+" nmap k gk
+" nmap gj j
+" nmap gk k
 
 " IME
 " augroup InsModeImEnable
@@ -461,13 +461,13 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 let g:mapleader = ','
 
 " ,r => reload .vimrc
-nnoremap <Leader>r :source ~/.vimrc<Cr>
+nmap <Leader>r :source ~/.vimrc<Cr>
 
 " <Esc><Esc> => nohilight
-nnoremap <Esc><Esc> :nohlsearch<Cr>
+nmap <Esc><Esc> :nohlsearch<Cr>
 
 " ,v => vsplit
-noremap <Leader>v :vsplit<Cr>
+nmap <Leader>v :vsplit<Cr>
 
 " svn diff
 nmap <Leader>d :call SVNDiff()<Cr>
@@ -478,22 +478,22 @@ function! SVNDiff()
 endfunction
 
 " copy/paste by clipboard
-vnoremap <Leader>y "*y
-nnoremap <Leader>p "*p
+vmap <Leader>y "*y
+nmap <Leader>p "*p
 
 " ,w => erase spaces of EOL for selected
-vnoremap <Leader>w :s/\s\+$//ge<Cr>
+vmap <Leader>w :s/\s\+$//ge<Cr>
 
 " search for selected
 " http://vim-users.jp/2009/11/hack104/
-vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<Cr><Cr>
+vmap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<Cr><Cr>
 
 " prevent unconscious operation
-inoremap <C-w> <Esc><C-w>
+imap <C-w> <Esc><C-w>
 
 " increment/decrement
-nnoremap + <C-a>
-nnoremap - <C-x>
+nmap + <C-a>
+nmap - <C-x>
 
 " emacs like moving in INSERT mode
 imap <C-h> <Left>
@@ -509,8 +509,8 @@ imap <expr><C-b> "\<PageUp>"
 " ----------------------------------------------
 " plugins "{{{
 " alignta "{{{
-noremap <Leader>a :Alignta<Space>
-vnoremap <Leader>ua :<C-u>Unite alignta:arguments<CR>
+vmap <Leader>a :Alignta<Space>
+vmap <Leader>ua :<C-u>Unite alignta:arguments<CR>
 let g:unite_source_alignta_preset_arguments = [
   \ ["Align at '=>'     --  `=>`",          '=>'],
   \ ["Align at /\\S/    --  `\\S\\+`",      '\S\+'],
@@ -553,10 +553,6 @@ nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
 " }}}
 
-" autoclose "{{{
-nmap <Leader><S-a> <Plug>ToggleAutoCloseMappings
-" }}}
-
 " blockle "{{{
 let g:blockle_mapping = ",b"
 let g:blockle_erase_spaces_around_starting_brace = 1
@@ -595,7 +591,7 @@ set foldtext=FoldCCtext()
 " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
 " r => show diff preview
 let g:gundo_auto_preview = 0
-nnoremap <F5> :GundoToggle<CR>
+nmap <F5> :GundoToggle<CR>
 " }}}
 
 " HowMuch "{{{
@@ -846,11 +842,11 @@ endif
 " Unicode-RST-Tables "{{{
 let g:no_rst_table_maps = 0
 if has("python3")
-  noremap <silent> <Leader><Leader>c :python3 CreateTable()<CR>
-  noremap <silent> <Leader><Leader>f :python3 FixTable()<CR>
+  map <silent> <Leader><Leader>c :python3 CreateTable()<CR>
+  map <silent> <Leader><Leader>f :python3 FixTable()<CR>
 elseif has("python")
-  noremap <silent> <Leader><Leader>c :python  CreateTable()<CR>
-  noremap <silent> <Leader><Leader>f :python  FixTable()<CR>
+  map <silent> <Leader><Leader>c :python  CreateTable()<CR>
+  map <silent> <Leader><Leader>f :python  FixTable()<CR>
 endif
 " }}}
 
@@ -870,16 +866,16 @@ call unite#custom_source("directory_mru", "max_candidates", 1000)
 call unite#custom_source("file_mru", "max_candidates", 1000)
 call unite#custom_source('buffer', 'sorters', 'sorter_word')
 autocmd VimLeavePre * call unite#sources#outline#remove_cache_files()
-nnoremap <Leader>ug :<C-u>Unite grep:./::
-nnoremap <silent> <Leader>uy :<C-u>Unite history/yank<CR>
-nnoremap <silent> <Leader>uo :<C-u>Unite outline<CR>
-nnoremap <silent> <Leader>uc :<C-u>Unite webcolorname<CR>
-nnoremap <silent> <Leader>ub :<C-u>Unite buffer<CR>
-nnoremap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-nnoremap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<CR>
-nnoremap <silent> <Leader>um :<C-u>Unite file_mru<CR>
-nnoremap <silent> <Leader>uu :<C-u>Unite buffer file_mru<CR>
-nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+nmap <Leader>ug :<C-u>Unite grep:./::
+nmap <silent> <Leader>uy :<C-u>Unite history/yank<CR>
+nmap <silent> <Leader>uo :<C-u>Unite outline<CR>
+nmap <silent> <Leader>uc :<C-u>Unite webcolorname<CR>
+nmap <silent> <Leader>ub :<C-u>Unite buffer<CR>
+nmap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nmap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<CR>
+nmap <silent> <Leader>um :<C-u>Unite file_mru<CR>
+nmap <silent> <Leader>uu :<C-u>Unite buffer file_mru<CR>
+nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
 " unite-shortcut "{{{
   " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
@@ -939,7 +935,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
 " }}}
 
 " unite plugins "{{{
-  nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:!<CR>
+  nmap <silent> <Leader>uv :<C-u>UniteVersions status:!<CR>
   function! AddActionsToVersions()
     let l:action = {
       \   "description" : "open files",
@@ -967,18 +963,18 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
   call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
 
   " other unite keymappings: they used to be for plugins replaced by unite
-  nnoremap <silent> <Leader>m :<C-u>Unite file_mru<CR>
-  nnoremap <F4> :<C-u>Unite buffer<CR>
+  nmap <silent> <Leader>m :<C-u>Unite file_mru<CR>
+  nmap <F4> :<C-u>Unite buffer<CR>
 " }}}
 " }}}
 
 " vimfiler "{{{
 let g:vimfiler_safe_mode_by_default = 0
-noremap <Leader>e :VimFilerBufferDir -quit<Cr>
+nmap <Leader>e :VimFilerBufferDir -quit<Cr>
 " }}}
 
 " vimshell "{{{
-noremap <Leader>s :VimShell<Cr>
+map <Leader>s :VimShell<Cr>
 
 if s:is_windows
   let g:_user_name = $USERNAME
