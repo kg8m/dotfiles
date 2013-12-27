@@ -828,6 +828,8 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
     \   ["[Reload with Encoding] euc-jp            ", "edit ++enc=euc-jp +set\\ noreadonly"],
     \   ["[Reload with Encoding] utf-8             ", "edit ++enc=utf-8 +set\\ noreadonly"],
     \
+    \   ["[Reload by Sudo]                         ", "edit sudo:%"],
+    \
     \   ["[Set Encoding] latin1                    ", "set fenc=latin1"],
     \   ["[Set Encoding] cp932                     ", "set fenc=cp932"],
     \   ["[Set Encoding] shift-jis                 ", "set fenc=shift-jis"],
