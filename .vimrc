@@ -491,6 +491,7 @@ nnoremap <F5> :GundoToggle<CR>
 " HowMuch "{{{
 " replace expr with result
 vmap ,? <Plug>AutoCalcReplace
+vmap ,?s <Plug>AutoCalcReplaceWithSum
 let g:HowMuch_scale = 5
 " }}}
 
