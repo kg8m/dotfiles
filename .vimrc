@@ -512,15 +512,15 @@ imap <expr><C-b> "\<PageUp>"
 vmap <Leader>a :Alignta<Space>
 vmap <Leader>ua :<C-u>Unite alignta:arguments<CR>
 let g:unite_source_alignta_preset_arguments = [
-  \ ["Align at '=>'     --  `=>`",          '=>'],
-  \ ["Align at /\\S/    --  `\\S\\+`",      '\S\+'],
-  \ ["Align at '='      --  `=>\\=`",       '=>\='],
-  \ ["Align at ':hoge'  --  `10 :`",        '10 :'],
-  \ ["Align at 'hoge:'  --  `00 \\w\\+: `", '00 \w\+: '],
-  \ ["Align at '|'      --  `|`",           '|'],
-  \ ["Align at ')'      --  `0 )`",         '0 )'],
-  \ ["Align at ']'      --  `0 ]`",         '0 ]'],
-  \ ["Align at '}'      --  `}`",           '}'],
+  \ ["Align at '=>'     --  `=>`",                        '=>'],
+  \ ["Align at /\\S/    --  `\\S\\+`",                    '\S\+'],
+  \ ["Align at '='      --  `=>\\=`",                     '=>\='],
+  \ ["Align at ':hoge'  --  `10 :`",                      '10 :'],
+  \ ["Align at 'hoge:'  --  `00 [a-zA-Z0-9_\"']\\+:\\s`", " 00 [a-zA-Z0-9_\"']\\+:\\s"],
+  \ ["Align at '|'      --  `|`",                         '|'],
+  \ ["Align at ')'      --  `0 )`",                       '0 )'],
+  \ ["Align at ']'      --  `0 ]`",                       '0 ]'],
+  \ ["Align at '}'      --  `}`",                         '}'],
   \ ["Align at 'hoge,'  --  `00 \\w\\+, ` -- not working", '00 \w\+, '],
 \]
 let s:alignta_comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
