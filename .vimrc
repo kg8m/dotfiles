@@ -102,7 +102,7 @@ NeoBundle 'michaeljsmith/vim-indent-object'
 "NeoBundle 'pangloss/vim-javascript'  trying othree/javascript-libraries-syntax
 NeoBundleLazy 'jelera/vim-javascript-syntax', {
             \   'autoload': {
-            \     'filetypes': ['javascript'],
+            \     'filetypes': ['javascript', 'eruby'],
             \   }
             \ }
 NeoBundle 'elzr/vim-json'
@@ -118,7 +118,7 @@ NeoBundle 'tpope/vim-repeat'
 NeoBundleLazy 'vim-ruby/vim-ruby', {
             \   'autoload': {
             \     'mappings':  '<Plug>(ref-keyword)',
-            \     'filetypes': 'ruby'
+            \     'filetypes': ['ruby', 'eruby']
             \   },
             \ },
 NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
@@ -164,7 +164,7 @@ NeoBundle 'https://bitbucket.org/teramako/jscomplete-vim.git'
 
 " plugins from vim.org
 NeoBundle 'EnhCommentify.vim'
-NeoBundle 'eruby.vim'
+"NeoBundle 'eruby.vim'
 NeoBundle 'matchit.zip'
 NeoBundle 'sequence'
 NeoBundle 'sudo.vim'
