@@ -22,11 +22,11 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
 NeoBundle 'Shougo/vimproc', {
-        \   'build' : {
-        \     'windows' : 'make -f make_mingw32.mak',
-        \     'cygwin'  : 'make -f make_cygwin.mak',
-        \     'mac'     : 'make -f make_mac.mak',
-        \     'unix'    : 'make -f make_unix.mak',
+        \   'build': {
+        \     'windows': 'make -f make_mingw32.mak',
+        \     'cygwin':  'make -f make_cygwin.mak',
+        \     'mac':     'make -f make_mac.mak',
+        \     'unix':    'make -f make_unix.mak',
         \   },
         \ },
 NeoBundle 'Shougo/neobundle.vim'
@@ -35,11 +35,11 @@ NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'kg8m/.vim'
 NeoBundleLazy 'mileszs/ack.vim', {
             \   'autoload': {
-            \     'commands':  ['Ack'],
-            \   }
-            \ }
+            \     'commands': ['Ack'],
+            \   },
+            \ },
 NeoBundle 'taichouchou2/alpaca_complete', {
-        \   'depends' : ['tpope/vim-rails', 'Shougo/neocomplcache'],
+        \   'depends': ['tpope/vim-rails', 'Shougo/neocomplcache'],
         \ },
 NeoBundle 'vim-scripts/AutoClose'
 NeoBundle 'rhysd/clever-f.vim'
@@ -49,27 +49,47 @@ NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
 "NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
 NeoBundle 'sk1418/HowMuch'
-NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev' : '4f63ea4f78' }
+NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
 
 if s:meet_neocomplete_requirements()
   NeoBundleFetch 'Shougo/neocomplcache.vim'
-  NeoBundle 'Shougo/neocomplete.vim'
+  NeoBundleLazy 'Shougo/neocomplete.vim', {
+              \   'autoload': {
+              \     'insert':   1,
+              \     'commands': 'NeoCompleteBufferMakeCache',
+              \   },
+              \ },
 else
   NeoBundle 'Shougo/neocomplcache.vim'
   NeoBundleFetch 'Shougo/neocomplete.vim'
 endif
 
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'kg8m/open-browser.vim'
-NeoBundle 'tyru/operator-camelize.vim'
+NeoBundleLazy 'Shougo/neosnippet', {
+            \   'autoload': {
+            \     'insert':        1,
+            \     'filetypes':     'snippet',
+            \     'unite_sources': ['neosnippet', 'neosnippet/user', 'neosnippet/runtime'],
+            \   },
+            \ },
+NeoBundleLazy 'kg8m/open-browser.vim', {
+            \   'autoload': {
+            \     'commands':  ['OpenBrowserSearch', 'OpenBrowser'],
+            \     'functions': 'openbrowser#open',
+            \   },
+            \ },
+NeoBundleLazy 'tyru/operator-camelize.vim', {
+            \   'autoload': {
+            \     'mappings': ['ns', '<Plug>(operator-camelize)', '<Plug>(operator-decamelize)'],
+            \   },
+            \ },
 NeoBundleLazy 'thinca/vim-prettyprint', {
             \   'autoload': {
             \     'commands':  ['PrettyPrint', 'PP'],
             \     'functions': ['PrettyPrint', 'PP'],
-            \   }
-            \ }
+            \   },
+            \ },
 "NeoBundle 'vim-scripts/QuickBuf'
 "NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'chrisbra/Recover.vim'
@@ -79,11 +99,32 @@ NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'osyo-manga/unite-filetype'
-NeoBundle 'Shougo/unite-help'
-NeoBundle 'h1mesuke/unite-outline'
-NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'pasela/unite-webcolorname'
+NeoBundleLazy 'osyo-manga/unite-filetype', {
+            \   'autoload': {
+            \     'unite_sources': ['filetype'],
+            \   },
+            \ },
+NeoBundleLazy 'Shougo/unite-help', {
+            \   'autoload': {
+            \     'unite_sources': ['help'],
+            \   },
+            \ },
+NeoBundleLazy 'h1mesuke/unite-outline', {
+            \   'autoload': {
+            \     'functions':     ['unite#sources#outline#remove_cache_files'],
+            \     'unite_sources': ['outline'],
+            \   },
+            \ },
+NeoBundleLazy 'tsukkee/unite-tag', {
+            \   'autoload': {
+            \     'unite_sources': ['tag', 'tag/include', 'tag/file'],
+            \   },
+            \ },
+NeoBundleLazy 'pasela/unite-webcolorname', {
+            \   'autoload': {
+            \     'unite_sources': ['webcolorname'],
+            \   },
+            \ },
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'kg8m/vim-blockle'
@@ -103,15 +144,23 @@ NeoBundle 'michaeljsmith/vim-indent-object'
 NeoBundleLazy 'jelera/vim-javascript-syntax', {
             \   'autoload': {
             \     'filetypes': ['javascript', 'eruby'],
-            \   }
-            \ }
+            \   },
+            \ },
 NeoBundle 'elzr/vim-json'
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
 "NeoBundle 'amdt/vim-niji'
-NeoBundle 'kana/vim-operator-replace'
+NeoBundleLazy 'kana/vim-operator-replace', {
+            \   'autoload': {
+            \     'mappings': ['ns', '<Plug>(operator-replace)'],
+            \   },
+            \ },
 NeoBundle 'kana/vim-operator-user'
-NeoBundle 'thinca/vim-qfreplace'
+NeoBundleLazy 'thinca/vim-qfreplace', {
+            \   'autoload': {
+            \     'filetypes': ['unite', 'quickfix']
+            \   },
+            \ },
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'tpope/vim-repeat'
@@ -137,7 +186,11 @@ if s:in_tmux
 endif
 
 NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'thinca/vim-unite-history'
+NeoBundleLazy 'thinca/vim-unite-history', {
+            \   'autoload': {
+            \     'unite_sources': ['history/command', 'history/search'],
+            \   },
+            \ },
 "NeoBundle 'hrsh7th/vim-unite-vcs'  replaced by vim-versions
 NeoBundle 'hrsh7th/vim-versions'
 NeoBundle 'superbrothers/vim-vimperator'
@@ -153,13 +206,17 @@ NeoBundleLazy 'Shougo/vimshell', {
             \ },
 
 if s:in_tmux
-  NeoBundle 'benmills/vimux', { 'rev' : '8e091d6' }
+  NeoBundle 'benmills/vimux', { 'rev': '8e091d6' }
 endif
 
 NeoBundle 'LeafCage/yankround.vim'
 
 " plugins from bitbucket
-NeoBundle 'https://bitbucket.org/heavenshell/gundo.vim'
+NeoBundleLazy 'https://bitbucket.org/heavenshell/gundo.vim', {
+            \   'autoload': {
+            \     'commands': 'GundoToggle',
+            \   },
+            \ },
 NeoBundle 'https://bitbucket.org/teramako/jscomplete-vim.git'
 
 " plugins from vim.org
@@ -177,7 +234,7 @@ filetype plugin indent on
 
 if !s:is_windows && !has('gui_running')
   if neobundle#exists_not_installed_bundles()
-    echomsg 'Not installed bundles : ' .
+    echomsg 'Not installed bundles: ' .
           \ string(neobundle#get_not_installed_bundle_names())
     echomsg 'Please execute ":NeoBundleInstall" command.'
     "finish
