@@ -105,6 +105,7 @@ NeoBundleLazy 'jelera/vim-javascript-syntax', {
             \     'filetypes': ['javascript'],
             \   }
             \ }
+NeoBundle 'elzr/vim-json'
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
 "NeoBundle 'amdt/vim-niji'
@@ -113,6 +114,7 @@ NeoBundle 'kana/vim-operator-user'
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'thinca/vim-ref'
+NeoBundle 'tpope/vim-repeat'
 NeoBundleLazy 'vim-ruby/vim-ruby', {
             \   'autoload': {
             \     'mappings':  '<Plug>(ref-keyword)',
