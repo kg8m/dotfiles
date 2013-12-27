@@ -458,17 +458,19 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
 " ----------------------------------------------
 " keymappings "{{{
+let g:mapleader = ','
+
 " ,r => reload .vimrc
-nnoremap ,r :source ~/.vimrc<Cr>
+nnoremap <Leader>r :source ~/.vimrc<Cr>
 
 " <Esc><Esc> => nohilight
 nnoremap <Esc><Esc> :nohlsearch<Cr>
 
 " ,v => vsplit
-noremap ,v :vsplit<Cr>
+noremap <Leader>v :vsplit<Cr>
 
 " svn diff
-nmap ,d :call SVNDiff()<Cr>
+nmap <Leader>d :call SVNDiff()<Cr>
 function! SVNDiff()
   edit diff
   silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
@@ -476,11 +478,11 @@ function! SVNDiff()
 endfunction
 
 " copy/paste by clipboard
-vnoremap ,y "*y
-nnoremap ,p "*p
+vnoremap <Leader>y "*y
+nnoremap <Leader>p "*p
 
 " ,w => erase spaces of EOL for selected
-vnoremap ,w :s/\s\+$//ge<Cr>
+vnoremap <Leader>w :s/\s\+$//ge<Cr>
 
 " search for selected
 " http://vim-users.jp/2009/11/hack104/
@@ -507,8 +509,8 @@ imap <expr><C-b> "\<PageUp>"
 " ----------------------------------------------
 " plugins "{{{
 " alignta "{{{
-noremap ,a :Alignta<Space>
-vnoremap ,ua :<C-u>Unite alignta:arguments<CR>
+noremap <Leader>a :Alignta<Space>
+vnoremap <Leader>ua :<C-u>Unite alignta:arguments<CR>
 let g:unite_source_alignta_preset_arguments = [
   \ ["Align at '=>'     --  `=>`",          '=>'],
   \ ["Align at /\\S/    --  `\\S\\+`",      '\S\+'],
@@ -551,6 +553,10 @@ nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
 " }}}
 
+" autoclose "{{{
+nmap <Leader><S-a> <Plug>ToggleAutoCloseMappings
+" }}}
+
 " blockle "{{{
 let g:blockle_mapping = ",b"
 let g:blockle_erase_spaces_around_starting_brace = 1
@@ -569,13 +575,14 @@ let g:EasyMotion_startofline = 0
 let g:EasyMotion_smartcase   = 1
 let g:EasyMotion_use_upper   = 1
 let g:EasyMotion_keys        = "FJKLASDHGUIONMERWC,;"
-nmap ,f <Plug>(easymotion-s)
-vmap ,f <Plug>(easymotion-s)
-omap ,f <Plug>(easymotion-s)
+nmap <Leader>f <Plug>(easymotion-s)
+vmap <Leader>f <Plug>(easymotion-s)
+omap <Leader>f <Plug>(easymotion-s)
 " }}}
 
 " EnhCommentify "{{{
 let g:EnhCommentifyBindInInsert = 'no'
+let g:EnhCommentifyBindInVisual = 'no'
 " }}}
 
 " foldCC "{{{
@@ -593,8 +600,8 @@ nnoremap <F5> :GundoToggle<CR>
 
 " HowMuch "{{{
 " replace expr with result
-vmap ,? <Plug>AutoCalcReplace
-vmap ,?s <Plug>AutoCalcReplaceWithSum
+vmap <Leader>? <Plug>AutoCalcReplace
+vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
 let g:HowMuch_scale = 5
 " }}}
 
@@ -715,13 +722,13 @@ let g:openbrowser_browser_commands = [
   \     "args": "ssh main 'open {uri}'",
   \   }
   \ ]
-nmap ,g <Plug>(openbrowser-open)
-vmap ,g <Plug>(openbrowser-open)
+nmap <Leader>g <Plug>(openbrowser-open)
+vmap <Leader>g <Plug>(openbrowser-open)
 " }}}
 
 " operator-camelize "{{{
-map ,C <Plug>(operator-camelize)
-map ,c <Plug>(operator-decamelize)
+vmap <Leader>C <Plug>(operator-camelize)
+vmap <Leader>c <Plug>(operator-decamelize)
 " }}}
 
 " operator-replace "{{{
@@ -779,10 +786,10 @@ endif
 " }}}
 
 " sequence "{{{
-vmap ,,a <plug>SequenceV_Increment
-vmap ,,x <plug>SequenceV_Decrement
-nmap ,,a <plug>SequenceN_Increment
-nmap ,,x <plug>SequenceN_Decrement
+vmap <Leader><Leader>a <plug>SequenceV_Increment
+vmap <Leader><Leader>x <plug>SequenceV_Decrement
+nmap <Leader><Leader>a <plug>SequenceN_Increment
+nmap <Leader><Leader>x <plug>SequenceN_Decrement
 " }}}
 
 " simple-javascript-indenter "{{{
@@ -839,11 +846,11 @@ endif
 " Unicode-RST-Tables "{{{
 let g:no_rst_table_maps = 0
 if has("python3")
-  noremap <silent> ,,c :python3 CreateTable()<CR>
-  noremap <silent> ,,f :python3 FixTable()<CR>
+  noremap <silent> <Leader><Leader>c :python3 CreateTable()<CR>
+  noremap <silent> <Leader><Leader>f :python3 FixTable()<CR>
 elseif has("python")
-  noremap <silent> ,,c :python  CreateTable()<CR>
-  noremap <silent> ,,f :python  FixTable()<CR>
+  noremap <silent> <Leader><Leader>c :python  CreateTable()<CR>
+  noremap <silent> <Leader><Leader>f :python  FixTable()<CR>
 endif
 " }}}
 
@@ -863,21 +870,21 @@ call unite#custom_source("directory_mru", "max_candidates", 1000)
 call unite#custom_source("file_mru", "max_candidates", 1000)
 call unite#custom_source('buffer', 'sorters', 'sorter_word')
 autocmd VimLeavePre * call unite#sources#outline#remove_cache_files()
-nnoremap ,ug :<C-u>Unite grep:./::
-nnoremap <silent> ,uy :<C-u>Unite history/yank<CR>
-nnoremap <silent> ,uo :<C-u>Unite outline<CR>
-nnoremap <silent> ,uc :<C-u>Unite webcolorname<CR>
-nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
-nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+nnoremap <Leader>ug :<C-u>Unite grep:./::
+nnoremap <silent> <Leader>uy :<C-u>Unite history/yank<CR>
+nnoremap <silent> <Leader>uo :<C-u>Unite outline<CR>
+nnoremap <silent> <Leader>uc :<C-u>Unite webcolorname<CR>
+nnoremap <silent> <Leader>ub :<C-u>Unite buffer<CR>
+nnoremap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<CR>
+nnoremap <silent> <Leader>um :<C-u>Unite file_mru<CR>
+nnoremap <silent> <Leader>uu :<C-u>Unite buffer file_mru<CR>
+nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
 
 " unite-shortcut "{{{
   " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
   " http://d.hatena.ne.jp/tyru/20120110/prompt
-  map <silent> ,us :<C-u>Unite menu:shortcuts<CR>
+  map <silent> <Leader>us :<C-u>Unite menu:shortcuts<CR>
   let g:unite_source_menu_menus = {}
   let g:unite_source_menu_menus.shortcuts = {
     \   "description" : "shortcuts"
@@ -932,8 +939,7 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
 " }}}
 
 " unite plugins "{{{
-  " nnoremap <silent> ,uv :<C-u>Unite vcs/status<CR>
-  nnoremap <silent> ,uv :<C-u>UniteVersions status:!<CR>
+  nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:!<CR>
   function! AddActionsToVersions()
     let l:action = {
       \   "description" : "open files",
@@ -961,18 +967,18 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
   call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
 
   " other unite keymappings: they used to be for plugins replaced by unite
-  nnoremap <silent> ,m :<C-u>Unite file_mru<CR>
+  nnoremap <silent> <Leader>m :<C-u>Unite file_mru<CR>
   nnoremap <F4> :<C-u>Unite buffer<CR>
 " }}}
 " }}}
 
 " vimfiler "{{{
 let g:vimfiler_safe_mode_by_default = 0
-noremap ,e :VimFilerBufferDir -quit<Cr>
+noremap <Leader>e :VimFilerBufferDir -quit<Cr>
 " }}}
 
 " vimshell "{{{
-noremap ,s :VimShell<Cr>
+noremap <Leader>s :VimShell<Cr>
 
 if s:is_windows
   let g:_user_name = $USERNAME
