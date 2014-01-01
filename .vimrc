@@ -296,6 +296,7 @@ set incsearch
 " controls "{{{
 set restorescreen
 " set clipboard=unnamed
+set visualbell t_vb=
 
 " backup, recover
 set nobackup
@@ -916,7 +917,6 @@ let g:user_emmet_settings = {
 if has('gui_running')
   gui
   set guioptions=none
-  set visualbell t_vb=
 
   nmap <C-v> <C-v>
   nmap <C-y> <C-y>
