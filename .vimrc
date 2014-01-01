@@ -66,6 +66,7 @@ NeoBundle 'tyru/operator-camelize.vim'
 "NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'joeytwiddle/sexy_scroller.vim'
+NeoBundle 'jiangmiao/simple-javascript-indenter'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
 NeoBundle 'Shougo/unite.vim'
@@ -131,6 +132,7 @@ NeoBundle 'LeafCage/yankround.vim'
 
 " plugins from bitbucket
 NeoBundle 'https://bitbucket.org/heavenshell/gundo.vim'
+NeoBundle 'https://bitbucket.org/teramako/jscomplete-vim.git'
 
 " plugins from vim.org
 NeoBundle 'EnhCommentify.vim'
@@ -495,6 +497,10 @@ vmap ,?s <Plug>AutoCalcReplaceWithSum
 let g:HowMuch_scale = 5
 " }}}
 
+" jscomplete "{{{
+let g:jscomplete_use = ['dom', 'moz', 'es6th']
+" }}}
+
 " lightline "{{{
 set laststatus=2
 let s:lightline_elements = {
@@ -582,9 +588,10 @@ endif
 
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" jscomplete
+autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
 " }}}
 
 " neosnippet "{{{
@@ -675,6 +682,11 @@ vmap ,,a <plug>SequenceV_Increment
 vmap ,,x <plug>SequenceV_Decrement
 nmap ,,a <plug>SequenceN_Increment
 nmap ,,x <plug>SequenceN_Decrement
+" }}}
+
+" simple-javascript-indenter "{{{
+let g:SimpleJsIndenter_BriefMode = 2
+let g:SimpleJsIndenter_CaseIndentLevel = -1
 " }}}
 
 " startify "{{{
