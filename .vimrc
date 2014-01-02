@@ -75,6 +75,7 @@ NeoBundleLazy 'thinca/vim-prettyprint', {
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'joeytwiddle/sexy_scroller.vim'
 NeoBundle 'jiangmiao/simple-javascript-indenter'
+NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
 NeoBundle 'Shougo/unite.vim'
@@ -715,6 +716,11 @@ nmap ,,x <plug>SequenceN_Decrement
 " simple-javascript-indenter "{{{
 let g:SimpleJsIndenter_BriefMode = 2
 let g:SimpleJsIndenter_CaseIndentLevel = -1
+" }}}
+
+" splitjoin "{{{
+let g:splitjoin_split_mapping = ',J'
+let g:splitjoin_join_mapping  = ',S'
 " }}}
 
 " startify "{{{
