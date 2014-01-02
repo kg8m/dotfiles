@@ -62,6 +62,7 @@ endif
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'kg8m/open-browser.vim'
 NeoBundle 'tyru/operator-camelize.vim'
+NeoBundle 'thinca/vim-prettyprint'
 "NeoBundle 'vim-scripts/QuickBuf'
 "NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'chrisbra/Recover.vim'
