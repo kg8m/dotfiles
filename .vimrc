@@ -1,7 +1,5 @@
 " ----------------------------------------------
 " initialize "{{{
-scriptencoding utf-8
-
 let s:is_windows = has('win32') || has('win64')
 let s:in_tmux    = exists('$TMUX')
 
@@ -35,7 +33,11 @@ NeoBundle 'Shougo/neobundle.vim'
 
 " plugins from github
 NeoBundle 'kg8m/.vim'
-NeoBundle 'mileszs/ack.vim'
+NeoBundleLazy 'mileszs/ack.vim', {
+            \   'autoload': {
+            \     'commands':  ['Ack'],
+            \   }
+            \ }
 NeoBundle 'taichouchou2/alpaca_complete', {
         \   'depends' : ['tpope/vim-rails', 'Shougo/neocomplcache'],
         \ },
@@ -62,7 +64,12 @@ endif
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'kg8m/open-browser.vim'
 NeoBundle 'tyru/operator-camelize.vim'
-NeoBundle 'thinca/vim-prettyprint'
+NeoBundleLazy 'thinca/vim-prettyprint', {
+            \   'autoload': {
+            \     'commands':  ['PrettyPrint', 'PP'],
+            \     'functions': ['PrettyPrint', 'PP'],
+            \   }
+            \ }
 "NeoBundle 'vim-scripts/QuickBuf'
 "NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'chrisbra/Recover.vim'
@@ -98,18 +105,19 @@ NeoBundleLazy 'jelera/vim-javascript-syntax', {
             \   }
             \ }
 NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'joker1007/vim-markdown-quote-syntax'
 "NeoBundle 'amdt/vim-niji'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'thinca/vim-ref'
-NeoBundle 'vim-ruby/vim-ruby', {
-        \   'autoload' : {
-        \     'mappings' : '<Plug>(ref-keyword)',
-        \     'filetypes' : 'ruby'
-        \   },
-        \ },
+NeoBundleLazy 'vim-ruby/vim-ruby', {
+            \   'autoload': {
+            \     'mappings':  '<Plug>(ref-keyword)',
+            \     'filetypes': 'ruby'
+            \   },
+            \ },
 NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
 NeoBundle 'kg8m/vim-rubytest'
 NeoBundle 'thinca/vim-singleton'
@@ -117,18 +125,34 @@ NeoBundle 'honza/vim-snippets'
 NeoBundle 'mhinz/vim-startify'
 NeoBundle 'nishigori/vim-sunday'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'deris/vim-textobj-enclosedsyntax', { 'depends' : 'kana/vim-textobj-user' }
+NeoBundle 'deris/vim-textobj-enclosedsyntax'
 NeoBundle 'kana/vim-textobj-jabraces'
 NeoBundle 'rhysd/vim-textobj-ruby'
-NeoBundle 'jgdavey/vim-turbux'
+
+if s:in_tmux
+  NeoBundle 'jgdavey/vim-turbux'
+endif
+
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'thinca/vim-unite-history'
-NeoBundle 'hrsh7th/vim-unite-vcs'
+"NeoBundle 'hrsh7th/vim-unite-vcs'  replaced by vim-versions
 NeoBundle 'hrsh7th/vim-versions'
 NeoBundle 'superbrothers/vim-vimperator'
-NeoBundle 'Shougo/vimfiler', { 'depends' : 'Shougo/unite.vim' }
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'benmills/vimux', { 'rev' : '8e091d6' }
+NeoBundleLazy 'Shougo/vimfiler', {
+            \   'autoload': {
+            \     'commands': ['VimFiler', 'VimFilerBufferDir'],
+            \   },
+            \ },
+NeoBundleLazy 'Shougo/vimshell', {
+            \   'autoload': {
+            \     'commands': ['VimShell'],
+            \   },
+            \ },
+
+if s:in_tmux
+  NeoBundle 'benmills/vimux', { 'rev' : '8e091d6' }
+endif
+
 NeoBundle 'LeafCage/yankround.vim'
 
 " plugins from bitbucket
@@ -217,6 +241,8 @@ set fileformats=unix,dos,mac
 if exists('&ambiwidth')
   set ambiwidth=double
 endif
+
+scriptencoding utf-8
 " }}}
 
 " ----------------------------------------------
@@ -810,6 +836,8 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
     \
     \   ["[System] Remove                          ", "!rm %"],
     \   ["[System] SVN Remove                      ", "!svn rm %"],
+    \
+    \   ["[Help][NeoBundle] Options-autoload       ", "help neobundle-options-autoload"],
     \ ]
 
   function! g:unite_source_menu_menus.shortcuts.map(key, value)
