@@ -819,12 +819,12 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
     \   ["[String Utility] All to Zenkaku          ", "'<,'>Zenkaku"],
     \   ["[String Utility] Kana to Zenkaku         ", "'<,'>HzjaConvert zen_kana"],
     \
-    \   ["[Reload with Encoding] latin1            ", "edit ++enc=latin1"],
-    \   ["[Reload with Encoding] cp932             ", "edit ++enc=cp932"],
-    \   ["[Reload with Encoding] shift-jis         ", "edit ++enc=shift-jis"],
-    \   ["[Reload with Encoding] iso-2022-jp       ", "edit ++enc=iso-2022-jp"],
-    \   ["[Reload with Encoding] euc-jp            ", "edit ++enc=euc-jp"],
-    \   ["[Reload with Encoding] utf-8             ", "edit ++enc=utf-8"],
+    \   ["[Reload with Encoding] latin1            ", "edit ++enc=latin1 +set\\ noreadonly"],
+    \   ["[Reload with Encoding] cp932             ", "edit ++enc=cp932 +set\\ noreadonly"],
+    \   ["[Reload with Encoding] shift-jis         ", "edit ++enc=shift-jis +set\\ noreadonly"],
+    \   ["[Reload with Encoding] iso-2022-jp       ", "edit ++enc=iso-2022-jp +set\\ noreadonly"],
+    \   ["[Reload with Encoding] euc-jp            ", "edit ++enc=euc-jp +set\\ noreadonly"],
+    \   ["[Reload with Encoding] utf-8             ", "edit ++enc=utf-8 +set\\ noreadonly"],
     \
     \   ["[Set Encoding] latin1                    ", "set fenc=latin1"],
     \   ["[Set Encoding] cp932                     ", "set fenc=cp932"],
@@ -843,7 +843,7 @@ nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mr
     \   ["[System] Remove                          ", "!rm %"],
     \   ["[System] SVN Remove                      ", "!svn rm %"],
     \
-    \   ["[Help][NeoBundle] Options-autoload       ", "help neobundle-options-autoload"],
+    \   ["[Help][neobundle] Options-autoload       ", "help neobundle-options-autoload"],
     \ ]
 
   function! g:unite_source_menu_menus.shortcuts.map(key, value)
