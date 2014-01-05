@@ -193,18 +193,18 @@ let use_hints_ext_extendedhinttags = 1
 let use_hints_ext_tranform = 1
 autocmd VimperatorEnter ".*" :hi -a HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 15px; font-weight: normal;
 javascript << EOM
-(function() {
+(function(){
   // ページ送り
-  hints.addSimpleMap("<C-f>", function () {
-    this.hide();
-    buffer.scrollPages(1);
-    this.show(this._submode, "", content.window);
-  });
-  hints.addSimpleMap("<C-b>", function () {
-    this.hide();
-    buffer.scrollPages(-1);
-    this.show(this._submode, "", content.window);
-  });
+  var _scrollPageWithHints = function(_mapping, _scrollPageSize){
+    hints.addSimpleMap(_mapping, function(){
+      this.hide();
+      buffer.scrollPages(_scrollPageSize);
+      this.show(this._submode, "", content.window);
+    });
+  };
+  _scrollPageWithHints("<C-f>", 1);
+  _scrollPageWithHints("<C-b>", -1);
+
   // hint node 重なり除去
   hints.addSimpleMap("<C-l>", function(){ this.relocation(); });
 })();
