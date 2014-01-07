@@ -47,8 +47,10 @@ inoremap <C-q> <Ins><C-q><Ins>
 " キーマップ設定
 " ------------------------------------------------------------
 
+let mapleader = ","
+
 " ,r で .vimperatorrc をリロード
-map ,r :source ~/.vimperatorrc<Cr>
+map <Leader>r :source ~/.vimperatorrc<Cr>
 
 " 検索補完関連
 nnoremap s :set<Space>cpt=s<Cr>:open<Space>google<Space>
@@ -100,10 +102,10 @@ inoremap <C-b> <PageUp>
 nnoremap <Esc><Esc> :noh<Cr>
 
 " ,p で印刷プレビュー
-noremap ,p :emenu ファイル.印刷プレビュー<Cr>
+noremap <Leader>p :emenu ファイル.印刷プレビュー<Cr>
 
 " ,o でURLを一気に開く
-nnoremap ,o :emenu ファイル.Open Multiple Locations...<Cr>
+nnoremap <Leader>o :emenu ファイル.Open Multiple Locations...<Cr>
 
 
 " ------------------------------------------------------------
