@@ -510,7 +510,7 @@ imap <expr><C-b> "\<PageUp>"
 " plugins "{{{
 " alignta "{{{
 vmap <Leader>a :Alignta<Space>
-vmap <Leader>ua :<C-u>Unite alignta:arguments<CR>
+vmap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
 let g:unite_source_alignta_preset_arguments = [
   \ ["Align at '=>'     --  `=>`",                        '=>'],
   \ ["Align at /\\S/    --  `\\S\\+`",                    '\S\+'],
@@ -591,7 +591,7 @@ set foldtext=FoldCCtext()
 " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
 " r => show diff preview
 let g:gundo_auto_preview = 0
-nmap <F5> :GundoToggle<CR>
+nmap <F5> :GundoToggle<Cr>
 " }}}
 
 " HowMuch "{{{
@@ -699,10 +699,10 @@ autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
 " }}}
 
 " neosnippet "{{{
-imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-imap <expr><CR> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplcache#smart_close_popup() : "\<CR>"
+imap <expr><Tab> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+smap <expr><Tab> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+imap <expr><Cr> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplcache#smart_close_popup() : "\<Cr>"
 
 if has('conceal')
   set conceallevel=2 concealcursor=i
@@ -842,11 +842,11 @@ endif
 " Unicode-RST-Tables "{{{
 let g:no_rst_table_maps = 0
 if has("python3")
-  map <silent> <Leader><Leader>c :python3 CreateTable()<CR>
-  map <silent> <Leader><Leader>f :python3 FixTable()<CR>
+  map <silent> <Leader><Leader>c :python3 CreateTable()<Cr>
+  map <silent> <Leader><Leader>f :python3 FixTable()<Cr>
 elseif has("python")
-  map <silent> <Leader><Leader>c :python  CreateTable()<CR>
-  map <silent> <Leader><Leader>f :python  FixTable()<CR>
+  map <silent> <Leader><Leader>c :python  CreateTable()<Cr>
+  map <silent> <Leader><Leader>f :python  FixTable()<Cr>
 endif
 " }}}
 
@@ -867,20 +867,20 @@ call unite#custom_source("file_mru", "max_candidates", 1000)
 call unite#custom_source('buffer', 'sorters', 'sorter_word')
 autocmd VimLeavePre * call unite#sources#outline#remove_cache_files()
 nmap <Leader>ug :<C-u>Unite grep:./::
-nmap <silent> <Leader>uy :<C-u>Unite history/yank<CR>
-nmap <silent> <Leader>uo :<C-u>Unite outline<CR>
-nmap <silent> <Leader>uc :<C-u>Unite webcolorname<CR>
-nmap <silent> <Leader>ub :<C-u>Unite buffer<CR>
-nmap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-nmap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<CR>
-nmap <silent> <Leader>um :<C-u>Unite file_mru<CR>
-nmap <silent> <Leader>uu :<C-u>Unite buffer file_mru<CR>
-nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+nmap <silent> <Leader>uy :<C-u>Unite history/yank<Cr>
+nmap <silent> <Leader>uo :<C-u>Unite outline<Cr>
+nmap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
+nmap <silent> <Leader>ub :<C-u>Unite buffer<Cr>
+nmap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
+nmap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
+nmap <silent> <Leader>um :<C-u>Unite file_mru<Cr>
+nmap <silent> <Leader>uu :<C-u>Unite buffer file_mru<Cr>
+nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Cr>
 
 " unite-shortcut "{{{
   " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
   " http://d.hatena.ne.jp/tyru/20120110/prompt
-  map <silent> <Leader>us :<C-u>Unite menu:shortcuts<CR>
+  map <silent> <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   let g:unite_source_menu_menus = {}
   let g:unite_source_menu_menus.shortcuts = {
     \   "description" : "shortcuts"
@@ -935,7 +935,7 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
 " }}}
 
 " unite plugins "{{{
-  nmap <silent> <Leader>uv :<C-u>UniteVersions status:!<CR>
+  nmap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
   function! AddActionsToVersions()
     let l:action = {
       \   "description" : "open files",
@@ -963,8 +963,8 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
   call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
 
   " other unite keymappings: they used to be for plugins replaced by unite
-  nmap <silent> <Leader>m :<C-u>Unite file_mru<CR>
-  nmap <F4> :<C-u>Unite buffer<CR>
+  nmap <silent> <Leader>m :<C-u>Unite file_mru<Cr>
+  nmap <F4> :<C-u>Unite buffer<Cr>
 " }}}
 " }}}
 
