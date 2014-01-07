@@ -121,6 +121,10 @@ let g:smooziee_scroll_interval=25
 " なんてあさましいっ!!
 let g:amazon_asamashi = "kgtk-22"
 
+" for caret-hint
+nnoremap <Leader>f :caret move head<Cr>
+nnoremap <Leader><S-f> :caret move tail<Cr>
+
 " for copy.js
 javascript << EOM
 liberator.globalVariables.copy_templates = [
