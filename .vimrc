@@ -78,6 +78,7 @@ NeoBundleLazy 'kg8m/open-browser.vim', {
             \   'autoload': {
             \     'commands':  ['OpenBrowserSearch', 'OpenBrowser'],
             \     'functions': 'openbrowser#open',
+            \     'mappings':  '<Plug>(openbrowser-open)',
             \   },
             \ },
 NeoBundleLazy 'tyru/operator-camelize.vim', {
