@@ -49,6 +49,7 @@ NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
 "NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
 NeoBundle 'sk1418/HowMuch'
+NeoBundle 'nishigori/increment-activator'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
@@ -175,7 +176,6 @@ NeoBundle 'kg8m/vim-rubytest'
 NeoBundle 'thinca/vim-singleton'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'mhinz/vim-startify'
-NeoBundle 'nishigori/vim-sunday'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'deris/vim-textobj-enclosedsyntax'
 NeoBundle 'kana/vim-textobj-jabraces'
