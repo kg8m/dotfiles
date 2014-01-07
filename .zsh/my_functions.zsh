@@ -103,6 +103,22 @@ function mysql_current {
   execute_with_echo "mysql -u root ${dbname}";
 }
 
+function separated_rake_test {
+  if (($# == 0)); then
+    targets=(unit functional integration)
+  else
+    eval "targets=($@)"
+  fi
+
+  for target in $targets ; do
+    echo "----- test test/${target}/**/*_test.rb ----------"
+
+    for char in {a-z}; do
+      execute_with_echo "ruby_multitest test/${target}/**/${char}*_test.rb"
+    done
+  done
+}
+
 function tmux_setup_default {
   tmux new-session -d -s default
   tmux new-window -t default:2
