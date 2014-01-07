@@ -73,7 +73,6 @@ noremap <C-j> :tabmove +1<Cr>
 noremap <C-k> :tabmove -1<Cr>
 
 " OSのキーバインドを一部再現
-noremap <C-a> i<C-a>
 inoremap <C-a> <Ins><C-a><Ins>
 inoremap <C-w> <Ins><C-w><Ins>
 cnoremap <C-a> <Ins><C-a><Ins>
