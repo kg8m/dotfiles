@@ -324,7 +324,7 @@ set cursorcolumn
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorcolumn nocursorline
-  autocmd WinEnter,BufEnter,BufRead,BufNewFile,InsertEnter,InsertLeave * set cursorcolumn cursorline
+  autocmd WinEnter,BufEnter,BufWinEnter,BufRead,BufNewFile,TabEnter * set cursorcolumn cursorline
 augroup END
 set scrolloff=15
 " set showbreak=++++
@@ -920,6 +920,7 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
     \   ["[System] Remove                          ", "!rm %"],
     \   ["[System] SVN Remove                      ", "!svn rm %"],
     \
+    \   ["[Help]autocommand-events                 ", "help autocommand-events"],
     \   ["[Help][neobundle] Options-autoload       ", "help neobundle-options-autoload"],
     \ ]
 
