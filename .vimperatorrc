@@ -88,6 +88,15 @@ map <C-l> <A-d>
 inoremap <C-n> <Esc><C-n>
 inoremap <C-p> <Esc><C-p>
 
+" input で Ctrl + h/j/k/l を使って移動
+" not working in a <select> tag
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+inoremap <C-f> <PageDown>
+inoremap <C-b> <PageUp>
+
 " <Esc><Esc>で検索ハイライト解除
 nnoremap <Esc><Esc> :noh<Cr>
 
