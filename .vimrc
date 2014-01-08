@@ -42,6 +42,7 @@ NeoBundle 'taichouchou2/alpaca_complete', {
         \   'depends': ['tpope/vim-rails', 'Shougo/neocomplcache'],
         \ },
 NeoBundle 'vim-scripts/AutoClose'
+NeoBundle 'tyru/caw.vim'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'lilydjwg/colorizer'
 NeoBundle 'rhysd/conflict-marker.vim'
@@ -221,7 +222,7 @@ NeoBundleLazy 'https://bitbucket.org/heavenshell/gundo.vim', {
 NeoBundle 'https://bitbucket.org/teramako/jscomplete-vim.git'
 
 " plugins from vim.org
-NeoBundle 'EnhCommentify.vim'
+"NeoBundle 'EnhCommentify.vim'
 "NeoBundle 'eruby.vim'
 NeoBundle 'matchit.zip'
 NeoBundle 'sequence'
@@ -575,11 +576,6 @@ let g:EasyMotion_keys        = "FJKLASDHGUIONMERWC,;"
 nmap <Leader>f <Plug>(easymotion-s)
 vmap <Leader>f <Plug>(easymotion-s)
 omap <Leader>f <Plug>(easymotion-s)
-" }}}
-
-" EnhCommentify "{{{
-let g:EnhCommentifyBindInInsert = 'no'
-let g:EnhCommentifyBindInVisual = 'no'
 " }}}
 
 " foldCC "{{{
