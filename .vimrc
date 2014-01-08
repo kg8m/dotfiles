@@ -365,7 +365,7 @@ if has('vim_starting')
 
   autocmd FileType ruby set foldmethod=syntax
   autocmd FileType yaml set foldmethod=indent
-  autocmd WinEnter,BufEnter,BufRead,BufNewFile * if &ft == 'javascript' | call JavaScriptFold() | endif
+  autocmd BufEnter * if &ft == 'javascript' | call JavaScriptFold() | endif
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
