@@ -182,6 +182,7 @@ NeoBundle 'mhinz/vim-startify'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'deris/vim-textobj-enclosedsyntax'
 NeoBundle 'kana/vim-textobj-jabraces'
+NeoBundle 'osyo-manga/vim-textobj-multitextobj'
 NeoBundle 'rhysd/vim-textobj-ruby'
 
 if s:in_tmux
@@ -837,6 +838,43 @@ let g:startify_custom_header = [
   \   '',
   \   '',
   \ ]
+" }}}
+
+" textobj-multitextobj "{{{
+let g:textobj_multitextobj_textobjects_a = [
+  \   [
+  \     "\<Plug>(textobj-jabraces-parens-a)",
+  \     "\<Plug>(textobj-jabraces-braces-a)",
+  \     "\<Plug>(textobj-jabraces-brackets-a)",
+  \     "\<Plug>(textobj-jabraces-angles-a)",
+  \     "\<Plug>(textobj-jabraces-double-angles-a)",
+  \     "\<Plug>(textobj-jabraces-kakko-a)",
+  \     "\<Plug>(textobj-jabraces-double-kakko-a)",
+  \     "\<Plug>(textobj-jabraces-yama-kakko-a)",
+  \     "\<Plug>(textobj-jabraces-double-yama-kakko-a)",
+  \     "\<Plug>(textobj-jabraces-kikkou-kakko-a)",
+  \     "\<Plug>(textobj-jabraces-sumi-kakko-a)",
+  \   ],
+  \ ]
+let g:textobj_multitextobj_textobjects_i = [
+  \   [
+  \     "\<Plug>(textobj-jabraces-parens-i)",
+  \     "\<Plug>(textobj-jabraces-braces-i)",
+  \     "\<Plug>(textobj-jabraces-brackets-i)",
+  \     "\<Plug>(textobj-jabraces-angles-i)",
+  \     "\<Plug>(textobj-jabraces-double-angles-i)",
+  \     "\<Plug>(textobj-jabraces-kakko-i)",
+  \     "\<Plug>(textobj-jabraces-double-kakko-i)",
+  \     "\<Plug>(textobj-jabraces-yama-kakko-i)",
+  \     "\<Plug>(textobj-jabraces-double-yama-kakko-i)",
+  \     "\<Plug>(textobj-jabraces-kikkou-kakko-i)",
+  \     "\<Plug>(textobj-jabraces-sumi-kakko-i)",
+  \   ],
+  \ ]
+omap aj <Plug>(textobj-multitextobj-a)
+omap ij <Plug>(textobj-multitextobj-i)
+vmap aj <Plug>(textobj-multitextobj-a)
+vmap ij <Plug>(textobj-multitextobj-i)
 " }}}
 
 " turbux "{{{
