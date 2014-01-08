@@ -143,10 +143,11 @@ NeoBundle 'thinca/vim-ft-vim_fold'
 NeoBundle 'muz/vim-gemfile'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
-"NeoBundle 'pangloss/vim-javascript'  trying othree/javascript-libraries-syntax
+"NeoBundle 'pangloss/vim-javascript'
 NeoBundleLazy 'jelera/vim-javascript-syntax', {
             \   'autoload': {
             \     'filetypes': ['javascript', 'eruby'],
+            \     'functions': ['JavaScriptFold'],
             \   },
             \ },
 NeoBundle 'elzr/vim-json'
@@ -365,7 +366,7 @@ if has('vim_starting')
 
   autocmd FileType ruby set foldmethod=syntax
   autocmd FileType yaml set foldmethod=indent
-  autocmd BufEnter * if &ft == 'javascript' | call JavaScriptFold() | endif
+  autocmd BufEnter * if &ft == 'javascript' | call MyJavaScriptFold() | endif
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
@@ -596,6 +597,16 @@ nmap <F5> :GundoToggle<Cr>
 vmap <Leader>? <Plug>AutoCalcReplace
 vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
 let g:HowMuch_scale = 5
+" }}}
+
+" vim-javascript-syntax "{{{
+function! MyJavaScriptFold()
+  if !exists("b:javascript_folded")
+    call JavaScriptFold()
+    setl foldlevelstart=0
+    let b:javascript_folded = 1
+  endif
+endfunction
 " }}}
 
 " jscomplete "{{{
