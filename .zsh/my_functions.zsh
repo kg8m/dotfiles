@@ -113,8 +113,8 @@ function separated_rake_test {
   for target in $targets ; do
     echo "----- test test/${target}/**/*_test.rb ----------"
 
-    for char in {a-z}; do
-      execute_with_echo "ruby_multitest test/${target}/**/${char}*_test.rb"
+    for f in `/bin/ls test/${target}/**/*_test.rb`; do
+      execute_with_echo "ruby $f"
     done
   done
 }
