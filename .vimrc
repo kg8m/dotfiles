@@ -600,7 +600,7 @@ vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
 let g:HowMuch_scale = 5
 " }}}
 
-" vim-javascript-syntax "{{{
+" javascript-syntax "{{{
 function! MyJavaScriptFold()
   if !exists("b:javascript_folded")
     call JavaScriptFold()
