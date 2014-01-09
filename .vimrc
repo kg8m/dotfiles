@@ -159,7 +159,19 @@ NeoBundleLazy 'kana/vim-operator-replace', {
             \     'mappings': ['ns', '<Plug>(operator-replace)'],
             \   },
             \ },
-NeoBundle 'kana/vim-operator-user'
+" not working in case like following:
+"   (1) text:      hoge "fu*ga piyo"
+"   (2) type keys: saa"'
+"   (3) expected:  hoge* '"fuga piyo"'
+"   (4) result:    hoge*' "fuga piyo"'
+" NeoBundleLazy 'rhysd/vim-operator-surround', {
+"             \   'autoload': {
+"             \     'mappings': ['ns', '<Plug>(operator-surround-'],
+"             \   },
+"             \ },
+NeoBundleLazy 'kana/vim-operator-user', {
+            \   'functions': 'operator#user#define',
+            \ }
 NeoBundleLazy 'thinca/vim-qfreplace', {
             \   'autoload': {
             \     'filetypes': ['unite', 'quickfix']
@@ -328,7 +340,7 @@ set cursorcolumn
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorcolumn nocursorline
-  autocmd WinEnter,BufEnter,BufWinEnter,BufRead,BufNewFile,TabEnter * set cursorcolumn cursorline
+  autocmd BufWinEnter,BufEnter,BufWinEnter,BufRead,BufNewFile,TabEnter * set cursorcolumn cursorline
 augroup END
 set scrolloff=15
 " set showbreak=++++
@@ -739,6 +751,15 @@ vmap <Leader>c <Plug>(operator-decamelize)
 " operator-replace "{{{
 nmap r <Plug>(operator-replace)
 vmap r <Plug>(operator-replace)
+" }}}
+
+" operator-surround "{{{
+" nmap <silent>sa <Plug>(operator-surround-append)
+" nmap <silent>sd <Plug>(operator-surround-delete)
+" nmap <silent>sr <Plug>(operator-surround-replace)
+" vmap <silent>sa <Plug>(operator-surround-append)
+" vmap <silent>sd <Plug>(operator-surround-delete)
+" vmap <silent>sr <Plug>(operator-surround-replace)
 " }}}
 
 " rails "{{{
