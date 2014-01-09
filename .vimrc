@@ -395,8 +395,9 @@ set incsearch
 " ----------------------------------------------
 " controls "{{{
 set restorescreen
+set mouse=
 " set clipboard=unnamed
-set visualbell t_vb=
+set t_vb=
 
 " backup, recover
 set nobackup
