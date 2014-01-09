@@ -48,7 +48,7 @@ NeoBundle 'lilydjwg/colorizer'
 NeoBundle 'rhysd/conflict-marker.vim'
 NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
-"NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
+" NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
 NeoBundle 'sk1418/HowMuch'
 NeoBundle 'nishigori/increment-activator'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
@@ -93,8 +93,8 @@ NeoBundleLazy 'thinca/vim-prettyprint', {
             \     'functions': ['PrettyPrint', 'PP'],
             \   },
             \ },
-"NeoBundle 'vim-scripts/QuickBuf'
-"NeoBundle 'kien/rainbow_parentheses.vim'
+" NeoBundle 'vim-scripts/QuickBuf'
+" NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'joeytwiddle/sexy_scroller.vim'
 NeoBundle 'jiangmiao/simple-javascript-indenter'
@@ -134,7 +134,7 @@ NeoBundle 'kg8m/vim-blockle'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'haya14busa/vim-easymotion'
-"NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
+" NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
 NeoBundle 'thinca/vim-ft-diff_fold'
 NeoBundle 'thinca/vim-ft-help_fold'
 NeoBundle 'thinca/vim-ft-markdown_fold'
@@ -143,7 +143,7 @@ NeoBundle 'thinca/vim-ft-vim_fold'
 NeoBundle 'muz/vim-gemfile'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
-"NeoBundle 'pangloss/vim-javascript'
+" NeoBundle 'pangloss/vim-javascript'
 NeoBundleLazy 'jelera/vim-javascript-syntax', {
             \   'autoload': {
             \     'filetypes': ['javascript', 'eruby'],
@@ -153,7 +153,7 @@ NeoBundleLazy 'jelera/vim-javascript-syntax', {
 NeoBundle 'elzr/vim-json'
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
-"NeoBundle 'amdt/vim-niji'
+" NeoBundle 'amdt/vim-niji'
 NeoBundleLazy 'kana/vim-operator-replace', {
             \   'autoload': {
             \     'mappings': ['ns', '<Plug>(operator-replace)'],
@@ -195,7 +195,7 @@ NeoBundleLazy 'thinca/vim-unite-history', {
             \     'unite_sources': ['history/command', 'history/search'],
             \   },
             \ },
-"NeoBundle 'hrsh7th/vim-unite-vcs'  replaced by vim-versions
+" NeoBundle 'hrsh7th/vim-unite-vcs'  replaced by vim-versions
 NeoBundle 'hrsh7th/vim-versions'
 NeoBundle 'superbrothers/vim-vimperator'
 NeoBundleLazy 'Shougo/vimfiler', {
@@ -224,8 +224,8 @@ NeoBundleLazy 'https://bitbucket.org/heavenshell/gundo.vim', {
 NeoBundle 'https://bitbucket.org/teramako/jscomplete-vim.git'
 
 " plugins from vim.org
-"NeoBundle 'EnhCommentify.vim'
-"NeoBundle 'eruby.vim'
+" NeoBundle 'EnhCommentify.vim'
+" NeoBundle 'eruby.vim'
 NeoBundle 'matchit.zip'
 NeoBundle 'sequence'
 NeoBundle 'sudo.vim'
@@ -261,38 +261,38 @@ if &encoding !=# 'utf-8'
   set encoding=japan
   set fileencoding=japan
 endif
-"if has('iconv')
-"  let s:enc_euc = 'euc-jp'
-"  let s:enc_jis = 'iso-2022-jp'
-"  if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-"    let s:enc_euc = 'eucjp-ms'
-"    let s:enc_jis = 'iso-2022-jp-3'
-"  elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-"    let s:enc_euc = 'euc-jisx0213'
-"    let s:enc_jis = 'iso-2022-jp-3'
-"  endif
-"  if &encoding ==# 'utf-8'
-"    let s:fileencodings_default = &fileencodings
-"    let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-"    let &fileencodings = &fileencodings .','. s:fileencodings_default
-"    unlet s:fileencodings_default
-"  else
-"    let &fileencodings = &fileencodings .','. s:enc_jis
-"    set fileencodings+=utf-8,ucs-2le,ucs-2
-"    if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-"      set fileencodings+=cp932
-"      set fileencodings-=euc-jp
-"      set fileencodings-=euc-jisx0213
-"      set fileencodings-=eucjp-ms
-"      let &encoding = s:enc_euc
-"      let &fileencoding = s:enc_euc
-"    else
-"      let &fileencodings = &fileencodings .','. s:enc_euc
-"    endif
-"  endif
-"  unlet s:enc_euc
-"  unlet s:enc_jis
-"endif
+" if has('iconv')
+"   let s:enc_euc = 'euc-jp'
+"   let s:enc_jis = 'iso-2022-jp'
+"   if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
+"     let s:enc_euc = 'eucjp-ms'
+"     let s:enc_jis = 'iso-2022-jp-3'
+"   elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
+"     let s:enc_euc = 'euc-jisx0213'
+"     let s:enc_jis = 'iso-2022-jp-3'
+"   endif
+"   if &encoding ==# 'utf-8'
+"     let s:fileencodings_default = &fileencodings
+"     let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+"     let &fileencodings = &fileencodings .','. s:fileencodings_default
+"     unlet s:fileencodings_default
+"   else
+"     let &fileencodings = &fileencodings .','. s:enc_jis
+"     set fileencodings+=utf-8,ucs-2le,ucs-2
+"     if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
+"       set fileencodings+=cp932
+"       set fileencodings-=euc-jp
+"       set fileencodings-=euc-jisx0213
+"       set fileencodings-=eucjp-ms
+"       let &encoding = s:enc_euc
+"       let &fileencoding = s:enc_euc
+"     else
+"       let &fileencodings = &fileencodings .','. s:enc_euc
+"     endif
+"   endif
+"   unlet s:enc_euc
+"   unlet s:enc_jis
+" endif
 if has('autocmd')
   function! AU_ReCheck_FENC()
     if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
