@@ -52,6 +52,7 @@ NeoBundle 'tyru/caw.vim'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'lilydjwg/colorizer'
 NeoBundle 'rhysd/conflict-marker.vim'
+NeoBundle 'spolu/dwm.vim'
 NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
 " NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
@@ -108,6 +109,7 @@ NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'kannokanno/unite-dwm'
 NeoBundleLazy 'osyo-manga/unite-filetype', {
             \   'autoload': {
             \     'unite_sources': ['filetype'],
@@ -592,6 +594,13 @@ let s:colorizer_target_filetypes = ['eruby', 'haml', 'html', 'css', 'scss', 'jav
 autocmd WinEnter,BufEnter,BufRead,BufNewFile * if index(s:colorizer_target_filetypes, &ft) >= 0 | ColorHighlight | else | ColorClear | endif
 " }}}
 
+" dwm "{{{
+let g:dwm_map_keys = 0
+nmap <C-w>n       :call DWM_New()<Cr>
+nmap <C-w>c       :call DWM_Close()<Cr>
+nmap <C-w><Space> :call DWM_Focus()<Cr>
+" }}}
+
 " easymotion "{{{
 " http://haya14busa.com/vim-lazymotion-on-speed/
 let g:EasyMotion_do_mapping  = 0
@@ -949,12 +958,12 @@ nmap <Leader>ug :<C-u>Unite grep:./::
 nmap <silent> <Leader>uy :<C-u>Unite history/yank<Cr>
 nmap <silent> <Leader>uo :<C-u>Unite outline<Cr>
 nmap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
-nmap <silent> <Leader>ub :<C-u>Unite buffer<Cr>
-nmap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
+nmap <silent> <Leader>ub :<C-u>Unite buffer -default-action=dwm_new<Cr>
+nmap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file -default-action=dwm_new<Cr>
 nmap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
-nmap <silent> <Leader>um :<C-u>Unite file_mru<Cr>
-nmap <silent> <Leader>uu :<C-u>Unite buffer file_mru<Cr>
-nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Cr>
+nmap <silent> <Leader>um :<C-u>Unite file_mru -default-action=dwm_new<Cr>
+nmap <silent> <Leader>uu :<C-u>Unite buffer file_mru -default-action=dwm_new<Cr>
+nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file -default-action=dwm_new<Cr>
 
 " unite-shortcut "{{{
   " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
@@ -1048,8 +1057,8 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
   call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
 
   " other unite keymappings: they used to be for plugins replaced by unite
-  nmap <silent> <Leader>m :<C-u>Unite file_mru<Cr>
-  nmap <F4> :<C-u>Unite buffer<Cr>
+  nmap <silent> <Leader>m :<C-u>Unite file_mru -default-action=dwm_new<Cr>
+  nmap <F4> :<C-u>Unite buffer -default-action=dwm_new<Cr>
 " }}}
 " }}}
 
