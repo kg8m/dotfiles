@@ -648,11 +648,12 @@ let g:jscomplete_use = ['dom', 'moz', 'es6th']
 " }}}
 
 " lightline "{{{
+" http://d.hatena.ne.jp/itchyny/20130828/1377653592
 set laststatus=2
 let s:lightline_elements = {
 \ 'left': [
 \   [ 'mode', 'paste' ],
-\   [ 'bufnum', 'readonly', 'absolutepath', 'modified' ],
+\   [ 'bufnum', 'filename' ],
 \   [ 'filetype', 'fileencoding', 'fileformat' ],
 \   [ 'lineinfo_with_percent' ],
 \ ],
@@ -664,10 +665,34 @@ let g:lightline = {
     \ 'inactive': s:lightline_elements,
     \ 'component': {
     \   'bufnum': '#%n',
-    \   'lineinfo_with_percent': '%3l/%L(%3p%%) : %-2v',
+    \   'lineinfo_with_percent': '%l/%L(%p%%) : %v',
+    \ },
+    \ 'component_function': {
+    \   'filename': 'MyFilename',
     \ },
     \ 'colorscheme': 'wombat',
 \ }
+
+function! MyReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'X' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+       \ (
+       \   &ft == 'vimfiler' ? vimfiler#get_status_string() :
+       \   &ft == 'unite' ? unite#get_status_string() :
+       \   &ft == 'vimshell' ? vimshell#get_status_string() :
+       \   '' != expand('%:t') ? (
+       \     winwidth(0) >= 100 ? expand('%:F') : expand('%:t')
+       \   ) : '[No Name]'
+       \ ) .
+       \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
 " }}}
 
 " neocomplcache/neocomplete "{{{
