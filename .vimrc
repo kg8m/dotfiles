@@ -42,6 +42,12 @@ NeoBundle 'taichouchou2/alpaca_complete', {
         \   'depends': ['tpope/vim-rails', 'Shougo/neocomplcache'],
         \ },
 NeoBundle 'vim-scripts/AutoClose'
+NeoBundleLazy 'itchyny/calendar.vim', {
+            \   'autoload': {
+            \     'commands':  'Calendar',
+            \     'mappings':  '<Plug>(calendar_',
+            \   },
+            \ },
 NeoBundle 'tyru/caw.vim'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'lilydjwg/colorizer'
@@ -575,6 +581,11 @@ let g:blockle_mapping = ",b"
 let g:blockle_erase_spaces_around_starting_brace = 1
 " }}}
 
+" calendar "{{{
+let g:calendar_google_calendar = 1
+let g:calendar_first_day = "monday"
+" }}}
+
 " colorizer "{{{
 let g:colorizer_startup = 0
 let s:colorizer_target_filetypes = ['eruby', 'haml', 'html', 'css', 'scss', 'javascript', 'diff']
@@ -948,7 +959,7 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
 " unite-shortcut "{{{
   " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
   " http://d.hatena.ne.jp/tyru/20120110/prompt
-  map <silent> <Leader>us :<C-u>Unite menu:shortcuts<Cr>
+  map <silent> <Leader>us :<C-u>Unite menu:shortcuts -start-insert<Cr>
   let g:unite_source_menu_menus = {}
   let g:unite_source_menu_menus.shortcuts = {
     \   "description" : "shortcuts"
@@ -987,6 +998,11 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
     \
     \   ["[System] Remove                          ", "!rm %"],
     \   ["[System] SVN Remove                      ", "!svn rm %"],
+    \
+    \   ["[Calendar] Year View                     ", "Calendar -view=year  -position=hear!"],
+    \   ["[Calendar] Month View                    ", "Calendar -view=month -position=hear!"],
+    \   ["[Calendar] Week View                     ", "Calendar -view=week  -position=hear!"],
+    \   ["[Calendar] Day View                      ", "Calendar -view=day   -position=hear! -split=vertical -width=75"],
     \
     \   ["[Help]autocommand-events                 ", "help autocommand-events"],
     \   ["[Help][neobundle] Options-autoload       ", "help neobundle-options-autoload"],
