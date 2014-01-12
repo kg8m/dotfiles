@@ -345,11 +345,11 @@ set showmode
 set showcmd
 set cursorline
 set cursorcolumn
-" augroup cch
-"   autocmd! cch
-"   autocmd WinLeave * set nocursorcolumn nocursorline
-"   autocmd BufWinEnter,BufEnter,BufWinEnter,BufRead,BufNewFile,TabEnter * set cursorcolumn cursorline
-" augroup END
+augroup cch
+  autocmd! cch
+  autocmd WinLeave * set nocursorcolumn nocursorline
+  autocmd WinEnter,BufWinEnter,FileType,ColorScheme * set cursorcolumn cursorline
+augroup END
 set scrolloff=15
 " set showbreak=++++
 set iskeyword& iskeyword+=-
