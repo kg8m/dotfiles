@@ -594,6 +594,10 @@ let s:colorizer_target_filetypes = ['eruby', 'haml', 'html', 'css', 'scss', 'jav
 autocmd WinEnter,BufEnter,BufRead,BufNewFile * if index(s:colorizer_target_filetypes, &ft) >= 0 | ColorHighlight | else | ColorClear | endif
 " }}}
 
+" caw "{{{
+let g:caw_i_skip_blank_line = 1
+" }}}
+
 " dwm "{{{
 let g:dwm_map_keys = 0
 nmap <C-w>n       :call DWM_New()<Cr>
