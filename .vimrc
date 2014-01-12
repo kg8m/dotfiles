@@ -139,6 +139,7 @@ NeoBundleLazy 'pasela/unite-webcolorname', {
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'kg8m/vim-blockle'
+NeoBundle 't9md/vim-choosewin'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'haya14busa/vim-easymotion'
@@ -596,6 +597,15 @@ autocmd WinEnter,BufEnter,BufRead,BufNewFile * if index(s:colorizer_target_filet
 
 " caw "{{{
 let g:caw_i_skip_blank_line = 1
+" }}}
+
+" choosewin "{{{
+let g:choosewin_overlay_enable          = 0  " wanna set true but too heavy
+let g:choosewin_overlay_clear_multibyte = 1
+let g:choosewin_blink_on_land           = 0
+let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
+let g:choosewin_tabline_replace         = 0
+nmap <C-w>s <Plug>(choosewin)
 " }}}
 
 " dwm "{{{
