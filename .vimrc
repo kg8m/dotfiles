@@ -109,7 +109,7 @@ NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'kannokanno/unite-dwm'
+NeoBundle 'kg8m/unite-dwm'
 NeoBundleLazy 'osyo-manga/unite-filetype', {
             \   'autoload': {
             \     'unite_sources': ['filetype'],
@@ -998,12 +998,12 @@ nmap <Leader>ug :<C-u>Unite grep:./::
 nmap <silent> <Leader>uy :<C-u>Unite history/yank<Cr>
 nmap <silent> <Leader>uo :<C-u>Unite outline<Cr>
 nmap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
-nmap <silent> <Leader>ub :<C-u>Unite buffer -default-action=dwm_new<Cr>
-nmap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file -default-action=dwm_new<Cr>
+nmap <silent> <Leader>ub :<C-u>Unite buffer<Cr>
+nmap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
 nmap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
-nmap <silent> <Leader>um :<C-u>Unite file_mru -default-action=dwm_new<Cr>
-nmap <silent> <Leader>uu :<C-u>Unite buffer file_mru -default-action=dwm_new<Cr>
-nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file -default-action=dwm_new<Cr>
+nmap <silent> <Leader>um :<C-u>Unite file_mru<Cr>
+nmap <silent> <Leader>uu :<C-u>Unite buffer file_mru<Cr>
+nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Cr>
 
 " unite-shortcut "{{{
   " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
@@ -1068,7 +1068,7 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
   endfunction
 " }}}
 
-" unite plugins "{{{
+" unite-versions "{{{
   nmap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
   function! AddActionsToVersions()
     let l:action = {
@@ -1092,13 +1092,17 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
     endfunction
 
     call unite#custom#action("versions/git/status,versions/svn/status", "open", l:action)
+    call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
   endfunction
   call AddActionsToVersions()
-  call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
+" }}}
+
+" unite-dwm "{{{
+  let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru"
 
   " other unite keymappings: they used to be for plugins replaced by unite
-  nmap <silent> <Leader>m :<C-u>Unite file_mru -default-action=dwm_new<Cr>
-  nmap <F4> :<C-u>Unite buffer -default-action=dwm_new<Cr>
+  nmap <silent> <Leader>m :<C-u>Unite file_mru<Cr>
+  nmap <F4> :<C-u>Unite buffer<Cr>
 " }}}
 " }}}
 
