@@ -1109,6 +1109,7 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
 
 " vimfiler "{{{
 let g:vimfiler_safe_mode_by_default = 0
+let g:vimfiler_edit_action = 'dwm_open'
 nmap <Leader>e :VimFilerBufferDir -quit<Cr>
 " }}}
 
