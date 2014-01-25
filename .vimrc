@@ -88,6 +88,7 @@ NeoBundleLazy 'Shougo/neosnippet', {
             \     'unite_sources': ['neosnippet', 'neosnippet/user', 'neosnippet/runtime'],
             \   },
             \ },
+NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'kg8m/open-browser.vim', {
             \   'autoload': {
             \     'commands':  ['OpenBrowserSearch', 'OpenBrowser'],
