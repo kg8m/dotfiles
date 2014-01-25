@@ -421,6 +421,9 @@ set mouse=
 " set clipboard=unnamed
 set t_vb=
 
+" smoothen screen drawing; wait procedures' completion
+set lazyredraw
+
 " backup, recover
 set nobackup
 set directory=~/tmp
