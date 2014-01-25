@@ -423,6 +423,7 @@ set t_vb=
 
 " smoothen screen drawing; wait procedures' completion
 set lazyredraw
+set ttyfast
 
 " backup, recover
 set nobackup
