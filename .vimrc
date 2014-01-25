@@ -51,6 +51,11 @@ NeoBundleLazy 'itchyny/calendar.vim', {
 NeoBundle 'tyru/caw.vim'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'lilydjwg/colorizer'
+NeoBundleLazy 'cocopon/colorswatch.vim', {
+            \   'autoload': {
+            \     'commands': 'ColorSwatchGenerate',
+            \   },
+            \ },
 NeoBundle 'rhysd/conflict-marker.vim'
 NeoBundle 'spolu/dwm.vim'
 NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
@@ -694,7 +699,7 @@ let g:lightline = {
     \ 'component_function': {
     \   'filename': 'MyFilename',
     \ },
-    \ 'colorscheme': 'wombat',
+    \ 'colorscheme': 'molokai',
 \ }
 
 function! MyReadonly()
