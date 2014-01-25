@@ -58,6 +58,7 @@ NeoBundle 'LeafCage/foldCC'
 " NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
 NeoBundle 'sk1418/HowMuch'
 NeoBundle 'nishigori/increment-activator'
+NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
@@ -646,6 +647,10 @@ nmap <F5> :GundoToggle<Cr>
 vmap <Leader>? <Plug>AutoCalcReplace
 vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
 let g:HowMuch_scale = 5
+" }}}
+
+" indentline "{{{
+let g:indentLine_char = '|'
 " }}}
 
 " javascript-syntax "{{{
