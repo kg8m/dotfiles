@@ -121,7 +121,7 @@ NeoBundleLazy 'Shougo/unite-help', {
             \     'unite_sources': ['help'],
             \   },
             \ },
-NeoBundleLazy 'h1mesuke/unite-outline', {
+NeoBundleLazy 'Shougo/unite-outline', {
             \   'autoload': {
             \     'functions':     ['unite#sources#outline#remove_cache_files'],
             \     'unite_sources': ['outline'],
