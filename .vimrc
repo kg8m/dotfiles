@@ -805,7 +805,12 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-let g:neosnippet#snippets_directory = "~/.vim/bundle/.vim/snippets"
+let g:neosnippet#snippets_directory = [
+\   "~/.vim/bundle/.vim/snippets",
+\   "~/.vim/bundle/vim-snippets/snippets",
+\ ]
+
+autocmd InsertLeave * NeoSnippetClearMarkers
 " }}}
 
 " open-browser "{{{
