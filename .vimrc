@@ -101,12 +101,6 @@ NeoBundleLazy 'tyru/operator-camelize.vim', {
             \     'mappings': ['ns', '<Plug>(operator-camelize)', '<Plug>(operator-decamelize)'],
             \   },
             \ },
-NeoBundleLazy 'thinca/vim-prettyprint', {
-            \   'autoload': {
-            \     'commands':  ['PrettyPrint', 'PP'],
-            \     'functions': ['PrettyPrint', 'PP'],
-            \   },
-            \ },
 " NeoBundle 'vim-scripts/QuickBuf'
 " NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'chrisbra/Recover.vim'
@@ -154,6 +148,12 @@ NeoBundle 'haya14busa/vim-easymotion'
 NeoBundle 'thinca/vim-ft-diff_fold'
 NeoBundle 'thinca/vim-ft-help_fold'
 NeoBundle 'thinca/vim-ft-markdown_fold'
+NeoBundleLazy 'thinca/vim-prettyprint', {
+            \   'autoload': {
+            \     'commands':  ['PrettyPrint', 'PP'],
+            \     'functions': ['PrettyPrint', 'PP'],
+            \   },
+            \ },
 NeoBundle 'thinca/vim-ft-svn_diff'
 NeoBundle 'thinca/vim-ft-vim_fold'
 NeoBundle 'muz/vim-gemfile'
