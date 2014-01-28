@@ -442,6 +442,11 @@ set hidden
 set wildmenu
 set wildmode=list:longest,full
 
+" ctags
+if exists('$RUBYGEMS_PATH')
+  let &tags = &tags . "," . $RUBYGEMS_PATH . "**/tags"
+endif
+
 " auto reload
 augroup CheckTimeHook
   autocmd!
