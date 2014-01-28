@@ -506,7 +506,7 @@ nmap <Esc><Esc> :nohlsearch<Cr>
 " ,v => vsplit
 nmap <Leader>v :vsplit<Cr>
 
-" svn diff
+" ,d => svn diff
 nmap <Leader>d :call SVNDiff()<Cr>
 function! SVNDiff()
   edit diff
@@ -514,7 +514,7 @@ function! SVNDiff()
   execute "normal :r!svn diff\n"
 endfunction
 
-" copy/paste by clipboard
+" ,y/,p => copy/paste by clipboard
 vmap <Leader>y "*y
 nmap <Leader>p "*p
 
