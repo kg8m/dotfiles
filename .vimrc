@@ -518,6 +518,10 @@ endfunction
 vmap <Leader>y "*y
 nmap <Leader>p "*p
 
+" ctags
+" <C-]>: go to tag, <C-[>: back from tag
+nmap <C-[> <C-S-t>
+
 " ,w => erase spaces of EOL for selected
 vmap <Leader>w :s/\s\+$//ge<Cr>
 
@@ -1117,6 +1121,10 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
     call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
   endfunction
   call AddActionsToVersions()
+" }}}
+
+" unite-tag "{{{
+  nmap <silent> <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
 " }}}
 
 " unite-dwm "{{{
