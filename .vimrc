@@ -867,6 +867,7 @@ let g:rails_projections = {
   \     "command": "finder",
   \   },
   \   "script/*": {
+  \     "command": "script",
   \     "test": [
   \       "test/unit/%s_test.rb",
   \     ],
