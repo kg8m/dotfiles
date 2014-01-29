@@ -1009,7 +1009,7 @@ endif
 " }}}
 
 " unite "{{{
-let g:unite_winheight = 70
+let g:unite_winheight = 200
 let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
