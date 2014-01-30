@@ -1075,6 +1075,7 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
     \
     \   ["[Manipulate File] set noreadonly         ", "set noreadonly"],
     \   ["[Manipulate File] to HTML                ", "colorscheme h2u_white | TOhtml"],
+    \   ["[Manipulate File] sed all buffers [Edit] ", "bufdo %s/{foo}/{bar}/gce | update"],
     \
     \   ["[System] Remove                          ", "!rm %"],
     \   ["[System] SVN Remove                      ", "!svn rm %"],
