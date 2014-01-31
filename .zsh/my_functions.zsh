@@ -1,8 +1,8 @@
 function execute_with_echo {
-  cmd=$1;
+  cmd_with_arguments=$@;
 
-  echo "----- ${cmd} ---------------";
-  eval ${cmd};
+  echo "----- ${cmd_with_arguments} ---------------";
+  eval ${cmd_with_arguments};
 }
 
 function sdiff {
