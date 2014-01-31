@@ -505,6 +505,9 @@ let g:mapleader = ','
 " ,r => reload .vimrc
 nmap <Leader>r :source ~/.vimrc<Cr>
 
+" use extended search as default; remove "\v" unless needed
+nmap / /\v
+
 " <Esc><Esc> => nohilight
 nmap <Esc><Esc> :nohlsearch<Cr>
 
