@@ -637,6 +637,10 @@ nmap <C-w>n       :call DWM_New()<Cr>
 nmap <C-w>c       :call DWM_Close()<Cr>
 nmap <C-w><Space> :call DWM_Focus()<Cr>
 nmap <C-w><C-l>   :call DWM_AutoEnter()<Cr>
+function! ClearDWMAugroup()
+  augroup! dwm
+endfunction
+autocmd VimEnter * call ClearDWMAugroup()
 " }}}
 
 " easymotion "{{{
