@@ -100,7 +100,7 @@ function mysql_current {
     dbname="${APP_NAME}_${dirname}"
   fi
 
-  execute_with_echo "mysql -u root ${dbname}";
+  execute_with_echo "mysql -u root ${dbname} $@";
 }
 
 function separated_rake_test {
