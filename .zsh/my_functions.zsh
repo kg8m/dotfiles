@@ -120,12 +120,18 @@ function separated_rake_test {
 }
 
 function watch_memused {
+  if (($# == 1)) then
+    sleep=$1
+  else
+    sleep=15
+  fi
+
   init='i = 0'
   header='"\n  " + [["time", 19], ["used%", 6], ["graph (used / all)", 0]].map{|name, width| name.to_s.ljust(width) }.join("   ")'
   put_header_or_not='i.modulo(25).zero?'
   get_memused='all, used = `free -o`.split(/\s+/).values_at(8, 9); racio = used.to_f / all.to_f * 100'
   line='"  " + [Time.now.strftime("%Y/%m/%d %H:%M:%S"), sprintf("%5.2f%", racio), "#" * (racio / 3).to_i + " (#{used} / #{all})"].join("   ")'
-  prepare_for_next='sleep 15; i += 1'
+  prepare_for_next="sleep ${sleep}; i += 1"
 
   ruby -e "${init}; while true; puts ${header} if ${put_header_or_not}; ${get_memused}; puts ${line}; ${prepare_for_next}; end"
 }
