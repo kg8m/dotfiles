@@ -637,8 +637,12 @@ let g:dwm_map_keys = 0
 nmap <C-w>n       :call DWM_New()<Cr>
 nmap <C-w>c       :call DWM_Close()<Cr>
 nmap <C-w><Space> :call DWM_AutoEnter()<Cr>
+let g:dwm_augroup_cleared = 0
 function! ClearDWMAugroup()
-  augroup! dwm
+  if !g:dwm_augroup_cleared
+    augroup! dwm
+    let g:dwm_augroup_cleared = 1
+  endif
 endfunction
 autocmd VimEnter * call ClearDWMAugroup()
 " }}}
