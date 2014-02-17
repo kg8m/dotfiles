@@ -127,6 +127,7 @@ NeoBundleLazy 'Shougo/unite-outline', {
             \     'unite_sources': ['outline'],
             \   },
             \ },
+NeoBundle 'basyura/unite-rails'
 NeoBundleLazy 'tsukkee/unite-tag', {
             \   'autoload': {
             \     'unite_sources': ['tag', 'tag/include', 'tag/file'],
@@ -1037,7 +1038,7 @@ nmap <silent> <Leader>uo :<C-u>Unite outline<Cr>
 nmap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
 nmap <silent> <Leader>ub :<C-u>Unite buffer<Cr>
 nmap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
-nmap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
+" nmap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
 nmap <silent> <Leader>um :<C-u>Unite file_mru<Cr>
 nmap <silent> <Leader>uu :<C-u>Unite buffer file_mru<Cr>
 nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Cr>
@@ -1145,6 +1146,10 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
   " other unite keymappings: they used to be for plugins replaced by unite
   nmap <silent> <Leader>m :<C-u>Unite file_mru<Cr>
   nmap <F4> :<C-u>Unite buffer<Cr>
+" }}}
+
+" unite-rails "{{{
+  nmap <Leader>ur :<C-u>Unite rails/
 " }}}
 " }}}
 
