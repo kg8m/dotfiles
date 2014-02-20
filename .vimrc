@@ -157,7 +157,7 @@ NeoBundleLazy 'thinca/vim-prettyprint', {
             \   },
             \ },
 NeoBundle 'thinca/vim-ft-svn_diff'
-NeoBundle 'thinca/vim-ft-vim_fold'
+" NeoBundle 'thinca/vim-ft-vim_fold'
 NeoBundle 'muz/vim-gemfile'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
