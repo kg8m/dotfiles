@@ -81,6 +81,7 @@ else
   NeoBundleFetch 'Shougo/neocomplete.vim'
 endif
 
+NeoBundle 'Shougo/neomru.vim'
 NeoBundleLazy 'Shougo/neosnippet', {
             \   'autoload': {
             \     'insert':        1,
@@ -1019,20 +1020,16 @@ elseif has("python")
 endif
 " }}}
 
-" unite "{{{
+" unite, neomru, unite's plugins "{{{
 let g:unite_winheight = '100%'
 let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
-let g:unite_source_directory_mru_limit = 1000
-let g:unite_source_file_mru_limit = 1000
 let g:unite_source_grep_command = 'ack'
 let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
 let g:unite_source_grep_recursive_opt = ''
 let g:unite_source_grep_max_candidates = 1000
 let g:unite_source_grep_search_word_highlight = 'Special'
-call unite#custom_source("directory_mru", "max_candidates", 1000)
-call unite#custom_source("file_mru", "max_candidates", 1000)
 call unite#custom_source('buffer', 'sorters', 'sorter_word')
 autocmd VimLeavePre * call unite#sources#outline#remove_cache_files()
 nmap <Leader>ug :<C-u>Unite grep:./::
@@ -1043,9 +1040,24 @@ nmap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
 nmap <silent> <Leader>ub :<C-u>Unite buffer<Cr>
 nmap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
 " nmap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
-nmap <silent> <Leader>um :<C-u>Unite file_mru<Cr>
-nmap <silent> <Leader>uu :<C-u>Unite buffer file_mru<Cr>
-nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Cr>
+nmap <silent> <Leader>um :<C-u>Unite neomru/file<Cr>
+nmap <silent> <Leader>uu :<C-u>Unite buffer neomru/file<Cr>
+nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neomru/file bookmark file<Cr>
+
+" unite-dwm "{{{
+  let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru"
+" }}}
+
+" neomru "{{{
+  let g:neomru#time_format     = "(%Y/%m/%d %H:%M:%S) "
+  let g:neomru#filename_format = ":~:."
+  let g:neomru#file_mru_limit  = 1000
+  nmap <silent> <Leader>m :<C-u>Unite neomru/file<Cr>
+" }}}
+
+" unite-rails "{{{
+  nmap <Leader>ur :<C-u>Unite rails/
+" }}}
 
 " unite-shortcut "{{{
   " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
@@ -1111,6 +1123,10 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
   endfunction
 " }}}
 
+" unite-tag "{{{
+  nmap <silent> <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
+" }}}
+
 " unite-versions "{{{
   nmap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
   function! AddActionsToVersions()
@@ -1140,20 +1156,8 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file
   call AddActionsToVersions()
 " }}}
 
-" unite-tag "{{{
-  nmap <silent> <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
-" }}}
-
-" unite-dwm "{{{
-  let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru"
-
-  " other unite keymappings: they used to be for plugins replaced by unite
-  nmap <silent> <Leader>m :<C-u>Unite file_mru<Cr>
+" other unite keymappings: they used to be for plugins replaced by unite "{{{
   nmap <F4> :<C-u>Unite buffer<Cr>
-" }}}
-
-" unite-rails "{{{
-  nmap <Leader>ur :<C-u>Unite rails/
 " }}}
 " }}}
 
