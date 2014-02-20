@@ -654,7 +654,7 @@ let g:EasyMotion_do_mapping  = 0
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_smartcase   = 1
 let g:EasyMotion_use_upper   = 1
-let g:EasyMotion_keys        = "FJKLASDHGUIONMERWC,;"
+let g:EasyMotion_keys        = "FJKLASDHGUIONMEREWC,;"
 nmap <Leader>f <Plug>(easymotion-s)
 vmap <Leader>f <Plug>(easymotion-s)
 omap <Leader>f <Plug>(easymotion-s)
