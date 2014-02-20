@@ -16,11 +16,18 @@ set nocompatible
 filetype off
 
 if has('vim_starting')
+  " http://qiita.com/td2sk/items/2299a5518f58ffbfc5cf
+  if !isdirectory(expand("~/.vim/bundle/neobundle.vim/"))
+    echo "Installing neobundle...."
+    call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+  endif
+
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 
+NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc', {
         \   'build': {
         \     'windows': 'make -f make_mingw32.mak',
@@ -29,7 +36,6 @@ NeoBundle 'Shougo/vimproc', {
         \     'unix':    'make -f make_unix.mak',
         \   },
         \ },
-NeoBundle 'Shougo/neobundle.vim'
 
 " plugins from github
 NeoBundle 'kg8m/.vim'
