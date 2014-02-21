@@ -12,7 +12,6 @@ endfunction
 " ----------------------------------------------
 " neobundle "{{{
 " https://github.com/Shougo/shougo-s-github/blob/master/vim/.vimrc
-set nocompatible
 filetype off
 
 if has('vim_starting')
