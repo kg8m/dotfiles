@@ -157,21 +157,22 @@ function tmux_setup_default {
 
 function attach_or_new_tmux {
   if (($# == 0)); then
-    echo "Error: specify target session name"
-    return
+    session_name='default'
+  else
+    session_name=$1
   fi
 
-  tmux has-session -t $1 &> /dev/null
+  tmux has-session -t $session_name &> /dev/null
 
   if [ $? != 0 ]; then
-    tmux new-session -d -s $1
+    tmux new-session -d -s $session_name
 
     if (($# == 2)); then
-      tmux send-keys -t $1:1 "$2" Enter
+      tmux send-keys -t $session_name:1 "$2" Enter
     fi
   fi
 
-  tmux attach -t $1
+  tmux attach -t $session_name
 }
 
 # http://d.hatena.ne.jp/itchyny/20130227/1361933011

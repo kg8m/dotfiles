@@ -47,3 +47,5 @@ alias rake_helpers='    execute_with_echo "TEST_ENV_NUMBER=4 rake spec:helpers"'
 alias ruby_multitest='ruby -I ${RUBYGEMS_PATH}rake-*/lib ${RUBYGEMS_PATH}rake-*/lib/rake/rake_test_loader.rb --runner=failfast'
 
 alias reload='source ~/.zshrc; echo "~/.zshrc sourced."'
+
+alias mux='attach_or_new_tmux'  # never use tmuxinator
