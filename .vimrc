@@ -1019,7 +1019,6 @@ endif
 " }}}
 
 " unite, neomru, unite's plugins "{{{
-let g:unite_enable_start_insert = 1
 let g:unite_winheight = '100%'
 let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
