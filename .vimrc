@@ -639,11 +639,11 @@ nmap <C-w><Space> :call DWM_AutoEnter()<Cr>
 let g:dwm_augroup_cleared = 0
 function! ClearDWMAugroup()
   if !g:dwm_augroup_cleared
-    augroup! dwm
+    autocmd! dwm
     let g:dwm_augroup_cleared = 1
   endif
 endfunction
-autocmd FileType * call ClearDWMAugroup()
+autocmd VimEnter * call ClearDWMAugroup()
 " }}}
 
 " easymotion "{{{
