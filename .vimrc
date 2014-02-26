@@ -643,7 +643,7 @@ function! ClearDWMAugroup()
     let g:dwm_augroup_cleared = 1
   endif
 endfunction
-autocmd VimEnter * call ClearDWMAugroup()
+autocmd FileType * call ClearDWMAugroup()
 " }}}
 
 " easymotion "{{{
