@@ -240,7 +240,7 @@ NeoBundleLazy 'Shougo/vimfiler', {
             \ },
 NeoBundleLazy 'Shougo/vimshell', {
             \   'autoload': {
-            \     'commands': ['VimShell'],
+            \     'commands': ['VimShell', 'VimShellExecute'],
             \   },
             \ },
 
@@ -906,6 +906,7 @@ let g:rails_projections = {
 
 " rubytest "{{{
 let g:no_rubytest_mappings = 1
+let g:rubytest_in_vimshell = 1
 if !s:in_tmux
   map <leader>T <Plug>RubyFileRun
   map <leader>t <Plug>RubyTestRun
