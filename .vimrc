@@ -619,7 +619,10 @@ autocmd WinEnter,BufEnter,BufRead,BufNewFile * if index(s:colorizer_target_filet
 " }}}
 
 " caw "{{{
+let g:caw_no_default_keymappings = 1
 let g:caw_i_skip_blank_line = 1
+nmap gci <Plug>(caw:i:toggle)
+vmap gci <Plug>(caw:i:toggle)
 " }}}
 
 " choosewin "{{{
