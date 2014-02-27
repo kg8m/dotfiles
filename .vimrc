@@ -184,9 +184,13 @@ NeoBundleLazy 'kana/vim-operator-replace', {
             \ },
 " not working in case like following:
 "   (1) text:      hoge "fu*ga piyo"
-"   (2) type keys: saa"'
+"   (2) call: <Plug>(operator-surround-append)"'
 "   (3) expected:  hoge* '"fuga piyo"'
 "   (4) result:    hoge*' "fuga piyo"'
+" or following:
+"   (2) call: <Plug>(operator-surround-replace)"'
+"   (3) expected:  hoge* 'fuga piyo'
+"   (4) result:    hoge*' fuga piyo'
 " NeoBundleLazy 'rhysd/vim-operator-surround', {
 "             \   'autoload': {
 "             \     'mappings': ['ns', '<Plug>(operator-surround-'],
