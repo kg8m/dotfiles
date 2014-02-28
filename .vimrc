@@ -150,7 +150,7 @@ NeoBundle 'kg8m/vim-blockle'
 NeoBundle 't9md/vim-choosewin'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'haya14busa/vim-easymotion'
+NeoBundle 'Lokaltog/vim-easymotion'
 " NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
 NeoBundle 'thinca/vim-ft-diff_fold'
 NeoBundle 'thinca/vim-ft-help_fold'
@@ -1031,9 +1031,17 @@ let g:unite_winheight = '100%'
 let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
-let g:unite_source_grep_command = 'ack'
-let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
-let g:unite_source_grep_recursive_opt = ''
+
+if executable("ag")
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nocolor --nogroup --column'
+  let g:unite_source_grep_recursive_opt = ''
+elseif executable("ack")
+  let g:unite_source_grep_command = 'ack'
+  let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+
 let g:unite_source_grep_max_candidates = 1000
 let g:unite_source_grep_search_word_highlight = 'Special'
 call unite#custom_source('buffer', 'sorters', 'sorter_word')
