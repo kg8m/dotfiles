@@ -38,11 +38,7 @@ NeoBundle 'Shougo/vimproc', {
 
 " plugins from github
 NeoBundle 'kg8m/.vim'
-NeoBundleLazy 'mileszs/ack.vim', {
-            \   'autoload': {
-            \     'commands': ['Ack'],
-            \   },
-            \ },
+" NeoBundle 'mileszs/ack.vim'
 NeoBundle 'taichouchou2/alpaca_complete', {
         \   'depends': ['tpope/vim-rails', 'Shougo/neocomplcache'],
         \ },
