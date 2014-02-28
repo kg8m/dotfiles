@@ -1027,9 +1027,13 @@ let g:unite_winheight = '100%'
 let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
-let g:unite_source_grep_command = 'ack'
-let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
-let g:unite_source_grep_recursive_opt = ''
+
+if executable("ack")
+  let g:unite_source_grep_command = 'ack'
+  let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+
 let g:unite_source_grep_max_candidates = 1000
 let g:unite_source_grep_search_word_highlight = 'Special'
 call unite#custom_source('buffer', 'sorters', 'sorter_word')
