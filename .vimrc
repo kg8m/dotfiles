@@ -249,7 +249,7 @@ NeoBundleLazy 'Shougo/vimshell', {
             \ },
 
 if s:in_tmux
-  NeoBundle 'benmills/vimux', { 'rev': '8e091d6' }
+  NeoBundle 'benmills/vimux'
 endif
 
 NeoBundle 'LeafCage/yankround.vim'
@@ -1189,6 +1189,8 @@ let g:vimshell_prompt = '% '
 
 " vimux "{{{
 let g:VimuxHeight = 30
+let g:VimuxUseNearestPane = 0  " deprecated?
+let g:VimuxUseNearest = 0
 if s:in_tmux
   autocmd VimLeavePre * :VimuxCloseRunner
 endif
