@@ -150,7 +150,7 @@ NeoBundle 'kg8m/vim-blockle'
 NeoBundle 't9md/vim-choosewin'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'haya14busa/vim-easymotion'
+NeoBundle 'Lokaltog/vim-easymotion'
 " NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
 NeoBundle 'thinca/vim-ft-diff_fold'
 NeoBundle 'thinca/vim-ft-help_fold'
