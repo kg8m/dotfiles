@@ -1028,7 +1028,11 @@ let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
 
-if executable("ack")
+if executable("ag")
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nocolor --nogroup --column'
+  let g:unite_source_grep_recursive_opt = ''
+elseif executable("ack")
   let g:unite_source_grep_command = 'ack'
   let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
   let g:unite_source_grep_recursive_opt = ''
