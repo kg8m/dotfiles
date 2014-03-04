@@ -458,10 +458,10 @@ augroup END
 set whichwrap=b,s,h,l,<,>,[,],~
 
 " move as shown
-" nmap j gj
-" nmap k gk
-" nmap gj j
-" nmap gk k
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
 
 " IME
 " augroup InsModeImEnable
