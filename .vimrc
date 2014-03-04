@@ -1055,7 +1055,7 @@ nmap <silent> <Leader>uu :<C-u>Unite buffer neomru/file<Cr>
 nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neomru/file bookmark file<Cr>
 
 " unite-dwm "{{{
-  let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru"
+  let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,jump_list,cdable"
 " }}}
 
 " neomru "{{{
