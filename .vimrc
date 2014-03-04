@@ -1072,7 +1072,7 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neom
 " unite-shortcut "{{{
   " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
   " http://d.hatena.ne.jp/tyru/20120110/prompt
-  map <silent> <Leader>us :<C-u>Unite menu:shortcuts -start-insert<Cr>
+  map <silent> <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   let g:unite_source_menu_menus = {}
   let g:unite_source_menu_menus.shortcuts = {
     \   "description" : "shortcuts"
