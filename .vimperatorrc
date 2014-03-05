@@ -71,8 +71,8 @@ mappings.addUserMap(
 EOM
 
 " タブ移動（タブからタブへの移動ではなく、タブの位置変更）
-noremap <C-j> :tabmove +1<Cr>
-noremap <C-k> :tabmove -1<Cr>
+noremap <C-S-j> :tabmove +1<Cr>
+noremap <C-S-k> :tabmove -1<Cr>
 
 " OSのキーバインドを一部再現
 inoremap <C-a> <Ins><C-a><Ins>
@@ -90,11 +90,11 @@ inoremap <C-n> <Esc><C-n>
 inoremap <C-p> <Esc><C-p>
 
 " input で Ctrl + h/j/k/l を使って移動
-" not working in a <select> tag
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
+" use OS's settings or key-config applications, e.g., KeyRemap4MacBook
+" inoremap <C-h> <Left>
+" inoremap <C-j> <Down>
+" inoremap <C-k> <Up>
+" inoremap <C-l> <Right>
 inoremap <C-f> <PageDown>
 inoremap <C-b> <PageUp>
 
