@@ -1042,8 +1042,8 @@ let g:unite_source_grep_max_candidates = 1000
 let g:unite_source_grep_search_word_highlight = 'Special'
 call unite#custom_source('buffer', 'sorters', 'sorter_word')
 autocmd VimLeavePre * call unite#sources#outline#remove_cache_files()
-nmap <Leader>ug :<C-u>Unite grep:./::
-vmap <Leader>ug "vy:<C-u>Unite grep:./::<C-r>"
+nmap <Leader>ug :<C-u>Unite -no-quit grep:./::
+vmap <Leader>ug "vy:<C-u>Unite -no-quit grep:./::<C-r>"
 nmap <silent> <Leader>uy :<C-u>Unite history/yank<Cr>
 nmap <silent> <Leader>uo :<C-u>Unite outline<Cr>
 nmap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
