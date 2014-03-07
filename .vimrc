@@ -458,10 +458,11 @@ augroup END
 set whichwrap=b,s,h,l,<,>,[,],~
 
 " move as shown
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
+" disable because of difference between normal mode and other modes (e.g., visual mode)
+" nnoremap j gj
+" nnoremap k gk
+" nnoremap gj j
+" nnoremap gk k
 
 " IME
 " augroup InsModeImEnable
