@@ -86,7 +86,7 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundleLazy 'Shougo/neosnippet', {
             \   'autoload': {
             \     'insert':        1,
-            \     'filetypes':     'snippet',
+            \     'filetypes':     ['snippet', 'neosnippet'],
             \     'unite_sources': ['neosnippet', 'neosnippet/user', 'neosnippet/runtime'],
             \   },
             \ },
