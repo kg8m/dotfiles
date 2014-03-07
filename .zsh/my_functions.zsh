@@ -6,11 +6,11 @@ function execute_with_echo {
 }
 
 function sdiff {
-  _sdiff
+  _sdiff "-b -B"
 }
 
-function sdiff_minimal {
-  _sdiff "-b -B"
+function sdiff_all {
+  _sdiff
 }
 
 function _sdiff {
@@ -33,13 +33,13 @@ function diffb {
   if (($# == 1)) then
     rev=$1;
     filename="${date}_@${rev}_${APP_NAME}.diff";
-    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10' ${TARGET_REPOSITORY_URL}/branches/ -c ${rev} > ${filename}";
+    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10 -b -B' ${TARGET_REPOSITORY_URL}/branches/ -c ${rev} > ${filename}";
   elif (($# == 3)) then
     branch=$1;
     rev_from=$2;
     rev_to=$3;
     filename="${date}_@${rev_from}-${rev_to}_${APP_NAME}_${branch}.diff";
-    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10' ${TARGET_REPOSITORY_URL}/branches/${branch}/ -r ${rev_from}:${rev_to} > ${filename}";
+    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10 -b -B' ${TARGET_REPOSITORY_URL}/branches/${branch}/ -r ${rev_from}:${rev_to} > ${filename}";
   fi
 
   execute_with_echo ${cmd}
@@ -52,12 +52,12 @@ function difft {
   if (($# == 1)) then
     rev=$1;
     filename="${date}_@${rev}_${APP_NAME}_trunk.diff";
-    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10' ${TARGET_REPOSITORY_URL}/trunk/ -c ${rev} > ${filename}";
+    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10 -b -B' ${TARGET_REPOSITORY_URL}/trunk/ -c ${rev} > ${filename}";
   elif (($# == 2)) then
     rev_from=$1;
     rev_to=$2;
     filename="${date}_@${rev_from}-${rev_to}_${APP_NAME}_trunk.diff";
-    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10' ${TARGET_REPOSITORY_URL}/trunk/ -r ${rev_from}:${rev_to} > ${filename}";
+    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10 -b -B' ${TARGET_REPOSITORY_URL}/trunk/ -r ${rev_from}:${rev_to} > ${filename}";
   fi
 
   execute_with_echo ${cmd}
