@@ -61,6 +61,12 @@ NeoBundle 'rhysd/conflict-marker.vim'
 NeoBundle 'spolu/dwm.vim'
 NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
 NeoBundle 'LeafCage/foldCC'
+NeoBundleLazy 'mattn/gist-vim', {
+            \   'depends':  ['mattn/webapi-vim'],
+            \   'autoload': {
+            \     'commands': 'Gist',
+            \   },
+            \ },
 " NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
 NeoBundle 'sk1418/HowMuch'
 NeoBundle 'nishigori/increment-activator'
@@ -116,6 +122,12 @@ NeoBundle 'kg8m/unite-dwm'
 NeoBundleLazy 'osyo-manga/unite-filetype', {
             \   'autoload': {
             \     'unite_sources': ['filetype'],
+            \   },
+            \ },
+NeoBundleLazy 'kg8m/unite-gist', {
+            \   'depends': ['mattn/gist-vim'],
+            \   'autoload': {
+            \     'unite_sources': ['gist'],
             \   },
             \ },
 NeoBundleLazy 'Shougo/unite-help', {
@@ -667,6 +679,13 @@ let g:foldCCtext_maxchars = 120
 set foldtext=FoldCCtext()
 " }}}
 
+" gist "{{{
+let g:gist_detect_filetype  = 1
+let g:gist_show_privates    = 1
+let g:gist_post_private     = 1
+let g:gist_get_multiplefile = 1
+" }}}
+
 " gundo "{{{
 " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
 " r => show diff preview
@@ -1116,6 +1135,19 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neom
     \   ["[Calendar] Month View                    ", "Calendar -view=month -position=hear!"],
     \   ["[Calendar] Week View                     ", "Calendar -view=week  -position=hear!"],
     \   ["[Calendar] Day View                      ", "Calendar -view=day   -position=hear! -split=vertical -width=75"],
+    \
+    \   ["[Unite plugin] gist                      ", "Unite gist"],
+    \   ["[Unite plugin] mru files list            ", "Unite neomru/file"],
+    \   ["[Unite plugin] outline                   ", "Unite outline"],
+    \   ["[Unite plugin] tag with cursor word      ", "UniteWithCursorWord tag"],
+    \   ["[Unite plugin] versions/status           ", "Unite versions/status"],
+    \   ["[Unite plugin] versions/log              ", "Unite versions/log"],
+    \   ["[Unite plugin] webcolorname              ", "Unite webcolorname"],
+    \   ["[Unite] buffers list                     ", "Unite buffer"],
+    \   ["[Unite] files list with buffer directory ", "UniteWithBufferDir file"],
+    \   ["[Unite] history/yank                     ", "Unite history/yank"],
+    \   ["[Unite] register                         ", "Unite register"],
+    \   ["[Unite] grep [Edit]                      ", "Unite -no-quit grep:./::{words}"],
     \
     \   ["[Help]autocommand-events                 ", "help autocommand-events"],
     \   ["[Help][neobundle] Options-autoload       ", "help neobundle-options-autoload"],
