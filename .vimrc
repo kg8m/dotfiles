@@ -923,6 +923,9 @@ let g:rails_projections = {
   \   "spec/support/*.rb": {
   \     "command": "support",
   \   },
+  \   "test/functional/shared/*_tests.rb": {
+  \     "alternate": "app/controllers/shared/%s.rb",
+  \   },
   \ }
 " }}}
 
