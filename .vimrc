@@ -50,14 +50,22 @@ NeoBundle 'kg8m/.vim'
 NeoBundle 'taichouchou2/alpaca_complete', {
         \   'depends': ['tpope/vim-rails', 'Shougo/neocomplcache'],
         \ },
-NeoBundle 'vim-scripts/AutoClose'
+NeoBundleLazy 'vim-scripts/AutoClose', {
+              \   'autoload': {
+              \     'insert':   1,
+              \   },
+              \ },
 NeoBundleLazy 'itchyny/calendar.vim', {
             \   'autoload': {
             \     'commands':  'Calendar',
             \     'mappings':  '<Plug>(calendar_',
             \   },
             \ },
-NeoBundle 'tyru/caw.vim'
+NeoBundleLazy 'tyru/caw.vim', {
+            \   'autoload': {
+            \     'mappings': ['ns', '<Plug>(caw:'],
+            \   },
+            \ },
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'lilydjwg/colorizer'
 NeoBundleLazy 'cocopon/colorswatch.vim', {
@@ -67,7 +75,12 @@ NeoBundleLazy 'cocopon/colorswatch.vim', {
             \ },
 NeoBundle 'rhysd/conflict-marker.vim'
 NeoBundle 'spolu/dwm.vim'
-NeoBundle 'mattn/emmet-vim'  " former zencoding-vim
+" former zencoding-vim
+NeoBundleLazy 'mattn/emmet-vim', {
+              \   'autoload': {
+              \     'insert':   1,
+              \   },
+              \ },
 NeoBundle 'LeafCage/foldCC'
 NeoBundleLazy 'mattn/gist-vim', {
             \   'depends':  ['mattn/webapi-vim'],
@@ -76,7 +89,11 @@ NeoBundleLazy 'mattn/gist-vim', {
             \   },
             \ },
 " NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
-NeoBundle 'sk1418/HowMuch'
+NeoBundleLazy 'sk1418/HowMuch', {
+            \   'autoload': {
+            \     'mappings': ['ns', '<Plug>AutoCalc'],
+            \   },
+            \ },
 NeoBundle 'nishigori/increment-activator'
 " NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
@@ -122,7 +139,11 @@ NeoBundleLazy 'tyru/operator-camelize.vim', {
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'joeytwiddle/sexy_scroller.vim'
 NeoBundle 'jiangmiao/simple-javascript-indenter'
-NeoBundle 'AndrewRadev/splitjoin.vim'
+NeoBundleLazy 'AndrewRadev/splitjoin.vim', {
+            \   'autoload': {
+            \     'commands':  ['SplitjoinJoin', 'SplitjoinSplit'],
+            \   },
+            \ },
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
 NeoBundle 'Shougo/unite.vim'
@@ -159,8 +180,17 @@ NeoBundleLazy 'pasela/unite-webcolorname', {
             \     'unite_sources': ['webcolorname'],
             \   },
             \ },
-NeoBundle 'h1mesuke/vim-alignta'
-NeoBundle 'osyo-manga/vim-anzu'
+NeoBundleLazy 'h1mesuke/vim-alignta', {
+            \   'autoload': {
+            \     'commands':      'Alignta',
+            \     'unite_sources': ['alignta'],
+            \   },
+            \ },
+NeoBundleLazy 'osyo-manga/vim-anzu', {
+            \   'autoload': {
+            \     'mappings': ['ns', '<Plug>(anzu-'],
+            \   },
+            \ },
 NeoBundle 'kg8m/vim-blockle'
 NeoBundle 't9md/vim-choosewin'
 NeoBundle 'hail2u/vim-css-syntax'
@@ -959,8 +989,10 @@ let g:SimpleJsIndenter_CaseIndentLevel = -1
 " }}}
 
 " splitjoin "{{{
-let g:splitjoin_split_mapping = ',J'
-let g:splitjoin_join_mapping  = ',S'
+let g:splitjoin_split_mapping = ''
+let g:splitjoin_join_mapping  = ''
+nmap <Leader>J :SplitjoinJoin<Cr>
+nmap <Leader>S :SplitjoinSplit<Cr>
 " }}}
 
 " startify "{{{
