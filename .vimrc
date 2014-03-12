@@ -9,7 +9,11 @@ let s:in_tmux    = exists('$TMUX')
 
 " http://rhysd.hatenablog.com/entry/2013/08/24/223438
 function! s:meet_neocomplete_requirements()
-  return has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
+  if !exists("g:meet_neocomplete_requirements")
+    let g:meet_neocomplete_requirements = has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
+  endif
+
+  return g:meet_neocomplete_requirements
 endfunction
 " }}}
 
