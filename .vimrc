@@ -1,5 +1,9 @@
 " ----------------------------------------------
 " initialize "{{{
+let $dotvim_path    = expand("~/.vim")
+let $bundles_path   = expand($dotvim_path . "/bundle")
+let $neobundle_path = expand($bundles_path . "/neobundle.vim")
+
 let s:is_windows = has('win32') || has('win64')
 let s:in_tmux    = exists('$TMUX')
 
@@ -16,15 +20,15 @@ filetype off
 
 if has('vim_starting')
   " http://qiita.com/td2sk/items/2299a5518f58ffbfc5cf
-  if !isdirectory(expand("~/.vim/bundle/neobundle.vim/"))
+  if !isdirectory($neobundle_path)
     echo "Installing neobundle...."
-    call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+    call system("git clone git://github.com/Shougo/neobundle.vim " . $neobundle_path)
   endif
 
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+  set runtimepath+=$neobundle_path
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#rc($bundles_path)
 
 NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc', {
@@ -847,8 +851,8 @@ if has('conceal')
 endif
 
 let g:neosnippet#snippets_directory = [
-\   "~/.vim/bundle/.vim/snippets",
-\   "~/.vim/bundle/vim-snippets/snippets",
+\   $bundles_path . "/.vim/snippets",
+\   $bundles_path . "/vim-snippets/snippets",
 \ ]
 
 autocmd InsertLeave * NeoSnippetClearMarkers
