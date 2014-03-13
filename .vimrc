@@ -55,6 +55,7 @@ NeoBundleLazy 'vim-scripts/AutoClose', {
               \     'insert':   1,
               \   },
               \ },
+NeoBundle 'vim-scripts/autodate.vim'
 NeoBundleLazy 'itchyny/calendar.vim', {
             \   'autoload': {
             \     'commands':  'Calendar',
@@ -650,6 +651,16 @@ nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
+" }}}
+
+" autodate "{{{
+let autodate_format       = '%Y/%m/%d'
+let autodate_lines        = 100
+let autodate_keyword_pre  = '\c\%(' .
+                          \   '\%(Last \?\%(Change\|Modified\)\)\|' .
+                          \   '\%(\%(最終\)\?更新日\?\)' .
+                          \ '\):'
+let autodate_keyword_post = '$'
 " }}}
 
 " blockle "{{{
