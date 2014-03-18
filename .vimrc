@@ -658,7 +658,7 @@ let autodate_format       = '%Y/%m/%d'
 let autodate_lines        = 100
 let autodate_keyword_pre  = '\c\%(' .
                           \   '\%(Last \?\%(Change\|Modified\)\)\|' .
-                          \   '\%(\%(最終\)\?更新日\?\)' .
+                          \   '\%(最終更新日\?\)' .
                           \ '\):'
 let autodate_keyword_post = '$'
 " }}}
