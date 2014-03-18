@@ -24,7 +24,7 @@ function slog {
     _limit="10";
   fi
 
-  execute_with_echo "svn log -r HEAD:1 --limit ${_limit}";
+  execute_with_echo "svn log -r HEAD:1 --limit ${_limit} --stop-on-copy";
 }
 
 function diffb {
