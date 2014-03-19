@@ -23,9 +23,6 @@ HISTFILE=~/.zsh_histfile
 HISTSIZE=100000
 SAVEHIST=100000
 
-autoload -U compinit
-compinit
-
 bindkey -v
 
 # http://blog.blueblack.net/item_204
@@ -68,7 +65,8 @@ setopt chase_links
 setopt ignore_eof
 
 # completion candidates include aliases
-setopt complete_aliases
+# incompatible with cd-bookmark
+# setopt complete_aliases
 
 # https://github.com/Shougo/shougo-s-github/blob/master/.zshrc
 zstyle ':completion:*' matcher-list \
@@ -176,8 +174,13 @@ add-zsh-hook precmd set_tmux_window_name
 bindkey -a 'q' push-line
 
 [ -f ~/.zsh/vim_visualmode.zsh ] && source ~/.zsh/vim_visualmode.zsh
-[ -f ~/.zsh/timetrack.zsh ] && source ~/.zsh/timetrack.zsh
-[ -f ~/.zsh/my_aliases.zsh ] && source ~/.zsh/my_aliases.zsh
-[ -f ~/.zsh/my_functions.zsh ] && source ~/.zsh/my_functions.zsh
+[ -f ~/.zsh/timetrack.zsh      ] && source ~/.zsh/timetrack.zsh
+[ -f ~/.zsh/cd-bookmark.zsh    ] && source ~/.zsh/cd-bookmark.zsh
+[ -f ~/.zsh/my_aliases.zsh     ] && source ~/.zsh/my_aliases.zsh
+[ -f ~/.zsh/my_functions.zsh   ] && source ~/.zsh/my_functions.zsh
+
+autoload -U compinit
+compinit
+
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 

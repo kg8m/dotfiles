@@ -1,3 +1,6 @@
 [submodule ".zsh/zsh-vcs-prompt"]
 	path = .zsh/zsh-vcs-prompt
 	url = git://github.com/yonchu/zsh-vcs-prompt
+[submodule ".zsh/cd-bookmark"]
+	path = .zsh/cd-bookmark
+	url = git://github.com/mollifier/cd-bookmark
