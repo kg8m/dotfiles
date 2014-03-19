@@ -19,11 +19,6 @@ alias vless='/usr/local/share/vim/vim73/macros/less.sh'
 alias rak='rak --sort-files'
 alias rak_app="rak -k 'db/|log/|public/|spec/|test/|tmp/|vendor/'"
 
-alias cdb='cd ~/apps/${APP_NAME}/branch'
-alias cdt='cd ~/apps/${APP_NAME}/trunk'
-alias cdbd='cd ~/apps/${APP_NAME}/dummy_branch'
-alias cdtd='cd ~/apps/${APP_NAME}/dummy_trunk'
-
 alias 80='sudo ruby script/server webrick -p 80'
 alias 443='sudo ruby script/webrick_ssl -p 443'
 alias log='tail -f log/development.log'
