@@ -579,6 +579,9 @@ nmap <Leader>p "*p
 " <C-]>: go to tag, <C-[>: back from tag
 nmap <C-[> <C-S-t>
 
+" ,w => <C-w>
+nmap <Leader>w <C-w>
+
 " ,w => erase spaces of EOL for selected
 vmap <Leader>w :s/\s\+$//ge<Cr>
 
@@ -691,7 +694,7 @@ let g:choosewin_overlay_clear_multibyte = 1
 let g:choosewin_blink_on_land           = 0
 let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
 let g:choosewin_tabline_replace         = 0
-nmap <C-w>s <Plug>(choosewin)
+nmap <Leader>wf <Plug>(choosewin)
 " }}}
 
 " dwm "{{{
