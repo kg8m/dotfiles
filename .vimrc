@@ -719,6 +719,7 @@ let g:EasyMotion_smartcase   = 1
 let g:EasyMotion_use_upper   = 1
 let g:EasyMotion_keys        = "FJKLASDHGUIONMEREWC,;"
 let g:EasyMotion_use_migemo  = 1
+let g:EasyMotion_enter_jump_first = 1
 nmap <Leader>f <Plug>(easymotion-s2)
 vmap <Leader>f <Plug>(easymotion-s2)
 omap <Leader>f <Plug>(easymotion-s2)
