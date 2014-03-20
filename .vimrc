@@ -585,9 +585,8 @@ nmap <Leader>w <C-w>
 " ,w => erase spaces of EOL for selected
 vmap <Leader>w :s/\s\+$//ge<Cr>
 
-" search for selected
-" http://vim-users.jp/2009/11/hack104/
-vmap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<Cr><Cr>
+" search selected characters
+vmap <silent> * "zy:let @/ = @z<Cr>n
 
 " prevent unconscious operation
 imap <C-w> <Esc><C-w>
@@ -724,9 +723,12 @@ nmap <Leader>f <Plug>(easymotion-s2)
 vmap <Leader>f <Plug>(easymotion-s2)
 omap <Leader>f <Plug>(easymotion-s2)
 " replace default `f`
-nmap f <Plug>(easymotion-sl)
-vmap f <Plug>(easymotion-sl)
-omap f <Plug>(easymotion-sl)
+nmap f <Plug>(easymotion-fl)
+vmap f <Plug>(easymotion-fl)
+omap f <Plug>(easymotion-fl)
+nmap <S-f> <Plug>(easymotion-Fl)
+vmap <S-f> <Plug>(easymotion-Fl)
+omap <S-f> <Plug>(easymotion-Fl)
 " replace default `/`
 " very magic (\v) as default
 nmap / <Plug>(easymotion-sn)\v
