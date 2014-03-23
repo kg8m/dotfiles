@@ -661,7 +661,7 @@ let autodate_keyword_pre  = '\c\%(' .
                           \   '\%(最終更新日\?\)\|' .
                           \   '\%(更新日\)' .
                           \ '\):'
-let autodate_keyword_post = '.$'
+let autodate_keyword_post = '\.$'
 " }}}
 
 " blockle "{{{
