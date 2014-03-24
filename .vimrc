@@ -67,7 +67,7 @@ NeoBundleLazy 'tyru/caw.vim', {
             \     'mappings': ['ns', '<Plug>(caw:'],
             \   },
             \ },
-NeoBundle 'rhysd/clever-f.vim'
+" NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'lilydjwg/colorizer'
 NeoBundleLazy 'cocopon/colorswatch.vim', {
             \   'autoload': {
@@ -557,9 +557,6 @@ let g:mapleader = ','
 " ,r => reload .vimrc
 nmap <Leader>r :source ~/.vimrc<Cr>
 
-" use extended search as default; remove "\v" unless needed
-nmap / /\v
-
 " <Esc><Esc> => nohilight
 nmap <Esc><Esc> :nohlsearch<Cr>
 
@@ -719,9 +716,19 @@ let g:EasyMotion_startofline = 0
 let g:EasyMotion_smartcase   = 1
 let g:EasyMotion_use_upper   = 1
 let g:EasyMotion_keys        = "FJKLASDHGUIONMEREWC,;"
-nmap <Leader>f <Plug>(easymotion-s)
-vmap <Leader>f <Plug>(easymotion-s)
-omap <Leader>f <Plug>(easymotion-s)
+let g:EasyMotion_use_migemo  = 1
+nmap <Leader>f <Plug>(easymotion-s2)
+vmap <Leader>f <Plug>(easymotion-s2)
+omap <Leader>f <Plug>(easymotion-s2)
+" replace default `f`
+nmap f <Plug>(easymotion-sl)
+vmap f <Plug>(easymotion-sl)
+omap f <Plug>(easymotion-sl)
+" replace default `/`
+" very magic (\v) as default
+nmap / <Plug>(easymotion-sn)\v
+vmap / <Plug>(easymotion-sn)\v
+omap / <Plug>(easymotion-sn)\v
 " }}}
 
 " foldCC "{{{
