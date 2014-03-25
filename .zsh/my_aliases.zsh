@@ -15,6 +15,7 @@ fi
 alias rm='rm -i'
 alias ls='ls --color -a'
 alias ll='ls -l'
+alias less='less -R'
 alias vless='/usr/local/share/vim/vim73/macros/less.sh'
 alias rak='rak --sort-files'
 alias rak_app="rak -k 'db/|log/|public/|spec/|test/|tmp/|vendor/'"
