@@ -585,6 +585,9 @@ nmap <Leader>w <C-w>
 " ,w => erase spaces of EOL for selected
 vmap <Leader>w :s/\s\+$//ge<Cr>
 
+" search very magic as default
+nmap / /\v
+
 " search selected characters
 vmap <silent> * "zy:let @/ = @z<Cr>n
 
@@ -733,9 +736,9 @@ vmap <S-f> <Plug>(easymotion-Fl)
 omap <S-f> <Plug>(easymotion-Fl)
 " replace default `/`
 " very magic (\v) as default
-nmap / <Plug>(easymotion-sn)\v
-vmap / <Plug>(easymotion-sn)\v
-omap / <Plug>(easymotion-sn)\v
+" nmap / <Plug>(easymotion-sn)\v
+" vmap / <Plug>(easymotion-sn)\v
+" omap / <Plug>(easymotion-sn)\v
 " }}}
 
 " foldCC "{{{
