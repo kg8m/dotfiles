@@ -8,12 +8,14 @@ let s:is_windows = has('win32') || has('win64')
 let s:in_tmux    = exists('$TMUX')
 
 " http://rhysd.hatenablog.com/entry/2013/08/24/223438
-function! s:neocomplete_available()
-  if !exists("g:neocomplete_available")
-    let g:neocomplete_available = has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
-  endif
+let s:neocomplete_available = has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
 
-  return g:neocomplete_available
+let s:ag_available = executable("ag")
+let s:ack_available = executable("ack")
+let s:migemo_available = has("migemo")
+
+function! s:availability_messaage(_function)
+  return a:_function . ' is ' . (eval('s:' . a:_function . '_available') ? '' : 'NOT ') . 'available'
 endfunction
 " }}}
 
@@ -101,7 +103,7 @@ NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
 
-if s:neocomplete_available()
+if s:neocomplete_available
   NeoBundleFetch 'Shougo/neocomplcache.vim'
   NeoBundleLazy 'Shougo/neocomplete.vim', {
               \   'autoload': {
@@ -835,9 +837,7 @@ endfunction
 " }}}
 
 " neocomplcache/neocomplete "{{{
-if s:neocomplete_available()
-  let s:use_neocomplete_message = "Neocomplete's requirements are meeted; use neocomplete"
-
+if s:neocomplete_available
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#enable_smart_case = 1
   let g:neocomplete#enable_fuzzy_completion = 1
@@ -864,9 +864,6 @@ if s:neocomplete_available()
 
   let g:sources#buffer#cache_limit_size = 500000
 else
-  let s:use_neocomplete_message = "Neocomplete's requirements are NOT meeted; use neocomplcache"
-
-
   let g:neocomplcache_enable_at_startup = 1
   let g:neocomplcache_enable_smart_case = 1
   let g:neocomplcache_enable_camel_case_completion = 0
@@ -1052,7 +1049,11 @@ let g:startify_custom_header = [
   \   '',
   \   '',
   \   '     * Vim version: ' . v:version,
-  \   '     * ' . s:use_neocomplete_message,
+  \   '',
+  \   '     * ' . s:availability_messaage("neocomplete"),
+  \   '     * ' . s:availability_messaage("ag"),
+  \   '     * ' . s:availability_messaage("ack"),
+  \   '     * ' . s:availability_messaage("migemo"),
   \   '',
   \   '',
   \ ]
@@ -1120,11 +1121,11 @@ let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
 
-if executable("ag")
+if s:ag_available
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_grep_default_opts = '--nocolor --nogroup --column'
   let g:unite_source_grep_recursive_opt = ''
-elseif executable("ack")
+elseif s:ack_available
   let g:unite_source_grep_command = 'ack'
   let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
   let g:unite_source_grep_recursive_opt = ''
