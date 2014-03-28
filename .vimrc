@@ -4,8 +4,8 @@ let $dotvim_path    = expand("~/.vim")
 let $bundles_path   = expand($dotvim_path . "/bundle")
 let $neobundle_path = expand($bundles_path . "/neobundle.vim")
 
-let s:is_windows = has('win32') || has('win64')
-let s:in_tmux    = exists('$TMUX')
+let s:on_windows = has('win32') || has('win64')
+let s:on_tmux    = exists('$TMUX')
 
 " http://rhysd.hatenablog.com/entry/2013/08/24/223438
 let s:neocomplete_available = has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
@@ -272,7 +272,7 @@ NeoBundle 'kana/vim-textobj-jabraces'
 NeoBundle 'osyo-manga/vim-textobj-multitextobj'
 NeoBundle 'rhysd/vim-textobj-ruby'
 
-if s:in_tmux
+if s:on_tmux
   NeoBundle 'jgdavey/vim-turbux'
 endif
 
@@ -296,7 +296,7 @@ NeoBundleLazy 'Shougo/vimshell', {
             \   },
             \ },
 
-if s:in_tmux
+if s:on_tmux
   NeoBundle 'benmills/vimux'
 endif
 
@@ -997,7 +997,7 @@ let g:rails_projections = {
 " rubytest "{{{
 let g:no_rubytest_mappings = 1
 let g:rubytest_in_vimshell = 1
-if !s:in_tmux
+if !s:on_tmux
   map <leader>T <Plug>RubyFileRun
   map <leader>t <Plug>RubyTestRun
 endif
@@ -1098,7 +1098,7 @@ vmap ij <Plug>(textobj-multitextobj-i)
 
 " turbux "{{{
 let g:no_turbux_mappings = 1
-if s:in_tmux
+if s:on_tmux
   map <leader>T <Plug>SendTestToTmux
   map <leader>t <Plug>SendFocusedTestToTmux
 endif
@@ -1285,7 +1285,7 @@ nmap <Leader>e :VimFilerBufferDir -quit<Cr>
 " vimshell "{{{
 map <Leader>s :VimShell<Cr>
 
-if s:is_windows
+if s:on_windows
   let g:_user_name = $USERNAME
 else
   let g:_user_name = $USER
@@ -1300,7 +1300,7 @@ let g:vimshell_prompt = '% '
 let g:VimuxHeight = 30
 let g:VimuxUseNearestPane = 0  " deprecated?
 let g:VimuxUseNearest = 0
-if s:in_tmux
+if s:on_tmux
   autocmd VimLeavePre * :VimuxCloseRunner
 endif
 " }}}
