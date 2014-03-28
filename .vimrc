@@ -8,12 +8,12 @@ let s:is_windows = has('win32') || has('win64')
 let s:in_tmux    = exists('$TMUX')
 
 " http://rhysd.hatenablog.com/entry/2013/08/24/223438
-function! s:meet_neocomplete_requirements()
-  if !exists("g:meet_neocomplete_requirements")
-    let g:meet_neocomplete_requirements = has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
+function! s:neocomplete_available()
+  if !exists("g:neocomplete_available")
+    let g:neocomplete_available = has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
   endif
 
-  return g:meet_neocomplete_requirements
+  return g:neocomplete_available
 endfunction
 " }}}
 
@@ -101,7 +101,7 @@ NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
 
-if s:meet_neocomplete_requirements()
+if s:neocomplete_available()
   NeoBundleFetch 'Shougo/neocomplcache.vim'
   NeoBundleLazy 'Shougo/neocomplete.vim', {
               \   'autoload': {
@@ -835,7 +835,7 @@ endfunction
 " }}}
 
 " neocomplcache/neocomplete "{{{
-if s:meet_neocomplete_requirements()
+if s:neocomplete_available()
   let s:use_neocomplete_message = "Neocomplete's requirements are meeted; use neocomplete"
 
   let g:neocomplete#enable_at_startup = 1
