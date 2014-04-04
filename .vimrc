@@ -12,7 +12,7 @@ let s:neocomplete_available = has('lua') && (v:version > 703 || (v:version == 70
 
 let s:ag_available = executable("ag")
 let s:ack_available = executable("ack")
-let s:migemo_available = has("migemo")
+let s:migemo_available = has("migemo") || executable("cmigemo")
 
 function! s:availability_messaage(_function)
   return a:_function . ' is ' . (eval('s:' . a:_function . '_available') ? '' : 'NOT ') . 'available'
