@@ -1124,7 +1124,7 @@ let g:unite_source_history_yank_limit = 300
 
 if s:ag_available
   let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nocolor --nogroup --column'
+  let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
   let g:unite_source_grep_recursive_opt = ''
 elseif s:ack_available
   let g:unite_source_grep_command = 'ack'

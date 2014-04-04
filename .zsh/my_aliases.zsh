@@ -19,6 +19,7 @@ alias less='less -R'
 alias vless='/usr/local/share/vim/vim73/macros/less.sh'
 alias rak='rak --sort-files'
 alias rak_app="rak -k 'db/|log/|public/|spec/|test/|tmp/|vendor/'"
+alias ag='ag --pager "less -R" -S --column'
 
 alias 80='sudo ruby script/server webrick -p 80'
 alias 443='sudo ruby script/webrick_ssl -p 443'
