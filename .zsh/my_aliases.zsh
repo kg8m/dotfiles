@@ -13,6 +13,7 @@ if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
 fi
 
 alias rm='rm -i'
+alias _ls='/bin/ls -a'
 alias ls='ls --color -a'
 alias ll='ls -l'
 alias less='less -R'
