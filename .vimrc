@@ -1247,7 +1247,9 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neom
 " }}}
 
 " unite-versions "{{{
-  nmap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
+  " maybe bug exists: works like as `status:%` in subversion directory
+  " nmap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
+  nmap <silent> <Leader>uv :<C-u>UniteVersions status:./<Cr>
   function! AddActionsToVersions()
     let l:action = {
       \   "description" : "open files",
