@@ -419,7 +419,10 @@ set list
 set listchars=tab:>\ ,eol:\ ,trail:_
 
 " make ZenkakuSpace visible
-au BufNewFile,BufRead * match Underlined /　/
+augroup HighlightZenkakuSpace
+  autocmd!
+  autocmd BufNewFile,BufRead * match Underlined /　/
+augroup END
 " }}}
 
 " ----------------------------------------------
@@ -524,7 +527,10 @@ set whichwrap=b,s,h,l,<,>,[,],~
 " augroup END
 
 " http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
-autocmd BufWriteCmd *[,*] call s:write_check_typo(expand('<afile>'))
+augroup CheckTypo
+  autocmd!
+  autocmd BufWriteCmd *[,*] call s:write_check_typo(expand('<afile>'))
+augroup END
 function! s:write_check_typo(file)
   let writecmd = 'write'.(v:cmdbang ? '!' : '').' '.a:file
 
@@ -681,7 +687,10 @@ let g:calendar_first_day = "monday"
 " colorizer "{{{
 let g:colorizer_startup = 0
 let s:colorizer_target_filetypes = ['eruby', 'haml', 'html', 'css', 'scss', 'javascript', 'diff']
-autocmd WinEnter,BufEnter,BufRead,BufNewFile * if index(s:colorizer_target_filetypes, &ft) >= 0 | ColorHighlight | else | ColorClear | endif
+augroup ToogleColorizer
+  autocmd!
+  autocmd WinEnter,BufEnter,BufRead,BufNewFile * if index(s:colorizer_target_filetypes, &ft) >= 0 | ColorHighlight | else | ColorClear | endif
+augroup END
 " }}}
 
 " caw "{{{
@@ -712,7 +721,10 @@ function! ClearDWMAugroup()
     let g:dwm_augroup_cleared = 1
   endif
 endfunction
-autocmd VimEnter * call ClearDWMAugroup()
+augroup ClearDWMAugroup
+  autocmd!
+  autocmd VimEnter * call ClearDWMAugroup()
+augroup END
 " }}}
 
 " easymotion "{{{
@@ -893,12 +905,15 @@ else
   let g:neocomplcache_caching_limit_file_size = 500000
 endif
 
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" jscomplete
-autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
+augroup SetOmunifuncs
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+  " jscomplete
+  autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
+augroup END
 " }}}
 
 " neosnippet "{{{
@@ -916,7 +931,10 @@ let g:neosnippet#snippets_directory = [
 \   $bundles_path . "/vim-snippets/snippets",
 \ ]
 
-autocmd InsertLeave * NeoSnippetClearMarkers
+augroup NeoSnippetClearMarkers
+  autocmd!
+  autocmd InsertLeave * NeoSnippetClearMarkers
+augroup END
 " }}}
 
 " open-browser "{{{
@@ -951,7 +969,10 @@ vmap r <Plug>(operator-replace)
 
 " rails "{{{
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
-autocmd FileType ruby set path+=test/lib
+augroup Rails
+  autocmd!
+  autocmd FileType ruby set path+=test/lib
+augroup END
 let g:rails_level = 4
 let g:rails_projections = {
   \   "app/controllers/shared/*.rb": {
@@ -1306,7 +1327,10 @@ let g:VimuxHeight = 30
 let g:VimuxUseNearestPane = 0  " deprecated?
 let g:VimuxUseNearest = 0
 if s:on_tmux
-  autocmd VimLeavePre * :VimuxCloseRunner
+  augroup Vimux
+    autocmd!
+    autocmd VimLeavePre * :VimuxCloseRunner
+  augroup END
 endif
 " }}}
 
