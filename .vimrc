@@ -477,7 +477,6 @@ set incsearch
 " controls "{{{
 set restorescreen
 set mouse=
-" set clipboard=unnamed
 set t_vb=
 
 " smoothen screen drawing; wait procedures' completion
@@ -1346,6 +1345,7 @@ if has('gui_running')
   gui
   set guioptions=none
 
+  set clipboard=unnamed
   nmap <C-v> <C-v>
   nmap <C-y> <C-y>
 
