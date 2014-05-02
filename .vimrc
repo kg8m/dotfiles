@@ -14,8 +14,8 @@ let s:ag_available = executable("ag")
 let s:ack_available = executable("ack")
 let s:migemo_available = has("migemo") || executable("cmigemo")
 
-function! s:availability_messaage(_function)
-  return a:_function . ' is ' . (eval('s:' . a:_function . '_available') ? '' : 'NOT ') . 'available'
+function! s:availability_messaage(target)
+  return a:target . ' is ' . (eval('s:' . a:target . '_available') ? '' : 'NOT ') . 'available'
 endfunction
 " }}}
 
