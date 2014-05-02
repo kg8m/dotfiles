@@ -49,9 +49,7 @@ NeoBundle 'Shougo/vimproc', {
 " plugins from github
 NeoBundle 'kg8m/.vim'
 " NeoBundle 'mileszs/ack.vim'
-NeoBundle 'taichouchou2/alpaca_complete', {
-        \   'depends': ['tpope/vim-rails', 'Shougo/neocomplcache'],
-        \ },
+NeoBundle 'taichouchou2/alpaca_complete'
 NeoBundleLazy 'vim-scripts/AutoClose', {
               \   'autoload': {
               \     'insert':   1,
@@ -86,7 +84,6 @@ NeoBundleLazy 'mattn/emmet-vim', {
               \ },
 NeoBundle 'LeafCage/foldCC'
 NeoBundleLazy 'mattn/gist-vim', {
-            \   'depends':  ['mattn/webapi-vim'],
             \   'autoload': {
             \     'commands': 'Gist',
             \   },
@@ -157,7 +154,6 @@ NeoBundleLazy 'osyo-manga/unite-filetype', {
             \   },
             \ },
 NeoBundleLazy 'kg8m/unite-gist', {
-            \   'depends': ['mattn/gist-vim'],
             \   'autoload': {
             \     'unite_sources': ['gist'],
             \   },
