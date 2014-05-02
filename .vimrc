@@ -1369,7 +1369,7 @@ if has('gui_running')
   gui
   set guioptions=none
 
-  set clipboard=unnamed
+  " set clipboard=unnamed
 
   " reset mswin.vim's mappings
   nnoremap <C-v> <C-v>
