@@ -562,16 +562,16 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 let g:mapleader = ','
 
 " ,r => reload .vimrc
-nmap <Leader>r :source ~/.vimrc<Cr>
+nnoremap <Leader>r :source ~/.vimrc<Cr>
 
 " <Esc><Esc> => nohilight
-nmap <Esc><Esc> :nohlsearch<Cr>
+nnoremap <Esc><Esc> :nohlsearch<Cr>
 
 " ,v => vsplit
-nmap <Leader>v :vsplit<Cr>
+nnoremap <Leader>v :vsplit<Cr>
 
 " ,d => svn diff
-nmap <Leader>d :call SVNDiff()<Cr>
+nnoremap <Leader>d :call SVNDiff()<Cr>
 function! SVNDiff()
   edit diff
   silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
@@ -579,48 +579,48 @@ function! SVNDiff()
 endfunction
 
 " ,y/,p => copy/paste by clipboard
-vmap <Leader>y "*y
-nmap <Leader>p "*p
+vnoremap <Leader>y "*y
+nnoremap <Leader>p "*p
 
 " ctags
 " <C-]>: go to tag, <C-[>: back from tag
-nmap <C-[> <C-S-t>
+nnoremap <C-[> <C-S-t>
 
 " ,w => <C-w>
-nmap <Leader>w <C-w>
+nnoremap <Leader>w <C-w>
 
 " ,w => erase spaces of EOL for selected
-vmap <Leader>w :s/\s\+$//ge<Cr>
+vnoremap <Leader>w :s/\s\+$//ge<Cr>
 
 " search very magic as default
-nmap / /\v
+nnoremap / /\v
 
 " search selected characters
-vmap <silent> * "zy:let @/ = @z<Cr>n
+vnoremap <silent> * "zy:let @/ = @z<Cr>n
 
 " prevent unconscious operation
-imap <C-w> <Esc><C-w>
+inoremap <C-w> <Esc><C-w>
 
 " increment/decrement
-nmap + <C-a>
-nmap - <C-x>
+nnoremap + <C-a>
+nnoremap - <C-x>
 
 " emacs like moving in INSERT mode
-imap <C-h> <Left>
-imap <C-j> <Down>
-imap <C-k> <Up>
-imap <C-l> <Right>
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
 
 " Page scroll in INSERT mode
-imap <expr><C-f> "\<PageDown>"
-imap <expr><C-b> "\<PageUp>"
+inoremap <expr><C-f> "\<PageDown>"
+inoremap <expr><C-b> "\<PageUp>"
 " }}}
 
 " ----------------------------------------------
 " plugins "{{{
 " alignta "{{{
-vmap <Leader>a :Alignta<Space>
-vmap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
+vnoremap <Leader>a :Alignta<Space>
+vnoremap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
 let g:unite_source_alignta_preset_arguments = [
   \ ["Align at '=>'     --  `=>`",                        '=>'],
   \ ["Align at /\\S/    --  `\\S\\+`",                    '\S\+'],
@@ -711,9 +711,9 @@ nmap <C-w>f <Plug>(choosewin)
 
 " dwm "{{{
 let g:dwm_map_keys = 0
-nmap <C-w>n       :call DWM_New()<Cr>
-nmap <C-w>c       :call DWM_Close()<Cr>
-nmap <C-w><Space> :call DWM_AutoEnter()<Cr>
+nnoremap <C-w>n       :call DWM_New()<Cr>
+nnoremap <C-w>c       :call DWM_Close()<Cr>
+nnoremap <C-w><Space> :call DWM_AutoEnter()<Cr>
 let g:dwm_augroup_cleared = 0
 function! ClearDWMAugroup()
   if !g:dwm_augroup_cleared
@@ -772,7 +772,7 @@ let g:gist_get_multiplefile = 1
 " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
 " r => show diff preview
 let g:gundo_auto_preview = 0
-nmap <F5> :GundoToggle<Cr>
+nnoremap <F5> :GundoToggle<Cr>
 " }}}
 
 " HowMuch "{{{
@@ -1042,8 +1042,8 @@ let g:SimpleJsIndenter_CaseIndentLevel = -1
 " splitjoin "{{{
 let g:splitjoin_split_mapping = ''
 let g:splitjoin_join_mapping  = ''
-nmap <Leader>J :SplitjoinJoin<Cr>
-nmap <Leader>S :SplitjoinSplit<Cr>
+nnoremap <Leader>J :SplitjoinJoin<Cr>
+nnoremap <Leader>S :SplitjoinSplit<Cr>
 " }}}
 
 " startify "{{{
@@ -1131,11 +1131,11 @@ endif
 " Unicode-RST-Tables "{{{
 let g:no_rst_table_maps = 0
 if has("python3")
-  map <silent> <Leader><Leader>c :python3 CreateTable()<Cr>
-  map <silent> <Leader><Leader>f :python3 FixTable()<Cr>
+  noremap <silent> <Leader><Leader>c :python3 CreateTable()<Cr>
+  noremap <silent> <Leader><Leader>f :python3 FixTable()<Cr>
 elseif has("python")
-  map <silent> <Leader><Leader>c :python  CreateTable()<Cr>
-  map <silent> <Leader><Leader>f :python  FixTable()<Cr>
+  noremap <silent> <Leader><Leader>c :python  CreateTable()<Cr>
+  noremap <silent> <Leader><Leader>f :python  FixTable()<Cr>
 endif
 " }}}
 
@@ -1158,17 +1158,17 @@ endif
 let g:unite_source_grep_max_candidates = 1000
 let g:unite_source_grep_search_word_highlight = 'Special'
 call unite#custom_source('buffer', 'sorters', 'sorter_word')
-nmap <Leader>ug :<C-u>Unite -no-quit grep:./::
-vmap <Leader>ug "vy:<C-u>Unite -no-quit grep:./::<C-r>"
-nmap <silent> <Leader>uy :<C-u>Unite history/yank<Cr>
-nmap <silent> <Leader>uo :<C-u>Unite outline<Cr>
-nmap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
-nmap <silent> <Leader>ub :<C-u>Unite buffer<Cr>
-nmap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
-" nmap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
-nmap <silent> <Leader>um :<C-u>Unite neomru/file<Cr>
-nmap <silent> <Leader>uu :<C-u>Unite buffer neomru/file<Cr>
-nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neomru/file bookmark file<Cr>
+nnoremap <Leader>ug :<C-u>Unite -no-quit grep:./::
+vnoremap <Leader>ug "vy:<C-u>Unite -no-quit grep:./::<C-r>"
+nnoremap <silent> <Leader>uy :<C-u>Unite history/yank<Cr>
+nnoremap <silent> <Leader>uo :<C-u>Unite outline<Cr>
+nnoremap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
+nnoremap <silent> <Leader>ub :<C-u>Unite buffer<Cr>
+nnoremap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
+" nnoremap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
+nnoremap <silent> <Leader>um :<C-u>Unite neomru/file<Cr>
+nnoremap <silent> <Leader>uu :<C-u>Unite buffer neomru/file<Cr>
+nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neomru/file bookmark file<Cr>
 
 " unite-dwm "{{{
   let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,cdable"
@@ -1178,17 +1178,17 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neom
   let g:neomru#time_format     = "(%Y/%m/%d %H:%M:%S) "
   let g:neomru#filename_format = ":~:."
   let g:neomru#file_mru_limit  = 1000
-  nmap <silent> <Leader>m :<C-u>Unite neomru/file<Cr>
+  nnoremap <silent> <Leader>m :<C-u>Unite neomru/file<Cr>
 " }}}
 
 " unite-rails "{{{
-  nmap <Leader>ur :<C-u>Unite rails/
+  nnoremap <Leader>ur :<C-u>Unite rails/
 " }}}
 
 " unite-shortcut "{{{
   " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
   " http://d.hatena.ne.jp/tyru/20120110/prompt
-  map <silent> <Leader>us :<C-u>Unite menu:shortcuts<Cr>
+  noremap <silent> <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   let g:unite_source_menu_menus = {}
   let g:unite_source_menu_menus.shortcuts = {
     \   "description" : "shortcuts"
@@ -1263,13 +1263,13 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neom
 " }}}
 
 " unite-tag "{{{
-  nmap <silent> <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
+  nnoremap <silent> <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
 " }}}
 
 " unite-versions "{{{
   " maybe bug exists: works like as `status:%` in subversion directory
-  " nmap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
-  nmap <silent> <Leader>uv :<C-u>UniteVersions status:./<Cr>
+  " nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
+  nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:./<Cr>
   function! AddActionsToVersions()
     let l:action = {
       \   "description" : "open files",
@@ -1298,18 +1298,18 @@ nmap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neom
 " }}}
 
 " other unite keymappings: they used to be for plugins replaced by unite "{{{
-  nmap <F4> :<C-u>Unite buffer<Cr>
+  nnoremap <F4> :<C-u>Unite buffer<Cr>
 " }}}
 " }}}
 
 " vimfiler "{{{
 let g:vimfiler_safe_mode_by_default = 0
 let g:vimfiler_edit_action = 'dwm_open'
-nmap <Leader>e :VimFilerBufferDir -quit<Cr>
+nnoremap <Leader>e :VimFilerBufferDir -quit<Cr>
 " }}}
 
 " vimshell "{{{
-map <Leader>s :VimShell<Cr>
+nnoremap <Leader>s :VimShell<Cr>
 
 if s:on_windows
   let g:_user_name = $USERNAME
@@ -1372,8 +1372,8 @@ if has('gui_running')
   set clipboard=unnamed
 
   " reset mswin.vim's mappings
-  nmap <C-v> <C-v>
-  nmap <C-y> <C-y>
+  nnoremap <C-v> <C-v>
+  nnoremap <C-y> <C-y>
 
   " save window's size and position
   " http://vim-users.jp/2010/01/hack120/
