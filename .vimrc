@@ -405,8 +405,8 @@ set showmode
 set showcmd
 set cursorline
 set cursorcolumn
-augroup cch
-  autocmd! cch
+augroup ToggleActiveWindowCursor
+  autocmd!
   autocmd WinLeave * set nocursorcolumn nocursorline
   autocmd WinEnter,BufWinEnter,FileType,ColorScheme * set cursorcolumn cursorline
 augroup END
