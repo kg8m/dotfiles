@@ -49,7 +49,11 @@ NeoBundle 'Shougo/vimproc', {
 " plugins from github
 NeoBundle 'kg8m/.vim'
 " NeoBundle 'mileszs/ack.vim'
-NeoBundle 'taichouchou2/alpaca_complete'
+NeoBundleLazy 'taichouchou2/alpaca_complete', {
+            \   'autoload': {
+            \     'filetypes': ['ruby', 'eruby']
+            \   },
+            \ },
 NeoBundleLazy 'vim-scripts/AutoClose', {
               \   'autoload': {
               \     'insert':   1,
@@ -68,13 +72,17 @@ NeoBundleLazy 'tyru/caw.vim', {
             \   },
             \ },
 " NeoBundle 'rhysd/clever-f.vim'
-NeoBundle 'lilydjwg/colorizer'
+NeoBundleLazy 'lilydjwg/colorizer', {
+            \   'autoload': {
+            \     'commands': ['ColorHighlight', 'ColorClear'],
+            \   },
+            \ },
 NeoBundleLazy 'cocopon/colorswatch.vim', {
             \   'autoload': {
             \     'commands': 'ColorSwatchGenerate',
             \   },
             \ },
-NeoBundle 'rhysd/conflict-marker.vim'
+" NeoBundle 'rhysd/conflict-marker.vim'
 NeoBundle 'spolu/dwm.vim'
 " former zencoding-vim
 NeoBundleLazy 'mattn/emmet-vim', {
@@ -191,7 +199,11 @@ NeoBundleLazy 'osyo-manga/vim-anzu', {
             \   },
             \ },
 NeoBundle 'kg8m/vim-blockle'
-NeoBundle 't9md/vim-choosewin'
+NeoBundle 't9md/vim-choosewin', {
+            \   'autoload': {
+            \     'mappings': ['ns', '<Plug>(choosewin)'],
+            \   },
+            \ },
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'Lokaltog/vim-easymotion'
