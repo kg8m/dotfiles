@@ -356,7 +356,7 @@ if &encoding !=# 'utf-8'
   set fileencoding=japan
 endif
 
-function! AU_ReCheck_FENC()
+function! s:recheck_fileencoding()
   if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
     let &fileencoding=&encoding
   endif
@@ -364,7 +364,7 @@ endfunction
 
 augroup CheckEncoding
   autocmd!
-  autocmd BufReadPost * call AU_ReCheck_FENC()
+  autocmd BufReadPost * call s:recheck_fileencoding()
 augroup END
 
 set fileformats=unix,dos,mac
@@ -438,7 +438,7 @@ if has('vim_starting')
   autocmd FileType vim  set foldmethod=marker
   autocmd FileType ruby set foldmethod=syntax
   autocmd FileType yaml set foldmethod=indent
-  autocmd BufEnter * if &ft == 'javascript' | call MyJavaScriptFold() | endif
+  autocmd BufEnter * if &ft == 'javascript' | call s:my_javascript_fold() | endif
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
@@ -558,8 +558,8 @@ nnoremap <Esc><Esc> :nohlsearch<Cr>
 nnoremap <Leader>v :vsplit<Cr>
 
 " ,d => svn diff
-nnoremap <Leader>d :call SVNDiff()<Cr>
-function! SVNDiff()
+nnoremap <Leader>d :call s:svn_diff()<Cr>
+function! s:svn_diff()
   edit diff
   silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
   execute "normal :r!svn diff\n"
@@ -702,7 +702,7 @@ nnoremap <C-w>n       :call DWM_New()<Cr>
 nnoremap <C-w>c       :call DWM_Close()<Cr>
 nnoremap <C-w><Space> :call DWM_AutoEnter()<Cr>
 let g:dwm_augroup_cleared = 0
-function! ClearDWMAugroup()
+function! s:clear_dwm_augroup()
   if !g:dwm_augroup_cleared
     autocmd! dwm
     let g:dwm_augroup_cleared = 1
@@ -710,7 +710,7 @@ function! ClearDWMAugroup()
 endfunction
 augroup ClearDWMAugroup
   autocmd!
-  autocmd VimEnter * call ClearDWMAugroup()
+  autocmd VimEnter * call s:clear_dwm_augroup()
 augroup END
 " }}}
 
@@ -774,7 +774,7 @@ let g:HowMuch_scale = 5
 " }}}
 
 " javascript-syntax "{{{
-function! MyJavaScriptFold()
+function! s:my_javascript_fold()
   if !exists("b:javascript_folded")
     call JavaScriptFold()
     setl foldlevelstart=0
@@ -808,17 +808,17 @@ let g:lightline = {
   \     'lineinfo_with_percent': '%l/%L(%p%%) : %v',
   \   },
   \   'component_function': {
-  \     'filename': 'MyFilename',
+  \     'filename': 'g:my_filename',
   \   },
   \   'colorscheme': 'molokai',
   \ }
 
-function! MyReadonly()
+function! g:my_readonly()
   return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'X' : ''
 endfunction
 
-function! MyFilename()
-  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+function! g:my_filename()
+  return ('' != g:my_readonly() ? g:my_readonly() . ' ' : '') .
        \ (
        \   &ft == 'vimfiler' ? vimfiler#get_status_string() :
        \   &ft == 'unite' ? unite#get_status_string() :
@@ -827,10 +827,10 @@ function! MyFilename()
        \     winwidth(0) >= 100 ? expand('%:F') : expand('%:t')
        \   ) : '[No Name]'
        \ ) .
-       \ ('' != MyModified() ? ' ' . MyModified() : '')
+       \ ('' != g:my_modified() ? ' ' . g:my_modified() : '')
 endfunction
 
-function! MyModified()
+function! g:my_modified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 " }}}
@@ -1262,7 +1262,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
   " maybe bug exists: works like as `status:%` in subversion directory
   " nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
   nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:./<Cr>
-  function! AddActionsToVersions()
+  function! s:add_actions_to_versions()
     let l:action = {
       \   "description" : "open files",
       \   "is_selectable" : 1,
@@ -1286,7 +1286,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
     call unite#custom#action("versions/git/status,versions/svn/status", "open", l:action)
     call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
   endfunction
-  call AddActionsToVersions()
+  call s:add_actions_to_versions()
 " }}}
 
 " other unite keymappings: they used to be for plugins replaced by unite "{{{
