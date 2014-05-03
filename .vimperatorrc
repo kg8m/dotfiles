@@ -71,8 +71,8 @@ mappings.addUserMap(
 EOM
 
 " タブ移動（タブからタブへの移動ではなく、タブの位置変更）
-nnoremap <C-J> :tabmove +1<Cr>
-nnoremap <C-K> :tabmove -1<Cr>
+nnoremap <C-S-j> :tabmove +1<Cr>
+nnoremap <C-S-k> :tabmove -1<Cr>
 
 " OSのキーバインドを一部再現
 inoremap <C-a> <Ins><C-a><Ins>
