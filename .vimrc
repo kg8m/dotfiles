@@ -261,10 +261,16 @@ NeoBundleLazy 'thinca/vim-qfreplace', {
             \   },
             \ },
 NeoBundle 'tpope/vim-rails'
-NeoBundle 'thinca/vim-ref'
+NeoBundleLazy 'thinca/vim-ref', {
+            \   'autoload': {
+            \     'commands': 'Ref',
+            \     'mappings': '<Plug>(ref-keyword)',
+            \   },
+            \ },
 NeoBundle 'tpope/vim-repeat'
 NeoBundleLazy 'vim-ruby/vim-ruby', {
             \   'autoload': {
+            \     'commands':  'Ref',
             \     'mappings':  '<Plug>(ref-keyword)',
             \     'filetypes': ['ruby', 'eruby']
             \   },
@@ -997,6 +1003,10 @@ let g:rails_projections = {
 " prevent `rails.vim` from defining keymappings
 nmap <Leader>Rwf  <Plug>RailsSplitFind
 nmap <Leader>Rwgf <Plug>RailsTabFind
+" }}}
+
+" ref "{{{
+nmap K <Plug>(ref-keyword)
 " }}}
 
 " rubytest "{{{
