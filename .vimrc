@@ -677,8 +677,8 @@ augroup END
 " caw "{{{
 let g:caw_no_default_keymappings = 1
 let g:caw_i_skip_blank_line = 1
-nmap gci <Plug>(caw:i:toggle)
-vmap gci <Plug>(caw:i:toggle)
+nmap gc <Plug>(caw:i:toggle)
+vmap gc <Plug>(caw:i:toggle)
 " }}}
 
 " choosewin "{{{
@@ -726,9 +726,9 @@ omap <Leader>f <Plug>(easymotion-s2)
 nmap f <Plug>(easymotion-fl)
 vmap f <Plug>(easymotion-fl)
 omap f <Plug>(easymotion-fl)
-nmap <S-f> <Plug>(easymotion-Fl)
-vmap <S-f> <Plug>(easymotion-Fl)
-omap <S-f> <Plug>(easymotion-Fl)
+nmap F <Plug>(easymotion-Fl)
+vmap F <Plug>(easymotion-Fl)
+omap F <Plug>(easymotion-Fl)
 " replace default `/`
 " very magic (\v) as default
 " nmap / <Plug>(easymotion-sn)\v
@@ -785,27 +785,27 @@ let g:jscomplete_use = ['dom', 'moz', 'es6th']
 " http://d.hatena.ne.jp/itchyny/20130828/1377653592
 set laststatus=2
 let s:lightline_elements = {
-\ 'left': [
-\   [ 'mode', 'paste' ],
-\   [ 'bufnum', 'filename' ],
-\   [ 'filetype', 'fileencoding', 'fileformat' ],
-\   [ 'lineinfo_with_percent' ],
-\ ],
-\ 'right': [
-\ ],
-\}
+  \   'left': [
+  \     [ 'mode', 'paste' ],
+  \     [ 'bufnum', 'filename' ],
+  \     [ 'filetype', 'fileencoding', 'fileformat' ],
+  \     [ 'lineinfo_with_percent' ],
+  \   ],
+  \   'right': [
+  \   ],
+  \ }
 let g:lightline = {
-    \ 'active': s:lightline_elements,
-    \ 'inactive': s:lightline_elements,
-    \ 'component': {
-    \   'bufnum': '#%n',
-    \   'lineinfo_with_percent': '%l/%L(%p%%) : %v',
-    \ },
-    \ 'component_function': {
-    \   'filename': 'MyFilename',
-    \ },
-    \ 'colorscheme': 'molokai',
-\ }
+  \   'active': s:lightline_elements,
+  \   'inactive': s:lightline_elements,
+  \   'component': {
+  \     'bufnum': '#%n',
+  \     'lineinfo_with_percent': '%l/%L(%p%%) : %v',
+  \   },
+  \   'component_function': {
+  \     'filename': 'MyFilename',
+  \   },
+  \   'colorscheme': 'molokai',
+  \ }
 
 function! MyReadonly()
   return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'X' : ''
@@ -908,9 +908,9 @@ if has('conceal')
 endif
 
 let g:neosnippet#snippets_directory = [
-\   $bundles_path . "/.vim/snippets",
-\   $bundles_path . "/vim-snippets/snippets",
-\ ]
+  \   $bundles_path . "/.vim/snippets",
+  \   $bundles_path . "/vim-snippets/snippets",
+  \ ]
 
 augroup NeoSnippetClearMarkers
   autocmd!
@@ -1003,16 +1003,16 @@ nmap <Leader>Rwgf <Plug>RailsTabFind
 let g:no_rubytest_mappings = 1
 let g:rubytest_in_vimshell = 1
 if !s:on_tmux
-  map <leader>T <Plug>RubyFileRun
-  map <leader>t <Plug>RubyTestRun
+  nmap <leader>T <Plug>RubyFileRun
+  nmap <leader>t <Plug>RubyTestRun
 endif
 " }}}
 
 " sequence "{{{
-vmap <Leader><Leader>a <plug>SequenceV_Increment
-vmap <Leader><Leader>x <plug>SequenceV_Decrement
-nmap <Leader><Leader>a <plug>SequenceN_Increment
-nmap <Leader><Leader>x <plug>SequenceN_Decrement
+vmap <Leader>+ <plug>SequenceV_Increment
+vmap <Leader>- <plug>SequenceV_Decrement
+nmap <Leader>+ <plug>SequenceN_Increment
+nmap <Leader>- <plug>SequenceN_Decrement
 " }}}
 
 " simple-javascript-indenter "{{{
@@ -1112,11 +1112,11 @@ endif
 " Unicode-RST-Tables "{{{
 let g:no_rst_table_maps = 0
 if has("python3")
-  noremap <silent> <Leader><Leader>c :python3 CreateTable()<Cr>
-  noremap <silent> <Leader><Leader>f :python3 FixTable()<Cr>
+  nnoremap <silent> <Leader><Leader>c :python3 CreateTable()<Cr>
+  nnoremap <silent> <Leader><Leader>f :python3 FixTable()<Cr>
 elseif has("python")
-  noremap <silent> <Leader><Leader>c :python  CreateTable()<Cr>
-  noremap <silent> <Leader><Leader>f :python  FixTable()<Cr>
+  nnoremap <silent> <Leader><Leader>c :python  CreateTable()<Cr>
+  nnoremap <silent> <Leader><Leader>f :python  FixTable()<Cr>
 endif
 " }}}
 
@@ -1126,12 +1126,13 @@ let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
 
-if s:ag_available
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
-  let g:unite_source_grep_recursive_opt = ''
-elseif s:ack_available
-  let g:unite_source_grep_command = 'ack'
+if s:ag_available || s:ack_available
+  if s:ag_available
+    let g:unite_source_grep_command = 'ag'
+  elseif s:ack_available
+    let g:unite_source_grep_command = 'ack'
+  endif
+
   let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
   let g:unite_source_grep_recursive_opt = ''
 endif
@@ -1349,7 +1350,6 @@ let g:user_emmet_settings = {
 if has('gui_running')
   gui
   set guioptions=none
-
   " set clipboard=unnamed
 
   " reset mswin.vim's mappings
