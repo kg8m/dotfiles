@@ -485,7 +485,7 @@ set wildmenu
 set wildmode=list:longest,full
 
 " ctags
-if exists('$RUBYGEMS_PATH')
+if has('vim_starting') && exists('$RUBYGEMS_PATH')
   let &tags = &tags . "," . $RUBYGEMS_PATH . "**/tags"
 endif
 
