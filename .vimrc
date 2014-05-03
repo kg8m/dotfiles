@@ -62,8 +62,8 @@ NeoBundleLazy 'vim-scripts/AutoClose', {
 NeoBundle 'vim-scripts/autodate.vim'
 NeoBundleLazy 'itchyny/calendar.vim', {
             \   'autoload': {
-            \     'commands':  'Calendar',
-            \     'mappings':  '<Plug>(calendar_',
+            \     'commands': 'Calendar',
+            \     'mappings': '<Plug>(calendar_',
             \   },
             \ },
 NeoBundleLazy 'tyru/caw.vim', {
@@ -87,7 +87,7 @@ NeoBundle 'spolu/dwm.vim'
 " former zencoding-vim
 NeoBundleLazy 'mattn/emmet-vim', {
               \   'autoload': {
-              \     'insert':   1,
+              \     'insert': 1,
               \   },
               \ },
 NeoBundle 'LeafCage/foldCC'
