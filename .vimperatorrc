@@ -50,13 +50,13 @@ inoremap <C-q> <Ins><C-q><Ins>
 let mapleader = ","
 
 " ,r で .vimperatorrc をリロード
-map <Leader>r :source ~/.vimperatorrc<Cr>
+nnoremap <Leader>r :source ~/.vimperatorrc<Cr>
 
 " 検索補完関連
 nnoremap s :set<Space>cpt=s<Cr>:open<Space>google<Space>
-nnoremap <S-s> :set<Space>cpt=s<Cr>:tabopen<Space>google<Space>
+nnoremap S :set<Space>cpt=s<Cr>:tabopen<Space>google<Space>
 nnoremap a :set<Space>cpt=s<Cr>:open<Space>amazon<Space>
-nnoremap <S-a> :set<Space>cpt=s<Cr>:tabopen<Space>amazon<Space>
+nnoremap A :set<Space>cpt=s<Cr>:tabopen<Space>amazon<Space>
 nnoremap t :set<Space>cpt=slt<Cr>:tabopen<Space>
 nnoremap o :set<Space>cpt=slt<Cr>:open<Space>
 
@@ -71,8 +71,8 @@ mappings.addUserMap(
 EOM
 
 " タブ移動（タブからタブへの移動ではなく、タブの位置変更）
-noremap <C-S-j> :tabmove +1<Cr>
-noremap <C-S-k> :tabmove -1<Cr>
+nnoremap <C-J> :tabmove +1<Cr>
+nnoremap <C-K> :tabmove -1<Cr>
 
 " OSのキーバインドを一部再現
 inoremap <C-a> <Ins><C-a><Ins>
@@ -80,10 +80,10 @@ inoremap <C-w> <Ins><C-w><Ins>
 cnoremap <C-a> <Ins><C-a><Ins>
 
 " ソース表示
-map <C-S-u> i<C-u>
+nnoremap <C-S-u> i<C-u>
 
 " ロケーションバーにフォーカス
-map <C-l> <A-d>
+noremap <C-l> <A-d>
 
 " 誤操作防止
 inoremap <C-n> <Esc><C-n>
@@ -102,7 +102,7 @@ inoremap <C-b> <PageUp>
 nnoremap <Esc><Esc> :noh<Cr>
 
 " ,p で印刷プレビュー
-noremap <Leader>p :emenu ファイル.印刷プレビュー<Cr>
+nnoremap <Leader>p :emenu ファイル.印刷プレビュー<Cr>
 
 " ,o でURLを一気に開く
 nnoremap <Leader>o :emenu ファイル.Open Multiple Locations...<Cr>
@@ -123,7 +123,7 @@ let g:amazon_asamashi = "kgtk-22"
 
 " for caret-hint
 nnoremap <Leader>f :caret move head<Cr>
-nnoremap <Leader><S-f> :caret move tail<Cr>
+nnoremap <Leader>F :caret move tail<Cr>
 
 " for copy.js
 javascript << EOM
