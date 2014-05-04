@@ -153,6 +153,8 @@ command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
 lazy fmaps -u='mail\.google\.com/mail' c / y f j k n p o u e x r a t # [ ] z * ? gl gi gs gt gd ga gc
 lazy fmaps -u='www\.google\.com/calendar' -events=vkeydown t a d w m x c e <Del> / + q ? j k r
 lazy fmaps -u='feedly\.com' ? gh ga gg <S-j> <S-k> r j k n p o v m <S-v>
+lazy fmaps -u='www\.flickr\.com' -events=vkeydown ? l j k <Left> <Right>
+lazy fmaps -u='www\.gqueues\.com' -events=vkeydown ? j k h l <S-j> <S-k> q r / e <S-c> d <C-S-d> o <S-o> gi
 lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
 
 " for twittperator
