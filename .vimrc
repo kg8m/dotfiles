@@ -558,8 +558,8 @@ nnoremap <Esc><Esc> :nohlsearch<Cr>
 nnoremap <Leader>v :vsplit<Cr>
 
 " ,d => svn diff
-nnoremap <Leader>d :call s:svn_diff()<Cr>
-function! s:svn_diff()
+nnoremap <Leader>d :call g:svn_diff()<Cr>
+function! g:svn_diff()
   edit diff
   silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
   execute "normal :r!svn diff\n"
