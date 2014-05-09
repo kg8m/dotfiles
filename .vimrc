@@ -49,11 +49,11 @@ NeoBundle 'Shougo/vimproc', {
 " plugins from github
 NeoBundle 'kg8m/.vim'
 " NeoBundle 'mileszs/ack.vim'
-NeoBundleLazy 'taichouchou2/alpaca_complete', {
-            \   'autoload': {
-            \     'filetypes': ['ruby', 'eruby']
-            \   },
-            \ },
+" NeoBundleLazy 'alpaca-tc/alpaca_complete', {
+"             \   'autoload': {
+"             \     'filetypes': ['ruby', 'eruby']
+"             \   },
+"             \ },
 NeoBundleLazy 'vim-scripts/AutoClose', {
               \   'autoload': {
               \     'insert':   1,
