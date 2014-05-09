@@ -54,6 +54,16 @@ NeoBundle 'kg8m/.vim'
 "             \     'filetypes': ['ruby', 'eruby']
 "             \   },
 "             \ },
+NeoBundleLazy 'alpaca-tc/alpaca_rails_support', {
+            \   'autoload': {
+            \     'insert':        1,
+            \     'unite_sources': 'rails_support/locales',
+            \     'commands':      [
+            \       'RSCreateRoutesCache', 'RSCleanCache',
+            \       'RSShowLocale', 'RSCreateLocaleCache',
+            \     ]
+            \   }
+            \ }
 NeoBundleLazy 'vim-scripts/AutoClose', {
               \   'autoload': {
               \     'insert':   1,
