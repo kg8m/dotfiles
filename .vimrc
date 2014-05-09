@@ -1257,6 +1257,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
 " }}}
 
 " unite-versions "{{{
+  let g:versions#type#svn#status#ignore_status = ['X']
   " maybe bug exists: works like as `status:%` in subversion directory
   " nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
   nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:./<Cr>
