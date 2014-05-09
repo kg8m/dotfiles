@@ -1012,6 +1012,10 @@ nmap <Leader>Rwgf <Plug>RailsTabFind
 nmap K <Plug>(ref-keyword)
 " }}}
 
+" ruby "{{{
+let g:no_ruby_maps = 1
+" }}}
+
 " rubytest "{{{
 let g:no_rubytest_mappings = 1
 let g:rubytest_in_vimshell = 1
