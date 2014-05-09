@@ -268,13 +268,15 @@ NeoBundleLazy 'thinca/vim-ref', {
             \   },
             \ },
 NeoBundle 'tpope/vim-repeat'
-NeoBundleLazy 'vim-ruby/vim-ruby', {
-            \   'autoload': {
-            \     'commands':  'Ref',
-            \     'mappings':  '<Plug>(ref-keyword)',
-            \     'filetypes': ['ruby', 'eruby']
-            \   },
-            \ },
+" ftdetecting does not working
+" NeoBundleLazy 'vim-ruby/vim-ruby', {
+"             \   'autoload': {
+"             \     'commands':  'Ref',
+"             \     'mappings':  '<Plug>(ref-keyword)',
+"             \     'filetypes': ['ruby', 'eruby']
+"             \   },
+"             \ },
+NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
 NeoBundle 'kg8m/vim-rubytest'
 NeoBundle 'thinca/vim-singleton'
