@@ -698,9 +698,9 @@ nmap <C-w>f <Plug>(choosewin)
 
 " dwm "{{{
 let g:dwm_map_keys = 0
-nnoremap <C-w>n       :call DWM_New()<Cr>
-nnoremap <C-w>c       :call DWM_Close()<Cr>
-nnoremap <C-w><Space> :call DWM_AutoEnter()<Cr>
+nmap <C-w>n       :call DWM_New()<Cr>
+nmap <C-w>c       :call DWM_Close()<Cr>
+nmap <C-w><Space> :call DWM_AutoEnter()<Cr>
 let g:dwm_augroup_cleared = 0
 function! s:clear_dwm_augroup()
   if !g:dwm_augroup_cleared
