@@ -72,11 +72,7 @@ NeoBundleLazy 'tyru/caw.vim', {
             \   },
             \ },
 " NeoBundle 'rhysd/clever-f.vim'
-NeoBundleLazy 'lilydjwg/colorizer', {
-            \   'autoload': {
-            \     'commands': ['ColorHighlight', 'ColorClear'],
-            \   },
-            \ },
+NeoBundle 'lilydjwg/colorizer'
 NeoBundleLazy 'cocopon/colorswatch.vim', {
             \   'autoload': {
             \     'commands': 'ColorSwatchGenerate',
