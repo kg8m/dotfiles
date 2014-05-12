@@ -712,7 +712,9 @@ nmap <C-w><Space> :call DWM_AutoEnter()<Cr>
 let g:dwm_augroup_cleared = 0
 function! s:clear_dwm_augroup()
   if !g:dwm_augroup_cleared
-    autocmd! dwm
+    augroup dwm
+      autocmd!
+    augroup END
     let g:dwm_augroup_cleared = 1
   endif
 endfunction
