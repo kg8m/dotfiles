@@ -236,7 +236,7 @@ NeoBundleLazy 'jelera/vim-javascript-syntax', {
             \   },
             \ },
 NeoBundle 'elzr/vim-json'
-NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'rcmdnk/vim-markdown'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
 " NeoBundle 'amdt/vim-niji'
 NeoBundleLazy 'kana/vim-operator-replace', {
