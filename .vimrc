@@ -712,7 +712,9 @@ nmap <C-w><Space> :call DWM_AutoEnter()<Cr>
 let g:dwm_augroup_cleared = 0
 function! s:clear_dwm_augroup()
   if !g:dwm_augroup_cleared
-    autocmd! dwm
+    augroup dwm
+      autocmd!
+    augroup END
     let g:dwm_augroup_cleared = 1
   endif
 endfunction
@@ -1288,7 +1290,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
 
     function! l:action.func(candidates)
       for l:candidate in a:candidates
-        let l:candidate.action__path = candidate.source__args.path . '/' . l:candidate.action__status.path
+        let l:candidate.action__path = l:candidate.source__args.path . l:candidate.action__status.path
         let l:candidate.action__directory = unite#util#path2directory(l:candidate.action__path)
 
         if l:candidate.action__path == l:candidate.action__directory
