@@ -21,9 +21,6 @@ endfunction
 
 " ----------------------------------------------
 " neobundle "{{{
-" https://github.com/Shougo/shougo-s-github/blob/master/vim/.vimrc
-filetype off
-
 if has('vim_starting')
   " http://qiita.com/td2sk/items/2299a5518f58ffbfc5cf
   if !isdirectory($neobundle_path)
@@ -34,9 +31,9 @@ if has('vim_starting')
   set runtimepath+=$neobundle_path
 endif
 
-call neobundle#rc($bundles_path)
+call neobundle#begin($bundles_path)
 
-NeoBundle 'Shougo/neobundle.vim'
+NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc', {
         \   'build': {
         \     'windows': 'make -f make_mingw32.mak',
@@ -285,7 +282,9 @@ NeoBundle 'tpope/vim-repeat'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
 NeoBundle 'kg8m/vim-rubytest'
-NeoBundle 'thinca/vim-singleton'
+NeoBundleLazy 'thinca/vim-singleton', {
+            \   'gui': 1,
+            \ },
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'mhinz/vim-startify'
 NeoBundle 'tpope/vim-surround'
@@ -343,6 +342,7 @@ NeoBundle 'sudo.vim'
 NeoBundle 'hail2u/h2u_colorscheme'  " for printing
 NeoBundle 'kg8m/molokai'
 
+call neobundle#end()
 filetype plugin indent on
 
 NeoBundleCheck
