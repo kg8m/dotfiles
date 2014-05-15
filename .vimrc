@@ -654,6 +654,10 @@ nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
 " }}}
 
+" autoclose "{{{
+let g:AutoClosePairs_add = "<>"
+" }}}
+
 " autodate "{{{
 let autodate_format       = '%Y/%m/%d'
 let autodate_lines        = 100
