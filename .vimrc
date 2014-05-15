@@ -991,6 +991,12 @@ let g:rails_projections = {
   \   "app/models/finder/*.rb": {
   \     "command": "finder",
   \   },
+  \   "config/routes.rb": {
+  \     "command": "routes",
+  \     "test": [
+  \       "test/integration/routes_test.rb",
+  \     ],
+  \   },
   \   "script/*": {
   \     "command": "script",
   \     "test": [
