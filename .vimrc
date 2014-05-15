@@ -61,11 +61,6 @@ NeoBundleLazy 'alpaca-tc/alpaca_rails_support', {
             \     ]
             \   }
             \ }
-NeoBundleLazy 'vim-scripts/AutoClose', {
-              \   'autoload': {
-              \     'insert':   1,
-              \   },
-              \ },
 NeoBundle 'vim-scripts/autodate.vim'
 NeoBundleLazy 'itchyny/calendar.vim', {
             \   'autoload': {
@@ -201,6 +196,7 @@ NeoBundleLazy 'osyo-manga/vim-anzu', {
             \     'mappings': ['ns', '<Plug>(anzu-'],
             \   },
             \ },
+NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'kg8m/vim-blockle'
 NeoBundle 't9md/vim-choosewin', {
             \   'autoload': {
