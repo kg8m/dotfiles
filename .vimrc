@@ -169,6 +169,7 @@ NeoBundleLazy 'Shougo/unite-help', {
             \     'unite_sources': ['help'],
             \   },
             \ },
+NeoBundle 'tacroe/unite-mark'
 NeoBundleLazy 'Shougo/unite-outline', {
             \   'autoload': {
             \     'unite_sources': ['outline'],
@@ -1183,7 +1184,7 @@ nnoremap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
 nnoremap <silent> <Leader>ub :<C-u>Unite buffer<Cr>
 nnoremap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
 " nnoremap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
-nnoremap <silent> <Leader>um :<C-u>Unite neomru/file<Cr>
+" nnoremap <silent> <Leader>um :<C-u>Unite neomru/file<Cr>
 nnoremap <silent> <Leader>uu :<C-u>Unite buffer neomru/file<Cr>
 nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neomru/file bookmark file<Cr>
 
@@ -1196,6 +1197,33 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
   let g:neomru#filename_format = ":~:."
   let g:neomru#file_mru_limit  = 1000
   nnoremap <silent> <Leader>m :<C-u>Unite neomru/file<Cr>
+" }}}
+
+" unite-mark "{{{
+  let g:mark_ids = [
+    \   "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+    \   "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+    \   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+    \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+    \ ]
+  let g:unite_source_mark_marks = join(g:mark_ids, "")
+  nnoremap <Leader>um :<C-u>Unite mark<Cr>
+  " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
+  nnoremap <silent> m :<C-u>call <SID>auto_mark()<Cr>
+  function! s:auto_mark()
+      if !exists("b:mark_position")
+        let b:mark_position = 0
+      else
+        let b:mark_position = (b:mark_position + 1) % len(g:mark_ids)
+      endif
+
+      execute 'mark' g:mark_ids[b:mark_position]
+      echo 'marked' g:mark_ids[b:mark_position]
+  endfunction
+  augroup InitMarks
+    autocmd!
+    autocmd BufReadPost * delmarks!
+  augroup END
 " }}}
 
 " unite-rails "{{{
