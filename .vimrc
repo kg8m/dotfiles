@@ -430,7 +430,7 @@ if has('vim_starting')
   " formatoptions
   autocmd FileType * setlocal fo+=q fo+=2 fo+=l
   autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
-  autocmd FileType text,mkd,moin setlocal fo-=r fo-=o
+  autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
 
   " folding
   set foldmethod=marker  " zo: open, zc: close, zR: open all, zM: close all
