@@ -14,7 +14,7 @@ let s:ag_available = executable("ag")
 let s:ack_available = executable("ack")
 let s:migemo_available = has("migemo") || executable("cmigemo")
 
-function! s:availability_messaage(target)
+function! s:AvailabilityMessage(target)
   return a:target . ' is ' . (eval('s:' . a:target . '_available') ? '' : 'NOT ') . 'available'
 endfunction
 " }}}
@@ -360,7 +360,7 @@ if &encoding !=# 'utf-8'
   set fileencoding=japan
 endif
 
-function! s:recheck_fileencoding()
+function! s:RecheckFileencoding()
   if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
     let &fileencoding=&encoding
   endif
@@ -368,7 +368,7 @@ endfunction
 
 augroup CheckEncoding
   autocmd!
-  autocmd BufReadPost * call s:recheck_fileencoding()
+  autocmd BufReadPost * call s:RecheckFileencoding()
 augroup END
 
 set fileformats=unix,dos,mac
@@ -442,7 +442,7 @@ if has('vim_starting')
   autocmd FileType vim  set foldmethod=marker
   autocmd FileType ruby set foldmethod=syntax
   autocmd FileType yaml set foldmethod=indent
-  autocmd BufEnter * if &ft == 'javascript' | call s:my_javascript_fold() | endif
+  autocmd BufEnter * if &ft == 'javascript' | call s:MyJavascriptFold() | endif
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
@@ -520,9 +520,9 @@ set whichwrap=b,s,h,l,<,>,[,],~
 " http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
 augroup CheckTypo
   autocmd!
-  autocmd BufWriteCmd *[,*] call s:write_check_typo(expand('<afile>'))
+  autocmd BufWriteCmd *[,*] call s:WriteCheckTypo(expand('<afile>'))
 augroup END
-function! s:write_check_typo(file)
+function! s:WriteCheckTypo(file)
   let writecmd = 'write'.(v:cmdbang ? '!' : '').' '.a:file
 
   if a:file =~ '[qfreplace]'
@@ -562,8 +562,8 @@ nnoremap <Esc><Esc> :nohlsearch<Cr>
 nnoremap <Leader>v :vsplit<Cr>
 
 " ,d => svn diff
-nnoremap <Leader>d :call g:svn_diff()<Cr>
-function! g:svn_diff()
+nnoremap <Leader>d :call SvnDiff()<Cr>
+function! SvnDiff()
   edit diff
   silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
   execute "normal :r!svn diff\n"
@@ -710,7 +710,7 @@ nmap <C-w>n       :call DWM_New()<Cr>
 nmap <C-w>c       :call DWM_Close()<Cr>
 nmap <C-w><Space> :call DWM_AutoEnter()<Cr>
 let g:dwm_augroup_cleared = 0
-function! s:clear_dwm_augroup()
+function! s:ClearDwmAugroup()
   if !g:dwm_augroup_cleared
     augroup dwm
       autocmd!
@@ -720,7 +720,7 @@ function! s:clear_dwm_augroup()
 endfunction
 augroup ClearDWMAugroup
   autocmd!
-  autocmd VimEnter * call s:clear_dwm_augroup()
+  autocmd VimEnter * call s:ClearDwmAugroup()
 augroup END
 " }}}
 
@@ -784,7 +784,7 @@ let g:HowMuch_scale = 5
 " }}}
 
 " javascript-syntax "{{{
-function! s:my_javascript_fold()
+function! s:MyJavascriptFold()
   if !exists("b:javascript_folded")
     call JavaScriptFold()
     setl foldlevelstart=0
@@ -818,17 +818,17 @@ let g:lightline = {
   \     'lineinfo_with_percent': '%l/%L(%p%%) : %v',
   \   },
   \   'component_function': {
-  \     'filename': 'g:my_filename',
+  \     'filename': 'MyFilename',
   \   },
   \   'colorscheme': 'molokai',
   \ }
 
-function! g:my_readonly()
+function! MyReadonly()
   return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'X' : ''
 endfunction
 
-function! g:my_filename()
-  return ('' != g:my_readonly() ? g:my_readonly() . ' ' : '') .
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
        \ (
        \   &ft == 'vimfiler' ? vimfiler#get_status_string() :
        \   &ft == 'unite' ? unite#get_status_string() :
@@ -837,10 +837,10 @@ function! g:my_filename()
        \     winwidth(0) >= 100 ? expand('%:F') : expand('%:t')
        \   ) : '[No Name]'
        \ ) .
-       \ ('' != g:my_modified() ? ' ' . g:my_modified() : '')
+       \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
-function! g:my_modified()
+function! MyModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 " }}}
@@ -1090,10 +1090,10 @@ let g:startify_custom_header = [
   \   '',
   \   '     * Vim version: ' . v:version,
   \   '',
-  \   '     * ' . s:availability_messaage("neocomplete"),
-  \   '     * ' . s:availability_messaage("ag"),
-  \   '     * ' . s:availability_messaage("ack"),
-  \   '     * ' . s:availability_messaage("migemo"),
+  \   '     * ' . s:AvailabilityMessage("neocomplete"),
+  \   '     * ' . s:AvailabilityMessage("ag"),
+  \   '     * ' . s:AvailabilityMessage("ack"),
+  \   '     * ' . s:AvailabilityMessage("migemo"),
   \   '',
   \   '',
   \ ]
@@ -1288,7 +1288,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
   " maybe bug exists: works like as `status:%` in subversion directory
   " nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
   nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:./<Cr>
-  function! s:add_actions_to_versions()
+  function! s:AddActionsToVersions()
     let l:action = {
       \   "description" : "open files",
       \   "is_selectable" : 1,
@@ -1312,7 +1312,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
     call unite#custom#action("versions/git/status,versions/svn/status", "open", l:action)
     call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
   endfunction
-  call s:add_actions_to_versions()
+  call s:AddActionsToVersions()
 " }}}
 
 " other unite keymappings: they used to be for plugins replaced by unite "{{{
@@ -1397,8 +1397,8 @@ if has('gui_running')
   let s:save_window_file = expand('~/.vimwinpos')
   augroup SaveWindow
     autocmd!
-    autocmd VimLeavePre * call s:save_window()
-    function! s:save_window()
+    autocmd VimLeavePre * call s:SaveWindow()
+    function! s:SaveWindow()
       let options = [
         \ 'set columns=' . &columns,
         \ 'set lines=' . &lines,
