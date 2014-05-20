@@ -594,8 +594,8 @@ vnoremap <silent> * "zy:let @/ = @z<Cr>n
 inoremap <C-w> <Esc><C-w>
 
 " increment/decrement
-nnoremap + <C-a>
-nnoremap - <C-x>
+nmap + <C-a>
+nmap - <C-x>
 
 " emacs like moving in INSERT mode
 inoremap <C-h> <Left>
@@ -778,6 +778,14 @@ nnoremap <F5> :GundoToggle<Cr>
 vmap <Leader>? <Plug>AutoCalcReplace
 vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
 let g:HowMuch_scale = 5
+" }}}
+
+" increment-activator "{{{
+let g:increment_activator_filetype_candidates = {
+  \   "_": [
+  \     ["日", "月", "火", "水", "木", "金", "土"],
+  \   ],
+  \ }
 " }}}
 
 " indentline "{{{
