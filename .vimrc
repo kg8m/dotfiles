@@ -588,7 +588,8 @@ vnoremap <Leader>w :s/\s\+$//ge<Cr>
 nnoremap / /\v
 
 " search selected characters
-vnoremap <silent> * "zy:let @/ = @z<Cr>n
+vnoremap <silent> *  "zy:let @/ = "\\<" . @z . "\\>"<Cr>n
+vnoremap <silent> g* "zy:let @/ = @z<Cr>n
 
 " prevent unconscious operation
 inoremap <C-w> <Esc><C-w>
