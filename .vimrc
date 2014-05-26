@@ -51,16 +51,7 @@ NeoBundle 'kg8m/.vim'
 "             \     'filetypes': ['ruby', 'eruby']
 "             \   },
 "             \ },
-NeoBundleLazy 'alpaca-tc/alpaca_rails_support', {
-            \   'autoload': {
-            \     'insert':        1,
-            \     'unite_sources': 'rails_support/locales',
-            \     'commands':      [
-            \       'RSCreateRoutesCache', 'RSCleanCache',
-            \       'RSShowLocale', 'RSCreateLocaleCache',
-            \     ]
-            \   }
-            \ }
+NeoBundleFetch 'alpaca-tc/alpaca_rails_support'
 NeoBundle 'vim-scripts/autodate.vim'
 NeoBundleLazy 'itchyny/calendar.vim', {
             \   'autoload': {
