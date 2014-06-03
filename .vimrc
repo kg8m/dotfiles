@@ -648,7 +648,8 @@ nmap # <Plug>(anzu-sharp-with-echo)
 " }}}
 
 " autoclose "{{{
-let g:AutoClosePairs_add = "<>"
+" annoying to type "<<" in Ruby code>
+" let g:AutoClosePairs_add = "<>"
 " }}}
 
 " autodate "{{{
