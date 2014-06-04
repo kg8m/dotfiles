@@ -1391,19 +1391,24 @@ nmap <C-n> <Plug>(yankround-next)
 " emmet (zencoding) "{{{
 " command: <C-y>,
 let g:user_emmet_settings = {
-  \   'indentation' : '  ',
-  \   'lang' : 'ja',
-  \   'eruby' : {
+  \   'indentation': '  ',
+  \   'lang': 'ja',
+  \   'eruby': {
   \     'extends' : 'html',
   \   },
-  \   'javascript' : {
+  \   'html': {
   \     'snippets' : {
-  \       'jq' : "$(function() {\n  ${cursor}${child}\n});",
-  \       'jq:each' : "$.each(arr, function(index, item)\n  ${child}\n});",
-  \       'fn' : "(function() {\n  ${cursor}\n})();",
-  \       'tm' : "setTimeout(function() {\n  ${cursor}\n}, 100);",
-  \       'if' : "if (${cursor}) {\n};",
-  \       'ife' : "if (${cursor}) {\n} else if (${cursor}) {\n} else {\n};",
+  \       'label': '<label>${cursor}</label>',
+  \     },
+  \   },
+  \   'javascript': {
+  \     'snippets': {
+  \       'jq': "$(function() {\n  ${cursor}${child}\n});",
+  \       'jq:each': "$.each(arr, function(index, item)\n  ${child}\n});",
+  \       'fn': "(function() {\n  ${cursor}\n})();",
+  \       'tm': "setTimeout(function() {\n  ${cursor}\n}, 100);",
+  \       'if': "if (${cursor}) {\n};",
+  \       'ife': "if (${cursor}) {\n} else if (${cursor}) {\n} else {\n};",
   \     },
   \   },
   \ }
