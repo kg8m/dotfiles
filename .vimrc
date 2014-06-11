@@ -846,6 +846,13 @@ function! MyModified()
 endfunction
 " }}}
 
+" markdown "{{{
+augroup ResetMarkdownIndentexpr
+  autocmd!
+  autocmd FileType markdown setlocal indentexpr= smartindent
+augroup END
+" }}}
+
 " neocomplcache/neocomplete "{{{
 if s:neocomplete_available
   let g:neocomplete#enable_at_startup = 1
