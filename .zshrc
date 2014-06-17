@@ -15,6 +15,10 @@ fi
 export GIT_EDITOR=vim
 export RUBYGEMS_PATH='/usr/local/lib/ruby/gems/1.8/gems/'
 
+export GOROOT=$HOME/.go
+export GOBIN=$GOROOT/bin
+export GOPATH=$HOME/go
+
 # http://dsas.blog.klab.org/archives/50808759.html
 export GREP_COLOR='01;35'
 # export GREP_OPTIONS='--color=always'

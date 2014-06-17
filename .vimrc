@@ -10,6 +10,7 @@ let s:on_tmux    = exists('$TMUX')
 " http://rhysd.hatenablog.com/entry/2013/08/24/223438
 let s:neocomplete_available = has('lua') && (v:version > 703 || (v:version == 703 && has('patch885')))
 
+let s:pt_available = executable("pt")
 let s:ag_available = executable("ag")
 let s:ack_available = executable("ack")
 let s:migemo_available = has("migemo") || executable("cmigemo")
@@ -1114,6 +1115,7 @@ let g:startify_custom_header = [
   \   '     * Vim version: ' . v:version,
   \   '',
   \   '     * ' . s:AvailabilityMessage("neocomplete"),
+  \   '     * ' . s:AvailabilityMessage("pt"),
   \   '     * ' . s:AvailabilityMessage("ag"),
   \   '     * ' . s:AvailabilityMessage("ack"),
   \   '     * ' . s:AvailabilityMessage("migemo"),
@@ -1185,13 +1187,22 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
 
 if s:ag_available || s:ack_available
-  if s:ag_available
-    let g:unite_source_grep_command = 'ag'
-  elseif s:ack_available
-    let g:unite_source_grep_command = 'ack'
-  endif
+  " https://github.com/monochromegane/the_platinum_searcher
+  " The Platinum Searcher is developing
+  " if s:pt_available
+  "   let g:unite_source_grep_command      = 'pt'
+  "   let g:unite_source_grep_default_opts = '--nocolor --nogroup'
+  "   let g:unite_source_grep_encoding     = 'utf-8'
+  " else
+    if s:ag_available
+      let g:unite_source_grep_command = 'ag'
+    elseif s:ack_available
+      let g:unite_source_grep_command = 'ack'
+    endif
 
-  let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
+    let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
+  " endif
+
   let g:unite_source_grep_recursive_opt = ''
 endif
 
