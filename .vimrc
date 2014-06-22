@@ -473,6 +473,7 @@ set ttyfast
 " backup, recover
 set nobackup
 set directory=~/tmp
+set undodir=~/tmp
 
 " undo
 set hidden
