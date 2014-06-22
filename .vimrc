@@ -676,7 +676,7 @@ let g:calendar_first_day = "monday"
 
 " colorizer "{{{
 let g:colorizer_startup = 0
-let s:colorizer_target_filetypes = ['eruby', 'haml', 'html', 'css', 'scss', 'javascript', 'diff']
+let s:colorizer_target_filetypes = ['css', 'scss']
 augroup ToogleColorizer
   autocmd!
   autocmd WinEnter,BufEnter,BufRead,BufNewFile * if index(s:colorizer_target_filetypes, &ft) >= 0 | ColorHighlight | else | ColorClear | endif
