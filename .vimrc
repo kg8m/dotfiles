@@ -398,6 +398,15 @@ set scrolloff=15
 " set showbreak=++++
 set iskeyword& iskeyword+=-
 
+" for vimdiff
+set wrap
+" http://stackoverflow.com/questions/16840433/forcing-vimdiff-to-wrap-lines
+augroup SetWrapForVimdiff
+  autocmd!
+  autocmd VimEnter * if &diff | execute 'windo set wrap' | endif
+augroup END
+set diffopt+=horizontal,context:10
+
 " make listchars visible
 set list
 set listchars=tab:>\ ,eol:\ ,trail:_
