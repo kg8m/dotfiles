@@ -573,7 +573,11 @@ function! SvnDiff()
 endfunction
 
 " ,y/,p => copy/paste by clipboard
-vnoremap <Leader>y "*y
+if s:on_tmux
+  vnoremap <Leader>y "zy:!tmux set-buffer '<C-r>"'<Cr>
+else
+  vnoremap <Leader>y "*y
+endif
 nnoremap <Leader>p "*p
 
 " ctags
