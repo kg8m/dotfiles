@@ -807,6 +807,10 @@ let g:increment_activator_filetype_candidates = {
   \       "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩",
   \       "⑪", "⑫", "⑬", "⑭", "⑮", "⑯", "⑰", "⑱", "⑲", "⑳",
   \     ],
+  \     [
+  \       "first", "second", "third", "fourth", "fifth",
+  \       "sixth", "seventh", "eighth", "ninth", "tenth",
+  \     ],
   \   ],
   \ }
 " }}}
