@@ -1,6 +1,7 @@
 alias -g G="| grep --color=always"
 alias -g V="| view -"
 alias -g L="| less"
+alias -g P="| peco"
 alias -g DIFF_MINIMAL="--diff-cmd /usr/bin/diff -x '-b -B -U 10'"
 alias -g FFTEST="TESTOPTS='--runner=failfast'"
 

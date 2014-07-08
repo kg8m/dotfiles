@@ -182,6 +182,7 @@ bindkey -a 'q' push-line
 [ -f ~/.zsh/cd-bookmark.zsh    ] && source ~/.zsh/cd-bookmark.zsh
 [ -f ~/.zsh/my_aliases.zsh     ] && source ~/.zsh/my_aliases.zsh
 [ -f ~/.zsh/my_functions.zsh   ] && source ~/.zsh/my_functions.zsh
+[ -f ~/.zsh/peco.zsh           ] && source ~/.zsh/peco.zsh
 
 autoload -U compinit
 compinit
