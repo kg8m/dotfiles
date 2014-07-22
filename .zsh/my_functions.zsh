@@ -30,7 +30,12 @@ function slog {
 function diffb {
   date=`date +"%y%m%d"`;
 
-  if (($# == 1)) then
+  if ! (($# == 1 || $# == 3)) then
+    echo 'diffb: create a diff file for a branch and open it by Vim'
+    echo 'Usage (1): `diffb {revision_number}`'
+    echo 'Usage (2): `diffb {branch_name} {revision_number_from} {revision_number_to}`'
+    return
+  elif (($# == 1)) then
     rev=$1;
     filename="${date}_@${rev}_${APP_NAME}.diff";
     cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10 -b -B' ${TARGET_REPOSITORY_URL}/branches/ -c ${rev} > ${filename}";
@@ -49,7 +54,12 @@ function diffb {
 function difft {
   date=`date +"%y%m%d"`;
 
-  if (($# == 1)) then
+  if ! (($# == 1 || $# == 2)) then
+    echo 'difft: create a diff file for the trunk and open it by Vim'
+    echo 'Usage (1): `difft {revision_number}`'
+    echo 'Usage (2): `difft {revision_number_from} {revision_number_to}`'
+    return
+  elif (($# == 1)) then
     rev=$1;
     filename="${date}_@${rev}_${APP_NAME}_trunk.diff";
     cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10 -b -B' ${TARGET_REPOSITORY_URL}/trunk/ -c ${rev} > ${filename}";
