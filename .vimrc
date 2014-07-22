@@ -1014,10 +1014,6 @@ vmap r <Plug>(operator-replace)
 
 " rails "{{{
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
-augroup Rails
-  autocmd!
-  autocmd FileType ruby set path+=test/lib
-augroup END
 let g:rails_level = 4
 let g:rails_projections = {
   \   "app/controllers/shared/*.rb": {
