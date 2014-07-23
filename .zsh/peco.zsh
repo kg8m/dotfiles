@@ -1,11 +1,13 @@
+builtin command -v peco > /dev/null || return
+
 # http://k0kubun.hatenablog.com/entry/2014/07/06/033336
 # http://blog.livedoor.jp/abell2142/archives/53185576.html
 function peco-select-history() {
   typeset tac
 
-  if which tac > /dev/null; then
+  if builtin command -v tac > /dev/null; then
     tac=tac
-  elif which gtac > /dev/null; then
+  elif builtin command -v gtac > /dev/null; then
     tac=gtac
   else
     tac='tail -r'

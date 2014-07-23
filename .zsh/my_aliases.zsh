@@ -6,7 +6,12 @@ alias -g DIFF_MINIMAL="--diff-cmd /usr/bin/diff -x '-b -B -U 10'"
 alias -g FFTEST="TESTOPTS='--runner=failfast'"
 
 alias g='git'
-alias s='colorsvn'
+
+if builtin command -v colorsvn; then
+  alias s='colorsvn'
+else
+  alias s='svn'
+fi
 
 if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
   macvim_cmd='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'

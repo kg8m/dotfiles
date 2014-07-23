@@ -121,8 +121,12 @@ PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 
 # https://github.com/yonchu/zsh-vcs-prompt
-source ~/.zsh/zsh-vcs-prompt/zshrc.sh
-ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+if [ -f ~/.zsh/zsh-vcs-prompt/zshrc.sh ]; then
+  source ~/.zsh/zsh-vcs-prompt/zshrc.sh
+  ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+else
+  function vcs_super_info {}
+fi
 
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 # prompt as ({current_time}) [{vi_mode}] {user_name}@{hostname} : {current_directory_path}\n% (# if root user)
