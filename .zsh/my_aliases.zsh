@@ -7,7 +7,7 @@ alias -g FFTEST="TESTOPTS='--runner=failfast'"
 
 alias g='git'
 
-if builtin command -v colorsvn; then
+if builtin command -v colorsvn > /dev/null; then
   alias s='colorsvn'
 else
   alias s='svn'
