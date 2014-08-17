@@ -66,7 +66,7 @@ NeoBundleLazy 'tyru/caw.vim', {
             \   },
             \ },
 " NeoBundle 'rhysd/clever-f.vim'
-NeoBundle 'lilydjwg/colorizer'
+" NeoBundle 'lilydjwg/colorizer'  " replaced by gorodinskiy/vim-coloresque
 NeoBundleLazy 'cocopon/colorswatch.vim', {
             \   'autoload': {
             \     'commands': 'ColorSwatchGenerate',
@@ -196,6 +196,7 @@ NeoBundle 't9md/vim-choosewin', {
             \     'mappings': ['ns', '<Plug>(choosewin)'],
             \   },
             \ },
+NeoBundle 'gorodinskiy/vim-coloresque'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'Lokaltog/vim-easymotion'
@@ -687,15 +688,6 @@ let g:blockle_erase_spaces_around_starting_brace = 1
 " calendar "{{{
 let g:calendar_google_calendar = 1
 let g:calendar_first_day = "monday"
-" }}}
-
-" colorizer "{{{
-let g:colorizer_startup = 0
-let s:colorizer_target_filetypes = ['css', 'scss']
-augroup ToogleColorizer
-  autocmd!
-  autocmd WinEnter,BufEnter,BufRead,BufNewFile * if index(s:colorizer_target_filetypes, &ft) >= 0 | ColorHighlight | else | ColorClear | endif
-augroup END
 " }}}
 
 " caw "{{{
