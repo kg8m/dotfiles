@@ -66,7 +66,7 @@ NeoBundleLazy 'tyru/caw.vim', {
             \   },
             \ },
 " NeoBundle 'rhysd/clever-f.vim'
-" NeoBundle 'lilydjwg/colorizer'  " replaced by gorodinskiy/vim-coloresque
+" NeoBundle 'lilydjwg/colorizer'  " replaced by kg8m/vim-coloresque
 NeoBundleLazy 'cocopon/colorswatch.vim', {
             \   'autoload': {
             \     'commands': 'ColorSwatchGenerate',
@@ -196,7 +196,7 @@ NeoBundle 't9md/vim-choosewin', {
             \     'mappings': ['ns', '<Plug>(choosewin)'],
             \   },
             \ },
-NeoBundle 'gorodinskiy/vim-coloresque'
+NeoBundle 'kg8m/vim-coloresque'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'Lokaltog/vim-easymotion'
