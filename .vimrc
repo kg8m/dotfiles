@@ -1366,10 +1366,10 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
         let l:candidate.action__directory = unite#util#path2directory(l:candidate.action__path)
 
         if l:candidate.action__path == l:candidate.action__directory
-          let l:candidate.kind = 'directory'
+          let l:candidate.kind = "directory"
           call unite#take_action("vimfiler", l:candidate)
         else
-          let l:candidate.kind = 'file'
+          let l:candidate.kind = "file"
           call unite#take_action("open", l:candidate)
         endif
       endfor
