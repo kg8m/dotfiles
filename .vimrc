@@ -1353,7 +1353,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
 
 " unite-versions "{{{
   let g:versions#type#svn#status#ignore_status = ['X']
-  nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:!<Cr>
+  nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:./<Cr>
   function! s:AddActionsToVersions()
     let l:action = {
       \   "description" : "open files",
@@ -1362,7 +1362,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
 
     function! l:action.func(candidates)
       for l:candidate in a:candidates
-        let l:candidate.action__path = l:candidate.source__args.path . "/" . l:candidate.action__status.path
+        let l:candidate.action__path = l:candidate.source__args.path . l:candidate.action__status.path
         let l:candidate.action__directory = unite#util#path2directory(l:candidate.action__path)
 
         if l:candidate.action__path == l:candidate.action__directory
