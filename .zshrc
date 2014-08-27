@@ -62,6 +62,9 @@ setopt hist_no_store                         # history (fc -l) コマンドを�
 setopt list_packed                           # 補完候補を詰めて表示
 setopt noautoremoveslash                     # 最後のスラッシュを自動的に削除しない
 
+# prevent `zsh: no matches found: ....`
+setopt nonomatch
+
 setopt hist_ignore_all_dups  # remove duplicated older command history
 
 # follow original file/directory via symbolic link
