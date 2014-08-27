@@ -399,6 +399,7 @@ augroup END
 set scrolloff=15
 " set showbreak=++++
 set iskeyword& iskeyword+=-
+let g:sh_noisk = 1
 
 " for vimdiff
 set wrap
