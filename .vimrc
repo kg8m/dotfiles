@@ -1097,8 +1097,18 @@ nnoremap <Leader>S :SplitjoinSplit<Cr>
 " startify "{{{
 let g:startify_enable_special = 1
 let g:startify_change_to_dir  = 0
+let g:startify_list_order     = [
+  \   ['   My bookmarks:'],
+  \   'bookmarks',
+  \   ['   Last recently opened files:'],
+  \   'files',
+  \   ['   Last recently modified files in the current directory:'],
+  \   'dir',
+  \   ['   My sessions:'],
+  \   'sessions',
+  \ ]
 " https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
-let g:startify_custom_header = [
+let g:startify_custom_header  = [
   \   '                      .',
   \   '      ##############..... ##############',
   \   '      ##############......##############',
