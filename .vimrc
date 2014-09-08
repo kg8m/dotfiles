@@ -196,6 +196,7 @@ NeoBundle 't9md/vim-choosewin', {
             \     'mappings': ['ns', '<Plug>(choosewin)'],
             \   },
             \ },
+NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'kg8m/vim-coloresque'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
@@ -875,6 +876,12 @@ endfunction
 " }}}
 
 " markdown "{{{
+let g:markdown_quote_syntax_filetypes = {
+  \   "coffee": {
+  \     "start": "coffee",
+  \   }
+  \ }
+
 augroup ResetMarkdownIndentexpr
   autocmd!
   autocmd FileType markdown setlocal indentexpr= smartindent
