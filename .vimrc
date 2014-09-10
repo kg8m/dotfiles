@@ -879,7 +879,10 @@ endfunction
 let g:markdown_quote_syntax_filetypes = {
   \   "coffee": {
   \     "start": "coffee",
-  \   }
+  \   },
+  \   "crontab": {
+  \     "start": "cron\\%(tab\\)\\?",
+  \   },
   \ }
 
 augroup ResetMarkdownIndentexpr
