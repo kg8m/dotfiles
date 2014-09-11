@@ -1408,9 +1408,11 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
 " }}}
 
 " vimfiler "{{{
-let g:vimfiler_safe_mode_by_default = 0
-let g:vimfiler_edit_action = 'dwm_open'
-nnoremap <Leader>e :VimFilerBufferDir -quit<Cr>
+call vimfiler#custom#profile("default", "context", {
+   \   "safe": 0,
+   \   "split_action": "dwm_open",
+   \ })
+nnoremap <Leader>e :VimFilerBufferDir -force-quit<Cr>
 " }}}
 
 " vimshell "{{{
