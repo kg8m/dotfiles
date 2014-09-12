@@ -486,10 +486,11 @@ set ttyfast
 " backup, recover
 set nobackup
 set directory=~/tmp
-set undodir=~/tmp
 
 " undo
 set hidden
+set undofile
+set undodir=~/tmp
 
 " wildmode
 set wildmenu
