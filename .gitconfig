@@ -54,3 +54,5 @@ su  = submodule update -i
 rm  = rm --cached -f
 [github]
 	user = kg8m
+[push]
+	default = simple
