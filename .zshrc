@@ -157,6 +157,16 @@ function zle-keymap-select {
 }
 zle -N zle-keymap-select
 
+# zsh-vcs-prompt
+ZSH_VCS_PROMPT_AHEAD_SIGIL='^'
+ZSH_VCS_PROMPT_BEHIND_SIGIL='v'
+ZSH_VCS_PROMPT_STAGED_SIGIL='+'
+ZSH_VCS_PROMPT_CONFLICTS_SIGIL='C'
+ZSH_VCS_PROMPT_UNSTAGED_SIGIL='!'
+ZSH_VCS_PROMPT_UNTRACKED_SIGIL='?'
+ZSH_VCS_PROMPT_STASHED_SIGIL='!?'
+ZSH_VCS_PROMPT_CLEAN_SIGIL='#'
+
 # http://news.mynavi.jp/column/zsh/002/
 # show terminal title as {user_name}@{hostname}:{current_directory}
 case "${TERM}" in
