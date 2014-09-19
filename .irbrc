@@ -57,7 +57,7 @@ Wirble.colorize
 Hirb.enable
 
 # Log to STDOUT if in Rails
-if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER')
+if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER') && ENV['RAILS_ENV'] != "production"
   require 'logger'
   RAILS_DEFAULT_LOGGER = Logger.new(STDOUT)
 end
