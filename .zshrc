@@ -6,6 +6,9 @@ case ${UID} in
     ;;
 esac
 
+export VISUAL=vim
+export EDITOR=vim
+
 if [ -e ~/svn_editor.sh ]; then
   export SVN_EDITOR="sh ~/svn_editor.sh"
 else
