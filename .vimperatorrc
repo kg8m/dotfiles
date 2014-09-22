@@ -138,10 +138,13 @@ liberator.globalVariables.copy_templates = [
   { label: 'ASIN',             value: 'copy ASIN code from Amazon',
     custom: function(){ return content.document.getElementById('ASIN').value; }},
 
-  { label: 'myQuote',        value: '<blockquote>\n  %HTMLSEL%\n</blockquote>\n<p class="p-cite"><cite>From: <a href="%URL%">%TITLE%</a></cite></p>' },
-  { label: 'kinikijiAnchor', value: '<p class="p-news">&raquo;&nbsp;<a href="%URL%">%TITLE%</a></p>' },
-  { label: 'myAmazon',       value: 'Copied: Amazon Affiliate Link',
+  { label: 'blockquoteForMe', value: '<blockquote>\n  %HTMLSEL%\n</blockquote>\n<p class="p-cite"><cite>From: <a href="%URL%">%TITLE%</a></cite></p>' },
+  { label: 'kinikijiAnchor',  value: '<p class="p-news">&raquo;&nbsp;<a href="%URL%">%TITLE%</a></p>' },
+  { label: 'amazonForMe',     value: 'Copied: Amazon Affiliate Link',
     custom: function(){ return '<a href="http://www.amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value + '/kgtk-22/" class="amazon">' + content.document.title + '</a>'; }
+  },
+  { label: 'amazonMarkdown',  value: 'Copied: Amazon Affiliate Link for Markdown',
+    custom: function(){ return '[' + content.document.title + '](http://www.amazon.co.jp/o/ASIN/' + content.document.getElementById('ASIN').value + '/kgtk-22/)'; }
   },
   { label: 'tracLink',     value: '[%URL% %TITLE%]',  map: ',yt' },
   { label: 'markdownLink', value: '[%TITLE%](%URL%)', map: ',ym' },
