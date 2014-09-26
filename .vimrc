@@ -1106,6 +1106,10 @@ nnoremap <Leader>S :SplitjoinSplit<Cr>
 " }}}
 
 " startify "{{{
+highlight StartifyFile   ctermfg=255
+highlight StartifyHeader ctermfg=255
+highlight StartifyPath   ctermfg=245
+highlight StartifySlash  ctermfg=245
 let g:startify_enable_special = 1
 let g:startify_change_to_dir  = 0
 let g:startify_list_order     = [
