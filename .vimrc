@@ -447,7 +447,6 @@ if has('vim_starting')
   set fillchars=vert:\|
 
   autocmd FileType vim  setlocal foldmethod=marker
-  autocmd FileType ruby setlocal foldmethod=syntax
   autocmd FileType yaml setlocal foldmethod=indent
   autocmd BufEnter * if &ft == 'javascript' | call s:MyJavascriptFold() | endif
 
