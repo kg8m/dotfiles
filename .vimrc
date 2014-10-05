@@ -1221,18 +1221,20 @@ let g:unite_source_history_yank_limit = 300
 
 if s:pt_available || s:ag_available || s:ack_available
   " https://github.com/monochromegane/the_platinum_searcher
-  if s:pt_available
+  " don't use `pt` because hidden files are ignored and results are not sorted
+  if s:pt_available && 0
     let g:unite_source_grep_command      = 'pt'
     let g:unite_source_grep_default_opts = '--nocolor --nogroup'
     let g:unite_source_grep_encoding     = 'utf-8'
   else
+    let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
+
     if s:ag_available
       let g:unite_source_grep_command = 'ag'
+      let g:unite_source_grep_default_opts = g:unite_source_grep_default_opts . ' --hidden'
     elseif s:ack_available
       let g:unite_source_grep_command = 'ack'
     endif
-
-    let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
   endif
 
   let g:unite_source_grep_recursive_opt = ''
