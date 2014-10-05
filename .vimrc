@@ -1047,7 +1047,7 @@ let g:rails_projections = {
   \   "script/*": {
   \     "command": "script",
   \     "test": [
-  \       "test/unit/%s_test.rb",
+  \       "test/script/%s_test.rb",
   \     ],
   \   },
   \   "spec/fabricators/*_fabricator.rb": {
