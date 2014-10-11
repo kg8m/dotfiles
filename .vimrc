@@ -1229,7 +1229,7 @@ if s:pt_available || s:ag_available || s:ack_available
   else
     let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
 
-    if s:ag_available
+    if s:ag_available && 0
       let g:unite_source_grep_command = 'ag'
       let g:unite_source_grep_default_opts = g:unite_source_grep_default_opts . ' --hidden'
     elseif s:ack_available
