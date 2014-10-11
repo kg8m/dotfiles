@@ -990,7 +990,7 @@ augroup END
 let g:openbrowser_browser_commands = [
   \   {
   \     "name": "ssh",
-  \     "args": "ssh main 'open {uri}'",
+  \     "args": "ssh main 'open '\\''{uri}'\\'''",
   \   }
   \ ]
 nmap <Leader>g <Plug>(openbrowser-open)
