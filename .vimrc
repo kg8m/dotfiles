@@ -1338,8 +1338,8 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
     \   ["[Manipulate File] to HTML                ", "colorscheme h2u_white | TOhtml"],
     \   ["[Manipulate File] sed all buffers [Edit] ", "bufdo %s/{foo}/{bar}/gce | update"],
     \
-    \   ["[System] Remove                          ", "!rm %"],
-    \   ["[System] SVN Remove                      ", "!svn rm %"],
+    \   ["[System] Remove/Delete                   ", "!rm %"],
+    \   ["[System] SVN Remove/Delete               ", "!svn rm %"],
     \
     \   ["[Calendar] Year View                     ", "Calendar -view=year  -position=hear!"],
     \   ["[Calendar] Month View                    ", "Calendar -view=month -position=hear!"],
