@@ -626,16 +626,17 @@ inoremap <expr><C-b> "\<PageUp>"
 vnoremap <Leader>a :Alignta<Space>
 vnoremap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
 let g:unite_source_alignta_preset_arguments = [
-  \ ["Align at '=>'     --  `=>`",                        '=>'],
-  \ ["Align at /\\S/    --  `\\S\\+`",                    '\S\+'],
-  \ ["Align at '='      --  `=>\\=`",                     '=>\='],
-  \ ["Align at ':hoge'  --  `10 :`",                      '10 :'],
-  \ ["Align at 'hoge:'  --  `00 [a-zA-Z0-9_\"']\\+:\\s`", " 00 [a-zA-Z0-9_\"']\\+:\\s"],
-  \ ["Align at '|'      --  `|`",                         '|'],
-  \ ["Align at ')'      --  `0 )`",                       '0 )'],
-  \ ["Align at ']'      --  `0 ]`",                       '0 ]'],
-  \ ["Align at '}'      --  `}`",                         '}'],
-  \ ["Align at 'hoge,'  --  `00 \\w\\+, ` -- not working", '00 \w\+, '],
+  \ ["Align at '=>'       --  `=>`",                        '=>'],
+  \ ["Align at /\\S/      --  `\\S\\+`",                    '\S\+'],
+  \ ["Align at /\\S/ once --  `\\S\\+/1`",                  '\S\+/1'],
+  \ ["Align at '='        --  `=>\\=`",                     '=>\='],
+  \ ["Align at ':hoge'    --  `10 :`",                      '10 :'],
+  \ ["Align at 'hoge:'    --  `00 [a-zA-Z0-9_\"']\\+:\\s`", " 00 [a-zA-Z0-9_\"']\\+:\\s"],
+  \ ["Align at '|'        --  `|`",                         '|'],
+  \ ["Align at ')'        --  `0 )`",                       '0 )'],
+  \ ["Align at ']'        --  `0 ]`",                       '0 ]'],
+  \ ["Align at '}'        --  `}`",                         '}'],
+  \ ["Align at 'hoge,'    --  `00 \\w\\+, ` -- not working", '00 \w\+, '],
 \]
 let s:alignta_comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
 let g:unite_source_alignta_preset_options = [
