@@ -3,3 +3,4 @@
 --ignore-dir=log
 --ignore-dir=tmp/sass-cache
 --ignore-file=match:_structure.sql
+--ignore-file=is:tags
