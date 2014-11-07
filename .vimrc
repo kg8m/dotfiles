@@ -95,6 +95,7 @@ NeoBundleLazy 'sk1418/HowMuch', {
 NeoBundle 'nishigori/increment-activator'
 " NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
+NeoBundle 'fuenor/JpFormat.vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kg8m/moin.vim'
 
@@ -826,6 +827,10 @@ function! s:MyJavascriptFold()
 endfunction
 " }}}
 
+" JpFormat "{{{
+let JpCountChars = 37
+" }}}
+
 " jscomplete "{{{
 let g:jscomplete_use = ['dom', 'moz', 'es6th']
 " }}}
@@ -1342,6 +1347,8 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
     \
     \   ["[System] Remove/Delete                   ", "!rm %"],
     \   ["[System] SVN Remove/Delete               ", "!svn rm %"],
+    \
+    \   ["[JpFormat] format all selected           ", "'<,'>JpFormatAll!"],
     \
     \   ["[Calendar] Year View                     ", "Calendar -view=year  -position=hear!"],
     \   ["[Calendar] Month View                    ", "Calendar -view=month -position=hear!"],
