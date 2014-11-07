@@ -1,3 +1,15 @@
+class Object
+  def __benchmark__(labels_and_procs)
+    require "benchmark/ips"
+
+    Benchmark.ips do |x|
+      labels_and_procs.each do |label, _proc|
+        x.report("#{label}:"){ _proc.call }
+      end
+    end
+  end
+end
+
 # http://d.hatena.ne.jp/LukeSilvia/20101023/p1
 # http://github.com/gmarik/dotfiles/blob/84073cf564b601c99dc4b3b7910bd91234ff94f5/.ruby/lib/gmarik/irb-1.8-history-fix.rb
 # http://stackoverflow.com/questions/2065923/irb-history-not-working
@@ -61,4 +73,3 @@ if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER') &
   require 'logger'
   RAILS_DEFAULT_LOGGER = Logger.new(STDOUT)
 end
-
