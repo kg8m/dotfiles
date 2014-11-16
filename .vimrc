@@ -1348,7 +1348,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
     \   ["[System] Remove/Delete                   ", "!rm %"],
     \   ["[System] SVN Remove/Delete               ", "!svn rm %"],
     \
-    \   ["[JpFormat] format all selected           ", "'<,'>JpFormatAll!"],
+    \   ["[JpFormat] format all selected for mail  ", "'<,'>JpFormatAll!"],
     \
     \   ["[Calendar] Year View                     ", "Calendar -view=year  -position=hear!"],
     \   ["[Calendar] Month View                    ", "Calendar -view=month -position=hear!"],
