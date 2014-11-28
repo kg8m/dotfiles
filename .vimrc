@@ -587,10 +587,6 @@ else
 endif
 nnoremap <Leader>p "*p
 
-" ctags
-" <C-]>: go to tag, <C-[>: back from tag
-nnoremap <C-[> <C-S-t>
-
 " ,w => <C-w>
 nnoremap <Leader>w <C-w>
 
@@ -1386,6 +1382,22 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
 
 " unite-tag "{{{
   nnoremap <silent> <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
+
+  augroup UniteTagSettings
+    autocmd!
+
+    autocmd BufEnter *
+    \   if empty(&buftype)
+    \|    nnoremap <buffer> g] :<C-u>UniteWithCursorWord -immediately tag<CR>
+    \|    vnoremap <buffer> g] :<C-u>UniteWithCursorWord -immediately tag<CR>
+    \|  endif
+
+    " http://qiita.com/kazu0620/items/d7da3047daed04fc5eba
+    autocmd BufEnter *
+    \   if empty(&buftype)
+    \|    nnoremap <buffer> g[ :<C-u>Unite jump<CR>
+    \|  endif
+  augroup END
 " }}}
 
 " unite-versions "{{{
