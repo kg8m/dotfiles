@@ -93,6 +93,7 @@ NeoBundleLazy 'sk1418/HowMuch', {
             \   },
             \ },
 NeoBundle 'nishigori/increment-activator'
+NeoBundle 'haya14busa/incsearch.vim'
 " NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
 NeoBundle 'fuenor/JpFormat.vim'
@@ -566,7 +567,7 @@ let g:mapleader = ','
 nnoremap <Leader>r :source ~/.vimrc<Cr>
 
 " <Esc><Esc> => nohilight
-nnoremap <Esc><Esc> :nohlsearch<Cr>
+nnoremap <Esc><Esc> :<C-u>nohlsearch<Cr>
 
 " ,v => vsplit
 nnoremap <Leader>v :vsplit<Cr>
@@ -594,11 +595,8 @@ nnoremap <Leader>w <C-w>
 vnoremap <Leader>w :s/\s\+$//ge<Cr>
 
 " search very magic as default
-nnoremap / /\v
-
-" search selected characters
-vnoremap <silent> *  "zy:let @/ = "\\<" . @z . "\\>"<Cr>n
-vnoremap <silent> g* "zy:let @/ = @z<Cr>n
+" replaced by incsearch
+" nnoremap / /\v
 
 " prevent unconscious operation
 inoremap <C-w> <Esc><C-w>
@@ -660,10 +658,11 @@ unlet s:alignta_comment_leadings
 " }}}
 
 " anzu "{{{
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
-nmap * <Plug>(anzu-star-with-echo)
-nmap # <Plug>(anzu-sharp-with-echo)
+" replaced by incsearch
+" nmap n <Plug>(anzu-n-with-echo)
+" nmap N <Plug>(anzu-N-with-echo)
+" nmap * <Plug>(anzu-star-with-echo)
+" nmap # <Plug>(anzu-sharp-with-echo)
 " }}}
 
 " autoclose "{{{
@@ -807,6 +806,22 @@ let g:increment_activator_filetype_candidates = {
   \     ],
   \   ],
   \ }
+" }}}
+
+" incsearch "{{{
+let g:incsearch#auto_nohlsearch = 0
+let g:incsearch#magic = '\v'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+map n  <Plug>(incsearch-nohl-n)<Plug>(anzu-update-search-status-with-echo)
+map N  <Plug>(incsearch-nohl-N)<Plug>(anzu-update-search-status-with-echo)
+map *  <Plug>(incsearch-nohl-*)<Plug>(anzu-update-search-status-with-echo)
+map #  <Plug>(incsearch-nohl-#)<Plug>(anzu-update-search-status-with-echo)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+vnoremap <silent> *  "zy:let @/ = "\\<" . @z . "\\>"<Cr>n
+vnoremap <silent> g* "zy:let @/ = @z<Cr>n
 " }}}
 
 " indentline "{{{
