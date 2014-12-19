@@ -4,6 +4,3 @@
 [submodule ".zsh/cd-bookmark"]
 	path = .zsh/cd-bookmark
 	url = git://github.com/mollifier/cd-bookmark
-[submodule ".zsh/enhancd"]
-	path = .zsh/enhancd
-	url = git@github.com:kg8m/enhancd.git
