@@ -846,6 +846,10 @@ let JpCountChars = 37
 let g:jscomplete_use = ['dom', 'moz', 'es6th']
 " }}}
 
+" json "{{{
+let g:vim_json_syntax_conceal = 0
+" }}}
+
 " lightline "{{{
 " http://d.hatena.ne.jp/itchyny/20130828/1377653592
 set laststatus=2
