@@ -191,6 +191,7 @@ NeoBundleLazy 'osyo-manga/vim-anzu', {
             \     'mappings': ['ns', '<Plug>(anzu-'],
             \   },
             \ },
+NeoBundle 'haya14busa/vim-asterisk'
 NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'kg8m/vim-blockle'
 NeoBundle 't9md/vim-choosewin', {
@@ -658,11 +659,23 @@ unlet s:alignta_comment_leadings
 " }}}
 
 " anzu "{{{
-" replaced by incsearch
+" see incsearch
 " nmap n <Plug>(anzu-n-with-echo)
 " nmap N <Plug>(anzu-N-with-echo)
 " nmap * <Plug>(anzu-star-with-echo)
 " nmap # <Plug>(anzu-sharp-with-echo)
+" }}}
+
+" asterisk "{{{
+" see incsearch
+" map *   <Plug>(asterisk-*)
+" map #   <Plug>(asterisk-#)
+" map g*  <Plug>(asterisk-g*)
+" map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
 " }}}
 
 " autoclose "{{{
@@ -816,12 +829,12 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 map n  <Plug>(incsearch-nohl-n)<Plug>(anzu-update-search-status-with-echo)
 map N  <Plug>(incsearch-nohl-N)<Plug>(anzu-update-search-status-with-echo)
-map *  <Plug>(incsearch-nohl-*)<Plug>(anzu-update-search-status-with-echo)
-map #  <Plug>(incsearch-nohl-#)<Plug>(anzu-update-search-status-with-echo)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
-vnoremap <silent> *  "zy:let @/ = "\\<" . @z . "\\>"<Cr>n
-vnoremap <silent> g* "zy:let @/ = @z<Cr>n
+map *  <Plug>(incsearch-nohl)<Plug>(asterisk-*)<Plug>(anzu-update-search-status-with-echo)
+map #  <Plug>(incsearch-nohl)<Plug>(asterisk-#)<Plug>(anzu-update-search-status-with-echo)
+map g* <Plug>(incsearch-nohl)<Plug>(asterisk-g*)<Plug>(anzu-update-search-status-with-echo)
+map g# <Plug>(incsearch-nohl)<Plug>(asterisk-g#)<Plug>(anzu-update-search-status-with-echo)
+" vnoremap <silent> *  "zy:let @/ = "\\<" . @z . "\\>"<Cr>n
+" vnoremap <silent> g* "zy:let @/ = @z<Cr>n
 " }}}
 
 " indentline "{{{
