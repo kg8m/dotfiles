@@ -1134,8 +1134,9 @@ let g:SimpleJsIndenter_CaseIndentLevel = -1
 " }}}
 
 " splitjoin "{{{
-let g:splitjoin_split_mapping = ''
-let g:splitjoin_join_mapping  = ''
+let g:splitjoin_split_mapping       = ''
+let g:splitjoin_join_mapping        = ''
+let g:splitjoin_ruby_trailing_comma = 1
 nnoremap <Leader>J :SplitjoinJoin<Cr>
 nnoremap <Leader>S :SplitjoinSplit<Cr>
 " }}}
