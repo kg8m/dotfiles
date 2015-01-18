@@ -193,6 +193,7 @@ NeoBundleLazy 'osyo-manga/vim-anzu', {
             \ },
 NeoBundle 'haya14busa/vim-asterisk'
 NeoBundle 'Townk/vim-autoclose'
+NeoBundle 'itchyny/vim-autoft'
 NeoBundle 'kg8m/vim-blockle'
 NeoBundle 't9md/vim-choosewin', {
             \   'autoload': {
@@ -692,6 +693,15 @@ let autodate_keyword_pre  = '\c\%(' .
                           \   '\%(更新日\)' .
                           \ '\):'
 let autodate_keyword_post = '\.$'
+" }}}
+
+" autoft "{{{
+let g:autoft_config = [
+  \   { 'filetype': 'html',       'pattern': '<\%(!DOCTYPE\|html\|head\|script\)' },
+  \   { 'filetype': 'javascript', 'pattern': '\%(^\s*\<var\>\s\+[a-zA-Z]\+\)\|\%(function\%(\s\+[a-zA-Z]\+\)\?\s*(\)' },
+  \   { 'filetype': 'c',          'pattern': '^\s*#\s*\%(include\|define\)\>' },
+  \   { 'filetype': 'sh',         'pattern': '^#!.*\%(\<sh\>\|\<bash\>\)\s*$' },
+  \ ]
 " }}}
 
 " blockle "{{{
