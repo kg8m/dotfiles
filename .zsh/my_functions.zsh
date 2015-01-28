@@ -5,6 +5,13 @@ function execute_with_echo {
   eval ${cmd_with_arguments};
 }
 
+function execute_commands_with_echo {
+  for command in $@; do
+    execute_with_echo $command
+    echo
+  done
+}
+
 function sdiff {
   _sdiff "-b -B"
 }
