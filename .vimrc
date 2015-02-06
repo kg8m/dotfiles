@@ -964,6 +964,11 @@ if s:neocomplete_available
   let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
   let g:sources#buffer#cache_limit_size = 500000
+
+  if !exists('g:neocomplete#same_filetypes')
+    let g:neocomplete#same_filetypes = {}
+  endif
+  let g:neocomplete#same_filetypes._ = '_'
 else
   let g:neocomplcache_enable_at_startup = 1
   let g:neocomplcache_enable_smart_case = 1
