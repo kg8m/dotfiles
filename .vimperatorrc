@@ -28,7 +28,7 @@ set complete=sl
 
 " クイックリンク関連
 set hintchars=fjklasdhguionmerwc
-" hi Hint padding: 1px 5px; background: -moz-linear-gradient(top, #ffffff, #f1f1f1 1%, #f1f1f1 50%, #dfdfdf 99%, #cccccc); border: 1px solid #222; border-radius: 3px; font-family: monospace; font-size: 12px; color: #222; text-shadow: 0 1px 0 #fff; text-transform: uppercase; white-space: nowrap;
+hi Hint font-family: "Osaka－等幅", "Osaka-Mono"; padding: 1px 3px; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 12.5px; font-weight: normal; text-transform: uppercase; white-space: nowrap;
 
 " Next/Previous Link
 set nextpattern=\bnext\b,\bmore\b,^next$,^次(の)?ページ,\b次.*,^次へ$,→\b,^>$,^(>>|≫)$,^(>|≫),(>|≫)$
@@ -210,27 +210,27 @@ loadplugins
 " http://d.hatena.ne.jp/caisui/20110724/1311495886
 " http://d.hatena.ne.jp/caisui/20120715/1342331929
 " http://d.hatena.ne.jp/caisui/20130527/1369660189
-let use_hints_ext_hinttags = 1
-let use_hints_ext_extendedhinttags = 1
-let use_hints_ext_tranform = 1
-autocmd VimperatorEnter ".*" :hi -a HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 15px; font-weight: normal;
-javascript << EOM
-(function(){
-  // ページ送り
-  var _scrollPageWithHints = function(_mapping, _scrollPageSize){
-    hints.addSimpleMap(_mapping, function(){
-      this.hide();
-      buffer.scrollPages(_scrollPageSize);
-      this.show(this._submode, "", content.window);
-    });
-  };
-  _scrollPageWithHints("<C-f>", 1);
-  _scrollPageWithHints("<C-b>", -1);
+" let use_hints_ext_hinttags = 1
+" let use_hints_ext_extendedhinttags = 1
+" let use_hints_ext_tranform = 1
+" autocmd VimperatorEnter ".*" :hi -a HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 15px; font-weight: normal;
+" javascript << EOM
+" (function(){
+"   // ページ送り
+"   var _scrollPageWithHints = function(_mapping, _scrollPageSize){
+"     hints.addSimpleMap(_mapping, function(){
+"       this.hide();
+"       buffer.scrollPages(_scrollPageSize);
+"       this.show(this._submode, "", content.window);
+"     });
+"   };
+"   _scrollPageWithHints("<C-f>", 1);
+"   _scrollPageWithHints("<C-b>", -1);
 
-  // hint node 重なり除去
-  hints.addSimpleMap("<C-l>", function(){ this.relocation(); });
-})();
-EOM
+"   // hint node 重なり除去
+"   hints.addSimpleMap("<C-l>", function(){ this.relocation(); });
+" })();
+" EOM
 
 
 " ------------------------------------------------------------
