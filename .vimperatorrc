@@ -64,9 +64,11 @@ nnoremap o :set<Space>cpt=slt<Cr>:open<Space>
 noremap + <C-a>
 javascript << EOM
 mappings.addUserMap(
-  [modes.NORMAL], ["-"], "- to <C-x>",
-  function(){events.feedkeys("<C-x>", true);},
-  {rhs:"<C-x>", noremap:true}
+  [modes.NORMAL],
+  ["-"],
+  "- to <C-x>",
+  function() { events.feedkeys("<C-x>", true); },
+  { rhs: "<C-x>", noremap: true }
 );
 EOM
 
