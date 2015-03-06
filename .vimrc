@@ -81,11 +81,6 @@ NeoBundleLazy 'mattn/emmet-vim', {
               \   },
               \ },
 NeoBundle 'LeafCage/foldCC'
-NeoBundleLazy 'mattn/gist-vim', {
-            \   'autoload': {
-            \     'commands': 'Gist',
-            \   },
-            \ },
 " NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
 NeoBundleLazy 'sk1418/HowMuch', {
             \   'autoload': {
@@ -153,11 +148,6 @@ NeoBundleLazy 'osyo-manga/unite-filetype', {
             \     'unite_sources': ['filetype'],
             \   },
             \ },
-NeoBundleLazy 'kg8m/unite-gist', {
-            \   'autoload': {
-            \     'unite_sources': ['gist'],
-            \   },
-            \ },
 NeoBundleLazy 'Shougo/unite-help', {
             \   'autoload': {
             \     'unite_sources': ['help'],
@@ -209,6 +199,13 @@ NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'thinca/vim-ft-diff_fold'
 NeoBundle 'thinca/vim-ft-help_fold'
 NeoBundle 'thinca/vim-ft-markdown_fold'
+NeoBundleLazy 'lambdalisue/vim-gista', {
+            \   'autoload': {
+            \     'commands':      ['Gista'],
+            \     'mappings':      '<Plug>(gista-',
+            \     'unite_sources': 'gista',
+            \   },
+            \ },
 NeoBundleLazy 'thinca/vim-prettyprint', {
             \   'autoload': {
             \     'commands':  ['PrettyPrint', 'PP'],
@@ -785,10 +782,7 @@ set foldtext=FoldCCtext()
 " }}}
 
 " gist "{{{
-let g:gist_detect_filetype  = 1
-let g:gist_show_privates    = 1
-let g:gist_post_private     = 1
-let g:gist_get_multiplefile = 1
+let g:gista#github_user = 'kg8m'
 " }}}
 
 " gundo "{{{
@@ -1400,7 +1394,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
     \   ["[Calendar] Week View                     ", "Calendar -view=week  -position=hear!"],
     \   ["[Calendar] Day View                      ", "Calendar -view=day   -position=hear! -split=vertical -width=75"],
     \
-    \   ["[Unite plugin] gist                      ", "Unite gist"],
+    \   ["[Unite plugin] gist                      ", "Unite gista"],
     \   ["[Unite plugin] mru files list            ", "Unite neomru/file"],
     \   ["[Unite plugin] neobundle/update          ", "Unite neobundle/update:all"],
     \   ["[Unite plugin] outline                   ", "Unite outline"],
