@@ -1,10 +1,12 @@
 # http://qiita.com/hayamiz/items/d64730b61b7918fbb970
 autoload -U add-zsh-hook 2>/dev/null || return
 
-__timetrack_threshold=10  # seconds
+__timetrack_threshold=30  # seconds
 read -r -d '' __timetrack_target_commands <<EOF
 ruby
 ruby_multitest
+spec
+rspec
 rake
 rake_units
 rake_functionals
