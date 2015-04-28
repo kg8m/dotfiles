@@ -93,6 +93,7 @@ NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
 NeoBundle 'fuenor/JpFormat.vim'
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'AndrewRadev/linediff.vim'
 NeoBundle 'kg8m/moin.vim'
 
 if s:neocomplete_available
@@ -913,6 +914,10 @@ endfunction
 function! MyModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
+" }}}
+
+" linediff "{{{
+let g:linediff_second_buffer_command = 'rightbelow vertical new'
 " }}}
 
 " markdown "{{{
