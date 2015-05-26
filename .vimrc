@@ -823,6 +823,11 @@ let g:increment_activator_filetype_candidates = {
   \       "sixth", "seventh", "eighth", "ninth", "tenth",
   \     ],
   \   ],
+  \   "ruby": [
+  \     ["should", "should_not"],
+  \     ["be_true", "be_false"],
+  \     ["be_present", "be_blank", "be_empty", "be_nil"],
+  \   ],
   \ }
 " }}}
 
