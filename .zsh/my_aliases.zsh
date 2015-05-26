@@ -15,8 +15,10 @@ fi
 
 if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
   macvim_cmd='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+  macvimdiff_cmd='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/vimdiff "$@"'
   alias vi=${macvim_cmd}
   alias vim=${macvim_cmd}
+  alias vimdiff=${macvimdiff_cmd}
 fi
 
 alias rm='rm -i'
