@@ -1074,10 +1074,11 @@ vmap r <Plug>(operator-replace)
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
 let g:rails_level = 4
 let g:rails_projections = {
-  \   "app/controllers/shared/*.rb": {
+  \   "app/controllers/*.rb": {
+  \     "command": "controller",
   \     "test": [
-  \       "test/functional/shared/%s_test.rb",
-  \       "test/functional/shared/%s_tests.rb",
+  \       "test/functional/%s_test.rb",
+  \       "test/functional/%s_tests.rb",
   \     ],
   \   },
   \   "app/helpers/*_builder.rb": {
@@ -1114,8 +1115,8 @@ let g:rails_projections = {
   \   "spec/support/*.rb": {
   \     "command": "support",
   \   },
-  \   "test/functional/shared/*_tests.rb": {
-  \     "alternate": "app/controllers/shared/%s.rb",
+  \   "test/functional/*_tests.rb": {
+  \     "alternate": "app/controllers/%s.rb",
   \   },
   \ }
 " prevent `rails.vim` from defining keymappings
