@@ -1086,54 +1086,14 @@ vmap r <Plug>(operator-replace)
 " rails "{{{
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
 let g:rails_level = 4
-let s:rails_projections_controller_commands = ["c", "co", "con", "cont", "controller"]
+let g:rails_projections_controller_commands = ["c", "co", "con", "cont", "controller"]
 let g:rails_projections = {
-  \   "app/controllers/*_controller.rb": {
-  \     "command": s:rails_projections_controller_commands,
-  \   },
-  \   "app/controllers/*_actions.rb": {
-  \     "type": "controller",
-  \     "command": s:rails_projections_controller_commands,
-  \     "test": [
-  \       "test/functional/%s_test.rb",
-  \       "test/functional/%s_tests.rb",
-  \     ],
-  \   },
-  \   "app/controllers/*_helper.rb": {
-  \     "type": "controller",
-  \     "command": s:rails_projections_controller_commands,
-  \   },
-  \   "app/controllers/*_methods.rb": {
-  \     "type": "controller",
-  \     "command": s:rails_projections_controller_commands,
-  \   },
-  \   "app/helpers/*_builder.rb": {
-  \     "command": "helper",
-  \   },
-  \   "app/models/*_counter.rb": {
-  \     "command": "counter",
-  \   },
-  \   "app/models/*_type.rb": {
-  \     "command": "type",
-  \   },
-  \   "app/models/finder/*.rb": {
-  \     "command": "finder",
-  \   },
   \   "config/*": {
   \     "command": "config",
   \   },
-  \   "config/routes.rb": {
-  \     "command": "routes",
-  \     "test": [
-  \       "test/integration/routes_test.rb",
-  \     ],
-  \   },
-  \   "lib/*.rake": {
-  \     "command": "lib",
-  \   },
   \   "script/*": {
   \     "command": "script",
-  \     "test": [
+  \     "test":    [
   \       "test/script/%s_test.rb",
   \     ],
   \   },
@@ -1146,9 +1106,6 @@ let g:rails_projections = {
   \   },
   \   "spec/support/*.rb": {
   \     "command": "support",
-  \   },
-  \   "test/functional/*_tests.rb": {
-  \     "alternate": "app/controllers/%s.rb",
   \   },
   \ }
 " prevent `rails.vim` from defining keymappings
