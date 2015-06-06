@@ -5,6 +5,7 @@ let $bundles_path   = expand($dotvim_path . "/bundle")
 let $neobundle_path = expand($bundles_path . "/neobundle.vim")
 
 let s:on_windows = has('win32') || has('win64')
+let s:on_mac     = has('mac')
 let s:on_tmux    = exists('$TMUX')
 
 " http://rhysd.hatenablog.com/entry/2013/08/24/223438
@@ -680,6 +681,18 @@ map gz# <Plug>(asterisk-gz#)
 " autoclose "{{{
 " annoying to type "<<" in Ruby code>
 " let g:AutoClosePairs_add = "<>"
+
+" https://github.com/Townk/vim-autoclose/blob/master/plugin/AutoClose.vim#L29
+if s:on_mac
+  imap <silent> <Esc>OA <Up>
+  imap <silent> <Esc>OB <Down>
+  imap <silent> <Esc>OC <Right>
+  imap <silent> <Esc>OD <Left>
+  imap <silent> <Esc>OH <Home>
+  imap <silent> <Esc>OF <End>
+  imap <silent> <Esc>[5~ <PageUp>
+  imap <silent> <Esc>[6~ <PageDown>
+endif
 " }}}
 
 " autodate "{{{
