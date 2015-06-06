@@ -1072,14 +1072,21 @@ vmap r <Plug>(operator-replace)
 
 " rails "{{{
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
+" disable default projects "controller"
 let g:rails_level = 4
 let g:rails_projections = {
+  \   "app/controllers/*_controller.rb": {
+  \     "command": "kontroller",
+  \   },
   \   "app/controllers/*.rb": {
-  \     "command": "controller",
+  \     "type": "controller",
+  \     "command": ["c", "co", "con", "cont", "controller"],
   \     "test": [
   \       "test/functional/%s_test.rb",
   \       "test/functional/%s_tests.rb",
   \     ],
+  \     "template": ["module {camelcase|capitalize|colons}Controller < ApplicationController", "end"],
+  \     "affinity": "controller",
   \   },
   \   "app/helpers/*_builder.rb": {
   \     "command": "helper",
@@ -1093,11 +1100,17 @@ let g:rails_projections = {
   \   "app/models/finder/*.rb": {
   \     "command": "finder",
   \   },
+  \   "config/*": {
+  \     "command": "config",
+  \   },
   \   "config/routes.rb": {
   \     "command": "routes",
   \     "test": [
   \       "test/integration/routes_test.rb",
   \     ],
+  \   },
+  \   "lib/*.rake": {
+  \     "command": "lib",
   \   },
   \   "script/*": {
   \     "command": "script",
