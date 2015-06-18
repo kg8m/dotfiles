@@ -35,9 +35,9 @@ alias pt='pt --color -S'
 
 alias 80='sudo ruby script/server webrick -p 80'
 alias 443='sudo ruby script/webrick_ssl -p 443'
-alias log='tail -f log/development.log'
-alias log_test='tail -f log/test.log'
-alias log_production='tail -f log/production.log'
+alias log='tail -F log/development.log log/production.log'
+alias log_test='tail -F log/test.log'
+alias log_production='tail -F log/production.log'
 
 alias console='ruby script/console'
 alias about='ruby script/about'
