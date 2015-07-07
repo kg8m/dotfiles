@@ -451,6 +451,7 @@ if has('vim_starting')
 
   autocmd FileType vim  setlocal foldmethod=marker
   autocmd FileType yaml setlocal foldmethod=indent
+  autocmd FileType haml setlocal foldmethod=indent
   autocmd BufEnter * if &ft == 'javascript' | call s:MyJavascriptFold() | endif
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
@@ -1086,7 +1087,6 @@ vmap r <Plug>(operator-replace)
 " rails "{{{
 " http://fg-180.katamayu.net/archives/2006/09/02/125150
 let g:rails_level = 4
-let g:rails_projections_controller_commands = ["c", "co", "con", "cont", "controller"]
 let g:rails_projections = {
   \   "config/*": {
   \     "command": "config",
