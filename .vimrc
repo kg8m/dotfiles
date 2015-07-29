@@ -91,7 +91,7 @@ NeoBundleLazy 'sk1418/HowMuch', {
 NeoBundle 'nishigori/increment-activator'
 NeoBundle 'haya14busa/incsearch.vim'
 " NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
+" NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
 NeoBundle 'fuenor/JpFormat.vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'AndrewRadev/linediff.vim'
@@ -221,12 +221,7 @@ NeoBundle 'tpope/vim-git'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
 " NeoBundle 'pangloss/vim-javascript'
-NeoBundleLazy 'jelera/vim-javascript-syntax', {
-            \   'autoload': {
-            \     'filetypes': ['javascript', 'eruby'],
-            \     'functions': ['JavaScriptFold'],
-            \   },
-            \ },
+NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'elzr/vim-json'
 NeoBundle 'rcmdnk/vim-markdown'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
