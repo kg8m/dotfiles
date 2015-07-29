@@ -677,6 +677,7 @@ map gz# <Plug>(asterisk-gz#)
 " autoclose "{{{
 " annoying to type "<<" in Ruby code>
 " let g:AutoClosePairs_add = "<>"
+let g:AutoCloseSelectionWrapPrefix = "<Leader>ac"
 
 " https://github.com/Townk/vim-autoclose/blob/master/plugin/AutoClose.vim#L29
 if s:on_mac
