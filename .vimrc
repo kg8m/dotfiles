@@ -1106,6 +1106,8 @@ let g:rails_projections = {
 " prevent `rails.vim` from defining keymappings
 nmap <Leader>Rwf  <Plug>RailsSplitFind
 nmap <Leader>Rwgf <Plug>RailsTabFind
+
+let &path = &path . ",spec/support"
 " }}}
 
 " ref "{{{
