@@ -1283,7 +1283,7 @@ endif
 
 let g:unite_source_grep_max_candidates = 1000
 let g:unite_source_grep_search_word_highlight = 'Special'
-call unite#custom_source('buffer', 'sorters', 'sorter_word')
+call unite#custom#source('buffer', 'sorters', 'sorter_word')
 nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
 vnoremap <Leader>ug "vy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
 nnoremap <silent> <Leader>uy :<C-u>Unite history/yank<Cr>
