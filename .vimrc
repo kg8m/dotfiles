@@ -1395,7 +1395,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
     \   ["[Unite plugin] gist                      ", "Unite gista"],
     \   ["[Unite plugin] mru files list            ", "Unite neomru/file"],
     \   ["[Unite plugin] neobundle/update          ", "Unite neobundle/update:all"],
-    \   ["[Unite plugin] outline                   ", "Unite outline"],
+    \   ["[Unite plugin] outline                   ", "Unite outline:!"],
     \   ["[Unite plugin] tag with cursor word      ", "UniteWithCursorWord tag"],
     \   ["[Unite plugin] versions/status           ", "Unite versions/status"],
     \   ["[Unite plugin] versions/log              ", "Unite versions/log"],
