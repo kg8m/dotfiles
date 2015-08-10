@@ -1290,7 +1290,7 @@ call unite#custom#source('buffer', 'sorters', 'sorter_word')
 nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
 vnoremap <Leader>ug "vy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
 nnoremap <silent> <Leader>uy :<C-u>Unite history/yank<Cr>
-nnoremap <silent> <Leader>uo :<C-u>Unite outline<Cr>
+nnoremap <silent> <Leader>uo :<C-u>Unite outline:!<Cr>
 nnoremap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
 nnoremap <silent> <Leader>ub :<C-u>Unite buffer<Cr>
 nnoremap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
