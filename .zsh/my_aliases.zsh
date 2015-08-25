@@ -32,6 +32,8 @@ alias rak='rak --sort-files'
 alias rak_app="rak -k 'db/|log/|public/|spec/|test/|tmp/|vendor/'"
 alias ag='ag --hidden --pager "less -R" -S'
 alias pt='pt --color -HSe --parallel'
+alias diff='diff -U 10 -b -B'
+alias _diff='/usr/bin/diff'
 
 alias 80='sudo ruby script/server webrick -p 80'
 alias 443='sudo ruby script/webrick_ssl -p 443'
