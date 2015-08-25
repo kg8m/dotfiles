@@ -296,11 +296,7 @@ NeoBundleLazy 'thinca/vim-unite-history', {
 " NeoBundle 'hrsh7th/vim-unite-vcs'  replaced by vim-versions
 NeoBundle 'hrsh7th/vim-versions'
 NeoBundle 'superbrothers/vim-vimperator'
-NeoBundleLazy 'Shougo/vimfiler', {
-            \   'autoload': {
-            \     'commands': ['VimFiler', 'VimFilerBufferDir'],
-            \   },
-            \ },
+NeoBundle 'Shougo/vimfiler'
 NeoBundleLazy 'Shougo/vimshell', {
             \   'autoload': {
             \     'commands': ['VimShell', 'VimShellExecute'],
@@ -1264,18 +1260,14 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
 
 if s:pt_available || s:ag_available || s:ack_available
-  " https://github.com/monochromegane/the_platinum_searcher
-  " don't use `pt` because hidden files are ignored and results are not sorted
-  if s:pt_available && 0
+  if s:pt_available
     let g:unite_source_grep_command      = 'pt'
     let g:unite_source_grep_default_opts = '--nocolor --nogroup'
-    let g:unite_source_grep_encoding     = 'utf-8'
   else
     let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
 
-    if s:ag_available && 0
+    if s:ag_available
       let g:unite_source_grep_command = 'ag'
-      let g:unite_source_grep_default_opts = g:unite_source_grep_default_opts . ' --hidden'
     elseif s:ack_available
       let g:unite_source_grep_command = 'ack'
     endif
@@ -1284,9 +1276,9 @@ if s:pt_available || s:ag_available || s:ack_available
   let g:unite_source_grep_recursive_opt = ''
 endif
 
-let g:unite_source_grep_max_candidates = 1000
 let g:unite_source_grep_search_word_highlight = 'Special'
 call unite#custom#source('buffer', 'sorters', 'sorter_word')
+call unite#custom#source('grep', 'max_candidates', 1000)
 nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
 vnoremap <Leader>ug "vy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
 nnoremap <silent> <Leader>uy :<C-u>Unite history/yank<Cr>
