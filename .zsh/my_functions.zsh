@@ -223,3 +223,11 @@ function color_pallet() {
 function viack() {
   vi `ack $@ -l`
 }
+
+function viag() {
+  vi `ag $@ -l --nocolor`
+}
+
+function vipt() {
+  vi `pt $@ -l --nocolor`
+}
