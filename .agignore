@@ -1,2 +1,9 @@
-log/
+.git
+.svn
+log
+tmp/sass-cache
+
+*_structure.sql
+*.dat
+*.diff
 tags
