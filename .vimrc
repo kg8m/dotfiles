@@ -1236,6 +1236,7 @@ vmap ij <Plug>(textobj-multitextobj-i)
 
 " turbux "{{{
 let g:no_turbux_mappings = 1
+let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
 if s:on_tmux
   map <leader>T <Plug>SendTestToTmux
   map <leader>t <Plug>SendFocusedTestToTmux
