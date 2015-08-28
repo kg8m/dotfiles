@@ -92,7 +92,7 @@ zstyle ':completion:*' matcher-list \
 # http://d.hatena.ne.jp/tarao/20100531/1275322620
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' keep-prefix
-zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate _list _history
+zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate _list
 
 # http://d.hatena.ne.jp/mollifier/20101227/p1
 autoload -Uz zmv
