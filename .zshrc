@@ -30,9 +30,6 @@ HISTFILE=~/.zsh_histfile
 HISTSIZE=100000
 SAVEHIST=100000
 
-# enhancd
-ENHANCD_HOME_STARTUP='false'
-
 bindkey -v
 
 # http://blog.blueblack.net/item_204
@@ -205,6 +202,7 @@ bindkey -a 'q' push-line
 [ -f ~/.zsh/vim_visualmode.zsh ] && source ~/.zsh/vim_visualmode.zsh
 [ -f ~/.zsh/timetrack.zsh      ] && source ~/.zsh/timetrack.zsh
 [ -f ~/.zsh/cd-bookmark.zsh    ] && source ~/.zsh/cd-bookmark.zsh
+[ -f ~/.zsh/enhancd/enhancd.sh ] && source ~/.zsh/enhancd/enhancd.sh
 [ -f ~/.zsh/my_aliases.zsh     ] && source ~/.zsh/my_aliases.zsh
 [ -f ~/.zsh/my_functions.zsh   ] && source ~/.zsh/my_functions.zsh
 [ -f ~/.zsh/peco.zsh           ] && source ~/.zsh/peco.zsh

@@ -7,3 +7,6 @@
 [submodule ".peco/anyframe"]
 	path = .peco/anyframe
 	url = git@github.com:mollifier/anyframe
+[submodule ".zsh/enhancd"]
+	path = .zsh/enhancd
+	url = git@github.com:b4b4r07/enhancd
