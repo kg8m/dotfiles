@@ -89,7 +89,7 @@ zstyle ':completion:*' matcher-list \
 # http://d.hatena.ne.jp/tarao/20100531/1275322620
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' keep-prefix
-zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate _list
+zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate _list _history
 
 # http://d.hatena.ne.jp/mollifier/20101227/p1
 autoload -Uz zmv
@@ -199,7 +199,6 @@ add-zsh-hook precmd set_tmux_window_name
 # http://memo.officebrook.net/20090316.html
 bindkey -a 'q' push-line
 
-[ -f ~/.zsh/vim_visualmode.zsh ] && source ~/.zsh/vim_visualmode.zsh
 [ -f ~/.zsh/timetrack.zsh      ] && source ~/.zsh/timetrack.zsh
 [ -f ~/.zsh/cd-bookmark.zsh    ] && source ~/.zsh/cd-bookmark.zsh
 [ -f ~/.zsh/enhancd/enhancd.sh ] && source ~/.zsh/enhancd/enhancd.sh
