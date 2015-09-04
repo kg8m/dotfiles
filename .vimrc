@@ -272,7 +272,11 @@ NeoBundle 'tpope/vim-repeat'
 "             \ },
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
-NeoBundle 'kg8m/vim-rubytest'
+NeoBundleLazy 'kg8m/vim-rubytest', {
+            \   'autoload': {
+            \     'mappings': ['<Plug>RubyFileRun', '<Plug>RubyTestRun'],
+            \   },
+            \ },
 NeoBundleLazy 'thinca/vim-singleton', {
             \   'gui': 1,
             \ },
@@ -382,7 +386,7 @@ let g:molokai_original = 1
 colorscheme molokai
 
 set showmatch
-set nu
+set number
 set showmode
 set showcmd
 set cursorline
@@ -508,13 +512,6 @@ augroup END
 " move
 set whichwrap=b,s,h,l,<,>,[,],~
 
-" move as shown
-" disable because of difference between normal mode and other modes (e.g., visual mode)
-" nnoremap j gj
-" nnoremap k gk
-" nnoremap gj j
-" nnoremap gk k
-
 " IME
 " augroup InsModeImEnable
 "   autocmd!
@@ -599,6 +596,16 @@ inoremap <C-w> <Esc><C-w>
 nmap + <C-a>
 nmap - <C-x>
 
+" move as shown
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+vnoremap j gj
+vnoremap k gk
+vnoremap gj j
+vnoremap gk k
+
 " emacs like moving in INSERT mode
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
@@ -661,14 +668,6 @@ unlet s:alignta_comment_leadings
 
 " asterisk "{{{
 " see incsearch
-" map *   <Plug>(asterisk-*)
-" map #   <Plug>(asterisk-#)
-" map g*  <Plug>(asterisk-g*)
-" map g#  <Plug>(asterisk-g#)
-map z*  <Plug>(asterisk-z*)
-map gz* <Plug>(asterisk-gz*)
-map z#  <Plug>(asterisk-z#)
-map gz# <Plug>(asterisk-gz#)
 " }}}
 
 " autoclose "{{{
@@ -776,11 +775,6 @@ omap f <Plug>(easymotion-fl)
 nmap F <Plug>(easymotion-Fl)
 vmap F <Plug>(easymotion-Fl)
 omap F <Plug>(easymotion-Fl)
-" replace default `/`
-" very magic (\v) as default
-" nmap / <Plug>(easymotion-sn)\v
-" vmap / <Plug>(easymotion-sn)\v
-" omap / <Plug>(easymotion-sn)\v
 " }}}
 
 " foldCC "{{{
@@ -839,6 +833,7 @@ let g:increment_activator_filetype_candidates = {
 " }}}
 
 " incsearch "{{{
+" asterisk's `z` commands are "stay star motions"
 let g:incsearch#auto_nohlsearch = 0
 let g:incsearch#magic = '\v'
 map /  <Plug>(incsearch-forward)
@@ -846,12 +841,10 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 map n  <Plug>(incsearch-nohl-n)<Plug>(anzu-update-search-status-with-echo)
 map N  <Plug>(incsearch-nohl-N)<Plug>(anzu-update-search-status-with-echo)
-map *  <Plug>(incsearch-nohl)<Plug>(asterisk-*)<Plug>(anzu-update-search-status-with-echo)
-map #  <Plug>(incsearch-nohl)<Plug>(asterisk-#)<Plug>(anzu-update-search-status-with-echo)
-map g* <Plug>(incsearch-nohl)<Plug>(asterisk-g*)<Plug>(anzu-update-search-status-with-echo)
-map g# <Plug>(incsearch-nohl)<Plug>(asterisk-g#)<Plug>(anzu-update-search-status-with-echo)
-" vnoremap <silent> *  "zy:let @/ = "\\<" . @z . "\\>"<Cr>n
-" vnoremap <silent> g* "zy:let @/ = @z<Cr>n
+map *  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
+map #  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
+map g* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
+map g# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 " }}}
 
 " indentline "{{{
@@ -944,7 +937,7 @@ let g:markdown_quote_syntax_filetypes = {
 
 augroup ResetMarkdownIndentexpr
   autocmd!
-  autocmd FileType markdown setlocal indentexpr= smartindent
+  autocmd FileType markdown setlocal indentexpr=smartindent
 augroup END
 " }}}
 
@@ -1054,8 +1047,8 @@ let g:openbrowser_browser_commands = [
   \     "args": "ssh main 'open '\\''{uri}'\\'''",
   \   }
   \ ]
-nmap <Leader>g <Plug>(openbrowser-open)
-vmap <Leader>g <Plug>(openbrowser-open)
+nmap <Leader>o <Plug>(openbrowser-open)
+vmap <Leader>o <Plug>(openbrowser-open)
 " }}}
 
 " operator-camelize "{{{
@@ -1246,13 +1239,6 @@ endif
 
 " Unicode-RST-Tables "{{{
 let g:no_rst_table_maps = 0
-if has("python3")
-  nnoremap <silent> <Leader><Leader>c :python3 CreateTable()<Cr>
-  nnoremap <silent> <Leader><Leader>f :python3 FixTable()<Cr>
-elseif has("python")
-  nnoremap <silent> <Leader><Leader>c :python  CreateTable()<Cr>
-  nnoremap <silent> <Leader><Leader>f :python  FixTable()<Cr>
-endif
 " }}}
 
 " unite, neomru, unite's plugins "{{{
@@ -1262,6 +1248,8 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
 
 if s:pt_available || s:ag_available || s:ack_available
+  let g:unite_source_grep_recursive_opt = ''
+
   if s:pt_available
     let g:unite_source_grep_command      = 'pt'
     let g:unite_source_grep_default_opts = '--nocolor --nogroup'
@@ -1274,8 +1262,6 @@ if s:pt_available || s:ag_available || s:ack_available
       let g:unite_source_grep_command = 'ack'
     endif
   endif
-
-  let g:unite_source_grep_recursive_opt = ''
 endif
 
 let g:unite_source_grep_search_word_highlight = 'Special'
@@ -1385,6 +1371,9 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
     \   ["[Calendar] Month View                    ", "Calendar -view=month -position=hear!"],
     \   ["[Calendar] Week View                     ", "Calendar -view=week  -position=hear!"],
     \   ["[Calendar] Day View                      ", "Calendar -view=day   -position=hear! -split=vertical -width=75"],
+    \
+    \   ["[Unicode-RST-Tables] Create Table        ", "python CreateTable()"],
+    \   ["[Unicode-RST-Tables] Fix Table           ", "python FixTable()"],
     \
     \   ["[Unite plugin] gist                      ", "Unite gista"],
     \   ["[Unite plugin] mru files list            ", "Unite neomru/file"],
@@ -1496,12 +1485,12 @@ let g:vimshell_prompt = '% '
 let g:VimuxHeight = 30
 let g:VimuxUseNearestPane = 0  " deprecated?
 let g:VimuxUseNearest = 0
-if s:on_tmux
-  augroup Vimux
-    autocmd!
-    autocmd VimLeavePre * :VimuxCloseRunner
-  augroup END
-endif
+" if s:on_tmux
+"   augroup Vimux
+"     autocmd!
+"     autocmd VimLeavePre * :VimuxCloseRunner
+"   augroup END
+" endif
 " }}}
 
 " yankround "{{{
