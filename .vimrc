@@ -804,6 +804,7 @@ let g:HowMuch_scale = 5
 " increment-activator "{{{
 let g:increment_activator_filetype_candidates = {
   \   "_": [
+  \     ["有", "無"],
   \     ["日", "月", "火", "水", "木", "金", "土"],
   \     [
   \       "a", "b", "c", "d", "e", "f", "g",
