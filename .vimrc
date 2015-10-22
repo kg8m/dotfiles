@@ -804,6 +804,7 @@ let g:HowMuch_scale = 5
 " increment-activator "{{{
 let g:increment_activator_filetype_candidates = {
   \   "_": [
+  \     ["有", "無"],
   \     ["日", "月", "火", "水", "木", "金", "土"],
   \     [
   \       "a", "b", "c", "d", "e", "f", "g",
@@ -1247,16 +1248,17 @@ let g:unite_cursor_line_highlight = 'CursorLine'
 let g:unite_source_history_yank_enable = 1
 let g:unite_source_history_yank_limit = 300
 
+" use ack because pt and ag don't sort search result
 if s:pt_available || s:ag_available || s:ack_available
   let g:unite_source_grep_recursive_opt = ''
 
-  if s:pt_available
+  if s:pt_available && 0
     let g:unite_source_grep_command      = 'pt'
     let g:unite_source_grep_default_opts = '--nocolor --nogroup'
   else
     let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
 
-    if s:ag_available
+    if s:ag_available && 0
       let g:unite_source_grep_command = 'ag'
     elseif s:ack_available
       let g:unite_source_grep_command = 'ack'
