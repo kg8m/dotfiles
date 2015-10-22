@@ -1507,17 +1507,19 @@ let g:user_emmet_settings = {
   \   'indentation': '  ',
   \   'lang': 'ja',
   \   'eruby': {
-  \     'extends' : 'html',
+  \     'extends': ['javascript', 'html'],
   \   },
   \   'html': {
+  \     'extends': 'javascript',
   \     'snippets' : {
   \       'label': '<label>${cursor}</label>',
+  \       'script': "<script type=\"text/javascript\">\n  ${cursor}\n</script>",
   \     },
   \   },
   \   'javascript': {
   \     'snippets': {
-  \       'jq': "$(function() {\n  ${cursor}${child}\n});",
-  \       'jq:each': "$.each(arr, function(index, item)\n  ${child}\n});",
+  \       'jq': "jQuery(function() {\n  ${cursor}${child}\n});",
+  \       'jq:each': "jQuery.each(arr, function(index, item)\n  ${child}\n});",
   \       'fn': "(function() {\n  ${cursor}\n})();",
   \       'tm': "setTimeout(function() {\n  ${cursor}\n}, 100);",
   \       'if': "if (${cursor}) {\n};",
