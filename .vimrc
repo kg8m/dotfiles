@@ -804,6 +804,7 @@ let g:HowMuch_scale = 5
 " increment-activator "{{{
 let g:increment_activator_filetype_candidates = {
   \   "_": [
+  \     ["有", "無"],
   \     ["日", "月", "火", "水", "木", "金", "土"],
   \     [
   \       "a", "b", "c", "d", "e", "f", "g",
@@ -1378,7 +1379,7 @@ nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer 
     \
     \   ["[Unite plugin] gist                      ", "Unite gista"],
     \   ["[Unite plugin] mru files list            ", "Unite neomru/file"],
-    \   ["[Unite plugin] neobundle/update          ", "Unite neobundle/update:all"],
+    \   ["[Unite plugin] neobundle/update          ", "Unite neobundle/update:all -log"],
     \   ["[Unite plugin] outline                   ", "Unite outline:!"],
     \   ["[Unite plugin] tag with cursor word      ", "UniteWithCursorWord tag"],
     \   ["[Unite plugin] versions/status           ", "Unite versions/status"],
