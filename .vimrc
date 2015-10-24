@@ -122,7 +122,7 @@ NeoBundleLazy 'Shougo/neosnippet', {
             \   },
             \ },
 NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundleLazy 'kg8m/open-browser.vim', {
+NeoBundleLazy 'tyru/open-browser.vim', {
             \   'autoload': {
             \     'commands':  ['OpenBrowserSearch', 'OpenBrowser'],
             \     'functions': 'openbrowser#open',
