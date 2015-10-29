@@ -75,6 +75,7 @@ NeoBundleLazy 'cocopon/colorswatch.vim', {
             \   },
             \ },
 " NeoBundle 'rhysd/conflict-marker.vim'
+NeoBundle 'chrisbra/csv.vim'
 NeoBundle 'spolu/dwm.vim'
 " former zencoding-vim
 NeoBundleLazy 'mattn/emmet-vim', {
