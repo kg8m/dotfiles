@@ -136,7 +136,7 @@ fi
 
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 # prompt as ({current_time}) [{vi_mode}] {user_name}@{hostname} : {current_directory_path}\n% (# if root user)
-prompt_time=$'\e[48;05;024m'"(%D{%Y/%m/%d %H:%M:%S})"$'\e[48;05;000m'
+prompt_time=$'\e[48;05;024m'"(%D{%Y/%m/%d(%a) %H:%M:%S})"$'\e[48;05;000m'
 prompt_user=$'\e[38;05;009m'"%n@%m"
 prompt_current_dir=$'\e[38;05;030m'"%~"$'%{${reset_color}%}'
 prompt_self=$'%{${reset_color}%}'"%(!.#.%#) "
