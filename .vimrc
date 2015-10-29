@@ -1110,6 +1110,12 @@ nmap K <Plug>(ref-keyword)
 let g:no_ruby_maps = 1
 " }}}
 
+" ruby-heredoc-syntax "{{{
+let g:ruby_heredoc_syntax_filetypes = {
+  \   "haml": { "start": "HAML" },
+  \ }
+" }}}
+
 " rubytest "{{{
 let g:no_rubytest_mappings = 1
 let g:rubytest_in_vimshell = 1
