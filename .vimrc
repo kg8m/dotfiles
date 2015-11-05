@@ -113,6 +113,7 @@ else
 endif
 
 NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neoyank.vim'
 NeoBundleLazy 'Shougo/neosnippet', {
             \   'autoload': {
             \     'insert':        1,
@@ -1249,11 +1250,10 @@ endif
 let g:no_rst_table_maps = 0
 " }}}
 
-" unite, neomru, unite's plugins "{{{
+" unite, neomru, neoyank, unite's plugins "{{{
 let g:unite_winheight = '100%'
 let g:unite_cursor_line_highlight = 'CursorLine'
-let g:unite_source_history_yank_enable = 1
-let g:unite_source_history_yank_limit = 300
+let g:neoyank#limit = 300
 
 " use ack because pt and ag don't sort search result
 if s:pt_available || s:ag_available || s:ack_available
