@@ -1492,14 +1492,32 @@ let g:vimshell_prompt = '% '
 
 " vimux "{{{
 let g:VimuxHeight = 30
-let g:VimuxUseNearestPane = 0  " deprecated?
-let g:VimuxUseNearest = 0
-" if s:on_tmux
-"   augroup Vimux
-"     autocmd!
-"     autocmd VimLeavePre * :VimuxCloseRunner
-"   augroup END
-" endif
+let g:VimuxUseNearest = 1
+
+if s:on_tmux
+  function! s:ExtendVimux()
+    " overriding default function: use a pane only after current
+    execute join([
+    \   'function! _VimuxNearestIndex()',
+    \     'let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")',
+    \
+    \     'for view in reverse(views)',
+    \       'if match(view, "(active)") == -1',
+    \         'return split(view, ":")[0]',
+    \       'else',
+    \         'return -1',
+    \       'endif',
+    \     'endfor',
+    \   'endfunction',
+    \ ], "\n")
+  endfunction
+
+  augroup Vimux
+    autocmd!
+    autocmd VimEnter * call s:ExtendVimux()
+    autocmd VimLeavePre * :VimuxCloseRunner
+  augroup END
+endif
 " }}}
 
 " yankround "{{{
