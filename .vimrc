@@ -439,6 +439,9 @@ if has('vim_starting')
   autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
   autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
 
+  " cinkyes
+  autocmd FileType text,markdown,moin setlocal cinkeys-=:
+
   " folding
   " Keys: `zo`: open, `zc`: close, `zR`: open all, `zM`: close all
   set foldmethod=marker
