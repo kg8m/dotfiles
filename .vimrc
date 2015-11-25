@@ -1500,18 +1500,25 @@ let g:VimuxUseNearest = 1
 
 if s:on_tmux
   function! s:ExtendVimux()
-    " overriding default function: use a pane only after current
+    " overriding default function: use current pane's next one
     execute join([
     \   'function! _VimuxNearestIndex()',
     \     'let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")',
+    \     'let index = len(views) - 1',
     \
-    \     'for view in reverse(views)',
-    \       'if match(view, "(active)") == -1',
-    \         'return split(view, ":")[0]',
-    \       'else',
-    \         'return -1',
+    \     'while index >= 0',
+    \       'let view = views[index]',
+    \
+    \       'if match(view, "(active)") != -1',
+    \         'if index == len(views) - 1',
+    \           'return -1',
+    \         'else',
+    \           'return split(views[index + 1], ":")[0]',
+    \         'endif',
     \       'endif',
-    \     'endfor',
+    \
+    \       'let index = index - 1',
+    \     'endwhile',
     \   'endfunction',
     \ ], "\n")
   endfunction
