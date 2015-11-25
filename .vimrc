@@ -961,6 +961,7 @@ if s:neocomplete_available
   let g:neocomplete#enable_insert_char_pre = 0
   let g:neocomplete#enable_prefetch = 0
   let g:neocomplete#force_overwrite_completefunc = 1
+  let g:neocomplete#sources#tags#cache_limit_size = 1000
 
   if !exists('g:neocomplete#keyword_patterns')
     let g:neocomplete#keyword_patterns = {}
