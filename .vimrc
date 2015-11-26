@@ -115,6 +115,7 @@ endif
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neoyank.vim'
 NeoBundleLazy 'Shougo/neosnippet', {
+            \   'depends': ['Shougo/context_filetype.vim'],
             \   'autoload': {
             \     'insert':        1,
             \     'filetypes':     ['snippet', 'neosnippet'],
