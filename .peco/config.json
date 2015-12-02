@@ -18,5 +18,6 @@
     "Selected": ["on_white", "black"],
     "Query": ["green", "bold"],
     "Matched": ["red"]
-  }
+  },
+  "Layout": "bottom-up"
 }
