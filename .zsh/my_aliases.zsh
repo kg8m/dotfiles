@@ -22,7 +22,11 @@ if [ -f /Applications/MacVim.app/Contents/MacOS/Vim ]; then
 fi
 
 alias rm='rm -i'
-alias crontab='crontab -i'
+
+if `crontab -i > /dev/null 2>&1`; then
+  alias crontab='crontab -i'
+fi
+
 alias _ls='/bin/ls -a'
 alias ls='ls --color -a'
 alias ll='ls -l'
