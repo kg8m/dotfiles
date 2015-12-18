@@ -259,6 +259,10 @@ if s:on_tmux
   NeoBundle 'benmills/vimux'
 endif
 
+let g:winresizer_start_key = '<C-w><C-e>'
+NeoBundle 'simeji/winresizer', {
+        \   'on_map': g:winresizer_start_key,
+        \ }
 NeoBundle 'LeafCage/yankround.vim'
 
 " plugins from bitbucket
