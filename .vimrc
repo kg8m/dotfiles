@@ -67,7 +67,7 @@ NeoBundle 'cocopon/colorswatch.vim', {
         \   'on_cmd': 'ColorSwatchGenerate',
         \ },
 " NeoBundle 'rhysd/conflict-marker.vim'
-NeoBundle 'chrisbra/csv.vim'
+NeoBundleFetch 'chrisbra/csv.vim'
 NeoBundle 'spolu/dwm.vim'
 " former zencoding-vim
 NeoBundle 'mattn/emmet-vim', {
