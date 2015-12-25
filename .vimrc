@@ -233,6 +233,7 @@ NeoBundle 'thinca/vim-singleton', {
         \ },
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'mhinz/vim-startify'
+NeoBundle 'kopischke/vim-stay'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'deris/vim-textobj-enclosedsyntax'
 NeoBundle 'kana/vim-textobj-jabraces'
@@ -1150,6 +1151,10 @@ let g:startify_custom_header  = [
   \   '',
   \   '',
   \ ]
+" }}}
+
+" stay "{{{
+set viewoptions=cursor
 " }}}
 
 " textobj-multitextobj "{{{
