@@ -101,8 +101,17 @@ inoremap <C-f> <PageDown>
 inoremap <C-b> <PageUp>
 
 " n/N でも全部ハイライトさせる
-nnoremap n     :js if (options["hlsearch"]) { finder.highlight(finder._lastSearchString); } finder.findAgain(false)<Cr>
-nnoremap <S-n> :js if (options["hlsearch"]) { finder.highlight(finder._lastSearchString); } finder.findAgain(true)<Cr>
+" needs to be fixed if Vimperator's core codes change
+javascript << EOM
+finder.originalFindAgain = finder.findAgain;
+finder.findAgain = function(reverse) {
+  if (options["hlsearch"]) {
+    this.highlight(this._lastSearchString);
+  }
+
+  this.originalFindAgain(reverse);
+};
+EOM
 
 " <Esc><Esc>で検索ハイライト解除
 nnoremap <Esc><Esc> :noh<Cr>
