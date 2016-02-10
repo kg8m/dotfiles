@@ -1295,7 +1295,7 @@ if has('vim_starting')
   " Keys: `zo`: open, `zc`: close, `zR`: open all, `zM`: close all
   set foldmethod=marker
   set foldopen=hor
-  set foldminlines=3
+  set foldminlines=0
   set foldcolumn=3
   set fillchars=vert:\|
 
