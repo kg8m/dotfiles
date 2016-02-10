@@ -16,6 +16,14 @@ let s:ag_available = executable("ag")
 let s:ack_available = executable("ack")
 let s:migemo_available = has("migemo") || executable("cmigemo")
 
+function! OnTmux() abort
+  return s:on_tmux
+endfunction
+
+function! NeocompleteAvailable() abort
+  return s:neocomplete_available
+endfunction
+
 function! s:AvailabilityMessage(target)
   return a:target . ' is ' . (eval('s:' . a:target . '_available') ? '' : 'NOT ') . 'available'
 endfunction
@@ -46,12 +54,12 @@ NeoBundle 'Shougo/vimproc', {
         \   },
         \ },
 
-" plugins from github
 NeoBundle 'kg8m/.vim'
-" NeoBundle 'mileszs/ack.vim'
-" NeoBundle 'alpaca-tc/alpaca_complete', {
-"         \   'on_ft': ['ruby', 'eruby'],
-"         \ },
+NeoBundle 'mileszs/ack.vim', { 'disabled': 1 }
+NeoBundle 'alpaca-tc/alpaca_complete', {
+        \   'disabled': 1,
+        \   'on_ft':    ['ruby', 'eruby'],
+        \ },
 NeoBundleFetch 'alpaca-tc/alpaca_rails_support'
 NeoBundle 'vim-scripts/autodate.vim'
 NeoBundle 'itchyny/calendar.vim', {
@@ -61,43 +69,60 @@ NeoBundle 'itchyny/calendar.vim', {
 NeoBundle 'tyru/caw.vim', {
         \   'on_map': ['ns', '<Plug>(caw:'],
         \ },
-" NeoBundle 'rhysd/clever-f.vim'
-" NeoBundle 'lilydjwg/colorizer'  " replaced by kg8m/vim-coloresque
+NeoBundle 'rhysd/clever-f.vim', {
+        \   'disabled':    1,
+        \   'description': 'replaced by easymotion',
+        \ }
+NeoBundle 'lilydjwg/colorizer', {
+        \   'disabled':    1,
+        \   'description': 'replaced by vim-coloresque',
+        \ }
 NeoBundle 'cocopon/colorswatch.vim', {
         \   'on_cmd': 'ColorSwatchGenerate',
         \ },
-" NeoBundle 'rhysd/conflict-marker.vim'
+NeoBundle 'rhysd/conflict-marker.vim', { 'disabled': 1 }
 NeoBundleFetch 'chrisbra/csv.vim'
 NeoBundle 'spolu/dwm.vim'
-" former zencoding-vim
 NeoBundle 'mattn/emmet-vim', {
-        \   'on_i': 1,
+        \   'description': 'former zencoding-vim',
+        \   'on_i':        1,
         \ },
+NeoBundle 'EnhCommentify.vim', {
+        \   'disabled':    1,
+        \   'description': 'replaced by caw',
+        \ }
+NeoBundle 'eruby.vim', { 'disabled': 1 }
 NeoBundle 'LeafCage/foldCC'
-" NeoBundle 'sjl/gundo.vim'  " replaced by bitbucket.org/heavenshell/gundo.vim
+NeoBundle 'sjl/gundo.vim', {
+        \   'disabled':    1,
+        \   'description': 'replaced by heavenshell/gundo.vim',
+        \ }
+NeoBundle 'bitbucket:heavenshell/gundo.vim', {
+        \   'on_cmd': 'GundoToggle',
+        \ },
 NeoBundle 'sk1418/HowMuch', {
         \   'on_map': ['ns', '<Plug>AutoCalc'],
         \ },
 NeoBundle 'nishigori/increment-activator'
 NeoBundle 'haya14busa/incsearch.vim'
-" NeoBundle 'Yggdroot/indentLine'
-" NeoBundle 'othree/javascript-libraries-syntax.vim', { 'rev': '4f63ea4f78' }
+NeoBundle 'Yggdroot/indentLine', { 'disabled': 1 }
+NeoBundle 'othree/javascript-libraries-syntax.vim', { 'disabled': 1 }
 NeoBundle 'fuenor/JpFormat.vim'
+NeoBundle 'bitbucket:teramako/jscomplete-vim.git'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'AndrewRadev/linediff.vim'
+NeoBundle 'matchit.zip'
 NeoBundle 'kg8m/moin.vim'
-
-if s:neocomplete_available
-  NeoBundleFetch 'Shougo/neocomplcache.vim'
-  NeoBundle 'Shougo/neocomplete.vim', {
-          \   'on_i':   1,
-          \   'on_cmd': 'NeoCompleteBufferMakeCache',
-          \ },
-else
-  NeoBundle 'Shougo/neocomplcache.vim'
-  NeoBundleFetch 'Shougo/neocomplete.vim'
-endif
-
+NeoBundle 'Shougo/neocomplcache.vim', {
+        \   'disabled': NeocompleteAvailable(),
+        \   'on_i':     1,
+        \   'on_cmd':   'NeoCompleteBufferMakeCache',
+        \ },
+NeoBundle 'Shougo/neocomplete.vim', {
+        \   'disabled': !NeocompleteAvailable(),
+        \   'on_i':     1,
+        \   'on_cmd':   'NeoCompleteBufferMakeCache',
+        \ },
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neoyank.vim'
 NeoBundle 'Shougo/neosnippet', {
@@ -115,20 +140,22 @@ NeoBundle 'tyru/open-browser.vim', {
 NeoBundle 'tyru/operator-camelize.vim', {
         \   'on_map': ['ns', '<Plug>(operator-camelize)', '<Plug>(operator-decamelize)'],
         \ },
-" NeoBundle 'vim-scripts/QuickBuf'
-" NeoBundle 'kien/rainbow_parentheses.vim'
+NeoBundle 'vim-scripts/QuickBuf', { 'disabled': 1 }
+NeoBundle 'kien/rainbow_parentheses.vim', { 'disabled': 1 }
 NeoBundle 'chrisbra/Recover.vim'
+NeoBundle 'sequence'
 NeoBundle 'joeytwiddle/sexy_scroller.vim'
 NeoBundle 'jiangmiao/simple-javascript-indenter'
 NeoBundle 'AndrewRadev/splitjoin.vim', {
         \   'on_cmd': ['SplitjoinJoin', 'SplitjoinSplit'],
         \ },
+NeoBundle 'sudo.vim'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'kg8m/unite-dwm', {
-          \   'on_ft': 'unite',
-          \ }
+        \   'on_ft': 'unite',
+        \ }
 NeoBundle 'osyo-manga/unite-filetype', {
         \   'on_unite': 'filetype',
         \ },
@@ -165,7 +192,10 @@ NeoBundle 'kg8m/vim-coloresque'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'Lokaltog/vim-easymotion'
-" NeoBundle 'tpope/vim-endwise'  incompatible with neosnippet
+NeoBundle 'tpope/vim-endwise', {
+        \   'disabled':    1,
+        \   'description': 'incompatible with neosnippet',
+        \ }
 NeoBundle 'thinca/vim-ft-diff_fold'
 NeoBundle 'thinca/vim-ft-help_fold'
 NeoBundle 'thinca/vim-ft-markdown_fold'
@@ -179,17 +209,17 @@ NeoBundle 'thinca/vim-prettyprint', {
         \   'on_func': ['PrettyPrint', 'PP'],
         \ },
 NeoBundle 'thinca/vim-ft-svn_diff'
-" NeoBundle 'thinca/vim-ft-vim_fold'
+NeoBundle 'thinca/vim-ft-vim_fold', { 'disabled': 1 }
 NeoBundle 'muz/vim-gemfile'
 NeoBundle 'tpope/vim-git'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'michaeljsmith/vim-indent-object'
-" NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'pangloss/vim-javascript', { 'disabled': 1 }
 NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'elzr/vim-json'
 NeoBundle 'rcmdnk/vim-markdown'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
-" NeoBundle 'amdt/vim-niji'
+NeoBundle 'amdt/vim-niji', { 'disabled': 1 }
 NeoBundle 'kana/vim-operator-replace', {
         \   'on_map': ['ns', '<Plug>(operator-replace)'],
         \ },
@@ -202,9 +232,10 @@ NeoBundle 'kana/vim-operator-replace', {
 "   (2) call: <Plug>(operator-surround-replace)"'
 "   (3) expected:  hoge* 'fuga piyo'
 "   (4) result:    hoge*' fuga piyo'
-" NeoBundle 'rhysd/vim-operator-surround', {
-"         \   'on_map': ['ns', '<Plug>(operator-surround-'],
-"         \ },
+NeoBundle 'rhysd/vim-operator-surround', {
+        \   'disabled': 1,
+        \   'on_map':   ['ns', '<Plug>(operator-surround-'],
+        \ },
 NeoBundle 'kana/vim-operator-user', {
         \   'on_func': 'operator#user#define',
         \ }
@@ -217,13 +248,9 @@ NeoBundle 'thinca/vim-ref', {
         \   'on_map': '<Plug>(ref-keyword)',
         \ },
 NeoBundle 'tpope/vim-repeat'
-" ftdetecting does not working
-" NeoBundle 'vim-ruby/vim-ruby', {
-"         \   'on_cmd': 'Ref',
-"         \   'on_map': '<Plug>(ref-keyword)',
-"         \   'on_ft':  ['ruby', 'eruby']
-"         \ },
-NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'vim-ruby/vim-ruby', {
+        \   'description': 'do not make lazy because ftdetecting does not work',
+        \ }
 NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
 NeoBundle 'kg8m/vim-rubytest', {
         \   'on_map': ['<Plug>RubyFileRun', '<Plug>RubyTestRun'],
@@ -239,45 +266,31 @@ NeoBundle 'deris/vim-textobj-enclosedsyntax'
 NeoBundle 'kana/vim-textobj-jabraces'
 NeoBundle 'osyo-manga/vim-textobj-multitextobj'
 NeoBundle 'rhysd/vim-textobj-ruby'
-
-if s:on_tmux
-  NeoBundle 'jgdavey/vim-turbux'
-endif
-
+NeoBundle 'jgdavey/vim-turbux', {
+        \   'disabled': !OnTmux(),
+        \ }
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'thinca/vim-unite-history', {
         \   'on_unite': ['history/command', 'history/search'],
         \ },
-" NeoBundle 'hrsh7th/vim-unite-vcs'  replaced by vim-versions
+NeoBundle 'hrsh7th/vim-unite-vcs', {
+        \   'disabled':    1,
+        \   'description': 'replaced by vim-versions',
+        \ }
 NeoBundle 'hrsh7th/vim-versions'
 NeoBundle 'superbrothers/vim-vimperator'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimshell', {
         \   'on_cmd': ['VimShell', 'VimShellExecute'],
         \ },
-
-if s:on_tmux
-  NeoBundle 'benmills/vimux'
-endif
-
+NeoBundle 'benmills/vimux', {
+        \   'disabled': !OnTmux(),
+        \ }
 let g:winresizer_start_key = '<C-w><C-e>'
 NeoBundle 'simeji/winresizer', {
         \   'on_map': g:winresizer_start_key,
         \ }
 NeoBundle 'LeafCage/yankround.vim'
-
-" plugins from bitbucket
-NeoBundle 'https://bitbucket.org/heavenshell/gundo.vim', {
-        \   'on_cmd': 'GundoToggle',
-        \ },
-NeoBundle 'https://bitbucket.org/teramako/jscomplete-vim.git'
-
-" plugins from vim.org
-" NeoBundle 'EnhCommentify.vim'
-" NeoBundle 'eruby.vim'
-NeoBundle 'matchit.zip'
-NeoBundle 'sequence'
-NeoBundle 'sudo.vim'
 
 " colorschemes
 NeoBundle 'hail2u/h2u_colorscheme'  " for printing
