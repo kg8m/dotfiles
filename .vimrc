@@ -303,288 +303,7 @@ NeoBundleCheck
 " }}}
 
 " ----------------------------------------------
-" singleton "{{{
-if has('gui_running') && !singleton#is_master()
-  let g:singleton#opener = 'drop'
-  call singleton#enable()
-endif
-" }}}
-
-" ----------------------------------------------
-" encoding "{{{
-" http://www.kawaz.jp/pukiwiki/?vim#cb691f26
-if &encoding !=# 'utf-8'
-  set encoding=japan
-  set fileencoding=japan
-endif
-
-function! s:RecheckFileencoding()
-  if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-    let &fileencoding=&encoding
-  endif
-endfunction
-
-augroup CheckEncoding
-  autocmd!
-  autocmd BufReadPost * call s:RecheckFileencoding()
-augroup END
-
-set fileformats=unix,dos,mac
-
-if exists('&ambiwidth')
-  set ambiwidth=double
-endif
-
-scriptencoding utf-8
-" }}}
-
-" ----------------------------------------------
-" general looks "{{{
-if has('vim_starting')
-  syntax on
-endif
-
-" colorscheme
-let g:molokai_original = 1
-colorscheme molokai
-
-set showmatch
-set number
-set showmode
-set showcmd
-set cursorline
-set cursorcolumn
-augroup ToggleActiveWindowCursor
-  autocmd!
-  autocmd WinLeave * set nocursorcolumn nocursorline
-  autocmd WinEnter,BufWinEnter,FileType,ColorScheme * set cursorcolumn cursorline
-augroup END
-set scrolloff=15
-" set showbreak=++++
-set iskeyword& iskeyword+=-
-let g:sh_noisk = 1
-
-" for vimdiff
-set wrap
-" http://stackoverflow.com/questions/16840433/forcing-vimdiff-to-wrap-lines
-augroup SetWrapForVimdiff
-  autocmd!
-  autocmd VimEnter * if &diff | execute 'windo set wrap' | endif
-augroup END
-set diffopt+=horizontal,context:10
-
-" make listchars visible
-set list
-set listchars=tab:>\ ,eol:\ ,trail:_
-
-" make ZenkakuSpace visible
-augroup HighlightZenkakuSpace
-  autocmd!
-  autocmd BufNewFile,BufRead * match Underlined /　/
-augroup END
-" }}}
-
-" ----------------------------------------------
-" spaces, indents "{{{
-set tabstop=2
-set shiftwidth=2
-set textwidth=0
-set expandtab
-set autoindent
-set smartindent
-set backspace=indent,eol,start
-
-if has('vim_starting')
-  " formatoptions
-  autocmd FileType * setlocal fo+=q fo+=2 fo+=l
-  autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
-  autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
-
-  " cinkyes
-  autocmd FileType text,markdown,moin setlocal cinkeys-=:
-
-  " folding
-  " Keys: `zo`: open, `zc`: close, `zR`: open all, `zM`: close all
-  set foldmethod=marker
-  set foldopen=hor
-  set foldminlines=3
-  set foldcolumn=3
-  set fillchars=vert:\|
-
-  autocmd FileType vim  setlocal foldmethod=marker
-  autocmd FileType yaml setlocal foldmethod=indent
-  autocmd FileType haml setlocal foldmethod=indent
-  autocmd BufEnter * if &ft == 'javascript' | call s:MyJavascriptFold() | endif
-
-  " http://d.hatena.ne.jp/gnarl/20120308/1331180615
-  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-  autocmd BufWritePost,FileWritePost,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
-
- " update filetype
-  autocmd BufWritePost *
-  \ if &l:filetype ==# '' || exists('b:ftdetect')
-  \ | unlet! b:ftdetect
-  \ | filetype detect
-  \ | endif
-
-  autocmd FileType gitcommit,qfreplace setlocal nofoldenable
-endif
-" }}}
-
-" ----------------------------------------------
-" search "{{{
-set hlsearch
-set ignorecase
-set smartcase
-set incsearch
-" }}}
-
-" ----------------------------------------------
-" controls "{{{
-set restorescreen
-set mouse=
-set t_vb=
-let &path = ".," . &path
-
-" smoothen screen drawing; wait procedures' completion
-set lazyredraw
-set ttyfast
-
-" backup, recover
-set nobackup
-set directory=~/tmp
-
-" undo
-set hidden
-set undofile
-set undodir=~/tmp
-
-" wildmode
-set wildmenu
-set wildmode=list:longest,full
-
-" ctags
-if has('vim_starting') && exists('$RUBYGEMS_PATH')
-  let &tags = &tags . "," . $RUBYGEMS_PATH . "**/tags"
-endif
-
-" auto reload
-augroup CheckTimeHook
-  autocmd!
-  autocmd InsertEnter * :checktime
-  autocmd InsertLeave * :checktime
-augroup END
-
-" move
-set whichwrap=b,s,h,l,<,>,[,],~
-
-" IME
-" augroup InsModeImEnable
-"   autocmd!
-"   autocmd InsertEnter,CmdwinEnter * set noimdisable
-"   autocmd InsertLeave,CmdwinLeave * set imdisable
-" augroup END
-
-" http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
-augroup CheckTypo
-  autocmd!
-  autocmd BufWriteCmd *[,*] call s:WriteCheckTypo(expand('<afile>'))
-augroup END
-function! s:WriteCheckTypo(file)
-  let writecmd = 'write'.(v:cmdbang ? '!' : '').' '.a:file
-
-  if a:file =~ '[qfreplace]'
-    return
-  endif
-
-  let prompt = "possible typo: really want to write to '" . a:file . "'?(y/n):"
-  let input = input(prompt)
-
-  if input ==# 'YES'
-    execute writecmd
-    let b:write_check_typo_nocheck = 1
-  elseif input =~? '^y\(es\)\=$'
-    execute writecmd
-  endif
-endfunction
-" }}}
-
-" ----------------------------------------------
-" commands "{{{
-" http://vim-users.jp/2009/05/hack17/
-" :Rename newfilename.ext
-command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
-" }}}
-
-" ----------------------------------------------
-" keymappings "{{{
-let g:mapleader = ','
-
-" ,r => reload .vimrc
-nnoremap <Leader>r :source ~/.vimrc<Cr>
-
-" <Esc><Esc> => nohilight
-nnoremap <Esc><Esc> :<C-u>nohlsearch<Cr>
-
-" ,v => vsplit
-nnoremap <Leader>v :vsplit<Cr>
-
-" ,d => svn diff
-nnoremap <Leader>d :call SvnDiff()<Cr>
-function! SvnDiff()
-  edit diff
-  silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
-  execute "normal :r!svn diff\n"
-endfunction
-
-" ,y/,p => copy/paste by clipboard
-if s:on_tmux
-  vnoremap <Leader>y "zy:!tmux set-buffer '<C-r>"'<Cr>
-else
-  vnoremap <Leader>y "*y
-endif
-nnoremap <Leader>p "*p
-
-" ,w => <C-w>
-nnoremap <Leader>w <C-w>
-
-" ,w => erase spaces of EOL for selected
-vnoremap <Leader>w :s/\s\+$//ge<Cr>
-
-" search very magic as default
-" replaced by incsearch
-" nnoremap / /\v
-
-" prevent unconscious operation
-inoremap <C-w> <Esc><C-w>
-
-" increment/decrement
-nmap + <C-a>
-nmap - <C-x>
-
-" move as shown
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
-vnoremap j gj
-vnoremap k gk
-vnoremap gj j
-vnoremap gk k
-
-" emacs like moving in INSERT mode
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
-
-" Page scroll in INSERT mode
-inoremap <expr><C-f> "\<PageDown>"
-inoremap <expr><C-b> "\<PageUp>"
-" }}}
-
-" ----------------------------------------------
-" plugins "{{{
+" plugin settings "{{{
 " alignta "{{{
 vnoremap <Leader>a :Alignta<Space>
 vnoremap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
@@ -1105,6 +824,13 @@ let g:SimpleJsIndenter_BriefMode = 2
 let g:SimpleJsIndenter_CaseIndentLevel = -1
 " }}}
 
+" singleton "{{{
+if has('gui_running') && !singleton#is_master()
+  let g:singleton#opener = 'drop'
+  call singleton#enable()
+endif
+" }}}
+
 " splitjoin "{{{
 let g:splitjoin_split_mapping       = ''
 let g:splitjoin_join_mapping        = ''
@@ -1531,6 +1257,279 @@ let g:user_emmet_settings = {
   \   },
   \ }
 " }}}
+" }}}
+
+" ----------------------------------------------
+" encoding "{{{
+" http://www.kawaz.jp/pukiwiki/?vim#cb691f26
+if &encoding !=# 'utf-8'
+  set encoding=japan
+  set fileencoding=japan
+endif
+
+function! s:RecheckFileencoding()
+  if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
+    let &fileencoding=&encoding
+  endif
+endfunction
+
+augroup CheckEncoding
+  autocmd!
+  autocmd BufReadPost * call s:RecheckFileencoding()
+augroup END
+
+set fileformats=unix,dos,mac
+
+if exists('&ambiwidth')
+  set ambiwidth=double
+endif
+
+scriptencoding utf-8
+" }}}
+
+" ----------------------------------------------
+" general looks "{{{
+if has('vim_starting')
+  syntax on
+endif
+
+" colorscheme
+let g:molokai_original = 1
+colorscheme molokai
+
+set showmatch
+set number
+set showmode
+set showcmd
+set cursorline
+set cursorcolumn
+augroup ToggleActiveWindowCursor
+  autocmd!
+  autocmd WinLeave * set nocursorcolumn nocursorline
+  autocmd WinEnter,BufWinEnter,FileType,ColorScheme * set cursorcolumn cursorline
+augroup END
+set scrolloff=15
+" set showbreak=++++
+set iskeyword& iskeyword+=-
+let g:sh_noisk = 1
+
+" for vimdiff
+set wrap
+" http://stackoverflow.com/questions/16840433/forcing-vimdiff-to-wrap-lines
+augroup SetWrapForVimdiff
+  autocmd!
+  autocmd VimEnter * if &diff | execute 'windo set wrap' | endif
+augroup END
+set diffopt+=horizontal,context:10
+
+" make listchars visible
+set list
+set listchars=tab:>\ ,eol:\ ,trail:_
+
+" make ZenkakuSpace visible
+augroup HighlightZenkakuSpace
+  autocmd!
+  autocmd BufNewFile,BufRead * match Underlined /　/
+augroup END
+" }}}
+
+" ----------------------------------------------
+" spaces, indents "{{{
+set tabstop=2
+set shiftwidth=2
+set textwidth=0
+set expandtab
+set autoindent
+set smartindent
+set backspace=indent,eol,start
+
+if has('vim_starting')
+  " formatoptions
+  autocmd FileType * setlocal fo+=q fo+=2 fo+=l
+  autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
+  autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
+
+  " cinkyes
+  autocmd FileType text,markdown,moin setlocal cinkeys-=:
+
+  " folding
+  " Keys: `zo`: open, `zc`: close, `zR`: open all, `zM`: close all
+  set foldmethod=marker
+  set foldopen=hor
+  set foldminlines=3
+  set foldcolumn=3
+  set fillchars=vert:\|
+
+  autocmd FileType vim  setlocal foldmethod=marker
+  autocmd FileType yaml setlocal foldmethod=indent
+  autocmd FileType haml setlocal foldmethod=indent
+  autocmd BufEnter * if &ft == 'javascript' | call s:MyJavascriptFold() | endif
+
+  " http://d.hatena.ne.jp/gnarl/20120308/1331180615
+  autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+  autocmd BufWritePost,FileWritePost,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+
+ " update filetype
+  autocmd BufWritePost *
+  \ if &l:filetype ==# '' || exists('b:ftdetect')
+  \ | unlet! b:ftdetect
+  \ | filetype detect
+  \ | endif
+
+  autocmd FileType gitcommit,qfreplace setlocal nofoldenable
+endif
+" }}}
+
+" ----------------------------------------------
+" search "{{{
+set hlsearch
+set ignorecase
+set smartcase
+set incsearch
+" }}}
+
+" ----------------------------------------------
+" controls "{{{
+set restorescreen
+set mouse=
+set t_vb=
+let &path = ".," . &path
+
+" smoothen screen drawing; wait procedures' completion
+set lazyredraw
+set ttyfast
+
+" backup, recover
+set nobackup
+set directory=~/tmp
+
+" undo
+set hidden
+set undofile
+set undodir=~/tmp
+
+" wildmode
+set wildmenu
+set wildmode=list:longest,full
+
+" ctags
+if has('vim_starting') && exists('$RUBYGEMS_PATH')
+  let &tags = &tags . "," . $RUBYGEMS_PATH . "**/tags"
+endif
+
+" auto reload
+augroup CheckTimeHook
+  autocmd!
+  autocmd InsertEnter * :checktime
+  autocmd InsertLeave * :checktime
+augroup END
+
+" move
+set whichwrap=b,s,h,l,<,>,[,],~
+
+" IME
+" augroup InsModeImEnable
+"   autocmd!
+"   autocmd InsertEnter,CmdwinEnter * set noimdisable
+"   autocmd InsertLeave,CmdwinLeave * set imdisable
+" augroup END
+
+" http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
+augroup CheckTypo
+  autocmd!
+  autocmd BufWriteCmd *[,*] call s:WriteCheckTypo(expand('<afile>'))
+augroup END
+function! s:WriteCheckTypo(file)
+  let writecmd = 'write'.(v:cmdbang ? '!' : '').' '.a:file
+
+  if a:file =~ '[qfreplace]'
+    return
+  endif
+
+  let prompt = "possible typo: really want to write to '" . a:file . "'?(y/n):"
+  let input = input(prompt)
+
+  if input ==# 'YES'
+    execute writecmd
+    let b:write_check_typo_nocheck = 1
+  elseif input =~? '^y\(es\)\=$'
+    execute writecmd
+  endif
+endfunction
+" }}}
+
+" ----------------------------------------------
+" commands "{{{
+" http://vim-users.jp/2009/05/hack17/
+" :Rename newfilename.ext
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+" }}}
+
+" ----------------------------------------------
+" keymappings "{{{
+let g:mapleader = ','
+
+" ,r => reload .vimrc
+nnoremap <Leader>r :source ~/.vimrc<Cr>
+
+" <Esc><Esc> => nohilight
+nnoremap <Esc><Esc> :<C-u>nohlsearch<Cr>
+
+" ,v => vsplit
+nnoremap <Leader>v :vsplit<Cr>
+
+" ,d => svn diff
+nnoremap <Leader>d :call SvnDiff()<Cr>
+function! SvnDiff()
+  edit diff
+  silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
+  execute "normal :r!svn diff\n"
+endfunction
+
+" ,y/,p => copy/paste by clipboard
+if s:on_tmux
+  vnoremap <Leader>y "zy:!tmux set-buffer '<C-r>"'<Cr>
+else
+  vnoremap <Leader>y "*y
+endif
+nnoremap <Leader>p "*p
+
+" ,w => <C-w>
+nnoremap <Leader>w <C-w>
+
+" ,w => erase spaces of EOL for selected
+vnoremap <Leader>w :s/\s\+$//ge<Cr>
+
+" search very magic as default
+" replaced by incsearch
+" nnoremap / /\v
+
+" prevent unconscious operation
+inoremap <C-w> <Esc><C-w>
+
+" increment/decrement
+nmap + <C-a>
+nmap - <C-x>
+
+" move as shown
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+vnoremap j gj
+vnoremap k gk
+vnoremap gj j
+vnoremap gk k
+
+" emacs like moving in INSERT mode
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+
+" Page scroll in INSERT mode
+inoremap <expr><C-f> "\<PageDown>"
+inoremap <expr><C-b> "\<PageUp>"
 " }}}
 
 " ----------------------------------------------
