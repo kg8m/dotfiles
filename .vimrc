@@ -560,10 +560,10 @@ if neobundle#tap('neocomplete.vim')  "{{{
 endif  " }}}
 if neobundle#tap('neosnippet')  "{{{
   call neobundle#config({
-  \ 'lazy':     1,
-  \ 'on_i':     1,
-  \ 'on_ft':    ['snippet', 'neosnippet'],
-  \ 'on_unite': ['neosnippet', 'neosnippet/user', 'neosnippet/runtime'],
+  \ 'lazy':      1,
+  \ 'on_i':      1,
+  \ 'on_ft':     ['snippet', 'neosnippet'],
+  \ 'on_source': 'unite.vim',
   \})
 
   function! neobundle#tapped.hooks.on_source(bundle) abort
@@ -655,6 +655,11 @@ if neobundle#tap('Unicode-RST-Tables')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('unite.vim')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_cmd': 'Unite',
+  \})
+
   nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
   vnoremap <Leader>ug "vy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
@@ -779,6 +784,11 @@ if neobundle#tap('unite.vim')  "{{{
   endfunction
 
   if neobundle#tap('neomru.vim')  "{{{
+    call neobundle#config({
+    \ 'lazy':      0,
+    \ 'on_source': 'unite.vim',
+    \})
+
     nnoremap <Leader>m :<C-u>Unite neomru/file<Cr>
 
     function! neobundle#tapped.hooks.on_source(bundle) abort
@@ -789,6 +799,11 @@ if neobundle#tap('unite.vim')  "{{{
   endif  " }}}
 
   if neobundle#tap('neoyank.vim')  "{{{
+    call neobundle#config({
+    \ 'lazy':      0,
+    \ 'on_source': 'unite.vim',
+    \})
+
     function! neobundle#tapped.hooks.on_source(bundle) abort
       let g:neoyank#limit = 300
     endfunction
@@ -807,15 +822,15 @@ if neobundle#tap('unite.vim')  "{{{
 
   if neobundle#tap('unite-filetype')  "{{{
     call neobundle#config({
-    \ 'lazy':     1,
-    \ 'on_unite': 'filetype',
+    \ 'lazy':      1,
+    \ 'on_source': 'unite.vim',
     \})
   endif  " }}}
 
   if neobundle#tap('unite-mark')  "{{{
     call neobundle#config({
-    \ 'lazy':     1,
-    \ 'on_unite': 'mark',
+    \ 'lazy':      1,
+    \ 'on_source': 'unite.vim',
     \})
 
     nnoremap <Leader>um :<C-u>Unite mark<Cr>
@@ -849,8 +864,8 @@ if neobundle#tap('unite.vim')  "{{{
 
   if neobundle#tap('unite-outline')  "{{{
     call neobundle#config({
-    \ 'lazy':     1,
-    \ 'on_unite': 'outline',
+    \ 'lazy':      1,
+    \ 'on_source': 'unite.vim',
     \})
 
     nnoremap <Leader>uo :<C-u>Unite outline:!<Cr>
@@ -858,8 +873,8 @@ if neobundle#tap('unite.vim')  "{{{
 
   if neobundle#tap('unite-rails')  "{{{
     call neobundle#config({
-    \ 'lazy':     1,
-    \ 'on_unite': 'rails',
+    \ 'lazy':      1,
+    \ 'on_source': 'unite.vim',
     \})
 
     nnoremap <Leader>ur :<C-u>Unite rails/
@@ -867,8 +882,8 @@ if neobundle#tap('unite.vim')  "{{{
 
   if neobundle#tap('unite-tag')  "{{{
     call neobundle#config({
-    \ 'lazy':     1,
-    \ 'on_unite': ['tag', 'tag/include', 'tag/file'],
+    \ 'lazy':      1,
+    \ 'on_source': 'unite.vim',
     \})
 
     nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
@@ -894,19 +909,25 @@ if neobundle#tap('unite.vim')  "{{{
 
   if neobundle#tap('unite-webcolorname')  "{{{
     call neobundle#config({
-    \ 'lazy':     1,
-    \ 'on_unite': 'webcolorname',
+    \ 'lazy':      1,
+    \ 'on_source': 'unite.vim',
     \})
   endif  " }}}
 
   if neobundle#tap('vim-unite-history')  "{{{
     call neobundle#config({
-    \ 'lazy':     1,
-    \ 'on_unite': ['history/command', 'history/search'],
+    \ 'lazy':      1,
+    \ 'on_source': 'unite.vim',
     \})
   endif  " }}}
 
   if neobundle#tap('vim-versions')  "{{{
+    call neobundle#config({
+    \ 'lazy':      1,
+    \ 'on_cmd':    'UniteVersions',
+    \ 'on_source': 'unite.vim',
+    \})
+
     nnoremap <Leader>uv :<C-u>UniteVersions status:./<Cr>
 
     function! neobundle#tapped.hooks.on_source(bundle) abort
@@ -942,9 +963,9 @@ if neobundle#tap('unite.vim')  "{{{
 endif  " }}}
 if neobundle#tap('vim-alignta')  "{{{
   call neobundle#config({
-  \ 'lazy':     1,
-  \ 'on_cmd':   'Alignta',
-  \ 'on_unite': 'alignta',
+  \ 'lazy':      1,
+  \ 'on_cmd':    'Alignta',
+  \ 'on_source': 'unite.vim',
   \})
 
   vnoremap <Leader>a :Alignta<Space>
@@ -1076,10 +1097,10 @@ if neobundle#tap('vim-easymotion')  "{{{
 endif  " }}}
 if neobundle#tap('vim-gista')  "{{{
   call neobundle#config({
-  \ 'lazy':     1,
-  \ 'on_cmd':   'Gista',
-  \ 'on_map':   '<Plug>(gista-',
-  \ 'on_unite': 'gista',
+  \ 'lazy':      1,
+  \ 'on_cmd':    'Gista',
+  \ 'on_map':    '<Plug>(gista-',
+  \ 'on_source': 'unite.vim',
   \})
 
   function! neobundle#tapped.hooks.on_source(bundle) abort
