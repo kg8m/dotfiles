@@ -1,5 +1,5 @@
 " ----------------------------------------------
-" initialize "{{{
+" initialize  "{{{
 let $dotvim_path    = expand("~/.vim")
 let $bundles_path   = expand($dotvim_path . "/bundle")
 let $neobundle_path = expand($bundles_path . "/neobundle.vim")
@@ -27,10 +27,13 @@ endfunction
 function! s:AvailabilityMessage(target)
   return a:target . ' is ' . (eval('s:' . a:target . '_available') ? '' : 'NOT ') . 'available'
 endfunction
+
+let g:mapleader = ','
 " }}}
 
 " ----------------------------------------------
-" neobundle "{{{
+" neobundle/plugins  "{{{
+" neobundle#begin  "{{{
 if has('vim_starting')
   " http://qiita.com/td2sk/items/2299a5518f58ffbfc5cf
   if !isdirectory($neobundle_path)
@@ -42,7 +45,9 @@ if has('vim_starting')
 endif
 
 call neobundle#begin($bundles_path)
+" }}}
 
+" plugins list  "{{{
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc', {
         \   'build': {
@@ -296,60 +301,49 @@ NeoBundle 'LeafCage/yankround.vim'
 " colorschemes
 NeoBundle 'hail2u/h2u_colorscheme'  " for printing
 NeoBundle 'kg8m/molokai'
-
-call neobundle#end()
-filetype plugin indent on
-
-NeoBundleCheck
-
-if has('vim_starting')
-  syntax on
-endif
-
-" colorscheme
-let g:molokai_original = 1
-colorscheme molokai
 " }}}
 
-" ----------------------------------------------
-" plugin settings "{{{
+" plugins settings  "{{{
 if neobundle#tap('vim-alignta')  "{{{
   vnoremap <Leader>a :Alignta<Space>
   vnoremap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
-  let g:unite_source_alignta_preset_arguments = [
-    \   ["Align at '=>'       --  `=>`",                        '=>'],
-    \   ["Align at /\\S/      --  `\\S\\+`",                    '\S\+'],
-    \   ["Align at /\\S/ once --  `\\S\\+/1`",                  '\S\+/1'],
-    \   ["Align at '='        --  `=>\\=`",                     '=>\='],
-    \   ["Align at ':hoge'    --  `10 :`",                      '10 :'],
-    \   ["Align at 'hoge:'    --  `00 [a-zA-Z0-9_\"']\\+:\\s`", " 00 [a-zA-Z0-9_\"']\\+:\\s"],
-    \   ["Align at '|'        --  `|`",                         '|'],
-    \   ["Align at ')'        --  `0 )`",                       '0 )'],
-    \   ["Align at ']'        --  `0 ]`",                       '0 ]'],
-    \   ["Align at '}'        --  `}`",                         '}'],
-    \   ["Align at 'hoge,'    --  `00 \\w\\+, ` -- not working", '00 \w\+, '],
-    \ ]
-  let s:alignta_comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
-  let g:unite_source_alignta_preset_options = [
-    \   ["Justify Left",      '<<'],
-    \   ["Justify Center",    '||'],
-    \   ["Justify Right",     '>>'],
-    \   ["Justify None",      '=='],
-    \   ["Shift Left",        '<-'],
-    \   ["Shift Right",       '->'],
-    \   ["Shift Left [Tab]",  '<--'],
-    \   ["Shift Right [Tab]", '-->'],
-    \   ["Margin 0:0",        '0'],
-    \   ["Margin 0:1",        '01'],
-    \   ["Margin 1:0",        '10'],
-    \   ["Margin 1:1",        '1'],
-    \
-    \   ["Regexp", '-r {regexp}/{regexp_options}'],
-    \
-    \   'v/' . s:alignta_comment_leadings,
-    \   'g/' . s:alignta_comment_leadings,
-    \ ]
-  unlet s:alignta_comment_leadings
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:unite_source_alignta_preset_arguments = [
+      \   ["Align at '=>'       --  `=>`",                        '=>'],
+      \   ["Align at /\\S/      --  `\\S\\+`",                    '\S\+'],
+      \   ["Align at /\\S/ once --  `\\S\\+/1`",                  '\S\+/1'],
+      \   ["Align at '='        --  `=>\\=`",                     '=>\='],
+      \   ["Align at ':hoge'    --  `10 :`",                      '10 :'],
+      \   ["Align at 'hoge:'    --  `00 [a-zA-Z0-9_\"']\\+:\\s`", " 00 [a-zA-Z0-9_\"']\\+:\\s"],
+      \   ["Align at '|'        --  `|`",                         '|'],
+      \   ["Align at ')'        --  `0 )`",                       '0 )'],
+      \   ["Align at ']'        --  `0 ]`",                       '0 ]'],
+      \   ["Align at '}'        --  `}`",                         '}'],
+      \   ["Align at 'hoge,'    --  `00 \\w\\+, ` -- not working", '00 \w\+, '],
+      \ ]
+    let s:alignta_comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
+    let g:unite_source_alignta_preset_options = [
+      \   ["Justify Left",      '<<'],
+      \   ["Justify Center",    '||'],
+      \   ["Justify Right",     '>>'],
+      \   ["Justify None",      '=='],
+      \   ["Shift Left",        '<-'],
+      \   ["Shift Right",       '->'],
+      \   ["Shift Left [Tab]",  '<--'],
+      \   ["Shift Right [Tab]", '-->'],
+      \   ["Margin 0:0",        '0'],
+      \   ["Margin 0:1",        '01'],
+      \   ["Margin 1:0",        '10'],
+      \   ["Margin 1:1",        '1'],
+      \
+      \   ["Regexp", '-r {regexp}/{regexp_options}'],
+      \
+      \   'v/' . s:alignta_comment_leadings,
+      \   'g/' . s:alignta_comment_leadings,
+      \ ]
+    unlet s:alignta_comment_leadings
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-anzu')  "{{{
   " see incsearch
@@ -358,92 +352,102 @@ if neobundle#tap('vim-asterisk')  "{{{
   " see incsearch
 endif  " }}}
 if neobundle#tap('vim-autoclose')  "{{{
-  " annoying to type "<<" in Ruby code>
-  " let g:AutoClosePairs_add = "<>"
-  let g:AutoCloseSelectionWrapPrefix = "<Leader>ac"
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    " annoying to type "<<" in Ruby code>
+    " let g:AutoClosePairs_add = "<>"
+    let g:AutoCloseSelectionWrapPrefix = "<Leader>ac"
 
-  " https://github.com/Townk/vim-autoclose/blob/master/plugin/AutoClose.vim#L29
-  if s:on_mac
-    imap <silent> <Esc>OA <Up>
-    imap <silent> <Esc>OB <Down>
-    imap <silent> <Esc>OC <Right>
-    imap <silent> <Esc>OD <Left>
-    imap <silent> <Esc>OH <Home>
-    imap <silent> <Esc>OF <End>
-    imap <silent> <Esc>[5~ <PageUp>
-    imap <silent> <Esc>[6~ <PageDown>
-  endif
+    " https://github.com/Townk/vim-autoclose/blob/master/plugin/AutoClose.vim#L29
+    if s:on_mac
+      imap <silent> <Esc>OA <Up>
+      imap <silent> <Esc>OB <Down>
+      imap <silent> <Esc>OC <Right>
+      imap <silent> <Esc>OD <Left>
+      imap <silent> <Esc>OH <Home>
+      imap <silent> <Esc>OF <End>
+      imap <silent> <Esc>[5~ <PageUp>
+      imap <silent> <Esc>[6~ <PageDown>
+    endif
+  endfunction
 endif  " }}}
 if neobundle#tap('autodate.vim')  "{{{
-  let autodate_format       = '%Y/%m/%d'
-  let autodate_lines        = 100
-  let autodate_keyword_pre  = '\c\%(' .
-                            \   '\%(Last \?\%(Change\|Modified\)\)\|' .
-                            \   '\%(最終更新日\?\)\|' .
-                            \   '\%(更新日\)' .
-                            \ '\):'
-  let autodate_keyword_post = '\.$'
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:autodate_format       = '%Y/%m/%d'
+    let g:autodate_lines        = 100
+    let g:autodate_keyword_pre  = '\c\%(' .
+                                \   '\%(Last \?\%(Change\|Modified\)\)\|' .
+                                \   '\%(最終更新日\?\)\|' .
+                                \   '\%(更新日\)' .
+                                \ '\):'
+    let g:autodate_keyword_post = '\.$'
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-autoft')  "{{{
-  let g:autoft_config = [
-    \   { 'filetype': 'html',       'pattern': '<\%(!DOCTYPE\|html\|head\|script\)' },
-    \   { 'filetype': 'javascript', 'pattern': '\%(^\s*\<var\>\s\+[a-zA-Z]\+\)\|\%(function\%(\s\+[a-zA-Z]\+\)\?\s*(\)' },
-    \   { 'filetype': 'c',          'pattern': '^\s*#\s*\%(include\|define\)\>' },
-    \   { 'filetype': 'sh',         'pattern': '^#!.*\%(\<sh\>\|\<bash\>\)\s*$' },
-    \ ]
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:autoft_config = [
+      \   { 'filetype': 'html',       'pattern': '<\%(!DOCTYPE\|html\|head\|script\)' },
+      \   { 'filetype': 'javascript', 'pattern': '\%(^\s*\<var\>\s\+[a-zA-Z]\+\)\|\%(function\%(\s\+[a-zA-Z]\+\)\?\s*(\)' },
+      \   { 'filetype': 'c',          'pattern': '^\s*#\s*\%(include\|define\)\>' },
+      \   { 'filetype': 'sh',         'pattern': '^#!.*\%(\<sh\>\|\<bash\>\)\s*$' },
+      \ ]
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-blockle')  "{{{
-  let g:blockle_mapping = ",b"
-  let g:blockle_erase_spaces_around_starting_brace = 1
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:blockle_mapping = ",b"
+    let g:blockle_erase_spaces_around_starting_brace = 1
+  endfunction
 endif  " }}}
 if neobundle#tap('calendar.vim')  "{{{
-  let g:calendar_google_calendar = 1
-  let g:calendar_first_day = "monday"
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:calendar_google_calendar = 1
+    let g:calendar_first_day       = "monday"
+  endfunction
 endif  " }}}
 if neobundle#tap('caw.vim')  "{{{
-  let g:caw_no_default_keymappings = 1
-  let g:caw_i_skip_blank_line = 1
   nmap gc <Plug>(caw:i:toggle)
   vmap gc <Plug>(caw:i:toggle)
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:caw_no_default_keymappings = 1
+    let g:caw_i_skip_blank_line      = 1
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-choosewin')  "{{{
-  let g:choosewin_overlay_enable          = 0  " wanna set true but too heavy
-  let g:choosewin_overlay_clear_multibyte = 1
-  let g:choosewin_blink_on_land           = 0
-  let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
-  let g:choosewin_tabline_replace         = 0
   nmap <C-w>f <Plug>(choosewin)
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:choosewin_overlay_enable          = 0  " wanna set true but too heavy
+    let g:choosewin_overlay_clear_multibyte = 1
+    let g:choosewin_blink_on_land           = 0
+    let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
+    let g:choosewin_tabline_replace         = 0
+  endfunction
 endif  " }}}
 if neobundle#tap('dwm.vim')  "{{{
-  let g:dwm_map_keys = 0
   nmap <C-w>n       :call DWM_New()<Cr>
   nmap <C-w>c       :call DWM_Close()<Cr>
   nmap <C-w><Space> :call DWM_AutoEnter()<Cr>
-  let g:dwm_augroup_cleared = 0
-  function! s:ClearDwmAugroup()
-    if !g:dwm_augroup_cleared
-      augroup dwm
-        autocmd!
-      augroup END
-      let g:dwm_augroup_cleared = 1
-    endif
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:dwm_map_keys = 0
+    let g:dwm_augroup_cleared = 0
+    function! s:ClearDwmAugroup()
+      if !g:dwm_augroup_cleared
+        augroup dwm
+          autocmd!
+        augroup END
+        let g:dwm_augroup_cleared = 1
+      endif
+    endfunction
+
+    augroup ClearDWMAugroup
+      autocmd!
+      autocmd VimEnter * call s:ClearDwmAugroup()
+    augroup END
   endfunction
-  augroup ClearDWMAugroup
-    autocmd!
-    autocmd VimEnter * call s:ClearDwmAugroup()
-  augroup END
 endif  " }}}
 if neobundle#tap('vim-easymotion')  "{{{
-  " http://haya14busa.com/vim-lazymotion-on-speed/
-  let g:EasyMotion_do_mapping  = 0
-  let g:EasyMotion_do_shade    = 0
-  let g:EasyMotion_startofline = 0
-  let g:EasyMotion_smartcase   = 1
-  let g:EasyMotion_use_upper   = 1
-  let g:EasyMotion_keys        = "FJKLASDHGUIONMEREWC,;"
-  let g:EasyMotion_use_migemo  = 1
-  let g:EasyMotion_enter_jump_first = 1
-  let g:EasyMotion_skipfoldedline   = 0
   nmap <Leader>f <Plug>(easymotion-s2)
   vmap <Leader>f <Plug>(easymotion-s2)
   omap <Leader>f <Plug>(easymotion-s2)
@@ -454,62 +458,83 @@ if neobundle#tap('vim-easymotion')  "{{{
   nmap F <Plug>(easymotion-Fl)
   vmap F <Plug>(easymotion-Fl)
   omap F <Plug>(easymotion-Fl)
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    " http://haya14busa.com/vim-lazymotion-on-speed/
+    let g:EasyMotion_do_mapping  = 0
+    let g:EasyMotion_do_shade    = 0
+    let g:EasyMotion_startofline = 0
+    let g:EasyMotion_smartcase   = 1
+    let g:EasyMotion_use_upper   = 1
+    let g:EasyMotion_keys        = "FJKLASDHGUIONMEREWC,;"
+    let g:EasyMotion_use_migemo  = 1
+    let g:EasyMotion_enter_jump_first = 1
+    let g:EasyMotion_skipfoldedline   = 0
+  endfunction
 endif  " }}}
 if neobundle#tap('foldCC')  "{{{
-  let g:foldCCtext_enable_autofdc_adjuster = 1
-  let g:foldCCtext_maxchars = 120
-  set foldtext=FoldCCtext()
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:foldCCtext_enable_autofdc_adjuster = 1
+    let g:foldCCtext_maxchars = 120
+    set foldtext=FoldCCtext()
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-gista')  "{{{
-  let g:gista#github_user = 'kg8m'
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:gista#github_user = 'kg8m'
+  endfunction
 endif  " }}}
 if neobundle#tap('gundo.vim')  "{{{
-  " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
-  " r => show diff preview
-  let g:gundo_auto_preview = 0
   nnoremap <F5> :GundoToggle<Cr>
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
+    let g:gundo_auto_preview = 0
+  endfunction
 endif  " }}}
 if neobundle#tap('HowMuch')  "{{{
-  " replace expr with result
   vmap <Leader>? <Plug>AutoCalcReplace
   vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
-  let g:HowMuch_scale = 5
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    " replace expr with result
+    let g:HowMuch_scale = 5
+  endfunction
 endif  " }}}
 if neobundle#tap('increment-activator')  "{{{
-  let g:increment_activator_filetype_candidates = {
-    \   "_": [
-    \     ["有", "無"],
-    \     ["日", "月", "火", "水", "木", "金", "土"],
-    \     [
-    \       "a", "b", "c", "d", "e", "f", "g",
-    \       "h", "i", "j", "k", "l", "m", "n", "o", "p",
-    \       "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-    \     ],
-    \     [
-    \       "A", "B", "C", "D", "E", "F", "G",
-    \       "H", "I", "J", "K", "L", "M", "N", "O", "P",
-    \       "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-    \     ],
-    \     [
-    \       "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩",
-    \       "⑪", "⑫", "⑬", "⑭", "⑮", "⑯", "⑰", "⑱", "⑲", "⑳",
-    \     ],
-    \     [
-    \       "first", "second", "third", "fourth", "fifth",
-    \       "sixth", "seventh", "eighth", "ninth", "tenth",
-    \     ],
-    \   ],
-    \   "ruby": [
-    \     ["should", "should_not"],
-    \     ["be_true", "be_false"],
-    \     ["be_present", "be_blank", "be_empty", "be_nil"],
-    \   ],
-    \ }
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:increment_activator_filetype_candidates = {
+      \   "_": [
+      \     ["有", "無"],
+      \     ["日", "月", "火", "水", "木", "金", "土"],
+      \     [
+      \       "a", "b", "c", "d", "e", "f", "g",
+      \       "h", "i", "j", "k", "l", "m", "n", "o", "p",
+      \       "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+      \     ],
+      \     [
+      \       "A", "B", "C", "D", "E", "F", "G",
+      \       "H", "I", "J", "K", "L", "M", "N", "O", "P",
+      \       "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+      \     ],
+      \     [
+      \       "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩",
+      \       "⑪", "⑫", "⑬", "⑭", "⑮", "⑯", "⑰", "⑱", "⑲", "⑳",
+      \     ],
+      \     [
+      \       "first", "second", "third", "fourth", "fifth",
+      \       "sixth", "seventh", "eighth", "ninth", "tenth",
+      \     ],
+      \   ],
+      \   "ruby": [
+      \     ["should", "should_not"],
+      \     ["be_true", "be_false"],
+      \     ["be_present", "be_blank", "be_empty", "be_nil"],
+      \   ],
+      \ }
+  endfunction
 endif  " }}}
 if neobundle#tap('incsearch.vim')  "{{{
-  " asterisk's `z` commands are "stay star motions"
-  let g:incsearch#auto_nohlsearch = 0
-  let g:incsearch#magic = '\v'
   map /  <Plug>(incsearch-forward)
   map ?  <Plug>(incsearch-backward)
   map g/ <Plug>(incsearch-stay)
@@ -519,199 +544,230 @@ if neobundle#tap('incsearch.vim')  "{{{
   map #  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
   map g* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
   map g# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    " asterisk's `z` commands are "stay star motions"
+    let g:incsearch#auto_nohlsearch = 0
+    let g:incsearch#magic = '\v'
+  endfunction
 endif  " }}}
 if neobundle#tap('indentLine')  "{{{
-  let g:indentLine_char = '|'
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:indentLine_char = '|'
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-javascript-syntax')  "{{{
-  function! s:MyJavascriptFold()
-    if !exists("b:javascript_folded")
-      call JavaScriptFold()
-      setl foldlevelstart=0
-      let b:javascript_folded = 1
-    endif
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    function! s:MyJavascriptFold()
+      if !exists("b:javascript_folded")
+        call JavaScriptFold()
+        setl foldlevelstart=0
+        let b:javascript_folded = 1
+      endif
+    endfunction
   endfunction
 endif  " }}}
 if neobundle#tap('JpFormat.vim')  "{{{
-  let JpCountChars = 37
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let JpCountChars = 37
+  endfunction
 endif  " }}}
 if neobundle#tap('jscomplete-vim.git')  "{{{
-  let g:jscomplete_use = ['dom', 'moz', 'es6th']
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:jscomplete_use = ['dom', 'moz', 'es6th']
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-json')  "{{{
-  let g:vim_json_syntax_conceal = 0
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:vim_json_syntax_conceal = 0
+  endfunction
 endif  " }}}
 if neobundle#tap('lightline.vim')  "{{{
-  " http://d.hatena.ne.jp/itchyny/20130828/1377653592
-  set laststatus=2
-  let s:lightline_elements = {
-    \   'left': [
-    \     [ 'mode', 'paste' ],
-    \     [ 'bufnum', 'filename' ],
-    \     [ 'filetype', 'fileencoding', 'fileformat' ],
-    \     [ 'lineinfo_with_percent' ],
-    \   ],
-    \   'right': [
-    \   ],
-    \ }
-  let g:lightline = {
-    \   'active': s:lightline_elements,
-    \   'inactive': s:lightline_elements,
-    \   'component': {
-    \     'bufnum': '#%n',
-    \     'lineinfo_with_percent': '%l/%L(%p%%) : %v',
-    \   },
-    \   'component_function': {
-    \     'filename': 'FilepathForLightline',
-    \   },
-    \   'colorscheme': 'molokai',
-    \ }
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    " http://d.hatena.ne.jp/itchyny/20130828/1377653592
+    set laststatus=2
+    let s:lightline_elements = {
+      \   'left': [
+      \     [ 'mode', 'paste' ],
+      \     [ 'bufnum', 'filename' ],
+      \     [ 'filetype', 'fileencoding', 'fileformat' ],
+      \     [ 'lineinfo_with_percent' ],
+      \   ],
+      \   'right': [
+      \   ],
+      \ }
+    let g:lightline = {
+      \   'active': s:lightline_elements,
+      \   'inactive': s:lightline_elements,
+      \   'component': {
+      \     'bufnum': '#%n',
+      \     'lineinfo_with_percent': '%l/%L(%p%%) : %v',
+      \   },
+      \   'component_function': {
+      \     'filename': 'FilepathForLightline',
+      \   },
+      \   'colorscheme': 'molokai',
+      \ }
 
-  function! ReadonlySymbolForLightline()
-    return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'X' : ''
-  endfunction
+    function! ReadonlySymbolForLightline()
+      return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? 'X' : ''
+    endfunction
 
-  function! FilepathForLightline()
-    return ('' != ReadonlySymbolForLightline() ? ReadonlySymbolForLightline() . ' ' : '') .
-         \ (
-         \   &ft == 'vimfiler' ? vimfiler#get_status_string() :
-         \   &ft == 'unite' ? unite#get_status_string() :
-         \   &ft == 'vimshell' ? vimshell#get_status_string() :
-         \   '' != expand('%:t') ? (
-         \     winwidth(0) >= 100 ? expand('%:F') : expand('%:t')
-         \   ) : '[No Name]'
-         \ ) .
-         \ ('' != ModifiedSymbolForLightline() ? ' ' . ModifiedSymbolForLightline() : '')
-  endfunction
+    function! FilepathForLightline()
+      return ('' != ReadonlySymbolForLightline() ? ReadonlySymbolForLightline() . ' ' : '') .
+           \ (
+           \   &ft == 'vimfiler' ? vimfiler#get_status_string() :
+           \   &ft == 'unite' ? unite#get_status_string() :
+           \   &ft == 'vimshell' ? vimshell#get_status_string() :
+           \   '' != expand('%:t') ? (
+           \     winwidth(0) >= 100 ? expand('%:F') : expand('%:t')
+           \   ) : '[No Name]'
+           \ ) .
+           \ ('' != ModifiedSymbolForLightline() ? ' ' . ModifiedSymbolForLightline() : '')
+    endfunction
 
-  function! ModifiedSymbolForLightline()
-    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+    function! ModifiedSymbolForLightline()
+      return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+    endfunction
   endfunction
 endif  " }}}
 if neobundle#tap('linediff.vim')  "{{{
-  let g:linediff_second_buffer_command = 'rightbelow vertical new'
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:linediff_second_buffer_command = 'rightbelow vertical new'
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-markdown')  "{{{
-  let g:markdown_quote_syntax_filetypes = {
-    \   "coffee": {
-    \     "start": "coffee",
-    \   },
-    \   "crontab": {
-    \     "start": "cron\\%(tab\\)\\?",
-    \   },
-    \ }
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:markdown_quote_syntax_filetypes = {
+      \   "coffee": {
+      \     "start": "coffee",
+      \   },
+      \   "crontab": {
+      \     "start": "cron\\%(tab\\)\\?",
+      \   },
+      \ }
 
-  augroup ResetMarkdownIndentexpr
-    autocmd!
-    autocmd FileType markdown setlocal indentexpr=smartindent
-  augroup END
+    augroup ResetMarkdownIndentexpr
+      autocmd!
+      autocmd FileType markdown setlocal indentexpr=smartindent
+    augroup END
+  endfunction
 endif  " }}}
 if neobundle#tap('neocomplcache.vim')  "{{{
-  let g:neocomplcache_enable_at_startup = 1
-  let g:neocomplcache_enable_smart_case = 1
-  let g:neocomplcache_enable_camel_case_completion = 0
-  let g:neocomplcache_enable_underbar_completion = 0
-  let g:neocomplcache_enable_fuzzy_completion = 1
-  let g:neocomplcache_min_syntax_length = 2
-  let g:neocomplcache_auto_completion_start_length = 1
-  let g:neocomplcache_manual_completion_start_length = 0
-  let g:neocomplcache_min_keyword_length = 3
-  let g:neocomplcache_enable_cursor_hold_i = 0
-  let g:neocomplcache_cursor_hold_i_time = 300
-  let g:neocomplcache_enable_insert_char_pre = 0
-  let g:neocomplcache_enable_prefetch = 0
-  let g:neocomplcache_force_overwrite_completefunc = 1
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:neocomplcache_enable_at_startup = 1
+    let g:neocomplcache_enable_smart_case = 1
+    let g:neocomplcache_enable_camel_case_completion = 0
+    let g:neocomplcache_enable_underbar_completion = 0
+    let g:neocomplcache_enable_fuzzy_completion = 1
+    let g:neocomplcache_min_syntax_length = 2
+    let g:neocomplcache_auto_completion_start_length = 1
+    let g:neocomplcache_manual_completion_start_length = 0
+    let g:neocomplcache_min_keyword_length = 3
+    let g:neocomplcache_enable_cursor_hold_i = 0
+    let g:neocomplcache_cursor_hold_i_time = 300
+    let g:neocomplcache_enable_insert_char_pre = 0
+    let g:neocomplcache_enable_prefetch = 0
+    let g:neocomplcache_force_overwrite_completefunc = 1
 
-  if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-  endif
-  let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-  let g:neocomplcache_keyword_patterns['ruby'] = '\h\w*'
+    if !exists('g:neocomplcache_keyword_patterns')
+      let g:neocomplcache_keyword_patterns = {}
+    endif
+    let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+    let g:neocomplcache_keyword_patterns['ruby'] = '\h\w*'
 
-  if !exists('g:neocomplcache_omni_patterns')
-    let g:neocomplcache_omni_patterns = {}
-  endif
-  let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+    if !exists('g:neocomplcache_omni_patterns')
+      let g:neocomplcache_omni_patterns = {}
+    endif
+    let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
-  let g:neocomplcache_caching_limit_file_size = 500000
+    let g:neocomplcache_caching_limit_file_size = 500000
+  endfunction
 endif  " }}}
 if neobundle#tap('neocomplete.vim')  "{{{
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#enable_smart_case = 1
-  let g:neocomplete#enable_fuzzy_completion = 1
-  let g:neocomplete#sources#syntax#min_keyword_length = 2
-  let g:neocomplete#auto_completion_start_length = 1
-  let g:neocomplete#manual_completion_start_length = 0
-  let g:neocomplete#min_keyword_length = 3
-  let g:neocomplete#enable_cursor_hold_i = 0
-  let g:neocomplete#cursor_hold_i_time = 300
-  let g:neocomplete#enable_insert_char_pre = 0
-  let g:neocomplete#enable_prefetch = 0
-  let g:neocomplete#force_overwrite_completefunc = 1
-  let g:neocomplete#sources#tags#cache_limit_size = 1000
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_smart_case = 1
+    let g:neocomplete#enable_fuzzy_completion = 1
+    let g:neocomplete#sources#syntax#min_keyword_length = 2
+    let g:neocomplete#auto_completion_start_length = 1
+    let g:neocomplete#manual_completion_start_length = 0
+    let g:neocomplete#min_keyword_length = 3
+    let g:neocomplete#enable_cursor_hold_i = 0
+    let g:neocomplete#cursor_hold_i_time = 300
+    let g:neocomplete#enable_insert_char_pre = 0
+    let g:neocomplete#enable_prefetch = 0
+    let g:neocomplete#force_overwrite_completefunc = 1
+    let g:neocomplete#sources#tags#cache_limit_size = 1000
 
-  if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-  endif
-  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-  let g:neocomplete#keyword_patterns['ruby'] = '\h\w*'
+    if !exists('g:neocomplete#keyword_patterns')
+      let g:neocomplete#keyword_patterns = {}
+    endif
+    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+    let g:neocomplete#keyword_patterns['ruby'] = '\h\w*'
 
-  if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-  endif
-  let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+      let g:neocomplete#sources#omni#input_patterns = {}
+    endif
+    let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
-  let g:sources#buffer#cache_limit_size = 500000
+    let g:sources#buffer#cache_limit_size = 500000
 
-  if !exists('g:neocomplete#same_filetypes')
-    let g:neocomplete#same_filetypes = {}
-  endif
-  let g:neocomplete#same_filetypes._ = '_'
+    if !exists('g:neocomplete#same_filetypes')
+      let g:neocomplete#same_filetypes = {}
+    endif
+    let g:neocomplete#same_filetypes._ = '_'
 
-  augroup SetOmunifuncs
-    autocmd!
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    " jscomplete
-    autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
-  augroup END
+    augroup SetOmunifuncs
+      autocmd!
+      autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+      autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+      " jscomplete
+      autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
+    augroup END
+  endfunction
 endif  " }}}
 if neobundle#tap('neosnippet')  "{{{
-  imap <expr><Tab> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-  smap <expr><Tab> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-  imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    imap <expr><Tab> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+    smap <expr><Tab> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+    imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-  if s:neocomplete_available
-    imap <expr><Cr> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplete#close_popup() : "\<Cr>"
-  else
-    imap <expr><Cr> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplcache#close_popup() : "\<Cr>"
-  endif
+    if s:neocomplete_available
+      imap <expr><Cr> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplete#close_popup() : "\<Cr>"
+    else
+      imap <expr><Cr> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplcache#close_popup() : "\<Cr>"
+    endif
 
-  if has('conceal')
-    set conceallevel=2 concealcursor=i
-  endif
+    if has('conceal')
+      set conceallevel=2 concealcursor=i
+    endif
 
-  let g:neosnippet#snippets_directory = [
-    \   $bundles_path . "/.vim/snippets",
-    \   $bundles_path . "/vim-snippets/snippets",
-    \ ]
+    let g:neosnippet#snippets_directory = [
+      \   $bundles_path . "/.vim/snippets",
+      \   $bundles_path . "/vim-snippets/snippets",
+      \ ]
 
-  augroup NeoSnippetClearMarkers
-    autocmd!
-    autocmd InsertLeave * NeoSnippetClearMarkers
-  augroup END
+    augroup NeoSnippetClearMarkers
+      autocmd!
+      autocmd InsertLeave * NeoSnippetClearMarkers
+    augroup END
+  endfunction
 endif  " }}}
 if neobundle#tap('open-browser.vim')  "{{{
-  let g:openbrowser_browser_commands = [
-    \   {
-    \     "name": "ssh",
-    \     "args": "ssh main 'open '\\''{uri}'\\'''",
-    \   }
-    \ ]
   nmap <Leader>o <Plug>(openbrowser-open)
   vmap <Leader>o <Plug>(openbrowser-open)
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:openbrowser_browser_commands = [
+      \   {
+      \     "name": "ssh",
+      \     "args": "ssh main 'open '\\''{uri}'\\'''",
+      \   }
+      \ ]
+  endfunction
 endif  " }}}
 if neobundle#tap('operator-camelize.vim')  "{{{
   vmap <Leader>C <Plug>(operator-camelize)
@@ -730,52 +786,61 @@ if neobundle#tap('vim-operator-surround')  "{{{
   vmap <silent>sr <Plug>(operator-surround-replace)
 endif  " }}}
 if neobundle#tap('vim-rails')  "{{{
-  " http://fg-180.katamayu.net/archives/2006/09/02/125150
-  let g:rails_level = 4
-  let g:rails_projections = {
-    \   "config/*": {
-    \     "command": "config",
-    \   },
-    \   "script/*": {
-    \     "command": "script",
-    \     "test":    [
-    \       "test/script/%s_test.rb",
-    \     ],
-    \   },
-    \   "spec/fabricators/*_fabricator.rb": {
-    \     "command":   "fabricator",
-    \     "affinity":  "model",
-    \     "alternate": "app/models/%s.rb",
-    \     "related":   "db/schema.rb#%p",
-    \     "test":      "spec/models/%s_spec.rb",
-    \   },
-    \   "spec/support/*.rb": {
-    \     "command": "support",
-    \   },
-    \ }
-  " prevent `rails.vim` from defining keymappings
-  nmap <Leader>Rwf  <Plug>RailsSplitFind
-  nmap <Leader>Rwgf <Plug>RailsTabFind
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    " http://fg-180.katamayu.net/archives/2006/09/02/125150
+    let g:rails_level = 4
+    let g:rails_projections = {
+      \   "config/*": {
+      \     "command": "config",
+      \   },
+      \   "script/*": {
+      \     "command": "script",
+      \     "test":    [
+      \       "test/script/%s_test.rb",
+      \     ],
+      \   },
+      \   "spec/fabricators/*_fabricator.rb": {
+      \     "command":   "fabricator",
+      \     "affinity":  "model",
+      \     "alternate": "app/models/%s.rb",
+      \     "related":   "db/schema.rb#%p",
+      \     "test":      "spec/models/%s_spec.rb",
+      \   },
+      \   "spec/support/*.rb": {
+      \     "command": "support",
+      \   },
+      \ }
+    " prevent `rails.vim` from defining keymappings
+    nmap <Leader>Rwf  <Plug>RailsSplitFind
+    nmap <Leader>Rwgf <Plug>RailsTabFind
 
-  let &path = &path . ",spec/support"
+    let &path = &path . ",spec/support"
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-ref')  "{{{
   nmap K <Plug>(ref-keyword)
 endif  " }}}
 if neobundle#tap('vim-ruby')  "{{{
-  let g:no_ruby_maps = 1
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:no_ruby_maps = 1
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-ruby-heredoc-syntax')  "{{{
-  let g:ruby_heredoc_syntax_filetypes = {
-    \   "haml": { "start": "HAML" },
-    \   "ruby": { "start": "RUBY" },
-    \ }
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:ruby_heredoc_syntax_filetypes = {
+      \   "haml": { "start": "HAML" },
+      \   "ruby": { "start": "RUBY" },
+      \ }
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-rubytest')  "{{{
-  let g:no_rubytest_mappings = 1
-  let g:rubytest_in_vimshell = 1
   nmap <leader>T <Plug>RubyFileRun
   nmap <leader>t <Plug>RubyTestRun
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:no_rubytest_mappings = 1
+    let g:rubytest_in_vimshell = 1
+  endfunction
 endif  " }}}
 if neobundle#tap('sequence')  "{{{
   vmap <Leader>+ <plug>SequenceV_Increment
@@ -784,392 +849,435 @@ if neobundle#tap('sequence')  "{{{
   nmap <Leader>- <plug>SequenceN_Decrement
 endif  " }}}
 if neobundle#tap('simple-javascript-indenter')  "{{{
-  let g:SimpleJsIndenter_BriefMode = 2
-  let g:SimpleJsIndenter_CaseIndentLevel = -1
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:SimpleJsIndenter_BriefMode = 2
+    let g:SimpleJsIndenter_CaseIndentLevel = -1
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-singleton')  "{{{
-  if has('gui_running') && !singleton#is_master()
-    let g:singleton#opener = 'drop'
-    call singleton#enable()
-  endif
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    if has('gui_running') && !singleton#is_master()
+      let g:singleton#opener = 'drop'
+      call singleton#enable()
+    endif
+  endfunction
 endif  " }}}
 if neobundle#tap('splitjoin.vim')  "{{{
-  let g:splitjoin_split_mapping       = ''
-  let g:splitjoin_join_mapping        = ''
-  let g:splitjoin_ruby_trailing_comma = 1
-  let g:splitjoin_ruby_hanging_args   = 0
   nnoremap <Leader>J :SplitjoinJoin<Cr>
   nnoremap <Leader>S :SplitjoinSplit<Cr>
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:splitjoin_split_mapping       = ''
+    let g:splitjoin_join_mapping        = ''
+    let g:splitjoin_ruby_trailing_comma = 1
+    let g:splitjoin_ruby_hanging_args   = 0
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-startify')  "{{{
-  highlight StartifyFile   ctermfg=255
-  highlight StartifyHeader ctermfg=255
-  highlight StartifyPath   ctermfg=245
-  highlight StartifySlash  ctermfg=245
-  let g:startify_enable_special = 1
-  let g:startify_change_to_dir  = 0
-  let g:startify_list_order     = [
-    \   ['   My bookmarks:'],
-    \   'bookmarks',
-    \   ['   Last recently opened files:'],
-    \   'files',
-    \   ['   Last recently modified files in the current directory:'],
-    \   'dir',
-    \   ['   My sessions:'],
-    \   'sessions',
-    \ ]
-  " https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
-  let g:startify_custom_header  = [
-    \   '                      .',
-    \   '      ##############..... ##############',
-    \   '      ##############......##############',
-    \   '        ##########..........##########',
-    \   '        ##########........##########',
-    \   '        ##########.......##########',
-    \   '        ##########.....##########..',
-    \   '        ##########....##########.....',
-    \   '      ..##########..##########.........',
-    \   '    ....##########.#########.............',
-    \   '      ..################JJJ............',
-    \   '        ################.............',
-    \   '        ##############.JJJ.JJJJJJJJJJ',
-    \   '        ############...JJ...JJ..JJ  JJ',
-    \   '        ##########....JJ...JJ..JJ  JJ',
-    \   '        ########......JJJ..JJJ JJJ JJJ',
-    \   '        ######    .........',
-    \   '                    .....',
-    \   '                      .',
-    \   '',
-    \   '',
-    \   '     * Vim version: ' . v:version,
-    \   '',
-    \   '     * ' . s:AvailabilityMessage("neocomplete"),
-    \   '     * ' . s:AvailabilityMessage("pt"),
-    \   '     * ' . s:AvailabilityMessage("ag"),
-    \   '     * ' . s:AvailabilityMessage("ack"),
-    \   '     * ' . s:AvailabilityMessage("migemo"),
-    \   '',
-    \   '',
-    \ ]
+  function! neobundle#tapped.hooks.on_post_source(bundle) abort
+    highlight StartifyFile   ctermfg=255
+    highlight StartifyHeader ctermfg=255
+    highlight StartifyPath   ctermfg=245
+    highlight StartifySlash  ctermfg=245
+    let g:startify_enable_special = 1
+    let g:startify_change_to_dir  = 0
+    let g:startify_list_order     = [
+      \   ['   My bookmarks:'],
+      \   'bookmarks',
+      \   ['   Last recently opened files:'],
+      \   'files',
+      \   ['   Last recently modified files in the current directory:'],
+      \   'dir',
+      \   ['   My sessions:'],
+      \   'sessions',
+      \ ]
+    " https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
+    let g:startify_custom_header  = [
+      \   '                      .',
+      \   '      ##############..... ##############',
+      \   '      ##############......##############',
+      \   '        ##########..........##########',
+      \   '        ##########........##########',
+      \   '        ##########.......##########',
+      \   '        ##########.....##########..',
+      \   '        ##########....##########.....',
+      \   '      ..##########..##########.........',
+      \   '    ....##########.#########.............',
+      \   '      ..################JJJ............',
+      \   '        ################.............',
+      \   '        ##############.JJJ.JJJJJJJJJJ',
+      \   '        ############...JJ...JJ..JJ  JJ',
+      \   '        ##########....JJ...JJ..JJ  JJ',
+      \   '        ########......JJJ..JJJ JJJ JJJ',
+      \   '        ######    .........',
+      \   '                    .....',
+      \   '                      .',
+      \   '',
+      \   '',
+      \   '     * Vim version: ' . v:version,
+      \   '',
+      \   '     * ' . s:AvailabilityMessage("neocomplete"),
+      \   '     * ' . s:AvailabilityMessage("pt"),
+      \   '     * ' . s:AvailabilityMessage("ag"),
+      \   '     * ' . s:AvailabilityMessage("ack"),
+      \   '     * ' . s:AvailabilityMessage("migemo"),
+      \   '',
+      \   '',
+      \ ]
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-stay')  "{{{
-  set viewoptions=cursor
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    set viewoptions=cursor
+  endfunction
 endif  " }}}
 if neobundle#tap('vim-textobj-multitextobj')  "{{{
-  let g:textobj_multitextobj_textobjects_a = [
-    \   [
-    \     "\<Plug>(textobj-jabraces-parens-a)",
-    \     "\<Plug>(textobj-jabraces-braces-a)",
-    \     "\<Plug>(textobj-jabraces-brackets-a)",
-    \     "\<Plug>(textobj-jabraces-angles-a)",
-    \     "\<Plug>(textobj-jabraces-double-angles-a)",
-    \     "\<Plug>(textobj-jabraces-kakko-a)",
-    \     "\<Plug>(textobj-jabraces-double-kakko-a)",
-    \     "\<Plug>(textobj-jabraces-yama-kakko-a)",
-    \     "\<Plug>(textobj-jabraces-double-yama-kakko-a)",
-    \     "\<Plug>(textobj-jabraces-kikkou-kakko-a)",
-    \     "\<Plug>(textobj-jabraces-sumi-kakko-a)",
-    \   ],
-    \ ]
-  let g:textobj_multitextobj_textobjects_i = [
-    \   [
-    \     "\<Plug>(textobj-jabraces-parens-i)",
-    \     "\<Plug>(textobj-jabraces-braces-i)",
-    \     "\<Plug>(textobj-jabraces-brackets-i)",
-    \     "\<Plug>(textobj-jabraces-angles-i)",
-    \     "\<Plug>(textobj-jabraces-double-angles-i)",
-    \     "\<Plug>(textobj-jabraces-kakko-i)",
-    \     "\<Plug>(textobj-jabraces-double-kakko-i)",
-    \     "\<Plug>(textobj-jabraces-yama-kakko-i)",
-    \     "\<Plug>(textobj-jabraces-double-yama-kakko-i)",
-    \     "\<Plug>(textobj-jabraces-kikkou-kakko-i)",
-    \     "\<Plug>(textobj-jabraces-sumi-kakko-i)",
-    \   ],
-    \ ]
   omap aj <Plug>(textobj-multitextobj-a)
   omap ij <Plug>(textobj-multitextobj-i)
   vmap aj <Plug>(textobj-multitextobj-a)
   vmap ij <Plug>(textobj-multitextobj-i)
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:textobj_multitextobj_textobjects_a = [
+      \   [
+      \     "\<Plug>(textobj-jabraces-parens-a)",
+      \     "\<Plug>(textobj-jabraces-braces-a)",
+      \     "\<Plug>(textobj-jabraces-brackets-a)",
+      \     "\<Plug>(textobj-jabraces-angles-a)",
+      \     "\<Plug>(textobj-jabraces-double-angles-a)",
+      \     "\<Plug>(textobj-jabraces-kakko-a)",
+      \     "\<Plug>(textobj-jabraces-double-kakko-a)",
+      \     "\<Plug>(textobj-jabraces-yama-kakko-a)",
+      \     "\<Plug>(textobj-jabraces-double-yama-kakko-a)",
+      \     "\<Plug>(textobj-jabraces-kikkou-kakko-a)",
+      \     "\<Plug>(textobj-jabraces-sumi-kakko-a)",
+      \   ],
+      \ ]
+    let g:textobj_multitextobj_textobjects_i = [
+      \   [
+      \     "\<Plug>(textobj-jabraces-parens-i)",
+      \     "\<Plug>(textobj-jabraces-braces-i)",
+      \     "\<Plug>(textobj-jabraces-brackets-i)",
+      \     "\<Plug>(textobj-jabraces-angles-i)",
+      \     "\<Plug>(textobj-jabraces-double-angles-i)",
+      \     "\<Plug>(textobj-jabraces-kakko-i)",
+      \     "\<Plug>(textobj-jabraces-double-kakko-i)",
+      \     "\<Plug>(textobj-jabraces-yama-kakko-i)",
+      \     "\<Plug>(textobj-jabraces-double-yama-kakko-i)",
+      \     "\<Plug>(textobj-jabraces-kikkou-kakko-i)",
+      \     "\<Plug>(textobj-jabraces-sumi-kakko-i)",
+      \   ],
+      \ ]
+  endfunction
 endif  " }}}
 if neobundle#tap('turbux')  "{{{
-  let g:no_turbux_mappings = 1
-  let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
   map <leader>T <Plug>SendTestToTmux
   map <leader>t <Plug>SendFocusedTestToTmux
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:no_turbux_mappings = 1
+    let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
+  endfunction
 endif  " }}}
 if neobundle#tap('Unicode-RST-Tables')  "{{{
-  let g:no_rst_table_maps = 0
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:no_rst_table_maps = 0
+  endfunction
 endif  " }}}
 if neobundle#tap('unite.vim')  "{{{
-  let g:unite_winheight = '100%'
-  let g:unite_cursor_line_highlight = 'CursorLine'
-
-  " use ack because pt and ag don't sort search result
-  if s:pt_available || s:ag_available || s:ack_available
-    let g:unite_source_grep_recursive_opt = ''
-
-    if s:pt_available && 0
-      let g:unite_source_grep_command      = 'pt'
-      let g:unite_source_grep_default_opts = '--nocolor --nogroup'
-    else
-      let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
-
-      if s:ag_available && 0
-        let g:unite_source_grep_command = 'ag'
-      elseif s:ack_available
-        let g:unite_source_grep_command = 'ack'
-      endif
-    endif
-  endif
-
-  let g:unite_source_grep_search_word_highlight = 'Special'
-  call unite#custom#source('buffer', 'sorters', 'sorter_word')
-  call unite#custom#source('grep', 'max_candidates', 1000)
+  nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
   vnoremap <Leader>ug "vy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
-  nnoremap <silent> <Leader>uy :<C-u>Unite history/yank<Cr>
-  nnoremap <silent> <Leader>uo :<C-u>Unite outline:!<Cr>
-  nnoremap <silent> <Leader>uc :<C-u>Unite webcolorname<Cr>
-  nnoremap <silent> <Leader>ub :<C-u>Unite buffer<Cr>
-  nnoremap <silent> <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
-  " nnoremap <silent> <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
-  " nnoremap <silent> <Leader>um :<C-u>Unite neomru/file<Cr>
-  nnoremap <silent> <Leader>uu :<C-u>Unite buffer neomru/file<Cr>
-  nnoremap <silent> <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neomru/file bookmark file<Cr>
+  nnoremap <Leader>uy :<C-u>Unite history/yank<Cr>
+  nnoremap <Leader>uo :<C-u>Unite outline:!<Cr>
+  nnoremap <Leader>uc :<C-u>Unite webcolorname<Cr>
+  nnoremap <Leader>ub :<C-u>Unite buffer<Cr>
+  nnoremap <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
+  " nnoremap <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
+  " nnoremap <Leader>um :<C-u>Unite neomru/file<Cr>
+  nnoremap <Leader>uu :<C-u>Unite buffer neomru/file<Cr>
+  nnoremap <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neomru/file bookmark file<Cr>
+
   nnoremap <F4> :<C-u>Unite buffer<Cr>
+  nnoremap <Leader>m :<C-u>Unite neomru/file<Cr>
+  nnoremap <Leader>um :<C-u>Unite mark<Cr>
+  " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
+  nnoremap <silent> m :<C-u>call <SID>auto_mark()<Cr>
+  nnoremap <Leader>ur :<C-u>Unite rails/
+  nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
+  nnoremap <Leader>uv :<C-u>UniteVersions status:./<Cr>
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:unite_winheight = '100%'
+    let g:unite_cursor_line_highlight = 'CursorLine'
+
+    " use ack because pt and ag don't sort search result
+    if s:pt_available || s:ag_available || s:ack_available
+      let g:unite_source_grep_recursive_opt = ''
+
+      if s:pt_available && 0
+        let g:unite_source_grep_command      = 'pt'
+        let g:unite_source_grep_default_opts = '--nocolor --nogroup'
+      else
+        let g:unite_source_grep_default_opts = '--nocolor --nogroup --nopager'
+
+        if s:ag_available && 0
+          let g:unite_source_grep_command = 'ag'
+        elseif s:ack_available
+          let g:unite_source_grep_command = 'ack'
+        endif
+      endif
+    endif
+
+    let g:unite_source_grep_search_word_highlight = 'Special'
+
+    call unite#custom#source('buffer', 'sorters', 'sorter_word')
+    call unite#custom#source('grep', 'max_candidates', 1000)
+
+    " unite-shortcut  "{{{
+      " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
+      " http://d.hatena.ne.jp/tyru/20120110/prompt
+      let g:unite_source_menu_menus = {}
+      let g:unite_source_menu_menus.shortcuts = {
+        \   "description" : "shortcuts"
+        \ }
+
+      " http://nanasi.jp/articles/vim/hz_ja_vim.html
+      let g:unite_source_menu_menus.shortcuts.candidates = [
+        \   ["[String Utility] All to Hankaku          ", "'<,'>Hankaku"],
+        \   ["[String Utility] Alphanumerics to Hankaku", "'<,'>HzjaConvert han_eisu"],
+        \   ["[String Utility] ASCII to Hankaku        ", "'<,'>HzjaConvert han_ascii"],
+        \   ["[String Utility] All to Zenkaku          ", "'<,'>Zenkaku"],
+        \   ["[String Utility] Kana to Zenkaku         ", "'<,'>HzjaConvert zen_kana"],
+        \
+        \   ["[Reload with Encoding] latin1            ", "edit ++enc=latin1 +set\\ noreadonly"],
+        \   ["[Reload with Encoding] cp932             ", "edit ++enc=cp932 +set\\ noreadonly"],
+        \   ["[Reload with Encoding] shift-jis         ", "edit ++enc=shift-jis +set\\ noreadonly"],
+        \   ["[Reload with Encoding] iso-2022-jp       ", "edit ++enc=iso-2022-jp +set\\ noreadonly"],
+        \   ["[Reload with Encoding] euc-jp            ", "edit ++enc=euc-jp +set\\ noreadonly"],
+        \   ["[Reload with Encoding] utf-8             ", "edit ++enc=utf-8 +set\\ noreadonly"],
+        \
+        \   ["[Reload by Sudo]                         ", "edit sudo:%"],
+        \
+        \   ["[Set Encoding] latin1                    ", "set fenc=latin1"],
+        \   ["[Set Encoding] cp932                     ", "set fenc=cp932"],
+        \   ["[Set Encoding] shift-jis                 ", "set fenc=shift-jis"],
+        \   ["[Set Encoding] iso-2022-jp               ", "set fenc=iso-2022-jp"],
+        \   ["[Set Encoding] euc-jp                    ", "set fenc=euc-jp"],
+        \   ["[Set Encoding] utf-8                     ", "set fenc=utf-8"],
+        \
+        \   ["[Set File Format] dos                    ", "set ff=dos"],
+        \   ["[Set File Format] unix                   ", "set ff=unix"],
+        \   ["[Set File Format] mac                    ", "set ff=mac"],
+        \
+        \   ["[Manipulate File] set noreadonly         ", "set noreadonly"],
+        \   ["[Manipulate File] to HTML                ", "colorscheme h2u_white | TOhtml"],
+        \   ["[Manipulate File] sed all buffers [Edit] ", "bufdo %s/{foo}/{bar}/gce | update"],
+        \
+        \   ["[System] Remove/Delete                   ", "!rm %"],
+        \   ["[System] SVN Remove/Delete               ", "!svn rm %"],
+        \
+        \   ["[JpFormat] format all selected for mail  ", "'<,'>JpFormatAll!"],
+        \
+        \   ["[Calendar] Year View                     ", "Calendar -view=year  -position=hear!"],
+        \   ["[Calendar] Month View                    ", "Calendar -view=month -position=hear!"],
+        \   ["[Calendar] Week View                     ", "Calendar -view=week  -position=hear!"],
+        \   ["[Calendar] Day View                      ", "Calendar -view=day   -position=hear! -split=vertical -width=75"],
+        \
+        \   ["[Unicode-RST-Tables] Create Table        ", "python CreateTable()"],
+        \   ["[Unicode-RST-Tables] Fix Table           ", "python FixTable()"],
+        \
+        \   ["[Unite plugin] gist                      ", "Unite gista"],
+        \   ["[Unite plugin] mru files list            ", "Unite neomru/file"],
+        \   ["[Unite plugin] neobundle/update          ", "Unite neobundle/update:all -log"],
+        \   ["[Unite plugin] outline                   ", "Unite outline:!"],
+        \   ["[Unite plugin] tag with cursor word      ", "UniteWithCursorWord tag"],
+        \   ["[Unite plugin] versions/status           ", "UniteVersions status:./"],
+        \   ["[Unite plugin] versions/log              ", "UniteVersions log:./"],
+        \   ["[Unite plugin] webcolorname              ", "Unite webcolorname"],
+        \   ["[Unite] buffers list                     ", "Unite buffer"],
+        \   ["[Unite] files list with buffer directory ", "UniteWithBufferDir file"],
+        \   ["[Unite] history/yank                     ", "Unite history/yank"],
+        \   ["[Unite] register                         ", "Unite register"],
+        \   ["[Unite] grep [Edit]                      ", "Unite -no-quit grep:./::{words}"],
+        \
+        \   ["[Help]autocommand-events                 ", "help autocommand-events"],
+        \   ["[Help][neobundle] Options-autoload       ", "help neobundle-options-autoload"],
+        \ ]
+
+      function! g:unite_source_menu_menus.shortcuts.map(key, value)
+        let [word, value] = a:value
+
+        return {
+             \   'word' : word . "  --  `" . value . "`",
+             \   'kind' : 'command',
+             \   'action__command' : value,
+             \ }
+      endfunction
+    " }}}
+  endfunction
 
   if neobundle#tap('neomru.vim')  "{{{
-    let g:neomru#time_format     = "(%Y/%m/%d %H:%M:%S) "
-    let g:neomru#filename_format = ":~:."
-    let g:neomru#file_mru_limit  = 1000
-    nnoremap <silent> <Leader>m :<C-u>Unite neomru/file<Cr>
+    function! neobundle#tapped.hooks.on_source(bundle) abort
+      let g:neomru#time_format     = "(%Y/%m/%d %H:%M:%S) "
+      let g:neomru#filename_format = ":~:."
+      let g:neomru#file_mru_limit  = 1000
+    endfunction
   endif  " }}}
 
   if neobundle#tap('neoyank.vim')  "{{{
-    let g:neoyank#limit = 300
+    function! neobundle#tapped.hooks.on_source(bundle) abort
+      let g:neoyank#limit = 300
+    endfunction
   endif  " }}}
 
   if neobundle#tap('unite-dwm')  "{{{
-    let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,cdable"
+    function! neobundle#tapped.hooks.on_source(bundle) abort
+      let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,cdable"
+    endfunction
   endif  " }}}
 
   if neobundle#tap('unite-mark')  "{{{
-    let g:mark_ids = [
-      \   "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-      \   "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-      \   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-      \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-      \ ]
-    let g:unite_source_mark_marks = join(g:mark_ids, "")
-    nnoremap <Leader>um :<C-u>Unite mark<Cr>
-    " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
-    nnoremap <silent> m :<C-u>call <SID>auto_mark()<Cr>
-    function! s:auto_mark()
-        if !exists("b:mark_position")
-          let b:mark_position = 0
-        else
-          let b:mark_position = (b:mark_position + 1) % len(g:mark_ids)
-        endif
+    function! neobundle#tapped.hooks.on_source(bundle) abort
+      let g:mark_ids = [
+        \   "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+        \   "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+        \   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+        \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+        \ ]
+      let g:unite_source_mark_marks = join(g:mark_ids, "")
+      function! s:auto_mark()
+          if !exists("b:mark_position")
+            let b:mark_position = 0
+          else
+            let b:mark_position = (b:mark_position + 1) % len(g:mark_ids)
+          endif
 
-        execute 'mark' g:mark_ids[b:mark_position]
-        echo 'marked' g:mark_ids[b:mark_position]
+          execute 'mark' g:mark_ids[b:mark_position]
+          echo 'marked' g:mark_ids[b:mark_position]
+      endfunction
+      augroup InitMarks
+        autocmd!
+        autocmd BufReadPost * delmarks!
+      augroup END
     endfunction
-    augroup InitMarks
-      autocmd!
-      autocmd BufReadPost * delmarks!
-    augroup END
   endif  " }}}
 
   if neobundle#tap('unite-rails')  "{{{
-    nnoremap <Leader>ur :<C-u>Unite rails/
   endif  " }}}
 
   if neobundle#tap('unite-tag')  "{{{
-    nnoremap <silent> <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
+    function! neobundle#tapped.hooks.on_source(bundle) abort
+      augroup UniteTagSettings
+        autocmd!
 
-    augroup UniteTagSettings
-      autocmd!
+        autocmd BufEnter *
+        \   if empty(&buftype)
+        \|    nnoremap <buffer> g] :<C-u>UniteWithCursorWord -immediately tag<CR>
+        \|    vnoremap <buffer> g] :<C-u>UniteWithCursorWord -immediately tag<CR>
+        \|  endif
 
-      autocmd BufEnter *
-      \   if empty(&buftype)
-      \|    nnoremap <buffer> g] :<C-u>UniteWithCursorWord -immediately tag<CR>
-      \|    vnoremap <buffer> g] :<C-u>UniteWithCursorWord -immediately tag<CR>
-      \|  endif
-
-      " http://qiita.com/kazu0620/items/d7da3047daed04fc5eba
-      autocmd BufEnter *
-      \   if empty(&buftype)
-      \|    nnoremap <buffer> g[ :<C-u>Unite jump<CR>
-      \|  endif
-    augroup END
+        " http://qiita.com/kazu0620/items/d7da3047daed04fc5eba
+        autocmd BufEnter *
+        \   if empty(&buftype)
+        \|    nnoremap <buffer> g[ :<C-u>Unite jump<CR>
+        \|  endif
+      augroup END
+    endfunction
   endif  " }}}
 
   if neobundle#tap('vim-versions')  "{{{
-    let g:versions#type#svn#status#ignore_status = ['X']
-    nnoremap <silent> <Leader>uv :<C-u>UniteVersions status:./<Cr>
-    function! s:AddActionsToVersions()
-      let l:action = {
-        \   "description" : "open files",
-        \   "is_selectable" : 1,
-        \ }
+    function! neobundle#tapped.hooks.on_source(bundle) abort
+      let g:versions#type#svn#status#ignore_status = ['X']
 
-      function! l:action.func(candidates)
-        for l:candidate in a:candidates
-          let l:candidate.action__path = l:candidate.source__args.path . l:candidate.action__status.path
-          let l:candidate.action__directory = unite#util#path2directory(l:candidate.action__path)
+      function! s:AddActionsToVersions()
+        let l:action = {
+          \   "description" : "open files",
+          \   "is_selectable" : 1,
+          \ }
 
-          if l:candidate.action__path == l:candidate.action__directory
-            let l:candidate.kind = "directory"
-            call unite#take_action("vimfiler", l:candidate)
-          else
-            let l:candidate.kind = "file"
-            call unite#take_action("open", l:candidate)
-          endif
-        endfor
+        function! l:action.func(candidates)
+          for l:candidate in a:candidates
+            let l:candidate.action__path = l:candidate.source__args.path . l:candidate.action__status.path
+            let l:candidate.action__directory = unite#util#path2directory(l:candidate.action__path)
+
+            if l:candidate.action__path == l:candidate.action__directory
+              let l:candidate.kind = "directory"
+              call unite#take_action("vimfiler", l:candidate)
+            else
+              let l:candidate.kind = "file"
+              call unite#take_action("open", l:candidate)
+            endif
+          endfor
+        endfunction
+
+        call unite#custom#action("versions/git/status,versions/svn/status", "open", l:action)
+        call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
       endfunction
-
-      call unite#custom#action("versions/git/status,versions/svn/status", "open", l:action)
-      call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
+      call s:AddActionsToVersions()
     endfunction
-    call s:AddActionsToVersions()
   endif  " }}}
-
-  " unite-shortcut  "{{{
-    " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
-    " http://d.hatena.ne.jp/tyru/20120110/prompt
-    noremap <silent> <Leader>us :<C-u>Unite menu:shortcuts<Cr>
-    let g:unite_source_menu_menus = {}
-    let g:unite_source_menu_menus.shortcuts = {
-      \   "description" : "shortcuts"
-      \ }
-
-    " http://nanasi.jp/articles/vim/hz_ja_vim.html
-    let g:unite_source_menu_menus.shortcuts.candidates = [
-      \   ["[String Utility] All to Hankaku          ", "'<,'>Hankaku"],
-      \   ["[String Utility] Alphanumerics to Hankaku", "'<,'>HzjaConvert han_eisu"],
-      \   ["[String Utility] ASCII to Hankaku        ", "'<,'>HzjaConvert han_ascii"],
-      \   ["[String Utility] All to Zenkaku          ", "'<,'>Zenkaku"],
-      \   ["[String Utility] Kana to Zenkaku         ", "'<,'>HzjaConvert zen_kana"],
-      \
-      \   ["[Reload with Encoding] latin1            ", "edit ++enc=latin1 +set\\ noreadonly"],
-      \   ["[Reload with Encoding] cp932             ", "edit ++enc=cp932 +set\\ noreadonly"],
-      \   ["[Reload with Encoding] shift-jis         ", "edit ++enc=shift-jis +set\\ noreadonly"],
-      \   ["[Reload with Encoding] iso-2022-jp       ", "edit ++enc=iso-2022-jp +set\\ noreadonly"],
-      \   ["[Reload with Encoding] euc-jp            ", "edit ++enc=euc-jp +set\\ noreadonly"],
-      \   ["[Reload with Encoding] utf-8             ", "edit ++enc=utf-8 +set\\ noreadonly"],
-      \
-      \   ["[Reload by Sudo]                         ", "edit sudo:%"],
-      \
-      \   ["[Set Encoding] latin1                    ", "set fenc=latin1"],
-      \   ["[Set Encoding] cp932                     ", "set fenc=cp932"],
-      \   ["[Set Encoding] shift-jis                 ", "set fenc=shift-jis"],
-      \   ["[Set Encoding] iso-2022-jp               ", "set fenc=iso-2022-jp"],
-      \   ["[Set Encoding] euc-jp                    ", "set fenc=euc-jp"],
-      \   ["[Set Encoding] utf-8                     ", "set fenc=utf-8"],
-      \
-      \   ["[Set File Format] dos                    ", "set ff=dos"],
-      \   ["[Set File Format] unix                   ", "set ff=unix"],
-      \   ["[Set File Format] mac                    ", "set ff=mac"],
-      \
-      \   ["[Manipulate File] set noreadonly         ", "set noreadonly"],
-      \   ["[Manipulate File] to HTML                ", "colorscheme h2u_white | TOhtml"],
-      \   ["[Manipulate File] sed all buffers [Edit] ", "bufdo %s/{foo}/{bar}/gce | update"],
-      \
-      \   ["[System] Remove/Delete                   ", "!rm %"],
-      \   ["[System] SVN Remove/Delete               ", "!svn rm %"],
-      \
-      \   ["[JpFormat] format all selected for mail  ", "'<,'>JpFormatAll!"],
-      \
-      \   ["[Calendar] Year View                     ", "Calendar -view=year  -position=hear!"],
-      \   ["[Calendar] Month View                    ", "Calendar -view=month -position=hear!"],
-      \   ["[Calendar] Week View                     ", "Calendar -view=week  -position=hear!"],
-      \   ["[Calendar] Day View                      ", "Calendar -view=day   -position=hear! -split=vertical -width=75"],
-      \
-      \   ["[Unicode-RST-Tables] Create Table        ", "python CreateTable()"],
-      \   ["[Unicode-RST-Tables] Fix Table           ", "python FixTable()"],
-      \
-      \   ["[Unite plugin] gist                      ", "Unite gista"],
-      \   ["[Unite plugin] mru files list            ", "Unite neomru/file"],
-      \   ["[Unite plugin] neobundle/update          ", "Unite neobundle/update:all -log"],
-      \   ["[Unite plugin] outline                   ", "Unite outline:!"],
-      \   ["[Unite plugin] tag with cursor word      ", "UniteWithCursorWord tag"],
-      \   ["[Unite plugin] versions/status           ", "UniteVersions status:./"],
-      \   ["[Unite plugin] versions/log              ", "UniteVersions log:./"],
-      \   ["[Unite plugin] webcolorname              ", "Unite webcolorname"],
-      \   ["[Unite] buffers list                     ", "Unite buffer"],
-      \   ["[Unite] files list with buffer directory ", "UniteWithBufferDir file"],
-      \   ["[Unite] history/yank                     ", "Unite history/yank"],
-      \   ["[Unite] register                         ", "Unite register"],
-      \   ["[Unite] grep [Edit]                      ", "Unite -no-quit grep:./::{words}"],
-      \
-      \   ["[Help]autocommand-events                 ", "help autocommand-events"],
-      \   ["[Help][neobundle] Options-autoload       ", "help neobundle-options-autoload"],
-      \ ]
-
-    function! g:unite_source_menu_menus.shortcuts.map(key, value)
-      let [word, value] = a:value
-
-      return {
-           \   'word' : word . "  --  `" . value . "`",
-           \   'kind' : 'command',
-           \   'action__command' : value,
-           \ }
-    endfunction
-  " }}}
 endif  " }}}
 if neobundle#tap('vimfiler')  "{{{
-  call vimfiler#custom#profile("default", "context", {
-     \   "safe": 0,
-     \   "split_action": "dwm_open",
-     \ })
   nnoremap <Leader>e :VimFilerBufferDir -force-quit<Cr>
+
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    call vimfiler#custom#profile("default", "context", {
+       \   "safe": 0,
+       \   "split_action": "dwm_open",
+       \ })
+  endfunction
 endif  " }}}
 if neobundle#tap('vimshell')  "{{{
   nnoremap <Leader>s :VimShell<Cr>
 
-  if s:on_windows
-    let g:_user_name = $USERNAME
-  else
-    let g:_user_name = $USER
-  endif
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    if s:on_windows
+      let g:_user_name = $USERNAME
+    else
+      let g:_user_name = $USER
+    endif
 
-  let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
-  let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
-  let g:vimshell_prompt = '% '
+    let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
+    let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
+    let g:vimshell_prompt = '% '
+  endfunction
 endif  " }}}
 if neobundle#tap('vimux')  "{{{
-  let g:VimuxHeight = 30
-  let g:VimuxUseNearest = 1
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    let g:VimuxHeight = 30
+    let g:VimuxUseNearest = 1
 
-  function! s:ExtendVimux()
-    " overriding default function: use current pane's next one
-    execute join([
-    \   'function! _VimuxNearestIndex()',
-    \     'let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")',
-    \     'let index = len(views) - 1',
-    \
-    \     'while index >= 0',
-    \       'let view = views[index]',
-    \
-    \       'if match(view, "(active)") != -1',
-    \         'if index == len(views) - 1',
-    \           'return -1',
-    \         'else',
-    \           'return split(views[index + 1], ":")[0]',
-    \         'endif',
-    \       'endif',
-    \
-    \       'let index = index - 1',
-    \     'endwhile',
-    \   'endfunction',
-    \ ], "\n")
+    function! s:ExtendVimux()
+      " overriding default function: use current pane's next one
+      execute join([
+      \   'function! _VimuxNearestIndex()',
+      \     'let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")',
+      \     'let index = len(views) - 1',
+      \
+      \     'while index >= 0',
+      \       'let view = views[index]',
+      \
+      \       'if match(view, "(active)") != -1',
+      \         'if index == len(views) - 1',
+      \           'return -1',
+      \         'else',
+      \           'return split(views[index + 1], ":")[0]',
+      \         'endif',
+      \       'endif',
+      \
+      \       'let index = index - 1',
+      \     'endwhile',
+      \   'endfunction',
+      \ ], "\n")
+    endfunction
+
+    augroup Vimux
+      autocmd!
+      autocmd VimEnter * call s:ExtendVimux()
+      autocmd VimLeavePre * :VimuxCloseRunner
+    augroup END
   endfunction
-
-  augroup Vimux
-    autocmd!
-    autocmd VimEnter * call s:ExtendVimux()
-    autocmd VimLeavePre * :VimuxCloseRunner
-  augroup END
 endif  " }}}
 if neobundle#tap('yankround.vim')  "{{{
   nmap p <Plug>(yankround-p)
@@ -1178,36 +1286,53 @@ if neobundle#tap('yankround.vim')  "{{{
   nmap <C-n> <Plug>(yankround-next)
 endif  " }}}
 if neobundle#tap('emmet-vim')  "{{{
-  " command: <C-y>,
-  let g:user_emmet_settings = {
-    \   'indentation': '  ',
-    \   'lang': 'ja',
-    \   'eruby': {
-    \     'extends': ['javascript', 'html'],
-    \   },
-    \   'html': {
-    \     'extends': 'javascript',
-    \     'snippets' : {
-    \       'label': '<label>${cursor}</label>',
-    \       'script': "<script type=\"text/javascript\">\n  ${cursor}\n</script>",
-    \     },
-    \   },
-    \   'javascript': {
-    \     'snippets': {
-    \       'jq': "jQuery(function() {\n  ${cursor}${child}\n});",
-    \       'jq:each': "jQuery.each(arr, function(index, item)\n  ${child}\n});",
-    \       'fn': "(function() {\n  ${cursor}\n})();",
-    \       'tm': "setTimeout(function() {\n  ${cursor}\n}, 100);",
-    \       'if': "if (${cursor}) {\n};",
-    \       'ife': "if (${cursor}) {\n} else if (${cursor}) {\n} else {\n};",
-    \     },
-    \   },
-    \ }
+  function! neobundle#tapped.hooks.on_source(bundle) abort
+    " command: <C-y>,
+    let g:user_emmet_settings = {
+      \   'indentation': '  ',
+      \   'lang': 'ja',
+      \   'eruby': {
+      \     'extends': ['javascript', 'html'],
+      \   },
+      \   'html': {
+      \     'extends': 'javascript',
+      \     'snippets' : {
+      \       'label': '<label>${cursor}</label>',
+      \       'script': "<script type=\"text/javascript\">\n  ${cursor}\n</script>",
+      \     },
+      \   },
+      \   'javascript': {
+      \     'snippets': {
+      \       'jq': "jQuery(function() {\n  ${cursor}${child}\n});",
+      \       'jq:each': "jQuery.each(arr, function(index, item)\n  ${child}\n});",
+      \       'fn': "(function() {\n  ${cursor}\n})();",
+      \       'tm': "setTimeout(function() {\n  ${cursor}\n}, 100);",
+      \       'if': "if (${cursor}) {\n};",
+      \       'ife': "if (${cursor}) {\n} else if (${cursor}) {\n} else {\n};",
+      \     },
+      \   },
+      \ }
+  endfunction
 endif  " }}}
 " }}}
 
+" neobundle#end  "{{{
+call neobundle#end()
+filetype plugin indent on
+syntax enable
+
+if has('vim_starting')
+  NeoBundleCheck
+endif
+
+" colorscheme
+let g:molokai_original = 1
+colorscheme molokai
+" }}}
+" }}}
+
 " ----------------------------------------------
-" encoding "{{{
+" encoding  "{{{
 " http://www.kawaz.jp/pukiwiki/?vim#cb691f26
 if &encoding !=# 'utf-8'
   set encoding=japan
@@ -1235,7 +1360,7 @@ scriptencoding utf-8
 " }}}
 
 " ----------------------------------------------
-" general looks "{{{
+" general looks  "{{{
 set showmatch
 set number
 set showmode
@@ -1273,7 +1398,7 @@ augroup END
 " }}}
 
 " ----------------------------------------------
-" spaces, indents "{{{
+" spaces, indents  "{{{
 set tabstop=2
 set shiftwidth=2
 set textwidth=0
@@ -1320,7 +1445,7 @@ endif
 " }}}
 
 " ----------------------------------------------
-" search "{{{
+" search  "{{{
 set hlsearch
 set ignorecase
 set smartcase
@@ -1328,7 +1453,7 @@ set incsearch
 " }}}
 
 " ----------------------------------------------
-" controls "{{{
+" controls  "{{{
 set restorescreen
 set mouse=
 set t_vb=
@@ -1398,16 +1523,14 @@ endfunction
 " }}}
 
 " ----------------------------------------------
-" commands "{{{
+" commands  "{{{
 " http://vim-users.jp/2009/05/hack17/
 " :Rename newfilename.ext
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 " }}}
 
 " ----------------------------------------------
-" keymappings "{{{
-let g:mapleader = ','
-
+" keymappings  "{{{
 " ,r => reload .vimrc
 nnoremap <Leader>r :source ~/.vimrc<Cr>
 
@@ -1472,7 +1595,7 @@ inoremap <expr><C-b> "\<PageUp>"
 " }}}
 
 " ----------------------------------------------
-" GUI settings "{{{
+" GUI settings  "{{{
 if has('gui_running')
   gui
   set guioptions=none
@@ -1505,7 +1628,7 @@ endif
 " }}}
 
 " ----------------------------------------------
-" external sources "{{{
+" external sources  "{{{
 if filereadable(expand('~/.vimrc.local'))
   source ~/.vimrc.local
 endif
