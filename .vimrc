@@ -963,7 +963,7 @@ if neobundle#tap('unite.vim')  "{{{
 endif  " }}}
 if neobundle#tap('vim-alignta')  "{{{
   call neobundle#config({
-  \ 'lazy':      1,
+  \ 'lazy':      0,
   \ 'on_cmd':    'Alignta',
   \ 'on_source': 'unite.vim',
   \})
