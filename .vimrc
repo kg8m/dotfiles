@@ -61,19 +61,11 @@ NeoBundle 'Shougo/vimproc', {
 
 NeoBundle 'kg8m/.vim'
 NeoBundle 'mileszs/ack.vim', { 'disabled': 1 }
-NeoBundle 'alpaca-tc/alpaca_complete', {
-        \   'disabled': 1,
-        \   'on_ft':    ['ruby', 'eruby'],
-        \ },
-NeoBundleFetch 'alpaca-tc/alpaca_rails_support'
+NeoBundle 'alpaca-tc/alpaca_complete', { 'disabled': 1 }
+NeoBundle 'alpaca-tc/alpaca_rails_support', { 'disabled': 1 }
 NeoBundle 'vim-scripts/autodate.vim'
-NeoBundle 'itchyny/calendar.vim', {
-        \   'on_cmd': 'Calendar',
-        \   'on_map': '<Plug>(calendar_',
-        \ },
-NeoBundle 'tyru/caw.vim', {
-        \   'on_map': ['ns', '<Plug>(caw:'],
-        \ },
+NeoBundle 'itchyny/calendar.vim'
+NeoBundle 'tyru/caw.vim'
 NeoBundle 'rhysd/clever-f.vim', {
         \   'disabled':    1,
         \   'description': 'replaced by easymotion',
@@ -82,16 +74,11 @@ NeoBundle 'lilydjwg/colorizer', {
         \   'disabled':    1,
         \   'description': 'replaced by vim-coloresque',
         \ }
-NeoBundle 'cocopon/colorswatch.vim', {
-        \   'on_cmd': 'ColorSwatchGenerate',
-        \ },
+NeoBundle 'cocopon/colorswatch.vim'
 NeoBundle 'rhysd/conflict-marker.vim', { 'disabled': 1 }
 NeoBundleFetch 'chrisbra/csv.vim'
 NeoBundle 'spolu/dwm.vim'
-NeoBundle 'mattn/emmet-vim', {
-        \   'description': 'former zencoding-vim',
-        \   'on_i':        1,
-        \ },
+NeoBundle 'mattn/emmet-vim', { 'description': 'former zencoding-vim' }
 NeoBundle 'EnhCommentify.vim', {
         \   'disabled':    1,
         \   'description': 'replaced by caw',
@@ -102,12 +89,8 @@ NeoBundle 'sjl/gundo.vim', {
         \   'disabled':    1,
         \   'description': 'replaced by heavenshell/gundo.vim',
         \ }
-NeoBundle 'bitbucket:heavenshell/gundo.vim', {
-        \   'on_cmd': 'GundoToggle',
-        \ },
-NeoBundle 'sk1418/HowMuch', {
-        \   'on_map': ['ns', '<Plug>AutoCalc'],
-        \ },
+NeoBundle 'bitbucket:heavenshell/gundo.vim'
+NeoBundle 'sk1418/HowMuch'
 NeoBundle 'nishigori/increment-activator'
 NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'Yggdroot/indentLine', { 'disabled': 1 }
@@ -118,80 +101,40 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'AndrewRadev/linediff.vim'
 NeoBundle 'matchit.zip'
 NeoBundle 'kg8m/moin.vim'
-NeoBundle 'Shougo/neocomplcache.vim', {
-        \   'disabled': NeocompleteAvailable(),
-        \   'on_i':     1,
-        \   'on_cmd':   'NeoCompleteBufferMakeCache',
-        \ },
-NeoBundle 'Shougo/neocomplete.vim', {
-        \   'disabled': !NeocompleteAvailable(),
-        \   'on_i':     1,
-        \   'on_cmd':   'NeoCompleteBufferMakeCache',
-        \ },
+NeoBundle 'Shougo/neocomplcache.vim', { 'disabled': NeocompleteAvailable() }
+NeoBundle 'Shougo/neocomplete.vim', { 'disabled': !NeocompleteAvailable() }
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neoyank.vim'
-NeoBundle 'Shougo/neosnippet', {
-        \   'depends': ['Shougo/context_filetype.vim'],
-        \   'on_i':     1,
-        \   'on_ft':    ['snippet', 'neosnippet'],
-        \   'on_unite': ['neosnippet', 'neosnippet/user', 'neosnippet/runtime'],
-        \ },
+NeoBundle 'Shougo/neosnippet', { 'depends': 'Shougo/context_filetype.vim' }
 NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'tyru/open-browser.vim', {
-        \   'on_cmd':  ['OpenBrowserSearch', 'OpenBrowser'],
-        \   'on_func': 'openbrowser#open',
-        \   'on_map':  '<Plug>(openbrowser-open)',
-        \ },
-NeoBundle 'tyru/operator-camelize.vim', {
-        \   'on_map': ['ns', '<Plug>(operator-camelize)', '<Plug>(operator-decamelize)'],
-        \ },
+NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'vim-scripts/QuickBuf', { 'disabled': 1 }
 NeoBundle 'kien/rainbow_parentheses.vim', { 'disabled': 1 }
 NeoBundle 'chrisbra/Recover.vim'
 NeoBundle 'sequence'
 NeoBundle 'joeytwiddle/sexy_scroller.vim'
 NeoBundle 'jiangmiao/simple-javascript-indenter'
-NeoBundle 'AndrewRadev/splitjoin.vim', {
-        \   'on_cmd': ['SplitjoinJoin', 'SplitjoinSplit'],
-        \ },
+NeoBundle 'AndrewRadev/splitjoin.vim'
 NeoBundle 'sudo.vim'
 NeoBundle 'kg8m/svn-diff.vim'
 NeoBundle 'vim-scripts/Unicode-RST-Tables'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'kg8m/unite-dwm', {
-        \   'on_ft': 'unite',
-        \ }
-NeoBundle 'osyo-manga/unite-filetype', {
-        \   'on_unite': 'filetype',
-        \ },
-NeoBundle 'Shougo/unite-help', {
-        \   'on_unite': 'help',
-        \ },
+NeoBundle 'kg8m/unite-dwm'
+NeoBundle 'osyo-manga/unite-filetype'
+NeoBundle 'Shougo/unite-help'
 NeoBundle 'tacroe/unite-mark'
-NeoBundle 'Shougo/unite-outline', {
-        \   'on_unite': 'outline',
-        \ },
+NeoBundle 'Shougo/unite-outline'
 NeoBundle 'basyura/unite-rails'
-NeoBundle 'tsukkee/unite-tag', {
-        \   'on_unite': ['tag', 'tag/include', 'tag/file'],
-        \ },
-NeoBundle 'pasela/unite-webcolorname', {
-        \   'on_unite': 'webcolorname',
-        \ },
-NeoBundle 'h1mesuke/vim-alignta', {
-        \   'on_cmd':   'Alignta',
-        \   'on_unite': 'alignta',
-        \ },
-NeoBundle 'osyo-manga/vim-anzu', {
-        \   'on_map': ['ns', '<Plug>(anzu-'],
-        \ },
+NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'pasela/unite-webcolorname'
+NeoBundle 'h1mesuke/vim-alignta'
+NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'haya14busa/vim-asterisk'
 NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'itchyny/vim-autoft'
 NeoBundle 'kg8m/vim-blockle'
-NeoBundle 't9md/vim-choosewin', {
-        \   'on_map': ['ns', '<Plug>(choosewin)'],
-        \ },
+NeoBundle 't9md/vim-choosewin'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'kg8m/vim-coloresque'
 NeoBundle 'hail2u/vim-css-syntax'
@@ -204,15 +147,7 @@ NeoBundle 'tpope/vim-endwise', {
 NeoBundle 'thinca/vim-ft-diff_fold'
 NeoBundle 'thinca/vim-ft-help_fold'
 NeoBundle 'thinca/vim-ft-markdown_fold'
-NeoBundle 'lambdalisue/vim-gista', {
-        \   'on_cmd':   'Gista',
-        \   'on_map':   '<Plug>(gista-',
-        \   'on_unite': 'gista',
-        \ },
-NeoBundle 'thinca/vim-prettyprint', {
-        \   'on_cmd':  ['PrettyPrint', 'PP'],
-        \   'on_func': ['PrettyPrint', 'PP'],
-        \ },
+NeoBundle 'lambdalisue/vim-gista'
 NeoBundle 'thinca/vim-ft-svn_diff'
 NeoBundle 'thinca/vim-ft-vim_fold', { 'disabled': 1 }
 NeoBundle 'muz/vim-gemfile'
@@ -225,9 +160,7 @@ NeoBundle 'elzr/vim-json'
 NeoBundle 'rcmdnk/vim-markdown'
 NeoBundle 'joker1007/vim-markdown-quote-syntax'
 NeoBundle 'amdt/vim-niji', { 'disabled': 1 }
-NeoBundle 'kana/vim-operator-replace', {
-        \   'on_map': ['ns', '<Plug>(operator-replace)'],
-        \ },
+NeoBundle 'kana/vim-operator-replace'
 " not working in case like following:
 "   (1) text:      hoge "fu*ga piyo"
 "   (2) call: <Plug>(operator-surround-append)"'
@@ -237,33 +170,19 @@ NeoBundle 'kana/vim-operator-replace', {
 "   (2) call: <Plug>(operator-surround-replace)"'
 "   (3) expected:  hoge* 'fuga piyo'
 "   (4) result:    hoge*' fuga piyo'
-NeoBundle 'rhysd/vim-operator-surround', {
-        \   'disabled': 1,
-        \   'on_map':   ['ns', '<Plug>(operator-surround-'],
-        \ },
-NeoBundle 'kana/vim-operator-user', {
-        \   'on_func': 'operator#user#define',
-        \ }
-NeoBundle 'thinca/vim-qfreplace', {
-        \   'on_ft': ['unite', 'quickfix']
-        \ },
+NeoBundle 'rhysd/vim-operator-surround', { 'disabled': 1 }
+NeoBundle 'kana/vim-operator-user'
+NeoBundle 'thinca/vim-prettyprint'
+NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tpope/vim-rails'
-NeoBundle 'thinca/vim-ref', {
-        \   'on_cmd': 'Ref',
-        \   'on_map': '<Plug>(ref-keyword)',
-        \ },
+NeoBundle 'thinca/vim-ref'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'vim-ruby/vim-ruby', {
         \   'description': 'do not make lazy because ftdetecting does not work',
         \ }
 NeoBundle 'joker1007/vim-ruby-heredoc-syntax'
-NeoBundle 'kg8m/vim-rubytest', {
-        \   'disabled': OnTmux(),
-        \   'on_map': ['<Plug>RubyFileRun', '<Plug>RubyTestRun'],
-        \ },
-NeoBundle 'thinca/vim-singleton', {
-        \   'gui': 1,
-        \ },
+NeoBundle 'kg8m/vim-rubytest', { 'disabled': OnTmux() }
+NeoBundle 'thinca/vim-singleton'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'mhinz/vim-startify'
 NeoBundle 'kopischke/vim-stay'
@@ -272,13 +191,9 @@ NeoBundle 'deris/vim-textobj-enclosedsyntax'
 NeoBundle 'kana/vim-textobj-jabraces'
 NeoBundle 'osyo-manga/vim-textobj-multitextobj'
 NeoBundle 'rhysd/vim-textobj-ruby'
-NeoBundle 'jgdavey/vim-turbux', {
-        \   'disabled': !OnTmux(),
-        \ }
+NeoBundle 'jgdavey/vim-turbux', { 'disabled': !OnTmux() }
 NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'thinca/vim-unite-history', {
-        \   'on_unite': ['history/command', 'history/search'],
-        \ },
+NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'hrsh7th/vim-unite-vcs', {
         \   'disabled':    1,
         \   'description': 'replaced by vim-versions',
@@ -286,16 +201,9 @@ NeoBundle 'hrsh7th/vim-unite-vcs', {
 NeoBundle 'hrsh7th/vim-versions'
 NeoBundle 'superbrothers/vim-vimperator'
 NeoBundle 'Shougo/vimfiler'
-NeoBundle 'Shougo/vimshell', {
-        \   'on_cmd': ['VimShell', 'VimShellExecute'],
-        \ },
-NeoBundle 'benmills/vimux', {
-        \   'disabled': !OnTmux(),
-        \ }
-let g:winresizer_start_key = '<C-w><C-e>'
-NeoBundle 'simeji/winresizer', {
-        \   'on_map': g:winresizer_start_key,
-        \ }
+NeoBundle 'Shougo/vimshell'
+NeoBundle 'benmills/vimux', { 'disabled': !OnTmux() }
+NeoBundle 'simeji/winresizer'
 NeoBundle 'LeafCage/yankround.vim'
 
 " colorschemes
@@ -304,7 +212,18 @@ NeoBundle 'kg8m/molokai'
 " }}}
 
 " plugins settings  "{{{
+if neobundle#tap('alpaca_complete')  "{{{
+  call neobundle#config({
+  \ 'on_ft': ['ruby', 'eruby'],
+  \})
+endif  " }}}
 if neobundle#tap('vim-alignta')  "{{{
+  call neobundle#config({
+  \ 'lazy':     1,
+  \ 'on_cmd':   'Alignta',
+  \ 'on_unite': 'alignta',
+  \})
+
   vnoremap <Leader>a :Alignta<Space>
   vnoremap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
 
@@ -346,6 +265,11 @@ if neobundle#tap('vim-alignta')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('vim-anzu')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_map': ['ns', '<Plug>(anzu-'],
+  \})
+
   " see incsearch
 endif  " }}}
 if neobundle#tap('vim-asterisk')  "{{{
@@ -399,12 +323,22 @@ if neobundle#tap('vim-blockle')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('calendar.vim')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_cmd': 'Calendar',
+  \})
+
   function! neobundle#tapped.hooks.on_source(bundle) abort
     let g:calendar_google_calendar = 1
     let g:calendar_first_day       = "monday"
   endfunction
 endif  " }}}
 if neobundle#tap('caw.vim')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_map': ['ns', '<Plug>(caw:'],
+  \})
+
   nmap gc <Plug>(caw:i:toggle)
   vmap gc <Plug>(caw:i:toggle)
 
@@ -414,6 +348,11 @@ if neobundle#tap('caw.vim')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('vim-choosewin')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_map': ['ns', '<Plug>(choosewin)'],
+  \})
+
   nmap <C-w>f <Plug>(choosewin)
 
   function! neobundle#tapped.hooks.on_source(bundle) abort
@@ -423,6 +362,12 @@ if neobundle#tap('vim-choosewin')  "{{{
     let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
     let g:choosewin_tabline_replace         = 0
   endfunction
+endif  " }}}
+if neobundle#tap('colorswatch.vim')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_cmd': 'ColorSwatchGenerate',
+  \})
 endif  " }}}
 if neobundle#tap('dwm.vim')  "{{{
   nmap <C-w>n       :call DWM_New()<Cr>
@@ -480,11 +425,23 @@ if neobundle#tap('foldCC')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('vim-gista')  "{{{
+  call neobundle#config({
+  \ 'lazy':     1,
+  \ 'on_cmd':   'Gista',
+  \ 'on_map':   '<Plug>(gista-',
+  \ 'on_unite': 'gista',
+  \})
+
   function! neobundle#tapped.hooks.on_source(bundle) abort
     let g:gista#github_user = 'kg8m'
   endfunction
 endif  " }}}
 if neobundle#tap('gundo.vim')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_cmd': 'GundoToggle',
+  \})
+
   nnoremap <F5> :GundoToggle<Cr>
 
   function! neobundle#tapped.hooks.on_source(bundle) abort
@@ -493,6 +450,11 @@ if neobundle#tap('gundo.vim')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('HowMuch')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_map': ['ns', '<Plug>AutoCalc'],
+  \})
+
   vmap <Leader>? <Plug>AutoCalcReplace
   vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
 
@@ -654,6 +616,12 @@ if neobundle#tap('vim-markdown')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('neocomplcache.vim')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_i':   1,
+  \ 'on_cmd': 'NeoCompleteBufferMakeCache',
+  \})
+
   function! neobundle#tapped.hooks.on_source(bundle) abort
     let g:neocomplcache_enable_at_startup = 1
     let g:neocomplcache_enable_smart_case = 1
@@ -685,6 +653,12 @@ if neobundle#tap('neocomplcache.vim')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('neocomplete.vim')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_i':   1,
+  \ 'on_cmd': 'NeoCompleteBufferMakeCache',
+  \})
+
   function! neobundle#tapped.hooks.on_source(bundle) abort
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_smart_case = 1
@@ -730,6 +704,13 @@ if neobundle#tap('neocomplete.vim')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('neosnippet')  "{{{
+  call neobundle#config({
+  \ 'lazy':     1,
+  \ 'on_i':     1,
+  \ 'on_ft':    ['snippet', 'neosnippet'],
+  \ 'on_unite': ['neosnippet', 'neosnippet/user', 'neosnippet/runtime'],
+  \})
+
   function! neobundle#tapped.hooks.on_source(bundle) abort
     imap <expr><Tab> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     smap <expr><Tab> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
@@ -757,6 +738,13 @@ if neobundle#tap('neosnippet')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('open-browser.vim')  "{{{
+  call neobundle#config({
+  \ 'lazy':    1,
+  \ 'on_cmd':  ['OpenBrowserSearch', 'OpenBrowser'],
+  \ 'on_func': 'openbrowser#open',
+  \ 'on_map':  '<Plug>(openbrowser-open)',
+  \})
+
   nmap <Leader>o <Plug>(openbrowser-open)
   vmap <Leader>o <Plug>(openbrowser-open)
 
@@ -770,20 +758,54 @@ if neobundle#tap('open-browser.vim')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('operator-camelize.vim')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_map': ['ns', '<Plug>(operator-camelize)', '<Plug>(operator-decamelize)'],
+  \})
+
   vmap <Leader>C <Plug>(operator-camelize)
   vmap <Leader>c <Plug>(operator-decamelize)
 endif  " }}}
 if neobundle#tap('vim-operator-replace')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_map': ['ns', '<Plug>(operator-replace)'],
+  \})
+
   nmap r <Plug>(operator-replace)
   vmap r <Plug>(operator-replace)
 endif  " }}}
 if neobundle#tap('vim-operator-surround')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_map': ['ns', '<Plug>(operator-surround-'],
+  \})
+
   nmap <silent>sa <Plug>(operator-surround-append)
   nmap <silent>sd <Plug>(operator-surround-delete)
   nmap <silent>sr <Plug>(operator-surround-replace)
   vmap <silent>sa <Plug>(operator-surround-append)
   vmap <silent>sd <Plug>(operator-surround-delete)
   vmap <silent>sr <Plug>(operator-surround-replace)
+endif  " }}}
+if neobundle#tap('vim-operator-user')  "{{{
+  call neobundle#config({
+  \ 'lazy':    1,
+  \ 'on_func': 'operator#user#define',
+  \})
+endif  " }}}
+if neobundle#tap('vim-prettyprint')  "{{{
+  call neobundle#config({
+  \ 'lazy':    1,
+  \ 'on_cmd':  ['PrettyPrint', 'PP'],
+  \ 'on_func': ['PrettyPrint', 'PP'],
+  \})
+endif  " }}}
+if neobundle#tap('vim-qfreplace')  "{{{
+  call neobundle#config({
+  \ 'lazy':  1,
+  \ 'on_ft': ['unite', 'quickfix']
+  \})
 endif  " }}}
 if neobundle#tap('vim-rails')  "{{{
   function! neobundle#tapped.hooks.on_source(bundle) abort
@@ -818,6 +840,12 @@ if neobundle#tap('vim-rails')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('vim-ref')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_cmd': 'Ref',
+  \ 'on_map': '<Plug>(ref-keyword)',
+  \})
+
   nmap K <Plug>(ref-keyword)
 endif  " }}}
 if neobundle#tap('vim-ruby')  "{{{
@@ -834,6 +862,11 @@ if neobundle#tap('vim-ruby-heredoc-syntax')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('vim-rubytest')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_map': ['<Plug>RubyFileRun', '<Plug>RubyTestRun'],
+  \})
+
   nmap <leader>T <Plug>RubyFileRun
   nmap <leader>t <Plug>RubyTestRun
 
@@ -855,6 +888,10 @@ if neobundle#tap('simple-javascript-indenter')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('vim-singleton')  "{{{
+  call neobundle#config({
+  \ 'gui': 1,
+  \})
+
   function! neobundle#tapped.hooks.on_source(bundle) abort
     if has('gui_running') && !singleton#is_master()
       let g:singleton#opener = 'drop'
@@ -863,6 +900,11 @@ if neobundle#tap('vim-singleton')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('splitjoin.vim')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_cmd': ['SplitjoinJoin', 'SplitjoinSplit'],
+  \})
+
   nnoremap <Leader>J :SplitjoinJoin<Cr>
   nnoremap <Leader>S :SplitjoinSplit<Cr>
 
@@ -970,7 +1012,7 @@ if neobundle#tap('vim-textobj-multitextobj')  "{{{
       \ ]
   endfunction
 endif  " }}}
-if neobundle#tap('turbux')  "{{{
+if neobundle#tap('vim-turbux')  "{{{
   map <leader>T <Plug>SendTestToTmux
   map <leader>t <Plug>SendFocusedTestToTmux
 
@@ -989,7 +1031,6 @@ if neobundle#tap('unite.vim')  "{{{
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
   vnoremap <Leader>ug "vy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
   nnoremap <Leader>uy :<C-u>Unite history/yank<Cr>
-  nnoremap <Leader>uo :<C-u>Unite outline:!<Cr>
   nnoremap <Leader>uc :<C-u>Unite webcolorname<Cr>
   nnoremap <Leader>ub :<C-u>Unite buffer<Cr>
   nnoremap <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
@@ -997,15 +1038,7 @@ if neobundle#tap('unite.vim')  "{{{
   " nnoremap <Leader>um :<C-u>Unite neomru/file<Cr>
   nnoremap <Leader>uu :<C-u>Unite buffer neomru/file<Cr>
   nnoremap <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neomru/file bookmark file<Cr>
-
   nnoremap <F4> :<C-u>Unite buffer<Cr>
-  nnoremap <Leader>m :<C-u>Unite neomru/file<Cr>
-  nnoremap <Leader>um :<C-u>Unite mark<Cr>
-  " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
-  nnoremap <silent> m :<C-u>call <SID>auto_mark()<Cr>
-  nnoremap <Leader>ur :<C-u>Unite rails/
-  nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
-  nnoremap <Leader>uv :<C-u>UniteVersions status:./<Cr>
 
   function! neobundle#tapped.hooks.on_source(bundle) abort
     let g:unite_winheight = '100%'
@@ -1118,6 +1151,8 @@ if neobundle#tap('unite.vim')  "{{{
   endfunction
 
   if neobundle#tap('neomru.vim')  "{{{
+    nnoremap <Leader>m :<C-u>Unite neomru/file<Cr>
+
     function! neobundle#tapped.hooks.on_source(bundle) abort
       let g:neomru#time_format     = "(%Y/%m/%d %H:%M:%S) "
       let g:neomru#filename_format = ":~:."
@@ -1132,12 +1167,33 @@ if neobundle#tap('unite.vim')  "{{{
   endif  " }}}
 
   if neobundle#tap('unite-dwm')  "{{{
+    call neobundle#config({
+    \ 'lazy':  1,
+    \ 'on_ft': 'unite',
+    \})
+
     function! neobundle#tapped.hooks.on_source(bundle) abort
       let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,cdable"
     endfunction
   endif  " }}}
 
+  if neobundle#tap('unite-filetype')  "{{{
+    call neobundle#config({
+    \ 'lazy':     1,
+    \ 'on_unite': 'filetype',
+    \})
+  endif  " }}}
+
   if neobundle#tap('unite-mark')  "{{{
+    call neobundle#config({
+    \ 'lazy':     1,
+    \ 'on_unite': 'mark',
+    \})
+
+    nnoremap <Leader>um :<C-u>Unite mark<Cr>
+    " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
+    nnoremap <silent> m :<C-u>call <SID>auto_mark()<Cr>
+
     function! neobundle#tapped.hooks.on_source(bundle) abort
       let g:mark_ids = [
         \   "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
@@ -1163,10 +1219,32 @@ if neobundle#tap('unite.vim')  "{{{
     endfunction
   endif  " }}}
 
+  if neobundle#tap('unite-outline')  "{{{
+    call neobundle#config({
+    \ 'lazy':     1,
+    \ 'on_unite': 'outline',
+    \})
+
+    nnoremap <Leader>uo :<C-u>Unite outline:!<Cr>
+  endif  " }}}
+
   if neobundle#tap('unite-rails')  "{{{
+    call neobundle#config({
+    \ 'lazy':     1,
+    \ 'on_unite': 'rails',
+    \})
+
+    nnoremap <Leader>ur :<C-u>Unite rails/
   endif  " }}}
 
   if neobundle#tap('unite-tag')  "{{{
+    call neobundle#config({
+    \ 'lazy':     1,
+    \ 'on_unite': ['tag', 'tag/include', 'tag/file'],
+    \})
+
+    nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
+
     function! neobundle#tapped.hooks.on_source(bundle) abort
       augroup UniteTagSettings
         autocmd!
@@ -1186,7 +1264,23 @@ if neobundle#tap('unite.vim')  "{{{
     endfunction
   endif  " }}}
 
+  if neobundle#tap('unite-webcolorname')  "{{{
+    call neobundle#config({
+    \ 'lazy':     1,
+    \ 'on_unite': 'webcolorname',
+    \})
+  endif  " }}}
+
+  if neobundle#tap('vim-unite-history')  "{{{
+    call neobundle#config({
+    \ 'lazy':     1,
+    \ 'on_unite': ['history/command', 'history/search'],
+    \})
+  endif  " }}}
+
   if neobundle#tap('vim-versions')  "{{{
+    nnoremap <Leader>uv :<C-u>UniteVersions status:./<Cr>
+
     function! neobundle#tapped.hooks.on_source(bundle) abort
       let g:versions#type#svn#status#ignore_status = ['X']
 
@@ -1229,6 +1323,11 @@ if neobundle#tap('vimfiler')  "{{{
   endfunction
 endif  " }}}
 if neobundle#tap('vimshell')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_cmd': ['VimShell', 'VimShellExecute'],
+  \})
+
   nnoremap <Leader>s :VimShell<Cr>
 
   function! neobundle#tapped.hooks.on_source(bundle) abort
@@ -1279,6 +1378,14 @@ if neobundle#tap('vimux')  "{{{
     augroup END
   endfunction
 endif  " }}}
+if neobundle#tap('winresizer')  "{{{
+  call neobundle#config({
+  \ 'lazy':   1,
+  \ 'on_map': '<C-w><C-e>',
+  \})
+
+  let g:winresizer_start_key = '<C-w><C-e>'
+endif  " }}}
 if neobundle#tap('yankround.vim')  "{{{
   nmap p <Plug>(yankround-p)
   nmap P <Plug>(yankround-P)
@@ -1286,6 +1393,11 @@ if neobundle#tap('yankround.vim')  "{{{
   nmap <C-n> <Plug>(yankround-next)
 endif  " }}}
 if neobundle#tap('emmet-vim')  "{{{
+  call neobundle#config({
+  \ 'lazy': 1,
+  \ 'on_i': 1,
+  \})
+
   function! neobundle#tapped.hooks.on_source(bundle) abort
     " command: <C-y>,
     let g:user_emmet_settings = {
