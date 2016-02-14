@@ -219,7 +219,7 @@ if neobundle#tap('alpaca_complete')  "{{{
 endif  " }}}
 
 if neobundle#tap('autodate.vim')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:autodate_format       = '%Y/%m/%d'
     let g:autodate_lines        = 100
     let g:autodate_keyword_pre  = '\c\%(' .
@@ -237,7 +237,7 @@ if neobundle#tap('calendar.vim')  "{{{
   \ 'on_cmd': 'Calendar',
   \})
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:calendar_google_calendar = 1
     let g:calendar_first_day       = "monday"
   endfunction
@@ -252,7 +252,7 @@ if neobundle#tap('caw.vim')  "{{{
   nmap gc <Plug>(caw:i:toggle)
   vmap gc <Plug>(caw:i:toggle)
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:caw_no_default_keymappings = 1
     let g:caw_i_skip_blank_line      = 1
   endfunction
@@ -270,7 +270,7 @@ if neobundle#tap('dwm.vim')  "{{{
   nmap <C-w>c       :call DWM_Close()<Cr>
   nmap <C-w><Space> :call DWM_AutoEnter()<Cr>
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:dwm_map_keys = 0
     let g:dwm_augroup_cleared = 0
     function! s:ClearDwmAugroup()
@@ -295,7 +295,7 @@ if neobundle#tap('emmet-vim')  "{{{
   \ 'on_i': 1,
   \})
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     " command: <C-y>,
     let g:user_emmet_settings = {
       \   'indentation': '  ',
@@ -325,7 +325,7 @@ if neobundle#tap('emmet-vim')  "{{{
 endif  " }}}
 
 if neobundle#tap('foldCC')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:foldCCtext_enable_autofdc_adjuster = 1
     let g:foldCCtext_maxchars = 120
     set foldtext=FoldCCtext()
@@ -340,7 +340,7 @@ if neobundle#tap('gundo.vim')  "{{{
 
   nnoremap <F5> :GundoToggle<Cr>
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
     let g:gundo_auto_preview = 0
   endfunction
@@ -355,14 +355,14 @@ if neobundle#tap('HowMuch')  "{{{
   vmap <Leader>? <Plug>AutoCalcReplace
   vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     " replace expr with result
     let g:HowMuch_scale = 5
   endfunction
 endif  " }}}
 
 if neobundle#tap('increment-activator')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:increment_activator_filetype_candidates = {
       \   "_": [
       \     ["有", "無"],
@@ -406,7 +406,7 @@ if neobundle#tap('incsearch.vim')  "{{{
   map g* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
   map g# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     " asterisk's `z` commands are "stay star motions"
     let g:incsearch#auto_nohlsearch = 0
     let g:incsearch#magic = '\v'
@@ -414,25 +414,25 @@ if neobundle#tap('incsearch.vim')  "{{{
 endif  " }}}
 
 if neobundle#tap('indentLine')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:indentLine_char = '|'
   endfunction
 endif  " }}}
 
 if neobundle#tap('JpFormat.vim')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let JpCountChars = 37
   endfunction
 endif  " }}}
 
 if neobundle#tap('jscomplete-vim.git')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:jscomplete_use = ['dom', 'moz', 'es6th']
   endfunction
 endif  " }}}
 
 if neobundle#tap('lightline.vim')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     " http://d.hatena.ne.jp/itchyny/20130828/1377653592
     set laststatus=2
     let s:lightline_elements = {
@@ -482,7 +482,7 @@ if neobundle#tap('lightline.vim')  "{{{
 endif  " }}}
 
 if neobundle#tap('linediff.vim')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:linediff_second_buffer_command = 'rightbelow vertical new'
   endfunction
 endif  " }}}
@@ -494,7 +494,7 @@ if neobundle#tap('neocomplcache.vim')  "{{{
   \ 'on_cmd': 'NeoCompleteBufferMakeCache',
   \})
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:neocomplcache_enable_at_startup = 1
     let g:neocomplcache_enable_smart_case = 1
     let g:neocomplcache_enable_camel_case_completion = 0
@@ -532,7 +532,7 @@ if neobundle#tap('neocomplete.vim')  "{{{
   \ 'on_cmd': 'NeoCompleteBufferMakeCache',
   \})
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_smart_case = 1
     let g:neocomplete#enable_fuzzy_completion = 1
@@ -585,7 +585,7 @@ if neobundle#tap('neosnippet')  "{{{
   \ 'on_source': 'unite.vim',
   \})
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     imap <expr><Tab> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     smap <expr><Tab> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -623,7 +623,7 @@ if neobundle#tap('open-browser.vim')  "{{{
   nmap <Leader>o <Plug>(openbrowser-open)
   vmap <Leader>o <Plug>(openbrowser-open)
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:openbrowser_browser_commands = [
       \   {
       \     "name": "ssh",
@@ -651,7 +651,7 @@ if neobundle#tap('sequence')  "{{{
 endif  " }}}
 
 if neobundle#tap('simple-javascript-indenter')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:SimpleJsIndenter_BriefMode = 2
     let g:SimpleJsIndenter_CaseIndentLevel = -1
   endfunction
@@ -666,7 +666,7 @@ if neobundle#tap('splitjoin.vim')  "{{{
   nnoremap <Leader>J :SplitjoinJoin<Cr>
   nnoremap <Leader>S :SplitjoinSplit<Cr>
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:splitjoin_split_mapping       = ''
     let g:splitjoin_join_mapping        = ''
     let g:splitjoin_ruby_trailing_comma = 1
@@ -675,7 +675,7 @@ if neobundle#tap('splitjoin.vim')  "{{{
 endif  " }}}
 
 if neobundle#tap('Unicode-RST-Tables')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:no_rst_table_maps = 0
   endfunction
 endif  " }}}
@@ -699,7 +699,7 @@ if neobundle#tap('unite.vim')  "{{{
   nnoremap <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neomru/file bookmark file<Cr>
   nnoremap <F4> :<C-u>Unite buffer<Cr>
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:unite_winheight = '100%'
     let g:unite_cursor_line_highlight = 'CursorLine'
 
@@ -817,7 +817,7 @@ if neobundle#tap('unite.vim')  "{{{
 
     nnoremap <Leader>m :<C-u>Unite neomru/file<Cr>
 
-    function! neobundle#tapped.hooks.on_source(bundle) abort
+    function! neobundle#hooks.on_source(bundle) abort
       let g:neomru#time_format     = "(%Y/%m/%d %H:%M:%S) "
       let g:neomru#filename_format = ":~:."
       let g:neomru#file_mru_limit  = 1000
@@ -830,7 +830,7 @@ if neobundle#tap('unite.vim')  "{{{
     \ 'on_source': 'unite.vim',
     \})
 
-    function! neobundle#tapped.hooks.on_source(bundle) abort
+    function! neobundle#hooks.on_source(bundle) abort
       let g:neoyank#limit = 300
     endfunction
   endif  " }}}
@@ -841,7 +841,7 @@ if neobundle#tap('unite.vim')  "{{{
     \ 'on_ft': 'unite',
     \})
 
-    function! neobundle#tapped.hooks.on_source(bundle) abort
+    function! neobundle#hooks.on_source(bundle) abort
       let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,cdable"
     endfunction
   endif  " }}}
@@ -863,7 +863,7 @@ if neobundle#tap('unite.vim')  "{{{
     " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
     nnoremap <silent> m :<C-u>call <SID>auto_mark()<Cr>
 
-    function! neobundle#tapped.hooks.on_source(bundle) abort
+    function! neobundle#hooks.on_source(bundle) abort
       let g:mark_ids = [
         \   "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
         \   "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
@@ -914,7 +914,7 @@ if neobundle#tap('unite.vim')  "{{{
 
     nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
 
-    function! neobundle#tapped.hooks.on_source(bundle) abort
+    function! neobundle#hooks.on_source(bundle) abort
       augroup UniteTagSettings
         autocmd!
 
@@ -956,7 +956,7 @@ if neobundle#tap('unite.vim')  "{{{
 
     nnoremap <Leader>uv :<C-u>UniteVersions status:./<Cr>
 
-    function! neobundle#tapped.hooks.on_source(bundle) abort
+    function! neobundle#hooks.on_source(bundle) abort
       let g:versions#type#svn#status#ignore_status = ['X']
 
       function! s:AddActionsToVersions()
@@ -998,7 +998,7 @@ if neobundle#tap('vim-alignta')  "{{{
   vnoremap <Leader>a :Alignta<Space>
   vnoremap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:unite_source_alignta_preset_arguments = [
       \   ["Align at '=>'       --  `=>`",                        '=>'],
       \   ["Align at /\\S/      --  `\\S\\+`",                    '\S\+'],
@@ -1050,7 +1050,7 @@ if neobundle#tap('vim-asterisk')  "{{{
 endif  " }}}
 
 if neobundle#tap('vim-autoclose')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     " annoying to type "<<" in Ruby code>
     " let g:AutoClosePairs_add = "<>"
     let g:AutoCloseSelectionWrapPrefix = "<Leader>ac"
@@ -1070,7 +1070,7 @@ if neobundle#tap('vim-autoclose')  "{{{
 endif  " }}}
 
 if neobundle#tap('vim-autoft')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:autoft_config = [
       \   { 'filetype': 'html',       'pattern': '<\%(!DOCTYPE\|html\|head\|script\)' },
       \   { 'filetype': 'javascript', 'pattern': '\%(^\s*\<var\>\s\+[a-zA-Z]\+\)\|\%(function\%(\s\+[a-zA-Z]\+\)\?\s*(\)' },
@@ -1081,7 +1081,7 @@ if neobundle#tap('vim-autoft')  "{{{
 endif  " }}}
 
 if neobundle#tap('vim-blockle')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:blockle_mapping = ",b"
     let g:blockle_erase_spaces_around_starting_brace = 1
   endfunction
@@ -1095,7 +1095,7 @@ if neobundle#tap('vim-choosewin')  "{{{
 
   nmap <C-w>f <Plug>(choosewin)
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:choosewin_overlay_enable          = 0  " wanna set true but too heavy
     let g:choosewin_overlay_clear_multibyte = 1
     let g:choosewin_blink_on_land           = 0
@@ -1116,7 +1116,7 @@ if neobundle#tap('vim-easymotion')  "{{{
   vmap F <Plug>(easymotion-Fl)
   omap F <Plug>(easymotion-Fl)
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     " http://haya14busa.com/vim-lazymotion-on-speed/
     let g:EasyMotion_do_mapping  = 0
     let g:EasyMotion_do_shade    = 0
@@ -1138,13 +1138,13 @@ if neobundle#tap('vim-gista')  "{{{
   \ 'on_source': 'unite.vim',
   \})
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:gista#github_user = 'kg8m'
   endfunction
 endif  " }}}
 
 if neobundle#tap('vim-javascript-syntax')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     function! s:MyJavascriptFold()
       if !exists("b:javascript_folded")
         call JavaScriptFold()
@@ -1156,13 +1156,13 @@ if neobundle#tap('vim-javascript-syntax')  "{{{
 endif  " }}}
 
 if neobundle#tap('vim-json')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:vim_json_syntax_conceal = 0
   endfunction
 endif  " }}}
 
 if neobundle#tap('vim-markdown')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:markdown_quote_syntax_filetypes = {
       \   "coffee": {
       \     "start": "coffee",
@@ -1226,7 +1226,7 @@ if neobundle#tap('vim-qfreplace')  "{{{
 endif  " }}}
 
 if neobundle#tap('vim-rails')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     " http://fg-180.katamayu.net/archives/2006/09/02/125150
     let g:rails_level = 4
     let g:rails_projections = {
@@ -1269,13 +1269,13 @@ if neobundle#tap('vim-ref')  "{{{
 endif  " }}}
 
 if neobundle#tap('vim-ruby')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:no_ruby_maps = 1
   endfunction
 endif  " }}}
 
 if neobundle#tap('vim-ruby-heredoc-syntax')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:ruby_heredoc_syntax_filetypes = {
       \   "haml": { "start": "HAML" },
       \   "ruby": { "start": "RUBY" },
@@ -1292,7 +1292,7 @@ if neobundle#tap('vim-rubytest')  "{{{
   nmap <leader>T <Plug>RubyFileRun
   nmap <leader>t <Plug>RubyTestRun
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:no_rubytest_mappings = 1
     let g:rubytest_in_vimshell = 1
   endfunction
@@ -1303,7 +1303,7 @@ if neobundle#tap('vim-singleton')  "{{{
   \ 'gui': 1,
   \})
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     if has('gui_running') && !singleton#is_master()
       let g:singleton#opener = 'drop'
       call singleton#enable()
@@ -1312,7 +1312,7 @@ if neobundle#tap('vim-singleton')  "{{{
 endif  " }}}
 
 if neobundle#tap('vim-startify')  "{{{
-  function! neobundle#tapped.hooks.on_post_source(bundle) abort
+  function! neobundle#hooks.on_post_source(bundle) abort
     highlight StartifyFile   ctermfg=255
     highlight StartifyHeader ctermfg=255
     highlight StartifyPath   ctermfg=245
@@ -1366,7 +1366,7 @@ if neobundle#tap('vim-startify')  "{{{
 endif  " }}}
 
 if neobundle#tap('vim-stay')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     set viewoptions=cursor
   endfunction
 endif  " }}}
@@ -1377,7 +1377,7 @@ if neobundle#tap('vim-textobj-multitextobj')  "{{{
   vmap aj <Plug>(textobj-multitextobj-a)
   vmap ij <Plug>(textobj-multitextobj-i)
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:textobj_multitextobj_textobjects_a = [
       \   [
       \     "\<Plug>(textobj-jabraces-parens-a)",
@@ -1415,7 +1415,7 @@ if neobundle#tap('vim-turbux')  "{{{
   map <leader>T <Plug>SendTestToTmux
   map <leader>t <Plug>SendFocusedTestToTmux
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:no_turbux_mappings = 1
     let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
   endfunction
@@ -1424,7 +1424,7 @@ endif  " }}}
 if neobundle#tap('vimfiler')  "{{{
   nnoremap <Leader>e :VimFilerBufferDir -force-quit<Cr>
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     call vimfiler#custom#profile("default", "context", {
        \   "safe": 0,
        \   "split_action": "dwm_open",
@@ -1440,7 +1440,7 @@ if neobundle#tap('vimshell')  "{{{
 
   nnoremap <Leader>s :VimShell<Cr>
 
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     if s:on_windows
       let g:_user_name = $USERNAME
     else
@@ -1454,7 +1454,7 @@ if neobundle#tap('vimshell')  "{{{
 endif  " }}}
 
 if neobundle#tap('vimux')  "{{{
-  function! neobundle#tapped.hooks.on_source(bundle) abort
+  function! neobundle#hooks.on_source(bundle) abort
     let g:VimuxHeight = 30
     let g:VimuxUseNearest = 1
 
