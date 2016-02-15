@@ -856,12 +856,14 @@ if neobundle#tap('unite.vim')  "{{{
   if neobundle#tap('unite-mark')  "{{{
     call neobundle#config({
     \ 'lazy':      1,
+    \ 'on_func':   'AutoMark',
     \ 'on_source': 'unite.vim',
+    \ 'depneds':   'unite.vim',
     \})
 
     nnoremap <Leader>um :<C-u>Unite mark<Cr>
     " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
-    nnoremap <silent> m :<C-u>call <SID>auto_mark()<Cr>
+    nnoremap <silent> m :<C-u>call AutoMark()<Cr>
 
     function! neobundle#hooks.on_source(bundle) abort
       let g:mark_ids = [
@@ -871,7 +873,7 @@ if neobundle#tap('unite.vim')  "{{{
         \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
         \ ]
       let g:unite_source_mark_marks = join(g:mark_ids, "")
-      function! s:auto_mark()
+      function! AutoMark()
           if !exists("b:mark_position")
             let b:mark_position = 0
           else
@@ -909,7 +911,7 @@ if neobundle#tap('unite.vim')  "{{{
   if neobundle#tap('unite-tag')  "{{{
     call neobundle#config({
     \ 'lazy':      1,
-    \ 'on_func':   ['UniteWithCursorWord', 'Unite'],
+    \ 'on_cmd':    'UniteWithCursorWord',
     \ 'on_source': 'unite.vim',
     \ 'depneds':   'unite.vim',
     \})
@@ -939,6 +941,7 @@ if neobundle#tap('unite.vim')  "{{{
     \ 'lazy':      1,
     \ 'on_cmd':    'UniteVersions',
     \ 'on_source': 'unite.vim',
+    \ 'depneds':   'unite.vim',
     \})
 
     nnoremap <Leader>uv :<C-u>UniteVersions status:./<Cr>
