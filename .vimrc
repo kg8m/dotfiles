@@ -93,6 +93,7 @@ NeoBundle 'bitbucket:heavenshell/gundo.vim'
 NeoBundle 'sk1418/HowMuch'
 NeoBundle 'nishigori/increment-activator'
 NeoBundle 'haya14busa/incsearch.vim'
+NeoBundle 'haya14busa/incsearch-index.vim', { 'disabled': 1 }
 NeoBundle 'Yggdroot/indentLine', { 'disabled': 1 }
 NeoBundle 'othree/javascript-libraries-syntax.vim', { 'disabled': 1 }
 NeoBundle 'fuenor/JpFormat.vim'
@@ -412,6 +413,11 @@ if neobundle#tap('incsearch.vim')  "{{{
     let g:incsearch#auto_nohlsearch = 0
     let g:incsearch#magic = '\v'
   endfunction
+
+  if neobundle#tap('incsearch-index.vim')  "{{{
+    map /  <Plug>(incsearch-index-/)
+    map ?  <Plug>(incsearch-index-?)
+  endif  " }}}
 endif  " }}}
 
 if neobundle#tap('indentLine')  "{{{
