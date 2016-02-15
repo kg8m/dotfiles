@@ -909,28 +909,15 @@ if neobundle#tap('unite.vim')  "{{{
   if neobundle#tap('unite-tag')  "{{{
     call neobundle#config({
     \ 'lazy':      1,
+    \ 'on_func':   ['UniteWithCursorWord', 'Unite'],
     \ 'on_source': 'unite.vim',
+    \ 'depneds':   'unite.vim',
     \})
 
+    nnoremap g] :<C-u>UniteWithCursorWord -immediately tag<CR>
+    vnoremap g] :<C-u>UniteWithCursorWord -immediately tag<CR>
+    nnoremap g[ :<C-u>Unite jump<CR>
     nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
-
-    function! neobundle#hooks.on_source(bundle) abort
-      augroup UniteTagSettings
-        autocmd!
-
-        autocmd BufEnter *
-        \   if empty(&buftype)
-        \|    nnoremap <buffer> g] :<C-u>UniteWithCursorWord -immediately tag<CR>
-        \|    vnoremap <buffer> g] :<C-u>UniteWithCursorWord -immediately tag<CR>
-        \|  endif
-
-        " http://qiita.com/kazu0620/items/d7da3047daed04fc5eba
-        autocmd BufEnter *
-        \   if empty(&buftype)
-        \|    nnoremap <buffer> g[ :<C-u>Unite jump<CR>
-        \|  endif
-      augroup END
-    endfunction
   endif  " }}}
 
   if neobundle#tap('unite-webcolorname')  "{{{
