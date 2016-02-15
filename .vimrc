@@ -200,6 +200,7 @@ NeoBundle 'hrsh7th/vim-unite-vcs', {
         \ }
 NeoBundle 'hrsh7th/vim-versions'
 NeoBundle 'superbrothers/vim-vimperator'
+NeoBundle 'thinca/vim-zenspace'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'benmills/vimux', { 'disabled': !OnTmux() }
@@ -1411,6 +1412,17 @@ if neobundle#tap('vim-turbux')  "{{{
   endfunction
 endif  " }}}
 
+if neobundle#tap('vim-zenspace')  "{{{
+  function! neobundle#hooks.on_source(bundle) abort
+    let g:zenspace#default_mode = 'on'
+
+    augroup HighlightZenkakuSpace
+      autocmd!
+      autocmd ColorScheme * highlight ZenSpace term=underline ctermbg=Cyan guibg=Cyan
+    augroup END
+  endfunction
+endif  " }}}
+
 if neobundle#tap('vimfiler')  "{{{
   nnoremap <Leader>e :VimFilerBufferDir -force-quit<Cr>
 
@@ -1570,12 +1582,6 @@ set diffopt+=horizontal,context:10
 " make listchars visible
 set list
 set listchars=tab:>\ ,eol:\ ,trail:_
-
-" make ZenkakuSpace visible
-augroup HighlightZenkakuSpace
-  autocmd!
-  autocmd BufNewFile,BufRead * match Underlined /　/
-augroup END
 " }}}
 
 " ----------------------------------------------
