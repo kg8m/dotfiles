@@ -411,7 +411,7 @@ if neobundle#tap("incsearch.vim")  "{{{
   function! neobundle#hooks.on_source(bundle) abort
     " asterisk's `z` commands are "stay star motions"
     let g:incsearch#auto_nohlsearch = 0
-    let g:incsearch#magic = "\v"
+    let g:incsearch#magic = '\v'
   endfunction
 
   if neobundle#tap("incsearch-index.vim")  "{{{
