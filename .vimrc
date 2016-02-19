@@ -842,8 +842,9 @@ if neobundle#tap("unite.vim")  "{{{
 
   if neobundle#tap("unite-dwm")  "{{{
     call neobundle#config({
-    \ "lazy":  1,
-    \ "on_ft": "unite",
+    \ "lazy":    1,
+    \ "on_ft":   "unite",
+    \ "depends": "unite.vim",
     \})
 
     function! neobundle#hooks.on_source(bundle) abort
@@ -855,6 +856,7 @@ if neobundle#tap("unite.vim")  "{{{
     call neobundle#config({
     \ "lazy":      1,
     \ "on_source": "unite.vim",
+    \ "depends":   "unite.vim",
     \})
   endif  " }}}
 
@@ -899,6 +901,7 @@ if neobundle#tap("unite.vim")  "{{{
     call neobundle#config({
     \ "lazy":      1,
     \ "on_source": "unite.vim",
+    \ "depends":   "unite.vim",
     \})
 
     nnoremap <Leader>uo :<C-u>Unite outline:!<Cr>
@@ -908,6 +911,7 @@ if neobundle#tap("unite.vim")  "{{{
     call neobundle#config({
     \ "lazy":      1,
     \ "on_source": "unite.vim",
+    \ "depends":   "unite.vim",
     \})
 
     nnoremap <Leader>ur :<C-u>Unite rails/
@@ -931,6 +935,7 @@ if neobundle#tap("unite.vim")  "{{{
     call neobundle#config({
     \ "lazy":      1,
     \ "on_source": "unite.vim",
+    \ "depends":   "unite.vim",
     \})
   endif  " }}}
 
@@ -938,6 +943,7 @@ if neobundle#tap("unite.vim")  "{{{
     call neobundle#config({
     \ "lazy":      1,
     \ "on_source": "unite.vim",
+    \ "depends":   "unite.vim",
     \})
   endif  " }}}
 
