@@ -196,6 +196,7 @@ NeoBundle "jgdavey/vim-turbux", { "disabled": !OnTmux() }
 NeoBundle "kana/vim-textobj-user"
 NeoBundle "thinca/vim-unite-history"
 NeoBundle "kmnk/vim-unite-giti"
+NeoBundle "kmnk/vim-unite-svn"
 NeoBundle "hrsh7th/vim-unite-vcs", {
         \   "disabled":    1,
         \   "description": "replaced by vim-versions",
@@ -955,6 +956,16 @@ if neobundle#tap("unite.vim")  "{{{
     \})
 
     nnoremap <Leader>uvg :<C-u>Unite giti/status<Cr>
+  endif  " }}}
+
+  if neobundle#tap("vim-unite-svn")  "{{{
+    call neobundle#config({
+    \ "lazy":      1,
+    \ "on_source": "unite.vim",
+    \ "depends":   "unite.vim",
+    \})
+
+    nnoremap <Leader>uvs :<C-u>Unite svn/status<Cr>
   endif  " }}}
 
   if neobundle#tap("vim-versions")  "{{{
