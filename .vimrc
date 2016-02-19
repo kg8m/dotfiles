@@ -956,6 +956,10 @@ if neobundle#tap("unite.vim")  "{{{
     \})
 
     nnoremap <Leader>uvg :<C-u>Unite giti/status<Cr>
+
+    function! neobundle#hooks.on_source(bundle) abort
+      let g:giti_log_default_line_count = 1000
+    endfunction
   endif  " }}}
 
   if neobundle#tap("vim-unite-svn")  "{{{
