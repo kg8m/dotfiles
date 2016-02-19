@@ -43,7 +43,7 @@ dh  = diff HEAD
 dc  = diff --cached
 lo  = log --stat
 lp  = log -p --stat
-lg  = log --graph --pretty=format:\"%Cgreen%h %cd %Cblue%cn %Creset%s\"
+lg  = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
 re  = reset --soft HEAD^
 co  = checkout
 ch  = checkout HEAD
