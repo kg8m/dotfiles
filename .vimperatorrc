@@ -103,13 +103,13 @@ inoremap <C-b> <PageUp>
 " n/N でも全部ハイライトさせる
 " needs to be fixed if Vimperator's core codes change
 javascript << EOM
-finder.originalFindAgain = finder.findAgain;
+finder.__originalFindAgain__ = finder.findAgain;
 finder.findAgain = function(reverse) {
   if (options["hlsearch"]) {
     this.highlight(this._lastSearchString);
   }
 
-  this.originalFindAgain(reverse);
+  this.__originalFindAgain__(reverse);
 };
 EOM
 
