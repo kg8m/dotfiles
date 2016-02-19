@@ -100,14 +100,25 @@ inoremap <C-p> <Esc><C-p>
 inoremap <C-f> <PageDown>
 inoremap <C-b> <PageUp>
 
+" 別タブでページ内検索したワードを引き継ぐ
 " n/N でも全部ハイライトさせる
 " FirefoxProfileDir/extensions/vimperator@mozdev.org/common/content/finder.js
 " needs to be fixed if Vimperator's core codes change
 javascript << EOM
+  finder.__originalFind__ = finder.find;
+  finder.find = function(str) {
+    this.__originalFind__(str);
+    this.__lastSearchString__ = str;
+  };
+
   finder.__originalFindAgain__ = finder.findAgain;
   finder.findAgain = function(reverse) {
     if (options["hlsearch"]) {
-      this.highlight(this._lastSearchString);
+      this.highlight(this.__lastSearchString__);
+    }
+
+    if (!this.findbar._findField.value) {
+      this.findbar._findField.value = this.__lastSearchString__;
     }
 
     this.__originalFindAgain__(reverse);
