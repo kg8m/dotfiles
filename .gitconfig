@@ -35,24 +35,24 @@ editor = vim
 autosetupmerge = true
 
 [alias]
-ci  = commit -v
-ca  = commit -va
-di  = diff -b
-dia = diff
-dh  = diff HEAD
-dc  = diff --cached
-lo  = log --stat
-lp  = log -p --stat
-lg  = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
-re  = reset --soft HEAD^
-co  = checkout
-ch  = checkout HEAD
-rv  = revert
-ad  = add
-st  = status
-br  = branch
-su  = submodule update -i
-rm  = rm --cached -f
+ci = commit -v
+ca = commit -va
+di = diff -b
+da = diff
+dh = diff HEAD
+dc = diff --cached
+lo = log --stat
+lp = log -p --stat
+lg = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
+re = reset --soft HEAD^
+co = checkout
+ch = checkout HEAD
+rv = revert
+ad = add
+st = status
+br = branch
+su = submodule update -i
+rm = rm --cached -f
 
 [github]
 user = kg8m
