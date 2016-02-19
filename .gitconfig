@@ -35,7 +35,8 @@ editor = vim
 autosetupmerge = true
 
 [alias]
-ci  = commit -av
+ci  = commit -v
+ca  = commit -va
 di  = diff -b
 dia = diff
 dh  = diff HEAD
