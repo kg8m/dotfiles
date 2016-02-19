@@ -865,7 +865,7 @@ if neobundle#tap("unite.vim")  "{{{
     \ "lazy":      1,
     \ "on_func":   "AutoMark",
     \ "on_source": "unite.vim",
-    \ "depneds":   "unite.vim",
+    \ "depends":   "unite.vim",
     \})
 
     nnoremap <Leader>um :<C-u>Unite mark<Cr>
@@ -920,7 +920,7 @@ if neobundle#tap("unite.vim")  "{{{
     \ "lazy":      1,
     \ "on_cmd":    "UniteWithCursorWord",
     \ "on_source": "unite.vim",
-    \ "depneds":   "unite.vim",
+    \ "depends":   "unite.vim",
     \})
 
     nnoremap g] :<C-u>UniteWithCursorWord -immediately tag<CR>
@@ -948,7 +948,7 @@ if neobundle#tap("unite.vim")  "{{{
     \ "lazy":      1,
     \ "on_cmd":    "UniteVersions",
     \ "on_source": "unite.vim",
-    \ "depneds":   "unite.vim",
+    \ "depends":   "unite.vim",
     \})
 
     nnoremap <Leader>uv :<C-u>UniteVersions status:./<Cr>
