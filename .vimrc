@@ -818,8 +818,7 @@ if neobundle#tap("unite.vim")  "{{{
 
   if neobundle#tap("neomru.vim")  "{{{
     call neobundle#config({
-    \ "lazy":      0,
-    \ "on_source": "unite.vim",
+    \ "lazy":    0,
     \})
 
     nnoremap <Leader>m :<C-u>Unite neomru/file<Cr>
@@ -833,8 +832,7 @@ if neobundle#tap("unite.vim")  "{{{
 
   if neobundle#tap("neoyank.vim")  "{{{
     call neobundle#config({
-    \ "lazy":      0,
-    \ "on_source": "unite.vim",
+    \ "lazy":    0,
     \})
 
     function! neobundle#hooks.on_source(bundle) abort
