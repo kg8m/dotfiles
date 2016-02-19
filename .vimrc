@@ -920,7 +920,6 @@ if neobundle#tap("unite.vim")  "{{{
   if neobundle#tap("unite-tag")  "{{{
     call neobundle#config({
     \ "lazy":      1,
-    \ "on_cmd":    "UniteWithCursorWord",
     \ "on_source": "unite.vim",
     \ "depends":   "unite.vim",
     \})
