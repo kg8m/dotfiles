@@ -20,7 +20,7 @@ set hlsearch
 
 " Beep設定オフ
 set visualbell
-hi Bell display: none;
+highlight Bell display: none;
 
 " 補完設定
 set autocomplete
@@ -28,7 +28,7 @@ set complete=sl
 
 " クイックリンク関連
 set hintchars=fjklasdhguionmerwc
-hi Hint font-family: "Osaka－等幅", "Osaka-Mono"; padding: 1px 3px; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 12.5px; font-weight: normal; text-transform: uppercase; white-space: nowrap;
+highlight Hint font-family: "Osaka－等幅", "Osaka-Mono"; padding: 1px 3px; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 12.5px; font-weight: normal; text-transform: uppercase; white-space: nowrap;
 
 " Next/Previous Link
 set nextpattern=\bnext\b,\bmore\b,^next$,^次(の)?ページ,\b次.*,^次へ$,→\b,^>$,^(>>|≫)$,^(>|≫),(>|≫)$
@@ -228,7 +228,7 @@ loadplugins
 " let use_hints_ext_hinttags = 1
 " let use_hints_ext_extendedhinttags = 1
 " let use_hints_ext_tranform = 1
-" autocmd VimperatorEnter ".*" :hi -a HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 15px; font-weight: normal;
+" autocmd VimperatorEnter ".*" :highlight -append HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 15px; font-weight: normal;
 " javascript << EOM
 " (function(){
 "   // ページ送り
