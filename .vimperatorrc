@@ -101,6 +101,7 @@ inoremap <C-f> <PageDown>
 inoremap <C-b> <PageUp>
 
 " n/N でも全部ハイライトさせる
+" FirefoxProfileDir/extensions/vimperator@mozdev.org/common/content/finder.js
 " needs to be fixed if Vimperator's core codes change
 javascript << EOM
   finder.__originalFindAgain__ = finder.findAgain;
