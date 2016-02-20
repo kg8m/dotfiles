@@ -795,6 +795,8 @@ if neobundle#tap("unite.vim")  "{{{
         \   ["[Unite plugin] tag with cursor word      ", "UniteWithCursorWord tag"],
         \   ["[Unite plugin] versions/status           ", "UniteVersions status:./"],
         \   ["[Unite plugin] versions/log              ", "UniteVersions log:./"],
+        \   ["[Unite plugin] giti/status               ", "Unite giti/status"],
+        \   ["[Unite plugin] svn/status                ", "Unite svn/status"],
         \   ["[Unite plugin] webcolorname              ", "Unite webcolorname"],
         \   ["[Unite] buffers list                     ", "Unite buffer"],
         \   ["[Unite] files list with buffer directory ", "UniteWithBufferDir file"],
