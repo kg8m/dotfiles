@@ -1679,7 +1679,6 @@ set incsearch
 set restorescreen
 set mouse=
 set t_vb=
-let &path = ".," . &path
 
 " smoothen screen drawing; wait procedures' completion
 set lazyredraw
