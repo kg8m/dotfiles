@@ -790,7 +790,7 @@ if neobundle#tap("unite.vim")  "{{{
         \
         \   ["[Unite plugin] gist                      ", "Unite gista"],
         \   ["[Unite plugin] mru files list            ", "Unite neomru/file"],
-        \   ["[Unite plugin] neobundle/update          ", "Unite neobundle/update:all -log"],
+        \   ["[Unite plugin] neobundle/update          ", "Unite neobundle/update:all -log -buffer-name=neobundle_update"],
         \   ["[Unite plugin] outline                   ", "Unite outline:!"],
         \   ["[Unite plugin] tag with cursor word      ", "UniteWithCursorWord tag"],
         \   ["[Unite plugin] versions/status           ", "UniteVersions status:./"],
@@ -803,6 +803,7 @@ if neobundle#tap("unite.vim")  "{{{
         \   ["[Unite] history/yank                     ", "Unite history/yank"],
         \   ["[Unite] register                         ", "Unite register"],
         \   ["[Unite] grep [Edit]                      ", "Unite -no-quit grep:./::{words}"],
+        \   ["[Unite] resume [Edit]                    ", "UniteResume {buffer-name}"],
         \
         \   ["[Help]autocommand-events                 ", "help autocommand-events"],
         \   ["[Help][neobundle] Options-autoload       ", "help neobundle-options-autoload"],
