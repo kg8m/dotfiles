@@ -923,6 +923,10 @@ if neobundle#tap("unite.vim")  "{{{
     \ "depends":   "unite.vim",
     \})
 
+    call neobundle#config("unite.vim", {
+    \ "on_cmd": neobundle#get("unite.vim")["on_cmd"] + ["UniteWithCursorWord"],
+    \})
+
     nnoremap g] :<C-u>UniteWithCursorWord -immediately tag<CR>
     vnoremap g] :<C-u>UniteWithCursorWord -immediately tag<CR>
     nnoremap g[ :<C-u>Unite jump<CR>
