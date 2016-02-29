@@ -699,13 +699,6 @@ if neobundle#tap("unite.vim")  "{{{
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
   vnoremap <Leader>ug "vy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
   nnoremap <Leader>uy :<C-u>Unite history/yank<Cr>
-  nnoremap <Leader>uc :<C-u>Unite webcolorname<Cr>
-  nnoremap <Leader>ub :<C-u>Unite buffer<Cr>
-  nnoremap <Leader>uf :<C-u>UniteWithBufferDir -buffer-name=files file<Cr>
-  " nnoremap <Leader>ur :<C-u>Unite -buffer-name=register register<Cr>
-  " nnoremap <Leader>um :<C-u>Unite neomru/file<Cr>
-  nnoremap <Leader>uu :<C-u>Unite buffer neomru/file<Cr>
-  nnoremap <Leader>ua :<C-u>UniteWithBufferDir -buffer-name=files buffer neomru/file bookmark file<Cr>
   nnoremap <F4> :<C-u>Unite buffer<Cr>
 
   function! neobundle#hooks.on_source(bundle) abort
@@ -799,7 +792,8 @@ if neobundle#tap("unite.vim")  "{{{
         \   ["[Unite plugin] svn/status                ", "Unite svn/status"],
         \   ["[Unite plugin] webcolorname              ", "Unite webcolorname"],
         \   ["[Unite] buffers list                     ", "Unite buffer"],
-        \   ["[Unite] files list with buffer directory ", "UniteWithBufferDir file"],
+        \   ["[Unite] files list                       ", "UniteWithBufferDir file"],
+        \   ["[Unite] various sources list             ", "UniteWithBufferDir buffer neomru/file bookmark file"],
         \   ["[Unite] history/yank                     ", "Unite history/yank"],
         \   ["[Unite] register                         ", "Unite register"],
         \   ["[Unite] grep [Edit]                      ", "Unite -no-quit grep:./::{words}"],
