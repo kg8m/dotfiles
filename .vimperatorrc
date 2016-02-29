@@ -34,9 +34,6 @@ highlight Hint font-family: "Osaka－等幅", "Osaka-Mono"; padding: 1px 3px; bo
 set nextpattern=\bnext\b,\bmore\b,^next$,^次(の)?ページ,\b次.*,^次へ$,→\b,^>$,^(>>|≫)$,^(>|≫),(>|≫)$
 set previouspattern=\bprev|previous\b,^prev$,^前(の)?ページ,\b前.*,^前へ$,\b←,^<$,^(<<|≪)$,^(<|≪),(<|≪)$
 
-" IME Controller
-:style -name commandline-ime chrome://* #liberator-commandline-command input { ime-mode: inactive; }
-
 " エディタ
 " It's All Text!のホットキーが<C-q>
 set editor=C:/Shortcuts/gvim73.lnk
