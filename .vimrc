@@ -726,7 +726,7 @@ if neobundle#tap("unite.vim")  "{{{
     let g:unite_source_grep_search_word_highlight = "Special"
 
     call unite#custom#source("buffer", "sorters", "sorter_word")
-    call unite#custom#source("grep", "max_candidates", 1000)
+    call unite#custom#source("grep", "max_candidates", 10000)
 
     " unite-shortcut  "{{{
       " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
