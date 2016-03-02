@@ -1454,7 +1454,7 @@ if neobundle#tap("vim-zenspace")  "{{{
 
     augroup HighlightZenkakuSpace
       autocmd!
-      autocmd ColorScheme * highlight ZenSpace term=underline ctermbg=Cyan guibg=Cyan
+      autocmd ColorScheme * highlight ZenSpace term=underline cterm=underline gui=underline ctermbg=Black guibg=Black ctermfg=DarkGray guifg=DarkGray
     augroup END
   endfunction
 endif  " }}}
