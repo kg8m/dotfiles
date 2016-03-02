@@ -37,10 +37,10 @@ autosetupmerge = true
 [alias]
 ci = commit -v
 ca = commit -va
-di = diff -b
-da = diff
-dh = diff HEAD
-dc = diff --cached
+di = diff -b -U10
+da = diff -U10
+dh = diff -U10 HEAD
+dc = diff -U10 --cached
 lo = log --stat
 lp = log -p --stat
 lg = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
