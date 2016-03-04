@@ -34,8 +34,6 @@ editor = vim
 [branch]
 autosetupmerge = true
 
-# test
-
 [alias]
 aa    = !git add . && git add -u && git status
 alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
