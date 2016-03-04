@@ -35,19 +35,26 @@ editor = vim
 autosetupmerge = true
 
 [alias]
+aa    = !git add . && git add -u && git status
+alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
+find  = !git ls-files | grep -i
 ad = add
 br = branch
 co = checkout
 ch = checkout HEAD
+cm = commit --ammend
 ci = commit -v
 ca = commit -va
 di = diff -b -U10
+dw = diff -b -U10 --color-words
 da = diff -U10
 dh = diff -U10 HEAD
 dc = diff -U10 --cached
 lg = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
 lo = log --stat
 lp = log -p --stat
+pl = pull
+pr = pull --rebase
 re = reset --soft HEAD^
 rv = revert
 rm = rm --cached -f
