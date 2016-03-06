@@ -48,6 +48,7 @@ call neobundle#begin($bundles_path)
 " }}}
 
 " plugins list  "{{{
+NeoBundleFetch "Shougo/dein.vim"
 NeoBundleFetch "Shougo/neobundle.vim"
 NeoBundle "Shougo/vimproc", {
         \   "build": {
