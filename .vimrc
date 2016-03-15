@@ -932,6 +932,11 @@ if neobundle#tap("unite.vim")  "{{{
     vnoremap g] :<C-u>UniteWithCursorWord -immediately tag<CR>
     nnoremap g[ :<C-u>Unite jump<CR>
     nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
+
+    function! neobundle#hooks.on_source(bundle) abort
+      let g:unite_source_tag_max_name_length  = 50
+      let g:unite_source_tag_max_fname_length = 100
+    endfunction
   endif  " }}}
 
   if neobundle#tap("unite-webcolorname")  "{{{
