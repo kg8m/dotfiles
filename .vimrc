@@ -779,6 +779,8 @@ if neobundle#tap("unite.vim")  "{{{
         \   ["[Calendar] Week View                     ", "Calendar -view=week  -position=hear!"],
         \   ["[Calendar] Day View                      ", "Calendar -view=day   -position=hear! -split=vertical -width=75"],
         \
+        \   ["[Rails] Reset Buffer                     ", "if RailsDetect() | call rails#buffer_setup() | endif"],
+        \
         \   ["[Unicode-RST-Tables] Create Table        ", "python CreateTable()"],
         \   ["[Unicode-RST-Tables] Fix Table           ", "python FixTable()"],
         \
