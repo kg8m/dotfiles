@@ -1648,7 +1648,7 @@ if has("vim_starting")
   autocmd FileType text,markdown,moin setlocal cinkeys-=:
 
   " folding
-  " Keys: `zo`: open, `zc`: close, `zR`: open all, `zM`: close all
+  " Keys: `zo`: open, `zc`: close, `zR`: open all, `zM`: close all, `zx`: update
   set foldmethod=marker
   set foldopen=hor
   set foldminlines=0
