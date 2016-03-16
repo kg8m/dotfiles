@@ -1804,14 +1804,14 @@ nmap + <C-a>
 nmap - <C-x>
 
 " move as shown
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
-vnoremap j gj
-vnoremap k gk
-vnoremap gj j
-vnoremap gk k
+" nnoremap j gj
+" nnoremap k gk
+" nnoremap gj j
+" nnoremap gk k
+" vnoremap j gj
+" vnoremap k gk
+" vnoremap gj j
+" vnoremap gk k
 
 " emacs like moving in INSERT mode
 inoremap <C-h> <Left>
