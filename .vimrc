@@ -134,6 +134,7 @@ NeoBundle "h1mesuke/vim-alignta"
 NeoBundle "osyo-manga/vim-anzu"
 NeoBundle "haya14busa/vim-asterisk"
 NeoBundle "Townk/vim-autoclose"
+NeoBundle "Chiel92/vim-autoformat"
 NeoBundle "itchyny/vim-autoft"
 NeoBundle "kg8m/vim-blockle"
 NeoBundle "t9md/vim-choosewin"
@@ -1101,6 +1102,12 @@ if neobundle#tap("vim-autoclose")  "{{{
       imap <silent> <Esc>[5~ <PageUp>
       imap <silent> <Esc>[6~ <PageDown>
     endif
+  endfunction
+endif  " }}}
+
+if neobundle#tap("vim-autoformat")  "{{{
+  function! neobundle#hooks.on_source(bundle) abort
+    let g:formatdef_jsbeautify_javascript = '"js-beautify -f -s2 -"'
   endfunction
 endif  " }}}
 
