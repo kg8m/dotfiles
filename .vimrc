@@ -1292,11 +1292,18 @@ if neobundle#tap("vim-rails")  "{{{
       \     "command": "support",
       \   },
       \ }
+
+    if !exists("g:rails_path_additions")
+      let g:rails_path_additions = []
+    endif
+
+    let g:rails_path_additions += [
+      \   "spec/support",
+      \ ]
+
     " prevent `rails.vim` from defining keymappings
     nmap <Leader>Rwf  <Plug>RailsSplitFind
     nmap <Leader>Rwgf <Plug>RailsTabFind
-
-    let &path = &path . ",spec/support"
   endfunction
 endif  " }}}
 
