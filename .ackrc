@@ -8,3 +8,4 @@
 --ignore-file=match:/\.diff$/
 --ignore-file=match:/\.dat$/
 --ignore-file=is:tags
+--ignore-file=match:/^jquery(-ui)?(\.min)?\.js$/
