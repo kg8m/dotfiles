@@ -50,6 +50,7 @@ dw = diff -b -U10 --color-words
 da = diff -U10
 dh = diff -U10 HEAD
 dc = diff -U10 --cached
+fc = fetch
 lg = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
 lo = log --stat
 lp = log -p --stat
