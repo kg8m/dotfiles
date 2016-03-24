@@ -1,6 +1,6 @@
 [user]
-name = kg8m
-email = info@kagitaku.com
+name  = kg8m
+email = takumi.kagiyama@gmail.com
 
 ; https://github.com/sasata299/dotfiles/blob/master/.gitconfig
 [color]
