@@ -1,7 +1,3 @@
-[user]
-name  = kg8m
-email = takumi.kagiyama@gmail.com
-
 ; https://github.com/sasata299/dotfiles/blob/master/.gitconfig
 [color]
 branch = auto
@@ -67,3 +63,6 @@ user = kg8m
 
 [push]
 default = simple
+
+[include]
+path = ~/.gitconfig.local
