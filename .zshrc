@@ -128,8 +128,8 @@ SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 
 # https://github.com/yonchu/zsh-vcs-prompt
 if [ -f ~/.zsh/zsh-vcs-prompt/zshrc.sh ]; then
-  source ~/.zsh/zsh-vcs-prompt/zshrc.sh
   ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+  source ~/.zsh/zsh-vcs-prompt/zshrc.sh
 else
   function vcs_super_info {}
 fi
@@ -139,7 +139,14 @@ fi
 prompt_time=$'\e[48;05;024m'"(%D{%Y/%m/%d(%a) %H:%M:%S})"$'\e[48;05;000m'
 prompt_user=$'\e[38;05;009m'"%n@%m"
 prompt_current_dir=$'\e[38;05;030m'"%~"$'%{${reset_color}%}'
+prompt_vcs='$(vcs_super_info)$(git_user_info)'
 prompt_self=$'%{${reset_color}%}'"%(!.#.%#) "
+
+git_user_info() {
+  if [ "$(git status 2> /dev/null)" ]; then
+    echo " - `git config user.name` (`git config user.email`)"
+  fi
+}
 
 set_prompt() {
   local prompt_mode="INSERT"
@@ -150,7 +157,7 @@ set_prompt() {
     ;;
   esac
 
-  PROMPT="${prompt_time} "$'\e[38;05;245m'"[${prompt_mode}] ${prompt_user}"$'\e[38;05;245m'" : ${prompt_current_dir} "$'$(vcs_super_info)\n'"${prompt_self}"
+  PROMPT="${prompt_time} "$'\e[38;05;245m'"[${prompt_mode}] ${prompt_user}"$'\e[38;05;245m'" : ${prompt_current_dir} ${prompt_vcs}"$'\n'"${prompt_self}"
 }
 set_prompt
 
