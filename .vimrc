@@ -255,8 +255,8 @@ if neobundle#tap("caw.vim")  "{{{
   \ "on_map": ["ns", "<Plug>(caw:"],
   \})
 
-  nmap gc <Plug>(caw:i:toggle)
-  vmap gc <Plug>(caw:i:toggle)
+  nmap gc <Plug>(caw:hatpos:toggle)
+  vmap gc <Plug>(caw:hatpos:toggle)
 
   function! neobundle#hooks.on_source(bundle) abort
     let g:caw_no_default_keymappings = 1
