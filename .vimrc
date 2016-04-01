@@ -260,7 +260,7 @@ if neobundle#tap("caw.vim")  "{{{
 
   function! neobundle#hooks.on_source(bundle) abort
     let g:caw_no_default_keymappings = 1
-    let g:caw_i_skip_blank_line      = 1
+    let g:caw_hatpos_skip_blank_line = 1
   endfunction
 endif  " }}}
 
