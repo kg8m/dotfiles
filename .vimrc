@@ -28,6 +28,10 @@ function! s:AvailabilityMessage(target)
   return a:target . " is " . (eval("s:" . a:target . "_available") ? "" : "NOT ") . "available"
 endfunction
 
+function! OnRailsDir() abort
+  return isdirectory("./app") && filereadable("./config/environment.rb")
+endfunction
+
 let g:mapleader = ","
 " }}}
 
@@ -127,7 +131,7 @@ NeoBundle "osyo-manga/unite-filetype"
 NeoBundle "Shougo/unite-help"
 NeoBundle "tacroe/unite-mark"
 NeoBundle "Shougo/unite-outline"
-NeoBundle "basyura/unite-rails"
+NeoBundle "basyura/unite-rails", { "disabled": !OnRailsDir() }
 NeoBundle "tsukkee/unite-tag"
 NeoBundle "pasela/unite-webcolorname"
 NeoBundle "h1mesuke/vim-alignta"
@@ -177,7 +181,7 @@ NeoBundle "rhysd/vim-operator-surround", { "disabled": 1 }
 NeoBundle "kana/vim-operator-user"
 NeoBundle "thinca/vim-prettyprint"
 NeoBundle "thinca/vim-qfreplace"
-NeoBundle "tpope/vim-rails"
+NeoBundle "tpope/vim-rails", { "disabled": !OnRailsDir() }
 NeoBundle "thinca/vim-ref"
 NeoBundle "tpope/vim-repeat"
 NeoBundle "vim-ruby/vim-ruby", {
