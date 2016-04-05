@@ -1275,6 +1275,11 @@ if neobundle#tap("vim-rails")  "{{{
   function! neobundle#hooks.on_source(bundle) abort
     " http://fg-180.katamayu.net/archives/2006/09/02/125150
     let g:rails_level = 4
+
+    if !exists("g:rails_projections")
+      let g:rails_projections = {}
+    endif
+
     let g:rails_projections = {
       \   "config/*": {
       \     "command": "config",
