@@ -32,6 +32,15 @@ function! OnRailsDir() abort
   return isdirectory("./app") && filereadable("./config/environment.rb")
 endfunction
 
+function! OnGitDir() abort
+  silent! !git status > /dev/null 2>&1
+  return !v:shell_error
+endfunction
+
+function! OnSvnDir() abort
+  return isdirectory("./.svn")
+endfunction
+
 let g:mapleader = ","
 " }}}
 
@@ -123,7 +132,7 @@ NeoBundle "joeytwiddle/sexy_scroller.vim"
 NeoBundle "jiangmiao/simple-javascript-indenter"
 NeoBundle "AndrewRadev/splitjoin.vim"
 NeoBundle "sudo.vim"
-NeoBundle "kg8m/svn-diff.vim"
+NeoBundle "kg8m/svn-diff.vim", { "disabled": !OnSvnDir() }
 NeoBundle "vim-scripts/Unicode-RST-Tables"
 NeoBundle "Shougo/unite.vim"
 NeoBundle "kg8m/unite-dwm"
@@ -201,13 +210,13 @@ NeoBundle "rhysd/vim-textobj-ruby"
 NeoBundle "jgdavey/vim-turbux", { "disabled": !OnTmux() }
 NeoBundle "kana/vim-textobj-user"
 NeoBundle "thinca/vim-unite-history"
-NeoBundle "kmnk/vim-unite-giti"
-NeoBundle "kmnk/vim-unite-svn"
+NeoBundle "kmnk/vim-unite-giti", { "disabled": !OnGitDir() }
+NeoBundle "kmnk/vim-unite-svn", { "disabled": !OnSvnDir() }
 NeoBundle "hrsh7th/vim-unite-vcs", {
         \   "disabled":    1,
         \   "description": "replaced by vim-versions",
         \ }
-NeoBundle "hrsh7th/vim-versions"
+NeoBundle "hrsh7th/vim-versions", { "disabled": !OnGitDir() && !OnSvnDir() }
 NeoBundle "superbrothers/vim-vimperator"
 NeoBundle "thinca/vim-zenspace"
 NeoBundle "Shougo/vimfiler"
@@ -969,7 +978,9 @@ if neobundle#tap("unite.vim")  "{{{
     \ "depends":   "unite.vim",
     \})
 
-    nnoremap <Leader>uvg :<C-u>Unite giti/status<Cr>
+    if !mapcheck("<Leader>uv")
+      nnoremap <Leader>uv :<C-u>Unite giti/status<Cr>
+  endif
 
     function! neobundle#hooks.on_source(bundle) abort
       let g:giti_log_default_line_count = 1000
@@ -983,7 +994,9 @@ if neobundle#tap("unite.vim")  "{{{
     \ "depends":   "unite.vim",
     \})
 
-    nnoremap <Leader>uvs :<C-u>Unite svn/status<Cr>
+    if !mapcheck("<Leader>uv")
+      nnoremap <Leader>uv :<C-u>Unite svn/status<Cr>
+    endif
   endif  " }}}
 
   if neobundle#tap("vim-versions")  "{{{
@@ -994,7 +1007,7 @@ if neobundle#tap("unite.vim")  "{{{
     \ "depends":   "unite.vim",
     \})
 
-    nnoremap <Leader>uv :<C-u>UniteVersions status:./<Cr>
+    nnoremap <Leader>u<S-v> :<C-u>UniteVersions status:./<Cr>
 
     function! neobundle#hooks.on_source(bundle) abort
       let g:versions#type#svn#status#ignore_status = ["X"]
