@@ -980,7 +980,7 @@ if neobundle#tap("unite.vim")  "{{{
 
     if !mapcheck("<Leader>uv")
       nnoremap <Leader>uv :<C-u>Unite giti/status<Cr>
-  endif
+    endif
 
     function! neobundle#hooks.on_source(bundle) abort
       let g:giti_log_default_line_count = 1000
