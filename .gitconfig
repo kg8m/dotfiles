@@ -42,11 +42,11 @@ ch = checkout HEAD
 cm = commit --ammend
 ci = commit -v
 ca = commit -va
-di = diff -b -U10
-dw = diff -b -U10 --color-words
-da = diff -U10
-dh = diff -U10 HEAD
-dc = diff -U10 --cached
+di = diff -b
+dw = diff -b --color-words
+da = diff
+dh = diff HEAD
+dc = diff --cached
 fc = fetch
 lg = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
 lo = log --stat
@@ -67,3 +67,8 @@ default = simple
 
 [include]
 path = ~/.gitconfig.local
+
+[diff]
+algorithm = histogram
+context = 10
+renames = copies
