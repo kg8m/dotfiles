@@ -51,8 +51,8 @@ fc = fetch
 lg = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
 lo = log --stat
 lp = log -p --stat
-pl = pull
-pr = pull --rebase
+pl = pull --stat
+pr = pull --stat --rebase
 re = reset --soft HEAD^
 rv = revert
 rm = rm --cached -f
