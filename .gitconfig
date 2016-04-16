@@ -44,9 +44,9 @@ ci = commit -v
 ca = commit -va
 di = diff -b
 dw = diff -b --color-words
-da = diff
-dh = diff HEAD
-dc = diff --cached
+da = diff -b
+dh = diff -b HEAD
+dc = diff -b --cached
 fc = fetch
 lg = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
 lo = log --stat
