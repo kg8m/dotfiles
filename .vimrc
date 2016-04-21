@@ -1326,6 +1326,11 @@ if neobundle#tap("vim-rails")  "{{{
     " prevent `rails.vim` from defining keymappings
     nmap <Leader>Rwf  <Plug>RailsSplitFind
     nmap <Leader>Rwgf <Plug>RailsTabFind
+
+    augroup ExecuteCtagsAfterSave
+      autocmd!
+      autocmd BufWritePost * call vimproc#system_bg("ctags -R --languages=ruby")
+    augroup END
   endfunction
 endif  " }}}
 
