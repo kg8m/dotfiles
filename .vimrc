@@ -77,6 +77,7 @@ NeoBundle "kg8m/.vim"
 NeoBundle "mileszs/ack.vim", { "disabled": 1 }
 NeoBundle "alpaca-tc/alpaca_complete", { "disabled": 1 }
 NeoBundle "alpaca-tc/alpaca_rails_support", { "disabled": 1 }
+NeoBundle "soramugi/auto-ctags.vim", { "disabled": !OnRailsDir() }
 NeoBundle "vim-scripts/autodate.vim"
 NeoBundle "itchyny/calendar.vim"
 NeoBundle "tyru/caw.vim"
@@ -235,6 +236,12 @@ if neobundle#tap("alpaca_complete")  "{{{
   call neobundle#config({
   \ "on_ft": ["ruby", "eruby"],
   \})
+endif  " }}}
+
+if neobundle#tap("auto-ctags.vim")  "{{{
+  function! neobundle#hooks.on_source(bundle) abort
+    let g:auto_ctags = 1
+  endfunction
 endif  " }}}
 
 if neobundle#tap("autodate.vim")  "{{{
@@ -1326,11 +1333,6 @@ if neobundle#tap("vim-rails")  "{{{
     " prevent `rails.vim` from defining keymappings
     nmap <Leader>Rwf  <Plug>RailsSplitFind
     nmap <Leader>Rwgf <Plug>RailsTabFind
-
-    augroup ExecuteCtagsAfterSave
-      autocmd!
-      autocmd BufWritePost * call vimproc#system_bg("ctags -R --languages=ruby")
-    augroup END
   endfunction
 endif  " }}}
 
