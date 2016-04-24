@@ -1264,6 +1264,15 @@ if neobundle#tap("vim-gista")  "{{{
   endfunction
 endif  " }}}
 
+if neobundle#tap("vim-git")  "{{{
+  function! neobundle#hooks.on_source(bundle) abort
+    augroup PreventVimGitFromChangingSettings
+      autocmd!
+      autocmd FileType gitcommit let b:did_ftplugin = 1
+    augroup END
+  endfunction
+endif  " }}}
+
 if neobundle#tap("vim-javascript-syntax")  "{{{
   function! neobundle#hooks.on_source(bundle) abort
     function! s:MyJavascriptFold()
