@@ -41,6 +41,19 @@ function! OnSvnDir() abort
   return isdirectory("./.svn")
 endfunction
 
+function! ExecuteWithConfirm(command) abort
+  if input("execute `" . a:command . "` ? [y/n] : ") !~ "[yY]"
+    echo " -> canceled."
+    return
+  endif
+
+  let l:result = system(a:command)
+
+  if v:shell_error
+    echomsg l:result
+  endif
+endfunction
+
 let g:mapleader = ","
 " }}}
 
@@ -992,6 +1005,27 @@ if neobundle#tap("unite.vim")  "{{{
     function! neobundle#hooks.on_source(bundle) abort
       let g:giti_log_default_line_count = 1000
     endfunction
+
+    function! neobundle#hooks.on_post_source(bundle) abort
+      function! s:AddActionsToUniteGiti()
+        let l:kind = unite#kinds#giti#status#define()
+        let l:kind.action_table.file_delete = {
+          \   "description":         "delete/remove directories/files",
+          \   "is_selectable":       1,
+          \   "is_invalidate_cache": 1,
+          \ }
+
+        function! l:kind.action_table.file_delete.func(candidates) abort
+          let l:files   = map(copy(a:candidates), "v:val.action__path")
+          let l:command = printf("yes | rm -r %s", join(l:files))
+
+          call ExecuteWithConfirm(l:command)
+        endfunction
+
+        let l:kind.alias_table.directory_delete = "file_delete"
+      endfunction
+      call s:AddActionsToUniteGiti()
+    endfunction
   endif  " }}}
 
   if neobundle#tap("vim-unite-svn")  "{{{
@@ -1004,6 +1038,27 @@ if neobundle#tap("unite.vim")  "{{{
     if !mapcheck("<Leader>uv")
       nnoremap <Leader>uv :<C-u>Unite svn/status<Cr>
     endif
+
+    function! neobundle#hooks.on_post_source(bundle) abort
+      function! s:AddActionsToUniteSvn()
+        let l:file_delete_action = {
+          \   "description":         "delete/remove directories/files",
+          \   "is_selectable":       1,
+          \   "is_invalidate_cache": 1,
+          \ }
+
+        function! l:file_delete_action.func(candidates) abort
+          let l:files   = map(copy(a:candidates), "v:val.action__path")
+          let l:command = printf("yes | rm -r %s", join(l:files))
+
+          call ExecuteWithConfirm(l:command)
+        endfunction
+
+        call unite#custom_action("source/svn/status/jump_list", "file_delete", l:file_delete_action)
+        call unite#custom_action("source/svn/status/jump_list", "directory_delete", copy(l:file_delete_action))
+      endfunction
+      call s:AddActionsToUniteSvn()
+    endfunction
   endif  " }}}
 
   if neobundle#tap("vim-versions")  "{{{
