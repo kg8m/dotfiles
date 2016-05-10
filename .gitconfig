@@ -42,11 +42,11 @@ ch = checkout HEAD
 cm = commit --ammend
 ci = commit -v
 ca = commit -va
-di = diff -b
-dw = diff -b --color-words
-da = diff -b
-dh = diff -b HEAD
-dc = diff -b --cached
+di = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
+dc = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --cached
+dw = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --color-words
+dh = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change HEAD
+da = diff HEAD
 fc = fetch
 lg = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
 lo = log --stat
