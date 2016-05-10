@@ -1,12 +1,12 @@
 [color]
 branch = auto
-diff = auto
+diff   = auto
 status = auto
 
 [color "branch"]
 current = white red
-local = yellow
-remote = green
+local   = yellow
+remote  = green
 
 [color "diff"]
 meta = green
@@ -15,8 +15,8 @@ old  = cyan
 new  = red
 
 [color "status"]
-added = yellow
-changed = green
+added     = yellow
+changed   = green
 untracked = cyan
 
 [color]
