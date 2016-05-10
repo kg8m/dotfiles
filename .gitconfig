@@ -10,10 +10,10 @@ local = yellow
 remote = green
 
 [color "diff"]
-meta = yellow bold
+meta = green
 frag = magenta bold
-old = cyan bold
-new = magenta bold
+old  = cyan
+new  = red
 
 [color "status"]
 added = yellow
