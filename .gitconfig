@@ -35,6 +35,7 @@ aa    = !git add . && git add -u && git status
 alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
 find  = !git ls-files | grep -i
 ad = add
+at = add --intent-to-add
 br = branch
 co = checkout
 ch = checkout HEAD

@@ -1014,12 +1014,24 @@ if neobundle#tap("unite.vim")  "{{{
           \   "is_selectable":       1,
           \   "is_invalidate_cache": 1,
           \ }
+        let l:kind.action_table.intent_to_add = {
+          \   "description":         "add --intent-to-add",
+          \   "is_selectable":       1,
+          \   "is_invalidate_cache": 1,
+          \ }
 
         function! l:kind.action_table.file_delete.func(candidates) abort
           let l:files   = map(copy(a:candidates), "v:val.action__path")
           let l:command = printf("yes | rm -r %s", join(l:files))
 
           call ExecuteWithConfirm(l:command)
+        endfunction
+
+        function! l:kind.action_table.intent_to_add.func(candidates) abort
+          let l:files   = map(copy(a:candidates), "v:val.action__path")
+          let l:command = printf("add --intent-to-add %s", join(l:files))
+
+          return giti#system(l:command)
         endfunction
 
         let l:kind.alias_table.directory_delete = "file_delete"
