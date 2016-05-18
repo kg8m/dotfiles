@@ -31,33 +31,37 @@ excludesfile = ~/.gitignore
 autosetupmerge = true
 
 [alias]
-aa    = !git add . && git add -u && git status
-alias = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
-find  = !git ls-files | grep -i
-ad = add
-at = add --intent-to-add
-br = branch
-co = checkout
-ch = checkout HEAD
-cm = commit --ammend
-ci = commit -v
-ca = commit -va
-di = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
-dc = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --cached
-dw = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --color-words
-dh = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change HEAD
-da = diff HEAD
-fc = fetch
-lg = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
-lo = log --stat
-lp = log -p --stat
-pl = pull --stat
-pr = pull --stat --rebase
-re = reset --soft HEAD^
-rv = revert
-rm = rm --cached -f
-st = status
-su = submodule update -i
+aa     = !git add . && git add -u && git status
+alias  = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
+su     = !git submodule update --init --recursive && git submodule update --remote
+ignore = !([ ! -e .gitignore ] && touch .gitignore) | echo $1 >> .gitignore
+find   = !git ls-files | grep -i
+ad     = add
+at     = add --intent-to-add
+br     = branch
+co     = checkout
+ch     = checkout HEAD
+crone  = clone --recursive
+cm     = commit --ammend
+ci     = commit -v
+ca     = commit -va
+di     = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
+dc     = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --cached
+dw     = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --color-words
+dh     = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change HEAD
+da     = diff HEAD
+fc     = fetch
+lg     = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
+lo     = log --stat
+lp     = log -p --stat
+pl     = pull --stat
+pr     = pull --stat --rebase
+info   = remote show origin
+ru     = remote update
+re     = reset --soft HEAD^
+rv     = revert
+rm     = rm --cached -f
+st     = status
 
 [github]
 user = kg8m
