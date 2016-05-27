@@ -81,6 +81,9 @@ algorithm = histogram
 context = 10
 renames = copies
 
+[fetch]
+prune = true
+
 # http://klabgames.tech.blog.jp.klab.com/archives/1033121546.html
 [user "ssh://git@github.com/"]
 name  = kg8m
