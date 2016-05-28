@@ -133,6 +133,8 @@ renames = copies
 prune = true
 
 [user]
+name  = kg8m
+email = takumi.kagiyama@gmail.com
 useConfigOnly = true
 
 # http://klabgames.tech.blog.jp.klab.com/archives/1033121546.html
