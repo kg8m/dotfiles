@@ -46,6 +46,12 @@ ru     = remote update
 sh     = show
 st     = status
 
+chmod = "!f() {\
+  command=\"git update-index --add --chmod=$@\";\
+  echo '# '${command};\
+  eval ${command};\
+}; f"
+
 # clone
 crone                 = !git clone-with-submodules
 clone-with-submodules = clone --recursive
