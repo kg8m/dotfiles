@@ -174,6 +174,7 @@ NeoBundle "tpope/vim-endwise", {
         \   "disabled":    1,
         \   "description": "incompatible with neosnippet",
         \ }
+NeoBundle "chrisbra/vim-diff-enhanced"
 NeoBundle "thinca/vim-ft-diff_fold"
 NeoBundle "thinca/vim-ft-help_fold"
 NeoBundle "thinca/vim-ft-markdown_fold"
@@ -1234,6 +1235,14 @@ if neobundle#tap("vim-choosewin")  "{{{
     let g:choosewin_blink_on_land           = 0
     let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
     let g:choosewin_tabline_replace         = 0
+  endfunction
+endif  " }}}
+
+if neobundle#tap("vim-diff-enhanced")  "{{{
+  function! neobundle#hooks.on_source(bundle) abort
+    if &diff
+      let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=histogram")'
+    endif
   endfunction
 endif  " }}}
 
