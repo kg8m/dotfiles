@@ -61,7 +61,7 @@ pl = pull --stat
 pr = pull --stat --rebase
 
 update = "!f() {\
-  command=\"git pull --rebase || ( git rebase --abort && echo 'rebase aborted!!' )\";\
+  command=\"git pull --stat --rebase || ( git rebase --abort && echo 'rebase aborted!!' )\";\
   echo '# '${command};\
   eval ${command};\
 }; f"
