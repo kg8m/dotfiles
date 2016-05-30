@@ -136,23 +136,3 @@ prune = true
 name  = kg8m
 email = takumi.kagiyama@gmail.com
 useConfigOnly = true
-
-# http://klabgames.tech.blog.jp.klab.com/archives/1033121546.html
-[user "ssh://git@github.com/"]
-name  = kg8m
-email = takumi.kagiyama@gmail.com
-
-# http://klabgames.tech.blog.jp.klab.com/archives/1033121546.html
-[user "https://github.com/"]
-name  = kg8m
-email = takumi.kagiyama@gmail.com
-
-# http://klabgames.tech.blog.jp.klab.com/archives/1033121546.html
-[user "ssh://git@bitbucket.org/"]
-name  = kg8m
-email = takumi.kagiyama@gmail.com
-
-# http://klabgames.tech.blog.jp.klab.com/archives/1033121546.html
-[user "https://bitbucket.org/"]
-name  = kg8m
-email = takumi.kagiyama@gmail.com
