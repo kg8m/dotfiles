@@ -21,10 +21,13 @@ brew ngrep
 brew nkf
 brew openssl
 brew peco
+brew python3
 brew rbenv
+brew readline
 brew ruby-build
 brew sqlite
 brew tmux
+brew xz
 brew zsh
 
 tap peco/peco
