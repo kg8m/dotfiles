@@ -220,6 +220,7 @@ NeoBundle "kopischke/vim-stay"
 NeoBundle "tpope/vim-surround"
 NeoBundle "deris/vim-textobj-enclosedsyntax"
 NeoBundle "kana/vim-textobj-jabraces"
+NeoBundle "kana/vim-textobj-lastpat"
 NeoBundle "osyo-manga/vim-textobj-multitextobj"
 NeoBundle "rhysd/vim-textobj-ruby"
 NeoBundle "jgdavey/vim-turbux", { "disabled": !OnTmux() }
