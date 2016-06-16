@@ -116,7 +116,7 @@ ca = commit --verbose --all
 edit-commits      = "!f() { git rebase --interactive HEAD~$1; }; f"
 reset-commits     = !git edit-commits
 reset-last-commit = reset --soft HEAD~
-undo-add          = reset HEAD
+undo-add          = reset --soft
 rv                = revert
 
 # log
