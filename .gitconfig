@@ -149,6 +149,7 @@ path = ~/.gitconfig.local
 algorithm = histogram
 context = 10
 renames = copies
+compactionHeuristic = true
 
 [fetch]
 prune = true
@@ -157,3 +158,11 @@ prune = true
 name  = kg8m
 email = takumi.kagiyama@gmail.com
 useConfigOnly = true
+
+[submodule]
+fetchJobs = 4
+
+[pager]
+log  = diff-highlight | less
+show = diff-highlight | less
+diff = diff-highlight | less
