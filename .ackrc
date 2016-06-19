@@ -1,4 +1,4 @@
---pager=less -R
+--pager=less
 --smart-case
 --sort-files
 --ignore-dir=log
