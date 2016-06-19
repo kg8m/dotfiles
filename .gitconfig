@@ -109,8 +109,8 @@ at      = add --intent-to-add
 
 # commit
 cm = commit --ammend
-ci = commit --verbose
-ca = commit --verbose --all
+ci = commit
+ca = commit --all
 
 # reset/revert
 edit-commits      = "!f() { git rebase --interactive HEAD~$1; }; f"
@@ -169,3 +169,6 @@ diff = diff-highlight | less
 
 [interactive]
 diffFilter = diff-highlight
+
+[commit]
+verbose = true
