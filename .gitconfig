@@ -148,7 +148,6 @@ path = ~/.gitconfig.local
 [diff]
 algorithm = histogram
 context = 10
-renames = copies
 compactionHeuristic = true
 
 [fetch]
