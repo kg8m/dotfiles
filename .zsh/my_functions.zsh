@@ -182,14 +182,20 @@ function attach_or_new_tmux {
   tmux has-session -t $session_name &> /dev/null
 
   if [ $? != 0 ]; then
-    if [ $session_name = 'default' ]; then
-      tmux_setup_default
-    else
-      tmux new-session -d -s $session_name
+    read response?'Create new session in `'$( pwd )'`? [y/n]: '
 
-      if (($# == 2)); then
-        tmux send-keys -t $session_name:1 "$2" Enter
+    if [[ $response =~ ^y ]]; then
+      if [ $session_name = 'default' ]; then
+        tmux_setup_default
+      else
+        tmux new-session -d -s $session_name
+
+        if (($# == 2)); then
+          tmux send-keys -t $session_name:1 "$2" Enter
+        fi
       fi
+    else
+      echo 'Not created.'
     fi
   fi
 
