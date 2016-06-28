@@ -182,7 +182,7 @@ function attach_or_new_tmux {
   tmux has-session -t $session_name &> /dev/null
 
   if [ $? != 0 ]; then
-    read response?'Create new session in `'$( pwd )'`? [y/n]: '
+    read response?'Create new session in directory `'$( pwd )'` with session name `'$( echo $session_name )'`? [y/n]: '
 
     if [[ $response =~ ^y ]]; then
       if [ $session_name = 'default' ]; then
