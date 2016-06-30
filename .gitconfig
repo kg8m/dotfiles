@@ -92,7 +92,6 @@ create-branch = "!f() {\
   command=${command}\"; git branches\";\
   \
   echo '# '${command};\
-  \
   read -p 'Are you sure? [y/n]: ' response;\
   \
   if [[ ${response} =~ ^y ]]; then\
@@ -131,6 +130,33 @@ dc = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore
 dw = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --color-words
 dh = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change HEAD
 da = diff HEAD
+
+compare-branches = diff-branches
+
+diff-branches = "!f() {\
+  branches1=($( git branch -r | awk '{print $1}' | peco --prompt 'select first branch:' ));\
+  if [[ ! ${#branches1[@]} -eq 1 ]]; then\
+    echo 'select only 1 branch.';\
+    exit 1;\
+  fi;\
+  \
+  branches2=($( git branch -r | awk '{print $1}' | peco --prompt 'select another branch:' ));\
+  if [[ ! ${#branches2[@]} -eq 1 ]]; then\
+    echo 'select only 1 branch.';\
+    exit 1;\
+  fi;\
+  \
+  command=\"git di ${branches1[0]}...${branches2[0]}\";\
+  \
+  echo '# '${command};\
+  read -p 'Are you sure? [y/n]: ' response;\
+  \
+  if [[ ${response} =~ ^y ]]; then\
+    eval ${command};\
+  else\
+    echo 'aborted.';\
+  fi;\
+}; f"
 
 # submodule
 su                = !git update-submodules
