@@ -136,24 +136,6 @@ function separated_rake_test {
   done
 }
 
-function watch_memused {
-  if (($# == 1)) then
-    sleep=$1
-  else
-    sleep=15
-  fi
-
-  init='i = 0; last_notified = Time.now'
-  header='"\n  " + [["time", 19], ["used%", 6], ["graph (used / all)", 0]].map{|name, width| name.to_s.ljust(width) }.join("   ")'
-  put_header_or_not='i.modulo(25).zero?'
-  get_memused='all, used = `free -o`.split(/\s+/).values_at(8, 9); racio = used.to_f / all.to_f * 100'
-  line='"  " + [Time.now.strftime("%Y/%m/%d %H:%M:%S"), sprintf("%5.2f%", racio), "#" * (racio / 3).to_i + " (#{used} / #{all})"].join("   ")'
-  notify='if racio > 90 && (Time.now - last_notified > 60); `ssh main "echo '\''(#{Time.now.strftime("%Y/%m/%d %H:%M:%S")}) memused: #{sprintf(%Q!%5.2f%!, racio)} @#{ENV[%Q!APP_NAME!]}\n\n#{`ps aux --sort -rss | head -n 2`}'\'' | growlnotify -n '\''ZSH MemUsed Watcher'\'' --appIcon iTerm"`; last_notified = Time.now; end'
-  prepare_for_next="sleep ${sleep}; i += 1"
-
-  ruby -e "${init}; while true; puts ${header} if ${put_header_or_not}; ${get_memused}; puts ${line}; ${notify}; ${prepare_for_next}; end"
-}
-
 function tmux_setup_default {
   tmux new-session -d -s default
   tmux new-window -t default:2
