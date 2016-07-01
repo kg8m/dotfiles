@@ -147,7 +147,7 @@ diff-branches = "!f() {\
     exit 1;\
   fi;\
   \
-  command=\"git di ${branches1[0]}...${branches2[0]}\";\
+  command=\"git di $@ ${branches1[0]}...${branches2[0]}\";\
   \
   echo '# '${command};\
   read -p 'Are you sure? [y/n]: ' response;\
