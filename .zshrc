@@ -16,7 +16,7 @@ else
 fi
 
 export GIT_EDITOR=vim
-export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT"
+export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --no-init --quit-if-one-screen"
 export RUBYGEMS_PATH='/usr/local/lib/ruby/gems/1.8/gems/'
 
 export GOROOT=$HOME/.go
