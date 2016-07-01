@@ -256,6 +256,11 @@ endif  " }}}
 if neobundle#tap("auto-ctags.vim")  "{{{
   function! neobundle#hooks.on_source(bundle) abort
     let g:auto_ctags = 1
+
+    augroup AutoCtagsAtVinEnter
+      autocmd!
+      autocmd VimEnter * call auto_ctags#ctags(0)
+    augroup END
   endfunction
 endif  " }}}
 
