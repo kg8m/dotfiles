@@ -1,2 +1,3 @@
 *.un~
+.bundle/cache
 .tmux/
