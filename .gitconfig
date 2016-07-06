@@ -198,3 +198,6 @@ diffFilter = diff-highlight
 
 [commit]
 verbose = true
+
+[rebase]
+autostash = true
