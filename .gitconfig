@@ -201,3 +201,6 @@ verbose = true
 
 [rebase]
 autostash = true
+
+[status]
+showUntrackedFiles = all
