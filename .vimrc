@@ -1690,8 +1690,10 @@ if has("vim_starting")
 endif
 
 " colorscheme
-let g:molokai_original = 1
-colorscheme molokai
+if neobundle#tap("molokai")  "{{{
+  let g:molokai_original = 1
+  colorscheme molokai
+endif  " }}}
 " }}}
 " }}}
 
