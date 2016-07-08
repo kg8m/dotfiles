@@ -226,7 +226,7 @@ NeoBundle "rhysd/vim-textobj-ruby"
 NeoBundle "jgdavey/vim-turbux", { "disabled": !OnTmux() }
 NeoBundle "kana/vim-textobj-user"
 NeoBundle "thinca/vim-unite-history"
-NeoBundle "kmnk/vim-unite-giti", { "disabled": !OnGitDir() }
+NeoBundle "kg8m/vim-unite-giti", { "disabled": !OnGitDir() }
 NeoBundle "kmnk/vim-unite-svn", { "disabled": !OnSvnDir() }
 NeoBundle "hrsh7th/vim-unite-vcs", {
         \   "disabled":    1,
