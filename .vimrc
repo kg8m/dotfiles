@@ -20,10 +20,6 @@ function! OnTmux() abort
   return s:on_tmux
 endfunction
 
-function! NeocompleteAvailable() abort
-  return s:neocomplete_available
-endfunction
-
 function! s:AvailabilityMessage(target)
   return a:target . " is " . (eval("s:" . a:target . "_available") ? "" : "NOT ") . "available"
 endfunction
@@ -130,8 +126,7 @@ NeoBundle "itchyny/lightline.vim"
 NeoBundle "AndrewRadev/linediff.vim"
 NeoBundle "matchit.zip"
 NeoBundle "kg8m/moin.vim"
-NeoBundle "Shougo/neocomplcache.vim", { "disabled": NeocompleteAvailable() }
-NeoBundle "Shougo/neocomplete.vim", { "disabled": !NeocompleteAvailable() }
+NeoBundle "Shougo/neocomplete.vim"
 NeoBundle "Shougo/neomru.vim"
 NeoBundle "Shougo/neoyank.vim"
 NeoBundle "Shougo/neosnippet", { "depends": "Shougo/context_filetype.vim" }
@@ -538,44 +533,6 @@ if neobundle#tap("linediff.vim")  "{{{
   endfunction
 endif  " }}}
 
-if neobundle#tap("neocomplcache.vim")  "{{{
-  call neobundle#config({
-  \ "lazy":   1,
-  \ "on_i":   1,
-  \ "on_cmd": "NeoCompleteBufferMakeCache",
-  \})
-
-  function! neobundle#hooks.on_source(bundle) abort
-    let g:neocomplcache_enable_at_startup = 1
-    let g:neocomplcache_enable_smart_case = 1
-    let g:neocomplcache_enable_camel_case_completion = 0
-    let g:neocomplcache_enable_underbar_completion = 0
-    let g:neocomplcache_enable_fuzzy_completion = 1
-    let g:neocomplcache_min_syntax_length = 2
-    let g:neocomplcache_auto_completion_start_length = 1
-    let g:neocomplcache_manual_completion_start_length = 0
-    let g:neocomplcache_min_keyword_length = 3
-    let g:neocomplcache_enable_cursor_hold_i = 0
-    let g:neocomplcache_cursor_hold_i_time = 300
-    let g:neocomplcache_enable_insert_char_pre = 0
-    let g:neocomplcache_enable_prefetch = 0
-    let g:neocomplcache_force_overwrite_completefunc = 1
-
-    if !exists("g:neocomplcache_keyword_patterns")
-      let g:neocomplcache_keyword_patterns = {}
-    endif
-    let g:neocomplcache_keyword_patterns["default"] = '\h\w*'
-    let g:neocomplcache_keyword_patterns["ruby"] = '\h\w*'
-
-    if !exists("g:neocomplcache_omni_patterns")
-      let g:neocomplcache_omni_patterns = {}
-    endif
-    let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-
-    let g:neocomplcache_caching_limit_file_size = 500000
-  endfunction
-endif  " }}}
-
 if neobundle#tap("neocomplete.vim")  "{{{
   call neobundle#config({
   \ "lazy":   1,
@@ -640,12 +597,7 @@ if neobundle#tap("neosnippet")  "{{{
     imap <expr><Tab> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     smap <expr><Tab> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-    if s:neocomplete_available
-      imap <expr><Cr> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplete#close_popup() : "\<Cr>"
-    else
-      imap <expr><Cr> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplcache#close_popup() : "\<Cr>"
-    endif
+    imap <expr><Cr> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplete#close_popup() : "\<Cr>"
 
     if has("conceal")
       set conceallevel=2 concealcursor=i
