@@ -120,7 +120,7 @@ rv                = revert
 
 # log
 lg    = !git graph
-graph = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%cn %Creset%s\"
+graph = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue[C] %cn [A] %an %Creset%s\"
 lo    = log --stat
 lp    = log --stat --patch
 
