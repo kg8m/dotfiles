@@ -16,12 +16,12 @@ let s:ag_available     = executable("ag")
 let s:ack_available    = executable("ack")
 let s:migemo_available = has("migemo") || executable("cmigemo")
 
-function! OnTmux() abort
-  return s:on_tmux
-endfunction
-
 function! s:AvailabilityMessage(target)
   return a:target . " is " . (eval("s:" . a:target . "_available") ? "" : "NOT ") . "available"
+endfunction
+
+function! OnTmux() abort
+  return s:on_tmux
 endfunction
 
 function! OnRailsDir() abort
