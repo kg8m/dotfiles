@@ -6,6 +6,7 @@ set line-graphics = ascii
 set horizontal-scroll = 20%
 set show-author = full
 set show-id = yes
+set wrap-lines = yes
 
 bind generic g move-first-line
 bind generic G move-last-line
