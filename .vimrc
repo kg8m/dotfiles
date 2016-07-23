@@ -170,6 +170,7 @@ NeoBundle "tpope/vim-endwise", {
         \   "description": "incompatible with neosnippet",
         \ }
 NeoBundle "chrisbra/vim-diff-enhanced", { "disabled": 1 }
+NeoBundle "kg8m/vim-dirdiff"
 NeoBundle "thinca/vim-ft-diff_fold"
 NeoBundle "thinca/vim-ft-help_fold"
 NeoBundle "thinca/vim-ft-markdown_fold"
@@ -772,6 +773,8 @@ if neobundle#tap("unite.vim")  "{{{
         \   ["[Calendar] Week View                     ", "Calendar -view=week  -position=hear!"],
         \   ["[Calendar] Day View                      ", "Calendar -view=day   -position=hear! -split=vertical -width=75"],
         \
+        \   ["[Diff] DirDiff [Edit]                    ", "DirDiff {dir1} {dir2}"],
+        \
         \   ["[Rails] Reset Buffer                     ", "if RailsDetect() | call rails#buffer_setup() | endif"],
         \
         \   ["[Unicode-RST-Tables] Create Table        ", "python CreateTable()"],
@@ -1194,6 +1197,19 @@ if neobundle#tap("vim-choosewin")  "{{{
     let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
     let g:choosewin_tabline_replace         = 0
   endfunction
+endif  " }}}
+
+if neobundle#tap("vim-dirdiff")  "{{{
+  call neobundle#config({
+  \ "lazy":   1,
+  \ "on_cmd": "DirDiff",
+  \})
+
+  let g:DirDiffExcludes   = "CVS,*.class,*.exe,.*.swp,*.git,db/development_structure.sql,log,tags,tmp"
+  let g:DirDiffIgnore     = "Id:,Revision:,Date:"
+  let g:DirDiffSort       = 1
+  let g:DirDiffIgnoreCase = 0
+  let g:DirDiffForceLang  = "C"
 endif  " }}}
 
 if neobundle#tap("vim-easymotion")  "{{{
