@@ -773,6 +773,7 @@ if neobundle#tap("unite.vim")  "{{{
         \   ["[Calendar] Week View                     ", "Calendar -view=week  -position=hear!"],
         \   ["[Calendar] Day View                      ", "Calendar -view=day   -position=hear! -split=vertical -width=75"],
         \
+        \   ["[Diff] Linediff                          ", "'<,'>Linediff"],
         \   ["[Diff] DirDiff [Edit]                    ", "DirDiff {dir1} {dir2}"],
         \
         \   ["[Rails] Reset Buffer                     ", "if RailsDetect() | call rails#buffer_setup() | endif"],
