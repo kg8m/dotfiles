@@ -1141,7 +1141,7 @@ endif  " }}}
 
 if neobundle#tap("vim-autoclose")  "{{{
   function! neobundle#hooks.on_source(bundle) abort
-    " annoying to type "<<" in Ruby code>
+    " annoying to type "<<" in Ruby code or type "<" for comparing in many languages
     " let g:AutoClosePairs_add = "<>"
     let g:AutoCloseSelectionWrapPrefix = "<Leader>ac"
 
@@ -1828,13 +1828,6 @@ augroup END
 " move
 set whichwrap=b,s,h,l,<,>,[,],~
 
-" IME
-" augroup InsModeImEnable
-"   autocmd!
-"   autocmd InsertEnter,CmdwinEnter * set noimdisable
-"   autocmd InsertLeave,CmdwinLeave * set imdisable
-" augroup END
-
 " http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
 augroup CheckTypo
   autocmd!
@@ -1899,26 +1892,12 @@ nnoremap <Leader>w <C-w>
 " ,w => erase spaces of EOL for selected
 vnoremap <Leader>w :s/\s\+$//ge<Cr>
 
-" search very magic as default
-" replaced by incsearch
-" nnoremap / /\v
-
 " prevent unconscious operation
 inoremap <C-w> <Esc><C-w>
 
 " increment/decrement
 nmap + <C-a>
 nmap - <C-x>
-
-" move as shown
-" nnoremap j gj
-" nnoremap k gk
-" nnoremap gj j
-" nnoremap gk k
-" vnoremap j gj
-" vnoremap k gk
-" vnoremap gj j
-" vnoremap gk k
 
 " emacs like moving in INSERT mode
 inoremap <C-h> <Left>
