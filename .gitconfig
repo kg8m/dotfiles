@@ -62,6 +62,7 @@ ch = checkout HEAD
 
 # pull/fetch/merge/rebase
 up = !git update
+f  = fetch
 fc = fetch
 pl = pull --stat
 pr = pull --stat --rebase
