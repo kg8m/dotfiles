@@ -16,5 +16,5 @@ bind generic e scroll-line-down
 bind generic b scroll-page-up
 bind generic f scroll-page-down
 bind generic ^e edit
-bind generic c !@bash -c "cut -c-7 <<<%(commit) | ssh main pbcopy"
-bind generic C !@bash -c "cut -c-7 <<<%(commit) | ssh main pbcopy"
+bind generic c !@bash -c "cut -c-7 <<<%(commit) | tr  -d '\n' | ssh main pbcopy"
+bind generic C !@bash -c "cut -c-7 <<<%(commit) | tr  -d '\n' | ssh main pbcopy"
