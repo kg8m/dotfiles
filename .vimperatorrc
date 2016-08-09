@@ -87,6 +87,7 @@ noremap <C-l> <A-d>
 " 誤操作防止
 inoremap <C-n> <Esc><C-n>
 inoremap <C-p> <Esc><C-p>
+noremap <BS> <NOP>
 
 " input で Ctrl + h/j/k/l を使って移動
 " use OS's settings or key-config applications, e.g., KeyRemap4MacBook
