@@ -385,6 +385,7 @@ if neobundle#tap("gundo.vim")  "{{{
   function! neobundle#hooks.on_source(bundle) abort
     " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
     let g:gundo_auto_preview = 0
+    let g:gundo_prefer_python3 = 1
   endfunction
 endif  " }}}
 
