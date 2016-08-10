@@ -1881,7 +1881,11 @@ endfunction
 
 " ,y/,p => copy/paste by clipboard
 if s:on_tmux
-  vnoremap <Leader>y "zy:!tmux set-buffer '<C-r>"'<Cr>
+  function! UnnamedRegisterToRemoteCopy() abort
+    call system("echo '" . substitute(@", "'", "'\\\\''", "g") . "' | ssh main pbcopy")
+    echomsg "Copy the Selection by pbcopy."
+  endfunction
+  vnoremap <Leader>y "zy:call UnnamedRegisterToRemoteCopy()<Cr>
 else
   vnoremap <Leader>y "*y
 endif
