@@ -1601,7 +1601,7 @@ if neobundle#tap("vimux")  "{{{
     let g:VimuxUseNearest = 1
 
     function! s:ExtendVimux()
-      " overriding default function: use current pane"s next one
+      " overriding default function: use current pane's next one
       execute join([
       \   'function! _VimuxNearestIndex()',
       \     'let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")',
