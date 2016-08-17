@@ -1882,7 +1882,17 @@ endfunction
 " ,y/,p => copy/paste by clipboard
 if s:on_tmux
   function! UnnamedRegisterToRemoteCopy() abort
-    call system("echo '" . substitute(@", "'", "'\\\\''", "g") . "' | ssh main pbcopy")
+    let l:text = @"
+    let l:text = substitute(l:text, "^\\n\\+", "", "")
+    let l:text = substitute(l:text, "\\n\\+$", "", "")
+
+    if l:text =~ "\n"
+      let l:filter = ""
+    else
+      let l:filter = " | tr -d '\\n'"
+    endif
+
+    call system("echo '" . substitute(l:text, "'", "'\\\\''", "g") . "'" . l:filter . " | ssh main pbcopy")
     echomsg "Copy the Selection by pbcopy."
   endfunction
   vnoremap <Leader>y "zy:call UnnamedRegisterToRemoteCopy()<Cr>
