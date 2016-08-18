@@ -172,9 +172,6 @@ update-hooks = !( rm -i .git/hooks/* || exit 0 ) && cp ~/.git_templates/hooks/* 
 [github]
 user = kg8m
 
-[include]
-path = ~/.gitconfig.local
-
 [diff]
 algorithm = histogram
 context = 10
@@ -207,3 +204,6 @@ autostash = true
 
 [status]
 showUntrackedFiles = all
+
+[include]
+path = ~/.gitconfig.local
