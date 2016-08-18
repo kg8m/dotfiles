@@ -1726,6 +1726,12 @@ set diffopt+=horizontal,context:10
 " make listchars visible
 set list
 set listchars=tab:>\ ,eol:\ ,trail:_
+
+" https://teratail.com/questions/24046
+augroup LimitLargeFileSyntax
+  autocmd!
+  autocmd Syntax * if 10000 < line("$") | syntax sync minlines=1000 | endif
+augroup END
 " }}}
 
 " ----------------------------------------------
