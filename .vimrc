@@ -1774,11 +1774,7 @@ if has("vim_starting")
   autocmd BufWritePost,FileWritePost,WinLeave * if exists("w:last_fdm") | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 
  " update filetype
-  autocmd BufWritePost *
-  \ if &l:filetype ==# "" || exists("b:ftdetect")
-  \ | unlet! b:ftdetect
-  \ | filetype detect
-  \ | endif
+  autocmd BufWritePost * if &l:filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
 
   autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 endif
