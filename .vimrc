@@ -43,10 +43,10 @@ function! ExecuteWithConfirm(command) abort
     return
   endif
 
-  let l:result = system(a:command)
+  let result = system(a:command)
 
   if v:shell_error
-    echomsg l:result
+    echomsg result
   endif
 endfunction
 
@@ -973,33 +973,33 @@ if neobundle#tap("unite.vim")  "{{{
 
     function! neobundle#hooks.on_post_source(bundle) abort
       function! s:AddActionsToUniteGiti()
-        let l:kind = unite#kinds#giti#status#define()
-        let l:kind.action_table.file_delete = {
+        let kind = unite#kinds#giti#status#define()
+        let kind.action_table.file_delete = {
           \   "description":         "delete/remove directories/files",
           \   "is_selectable":       1,
           \   "is_invalidate_cache": 1,
           \ }
-        let l:kind.action_table.intent_to_add = {
+        let kind.action_table.intent_to_add = {
           \   "description":         "add --intent-to-add",
           \   "is_selectable":       1,
           \   "is_invalidate_cache": 1,
           \ }
 
-        function! l:kind.action_table.file_delete.func(candidates) abort
-          let l:files   = map(copy(a:candidates), "v:val.action__path")
-          let l:command = printf("yes | rm -r %s", join(l:files))
+        function! kind.action_table.file_delete.func(candidates) abort
+          let files   = map(copy(a:candidates), "v:val.action__path")
+          let command = printf("yes | rm -r %s", join(files))
 
-          call ExecuteWithConfirm(l:command)
+          call ExecuteWithConfirm(command)
         endfunction
 
-        function! l:kind.action_table.intent_to_add.func(candidates) abort
-          let l:files   = map(copy(a:candidates), "v:val.action__path")
-          let l:command = printf("add --intent-to-add %s", join(l:files))
+        function! kind.action_table.intent_to_add.func(candidates) abort
+          let files   = map(copy(a:candidates), "v:val.action__path")
+          let command = printf("add --intent-to-add %s", join(files))
 
-          return giti#system(l:command)
+          return giti#system(command)
         endfunction
 
-        let l:kind.alias_table.directory_delete = "file_delete"
+        let kind.alias_table.directory_delete = "file_delete"
       endfunction
       call s:AddActionsToUniteGiti()
     endfunction
@@ -1018,21 +1018,21 @@ if neobundle#tap("unite.vim")  "{{{
 
     function! neobundle#hooks.on_post_source(bundle) abort
       function! s:AddActionsToUniteSvn()
-        let l:file_delete_action = {
+        let file_delete_action = {
           \   "description":         "delete/remove directories/files",
           \   "is_selectable":       1,
           \   "is_invalidate_cache": 1,
           \ }
 
-        function! l:file_delete_action.func(candidates) abort
-          let l:files   = map(copy(a:candidates), "v:val.action__path")
-          let l:command = printf("yes | rm -r %s", join(l:files))
+        function! file_delete_action.func(candidates) abort
+          let files   = map(copy(a:candidates), "v:val.action__path")
+          let command = printf("yes | rm -r %s", join(files))
 
-          call ExecuteWithConfirm(l:command)
+          call ExecuteWithConfirm(command)
         endfunction
 
-        call unite#custom_action("source/svn/status/jump_list", "file_delete", l:file_delete_action)
-        call unite#custom_action("source/svn/status/jump_list", "directory_delete", copy(l:file_delete_action))
+        call unite#custom_action("source/svn/status/jump_list", "file_delete", file_delete_action)
+        call unite#custom_action("source/svn/status/jump_list", "directory_delete", copy(file_delete_action))
       endfunction
       call s:AddActionsToUniteSvn()
     endfunction
@@ -1052,27 +1052,27 @@ if neobundle#tap("unite.vim")  "{{{
       let g:versions#type#svn#status#ignore_status = ["X"]
 
       function! s:AddActionsToVersions()
-        let l:action = {
+        let action = {
           \   "description" : "open files",
           \   "is_selectable" : 1,
           \ }
 
-        function! l:action.func(candidates)
-          for l:candidate in a:candidates
-            let l:candidate.action__path = l:candidate.source__args.path . l:candidate.action__status.path
-            let l:candidate.action__directory = unite#util#path2directory(l:candidate.action__path)
+        function! action.func(candidates)
+          for candidate in a:candidates
+            let candidate.action__path = candidate.source__args.path . candidate.action__status.path
+            let candidate.action__directory = unite#util#path2directory(candidate.action__path)
 
-            if l:candidate.action__path == l:candidate.action__directory
-              let l:candidate.kind = "directory"
-              call unite#take_action("vimfiler", l:candidate)
+            if candidate.action__path == candidate.action__directory
+              let candidate.kind = "directory"
+              call unite#take_action("vimfiler", candidate)
             else
-              let l:candidate.kind = "file"
-              call unite#take_action("open", l:candidate)
+              let candidate.kind = "file"
+              call unite#take_action("open", candidate)
             endif
           endfor
         endfunction
 
-        call unite#custom#action("versions/git/status,versions/svn/status", "open", l:action)
+        call unite#custom#action("versions/git/status,versions/svn/status", "open", action)
         call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
       endfunction
       call s:AddActionsToVersions()
@@ -1772,10 +1772,10 @@ if has("vim_starting")
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * if !exists("w:last_fdm") | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-  autocmd BufWritePost,FileWritePost,WinLeave * if exists("w:last_fdm") | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+  autocmd BufWritePost,FileWritePost,WinLeave * if exists("w:last_fdm") | let &foldmethod=w:last_fdm | unlet w:last_fdm | endif
 
  " update filetype
-  autocmd BufWritePost * if &l:filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
+  autocmd BufWritePost * if &filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
 endif
 " }}}
 
@@ -1878,17 +1878,17 @@ endfunction
 " ,y/,p => copy/paste by clipboard
 if s:on_tmux
   function! UnnamedRegisterToRemoteCopy() abort
-    let l:text = @"
-    let l:text = substitute(l:text, "^\\n\\+", "", "")
-    let l:text = substitute(l:text, "\\n\\+$", "", "")
+    let text = @"
+    let text = substitute(text, "^\\n\\+", "", "")
+    let text = substitute(text, "\\n\\+$", "", "")
 
-    if l:text =~ "\n"
-      let l:filter = ""
+    if text =~ "\n"
+      let filter = ""
     else
-      let l:filter = " | tr -d '\\n'"
+      let filter = " | tr -d '\\n'"
     endif
 
-    call system("echo '" . substitute(l:text, "'", "'\\\\''", "g") . "'" . l:filter . " | ssh main pbcopy")
+    call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main pbcopy")
     echomsg "Copy the Selection by pbcopy."
   endfunction
   vnoremap <Leader>y "zy:call UnnamedRegisterToRemoteCopy()<Cr>
