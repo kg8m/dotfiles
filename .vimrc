@@ -1744,7 +1744,7 @@ if has("vim_starting")
   autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
   autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
 
-  " cinkyes
+  " cinkeys
   autocmd FileType text,markdown,moin setlocal cinkeys-=:
 
   " folding
