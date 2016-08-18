@@ -1767,6 +1767,7 @@ if has("vim_starting")
   autocmd FileType vim  setlocal foldmethod=marker
   autocmd FileType yaml setlocal foldmethod=indent
   autocmd FileType haml setlocal foldmethod=indent
+  autocmd FileType gitcommit,qfreplace setlocal nofoldenable
   autocmd BufEnter * if &ft == "javascript" | call s:MyJavascriptFold() | endif
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
@@ -1775,8 +1776,6 @@ if has("vim_starting")
 
  " update filetype
   autocmd BufWritePost * if &l:filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
-
-  autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 endif
 " }}}
 
