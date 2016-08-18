@@ -108,6 +108,7 @@ NeoBundle "EnhCommentify.vim", {
         \   "description": "replaced by caw",
         \ }
 NeoBundle "eruby.vim", { "disabled": 1 }
+NeoBundle "bogado/file-line"
 NeoBundle "LeafCage/foldCC"
 NeoBundle "sjl/gundo.vim", {
         \   "disabled":    1,
