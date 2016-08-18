@@ -54,6 +54,34 @@ let g:mapleader = ","
 " }}}
 
 " ----------------------------------------------
+" encoding  "{{{
+" http://www.kawaz.jp/pukiwiki/?vim#cb691f26
+if &encoding !=# "utf-8"
+  set encoding=japan
+  set fileencoding=japan
+endif
+
+function! s:RecheckFileencoding()
+  if &fileencoding =~# "iso-2022-jp" && search("[^\x01-\x7e]", "n") == 0
+    let &fileencoding=&encoding
+  endif
+endfunction
+
+augroup CheckEncoding
+  autocmd!
+  autocmd BufReadPost * call s:RecheckFileencoding()
+augroup END
+
+set fileformats=unix,dos,mac
+
+if exists("&ambiwidth")
+  set ambiwidth=double
+endif
+
+scriptencoding utf-8
+" }}}
+
+" ----------------------------------------------
 " neobundle/plugins  "{{{
 " neobundle#begin  "{{{
 if has("vim_starting")
@@ -1668,34 +1696,6 @@ if neobundle#tap("molokai")  "{{{
   colorscheme molokai
 endif  " }}}
 " }}}
-" }}}
-
-" ----------------------------------------------
-" encoding  "{{{
-" http://www.kawaz.jp/pukiwiki/?vim#cb691f26
-if &encoding !=# "utf-8"
-  set encoding=japan
-  set fileencoding=japan
-endif
-
-function! s:RecheckFileencoding()
-  if &fileencoding =~# "iso-2022-jp" && search("[^\x01-\x7e]", "n") == 0
-    let &fileencoding=&encoding
-  endif
-endfunction
-
-augroup CheckEncoding
-  autocmd!
-  autocmd BufReadPost * call s:RecheckFileencoding()
-augroup END
-
-set fileformats=unix,dos,mac
-
-if exists("&ambiwidth")
-  set ambiwidth=double
-endif
-
-scriptencoding utf-8
 " }}}
 
 " ----------------------------------------------
