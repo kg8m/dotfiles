@@ -136,7 +136,10 @@ NeoBundle "EnhCommentify.vim", {
         \   "description": "replaced by caw",
         \ }
 NeoBundle "eruby.vim", { "disabled": 1 }
-NeoBundle "bogado/file-line"
+NeoBundle "bogado/file-line", {
+        \   "disabled":    1,
+        \   "description": "conflicts with sudo.vim (`vim sudo:path/to/file` not working)",
+        \ }
 NeoBundle "LeafCage/foldCC"
 NeoBundle "sjl/gundo.vim", {
         \   "disabled":    1,
