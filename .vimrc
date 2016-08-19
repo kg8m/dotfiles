@@ -37,6 +37,10 @@ function! OnSvnDir() abort
   return isdirectory("./.svn")
 endfunction
 
+function! RubyVersion() abort
+  return system("ruby -e 'print RUBY_VERSION'")
+endfunction
+
 function! ExecuteWithConfirm(command) abort
   if input("execute `" . a:command . "` ? [y/n] : ") !~ "[yY]"
     echo " -> canceled."
@@ -168,6 +172,7 @@ NeoBundle "tyru/operator-camelize.vim"
 NeoBundle "vim-scripts/QuickBuf", { "disabled": 1 }
 NeoBundle "kien/rainbow_parentheses.vim", { "disabled": 1 }
 NeoBundle "chrisbra/Recover.vim"
+NeoBundle "todesking/ruby_hl_lvar.vim", { "disabled": "RubyVersion() < '1.9.0'" }
 NeoBundle "sequence"
 NeoBundle "joeytwiddle/sexy_scroller.vim"
 NeoBundle "jiangmiao/simple-javascript-indenter"
