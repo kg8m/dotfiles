@@ -687,6 +687,14 @@ if neobundle#tap("operator-camelize.vim")  "{{{
   vmap <Leader>c <Plug>(operator-decamelize)
 endif  " }}}
 
+if neobundle#tap("ruby_hl_lvar.vim")  "{{{
+  call neobundle#config({
+  \ "disabled": 1,
+  \ "lazy":     1,
+  \ "on_ft":    ["ruby"],
+  \})
+endif  " }}}
+
 if neobundle#tap("sequence")  "{{{
   vmap <Leader>+ <plug>SequenceV_Increment
   vmap <Leader>- <plug>SequenceV_Decrement
