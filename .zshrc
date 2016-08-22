@@ -56,7 +56,6 @@ zstyle ':completion:*:default' menu select=1 # 補完候補のカーソル選択
 setopt auto_cd                               # ディレクトリ名だけで cd
 setopt auto_param_keys                       # カッコの対応などを自動的に補完
 setopt auto_param_slash                      # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
-setopt correct                               # スペルチェック
 setopt brace_ccl                             # {a-c} を a b c に展開する機能を使えるようにする
 setopt NO_flow_control                       # Ctrl+S/Ctrl+Q によるフロー制御を使わないようにする
 setopt hist_ignore_space                     # コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
