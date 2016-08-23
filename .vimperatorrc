@@ -115,7 +115,8 @@ javascript << EOM
 EOM
 
 " <Esc><Esc>で検索ハイライト解除
-nnoremap <Esc><Esc> :noh<Cr>
+" <Esc>周りの挙動がおかしくなる
+" nnoremap <Esc><Esc> :noh<Cr>
 
 " ,p で印刷プレビュー
 nnoremap <Leader>p :emenu ファイル.印刷プレビュー<Cr>
