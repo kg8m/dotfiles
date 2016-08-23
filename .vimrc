@@ -201,7 +201,10 @@ NeoBundle "kchmck/vim-coffee-script"
 NeoBundle "kg8m/vim-coloresque"
 NeoBundle "hail2u/vim-css-syntax"
 NeoBundle "hail2u/vim-css3-syntax"
-NeoBundle "itchyny/vim-cursorword"
+NeoBundle "itchyny/vim-cursorword", {
+        \   "disabled":    1,
+        \   "description": "confusing with IME's underline",
+        \ }
 NeoBundle "Lokaltog/vim-easymotion"
 NeoBundle "tpope/vim-endwise", {
         \   "disabled":    1,
