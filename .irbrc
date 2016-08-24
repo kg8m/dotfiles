@@ -40,7 +40,7 @@ begin
 
     if File::exists?( histfile )
       lines = IO::readlines( histfile ).collect {|line| line.chomp}
-      puts "Read %d saved history commands from %s." % [ lines.nitems, histfile ] if $DEBUG || $VERBOSE
+      puts "Read %d saved history commands from %s." % [ lines.select{|line| line }.size, histfile ] if $DEBUG || $VERBOSE
       Readline::HISTORY.push( *lines )
     else
       puts "History file '%s' was empty or non-existant." % histfile if $DEBUG || $VERBOSE
@@ -48,7 +48,7 @@ begin
 
     Kernel::at_exit {
       lines = Readline::HISTORY.to_a.reverse.uniq.reverse
-      lines = lines[ -MAXHISTSIZE, MAXHISTSIZE ] if lines.nitems > MAXHISTSIZE
+      lines = lines[ -MAXHISTSIZE, MAXHISTSIZE ] if lines.select{|line| line }.size > MAXHISTSIZE
       $stderr.puts "Saving %d history lines to %s." % [ lines.length, histfile ] if $VERBOSE || $DEBUG
 
       File::open( histfile, File::WRONLY|File::CREAT|File::TRUNC ) {|ofh|
