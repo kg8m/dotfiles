@@ -1888,8 +1888,8 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand("#"))
 " ,r => reload .vimrc
 nnoremap <Leader>r :source ~/.vimrc<Cr>
 
-" <Esc><Esc> => nohilight
-nnoremap <Esc><Esc> :<C-u>nohlsearch<Cr>
+" <C-/> => nohilight
+nnoremap <Leader>/ :nohlsearch<Cr>
 
 " ,v => vsplit
 nnoremap <Leader>v :vsplit<Cr>
