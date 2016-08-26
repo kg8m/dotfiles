@@ -26,7 +26,7 @@ end if IRB::HistorySavingAbility.respond_to?(:create_finalizer)
 
 # http://rvm.beginrescueend.com/workflow/irbrc/
 # for RVM
-IRB.conf[:PROMPT_MODE] = :DEFAULT
+IRB.conf[:PROMPT_MODE] = :SIMPLE
 
 # ヒストリーを有効にする
 IRB.conf[:EVAL_HISTORY] = 1000
@@ -58,6 +58,15 @@ begin
   end
 end
 
+# Log to STDOUT if in Rails
+case
+when defined? Rails && Rails.env.development?
+  ActiveRecord::Base.logger = Logger.new($stdout)
+when ENV.include?("RAILS_ENV") && ENV["RAILS_ENV"] == "development" && !Object.const_defined?("RAILS_DEFAULT_LOGGER")
+  require "logger"
+  RAILS_DEFAULT_LOGGER = Logger.new($stdout)
+end
+
 require 'rubygems'
 require 'wirble'
 require 'hirb'
@@ -67,9 +76,3 @@ Wirble.init
 Wirble.colorize
 
 Hirb.enable
-
-# Log to STDOUT if in Rails
-if ENV.include?('RAILS_ENV') && !Object.const_defined?('RAILS_DEFAULT_LOGGER') && ENV['RAILS_ENV'] != "production"
-  require 'logger'
-  RAILS_DEFAULT_LOGGER = Logger.new(STDOUT)
-end
