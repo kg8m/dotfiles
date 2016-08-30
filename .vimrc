@@ -1742,7 +1742,7 @@ augroup SetWrapForVimdiff
   autocmd!
   autocmd VimEnter * if &diff | execute "windo set wrap" | endif
 augroup END
-set diffopt+=horizontal,context:10
+set diffopt+=horizontal,context:10,iwhite
 
 " make listchars visible
 set list
