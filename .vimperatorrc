@@ -186,9 +186,10 @@ let g:twittperator_use_ssl_connection_for_api_ep = 1
 javascript <<EOM
 liberator.globalVariables.webSearchTemplates = [
   {
-    names:       ['weblio'],
-    description: 'Translate keywords by weblio',
-    url:         'http://ejje.weblio.jp/content/%KEYWORD%',
+    names:             ['weblio'],
+    description:       'Translate keywords by weblio',
+    url:               'http://ejje.weblio.jp/content/%KEYWORD%',
+    urlWithoutKeyword: 'http://ejje.weblio.jp',
   },
   {
     names:             ['thesaurus'],
