@@ -104,7 +104,7 @@ function migrate {
   fi
 
   execute_with_echo ${cmd};
-  execute_with_echo "rake db:test:clone_structure";
+  execute_with_echo "rake db:test:load_structure";
 }
 
 function mysql_current {
