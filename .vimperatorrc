@@ -191,6 +191,12 @@ liberator.globalVariables.webSearchTemplates = [
     url:         'http://ejje.weblio.jp/content/%KEYWORD%',
   },
   {
+    names:             ['thesaurus'],
+    description:       'Search keywords by thesaurus.com',
+    url:               'http://www.thesaurus.com/browse/%KEYWORD%',
+    urlWithoutKeyword: 'http://www.thesaurus.com',
+  },
+  {
     names:             ['ruby'],
     description:       'Search Ruby documents on APIdock',
     url:               'http://apidock.com/ruby/search?query=%KEYWORD%',
