@@ -254,7 +254,10 @@ NeoBundle "kg8m/vim-rubytest", { "disabled": OnTmux() }
 NeoBundle "thinca/vim-singleton"
 NeoBundle "honza/vim-snippets"
 NeoBundle "mhinz/vim-startify"
-NeoBundle "kopischke/vim-stay"
+NeoBundle "kopischke/vim-stay", {
+        \   "disabled":    1,
+        \   "description": "sometimes excessively works",
+        \ }
 NeoBundle "tpope/vim-surround"
 NeoBundle "deris/vim-textobj-enclosedsyntax"
 NeoBundle "kana/vim-textobj-jabraces"
