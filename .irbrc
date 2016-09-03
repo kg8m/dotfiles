@@ -60,7 +60,7 @@ end
 
 # Log to STDOUT if in Rails
 case
-when defined? Rails && Rails.env.development?
+when defined?(Rails) && Rails.env.development?
   ActiveRecord::Base.logger = Logger.new($stdout)
 when ENV.include?("RAILS_ENV") && ENV["RAILS_ENV"] == "development" && !Object.const_defined?("RAILS_DEFAULT_LOGGER")
   require "logger"
