@@ -1947,8 +1947,8 @@ inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 
 " Page scroll in INSERT mode
-inoremap <expr><C-f> "\<PageDown>"
-inoremap <expr><C-b> "\<PageUp>"
+inoremap <C-f> <PageDown>
+inoremap <C-b> <PageUp>
 " }}}
 
 " ----------------------------------------------
