@@ -353,9 +353,9 @@ if neobundle#tap("colorswatch.vim")  "{{{
 endif  " }}}
 
 if neobundle#tap("dwm.vim")  "{{{
-  nmap <C-w>n       :call DWM_New()<Cr>
-  nmap <C-w>c       :call DWM_Close()<Cr>
-  nmap <C-w><Space> :call DWM_AutoEnter()<Cr>
+  nmap <C-w>n       :<C-u>call DWM_New()<Cr>
+  nmap <C-w>c       :<C-u>call DWM_Close()<Cr>
+  nmap <C-w><Space> :<C-u>call DWM_AutoEnter()<Cr>
 
   function! neobundle#hooks.on_source(bundle) abort
     let g:dwm_map_keys = 0
@@ -425,7 +425,7 @@ if neobundle#tap("gundo.vim")  "{{{
   \ "on_cmd": "GundoToggle",
   \})
 
-  nnoremap <F5> :GundoToggle<Cr>
+  nnoremap <F5> :<C-u>GundoToggle<Cr>
 
   function! neobundle#hooks.on_source(bundle) abort
     " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
@@ -721,8 +721,8 @@ if neobundle#tap("splitjoin.vim")  "{{{
   \ "on_cmd": ["SplitjoinJoin", "SplitjoinSplit"],
   \})
 
-  nnoremap <Leader>J :SplitjoinJoin<Cr>
-  nnoremap <Leader>S :SplitjoinSplit<Cr>
+  nnoremap <Leader>J :<C-u>SplitjoinJoin<Cr>
+  nnoremap <Leader>S :<C-u>SplitjoinSplit<Cr>
 
   function! neobundle#hooks.on_source(bundle) abort
     let g:splitjoin_split_mapping       = ""
@@ -1617,7 +1617,7 @@ if neobundle#tap("vim-zenspace")  "{{{
 endif  " }}}
 
 if neobundle#tap("vimfiler")  "{{{
-  nnoremap <Leader>e :VimFilerBufferDir -force-quit<Cr>
+  nnoremap <Leader>e :<C-u>VimFilerBufferDir -force-quit<Cr>
 
   function! neobundle#hooks.on_source(bundle) abort
     call vimfiler#custom#profile("default", "context", {
@@ -1633,7 +1633,7 @@ if neobundle#tap("vimshell")  "{{{
   \ "on_cmd": ["VimShell", "VimShellExecute"],
   \})
 
-  nnoremap <Leader>s :VimShell<Cr>
+  nnoremap <Leader>s :<C-u>VimShell<Cr>
 
   function! neobundle#hooks.on_source(bundle) abort
     if s:on_windows
@@ -1889,16 +1889,16 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand("#"))
 " ----------------------------------------------
 " keymappings  "{{{
 " ,r => reload .vimrc
-nnoremap <Leader>r :source ~/.vimrc<Cr>
+nnoremap <Leader>r :<C-u>source ~/.vimrc<Cr>
 
 " <C-/> => nohilight
-nnoremap <Leader>/ :nohlsearch<Cr>
+nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
 
 " ,v => vsplit
-nnoremap <Leader>v :vsplit<Cr>
+nnoremap <Leader>v :<C-u>vsplit<Cr>
 
 " ,d => svn diff
-nnoremap <Leader>d :call SvnDiff()<Cr>
+nnoremap <Leader>d :<C-u>call SvnDiff()<Cr>
 function! SvnDiff()
   edit diff
   silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
@@ -1921,7 +1921,7 @@ if s:on_tmux
     call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main pbcopy")
     echomsg "Copy the Selection by pbcopy."
   endfunction
-  vnoremap <Leader>y "zy:call UnnamedRegisterToRemoteCopy()<Cr>
+  vnoremap <Leader>y "zy:<C-u>call UnnamedRegisterToRemoteCopy()<Cr>
 else
   vnoremap <Leader>y "*y
 endif
