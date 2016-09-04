@@ -16,7 +16,7 @@ let s:ag_available     = executable("ag")
 let s:ack_available    = executable("ack")
 let s:migemo_available = has("migemo") || executable("cmigemo")
 
-function! s:AvailabilityMessage(target)
+function! s:AvailabilityMessage(target) abort
   return a:target . " is " . (eval("s:" . a:target . "_available") ? "" : "NOT ") . "available"
 endfunction
 
@@ -65,7 +65,7 @@ if &encoding !=# "utf-8"
   set fileencoding=japan
 endif
 
-function! s:RecheckFileencoding()
+function! s:RecheckFileencoding() abort
   if &fileencoding =~# "iso-2022-jp" && search("[^\x01-\x7e]", "n") == 0
     let &fileencoding=&encoding
   endif
@@ -360,7 +360,7 @@ if neobundle#tap("dwm.vim")  "{{{
   function! neobundle#hooks.on_source(bundle) abort
     let g:dwm_map_keys = 0
     let g:dwm_augroup_cleared = 0
-    function! s:ClearDwmAugroup()
+    function! s:ClearDwmAugroup() abort
       if !g:dwm_augroup_cleared
         augroup dwm
           autocmd!
@@ -551,11 +551,11 @@ if neobundle#tap("lightline.vim")  "{{{
       \   "colorscheme": "molokai",
       \ }
 
-    function! ReadonlySymbolForLightline()
+    function! ReadonlySymbolForLightline() abort
       return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? "X" : ""
     endfunction
 
-    function! FilepathForLightline()
+    function! FilepathForLightline() abort
       return ("" != ReadonlySymbolForLightline() ? ReadonlySymbolForLightline() . " " : "") .
            \ (
            \   &ft == "vimfiler" ? vimfiler#get_status_string() :
@@ -568,7 +568,7 @@ if neobundle#tap("lightline.vim")  "{{{
            \ ("" != ModifiedSymbolForLightline() ? " " . ModifiedSymbolForLightline() : "")
     endfunction
 
-    function! ModifiedSymbolForLightline()
+    function! ModifiedSymbolForLightline() abort
       return &ft =~ 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
     endfunction
   endfunction
@@ -857,7 +857,7 @@ if neobundle#tap("unite.vim")  "{{{
         \   ["[Help][neobundle] Options-autoload       ", "help neobundle-options-autoload"],
         \ ]
 
-      function! g:unite_source_menu_menus.shortcuts.map(key, value)
+      function! g:unite_source_menu_menus.shortcuts.map(key, value) abort
         let [word, value] = a:value
 
         return {
@@ -933,7 +933,7 @@ if neobundle#tap("unite.vim")  "{{{
         \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
         \ ]
       let g:unite_source_mark_marks = join(g:mark_ids, "")
-      function! AutoMark()
+      function! AutoMark() abort
           if !exists("b:mark_position")
             let b:mark_position = 0
           else
@@ -1024,7 +1024,7 @@ if neobundle#tap("unite.vim")  "{{{
     endfunction
 
     function! neobundle#hooks.on_post_source(bundle) abort
-      function! s:AddActionsToUniteGiti()
+      function! s:AddActionsToUniteGiti() abort
         let kind = unite#kinds#giti#status#define()
         let kind.action_table.file_delete = {
           \   "description":         "delete/remove directories/files",
@@ -1069,7 +1069,7 @@ if neobundle#tap("unite.vim")  "{{{
     endif
 
     function! neobundle#hooks.on_post_source(bundle) abort
-      function! s:AddActionsToUniteSvn()
+      function! s:AddActionsToUniteSvn() abort
         let file_delete_action = {
           \   "description":         "delete/remove directories/files",
           \   "is_selectable":       1,
@@ -1103,13 +1103,13 @@ if neobundle#tap("unite.vim")  "{{{
     function! neobundle#hooks.on_source(bundle) abort
       let g:versions#type#svn#status#ignore_status = ["X"]
 
-      function! s:AddActionsToVersions()
+      function! s:AddActionsToVersions() abort
         let action = {
           \   "description" : "open files",
           \   "is_selectable" : 1,
           \ }
 
-        function! action.func(candidates)
+        function! action.func(candidates) abort
           for candidate in a:candidates
             let candidate.action__path = candidate.source__args.path . candidate.action__status.path
             let candidate.action__directory = unite#util#path2directory(candidate.action__path)
@@ -1317,7 +1317,7 @@ endif  " }}}
 
 if neobundle#tap("vim-javascript-syntax")  "{{{
   function! neobundle#hooks.on_source(bundle) abort
-    function! s:MyJavascriptFold()
+    function! s:MyJavascriptFold() abort
       if !exists("b:javascript_folded")
         call JavaScriptFold()
         setl foldlevelstart=0
@@ -1653,10 +1653,10 @@ if neobundle#tap("vimux")  "{{{
     let g:VimuxHeight = 30
     let g:VimuxUseNearest = 1
 
-    function! s:ExtendVimux()
+    function! s:ExtendVimux() abort
       " overriding default function: use current pane's next one
       execute join([
-      \   'function! _VimuxNearestIndex()',
+      \   'function! _VimuxNearestIndex() abort',
       \     'let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")',
       \     'let index = len(views) - 1',
       \
@@ -1860,7 +1860,7 @@ augroup CheckTypo
   autocmd!
   autocmd BufWriteCmd *[,*] call s:WriteCheckTypo(expand("<afile>"))
 augroup END
-function! s:WriteCheckTypo(file)
+function! s:WriteCheckTypo(file) abort
   let writecmd = "write".(v:cmdbang ? "!" : "")." ".a:file
 
   if a:file =~ "[qfreplace]"
@@ -1899,7 +1899,7 @@ nnoremap <Leader>v :<C-u>vsplit<Cr>
 
 " ,d => svn diff
 nnoremap <Leader>d :<C-u>call SvnDiff()<Cr>
-function! SvnDiff()
+function! SvnDiff() abort
   edit diff
   silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
   execute "normal :r!svn diff\n"
@@ -1968,7 +1968,7 @@ if has("gui_running")
   augroup SaveWindow
     autocmd!
     autocmd VimLeavePre * call s:SaveWindow()
-    function! s:SaveWindow()
+    function! s:SaveWindow() abort
       let options = [
         \ "set columns=" . &columns,
         \ "set lines=" . &lines,
