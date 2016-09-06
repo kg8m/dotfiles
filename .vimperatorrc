@@ -179,6 +179,18 @@ lazy fmaps -u='www\.gqueues\.com/main' -events=vkeydown ? j k h l <S-j> <S-k> q 
 lazy fmaps -u='www\.gqueues\.com/main' -events=keydown <Left> <Right>
 lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
 
+" for slideshare.js
+nnoremap -urls=www\\.slideshare\\.net l       :slideshare next<Cr>
+nnoremap -urls=www\\.slideshare\\.net h       :slideshare prev<Cr>
+nnoremap -urls=www\\.slideshare\\.net <Right> :slideshare next<Cr>
+nnoremap -urls=www\\.slideshare\\.net <Left>  :slideshare prev<Cr>
+
+" for speakerdeck.js
+nnoremap -urls=speakerdeck\\.com l       :speakerdeck next<Cr>
+nnoremap -urls=speakerdeck\\.com h       :speakerdeck prev<Cr>
+nnoremap -urls=speakerdeck\\.com <Right> :speakerdeck next<Cr>
+nnoremap -urls=speakerdeck\\.com <Left>  :speakerdeck prev<Cr>
+
 " for twittperator
 let g:twittperator_use_ssl_connection_for_api_ep = 1
 
