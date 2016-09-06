@@ -13,3 +13,6 @@
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
 	url = git@github.com:tmux-plugins/tpm
+[submodule ".rbenv/plugins/rbenv-update"]
+	path = .rbenv/plugins/rbenv-update
+	url = https://github.com/rkh/rbenv-update

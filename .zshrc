@@ -211,6 +211,8 @@ bindkey -a 'q' push-line
 [ -f ~/.zsh/my_aliases.zsh     ] && source ~/.zsh/my_aliases.zsh
 [ -f ~/.zsh/my_functions.zsh   ] && source ~/.zsh/my_functions.zsh
 [ -f ~/.zsh/peco.zsh           ] && source ~/.zsh/peco.zsh
+[ -f ~/.zsh/rbenv.zsh          ] && source ~/.zsh/rbenv.zsh
+[ -f ~/.zsh/nodenv.zsh         ] && source ~/.zsh/nodenv.zsh
 
 autoload -U compinit
 compinit
