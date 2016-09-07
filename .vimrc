@@ -241,6 +241,7 @@ NeoBundle "kana/vim-operator-replace"
 "   (4) result:    hoge*' fuga piyo'
 NeoBundle "rhysd/vim-operator-surround", { "disabled": 1 }
 NeoBundle "kana/vim-operator-user"
+NeoBundle "itchyny/vim-parenmatch"
 NeoBundle "thinca/vim-prettyprint"
 NeoBundle "thinca/vim-qfreplace"
 NeoBundle "tpope/vim-rails", { "disabled": !OnRailsDir() }
@@ -1380,6 +1381,15 @@ if neobundle#tap("vim-operator-user")  "{{{
   \ "lazy":    1,
   \ "on_func": "operator#user#define",
   \})
+endif  " }}}
+
+if neobundle#tap("vim-parenmatch")  "{{{
+  let g:loaded_matchparen = 1
+
+  augroup HighlightParenmatch
+    autocmd!
+    autocmd VimEnter,ColorScheme * highlight ParenMatch ctermbg=white ctermfg=black guibg=white guifg=black
+  augroup END
 endif  " }}}
 
 if neobundle#tap("vim-prettyprint")  "{{{
