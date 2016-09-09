@@ -1,2 +1,2 @@
 export PATH=~/.nodenv/bin:$PATH
-if which nodenv > /dev/null; then eval "$( nodenv init - )"; fi
+if which nodenv > /dev/null 2>&1; then eval "$( nodenv init - )"; fi
