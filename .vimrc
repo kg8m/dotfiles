@@ -747,6 +747,8 @@ if dein#tap("unite.vim")  "{{{
 
       " http://nanasi.jp/articles/vim/hz_ja_vim.html
       let g:unite_source_menu_menus.shortcuts.candidates = [
+        \   ["[Plugins] Update Plugins                 ", "call UpdatePlugins()"],
+        \
         \   ["[String Utility] All to Hankaku          ", "'<,'>Hankaku"],
         \   ["[String Utility] Alphanumerics to Hankaku", "'<,'>HzjaConvert han_eisu"],
         \   ["[String Utility] ASCII to Hankaku        ", "'<,'>HzjaConvert han_ascii"],
@@ -813,8 +815,6 @@ if dein#tap("unite.vim")  "{{{
         \   ["[Unite] resume [Edit]                    ", "UniteResume {buffer-name}"],
         \
         \   ["[Help]autocommand-events                 ", "help autocommand-events"],
-        \
-        \   ["[Plugins] Update Plugins                 ", "call UpdatePlugins()"],
         \ ]
 
       function! g:unite_source_menu_menus.shortcuts.map(key, value) abort
