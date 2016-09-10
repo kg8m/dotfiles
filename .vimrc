@@ -22,7 +22,7 @@ endfunction
 
 function! UpdatePlugins() abort
   call dein#update()
-  Unite dein/log:! -buffer-name=update_plugins
+  Unite dein/log -buffer-name=update_plugins
 endfunction
 
 function! OnTmux() abort
