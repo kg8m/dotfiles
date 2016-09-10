@@ -598,6 +598,7 @@ if dein#tap("neosnippet")  "{{{
      \   "on_i":      1,
      \   "on_ft":     ["snippet", "neosnippet"],
      \   "on_source": "unite.vim",
+     \   "depends":   [".vim", "vim-snippets"],
      \   "hook_source": "call ConfigPluginOnSource_neosnippet()",
      \ })
 
@@ -612,8 +613,8 @@ if dein#tap("neosnippet")  "{{{
     endif
 
     let g:neosnippet#snippets_directory = [
-      \   $plugins_path . "/.vim/snippets",
-      \   $plugins_path . "/vim-snippets/snippets",
+      \   dein#get(".vim").path . "/snippets",
+      \   dein#get("vim-snippets").path . "/snippets",
       \ ]
 
     augroup NeoSnippetClearMarkers
