@@ -16,13 +16,13 @@ let s:ag_available     = executable("ag")
 let s:ack_available    = executable("ack")
 let s:migemo_available = has("migemo") || executable("cmigemo")
 
-function! s:AvailabilityMessage(target) abort
-  return a:target . " is " . (eval("s:" . a:target . "_available") ? "" : "NOT ") . "available"
-endfunction
-
 function! UpdatePlugins() abort
   call dein#update()
   Unite dein/log -buffer-name=update_plugins -input=!Same\\ revision\ !Already\\ up-to-date.\ !git\\ pull
+endfunction
+
+function! s:AvailabilityMessage(target) abort
+  return a:target . " is " . (eval("s:" . a:target . "_available") ? "" : "NOT ") . "available"
 endfunction
 
 function! OnTmux() abort
