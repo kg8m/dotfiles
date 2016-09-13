@@ -146,110 +146,110 @@ if has("vim_starting")
   set runtimepath+=$plugin_manager_path
 endif
 
-call dein#begin($plugins_path)
+call s:SetupPluginStart($plugins_path)
 " }}}
 
 " plugins list  "{{{
-call dein#add("Shougo/dein.vim")
-call dein#add("Shougo/vimproc", { "build": "make" })
+call s:RegisterPlugin("Shougo/dein.vim")
+call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 
-call dein#add("kg8m/.vim")
-call dein#add("soramugi/auto-ctags.vim", { "if": OnRailsDir() })
-call dein#add("vim-scripts/autodate.vim")
-call dein#add("itchyny/calendar.vim")
-call dein#add("tyru/caw.vim")
-call dein#add("cocopon/colorswatch.vim")
-call dein#add("rhysd/conflict-marker.vim", { "if": 0 })
-call dein#add("Shougo/context_filetype.vim")
-call dein#add("chrisbra/csv.vim", { "if": 0 })
-call dein#add("spolu/dwm.vim")
-call dein#add("mattn/emmet-vim", { "description": "former zencoding-vim" })
-call dein#add("eruby.vim", { "if": 0 })
-call dein#add("bogado/file-line", {
+call s:RegisterPlugin("kg8m/.vim")
+call s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })
+call s:RegisterPlugin("vim-scripts/autodate.vim")
+call s:RegisterPlugin("itchyny/calendar.vim")
+call s:RegisterPlugin("tyru/caw.vim")
+call s:RegisterPlugin("cocopon/colorswatch.vim")
+call s:RegisterPlugin("rhysd/conflict-marker.vim", { "if": 0 })
+call s:RegisterPlugin("Shougo/context_filetype.vim")
+call s:RegisterPlugin("chrisbra/csv.vim", { "if": 0 })
+call s:RegisterPlugin("spolu/dwm.vim")
+call s:RegisterPlugin("mattn/emmet-vim", { "description": "former zencoding-vim" })
+call s:RegisterPlugin("eruby.vim", { "if": 0 })
+call s:RegisterPlugin("bogado/file-line", {
    \   "if": 0,
    \   "description": "conflicts with sudo.vim (`vim sudo:path/to/file` not working)",
    \ })
-call dein#add("leafcage/foldCC")
+call s:RegisterPlugin("leafcage/foldCC")
 " dein does not support hg
-" call dein#add("https://bitbucket.org/heavenshell/gundo.vim")
+" call s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")
 if !isdirectory("~/.vim/bundle/gundo.vim")
   call system("hg clone https://bitbucket.org/heavenshell/gundo.vim ~/.vim/bundle/gundo.vim")
 endif
 set runtimepath+=~/.vim/bundle/gundo.vim
-call dein#add("sk1418/HowMuch")
-call dein#add("nishigori/increment-activator")
-call dein#add("haya14busa/incsearch.vim")
-call dein#add("haya14busa/incsearch-index.vim", { "if": 0 })
-call dein#add("fuenor/JpFormat.vim")
-call dein#add("https://bitbucket.org/teramako/jscomplete-vim.git")
-call dein#add("itchyny/lightline.vim")
-call dein#add("AndrewRadev/linediff.vim")
-call dein#add("matchit.zip")
-call dein#add("kg8m/moin.vim")
-call dein#add("Shougo/neocomplete.vim")
-call dein#add("Shougo/neomru.vim")
-call dein#add("Shougo/neoyank.vim")
-call dein#add("Shougo/neosnippet")
-call dein#add("Shougo/neosnippet-snippets")
-call dein#add("tyru/open-browser.vim")
-call dein#add("tyru/operator-camelize.vim")
-call dein#add("kien/rainbow_parentheses.vim", { "if": 0 })
-call dein#add("chrisbra/Recover.vim")
-call dein#add("todesking/ruby_hl_lvar.vim", { "if": RubyVersion() >= '1.9.0' })
-call dein#add("sequence")
-call dein#add("joeytwiddle/sexy_scroller.vim")
-call dein#add("jiangmiao/simple-javascript-indenter")
-call dein#add("AndrewRadev/splitjoin.vim")
-call dein#add("sudo.vim")
-call dein#add("kg8m/svn-diff.vim", { "if": OnSvnDir() })
-call dein#add("vim-scripts/Unicode-RST-Tables")
-call dein#add("Shougo/unite.vim")
-call dein#add("kg8m/unite-dwm")
-call dein#add("osyo-manga/unite-filetype")
-call dein#add("Shougo/unite-help")
-call dein#add("tacroe/unite-mark")
-call dein#add("Shougo/unite-outline")
-call dein#add("basyura/unite-rails", { "if": OnRailsDir() })
-call dein#add("tsukkee/unite-tag")
-call dein#add("pasela/unite-webcolorname")
-call dein#add("h1mesuke/vim-alignta")
-call dein#add("osyo-manga/vim-anzu")
-call dein#add("haya14busa/vim-asterisk")
-call dein#add("Townk/vim-autoclose")
-call dein#add("Chiel92/vim-autoformat")
-call dein#add("itchyny/vim-autoft")
-call dein#add("kg8m/vim-blockle")
-call dein#add("t9md/vim-choosewin")
-call dein#add("kchmck/vim-coffee-script")
-call dein#add("kg8m/vim-coloresque")
-call dein#add("hail2u/vim-css-syntax")
-call dein#add("hail2u/vim-css3-syntax")
-call dein#add("itchyny/vim-cursorword", {
+call s:RegisterPlugin("sk1418/HowMuch")
+call s:RegisterPlugin("nishigori/increment-activator")
+call s:RegisterPlugin("haya14busa/incsearch.vim")
+call s:RegisterPlugin("haya14busa/incsearch-index.vim", { "if": 0 })
+call s:RegisterPlugin("fuenor/JpFormat.vim")
+call s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git")
+call s:RegisterPlugin("itchyny/lightline.vim")
+call s:RegisterPlugin("AndrewRadev/linediff.vim")
+call s:RegisterPlugin("matchit.zip")
+call s:RegisterPlugin("kg8m/moin.vim")
+call s:RegisterPlugin("Shougo/neocomplete.vim")
+call s:RegisterPlugin("Shougo/neomru.vim")
+call s:RegisterPlugin("Shougo/neoyank.vim")
+call s:RegisterPlugin("Shougo/neosnippet")
+call s:RegisterPlugin("Shougo/neosnippet-snippets")
+call s:RegisterPlugin("tyru/open-browser.vim")
+call s:RegisterPlugin("tyru/operator-camelize.vim")
+call s:RegisterPlugin("kien/rainbow_parentheses.vim", { "if": 0 })
+call s:RegisterPlugin("chrisbra/Recover.vim")
+call s:RegisterPlugin("todesking/ruby_hl_lvar.vim", { "if": RubyVersion() >= '1.9.0' })
+call s:RegisterPlugin("sequence")
+call s:RegisterPlugin("joeytwiddle/sexy_scroller.vim")
+call s:RegisterPlugin("jiangmiao/simple-javascript-indenter")
+call s:RegisterPlugin("AndrewRadev/splitjoin.vim")
+call s:RegisterPlugin("sudo.vim")
+call s:RegisterPlugin("kg8m/svn-diff.vim", { "if": OnSvnDir() })
+call s:RegisterPlugin("vim-scripts/Unicode-RST-Tables")
+call s:RegisterPlugin("Shougo/unite.vim")
+call s:RegisterPlugin("kg8m/unite-dwm")
+call s:RegisterPlugin("osyo-manga/unite-filetype")
+call s:RegisterPlugin("Shougo/unite-help")
+call s:RegisterPlugin("tacroe/unite-mark")
+call s:RegisterPlugin("Shougo/unite-outline")
+call s:RegisterPlugin("basyura/unite-rails", { "if": OnRailsDir() })
+call s:RegisterPlugin("tsukkee/unite-tag")
+call s:RegisterPlugin("pasela/unite-webcolorname")
+call s:RegisterPlugin("h1mesuke/vim-alignta")
+call s:RegisterPlugin("osyo-manga/vim-anzu")
+call s:RegisterPlugin("haya14busa/vim-asterisk")
+call s:RegisterPlugin("Townk/vim-autoclose")
+call s:RegisterPlugin("Chiel92/vim-autoformat")
+call s:RegisterPlugin("itchyny/vim-autoft")
+call s:RegisterPlugin("kg8m/vim-blockle")
+call s:RegisterPlugin("t9md/vim-choosewin")
+call s:RegisterPlugin("kchmck/vim-coffee-script")
+call s:RegisterPlugin("kg8m/vim-coloresque")
+call s:RegisterPlugin("hail2u/vim-css-syntax")
+call s:RegisterPlugin("hail2u/vim-css3-syntax")
+call s:RegisterPlugin("itchyny/vim-cursorword", {
    \   "if": 0,
    \   "description": "confusing with IME's underline",
    \ })
-call dein#add("Lokaltog/vim-easymotion")
-call dein#add("tpope/vim-endwise", {
+call s:RegisterPlugin("Lokaltog/vim-easymotion")
+call s:RegisterPlugin("tpope/vim-endwise", {
    \   "if": 0,
    \   "description": "incompatible with neosnippet",
    \ })
-call dein#add("kg8m/vim-dirdiff")
-call dein#add("thinca/vim-ft-diff_fold")
-call dein#add("thinca/vim-ft-help_fold")
-call dein#add("thinca/vim-ft-markdown_fold")
-call dein#add("lambdalisue/vim-gista")
-call dein#add("thinca/vim-ft-svn_diff")
-call dein#add("muz/vim-gemfile")
-call dein#add("tpope/vim-git")
-call dein#add("lambdalisue/vim-gita", { "if": 0 })
-call dein#add("tpope/vim-haml")
-call dein#add("michaeljsmith/vim-indent-object")
-call dein#add("jelera/vim-javascript-syntax")
-call dein#add("elzr/vim-json")
-call dein#add("rcmdnk/vim-markdown")
-call dein#add("joker1007/vim-markdown-quote-syntax")
-call dein#add("losingkeys/vim-niji", { "if": 0 })
-call dein#add("kana/vim-operator-replace")
+call s:RegisterPlugin("kg8m/vim-dirdiff")
+call s:RegisterPlugin("thinca/vim-ft-diff_fold")
+call s:RegisterPlugin("thinca/vim-ft-help_fold")
+call s:RegisterPlugin("thinca/vim-ft-markdown_fold")
+call s:RegisterPlugin("lambdalisue/vim-gista")
+call s:RegisterPlugin("thinca/vim-ft-svn_diff")
+call s:RegisterPlugin("muz/vim-gemfile")
+call s:RegisterPlugin("tpope/vim-git")
+call s:RegisterPlugin("lambdalisue/vim-gita", { "if": 0 })
+call s:RegisterPlugin("tpope/vim-haml")
+call s:RegisterPlugin("michaeljsmith/vim-indent-object")
+call s:RegisterPlugin("jelera/vim-javascript-syntax")
+call s:RegisterPlugin("elzr/vim-json")
+call s:RegisterPlugin("rcmdnk/vim-markdown")
+call s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")
+call s:RegisterPlugin("losingkeys/vim-niji", { "if": 0 })
+call s:RegisterPlugin("kana/vim-operator-replace")
 " not working in case like following:
 "   (1) text:      hoge "fu*ga piyo"
 "   (2) call: <Plug>(operator-surround-append)"'
@@ -259,61 +259,61 @@ call dein#add("kana/vim-operator-replace")
 "   (2) call: <Plug>(operator-surround-replace)"'
 "   (3) expected:  hoge* 'fuga piyo'
 "   (4) result:    hoge*' fuga piyo'
-call dein#add("rhysd/vim-operator-surround", { "if": 0 })
-call dein#add("kana/vim-operator-user")
-call dein#add("itchyny/vim-parenmatch")
-call dein#add("thinca/vim-prettyprint")
-call dein#add("thinca/vim-qfreplace")
-call dein#add("tpope/vim-rails", { "if": OnRailsDir() })
-call dein#add("thinca/vim-ref")
-call dein#add("tpope/vim-repeat")
-call dein#add("vim-ruby/vim-ruby", {
+call s:RegisterPlugin("rhysd/vim-operator-surround", { "if": 0 })
+call s:RegisterPlugin("kana/vim-operator-user")
+call s:RegisterPlugin("itchyny/vim-parenmatch")
+call s:RegisterPlugin("thinca/vim-prettyprint")
+call s:RegisterPlugin("thinca/vim-qfreplace")
+call s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() })
+call s:RegisterPlugin("thinca/vim-ref")
+call s:RegisterPlugin("tpope/vim-repeat")
+call s:RegisterPlugin("vim-ruby/vim-ruby", {
    \   "description": "do not make lazy because ftdetecting does not work",
    \ })
-call dein#add("joker1007/vim-ruby-heredoc-syntax")
-call dein#add("kg8m/vim-rubytest", { "if": !OnTmux() })
-call dein#add("thinca/vim-singleton")
-call dein#add("honza/vim-snippets")
-call dein#add("mhinz/vim-startify")
-call dein#add("kopischke/vim-stay", {
+call s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax")
+call s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() })
+call s:RegisterPlugin("thinca/vim-singleton")
+call s:RegisterPlugin("honza/vim-snippets")
+call s:RegisterPlugin("mhinz/vim-startify")
+call s:RegisterPlugin("kopischke/vim-stay", {
    \   "if": 0,
    \   "description": "sometimes excessively works",
    \ })
-call dein#add("tpope/vim-surround")
-call dein#add("deris/vim-textobj-enclosedsyntax")
-call dein#add("kana/vim-textobj-jabraces")
-call dein#add("kana/vim-textobj-lastpat")
-call dein#add("osyo-manga/vim-textobj-multitextobj")
-call dein#add("rhysd/vim-textobj-ruby")
-call dein#add("jgdavey/vim-turbux", { "if": OnTmux() })
-call dein#add("kana/vim-textobj-user")
-call dein#add("thinca/vim-unite-history")
-call dein#add("kg8m/vim-unite-giti", { "if": OnGitDir() })
-call dein#add("kmnk/vim-unite-svn", { "if": OnSvnDir() })
-call dein#add("hrsh7th/vim-versions", { "if": OnGitDir() || OnSvnDir() })
-call dein#add("superbrothers/vim-vimperator")
-call dein#add("thinca/vim-zenspace")
-call dein#add("Shougo/vimfiler")
-call dein#add("Shougo/vimshell")
-call dein#add("benmills/vimux", { "if": OnTmux() })
-call dein#add("simeji/winresizer")
-call dein#add("LeafCage/yankround.vim")
+call s:RegisterPlugin("tpope/vim-surround")
+call s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")
+call s:RegisterPlugin("kana/vim-textobj-jabraces")
+call s:RegisterPlugin("kana/vim-textobj-lastpat")
+call s:RegisterPlugin("osyo-manga/vim-textobj-multitextobj")
+call s:RegisterPlugin("rhysd/vim-textobj-ruby")
+call s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() })
+call s:RegisterPlugin("kana/vim-textobj-user")
+call s:RegisterPlugin("thinca/vim-unite-history")
+call s:RegisterPlugin("kg8m/vim-unite-giti", { "if": OnGitDir() })
+call s:RegisterPlugin("kmnk/vim-unite-svn", { "if": OnSvnDir() })
+call s:RegisterPlugin("hrsh7th/vim-versions", { "if": OnGitDir() || OnSvnDir() })
+call s:RegisterPlugin("superbrothers/vim-vimperator")
+call s:RegisterPlugin("thinca/vim-zenspace")
+call s:RegisterPlugin("Shougo/vimfiler")
+call s:RegisterPlugin("Shougo/vimshell")
+call s:RegisterPlugin("benmills/vimux", { "if": OnTmux() })
+call s:RegisterPlugin("simeji/winresizer")
+call s:RegisterPlugin("LeafCage/yankround.vim")
 
 " colorschemes
-call dein#add("hail2u/h2u_colorscheme", {
+call s:RegisterPlugin("hail2u/h2u_colorscheme", {
    \   "description": "for printing",
    \ })
-call dein#add("kg8m/molokai")
+call s:RegisterPlugin("kg8m/molokai")
 " }}}
 
 " plugins settings  "{{{
-if dein#tap("alpaca_complete")  "{{{
+if s:TapPlugin("alpaca_complete")  "{{{
   call dein#config({
      \   "on_ft": ["ruby", "eruby"],
      \ })
 endif  " }}}
 
-if dein#tap("auto-ctags.vim")  "{{{
+if s:TapPlugin("auto-ctags.vim")  "{{{
   let g:auto_ctags = 1
 
   augroup AutoCtagsAtVinEnter  "{{{
@@ -322,7 +322,7 @@ if dein#tap("auto-ctags.vim")  "{{{
   augroup END  " }}}
 endif  " }}}
 
-if dein#tap("autodate.vim")  "{{{
+if s:TapPlugin("autodate.vim")  "{{{
   let g:autodate_format       = "%Y/%m/%d"
   let g:autodate_lines        = 100
   let g:autodate_keyword_pre  = '\c\%(' .
@@ -333,8 +333,8 @@ if dein#tap("autodate.vim")  "{{{
   let g:autodate_keyword_post = '\.$'
 endif  " }}}
 
-if dein#tap("calendar.vim")  "{{{
-  call dein#config({
+if s:TapPlugin("calendar.vim")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "Calendar",
      \   "hook_source": "call ConfigPluginOnSource_calendar()",
@@ -346,8 +346,8 @@ if dein#tap("calendar.vim")  "{{{
   endfunction
 endif  " }}}
 
-if dein#tap("caw.vim")  "{{{
-  call dein#config({
+if s:TapPlugin("caw.vim")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": ["ns", "<Plug>(caw:"],
      \   "hook_source": "call ConfigPluginOnSource_caw()",
@@ -362,14 +362,14 @@ if dein#tap("caw.vim")  "{{{
   endfunction
 endif  " }}}
 
-if dein#tap("colorswatch.vim")  "{{{
-  call dein#config({
+if s:TapPlugin("colorswatch.vim")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "ColorSwatchGenerate",
      \ })
 endif  " }}}
 
-if dein#tap("dwm.vim")  "{{{
+if s:TapPlugin("dwm.vim")  "{{{
   nmap <C-w>n       :<C-u>call DWM_New()<Cr>
   nmap <C-w>c       :<C-u>call DWM_Close()<Cr>
   nmap <C-w><Space> :<C-u>call DWM_AutoEnter()<Cr>
@@ -393,8 +393,9 @@ if dein#tap("dwm.vim")  "{{{
   augroup END  " }}}
 endif  " }}}
 
-if dein#tap("emmet-vim")  "{{{
-  call dein#config({
+if s:TapPlugin("emmet-vim")  "{{{
+  " command: <C-y>,
+  call s:ConfigPlugin({
      \   "lazy": 1,
      \   "on_i": 1,
      \   "hook_source": "call ConfigPluginOnSource_emmet_vim()",
@@ -428,14 +429,14 @@ if dein#tap("emmet-vim")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("foldCC")  "{{{
+if s:TapPlugin("foldCC")  "{{{
   let g:foldCCtext_enable_autofdc_adjuster = 1
   let g:foldCCtext_maxchars = 120
   set foldtext=FoldCCtext()
 endif  " }}}
 
-" if dein#tap("gundo.vim")  "{{{
-"   call dein#config({
+" if s:TapPlugin("gundo.vim")  "{{{
+"   call s:ConfigPlugin({
 "      \   "lazy":   1,
 "      \   "on_cmd": "GundoToggle",
 "      \   "hook_source": "call ConfigPluginOnSource_gundo()",
@@ -450,8 +451,8 @@ endif  " }}}
 "   endfunction  " }}}
 " endif  " }}}
 
-if dein#tap("HowMuch")  "{{{
-  call dein#config({
+if s:TapPlugin("HowMuch")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": ["ns", "<Plug>AutoCalc"],
      \   "hook_source": "call ConfigPluginOnSource_HowMuch()",
@@ -466,7 +467,7 @@ if dein#tap("HowMuch")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("increment-activator")  "{{{
+if s:TapPlugin("increment-activator")  "{{{
   let g:increment_activator_filetype_candidates = {
     \   "_": [
     \     ["有", "無"],
@@ -498,7 +499,7 @@ if dein#tap("increment-activator")  "{{{
     \ }
 endif  " }}}
 
-if dein#tap("incsearch.vim")  "{{{
+if s:TapPlugin("incsearch.vim")  "{{{
   map /  <Plug>(incsearch-forward)
   map ?  <Plug>(incsearch-backward)
   map g/ <Plug>(incsearch-stay)
@@ -513,25 +514,25 @@ if dein#tap("incsearch.vim")  "{{{
   let g:incsearch#auto_nohlsearch = 0
   let g:incsearch#magic = '\v'
 
-  if dein#tap("incsearch-index.vim")  "{{{
+  if s:TapPlugin("incsearch-index.vim")  "{{{
     map /  <Plug>(incsearch-index-/)
     map ?  <Plug>(incsearch-index-?)
   endif  " }}}
 endif  " }}}
 
-if dein#tap("indentLine")  "{{{
+if s:TapPlugin("indentLine")  "{{{
   let g:indentLine_char = "|"
 endif  " }}}
 
-if dein#tap("JpFormat.vim")  "{{{
+if s:TapPlugin("JpFormat.vim")  "{{{
   let JpCountChars = 37
 endif  " }}}
 
-if dein#tap("jscomplete-vim.git")  "{{{
+if s:TapPlugin("jscomplete-vim.git")  "{{{
   let g:jscomplete_use = ["dom", "moz", "es6th"]
 endif  " }}}
 
-if dein#tap("lightline.vim")  "{{{
+if s:TapPlugin("lightline.vim")  "{{{
   " http://d.hatena.ne.jp/itchyny/20130828/1377653592
   set laststatus=2
   let s:lightline_elements = {
@@ -579,12 +580,12 @@ if dein#tap("lightline.vim")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("linediff.vim")  "{{{
+if s:TapPlugin("linediff.vim")  "{{{
   let g:linediff_second_buffer_command = "rightbelow vertical new"
 endif  " }}}
 
-if dein#tap("neocomplete.vim")  "{{{
-  call dein#config({
+if s:TapPlugin("neocomplete.vim")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_i":   1,
      \   "on_cmd": "NeoCompleteBufferMakeCache",
@@ -636,8 +637,8 @@ if dein#tap("neocomplete.vim")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("neosnippet")  "{{{
-  call dein#config({
+if s:TapPlugin("neosnippet")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":      1,
      \   "on_i":      1,
      \   "on_ft":     ["snippet", "neosnippet"],
@@ -657,8 +658,8 @@ if dein#tap("neosnippet")  "{{{
     endif
 
     let g:neosnippet#snippets_directory = [
-      \   dein#get(".vim").path . "/snippets",
-      \   dein#get("vim-snippets").path . "/snippets",
+      \   s:PluginInfo(".vim").path . "/snippets",
+      \   s:PluginInfo("vim-snippets").path . "/snippets",
       \ ]
 
     augroup NeoSnippetClearMarkers  "{{{
@@ -668,8 +669,8 @@ if dein#tap("neosnippet")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("open-browser.vim")  "{{{
-  call dein#config({
+if s:TapPlugin("open-browser.vim")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":    1,
      \   "on_cmd":  ["OpenBrowserSearch", "OpenBrowser"],
      \   "on_func": "openbrowser#open",
@@ -690,8 +691,8 @@ if dein#tap("open-browser.vim")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("operator-camelize.vim")  "{{{
-  call dein#config({
+if s:TapPlugin("operator-camelize.vim")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": ["ns", "<Plug>(operator-camelize)", "<Plug>(operator-decamelize)"],
      \ })
@@ -700,27 +701,27 @@ if dein#tap("operator-camelize.vim")  "{{{
   vmap <Leader>c <Plug>(operator-decamelize)
 endif  " }}}
 
-if dein#tap("ruby_hl_lvar.vim")  "{{{
-  call dein#config({
+if s:TapPlugin("ruby_hl_lvar.vim")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":  1,
      \   "on_ft": ["ruby"],
      \ })
 endif  " }}}
 
-if dein#tap("sequence")  "{{{
+if s:TapPlugin("sequence")  "{{{
   vmap <Leader>+ <plug>SequenceV_Increment
   vmap <Leader>- <plug>SequenceV_Decrement
   nmap <Leader>+ <plug>SequenceN_Increment
   nmap <Leader>- <plug>SequenceN_Decrement
 endif  " }}}
 
-if dein#tap("simple-javascript-indenter")  "{{{
+if s:TapPlugin("simple-javascript-indenter")  "{{{
   let g:SimpleJsIndenter_BriefMode = 2
   let g:SimpleJsIndenter_CaseIndentLevel = -1
 endif  " }}}
 
-if dein#tap("splitjoin.vim")  "{{{
-  call dein#config({
+if s:TapPlugin("splitjoin.vim")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": ["SplitjoinJoin", "SplitjoinSplit"],
      \   "hook_source": "call ConfigPluginOnSource_splitjoin()",
@@ -737,12 +738,12 @@ if dein#tap("splitjoin.vim")  "{{{
   endfunction
 endif  " }}}
 
-if dein#tap("Unicode-RST-Tables")  "{{{
+if s:TapPlugin("Unicode-RST-Tables")  "{{{
   let g:no_rst_table_maps = 0
 endif  " }}}
 
-if dein#tap("unite.vim")  "{{{
-  call dein#config({
+if s:TapPlugin("unite.vim")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "Unite",
      \   "hook_source": "call ConfigPluginOnSource_unite()",
@@ -873,8 +874,8 @@ if dein#tap("unite.vim")  "{{{
     " }}}
   endfunction  " }}}
 
-  if dein#tap("neomru.vim")  "{{{
-    call dein#config({
+  if s:TapPlugin("neomru.vim")  "{{{
+    call s:ConfigPlugin({
        \   "lazy": 0,
        \ })
 
@@ -885,16 +886,16 @@ if dein#tap("unite.vim")  "{{{
     let g:neomru#file_mru_limit  = 1000
   endif  " }}}
 
-  if dein#tap("neoyank.vim")  "{{{
-    call dein#config({
+  if s:TapPlugin("neoyank.vim")  "{{{
+    call s:ConfigPlugin({
        \   "lazy": 0,
        \ })
 
     let g:neoyank#limit = 300
   endif  " }}}
 
-  if dein#tap("unite-dwm")  "{{{
-    call dein#config({
+  if s:TapPlugin("unite-dwm")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":  1,
        \   "on_ft": "unite",
        \   "hook_source": "call ConfigPluginOnSource_unite_dwm()",
@@ -905,15 +906,15 @@ if dein#tap("unite.vim")  "{{{
     endfunction  " }}}
   endif  " }}}
 
-  if dein#tap("unite-filetype")  "{{{
-    call dein#config({
+  if s:TapPlugin("unite-filetype")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \ })
   endif  " }}}
 
-  if dein#tap("unite-mark")  "{{{
-    call dein#config({
+  if s:TapPlugin("unite-mark")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_func":   "AutoMark",
        \   "on_source": "unite.vim",
@@ -949,8 +950,8 @@ if dein#tap("unite.vim")  "{{{
     endfunction  " }}}
   endif  " }}}
 
-  if dein#tap("unite-outline")  "{{{
-    call dein#config({
+  if s:TapPlugin("unite-outline")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \ })
@@ -958,8 +959,8 @@ if dein#tap("unite.vim")  "{{{
     nnoremap <Leader>uo :<C-u>Unite outline:!<Cr>
   endif  " }}}
 
-  if dein#tap("unite-rails")  "{{{
-    call dein#config({
+  if s:TapPlugin("unite-rails")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \ })
@@ -967,15 +968,15 @@ if dein#tap("unite.vim")  "{{{
     nnoremap <Leader>ur :<C-u>Unite rails/
   endif  " }}}
 
-  if dein#tap("unite-tag")  "{{{
-    call dein#config({
+  if s:TapPlugin("unite-tag")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \   "hook_source": "call ConfigPluginOnSource_unite_tag()",
        \ })
 
-    call dein#config("unite.vim", {
-       \   "on_cmd": dein#get("unite.vim")["on_cmd"] + ["UniteWithCursorWord"],
+    call s:ConfigPlugin("unite.vim", {
+       \   "on_cmd": s:PluginInfo("unite.vim")["on_cmd"] + ["UniteWithCursorWord"],
        \ })
 
     nnoremap g] :<C-u>UniteWithCursorWord -immediately tag<CR>
@@ -989,22 +990,22 @@ if dein#tap("unite.vim")  "{{{
     endfunction  " }}}
   endif  " }}}
 
-  if dein#tap("unite-webcolorname")  "{{{
-    call dein#config({
+  if s:TapPlugin("unite-webcolorname")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \ })
   endif  " }}}
 
-  if dein#tap("vim-unite-history")  "{{{
-    call dein#config({
+  if s:TapPlugin("vim-unite-history")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \ })
   endif  " }}}
 
-  if dein#tap("vim-unite-giti")  "{{{
-    call dein#config({
+  if s:TapPlugin("vim-unite-giti")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \   "hook_source":      "call ConfigPluginOnSource_vim_unite_giti()",
@@ -1053,8 +1054,8 @@ if dein#tap("unite.vim")  "{{{
     endfunction  " }}}
   endif  " }}}
 
-  if dein#tap("vim-unite-svn")  "{{{
-    call dein#config({
+  if s:TapPlugin("vim-unite-svn")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \   "hook_post_source": "call ConfigPluginOnPostSource_vim_unite_svn()",
@@ -1086,8 +1087,8 @@ if dein#tap("unite.vim")  "{{{
     endfunction  " }}}
   endif  " }}}
 
-  if dein#tap("vim-versions")  "{{{
-    call dein#config({
+  if s:TapPlugin("vim-versions")  "{{{
+    call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_cmd":    "UniteVersions",
        \   "on_source": "unite.vim",
@@ -1128,8 +1129,8 @@ if dein#tap("unite.vim")  "{{{
   endif  " }}}
 endif  " }}}
 
-if dein#tap("vim-alignta")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-alignta")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":      0,
      \   "on_cmd":    "Alignta",
      \   "on_source": "unite.vim",
@@ -1175,8 +1176,8 @@ if dein#tap("vim-alignta")  "{{{
   unlet s:alignta_comment_leadings
 endif  " }}}
 
-if dein#tap("vim-anzu")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-anzu")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": ["ns", "<Plug>(anzu-"],
      \ })
@@ -1184,11 +1185,11 @@ if dein#tap("vim-anzu")  "{{{
   " see incsearch
 endif  " }}}
 
-if dein#tap("vim-asterisk")  "{{{
+if s:TapPlugin("vim-asterisk")  "{{{
   " see incsearch
 endif  " }}}
 
-if dein#tap("vim-autoclose")  "{{{
+if s:TapPlugin("vim-autoclose")  "{{{
   " annoying to type "<<" in Ruby code or type "<" for comparing in many languages
   " let g:AutoClosePairs_add = "<>"
   let g:AutoCloseSelectionWrapPrefix = "<Leader>ac"
@@ -1206,11 +1207,11 @@ if dein#tap("vim-autoclose")  "{{{
   endif
 endif  " }}}
 
-if dein#tap("vim-autoformat")  "{{{
+if s:TapPlugin("vim-autoformat")  "{{{
   let g:formatdef_jsbeautify_javascript = '"js-beautify -f -s2 -"'
 endif  " }}}
 
-if dein#tap("vim-autoft")  "{{{
+if s:TapPlugin("vim-autoft")  "{{{
   let g:autoft_config = [
     \   { "filetype": "html",       "pattern": '<\%(!DOCTYPE\|html\|head\|script\)' },
     \   { "filetype": "javascript", "pattern": '\%(^\s*\<var\>\s\+[a-zA-Z]\+\)\|\%(function\%(\s\+[a-zA-Z]\+\)\?\s*(\)' },
@@ -1219,13 +1220,13 @@ if dein#tap("vim-autoft")  "{{{
     \ ]
 endif  " }}}
 
-if dein#tap("vim-blockle")  "{{{
+if s:TapPlugin("vim-blockle")  "{{{
   let g:blockle_mapping = ",b"
   let g:blockle_erase_spaces_around_starting_brace = 1
 endif  " }}}
 
-if dein#tap("vim-choosewin")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-choosewin")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": ["ns", "<Plug>(choosewin)"],
      \   "hook_source": "call ConfigPluginOnSource_vim_choosewin()",
@@ -1242,8 +1243,8 @@ if dein#tap("vim-choosewin")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("vim-dirdiff")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-dirdiff")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "DirDiff",
      \   "hook_source": "call ConfigPluginOnSource_vim_dirdiff()",
@@ -1258,7 +1259,7 @@ if dein#tap("vim-dirdiff")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("vim-easymotion")  "{{{
+if s:TapPlugin("vim-easymotion")  "{{{
   nmap <Leader>f <Plug>(easymotion-s2)
   vmap <Leader>f <Plug>(easymotion-s2)
   omap <Leader>f <Plug>(easymotion-s2)
@@ -1282,8 +1283,8 @@ if dein#tap("vim-easymotion")  "{{{
   let g:EasyMotion_skipfoldedline   = 0
 endif  " }}}
 
-if dein#tap("vim-gista")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-gista")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":      1,
      \   "on_cmd":    "Gista",
      \   "on_map":    "<Plug>(gista-",
@@ -1296,14 +1297,14 @@ if dein#tap("vim-gista")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("vim-git")  "{{{
+if s:TapPlugin("vim-git")  "{{{
   augroup PreventVimGitFromChangingSettings
     autocmd!
     autocmd FileType gitcommit let b:did_ftplugin = 1
   augroup END  " }}}
 endif  " }}}
 
-if dein#tap("vim-javascript-syntax")  "{{{
+if s:TapPlugin("vim-javascript-syntax")  "{{{
   function! s:MyJavascriptFold() abort
     if !exists("b:javascript_folded")
       call JavaScriptFold()
@@ -1313,11 +1314,11 @@ if dein#tap("vim-javascript-syntax")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("vim-json")  "{{{
+if s:TapPlugin("vim-json")  "{{{
   let g:vim_json_syntax_conceal = 0
 endif  " }}}
 
-if dein#tap("vim-markdown")  "{{{
+if s:TapPlugin("vim-markdown")  "{{{
   let g:markdown_quote_syntax_filetypes = {
     \   "coffee": {
     \     "start": "coffee",
@@ -1333,8 +1334,8 @@ if dein#tap("vim-markdown")  "{{{
   augroup END  " }}}
 endif  " }}}
 
-if dein#tap("vim-operator-replace")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-operator-replace")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":    1,
      \   "on_map": ["ns", "<Plug>(operator-replace)"],
      \ })
@@ -1343,8 +1344,8 @@ if dein#tap("vim-operator-replace")  "{{{
   vmap r <Plug>(operator-replace)
 endif  " }}}
 
-if dein#tap("vim-operator-surround")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-operator-surround")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": ["ns", "<Plug>(operator-surround-"],
      \ })
@@ -1357,14 +1358,14 @@ if dein#tap("vim-operator-surround")  "{{{
   vmap <silent>sr <Plug>(operator-surround-replace)
 endif  " }}}
 
-if dein#tap("vim-operator-user")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-operator-user")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":    1,
      \   "on_func": "operator#user#define",
      \ })
 endif  " }}}
 
-if dein#tap("vim-parenmatch")  "{{{
+if s:TapPlugin("vim-parenmatch")  "{{{
   let g:loaded_matchparen = 1
 
   augroup HighlightParenmatch  "{{{
@@ -1373,22 +1374,22 @@ if dein#tap("vim-parenmatch")  "{{{
   augroup END  " }}}
 endif  " }}}
 
-if dein#tap("vim-prettyprint")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-prettyprint")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":    1,
      \   "on_cmd":  ["PrettyPrint", "PP"],
      \   "on_func": ["PrettyPrint", "PP"],
      \ })
 endif  " }}}
 
-if dein#tap("vim-qfreplace")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-qfreplace")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":  1,
      \   "on_ft": ["unite", "quickfix"]
      \ })
 endif  " }}}
 
-if dein#tap("vim-rails")  "{{{
+if s:TapPlugin("vim-rails")  "{{{
   " http://fg-180.katamayu.net/archives/2006/09/02/125150
   let g:rails_level = 4
 
@@ -1431,8 +1432,8 @@ if dein#tap("vim-rails")  "{{{
   nmap <Leader>Rwgf <Plug>RailsTabFind
 endif  " }}}
 
-if dein#tap("vim-ref")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-ref")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "Ref",
      \   "on_map": "<Plug>(ref-keyword)",
@@ -1441,19 +1442,19 @@ if dein#tap("vim-ref")  "{{{
   nmap K <Plug>(ref-keyword)
 endif  " }}}
 
-if dein#tap("vim-ruby")  "{{{
+if s:TapPlugin("vim-ruby")  "{{{
   let g:no_ruby_maps = 1
 endif  " }}}
 
-if dein#tap("vim-ruby-heredoc-syntax")  "{{{
+if s:TapPlugin("vim-ruby-heredoc-syntax")  "{{{
   let g:ruby_heredoc_syntax_filetypes = {
     \   "haml": { "start": "HAML" },
     \   "ruby": { "start": "RUBY" },
     \ }
 endif  " }}}
 
-if dein#tap("vim-rubytest")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-rubytest")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": ["<Plug>RubyFileRun", "<Plug>RubyTestRun"],
      \   "hook_source": "call ConfigPluginOnSource_vim_rubytest()",
@@ -1468,8 +1469,8 @@ if dein#tap("vim-rubytest")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("vim-singleton")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-singleton")  "{{{
+  call s:ConfigPlugin({
      \   "gui": 1,
      \   "hook_source": "call ConfigPluginOnSource_vim_singleton()",
      \ })
@@ -1482,8 +1483,8 @@ if dein#tap("vim-singleton")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("vim-startify")  "{{{
-  call dein#config({
+if s:TapPlugin("vim-startify")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":     1,
      \   "on_event": "VimEnter",
      \   "hook_post_source": "call ConfigPluginOnPostSource_vim_startify()",
@@ -1543,11 +1544,11 @@ if dein#tap("vim-startify")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("vim-stay")  "{{{
+if s:TapPlugin("vim-stay")  "{{{
   set viewoptions=cursor
 endif  " }}}
 
-if dein#tap("vim-textobj-multitextobj")  "{{{
+if s:TapPlugin("vim-textobj-multitextobj")  "{{{
   omap aj <Plug>(textobj-multitextobj-a)
   omap ij <Plug>(textobj-multitextobj-i)
   vmap aj <Plug>(textobj-multitextobj-a)
@@ -1585,7 +1586,7 @@ if dein#tap("vim-textobj-multitextobj")  "{{{
     \ ]
 endif  " }}}
 
-if dein#tap("vim-turbux")  "{{{
+if s:TapPlugin("vim-turbux")  "{{{
   map <leader>T <Plug>SendTestToTmux
   map <leader>t <Plug>SendFocusedTestToTmux
 
@@ -1593,7 +1594,7 @@ if dein#tap("vim-turbux")  "{{{
   let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
 endif  " }}}
 
-if dein#tap("vim-zenspace")  "{{{
+if s:TapPlugin("vim-zenspace")  "{{{
   let g:zenspace#default_mode = "on"
 
   augroup HighlightZenkakuSpace  "{{{
@@ -1602,7 +1603,7 @@ if dein#tap("vim-zenspace")  "{{{
   augroup END
 endif  " }}}
 
-if dein#tap("vimfiler")  "{{{
+if s:TapPlugin("vimfiler")  "{{{
   nnoremap <Leader>e :<C-u>VimFilerBufferDir -force-quit<Cr>
 
   call vimfiler#custom#profile("default", "context", {
@@ -1611,8 +1612,8 @@ if dein#tap("vimfiler")  "{{{
      \ })
 endif  " }}}
 
-if dein#tap("vimshell")  "{{{
-  call dein#config({
+if s:TapPlugin("vimshell")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": ["VimShell", "VimShellExecute"],
      \   "hook_source": "call ConfigPluginOnSource_vimshell()",
@@ -1633,7 +1634,7 @@ if dein#tap("vimshell")  "{{{
   endfunction  " }}}
 endif  " }}}
 
-if dein#tap("vimux")  "{{{
+if s:TapPlugin("vimux")  "{{{
   let g:VimuxHeight = 30
   let g:VimuxUseNearest = 1
 
@@ -1668,8 +1669,8 @@ if dein#tap("vimux")  "{{{
   augroup END  " }}}
 endif  " }}}
 
-if dein#tap("winresizer")  "{{{
-  call dein#config({
+if s:TapPlugin("winresizer")  "{{{
+  call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": "<C-w><C-e>",
      \ })
@@ -1677,7 +1678,7 @@ if dein#tap("winresizer")  "{{{
   let g:winresizer_start_key = "<C-w><C-e>"
 endif  " }}}
 
-if dein#tap("yankround.vim")  "{{{
+if s:TapPlugin("yankround.vim")  "{{{
   nmap p <Plug>(yankround-p)
   xmap p <Plug>(yankround-p)
   nmap P <Plug>(yankround-P)
@@ -1687,20 +1688,20 @@ endif  " }}}
 " }}}
 
 " finish plugin manager initialization  "{{{
-call dein#end()
+call s:SetupPluginEnd()
 filetype plugin indent on
 syntax enable
 
-if dein#check_install(["vimproc"])
-  call dein#install(["vimproc"])
+if s:InstallablePluginExists(["vimproc"])
+  call s:InstallPlugins(["vimproc"])
 endif
 
-if dein#check_install()
-  call dein#install()
+if s:InstallablePluginExists()
+  call s:InstallPlugins()
 endif
 
 " colorscheme
-if dein#tap("molokai")  "{{{
+if s:TapPlugin("molokai")  "{{{
   let g:molokai_original = 1
   colorscheme molokai
 endif  " }}}
