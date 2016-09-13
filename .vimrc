@@ -707,6 +707,16 @@ if s:TapPlugin("ruby_hl_lvar.vim")  "{{{
 endif  " }}}
 
 if s:TapPlugin("sequence")  "{{{
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_map": [
+     \     "<Plug>SequenceV_Increment",
+     \     "<Plug>SequenceV_Decrement",
+     \     "<Plug>SequenceN_Increment",
+     \     "<Plug>SequenceN_Decrement",
+     \   ],
+     \ })
+
   vmap <Leader>+ <Plug>SequenceV_Increment
   vmap <Leader>- <Plug>SequenceV_Decrement
   nmap <Leader>+ <Plug>SequenceN_Increment
