@@ -1862,8 +1862,8 @@ endfor
 " auto reload
 augroup CheckTimeHook  "{{{
   autocmd!
-  autocmd InsertEnter * :checktime
-  autocmd InsertLeave * :checktime
+  autocmd InsertEnter * checktime
+  autocmd InsertLeave * checktime
 augroup END  " }}}
 
 " move
