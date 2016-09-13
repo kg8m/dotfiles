@@ -1652,10 +1652,19 @@ if s:TapPlugin("vimshell")  "{{{
 endif  " }}}
 
 if s:TapPlugin("vimux")  "{{{
-  let g:VimuxHeight = 30
-  let g:VimuxUseNearest = 1
+  call s:ConfigPlugin({
+     \   "lazy":     1,
+     \   "on_event": "VimEnter",
+     \   "hook_source":      "call ConfigPluginOnSource_vimux()",
+     \   "hook_post_source": "call ConfigPluginOnPostSource_vimux()",
+     \ })
 
-  function! s:ExtendVimux() abort
+  function! ConfigPluginOnSource_vimux() abort  "{{{
+    let g:VimuxHeight     = 30
+    let g:VimuxUseNearest = 1
+  endfunction  " }}}
+
+  function! ConfigPluginOnPostSource_vimux() abort  "{{{
     " overriding default function: use current pane's next one
     execute join([
     \   'function! _VimuxNearestIndex() abort',
@@ -1681,7 +1690,6 @@ if s:TapPlugin("vimux")  "{{{
 
   augroup Vimux  "{{{
     autocmd!
-    autocmd VimEnter * call s:ExtendVimux()
     autocmd VimLeavePre * :VimuxCloseRunner
   augroup END  " }}}
 endif  " }}}
