@@ -1612,7 +1612,7 @@ if s:TapPlugin("vim-zenspace")  "{{{
 
   augroup HighlightZenkakuSpace  "{{{
     autocmd!
-    autocmd ColorScheme * highlight ZenSpace term=underline cterm=underline gui=underline ctermbg=Black guibg=Black ctermfg=DarkGray guifg=DarkGray
+    autocmd ColorScheme * highlight ZenSpace term=underline cterm=underline gui=underline ctermbg=DarkGray guibg=DarkGray ctermfg=DarkGray guifg=DarkGray
   augroup END  " }}}
 endif  " }}}
 
