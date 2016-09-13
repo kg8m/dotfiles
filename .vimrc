@@ -21,6 +21,42 @@ function! UpdatePlugins() abort  "{{{
   Unite dein/log -buffer-name=update_plugins -input=!Same\\ revision\ !Already\\ up-to-date.\ !git\\ pull
 endfunction  " }}}
 
+function! s:SetupPluginStart(plugins_path) abort  "{{{
+  return dein#begin(a:plugins_path)
+endfunction  " }}}
+
+function! s:SetupPluginEnd() abort  "{{{
+  return dein#end()
+endfunction  " }}}
+
+function! s:RegisterPlugin(plugin_name, ...) abort  "{{{
+  return dein#add(a:plugin_name, get(a:000, 0, {}))
+endfunction  " }}}
+
+function! s:TapPlugin(plugin_name) abort  "{{{
+  return dein#tap(a:plugin_name)
+endfunction  " }}}
+
+function! s:ConfigPlugin(arg, ...) abort  "{{{
+  if type(a:arg) != type([])
+    return dein#config(a:arg, get(a:000, 0, {}))
+  else
+    return dein#config(a:arg)
+  endif
+endfunction  " }}}
+
+function! s:PluginInfo(plugin_name) abort  "{{{
+  return dein#get(a:plugin_name)
+endfunction  " }}}
+
+function! s:InstallablePluginExists(...) abort  "{{{
+  return dein#check_install(get(a:000, 0, []))
+endfunction  " }}}
+
+function! s:InstallPlugins(...) abort  "{{{
+  return dein#install(get(a:000, 0, []))
+endfunction  " }}}
+
 function! s:AvailabilityMessage(target) abort  "{{{
   return a:target . " is " . (eval("s:" . a:target . "_available") ? "" : "NOT ") . "available"
 endfunction  " }}}
