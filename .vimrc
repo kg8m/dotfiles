@@ -452,7 +452,7 @@ if s:TapPlugin("HowMuch")  "{{{
      \   "hook_source": "call ConfigPluginOnSource_HowMuch()",
      \ })
 
-  vmap <Leader>? <Plug>AutoCalcReplace
+  vmap <Leader>?  <Plug>AutoCalcReplace
   vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
 
   function! ConfigPluginOnSource_HowMuch() abort  "{{{
@@ -853,7 +853,7 @@ if s:TapPlugin("unite.vim")  "{{{
         \   ["[Unite] grep [Edit]                      ", "Unite -no-quit grep:./::{words}"],
         \   ["[Unite] resume [Edit]                    ", "UniteResume {buffer-name}"],
         \
-        \   ["[Help]autocommand-events                 ", "help autocommand-events"],
+        \   ["[Help] autocommand-events                ", "help autocommand-events"],
         \ ]
 
       function! g:unite_source_menu_menus.shortcuts.map(key, value) abort  "{{{
@@ -973,9 +973,9 @@ if s:TapPlugin("unite.vim")  "{{{
        \   "on_cmd": s:PluginInfo("unite.vim")["on_cmd"] + ["UniteWithCursorWord"],
        \ })
 
-    nnoremap g] :<C-u>UniteWithCursorWord -immediately tag<CR>
-    vnoremap g] :<C-u>UniteWithCursorWord -immediately tag<CR>
-    nnoremap g[ :<C-u>Unite jump<CR>
+    nnoremap g] :<C-u>UniteWithCursorWord -immediately tag<Cr>
+    vnoremap g] :<C-u>UniteWithCursorWord -immediately tag<Cr>
+    nnoremap g[ :<C-u>Unite jump<Cr>
     nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
 
     function! ConfigPluginOnSource_unite_tag() abort  "{{{
@@ -1096,7 +1096,7 @@ if s:TapPlugin("unite.vim")  "{{{
 
       function! s:AddActionsToVersions() abort  "{{{
         let action = {
-          \   "description" : "open files",
+          \   "description" :   "open files",
           \   "is_selectable" : 1,
           \ }
 
@@ -1125,13 +1125,10 @@ endif  " }}}
 
 if s:TapPlugin("vim-alignta")  "{{{
   call s:ConfigPlugin({
-     \   "lazy":      0,
-     \   "on_cmd":    "Alignta",
-     \   "on_source": "unite.vim",
-     \   "hook_source": "call ConfigPluginOnSource_vim_alignta()",
+     \   "lazy": 0,
      \ })
 
-  vnoremap <Leader>a :Alignta<Space>
+  vnoremap <Leader>a  :Alignta<Space>
   vnoremap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
 
   let g:unite_source_alignta_preset_arguments = [
@@ -1673,9 +1670,9 @@ if s:TapPlugin("winresizer")  "{{{
 endif  " }}}
 
 if s:TapPlugin("yankround.vim")  "{{{
-  nmap p <Plug>(yankround-p)
-  xmap p <Plug>(yankround-p)
-  nmap P <Plug>(yankround-P)
+  nmap p     <Plug>(yankround-p)
+  xmap p     <Plug>(yankround-p)
+  nmap P     <Plug>(yankround-P)
   nmap <C-p> <Plug>(yankround-prev)
   nmap <C-n> <Plug>(yankround-next)
 endif  " }}}
