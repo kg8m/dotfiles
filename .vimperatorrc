@@ -1,53 +1,36 @@
-" ------------------------------------------------------------
-" 基本設定
-" ------------------------------------------------------------
+" basice settings  " {{{
 
 colorscheme solarized
 
-" ブラウザのタイトル
 set titlestring="Mozilla Firefox"
-
-" キャレットを太めに
 set! ui.caretWidth=7
-
-" ページのアクセスキーを無効化
 set! ui.key.generalAccessKey=0
 
-" 検索語のハイライト
 set hlsearch
 
-" Beep設定オフ
 set visualbell
 highlight Bell display: none;
 
-" 補完設定
 set autocomplete
 set complete=sl
 
-" クイックリンク関連
 set hintchars=fjklasdhguionmerwc
 highlight Hint font-family: "Osaka－等幅", "Osaka-Mono"; padding: 1px 3px; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 12.5px; font-weight: normal; text-transform: uppercase; white-space: nowrap;
 
-" Next/Previous Link
 set nextpattern=\bnext\b,\bmore\b,^next$,^次(の)?ページ,\b次.*,^次へ$,→\b,^>$,^(>>|≫)$,^(>|≫),(>|≫)$
 set previouspattern=\bprev|previous\b,^prev$,^前(の)?ページ,\b前.*,^前へ$,\b←,^<$,^(<<|≪)$,^(<|≪),(<|≪)$
 
-" エディタ
-" It's All Text!のホットキーが<C-q>
-set editor=C:/Shortcuts/gvim73.lnk
+" set editor in each environment
+set editor=vim
+" <C-q> to open It's All Text!
 inoremap <C-q> <Ins><C-q><Ins>
+" }}}
 
-
-" ------------------------------------------------------------
-" キーマップ設定
-" ------------------------------------------------------------
-
+" keymappings " {{{
 let mapleader = ","
 
-" ,r で .vimperatorrc をリロード
 nnoremap <Leader>r :source ~/.vimperatorrc<Cr>
 
-" 検索補完関連
 nnoremap s :set<Space>cpt=s<Cr>:open<Space>google<Space>
 nnoremap S :set<Space>cpt=s<Cr>:tabopen<Space>google<Space>
 nnoremap a :set<Space>cpt=s<Cr>:open<Space>amazon<Space>
@@ -55,9 +38,8 @@ nnoremap A :set<Space>cpt=s<Cr>:tabopen<Space>amazon<Space>
 nnoremap t :set<Space>cpt=slt<Cr>:tabopen<Space>
 nnoremap o :set<Space>cpt=slt<Cr>:open<Space>
 
-" URL中の数字を++/--
 noremap + <C-a>
-javascript << EOM
+javascript << JS
 mappings.addUserMap(
   [modes.NORMAL],
   ["-"],
@@ -65,29 +47,28 @@ mappings.addUserMap(
   function() { events.feedkeys("<C-x>", true); },
   { rhs: "<C-x>", noremap: true }
 );
-EOM
+JS
 
-" タブ移動（タブからタブへの移動ではなく、タブの位置変更）
+" move a tab
+" not move from a tab to an other tab
 nnoremap <C-S-j> :tabmove +1<Cr>
 nnoremap <C-S-k> :tabmove -1<Cr>
 
-" OSのキーバインドを一部再現
 inoremap <C-a> <Ins><C-a><Ins>
 inoremap <C-w> <Ins><C-w><Ins>
 cnoremap <C-a> <Ins><C-a><Ins>
 
-" ソース表示
+" show sources
 nnoremap <C-S-u> i<C-u>
 
-" ロケーションバーにフォーカス
+" focus to the location bar
 noremap <C-l> <A-d>
 
-" 誤操作防止
+" prevent unconcious operations
 inoremap <C-n> <Esc><C-n>
 inoremap <C-p> <Esc><C-p>
 noremap <BS> <NOP>
 
-" input で Ctrl + h/j/k/l を使って移動
 " use OS's settings or key-config applications, e.g., KeyRemap4MacBook
 " inoremap <C-h> <Left>
 " inoremap <C-j> <Down>
@@ -96,10 +77,10 @@ noremap <BS> <NOP>
 inoremap <C-f> <PageDown>
 inoremap <C-b> <PageUp>
 
-" n/N でも全部ハイライトさせる
+" highlight all matched words by n/N
 " FirefoxProfileDir/extensions/vimperator@mozdev.org/common/content/finder.js
 " needs to be fixed if Vimperator's core codes change
-javascript << EOM
+javascript << JS
   if (typeof finder.__originalFindAgain__ === "undefined") {
     finder.__originalFindAgain__ = finder.findAgain;
     finder.findAgain = function(reverse) {
@@ -110,37 +91,34 @@ javascript << EOM
       this.__originalFindAgain__(reverse);
     };
   }
-EOM
+JS
 
-" ,/で検索ハイライト解除
 nnoremap <Leader>/ :nohlsearch<Cr>
 
-" ,p で印刷プレビュー
 nnoremap <Leader>p :emenu ファイル.印刷プレビュー<Cr>
 
-" ,o でURLを一気に開く
 nnoremap <Leader>o :emenu ファイル.Open Multiple Locations...<Cr>
+" }}}
 
+" plugin settings " {{{
 
-" ------------------------------------------------------------
-" プラグイン関連
-" ------------------------------------------------------------
-
-" for _smooziee.js
+" _smooziee.js " {{{
 " default = [400, 20]
 let g:smooziee_scroll_amount=350
 let g:smooziee_scroll_interval=25
+" }}}
 
-" for amazon_simple_uri.js
-" なんてあさましいっ!!
+" amazon_simple_uri.js " {{{
 let g:amazon_asamashi = "kgtk-22"
+" }}}
 
-" for caret-hint
+" caret-hint " {{{
 nnoremap <Leader>f :caret move head<Cr>
 nnoremap <Leader>F :caret move tail<Cr>
+" }}}
 
-" for copy.js
-javascript << EOM
+" copy.js " {{{
+javascript << JS
 liberator.globalVariables.copy_templates = [
   { label: 'urlWithoutEncode', value: 'copy the URL without encoding',
     custom: function(){ return buffer.URL },                         map: 'yy' },
@@ -163,9 +141,10 @@ liberator.globalVariables.copy_templates = [
   { label: 'tracLink',     value: '[%URL% %TITLE%]',  map: ',yt' },
   { label: 'markdownLink', value: '[%TITLE%](%URL%)', map: ',ym' },
 ];
-EOM
+JS
+" }}}
 
-" for feedSomeKeys_3.js
+" feedSomeKeys_3.js " {{{
 command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
 lazy fmaps -u='mail\.google\.com/mail' c / y f j k n p o u e x r a t # [ ] z * ? gl gi gs gt gd ga gc
 lazy fmaps -u='(calendar\.google\.com|www\.google\.com/calendar)' -events=vkeydown t a d w m x c e / + q ? j k r
@@ -176,24 +155,28 @@ lazy fmaps -u='www\.flickr\.com' -events=keydown <Left> <Right>
 lazy fmaps -u='www\.gqueues\.com/main' -events=vkeydown ? j k h l <S-j> <S-k> q r / e n <S-c> s d <C-S-d> o <S-o> gi
 lazy fmaps -u='www\.gqueues\.com/main' -events=keydown <Left> <Right>
 lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
+" }}}
 
-" for slideshare.js
+" slideshare.js " {{{
 nnoremap -urls=www\\.slideshare\\.net l       :slideshare next<Cr>
 nnoremap -urls=www\\.slideshare\\.net h       :slideshare prev<Cr>
 nnoremap -urls=www\\.slideshare\\.net <Right> :slideshare next<Cr>
 nnoremap -urls=www\\.slideshare\\.net <Left>  :slideshare prev<Cr>
+" }}}
 
-" for speakerdeck.js
+" speakerdeck.js " {{{
 nnoremap -urls=speakerdeck\\.com l       :speakerdeck next<Cr>
 nnoremap -urls=speakerdeck\\.com h       :speakerdeck prev<Cr>
 nnoremap -urls=speakerdeck\\.com <Right> :speakerdeck next<Cr>
 nnoremap -urls=speakerdeck\\.com <Left>  :speakerdeck prev<Cr>
+" }}}
 
-" for twittperator
+" twittperator " {{{
 let g:twittperator_use_ssl_connection_for_api_ep = 1
+" }}}
 
-" for websearch.js
-javascript <<EOM
+" websearch.js " {{{
+javascript <<JS
 liberator.globalVariables.webSearchTemplates = [
   {
     names:             ['weblio'],
@@ -226,20 +209,17 @@ liberator.globalVariables.webSearchTemplates = [
     urlWithoutKeyword: 'https://github.com/kg8m',
   },
 ];
-EOM
+JS
+" }}}
+" }}}
 
-
-" ------------------------------------------------------------
 source ~/.vimperatorrc.local
 
-
-" ------------------------------------------------------------
-" settingsg after loadplugins
-" ------------------------------------------------------------
-
+" settingsg after loadplugins  " {{{
 loadplugins
+" }}}
 
-" for hints-ext
+" hints-ext
 " http://d.hatena.ne.jp/caisui/20110724/1311495886
 " http://d.hatena.ne.jp/caisui/20120715/1342331929
 " http://d.hatena.ne.jp/caisui/20130527/1369660189
@@ -247,7 +227,7 @@ loadplugins
 " let use_hints_ext_extendedhinttags = 1
 " let use_hints_ext_tranform = 1
 " autocmd VimperatorEnter ".*" :highlight -append HintExt font-family: "Osaka－等幅", "Osaka-Mono"; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 15px; font-weight: normal;
-" javascript << EOM
+" javascript << JS
 " (function(){
 "   // ページ送り
 "   var _scrollPageWithHints = function(_mapping, _scrollPageSize){
@@ -263,8 +243,6 @@ loadplugins
 "   // hint node 重なり除去
 "   hints.addSimpleMap("<C-l>", function(){ this.relocation(); });
 " })();
-" EOM
+" JS
 
-
-" ------------------------------------------------------------
 echo ".vimperatorrc sourced"
