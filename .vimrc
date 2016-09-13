@@ -1592,11 +1592,19 @@ if s:TapPlugin("vim-textobj-multitextobj")  "{{{
 endif  " }}}
 
 if s:TapPlugin("vim-turbux")  "{{{
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_map": ["<Plug>SendTestToTmux", "<Plug>SendFocusedTestToTmux"],
+     \   "hook_source": "call ConfigPluginOnSource_vim_turbux()",
+     \ })
+
   map <leader>T <Plug>SendTestToTmux
   map <leader>t <Plug>SendFocusedTestToTmux
 
-  let g:no_turbux_mappings = 1
-  let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
+  function! ConfigPluginOnSource_vim_turbux() abort  "{{{
+    let g:no_turbux_mappings = 1
+    let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
+  endfunction  " }}}
 endif  " }}}
 
 if s:TapPlugin("vim-zenspace")  "{{{
