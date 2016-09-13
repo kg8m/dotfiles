@@ -1922,7 +1922,7 @@ endfunction  " }}}
 
 " ,y/,p => copy/paste by clipboard
 if s:on_tmux
-  function! UnnamedRegisterToRemoteCopy() abort  "{{{
+  function! s:UnnamedRegisterToRemoteCopy() abort  "{{{
     let text = @"
     let text = substitute(text, "^\\n\\+", "", "")
     let text = substitute(text, "\\n\\+$", "", "")
@@ -1936,7 +1936,8 @@ if s:on_tmux
     call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main pbcopy")
     echomsg "Copy the Selection by pbcopy."
   endfunction  " }}}
-  vnoremap <Leader>y "zy:<C-u>call UnnamedRegisterToRemoteCopy()<Cr>
+
+  vnoremap <Leader>y "zy:<C-u>call s:UnnamedRegisterToRemoteCopy()<Cr>
 else
   vnoremap <Leader>y "*y
 endif
