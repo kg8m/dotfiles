@@ -1380,6 +1380,10 @@ if s:TapPlugin("vim-qfreplace")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-rails")  " {{{
+  call s:ConfigPlugin({
+     \   "lazy": 0,
+     \ })
+
   " http://fg-180.katamayu.net/archives/2006/09/02/125150
   let g:rails_level = 4
 
@@ -1427,6 +1431,10 @@ if s:TapPlugin("vim-ref")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-ruby")  " {{{
+  call s:ConfigPlugin({
+     \   "lazy": 0,
+     \ })
+
   let g:no_ruby_maps = 1
 endif  " }}}
 
