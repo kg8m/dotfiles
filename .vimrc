@@ -1745,8 +1745,9 @@ set cursorcolumn
 augroup ToggleActiveWindowCursor  "{{{
   autocmd!
   autocmd WinLeave * set nocursorcolumn nocursorline
-  autocmd WinEnter,BufWinEnter,FileType,ColorScheme * set cursorcolumn cursorline
-augroup END
+  autocmd WinEnter,TabEnter,BufEnter,BufWinEnter,FileType,ColorScheme * set cursorcolumn cursorline
+augroup END  " }}}
+
 set scrolloff=15
 " set showbreak=++++
 set iskeyword& iskeyword+=-
