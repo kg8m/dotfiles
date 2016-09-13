@@ -159,16 +159,11 @@ call s:RegisterPlugin("vim-scripts/autodate.vim")
 call s:RegisterPlugin("itchyny/calendar.vim")
 call s:RegisterPlugin("tyru/caw.vim")
 call s:RegisterPlugin("cocopon/colorswatch.vim")
-call s:RegisterPlugin("rhysd/conflict-marker.vim", { "if": 0 })
 call s:RegisterPlugin("Shougo/context_filetype.vim")
-call s:RegisterPlugin("chrisbra/csv.vim", { "if": 0 })
+call s:RegisterPlugin("chrisbra/csv.vim", { "if": 0 })               " sometimes excessively works
 call s:RegisterPlugin("spolu/dwm.vim")
-call s:RegisterPlugin("mattn/emmet-vim", { "description": "former zencoding-vim" })
-call s:RegisterPlugin("eruby.vim", { "if": 0 })
-call s:RegisterPlugin("bogado/file-line", {
-   \   "if": 0,
-   \   "description": "conflicts with sudo.vim (`vim sudo:path/to/file` not working)",
-   \ })
+call s:RegisterPlugin("mattn/emmet-vim")                             " former zencoding-vim
+call s:RegisterPlugin("bogado/file-line", { "if": 0 })               " conflicts with sudo.vim (`vim sudo:path/to/file` not working)
 call s:RegisterPlugin("leafcage/foldCC")
 " dein does not support hg
 " call s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")
@@ -179,7 +174,7 @@ set runtimepath+=~/.vim/bundle/gundo.vim
 call s:RegisterPlugin("sk1418/HowMuch")
 call s:RegisterPlugin("nishigori/increment-activator")
 call s:RegisterPlugin("haya14busa/incsearch.vim")
-call s:RegisterPlugin("haya14busa/incsearch-index.vim", { "if": 0 })
+call s:RegisterPlugin("haya14busa/incsearch-index.vim", { "if": 0 }) " experimental
 call s:RegisterPlugin("fuenor/JpFormat.vim")
 call s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git")
 call s:RegisterPlugin("itchyny/lightline.vim")
@@ -193,7 +188,7 @@ call s:RegisterPlugin("Shougo/neosnippet")
 call s:RegisterPlugin("Shougo/neosnippet-snippets")
 call s:RegisterPlugin("tyru/open-browser.vim")
 call s:RegisterPlugin("tyru/operator-camelize.vim")
-call s:RegisterPlugin("kien/rainbow_parentheses.vim", { "if": 0 })
+call s:RegisterPlugin("kien/rainbow_parentheses.vim", { "if": 0 })   " sometimes break colorschemes
 call s:RegisterPlugin("chrisbra/Recover.vim")
 call s:RegisterPlugin("todesking/ruby_hl_lvar.vim", { "if": RubyVersion() >= '1.9.0' })
 call s:RegisterPlugin("sequence")
@@ -224,15 +219,9 @@ call s:RegisterPlugin("kchmck/vim-coffee-script")
 call s:RegisterPlugin("kg8m/vim-coloresque")
 call s:RegisterPlugin("hail2u/vim-css-syntax")
 call s:RegisterPlugin("hail2u/vim-css3-syntax")
-call s:RegisterPlugin("itchyny/vim-cursorword", {
-   \   "if": 0,
-   \   "description": "confusing with IME's underline",
-   \ })
+call s:RegisterPlugin("itchyny/vim-cursorword", { "if": 0 })         " confusing with IME's underline
 call s:RegisterPlugin("Lokaltog/vim-easymotion")
-call s:RegisterPlugin("tpope/vim-endwise", {
-   \   "if": 0,
-   \   "description": "incompatible with neosnippet",
-   \ })
+call s:RegisterPlugin("tpope/vim-endwise", { "if": 0 })              " incompatible with neosnippet
 call s:RegisterPlugin("kg8m/vim-dirdiff")
 call s:RegisterPlugin("thinca/vim-ft-diff_fold")
 call s:RegisterPlugin("thinca/vim-ft-help_fold")
@@ -241,14 +230,14 @@ call s:RegisterPlugin("lambdalisue/vim-gista")
 call s:RegisterPlugin("thinca/vim-ft-svn_diff")
 call s:RegisterPlugin("muz/vim-gemfile")
 call s:RegisterPlugin("tpope/vim-git")
-call s:RegisterPlugin("lambdalisue/vim-gita", { "if": 0 })
+call s:RegisterPlugin("lambdalisue/vim-gita", { "if": 0 })           " hope to future features
 call s:RegisterPlugin("tpope/vim-haml")
 call s:RegisterPlugin("michaeljsmith/vim-indent-object")
 call s:RegisterPlugin("jelera/vim-javascript-syntax")
 call s:RegisterPlugin("elzr/vim-json")
 call s:RegisterPlugin("rcmdnk/vim-markdown")
 call s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")
-call s:RegisterPlugin("losingkeys/vim-niji", { "if": 0 })
+call s:RegisterPlugin("losingkeys/vim-niji", { "if": 0 })            " sometimes break colorschemes
 call s:RegisterPlugin("kana/vim-operator-replace")
 " not working in case like following:
 "   (1) text:      hoge "fu*ga piyo"
@@ -259,7 +248,7 @@ call s:RegisterPlugin("kana/vim-operator-replace")
 "   (2) call: <Plug>(operator-surround-replace)"'
 "   (3) expected:  hoge* 'fuga piyo'
 "   (4) result:    hoge*' fuga piyo'
-call s:RegisterPlugin("rhysd/vim-operator-surround", { "if": 0 })
+call s:RegisterPlugin("rhysd/vim-operator-surround", { "if": 0 })    " not working in some edge cases
 call s:RegisterPlugin("kana/vim-operator-user")
 call s:RegisterPlugin("itchyny/vim-parenmatch")
 call s:RegisterPlugin("thinca/vim-prettyprint")
@@ -267,18 +256,13 @@ call s:RegisterPlugin("thinca/vim-qfreplace")
 call s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() })
 call s:RegisterPlugin("thinca/vim-ref")
 call s:RegisterPlugin("tpope/vim-repeat")
-call s:RegisterPlugin("vim-ruby/vim-ruby", {
-   \   "description": "do not make lazy because ftdetecting does not work",
-   \ })
+call s:RegisterPlugin("vim-ruby/vim-ruby")
 call s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax")
 call s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() })
 call s:RegisterPlugin("thinca/vim-singleton")
 call s:RegisterPlugin("honza/vim-snippets")
 call s:RegisterPlugin("mhinz/vim-startify")
-call s:RegisterPlugin("kopischke/vim-stay", {
-   \   "if": 0,
-   \   "description": "sometimes excessively works",
-   \ })
+call s:RegisterPlugin("kopischke/vim-stay", { "if": 0 })             " sometimes excessively works
 call s:RegisterPlugin("tpope/vim-surround")
 call s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")
 call s:RegisterPlugin("kana/vim-textobj-jabraces")
@@ -300,9 +284,7 @@ call s:RegisterPlugin("simeji/winresizer")
 call s:RegisterPlugin("LeafCage/yankround.vim")
 
 " colorschemes
-call s:RegisterPlugin("hail2u/h2u_colorscheme", {
-   \   "description": "for printing",
-   \ })
+call s:RegisterPlugin("hail2u/h2u_colorscheme")                      " for printing
 call s:RegisterPlugin("kg8m/molokai")
 " }}}
 
