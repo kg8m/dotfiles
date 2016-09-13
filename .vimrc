@@ -514,10 +514,6 @@ if s:TapPlugin("incsearch.vim")  "{{{
   endif  " }}}
 endif  " }}}
 
-if s:TapPlugin("indentLine")  "{{{
-  let g:indentLine_char = "|"
-endif  " }}}
-
 if s:TapPlugin("JpFormat.vim")  "{{{
   let JpCountChars = 37
 endif  " }}}
