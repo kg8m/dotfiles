@@ -46,6 +46,10 @@ function! RubyVersion() abort  "{{{
   return system("ruby -e 'print RUBY_VERSION'")
 endfunction  " }}}
 
+function! RubyGemPaths() abort  "{{{
+  return system("ruby -e 'print Gem.path.join(\":\")'")
+endfunction  " }}}
+
 function! ExecuteWithConfirm(command) abort  "{{{
   if input("execute `" . a:command . "` ? [y/n] : ") !~ "[yY]"
     echo " -> canceled."
@@ -1785,9 +1789,9 @@ set wildmenu
 set wildmode=list:longest,full
 
 " ctags
-if has("vim_starting") && exists("$RUBYGEMS_PATH")
-  let &tags = &tags . "," . $RUBYGEMS_PATH . "**/tags"
-endif
+for s:ruby_gem_path in split(RubyGemPaths(), ":")
+  let &tags = &tags . "," . s:ruby_gem_path . "**/tags"
+endfor
 
 " auto reload
 augroup CheckTimeHook  "{{{
