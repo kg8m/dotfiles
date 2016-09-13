@@ -707,10 +707,10 @@ if s:TapPlugin("ruby_hl_lvar.vim")  "{{{
 endif  " }}}
 
 if s:TapPlugin("sequence")  "{{{
-  vmap <Leader>+ <plug>SequenceV_Increment
-  vmap <Leader>- <plug>SequenceV_Decrement
-  nmap <Leader>+ <plug>SequenceN_Increment
-  nmap <Leader>- <plug>SequenceN_Decrement
+  vmap <Leader>+ <Plug>SequenceV_Increment
+  vmap <Leader>- <Plug>SequenceV_Decrement
+  nmap <Leader>+ <Plug>SequenceN_Increment
+  nmap <Leader>- <Plug>SequenceN_Decrement
 endif  " }}}
 
 if s:TapPlugin("simple-javascript-indenter")  "{{{
