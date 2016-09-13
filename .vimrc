@@ -835,6 +835,7 @@ if s:TapPlugin("unite.vim")  "{{{
         \   ["[System] Remove/Delete                   ", "!rm %"],
         \   ["[System] SVN Remove/Delete               ", "!svn rm %"],
         \
+        \   ["[Autoformat] format source codes         ", "Autoformat"],
         \   ["[JpFormat] format all selected for mail  ", "'<,'>JpFormatAll!"],
         \
         \   ["[Calendar] Year View                     ", "Calendar -view=year  -position=hear!"],
