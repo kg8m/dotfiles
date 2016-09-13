@@ -571,7 +571,15 @@ if s:TapPlugin("lightline.vim")  "{{{
 endif  " }}}
 
 if s:TapPlugin("linediff.vim")  "{{{
-  let g:linediff_second_buffer_command = "rightbelow vertical new"
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": "Linediff",
+     \   "hook_source": "call ConfigPluginOnSource_linediff()",
+     \ })
+
+  function! ConfigPluginOnSource_linediff() abort  "{{{
+    let g:linediff_second_buffer_command = "rightbelow vertical new"
+  endfunction  " }}}
 endif  " }}}
 
 if s:TapPlugin("neocomplete.vim")  "{{{
