@@ -942,15 +942,16 @@ if s:TapPlugin("unite.vim")  "{{{
         \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
         \ ]
       let g:unite_source_mark_marks = join(g:mark_ids, "")
-      function! AutoMark() abort  "{{{
-          if !exists("b:mark_position")
-            let b:mark_position = 0
-          else
-            let b:mark_position = (b:mark_position + 1) % len(g:mark_ids)
-          endif
 
-          execute "mark" g:mark_ids[b:mark_position]
-          echo "marked" g:mark_ids[b:mark_position]
+      function! AutoMark() abort  "{{{
+        if !exists("b:mark_position")
+          let b:mark_position = 0
+        else
+          let b:mark_position = (b:mark_position + 1) % len(g:mark_ids)
+        endif
+
+        execute "mark" g:mark_ids[b:mark_position]
+        echo "marked" g:mark_ids[b:mark_position]
       endfunction  " }}}
 
       augroup InitMarks  "{{{
