@@ -334,10 +334,10 @@ if s:TapPlugin("calendar.vim")  "{{{
      \   "hook_source": "call ConfigPluginOnSource_calendar()",
      \ })
 
-  function! ConfigPluginOnSource_calendar() abort
+  function! ConfigPluginOnSource_calendar() abort  "{{{
     let g:calendar_google_calendar = 1
     let g:calendar_first_day       = "monday"
-  endfunction
+  endfunction  " }}}
 endif  " }}}
 
 if s:TapPlugin("caw.vim")  "{{{
@@ -350,10 +350,10 @@ if s:TapPlugin("caw.vim")  "{{{
   nmap gc <Plug>(caw:hatpos:toggle)
   vmap gc <Plug>(caw:hatpos:toggle)
 
-  function! ConfigPluginOnSource_caw() abort
+  function! ConfigPluginOnSource_caw() abort  "{{{
     let g:caw_no_default_keymappings = 1
     let g:caw_hatpos_skip_blank_line = 1
-  endfunction
+  endfunction  " }}}
 endif  " }}}
 
 if s:TapPlugin("colorswatch.vim")  "{{{
@@ -720,12 +720,12 @@ if s:TapPlugin("splitjoin.vim")  "{{{
   nnoremap <Leader>J :<C-u>SplitjoinJoin<Cr>
   nnoremap <Leader>S :<C-u>SplitjoinSplit<Cr>
 
-  function! ConfigPluginOnSource_splitjoin() abort
+  function! ConfigPluginOnSource_splitjoin() abort  "{{{
     let g:splitjoin_split_mapping       = ""
     let g:splitjoin_join_mapping        = ""
     let g:splitjoin_ruby_trailing_comma = 1
     let g:splitjoin_ruby_hanging_args   = 0
-  endfunction
+  endfunction  " }}}
 endif  " }}}
 
 if s:TapPlugin("Unicode-RST-Tables")  "{{{
@@ -923,7 +923,7 @@ if s:TapPlugin("unite.vim")  "{{{
         \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
         \ ]
       let g:unite_source_mark_marks = join(g:mark_ids, "")
-      function! AutoMark() abort
+      function! AutoMark() abort  "{{{
           if !exists("b:mark_position")
             let b:mark_position = 0
           else
@@ -932,8 +932,9 @@ if s:TapPlugin("unite.vim")  "{{{
 
           execute "mark" g:mark_ids[b:mark_position]
           echo "marked" g:mark_ids[b:mark_position]
-      endfunction
-      augroup InitMarks
+      endfunction  " }}}
+
+      augroup InitMarks  "{{{
         autocmd!
         autocmd BufReadPost * delmarks!
       augroup END  " }}}
@@ -1285,14 +1286,14 @@ if s:TapPlugin("vim-gista")  "{{{
 endif  " }}}
 
 if s:TapPlugin("vim-git")  "{{{
-  augroup PreventVimGitFromChangingSettings
+  augroup PreventVimGitFromChangingSettings  "{{{
     autocmd!
     autocmd FileType gitcommit let b:did_ftplugin = 1
   augroup END  " }}}
 endif  " }}}
 
 if s:TapPlugin("vim-javascript-syntax")  "{{{
-  function! s:MyJavascriptFold() abort
+  function! s:MyJavascriptFold() abort  "{{{
     if !exists("b:javascript_folded")
       call JavaScriptFold()
       setl foldlevelstart=0
@@ -1587,7 +1588,7 @@ if s:TapPlugin("vim-zenspace")  "{{{
   augroup HighlightZenkakuSpace  "{{{
     autocmd!
     autocmd ColorScheme * highlight ZenSpace term=underline cterm=underline gui=underline ctermbg=Black guibg=Black ctermfg=DarkGray guifg=DarkGray
-  augroup END
+  augroup END  " }}}
 endif  " }}}
 
 if s:TapPlugin("vimfiler")  "{{{
@@ -1826,7 +1827,7 @@ augroup CheckTimeHook  "{{{
   autocmd!
   autocmd InsertEnter * :checktime
   autocmd InsertLeave * :checktime
-augroup END
+augroup END  " }}}
 
 " move
 set whichwrap=b,s,h,l,<,>,[,],~
@@ -1884,7 +1885,7 @@ endfunction  " }}}
 
 " ,y/,p => copy/paste by clipboard
 if s:on_tmux
-  function! UnnamedRegisterToRemoteCopy() abort
+  function! UnnamedRegisterToRemoteCopy() abort  "{{{
     let text = @"
     let text = substitute(text, "^\\n\\+", "", "")
     let text = substitute(text, "\\n\\+$", "", "")
@@ -1897,7 +1898,7 @@ if s:on_tmux
 
     call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main pbcopy")
     echomsg "Copy the Selection by pbcopy."
-  endfunction
+  endfunction  " }}}
   vnoremap <Leader>y "zy:<C-u>call UnnamedRegisterToRemoteCopy()<Cr>
 else
   vnoremap <Leader>y "*y
