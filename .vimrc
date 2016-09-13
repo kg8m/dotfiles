@@ -307,12 +307,6 @@ call s:RegisterPlugin("kg8m/molokai")
 " }}}
 
 " plugins settings  "{{{
-if s:TapPlugin("alpaca_complete")  "{{{
-  call dein#config({
-     \   "on_ft": ["ruby", "eruby"],
-     \ })
-endif  " }}}
-
 if s:TapPlugin("auto-ctags.vim")  "{{{
   let g:auto_ctags = 1
 
