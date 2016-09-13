@@ -16,6 +16,7 @@ let s:ag_available     = executable("ag")
 let s:ack_available    = executable("ack")
 let s:migemo_available = has("migemo") || executable("cmigemo")
 
+" plugin management functions  "{{{
 function! UpdatePlugins() abort  "{{{
   call dein#update()
   Unite dein/log -buffer-name=update_plugins -input=!Same\\ revision\ !Already\\ up-to-date.\ !git\\ pull
@@ -56,7 +57,9 @@ endfunction  " }}}
 function! s:InstallPlugins(...) abort  "{{{
   return dein#install(get(a:000, 0, []))
 endfunction  " }}}
+" }}}
 
+" utility functions  "{{{
 function! s:AvailabilityMessage(target) abort  "{{{
   return a:target . " is " . (eval("s:" . a:target . "_available") ? "" : "NOT ") . "available"
 endfunction  " }}}
@@ -98,6 +101,7 @@ function! ExecuteWithConfirm(command) abort  "{{{
     echomsg result
   endif
 endfunction  " }}}
+" }}}
 
 let g:mapleader = ","
 " }}}
