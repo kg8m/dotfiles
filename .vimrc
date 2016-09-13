@@ -1405,27 +1405,21 @@ if s:TapPlugin("vim-rails")  "{{{
     let g:rails_projections = {}
   endif
 
-  let g:rails_projections = {
-    \   "config/*": {
-    \     "command": "config",
-    \   },
-    \   "script/*": {
-    \     "command": "script",
-    \     "test":    [
-    \       "test/script/%s_test.rb",
-    \     ],
-    \   },
-    \   "spec/fabricators/*_fabricator.rb": {
-    \     "command":   "fabricator",
-    \     "affinity":  "model",
-    \     "alternate": "app/models/%s.rb",
-    \     "related":   "db/schema.rb#%p",
-    \     "test":      "spec/models/%s_spec.rb",
-    \   },
-    \   "spec/support/*.rb": {
-    \     "command": "support",
-    \   },
+  let g:rails_projections["config/*"] = { "command": "config" }
+  let g:rails_projections["script/*"] = {
+    \   "command": "script",
+    \   "test":    [
+    \     "test/script/%s_test.rb",
+    \   ],
     \ }
+  let g:rails_projections["spec/fabricators/*_fabricator.rb"] = {
+    \   "command":   "fabricator",
+    \   "affinity":  "model",
+    \   "alternate": "app/models/%s.rb",
+    \   "related":   "db/schema.rb#%p",
+    \   "test":      "spec/models/%s_spec.rb",
+    \ }
+  let g:rails_projections["spec/support/*.rb"] = { "command": "support" }
 
   if !exists("g:rails_path_additions")
     let g:rails_path_additions = []
