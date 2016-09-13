@@ -1617,6 +1617,10 @@ if s:TapPlugin("vim-zenspace")  "{{{
 endif  " }}}
 
 if s:TapPlugin("vimfiler")  "{{{
+  call s:ConfigPlugin({
+     \   "lazy": 0,
+     \ })
+
   nnoremap <Leader>e :<C-u>VimFilerBufferDir -force-quit<Cr>
 
   call vimfiler#custom#profile("default", "context", {
