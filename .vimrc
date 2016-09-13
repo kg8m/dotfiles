@@ -499,12 +499,12 @@ if s:TapPlugin("incsearch.vim")  "{{{
   map g/ <Plug>(incsearch-stay)
   map n  <Plug>(incsearch-nohl-n)<Plug>(anzu-update-search-status-with-echo)
   map N  <Plug>(incsearch-nohl-N)<Plug>(anzu-update-search-status-with-echo)
+  " asterisk's `z` commands are "stay star motions"
   map *  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
   map #  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
   map g* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
   map g# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 
-  " asterisk's `z` commands are "stay star motions"
   let g:incsearch#auto_nohlsearch = 0
   let g:incsearch#magic = '\v'
 
