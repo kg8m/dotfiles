@@ -1489,54 +1489,57 @@ if s:TapPlugin("vim-startify")  "{{{
   call s:ConfigPlugin({
      \   "lazy":     1,
      \   "on_event": "VimEnter",
+     \   "hook_source":      "call ConfigPluginOnSource_vim_startify()",
      \   "hook_post_source": "call ConfigPluginOnPostSource_vim_startify()",
      \ })
 
-  let g:startify_enable_special = 1
-  let g:startify_change_to_dir  = 0
-  let g:startify_list_order     = [
-    \   ["   My bookmarks:"],
-    \   "bookmarks",
-    \   ["   Last recently opened files:"],
-    \   "files",
-    \   ["   Last recently modified files in the current directory:"],
-    \   "dir",
-    \   ["   My sessions:"],
-    \   "sessions",
-    \ ]
-  " https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
-  let g:startify_custom_header  = [
-    \   "                      .",
-    \   "      ##############..... ##############",
-    \   "      ##############......##############",
-    \   "        ##########..........##########",
-    \   "        ##########........##########",
-    \   "        ##########.......##########",
-    \   "        ##########.....##########..",
-    \   "        ##########....##########.....",
-    \   "      ..##########..##########.........",
-    \   "    ....##########.#########.............",
-    \   "      ..################JJJ............",
-    \   "        ################.............",
-    \   "        ##############.JJJ.JJJJJJJJJJ",
-    \   "        ############...JJ...JJ..JJ  JJ",
-    \   "        ##########....JJ...JJ..JJ  JJ",
-    \   "        ########......JJJ..JJJ JJJ JJJ",
-    \   "        ######    .........",
-    \   "                    .....",
-    \   "                      .",
-    \   "",
-    \   "",
-    \   "     * Vim version: " . v:version,
-    \   "",
-    \   "     * " . s:AvailabilityMessage("neocomplete"),
-    \   "     * " . s:AvailabilityMessage("pt"),
-    \   "     * " . s:AvailabilityMessage("ag"),
-    \   "     * " . s:AvailabilityMessage("ack"),
-    \   "     * " . s:AvailabilityMessage("migemo"),
-    \   "",
-    \   "",
-    \ ]
+  function! ConfigPluginOnSource_vim_startify() abort  "{{{
+    let g:startify_enable_special = 1
+    let g:startify_change_to_dir  = 0
+    let g:startify_list_order     = [
+      \   ["   My bookmarks:"],
+      \   "bookmarks",
+      \   ["   Last recently opened files:"],
+      \   "files",
+      \   ["   Last recently modified files in the current directory:"],
+      \   "dir",
+      \   ["   My sessions:"],
+      \   "sessions",
+      \ ]
+    " https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
+    let g:startify_custom_header  = [
+      \   "                      .",
+      \   "      ##############..... ##############",
+      \   "      ##############......##############",
+      \   "        ##########..........##########",
+      \   "        ##########........##########",
+      \   "        ##########.......##########",
+      \   "        ##########.....##########..",
+      \   "        ##########....##########.....",
+      \   "      ..##########..##########.........",
+      \   "    ....##########.#########.............",
+      \   "      ..################JJJ............",
+      \   "        ################.............",
+      \   "        ##############.JJJ.JJJJJJJJJJ",
+      \   "        ############...JJ...JJ..JJ  JJ",
+      \   "        ##########....JJ...JJ..JJ  JJ",
+      \   "        ########......JJJ..JJJ JJJ JJJ",
+      \   "        ######    .........",
+      \   "                    .....",
+      \   "                      .",
+      \   "",
+      \   "",
+      \   "     * Vim version: " . v:version,
+      \   "",
+      \   "     * " . s:AvailabilityMessage("neocomplete"),
+      \   "     * " . s:AvailabilityMessage("pt"),
+      \   "     * " . s:AvailabilityMessage("ag"),
+      \   "     * " . s:AvailabilityMessage("ack"),
+      \   "     * " . s:AvailabilityMessage("migemo"),
+      \   "",
+      \   "",
+      \ ]
+  endfunction  " }}}
 
   function! ConfigPluginOnPostSource_vim_startify() abort  "{{{
     highlight StartifyFile   ctermfg=255
