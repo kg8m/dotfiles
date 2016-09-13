@@ -343,7 +343,7 @@ endif  " }}}
 if s:TapPlugin("caw.vim")  "{{{
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_map": ["ns", "<Plug>(caw:"],
+     \   "on_map": "<Plug>(caw:",
      \   "hook_source": "call ConfigPluginOnSource_caw()",
      \ })
 
@@ -448,7 +448,7 @@ endif  " }}}
 if s:TapPlugin("HowMuch")  "{{{
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_map": ["ns", "<Plug>AutoCalc"],
+     \   "on_map": "<Plug>AutoCalc",
      \   "hook_source": "call ConfigPluginOnSource_HowMuch()",
      \ })
 
@@ -688,7 +688,7 @@ endif  " }}}
 if s:TapPlugin("operator-camelize.vim")  "{{{
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_map": ["ns", "<Plug>(operator-camelize)", "<Plug>(operator-decamelize)"],
+     \   "on_map": ["<Plug>(operator-camelize)", "<Plug>(operator-decamelize)"],
      \ })
 
   vmap <Leader>C <Plug>(operator-camelize)
@@ -1173,7 +1173,7 @@ endif  " }}}
 if s:TapPlugin("vim-anzu")  "{{{
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_map": ["ns", "<Plug>(anzu-"],
+     \   "on_map": "<Plug>(anzu-",
      \ })
 
   " see incsearch
@@ -1222,7 +1222,7 @@ endif  " }}}
 if s:TapPlugin("vim-choosewin")  "{{{
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_map": ["ns", "<Plug>(choosewin)"],
+     \   "on_map": "<Plug>(choosewin)",
      \   "hook_source": "call ConfigPluginOnSource_vim_choosewin()",
      \ })
 
@@ -1331,7 +1331,7 @@ endif  " }}}
 if s:TapPlugin("vim-operator-replace")  "{{{
   call s:ConfigPlugin({
      \   "lazy":    1,
-     \   "on_map": ["ns", "<Plug>(operator-replace)"],
+     \   "on_map": "<Plug>(operator-replace)",
      \ })
 
   nmap r <Plug>(operator-replace)
@@ -1341,7 +1341,7 @@ endif  " }}}
 if s:TapPlugin("vim-operator-surround")  "{{{
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_map": ["ns", "<Plug>(operator-surround-"],
+     \   "on_map": "<Plug>(operator-surround-",
      \ })
 
   nmap <silent>sa <Plug>(operator-surround-append)
