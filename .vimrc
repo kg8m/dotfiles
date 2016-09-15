@@ -1770,6 +1770,11 @@ set textwidth=0
 set expandtab
 set autoindent
 set smartindent
+
+if v:version > 704 || (v:version == 704 && has("patch338"))
+  set breakindent
+endif
+
 set backspace=indent,eol,start
 
 if has("vim_starting")
