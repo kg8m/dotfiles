@@ -1912,7 +1912,7 @@ endfunction  " }}}
 
 " ,y/,p => copy/paste by clipboard
 if s:on_tmux
-  function! s:UnnamedRegisterToRemoteCopy() abort  " {{{
+  function! UnnamedRegisterToRemoteCopy() abort  " {{{
     let text = @"
     let text = substitute(text, "^\\n\\+", "", "")
     let text = substitute(text, "\\n\\+$", "", "")
@@ -1927,7 +1927,7 @@ if s:on_tmux
     echomsg "Copy the Selection by pbcopy."
   endfunction  " }}}
 
-  vnoremap <Leader>y "zy:<C-u>call s:UnnamedRegisterToRemoteCopy()<Cr>
+  vnoremap <Leader>y "zy:<C-u>call UnnamedRegisterToRemoteCopy()<Cr>
 else
   vnoremap <Leader>y "*y
 endif
