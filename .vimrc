@@ -86,7 +86,7 @@ function! RubyVersion() abort  " {{{
 endfunction  " }}}
 
 function! RubyGemPaths() abort  " {{{
-  return system("ruby -e 'print Gem.path.join(\":\")'")
+  return system("ruby -r rubygems -e 'print Gem.path.join(\":\")'")
 endfunction  " }}}
 
 function! ExecuteWithConfirm(command) abort  " {{{
@@ -1851,7 +1851,7 @@ set wildmode=list:longest,full
 
 " ctags
 for s:ruby_gem_path in split(RubyGemPaths(), ":")
-  let &tags = &tags . "," . s:ruby_gem_path . "**/tags"
+  let &tags = &tags . "," . s:ruby_gem_path . "/**/tags"
 endfor
 
 " auto reload
