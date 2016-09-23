@@ -259,6 +259,7 @@ call s:RegisterPlugin("kana/vim-operator-replace")
 call s:RegisterPlugin("rhysd/vim-operator-surround", { "if": 0 })    " not working in some edge cases
 call s:RegisterPlugin("kana/vim-operator-user")
 call s:RegisterPlugin("itchyny/vim-parenmatch")
+call s:RegisterPlugin("powerman/vim-plugin-autosess")
 call s:RegisterPlugin("thinca/vim-prettyprint")
 call s:RegisterPlugin("thinca/vim-qfreplace")
 call s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() })
@@ -1371,6 +1372,10 @@ if s:TapPlugin("vim-parenmatch")  " {{{
     autocmd!
     autocmd VimEnter,ColorScheme * highlight ParenMatch ctermbg=white ctermfg=black guibg=white guifg=black
   augroup END  " }}}
+endif  " }}}
+
+if s:TapPlugin("vim-plugin-autosess")  " {{{
+  let g:autosess_dir = "~/.cache/autosess/"
 endif  " }}}
 
 if s:TapPlugin("vim-prettyprint")  " {{{
