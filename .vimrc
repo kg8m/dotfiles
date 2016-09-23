@@ -748,6 +748,7 @@ if s:TapPlugin("unite.vim")  " {{{
      \ })
 
   nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
+  vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
   vnoremap <Leader>ug "vy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
   nnoremap <Leader>uy :<C-u>Unite history/yank<Cr>
