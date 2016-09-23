@@ -51,11 +51,19 @@ function! s:PluginInfo(plugin_name) abort  " {{{
 endfunction  " }}}
 
 function! s:InstallablePluginExists(...) abort  " {{{
-  return dein#check_install(get(a:000, 0, []))
+  if empty(a:000)
+    return dein#check_install()
+  else
+    return dein#check_install(get(a:000, 0))
+  endif
 endfunction  " }}}
 
 function! s:InstallPlugins(...) abort  " {{{
-  return dein#install(get(a:000, 0, []))
+  if empty(a:000)
+    return dein#install()
+  else
+    return dein#install(get(a:000, 0))
+  endif
 endfunction  " }}}
 " }}}
 
