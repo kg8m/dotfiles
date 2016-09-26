@@ -149,11 +149,15 @@ lazy fmaps -u='mail\.google\.com/mail' c / y f j k n p o u e x r a t # [ ] z * ?
 lazy fmaps -u='(calendar\.google\.com|www\.google\.com/calendar)' -events=vkeydown t a d w m x c e / + q ? j k r
 lazy fmaps -u='(calendar\.google\.com|www\.google\.com/calendar)' -events=keydown <Del> <Bs>
 lazy fmaps -u='feedly\.com' ? gh ga gg <S-j> <S-k> r j k n p o v m s <S-v>
+lazy fmaps -u='qiita\.com' -events=keydown <Left> <Right>
 lazy fmaps -u='www\.flickr\.com' -events=vkeydown ? l j k
 lazy fmaps -u='www\.flickr\.com' -events=keydown <Left> <Right>
 lazy fmaps -u='www\.gqueues\.com/main' -events=vkeydown ? j k h l <S-j> <S-k> q r / e n <S-c> s d <C-S-d> o <S-o> gi
 lazy fmaps -u='www\.gqueues\.com/main' -events=keydown <Left> <Right>
 lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
+
+nnoremap -urls=qiita\\.com l :javascript content.document.querySelector(".slide_controller_btn .fa-forward").click()<Cr>
+nnoremap -urls=qiita\\.com h :javascript content.document.querySelector(".slide_controller_btn .fa-backward").click()<Cr>
 " }}}
 
 " slideshare.js " {{{
