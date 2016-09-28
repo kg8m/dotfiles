@@ -822,7 +822,7 @@ if s:TapPlugin("unite.vim")  " {{{
         \
         \   ["[Manipulate File] set noreadonly         ", "set noreadonly"],
         \   ["[Manipulate File] to HTML                ", "colorscheme h2u_white | TOhtml"],
-        \   ["[Manipulate File] sed all buffers [Edit] ", "bufdo %s/{foo}/{bar}/gce | update"],
+        \   ["[Manipulate File] sed all buffers [Edit] ", "bufdo set eventignore-=Syntax | %s/{foo}/{bar}/gce | update"],
         \
         \   ["[System] Remove/Delete                   ", "!rm %"],
         \   ["[System] SVN Remove/Delete               ", "!svn rm %"],
