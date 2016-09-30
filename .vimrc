@@ -281,7 +281,7 @@ call s:RegisterPlugin("xolox/vim-session")
 call s:RegisterPlugin("thinca/vim-singleton")
 call s:RegisterPlugin("honza/vim-snippets")
 call s:RegisterPlugin("mhinz/vim-startify")
-call s:RegisterPlugin("kopischke/vim-stay", { "if": 0 })             " sometimes excessively works
+call s:RegisterPlugin("kopischke/vim-stay")
 call s:RegisterPlugin("tpope/vim-surround")
 call s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")
 call s:RegisterPlugin("kana/vim-textobj-jabraces")
