@@ -253,6 +253,7 @@ call s:RegisterPlugin("jelera/vim-javascript-syntax")
 call s:RegisterPlugin("elzr/vim-json")
 call s:RegisterPlugin("rcmdnk/vim-markdown")
 call s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")
+call s:RegisterPlugin("xolox/vim-misc")
 call s:RegisterPlugin("losingkeys/vim-niji", { "if": 0 })            " sometimes break colorschemes
 call s:RegisterPlugin("kana/vim-operator-replace")
 " not working in case like following:
@@ -267,7 +268,7 @@ call s:RegisterPlugin("kana/vim-operator-replace")
 call s:RegisterPlugin("rhysd/vim-operator-surround", { "if": 0 })    " not working in some edge cases
 call s:RegisterPlugin("kana/vim-operator-user")
 call s:RegisterPlugin("itchyny/vim-parenmatch")
-call s:RegisterPlugin("powerman/vim-plugin-autosess")
+call s:RegisterPlugin("powerman/vim-plugin-autosess", { "if": 0 })   " behaviors are undesirable for me
 call s:RegisterPlugin("thinca/vim-prettyprint")
 call s:RegisterPlugin("thinca/vim-qfreplace")
 call s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() })
@@ -276,6 +277,7 @@ call s:RegisterPlugin("tpope/vim-repeat")
 call s:RegisterPlugin("vim-ruby/vim-ruby")
 call s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax")
 call s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() })
+call s:RegisterPlugin("xolox/vim-session")
 call s:RegisterPlugin("thinca/vim-singleton")
 call s:RegisterPlugin("honza/vim-snippets")
 call s:RegisterPlugin("mhinz/vim-startify")
@@ -1483,6 +1485,61 @@ if s:TapPlugin("vim-rubytest")  " {{{
   endfunction  " }}}
 endif  " }}}
 
+" also see vim-startify's settings
+if s:TapPlugin("vim-session")  " {{{
+  call s:ConfigPlugin({
+     \   "depends": ["xolox/vim-misc"],
+     \ })
+
+  let g:session_directory         = getcwd() . "/.vim-sessions"
+  let g:session_autoload          = "no"
+  let g:session_autosave          = "no"
+  let g:session_autosave_periodic = 0
+
+  augroup ExtendPluginSession  " {{{
+    autocmd!
+    autocmd VimLeavePre  * call s:SaveSessionWithConfirm()
+    autocmd BufWritePost * call s:SaveSessionWithoutConfirm()
+    autocmd VimLeavePre,BufWritePost * call s:CleanUpSession()
+  augroup END  " }}}
+
+  function! s:SaveSessionWithConfirm() abort  " {{{
+    if s:IsSessionSavable()
+      if !Confirm(s:SaveSessionCommand())
+        return
+      endif
+
+      execute s:SaveSessionCommand()
+    endif
+  endfunction  " }}}
+
+  function! s:SaveSessionWithoutConfirm() abort  " {{{
+    if s:IsSessionSavable()
+      execute s:SaveSessionCommand()
+    endif
+  endfunction  " }}}
+
+  function! s:IsSessionSavable() abort  " {{{
+    return bufname(1) != ".git/COMMIT_EDITMSG" &&
+         \ bufname(1) != "Startify"
+  endfunction  " }}}
+
+  function! s:SaveSessionCommand() abort  " {{{
+    return command = "SaveSession " . s:SessionName()
+  endfunction  " }}}
+
+  function! s:SessionName() abort  " {{{
+    return substitute(@%, "/", "+=", "g")
+  endfunction  " }}}
+
+  function! s:CleanUpSession() abort  " {{{
+    silent execute " ! /usr/bin/env ls -at " . g:session_directory
+                 \ " | /usr/bin/env grep '\\.vim$'"
+                 \ " | /usr/bin/env tail -n +11"
+                 \ " | /usr/bin/env xargs -I% rm -f " . g:session_directory . "/%"
+  endfunction  " }}}
+endif  " }}}
+
 if s:TapPlugin("vim-singleton")  " {{{
   call s:ConfigPlugin({
      \   "gui": 1,
@@ -1506,6 +1563,11 @@ if s:TapPlugin("vim-startify")  " {{{
      \ })
 
   function! ConfigPluginOnSource_vim_startify() abort  " {{{
+    " see vim-session's settings
+    let g:startify_session_dir         = g:session_directory
+    let g:startify_session_persistence = 1
+    let g:startify_session_sort        = 1
+
     let g:startify_enable_special = 1
     let g:startify_change_to_dir  = 0
     let g:startify_relative_path  = 1
