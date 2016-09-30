@@ -48,8 +48,7 @@ st     = status
 
 chmod = "!f() {\
   command=\"git update-index --add --chmod=$@\";\
-  echo '# '${command};\
-  eval ${command};\
+  git execute-with-echo ${command};\
 }; f"
 
 # clone
@@ -69,8 +68,7 @@ pr = pull --stat --rebase
 
 update = "!f() {\
   command=\"git pull --stat --rebase || ( git rebase --abort && echo 'rebase aborted!!' )\";\
-  echo '# '${command};\
-  eval ${command};\
+  git execute-with-echo ${command};\
 }; f"
 
 # branch
@@ -168,6 +166,13 @@ update-submodules = !git submodule update --init --recursive && git submodule up
 
 # hook
 update-hooks = !( rm -i .git/hooks/* || exit 0 ) && cp ~/.git_templates/hooks/* .git/hooks/ && ls -l .git/hooks/
+
+# utility
+execute-with-echo = "!f() {\
+  command=\"$@\";\
+  echo '# '${command};\
+  eval ${command};\
+}; f"
 
 [github]
 user = kg8m
