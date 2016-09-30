@@ -93,6 +93,18 @@ create-branch = "!f() {\
   git execute-with-confirm ${command};\
 }; f"
 
+select-a-branch = "!f() {\
+  prompt=${1:-'select a branch:'};\
+  branches=($( git branch -r | awk '{print $1}' | peco --prompt \"${prompt}\" ));\
+  \
+  if [[ ! ${#branches[@]} -eq 1 ]]; then\
+    echo 'select only 1 branch.' >&2;\
+    exit 1;\
+  else\
+    echo ${branches};\
+  fi;\
+}; f"
+
 # add
 add-all = !git add . && git add --updaste && git status
 ad      = add
@@ -129,20 +141,10 @@ compare-branches   = !git diff-branches
 diff-stat-branches = !git diff-branches --stat-width=150
 
 diff-branches = "!f() {\
-  branches1=($( git branch -r | awk '{print $1}' | peco --prompt 'select first branch:' ));\
-  if [[ ! ${#branches1[@]} -eq 1 ]]; then\
-    echo 'select only 1 branch.';\
-    exit 1;\
-  fi;\
+  branch1=$( git select-a-branch 'select first branch:' ) || exit 1;\
+  branch2=$( git select-a-branch 'select another branch:' ) || exit 1;\
   \
-  branches2=($( git branch -r | awk '{print $1}' | peco --prompt 'select another branch:' ));\
-  if [[ ! ${#branches2[@]} -eq 1 ]]; then\
-    echo 'select only 1 branch.';\
-    exit 1;\
-  fi;\
-  \
-  command=\"git diff-without-space-changes $@ ${branches1[0]}...${branches2[0]}\";\
-  \
+  command=\"git diff-without-space-changes $@ ${branch1}...${branch2}\";\
   git execute-with-confirm ${command};\
 }; f"
 
