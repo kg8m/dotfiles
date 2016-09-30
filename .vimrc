@@ -98,8 +98,7 @@ function! RubyGemPaths() abort  " {{{
 endfunction  " }}}
 
 function! ExecuteWithConfirm(command) abort  " {{{
-  if input("execute `" . a:command . "` ? [y/n] : ") !~ "[yY]"
-    echo " -> canceled."
+  if !Confirm(a:command)
     return
   endif
 
@@ -108,6 +107,15 @@ function! ExecuteWithConfirm(command) abort  " {{{
   if v:shell_error
     echomsg result
   endif
+endfunction  " }}}
+
+function! Confirm(command) abort  " {{{
+  if input("execute `" . a:command . "` ? [y/n] : ") !~ "[yY]"
+    echo " -> canceled."
+    return 0
+  endif
+
+  return 1
 endfunction  " }}}
 " }}}
 
