@@ -1525,7 +1525,7 @@ if s:TapPlugin("vim-session")  " {{{
   endfunction  " }}}
 
   function! s:SaveSessionCommand() abort  " {{{
-    return command = "SaveSession " . s:SessionName()
+    return "SaveSession " . s:SessionName()
   endfunction  " }}}
 
   function! s:SessionName() abort  " {{{
