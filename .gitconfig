@@ -148,6 +148,14 @@ diff-branches = "!f() {\
   git execute-with-confirm ${command};\
 }; f"
 
+open-changed-files = "!f() {\
+  branch1=$( git select-a-branch 'select first branch:' ) || exit 1;\
+  branch2=$( git select-a-branch 'select another branch:' ) || exit 1;\
+  \
+  command=\"vim \\$( git diff --name-only $@ ${branch1}...${branch2} )\";\
+  git execute-with-confirm ${command};\
+}; f"
+
 # submodule
 su                = !git update-submodules
 update-submodules = !git submodule update --init --recursive && git submodule update --remote && git status
