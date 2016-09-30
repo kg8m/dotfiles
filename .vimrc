@@ -1521,6 +1521,7 @@ if s:TapPlugin("vim-session")  " {{{
 
   function! s:IsSessionSavable() abort  " {{{
     return bufname(1) != ".git/COMMIT_EDITMSG" &&
+         \ bufname(1) != ".git/addp-hunk-edit.diff" &&
          \ bufname(1) != "Startify"
   endfunction  " }}}
 
