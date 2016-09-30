@@ -160,6 +160,7 @@ lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
 javascript <<JS
 liberator.globalVariables.qiita_slide_keys_next = ["l", "<Right>"];
 liberator.globalVariables.qiita_slide_keys_prev = ["h", "<Left>"];
+liberator.globalVariables.qiita_slide_keys_toggle_fullscreen = ["<C-S-f>"];
 JS
 " }}}
 
