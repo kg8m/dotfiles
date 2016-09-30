@@ -1498,24 +1498,13 @@ if s:TapPlugin("vim-session")  " {{{
 
   augroup ExtendPluginSession  " {{{
     autocmd!
-    autocmd VimLeavePre  * call s:SaveSessionWithConfirm()
-    autocmd BufWritePost * call s:SaveSessionWithoutConfirm()
-    autocmd VimLeavePre,BufWritePost * call s:CleanUpSession()
+    autocmd BufWritePost * call s:SaveSession()
+    autocmd BufWritePost * call s:CleanUpSession()
   augroup END  " }}}
 
-  function! s:SaveSessionWithConfirm() abort  " {{{
+  function! s:SaveSession() abort  " {{{
     if s:IsSessionSavable()
-      if !Confirm(s:SaveSessionCommand())
-        return
-      endif
-
-      execute s:SaveSessionCommand()
-    endif
-  endfunction  " }}}
-
-  function! s:SaveSessionWithoutConfirm() abort  " {{{
-    if s:IsSessionSavable()
-      execute s:SaveSessionCommand()
+      execute "SaveSession " . s:SessionName()
     endif
   endfunction  " }}}
 
@@ -1523,10 +1512,6 @@ if s:TapPlugin("vim-session")  " {{{
     return bufname(1) != ".git/COMMIT_EDITMSG" &&
          \ bufname(1) != ".git/addp-hunk-edit.diff" &&
          \ bufname(1) != "Startify"
-  endfunction  " }}}
-
-  function! s:SaveSessionCommand() abort  " {{{
-    return "SaveSession " . s:SessionName()
   endfunction  " }}}
 
   function! s:SessionName() abort  " {{{
