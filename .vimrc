@@ -198,7 +198,7 @@ call s:RegisterPlugin("tyru/open-browser.vim")
 call s:RegisterPlugin("tyru/operator-camelize.vim")
 call s:RegisterPlugin("kien/rainbow_parentheses.vim", { "if": 0 })   " sometimes break colorschemes
 call s:RegisterPlugin("chrisbra/Recover.vim")
-call s:RegisterPlugin("todesking/ruby_hl_lvar.vim", { "if": RubyVersion() >= '1.9.0' })
+call s:RegisterPlugin("todesking/ruby_hl_lvar.vim", { "if": RubyVersion() >= '1.9.0' && 0 })  " mossari
 call s:RegisterPlugin("sequence")
 call s:RegisterPlugin("joeytwiddle/sexy_scroller.vim")
 call s:RegisterPlugin("jiangmiao/simple-javascript-indenter")
