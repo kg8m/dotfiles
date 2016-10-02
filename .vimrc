@@ -1498,8 +1498,8 @@ if s:TapPlugin("vim-session")  " {{{
 
   augroup ExtendPluginSession  " {{{
     autocmd!
-    autocmd BufWritePost * call s:SaveSession()
-    autocmd BufWritePost * call s:CleanUpSession()
+    autocmd BufWritePost * silent call s:SaveSession()
+    autocmd BufWritePost * silent call s:CleanUpSession()
   augroup END  " }}}
 
   function! s:SaveSession() abort  " {{{
@@ -1519,10 +1519,10 @@ if s:TapPlugin("vim-session")  " {{{
   endfunction  " }}}
 
   function! s:CleanUpSession() abort  " {{{
-    silent execute " ! /usr/bin/env ls -at " . g:session_directory
-                 \ " | /usr/bin/env grep '\\.vim$'"
-                 \ " | /usr/bin/env tail -n +11"
-                 \ " | /usr/bin/env xargs -I% rm -f " . g:session_directory . "/%"
+    execute " ! /usr/bin/env ls -at " . g:session_directory
+          \ " | /usr/bin/env grep '\\.vim$'"
+          \ " | /usr/bin/env tail -n +11"
+          \ " | /usr/bin/env xargs -I% rm -f " . g:session_directory . "/%"
   endfunction  " }}}
 endif  " }}}
 
