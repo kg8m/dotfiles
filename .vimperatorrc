@@ -12,6 +12,9 @@ highlight Bell display: none;
 
 set autocomplete
 set complete=sl
+" temporarily fix Firefox 49+'s Smart Completions issue
+" https://github.com/vimperator/vimperator-labs/issues/590
+javascript services.services.autoCompleteSearch.class_="@mozilla.org/autocomplete/search;1?name=unifiedcomplete"
 
 set hintchars=fjklasdhguionmerwc
 highlight Hint font-family: "Osaka－等幅", "Osaka-Mono"; padding: 1px 3px; border: 1px solid #fdf6e3; background-color: #d33682; color: #fdf6e3; font-size: 12.5px; font-weight: normal; text-transform: uppercase; white-space: nowrap;
