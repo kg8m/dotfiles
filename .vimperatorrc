@@ -41,7 +41,7 @@ nnoremap t :set<Space>cpt=slt<Cr>:tabopen<Space>
 nnoremap o :set<Space>cpt=slt<Cr>:open<Space>
 
 noremap + <C-a>
-javascript << JS
+javascript <<JS
 mappings.addUserMap(
   [modes.NORMAL],
   ["-"],
@@ -82,7 +82,7 @@ inoremap <C-b> <PageUp>
 " highlight all matched words by n/N
 " FirefoxProfileDir/extensions/vimperator@mozdev.org/common/content/finder.js
 " needs to be fixed if Vimperator's core codes change
-javascript << JS
+javascript <<JS
   if (typeof finder.__originalFindAgain__ === "undefined") {
     finder.__originalFindAgain__ = finder.findAgain;
     finder.findAgain = function(reverse) {
@@ -120,7 +120,7 @@ nnoremap <Leader>F :caret move tail<Cr>
 " }}}
 
 " copy.js " {{{
-javascript << JS
+javascript <<JS
 liberator.globalVariables.copy_templates = [
   { label: 'urlWithoutEncode', value: 'copy the URL without encoding',
     custom: function(){ return buffer.URL },                         map: 'yy' },
