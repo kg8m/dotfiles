@@ -1,5 +1,5 @@
 alias -g G="| grep --color=always"
-alias -g V="| view -"
+alias -g V="| vim -R -"
 alias -g L="| less"
 alias -g H="| head"
 alias -g T="| tail"
