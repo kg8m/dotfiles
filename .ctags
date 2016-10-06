@@ -1,5 +1,6 @@
 --exclude=.git
 --exclude=.svn
+--exclude=.vim-sessions
 --exclude=*.min.js
 --exclude=jquery*.js
 --exclude=jrails.js
