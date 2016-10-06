@@ -94,7 +94,8 @@ function! RubyVersion() abort  " {{{
 endfunction  " }}}
 
 function! RubyGemPaths() abort  " {{{
-  return system("ruby -r rubygems -e 'print Gem.path.join(\":\")'")
+  let command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
+  return system(command_prefix . " -e 'print Gem.path.join(\":\")'")
 endfunction  " }}}
 
 function! ExecuteWithConfirm(command) abort  " {{{
@@ -313,8 +314,25 @@ if s:TapPlugin("auto-ctags.vim")  " {{{
 
   augroup AutoCtagsAtVinEnter  " {{{
     autocmd!
-    autocmd VimEnter * call auto_ctags#ctags(0)
+    autocmd VimEnter,BufWritePost * silent call auto_ctags#ctags(0)
+    autocmd VimEnter              * silent call s:CreateRubyGemsCtags()
   augroup END  " }}}
+
+  function! s:CreateRubyGemsCtags() abort  " {{{
+    let original_current_directory = getcwd()
+    let original_directory_list    = g:auto_ctags_directory_list
+
+    for ruby_gem_path in split(RubyGemPaths(), ":")
+      if isdirectory(ruby_gem_path)
+        execute "cd " . ruby_gem_path
+        let g:auto_ctags_directory_list = [ruby_gem_path]
+        call auto_ctags#ctags(0)
+      endif
+    endfor
+
+    execute "cd " . original_current_directory
+    let g:auto_ctags_directory_list = original_directory_list
+  endfunction  " }}}
 endif  " }}}
 
 if s:TapPlugin("autodate.vim")  " {{{
@@ -1921,9 +1939,14 @@ set wildmenu
 set wildmode=list:longest,full
 
 " ctags
-for s:ruby_gem_path in split(RubyGemPaths(), ":")
-  let &tags = &tags . "," . s:ruby_gem_path . "/**/tags"
-endfor
+function! s:SetupTags() abort
+  for ruby_gem_path in split(RubyGemPaths(), ":")
+    if isdirectory(ruby_gem_path)
+      let &tags = &tags . "," . ruby_gem_path . "/tags"
+    endif
+  endfor
+endfunction
+call s:SetupTags()
 
 " auto reload
 augroup CheckTimeHook  " {{{
