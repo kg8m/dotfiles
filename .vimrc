@@ -312,7 +312,7 @@ call s:RegisterPlugin("kg8m/molokai")
 if s:TapPlugin("auto-ctags.vim")  " {{{
   let g:auto_ctags = 1
 
-  augroup AutoCtagsAtVinEnter  " {{{
+  augroup AutoCtagsAucocommands  " {{{
     autocmd!
     autocmd VimEnter,BufWritePost * silent call auto_ctags#ctags(0)
     autocmd VimEnter              * silent call s:CreateRubyGemsCtags()
