@@ -407,7 +407,7 @@ if s:TapPlugin("dwm.vim")  " {{{
 endif  " }}}
 
 if s:TapPlugin("emmet-vim")  " {{{
-  " command: <C-y>,
+  " command: `<C-y>,`, `<C-y>;`
   call s:ConfigPlugin({
      \   "lazy": 1,
      \   "on_i": 1,
