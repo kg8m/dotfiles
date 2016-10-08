@@ -779,7 +779,7 @@ if s:TapPlugin("unite.vim")  " {{{
   nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
-  vnoremap <Leader>ug "vy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
+  vnoremap <Leader>ug "gy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
   nnoremap <Leader>uy :<C-u>Unite history/yank<Cr>
   nnoremap <F4> :<C-u>Unite buffer<Cr>
 
@@ -1008,7 +1008,7 @@ if s:TapPlugin("unite.vim")  " {{{
        \ })
 
     nnoremap g] :<C-u>UniteWithCursorWord -immediately tag<Cr>
-    vnoremap g] "zy:<C-u>Unite -immediately tag:<C-r>"<Cr>
+    vnoremap g] "ty:<C-u>Unite -immediately tag:<C-r>"<Cr>
     nnoremap g[ :<C-u>Unite jump<Cr>
     nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
 
@@ -2023,7 +2023,7 @@ if s:on_tmux
     echomsg "Copy the Selection by pbcopy."
   endfunction  " }}}
 
-  vnoremap <Leader>y "zy:<C-u>call UnnamedRegisterToRemoteCopy()<Cr>
+  vnoremap <Leader>y "yy:<C-u>call UnnamedRegisterToRemoteCopy()<Cr>
 else
   vnoremap <Leader>y "*y
 endif
