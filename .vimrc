@@ -955,8 +955,6 @@ if s:TapPlugin("unite.vim")  " {{{
       let g:mark_ids = [
         \   "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
         \   "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-        \   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-        \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
         \ ]
       let g:unite_source_mark_marks = join(g:mark_ids, "")
 
