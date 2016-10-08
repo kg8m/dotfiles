@@ -99,7 +99,7 @@ function! RubyGemPaths() abort  " {{{
 endfunction  " }}}
 
 function! ExecuteWithConfirm(command) abort  " {{{
-  if !Confirm(a:command)
+  if !ConfirmCommand(a:command)
     return
   endif
 
@@ -110,7 +110,7 @@ function! ExecuteWithConfirm(command) abort  " {{{
   endif
 endfunction  " }}}
 
-function! Confirm(command) abort  " {{{
+function! ConfirmCommand(command) abort  " {{{
   if input("execute `" . a:command . "` ? [y/n] : ") !~ "[yY]"
     echo " -> canceled."
     return 0
