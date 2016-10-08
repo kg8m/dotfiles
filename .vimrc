@@ -255,7 +255,7 @@ call s:RegisterPlugin("elzr/vim-json")
 call s:RegisterPlugin("rcmdnk/vim-markdown")
 call s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")
 call s:RegisterPlugin("xolox/vim-misc")
-call s:RegisterPlugin("losingkeys/vim-niji", { "if": 0 })            " sometimes break colorschemes
+call s:RegisterPlugin("losingkeys/vim-niji", { "if": 0 })            " sometimes breaks colorschemes
 call s:RegisterPlugin("kana/vim-operator-replace")
 " not working in case like following:
 "   (1) text:      hoge "fu*ga piyo"
