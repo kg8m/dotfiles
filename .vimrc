@@ -205,7 +205,7 @@ call s:RegisterPlugin("Shougo/neosnippet")
 call s:RegisterPlugin("Shougo/neosnippet-snippets")
 call s:RegisterPlugin("tyru/open-browser.vim")
 call s:RegisterPlugin("tyru/operator-camelize.vim")
-call s:RegisterPlugin("kien/rainbow_parentheses.vim", { "if": 0 })   " sometimes break colorschemes
+call s:RegisterPlugin("kien/rainbow_parentheses.vim", { "if": 0 })   " sometimes breaks colorschemes
 call s:RegisterPlugin("chrisbra/Recover.vim")
 call s:RegisterPlugin("todesking/ruby_hl_lvar.vim", { "if": RubyVersion() >= '1.9.0' && 0 })  " mossari
 call s:RegisterPlugin("sequence")
