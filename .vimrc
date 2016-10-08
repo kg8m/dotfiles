@@ -871,6 +871,7 @@ if s:TapPlugin("unite.vim")  " {{{
         \   ["[Unite plugin] gist                      ", "Unite gista"],
         \   ["[Unite plugin] mru files list            ", "Unite neomru/file"],
         \   ["[Unite plugin] outline                   ", "Unite outline:!"],
+        \   ["[Unite plugin] mark                      ", "Unite mark"],
         \   ["[Unite plugin] tag with cursor word      ", "UniteWithCursorWord tag"],
         \   ["[Unite plugin] versions/status           ", "UniteVersions status:./"],
         \   ["[Unite plugin] versions/log              ", "UniteVersions log:./"],
