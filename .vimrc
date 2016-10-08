@@ -423,7 +423,7 @@ if s:TapPlugin("emmet-vim")  " {{{
       \   },
       \   "html": {
       \     "extends": "javascript",
-      \     "snippets" : {
+      \     "snippets": {
       \       "label": "<label>${cursor}</label>",
       \       "script": "<script type=\"text/javascript\">\n  ${cursor}\n</script>",
       \     },
@@ -665,10 +665,10 @@ if s:TapPlugin("neosnippet")  " {{{
      \ })
 
   function! ConfigPluginOnSource_neosnippet() abort  " {{{
-    imap <expr><Tab> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-    smap <expr><Tab> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+    imap <expr><Tab>   pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+    smap <expr><Tab>   neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    imap <expr><Cr> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplete#close_popup() : "\<Cr>"
+    imap <expr><Cr>    neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplete#close_popup() : "\<Cr>"
 
     if has("conceal")
       set conceallevel=2 concealcursor=i
@@ -815,7 +815,7 @@ if s:TapPlugin("unite.vim")  " {{{
       " http://d.hatena.ne.jp/tyru/20120110/prompt
       let g:unite_source_menu_menus = {}
       let g:unite_source_menu_menus.shortcuts = {
-        \   "description" : "shortcuts"
+        \   "description": "shortcuts"
         \ }
 
       " http://nanasi.jp/articles/vim/hz_ja_vim.html
@@ -893,9 +893,9 @@ if s:TapPlugin("unite.vim")  " {{{
         let [word, value] = a:value
 
         return {
-             \   "word" : word . "  --  `" . value . "`",
-             \   "kind" : "command",
-             \   "action__command" : value,
+             \   "word": word . "  --  `" . value . "`",
+             \   "kind": "command",
+             \   "action__command": value,
              \ }
       endfunction  " }}}
     " }}}
@@ -1129,8 +1129,8 @@ if s:TapPlugin("unite.vim")  " {{{
 
       function! s:AddActionsToVersions() abort  " {{{
         let action = {
-          \   "description" :   "open files",
-          \   "is_selectable" : 1,
+          \   "description":   "open files",
+          \   "is_selectable": 1,
           \ }
 
         function! action.func(candidates) abort  " {{{
