@@ -702,7 +702,7 @@ if s:TapPlugin("open-browser.vim")  " {{{
     let g:openbrowser_browser_commands = [
       \   {
       \     "name": "ssh",
-      \     "args": "ssh main 'open '\\''{uri}'\\'''",
+      \     "args": "ssh main '{uri}'",
       \   }
       \ ]
   endfunction  " }}}
