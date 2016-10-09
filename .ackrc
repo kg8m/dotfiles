@@ -1,6 +1,7 @@
 --color-filename=blue
 --color-lineno=cyan
 --color-match=on_cyan black
+--follow
 --pager=less
 --smart-case
 --sort-files
