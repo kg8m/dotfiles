@@ -1565,7 +1565,7 @@ if s:TapPlugin("vim-startify")  " {{{
   function! ConfigPluginOnSource_vim_startify() abort  " {{{
     " see vim-session's settings
     let g:startify_session_dir         = g:session_directory
-    let g:startify_session_persistence = 1
+    let g:startify_session_persistence = 0
     let g:startify_session_sort        = 1
 
     let g:startify_enable_special = 1
