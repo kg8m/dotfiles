@@ -1502,7 +1502,7 @@ endif  " }}}
 " also see vim-startify's settings
 if s:TapPlugin("vim-session")  " {{{
   call s:ConfigPlugin({
-     \   "depends": ["xolox/vim-misc"],
+     \   "depends": ["vim-misc"],
      \ })
 
   let g:session_directory         = getcwd() . "/.vim-sessions"
