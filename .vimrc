@@ -949,31 +949,62 @@ if s:TapPlugin("unite.vim")  " {{{
        \ })
 
     nnoremap <Leader>um :<C-u>Unite mark<Cr>
-    " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
     nnoremap <silent> m :<C-u>call AutoMark()<Cr>
 
     function! ConfigPluginOnSource_unite_mark() abort  " {{{
-      let g:mark_ids = [
-        \   "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-        \   "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+      " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
+      let g:mark_increment_keys = [
+        \   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+        \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
         \ ]
-      let g:unite_source_mark_marks = join(g:mark_ids, "")
+      let g:unite_source_mark_marks = join(g:mark_increment_keys, "")
+      let s:mark_increment_key_regexp = "^[" . g:unite_source_mark_marks . "]$"
 
       function! AutoMark() abort  " {{{
-        if !exists("b:mark_position")
-          let b:mark_position = 0
-        else
-          let b:mark_position = (b:mark_position + 1) % len(g:mark_ids)
+        let mark_increment_key = s:DetectMarkIncrementKey()
+
+        if mark_increment_key =~ s:mark_increment_key_regexp
+          echo "Already marked to " . mark_increment_key
+          return
         endif
 
-        execute "mark" g:mark_ids[b:mark_position]
-        echo "marked" g:mark_ids[b:mark_position]
+        if !exists("g:mark_increment_index")
+          let g:mark_increment_index = 0
+        else
+          let g:mark_increment_index = (g:mark_increment_index + 1) % len(g:mark_increment_keys)
+        endif
+
+        execute "mark " . g:mark_increment_keys[g:mark_increment_index]
+        echo "Marked to " . g:mark_increment_keys[g:mark_increment_index]
       endfunction  " }}}
 
-      augroup InitMarks  " {{{
-        autocmd!
-        autocmd BufReadPost * delmarks!
-      augroup END  " }}}
+      function! s:DetectMarkIncrementKey() abort  " {{{
+        let detected_mark_key   = 0
+        let current_filepath    = expand("%")
+        let current_line_number = line(".")
+
+        for mark_key in g:mark_increment_keys
+          let position = getpos("'" . mark_key)
+
+          if position[0]
+            let filepath    = bufname(position[0])
+            let line_number = position[1]
+
+            if filepath == current_filepath && line_number == current_line_number
+              let detected_mark_key = mark_key
+              break
+            else
+              continue
+            endif
+          else
+            continue
+          endif
+        endfor
+
+        return detected_mark_key
+      endfunction  " }}}
+
+      execute "delmarks " . join(g:mark_increment_keys, "")
     endfunction  " }}}
   endif  " }}}
 
