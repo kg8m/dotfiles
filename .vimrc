@@ -31,7 +31,14 @@ function! s:SetupPluginEnd() abort  " {{{
 endfunction  " }}}
 
 function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
-  return dein#add(a:plugin_name, get(a:000, 0, {}))
+  let options = get(a:000, 0, {})
+
+  " sometimes dein doesn't add runtimepath if no options given
+  if !has_key(options, "if")
+    let options["if"] = 1
+  endif
+
+  return dein#add(a:plugin_name, options)
 endfunction  " }}}
 
 function! s:TapPlugin(plugin_name) abort  " {{{
