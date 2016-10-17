@@ -128,6 +128,18 @@ graph = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue[C] %cn [A] %an %Crese
 lo    = log --stat
 lp    = log --stat --patch
 
+lg-branches = !git log-branches --graph --pretty=format:'%Cgreen%h\\ %ci\\ %Cblue[C]\\ %cn\\ [A]\\ %an\\ %Creset%s'
+lo-branches = !git log-branches --stat
+lp-branches = !git log-branches --stat --patch
+
+log-branches = "!f() {\
+  branch1=$( git select-a-branch 'select first branch:' ) || exit 1;\
+  branch2=$( git select-a-branch 'select another branch:' ) || exit 1;\
+  \
+  command=\"git log $@ ${branch1}...${branch2}\";\
+  git execute-with-confirm ${command};\
+}; f"
+
 # diff
 di = !git diff-without-space-changes
 dc = !git diff-without-space-changes --cached
