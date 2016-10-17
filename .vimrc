@@ -1322,9 +1322,9 @@ if s:TapPlugin("vim-dirdiff")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-easymotion")  " {{{
-  nmap <Leader>f <Plug>(easymotion-s2)
-  vmap <Leader>f <Plug>(easymotion-s2)
-  omap <Leader>f <Plug>(easymotion-s2)
+  nmap <Leader>f <Plug>(easymotion-s)
+  vmap <Leader>f <Plug>(easymotion-s)
+  omap <Leader>f <Plug>(easymotion-s)
   " replace default `f`
   nmap f <Plug>(easymotion-fl)
   vmap f <Plug>(easymotion-fl)
