@@ -931,7 +931,7 @@ if s:TapPlugin("unite.vim")  " {{{
   if s:TapPlugin("unite-dwm")  " {{{
     call s:ConfigPlugin({
        \   "lazy":  1,
-       \   "on_ft": "unite",
+       \   "on_ft": ["unite", "vimfiler"],
        \   "hook_source": "call ConfigPluginOnSource_unite_dwm()",
        \ })
 
@@ -1737,14 +1737,17 @@ endif  " }}}
 if s:TapPlugin("vimfiler")  " {{{
   call s:ConfigPlugin({
      \   "lazy": 0,
+     \   "hook_source": "call ConfigPluginOnSource_vimfiler()",
      \ })
 
   nnoremap <Leader>e :<C-u>VimFilerBufferDir -force-quit<Cr>
 
-  call vimfiler#custom#profile("default", "context", {
-     \   "safe": 0,
-     \   "split_action": "dwm_open",
-     \ })
+  function! ConfigPluginOnSource_vimfiler() abort  " {{{
+    call vimfiler#custom#profile("default", "context", {
+       \   "safe": 0,
+       \   "split_action": "dwm_open",
+       \ })
+  endfunction  " }}}
 endif  " }}}
 
 if s:TapPlugin("vimshell")  " {{{
