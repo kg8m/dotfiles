@@ -354,32 +354,32 @@ if s:TapPlugin("autodate.vim")  " {{{
 endif  " }}}
 
 if s:TapPlugin("calendar.vim")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": "Calendar",
-     \   "hook_source": "call ConfigPluginOnSource_calendar()",
-     \ })
-
-  function! ConfigPluginOnSource_calendar() abort  " {{{
+  function! s:ConfigPluginOnSource_calendar() abort  " {{{
     let g:calendar_google_calendar = 1
     let g:calendar_first_day       = "monday"
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": "Calendar",
+     \   "hook_source": function("s:ConfigPluginOnSource_calendar"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("caw.vim")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": "<Plug>(caw:",
-     \   "hook_source": "call ConfigPluginOnSource_caw()",
-     \ })
-
   nmap gc <Plug>(caw:hatpos:toggle)
   vmap gc <Plug>(caw:hatpos:toggle)
 
-  function! ConfigPluginOnSource_caw() abort  " {{{
+  function! s:ConfigPluginOnSource_caw() abort  " {{{
     let g:caw_no_default_keymappings = 1
     let g:caw_hatpos_skip_blank_line = 1
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_map": "<Plug>(caw:",
+     \   "hook_source": function("s:ConfigPluginOnSource_caw"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("colorswatch.vim")  " {{{
@@ -415,13 +415,7 @@ endif  " }}}
 
 if s:TapPlugin("emmet-vim")  " {{{
   " command: `<C-y>,`, `<C-y>;`
-  call s:ConfigPlugin({
-     \   "lazy": 1,
-     \   "on_i": 1,
-     \   "hook_source": "call ConfigPluginOnSource_emmet_vim()",
-     \ })
-
-  function! ConfigPluginOnSource_emmet_vim() abort  " {{{
+  function! s:ConfigPluginOnSource_emmet_vim() abort  " {{{
     let g:user_emmet_settings = {
       \   "indentation": "  ",
       \   "lang": "ja",
@@ -447,6 +441,12 @@ if s:TapPlugin("emmet-vim")  " {{{
       \   },
       \ }
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy": 1,
+     \   "on_i": 1,
+     \   "hook_source": function("s:ConfigPluginOnSource_emmet_vim"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("foldCC")  " {{{
@@ -456,35 +456,35 @@ if s:TapPlugin("foldCC")  " {{{
 endif  " }}}
 
 " if s:TapPlugin("gundo.vim")  " {{{
-"   call s:ConfigPlugin({
-"      \   "lazy":   1,
-"      \   "on_cmd": "GundoToggle",
-"      \   "hook_source": "call ConfigPluginOnSource_gundo()",
-"      \ })
-
   nnoremap <F5> :<C-u>GundoToggle<Cr>
 
-"   function! ConfigPluginOnSource_gundo() abort  " {{{
+"   function! s:ConfigPluginOnSource_gundo() abort  " {{{
     " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
     let g:gundo_auto_preview = 0
     let g:gundo_prefer_python3 = 1
 "   endfunction  " }}}
+
+"   call s:ConfigPlugin({
+"      \   "lazy":   1,
+"      \   "on_cmd": "GundoToggle",
+"      \   "hook_source": function("s:ConfigPluginOnSource_gundo"),
+"      \ })
 " endif  " }}}
 
 if s:TapPlugin("HowMuch")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": "<Plug>AutoCalc",
-     \   "hook_source": "call ConfigPluginOnSource_HowMuch()",
-     \ })
-
   vmap <Leader>?  <Plug>AutoCalcReplace
   vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
 
-  function! ConfigPluginOnSource_HowMuch() abort  " {{{
+  function! s:ConfigPluginOnSource_HowMuch() abort  " {{{
     " replace expr with result
     let g:HowMuch_scale = 5
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_map": "<Plug>AutoCalc",
+     \   "hook_source": function("s:ConfigPluginOnSource_HowMuch"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("increment-activator")  " {{{
@@ -597,26 +597,19 @@ if s:TapPlugin("lightline.vim")  " {{{
 endif  " }}}
 
 if s:TapPlugin("linediff.vim")  " {{{
+  function! s:ConfigPluginOnSource_linediff() abort  " {{{
+    let g:linediff_second_buffer_command = "rightbelow vertical new"
+  endfunction  " }}}
+
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "Linediff",
-     \   "hook_source": "call ConfigPluginOnSource_linediff()",
+     \   "hook_source": function("s:ConfigPluginOnSource_linediff"),
      \ })
-
-  function! ConfigPluginOnSource_linediff() abort  " {{{
-    let g:linediff_second_buffer_command = "rightbelow vertical new"
-  endfunction  " }}}
 endif  " }}}
 
 if s:TapPlugin("neocomplete.vim")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_i":   1,
-     \   "on_cmd": "NeoCompleteBufferMakeCache",
-     \   "hook_source": "call ConfigPluginOnSource_neocomplete()",
-     \ })
-
-  function! ConfigPluginOnSource_neocomplete() abort  " {{{
+  function! s:ConfigPluginOnSource_neocomplete() abort  " {{{
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_smart_case = 1
     let g:neocomplete#enable_fuzzy_completion = 1
@@ -659,19 +652,17 @@ if s:TapPlugin("neocomplete.vim")  " {{{
       autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
     augroup END  " }}}
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_i":   1,
+     \   "on_cmd": "NeoCompleteBufferMakeCache",
+     \   "hook_source": function("s:ConfigPluginOnSource_neocomplete"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("neosnippet")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":      1,
-     \   "on_i":      1,
-     \   "on_ft":     ["snippet", "neosnippet"],
-     \   "on_source": "unite.vim",
-     \   "depends":   [".vim", "vim-snippets"],
-     \   "hook_source": "call ConfigPluginOnSource_neosnippet()",
-     \ })
-
-  function! ConfigPluginOnSource_neosnippet() abort  " {{{
+  function! s:ConfigPluginOnSource_neosnippet() abort  " {{{
     imap <expr><Tab>   pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     smap <expr><Tab>   neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -691,21 +682,22 @@ if s:TapPlugin("neosnippet")  " {{{
       autocmd InsertLeave * NeoSnippetClearMarkers
     augroup END  " }}}
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":      1,
+     \   "on_i":      1,
+     \   "on_ft":     ["snippet", "neosnippet"],
+     \   "on_source": "unite.vim",
+     \   "depends":   [".vim", "vim-snippets"],
+     \   "hook_source": function("s:ConfigPluginOnSource_neosnippet"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("open-browser.vim")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":    1,
-     \   "on_cmd":  ["OpenBrowserSearch", "OpenBrowser"],
-     \   "on_func": "openbrowser#open",
-     \   "on_map":  "<Plug>(openbrowser-open)",
-     \   "hook_source": "call ConfigPluginOnSource_open_browser()",
-     \ })
-
   nmap <Leader>o <Plug>(openbrowser-open)
   vmap <Leader>o <Plug>(openbrowser-open)
 
-  function! ConfigPluginOnSource_open_browser() abort  " {{{
+  function! s:ConfigPluginOnSource_open_browser() abort  " {{{
     let g:openbrowser_browser_commands = [
       \   {
       \     "name": "ssh",
@@ -713,6 +705,15 @@ if s:TapPlugin("open-browser.vim")  " {{{
       \   }
       \ ]
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":    1,
+     \   "on_cmd":  ["OpenBrowserSearch", "OpenBrowser"],
+     \   "on_func": "openbrowser#open",
+     \   "on_map":  "<Plug>(openbrowser-open)",
+     \   "hook_source": function("s:ConfigPluginOnSource_open_browser"),
+     \ })
+
 endif  " }}}
 
 if s:TapPlugin("operator-camelize.vim")  " {{{
@@ -755,21 +756,21 @@ if s:TapPlugin("simple-javascript-indenter")  " {{{
 endif  " }}}
 
 if s:TapPlugin("splitjoin.vim")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": ["SplitjoinJoin", "SplitjoinSplit"],
-     \   "hook_source": "call ConfigPluginOnSource_splitjoin()",
-     \ })
-
   nnoremap <Leader>J :<C-u>SplitjoinJoin<Cr>
   nnoremap <Leader>S :<C-u>SplitjoinSplit<Cr>
 
-  function! ConfigPluginOnSource_splitjoin() abort  " {{{
+  function! s:ConfigPluginOnSource_splitjoin() abort  " {{{
     let g:splitjoin_split_mapping       = ""
     let g:splitjoin_join_mapping        = ""
     let g:splitjoin_ruby_trailing_comma = 1
     let g:splitjoin_ruby_hanging_args   = 0
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": ["SplitjoinJoin", "SplitjoinSplit"],
+     \   "hook_source": function("s:ConfigPluginOnSource_splitjoin"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("Unicode-RST-Tables")  " {{{
@@ -777,12 +778,6 @@ if s:TapPlugin("Unicode-RST-Tables")  " {{{
 endif  " }}}
 
 if s:TapPlugin("unite.vim")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": "Unite",
-     \   "hook_source": "call ConfigPluginOnSource_unite()",
-     \ })
-
   nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
@@ -790,7 +785,7 @@ if s:TapPlugin("unite.vim")  " {{{
   nnoremap <Leader>uy :<C-u>Unite history/yank<Cr>
   nnoremap <F4> :<C-u>Unite buffer<Cr>
 
-  function! ConfigPluginOnSource_unite() abort  " {{{
+  function! s:ConfigPluginOnSource_unite() abort  " {{{
     let g:unite_winheight = "100%"
     let g:unite_cursor_line_highlight = "CursorLine"
 
@@ -908,6 +903,12 @@ if s:TapPlugin("unite.vim")  " {{{
     " }}}
   endfunction  " }}}
 
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": "Unite",
+     \   "hook_source": function("s:ConfigPluginOnSource_unite"),
+     \ })
+
   if s:TapPlugin("neomru.vim")  " {{{
     call s:ConfigPlugin({
        \   "lazy": 0,
@@ -929,15 +930,15 @@ if s:TapPlugin("unite.vim")  " {{{
   endif  " }}}
 
   if s:TapPlugin("unite-dwm")  " {{{
+    function! s:ConfigPluginOnSource_unite_dwm() abort  " {{{
+      let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,cdable"
+    endfunction  " }}}
+
     call s:ConfigPlugin({
        \   "lazy":  1,
        \   "on_ft": ["unite", "vimfiler"],
-       \   "hook_source": "call ConfigPluginOnSource_unite_dwm()",
+       \   "hook_source": function("s:ConfigPluginOnSource_unite_dwm"),
        \ })
-
-    function! ConfigPluginOnSource_unite_dwm() abort  " {{{
-      let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,cdable"
-    endfunction  " }}}
   endif  " }}}
 
   if s:TapPlugin("unite-filetype")  " {{{
@@ -948,17 +949,10 @@ if s:TapPlugin("unite.vim")  " {{{
   endif  " }}}
 
   if s:TapPlugin("unite-mark")  " {{{
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_func":   "AutoMark",
-       \   "on_source": "unite.vim",
-       \   "hook_source": "call ConfigPluginOnSource_unite_mark()",
-       \ })
-
     nnoremap <Leader>um :<C-u>Unite mark<Cr>
     nnoremap <silent> m :<C-u>call AutoMark()<Cr>
 
-    function! ConfigPluginOnSource_unite_mark() abort  " {{{
+    function! s:ConfigPluginOnSource_unite_mark() abort  " {{{
       " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
       let g:mark_increment_keys = [
         \   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
@@ -1013,6 +1007,13 @@ if s:TapPlugin("unite.vim")  " {{{
 
       execute "delmarks " . join(g:mark_increment_keys, "")
     endfunction  " }}}
+
+    call s:ConfigPlugin({
+       \   "lazy":      1,
+       \   "on_func":   "AutoMark",
+       \   "on_source": "unite.vim",
+       \   "hook_source": function("s:ConfigPluginOnSource_unite_mark"),
+       \ })
   endif  " }}}
 
   if s:TapPlugin("unite-outline")  " {{{
@@ -1034,12 +1035,6 @@ if s:TapPlugin("unite.vim")  " {{{
   endif  " }}}
 
   if s:TapPlugin("unite-tag")  " {{{
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_source": "unite.vim",
-       \   "hook_source": "call ConfigPluginOnSource_unite_tag()",
-       \ })
-
     call s:ConfigPlugin("unite.vim", {
        \   "on_cmd": s:PluginInfo("unite.vim")["on_cmd"] + ["UniteWithCursorWord"],
        \ })
@@ -1049,10 +1044,16 @@ if s:TapPlugin("unite.vim")  " {{{
     nnoremap g[ :<C-u>Unite jump<Cr>
     nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
 
-    function! ConfigPluginOnSource_unite_tag() abort  " {{{
+    function! s:ConfigPluginOnSource_unite_tag() abort  " {{{
       let g:unite_source_tag_max_name_length  = 50
       let g:unite_source_tag_max_fname_length = 100
     endfunction  " }}}
+
+    call s:ConfigPlugin({
+       \   "lazy":      1,
+       \   "on_source": "unite.vim",
+       \   "hook_source": function("s:ConfigPluginOnSource_unite_tag"),
+       \ })
   endif  " }}}
 
   if s:TapPlugin("unite-webcolorname")  " {{{
@@ -1070,22 +1071,15 @@ if s:TapPlugin("unite.vim")  " {{{
   endif  " }}}
 
   if s:TapPlugin("vim-unite-giti")  " {{{
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_source": "unite.vim",
-       \   "hook_source":      "call ConfigPluginOnSource_vim_unite_giti()",
-       \   "hook_post_source": "call ConfigPluginOnPostSource_vim_unite_giti()",
-       \ })
-
     if !mapcheck("<Leader>uv")
       nnoremap <Leader>uv :<C-u>Unite giti/status<Cr>
     endif
 
-    function! ConfigPluginOnSource_vim_unite_giti() abort  " {{{
+    function! s:ConfigPluginOnSource_vim_unite_giti() abort  " {{{
       let g:giti_log_default_line_count = 1000
     endfunction  " }}}
 
-    function! ConfigPluginOnPostSource_vim_unite_giti() abort  " {{{
+    function! s:ConfigPluginOnPostSource_vim_unite_giti() abort  " {{{
       function! s:AddActionsToUniteGiti() abort  " {{{
         let kind = unite#kinds#giti#status#define()
         let kind.action_table.file_delete = {
@@ -1117,20 +1111,21 @@ if s:TapPlugin("unite.vim")  " {{{
       endfunction  " }}}
       call s:AddActionsToUniteGiti()
     endfunction  " }}}
-  endif  " }}}
 
-  if s:TapPlugin("vim-unite-svn")  " {{{
     call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
-       \   "hook_post_source": "call ConfigPluginOnPostSource_vim_unite_svn()",
+       \   "hook_source":      function("s:ConfigPluginOnSource_vim_unite_giti"),
+       \   "hook_post_source": function("s:ConfigPluginOnPostSource_vim_unite_giti"),
        \ })
+  endif  " }}}
 
+  if s:TapPlugin("vim-unite-svn")  " {{{
     if !mapcheck("<Leader>uv")
       nnoremap <Leader>uv :<C-u>Unite svn/status<Cr>
     endif
 
-    function! ConfigPluginOnPostSource_vim_unite_svn() abort  " {{{
+    function! s:ConfigPluginOnPostSource_vim_unite_svn() abort  " {{{
       function! s:AddActionsToUniteSvn() abort  " {{{
         let file_delete_action = {
           \   "description":         "delete/remove directories/files",
@@ -1150,19 +1145,18 @@ if s:TapPlugin("unite.vim")  " {{{
       endfunction  " }}}
       call s:AddActionsToUniteSvn()
     endfunction  " }}}
+
+    call s:ConfigPlugin({
+       \   "lazy":      1,
+       \   "on_source": "unite.vim",
+       \   "hook_post_source": function("s:ConfigPluginOnPostSource_vim_unite_svn"),
+       \ })
   endif  " }}}
 
   if s:TapPlugin("vim-versions")  " {{{
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_cmd":    "UniteVersions",
-       \   "on_source": "unite.vim",
-       \   "hook_source": "call ConfigPluginOnSource_vim_versions()",
-       \ })
-
     nnoremap <Leader>u<S-v> :<C-u>UniteVersions status:./<Cr>
 
-    function! ConfigPluginOnSource_vim_versions() abort  " {{{
+    function! s:ConfigPluginOnSource_vim_versions() abort  " {{{
       let g:versions#type#svn#status#ignore_status = ["X"]
 
       function! s:AddActionsToVersions() abort  " {{{
@@ -1191,6 +1185,13 @@ if s:TapPlugin("unite.vim")  " {{{
       endfunction  " }}}
       call s:AddActionsToVersions()
     endfunction  " }}}
+
+    call s:ConfigPlugin({
+       \   "lazy":      1,
+       \   "on_cmd":    "UniteVersions",
+       \   "on_source": "unite.vim",
+       \   "hook_source": function("s:ConfigPluginOnSource_vim_versions"),
+       \ })
   endif  " }}}
 endif  " }}}
 
@@ -1288,37 +1289,37 @@ if s:TapPlugin("vim-blockle")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-choosewin")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": "<Plug>(choosewin)",
-     \   "hook_source": "call ConfigPluginOnSource_vim_choosewin()",
-     \ })
-
   nmap <C-w>f <Plug>(choosewin)
 
-  function! ConfigPluginOnSource_vim_choosewin() abort  " {{{
+  function! s:ConfigPluginOnSource_vim_choosewin() abort  " {{{
     let g:choosewin_overlay_enable          = 0  " wanna set true but too heavy
     let g:choosewin_overlay_clear_multibyte = 1
     let g:choosewin_blink_on_land           = 0
     let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
     let g:choosewin_tabline_replace         = 0
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_map": "<Plug>(choosewin)",
+     \   "hook_source": function("s:ConfigPluginOnSource_vim_choosewin"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-dirdiff")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": "DirDiff",
-     \   "hook_source": "call ConfigPluginOnSource_vim_dirdiff()",
-     \ })
-
-  function! ConfigPluginOnSource_vim_dirdiff() abort  " {{{
+  function! s:ConfigPluginOnSource_vim_dirdiff() abort  " {{{
     let g:DirDiffExcludes   = "CVS,*.class,*.exe,.*.swp,*.git,db/development_structure.sql,log,tags,tmp"
     let g:DirDiffIgnore     = "Id:,Revision:,Date:"
     let g:DirDiffSort       = 1
     let g:DirDiffIgnoreCase = 0
     let g:DirDiffForceLang  = "C"
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": "DirDiff",
+     \   "hook_source": function("s:ConfigPluginOnSource_vim_dirdiff"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-easymotion")  " {{{
@@ -1346,17 +1347,17 @@ if s:TapPlugin("vim-easymotion")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-gista")  " {{{
+  function! s:ConfigPluginOnSource_vim_gista() abort  " {{{
+    let g:gista#github_user = "kg8m"
+  endfunction  " }}}
+
   call s:ConfigPlugin({
      \   "lazy":      1,
      \   "on_cmd":    "Gista",
      \   "on_map":    "<Plug>(gista-",
      \   "on_source": "unite.vim",
-     \   "hook_source": "call ConfigPluginOnSource_vim_gista()",
+     \   "hook_source": function("s:ConfigPluginOnSource_vim_gista"),
      \ })
-
-  function! ConfigPluginOnSource_vim_gista() abort  " {{{
-    let g:gista#github_user = "kg8m"
-  endfunction  " }}}
 endif  " }}}
 
 if s:TapPlugin("vim-git")  " {{{
@@ -1522,19 +1523,19 @@ if s:TapPlugin("vim-ruby-heredoc-syntax")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-rubytest")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": ["<Plug>RubyFileRun", "<Plug>RubyTestRun"],
-     \   "hook_source": "call ConfigPluginOnSource_vim_rubytest()",
-     \ })
-
   nmap <leader>T <Plug>RubyFileRun
   nmap <leader>t <Plug>RubyTestRun
 
-  function! ConfigPluginOnSource_vim_rubytest() abort  " {{{
+  function! s:ConfigPluginOnSource_vim_rubytest() abort  " {{{
     let g:no_rubytest_mappings = 1
     let g:rubytest_in_vimshell = 1
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_map": ["<Plug>RubyFileRun", "<Plug>RubyTestRun"],
+     \   "hook_source": function("s:ConfigPluginOnSource_vim_rubytest"),
+     \ })
 endif  " }}}
 
 " also see vim-startify's settings
@@ -1579,28 +1580,21 @@ if s:TapPlugin("vim-session")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-singleton")  " {{{
-  call s:ConfigPlugin({
-     \   "gui": 1,
-     \   "hook_source": "call ConfigPluginOnSource_vim_singleton()",
-     \ })
-
-  function! ConfigPluginOnSource_vim_singleton() abort  " {{{
+  function! s:ConfigPluginOnSource_vim_singleton() abort  " {{{
     if has("gui_running") && !singleton#is_master()
       let g:singleton#opener = "drop"
       call singleton#enable()
     endif
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "gui": 1,
+     \   "hook_source": function("s:ConfigPluginOnSource_vim_singleton"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-startify")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "on_event": "VimEnter",
-     \   "hook_source":      "call ConfigPluginOnSource_vim_startify()",
-     \   "hook_post_source": "call ConfigPluginOnPostSource_vim_startify()",
-     \ })
-
-  function! ConfigPluginOnSource_vim_startify() abort  " {{{
+  function! s:ConfigPluginOnSource_vim_startify() abort  " {{{
     " see vim-session's settings
     let g:startify_session_dir         = g:session_directory
     let g:startify_session_persistence = 0
@@ -1659,12 +1653,19 @@ if s:TapPlugin("vim-startify")  " {{{
       \ ]
   endfunction  " }}}
 
-  function! ConfigPluginOnPostSource_vim_startify() abort  " {{{
+  function! s:ConfigPluginOnPostSource_vim_startify() abort  " {{{
     highlight StartifyFile   ctermfg=255
     highlight StartifyHeader ctermfg=255
     highlight StartifyPath   ctermfg=245
     highlight StartifySlash  ctermfg=245
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":     1,
+     \   "on_event": "VimEnter",
+     \   "hook_source":      function("s:ConfigPluginOnSource_vim_startify"),
+     \   "hook_post_source": function("s:ConfigPluginOnPostSource_vim_startify"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-stay")  " {{{
@@ -1710,19 +1711,19 @@ if s:TapPlugin("vim-textobj-multitextobj")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-turbux")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": ["<Plug>SendTestToTmux", "<Plug>SendFocusedTestToTmux"],
-     \   "hook_source": "call ConfigPluginOnSource_vim_turbux()",
-     \ })
-
   map <leader>T <Plug>SendTestToTmux
   map <leader>t <Plug>SendFocusedTestToTmux
 
-  function! ConfigPluginOnSource_vim_turbux() abort  " {{{
+  function! s:ConfigPluginOnSource_vim_turbux() abort  " {{{
     let g:no_turbux_mappings = 1
     let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_map": ["<Plug>SendTestToTmux", "<Plug>SendFocusedTestToTmux"],
+     \   "hook_source": function("s:ConfigPluginOnSource_vim_turbux"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-zenspace")  " {{{
@@ -1735,31 +1736,25 @@ if s:TapPlugin("vim-zenspace")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vimfiler")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy": 0,
-     \   "hook_source": "call ConfigPluginOnSource_vimfiler()",
-     \ })
-
   nnoremap <Leader>e :<C-u>VimFilerBufferDir -force-quit<Cr>
 
-  function! ConfigPluginOnSource_vimfiler() abort  " {{{
+  function! s:ConfigPluginOnSource_vimfiler() abort  " {{{
     call vimfiler#custom#profile("default", "context", {
        \   "safe": 0,
        \   "split_action": "dwm_open",
        \ })
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy": 0,
+     \   "hook_source": function("s:ConfigPluginOnSource_vimfiler"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vimshell")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": ["VimShell", "VimShellExecute"],
-     \   "hook_source": "call ConfigPluginOnSource_vimshell()",
-     \ })
-
   nnoremap <Leader>s :<C-u>VimShell<Cr>
 
-  function! ConfigPluginOnSource_vimshell() abort  " {{{
+  function! s:ConfigPluginOnSource_vimshell() abort  " {{{
     if s:on_windows
       let g:_user_name = $USERNAME
     else
@@ -1770,22 +1765,26 @@ if s:TapPlugin("vimshell")  " {{{
     let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
     let g:vimshell_prompt = "% "
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": ["VimShell", "VimShellExecute"],
+     \   "hook_source": function("s:ConfigPluginOnSource_vimshell"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vimux")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "on_event": "VimEnter",
-     \   "hook_source":      "call ConfigPluginOnSource_vimux()",
-     \   "hook_post_source": "call ConfigPluginOnPostSource_vimux()",
-     \ })
-
-  function! ConfigPluginOnSource_vimux() abort  " {{{
+  function! s:ConfigPluginOnSource_vimux() abort  " {{{
     let g:VimuxHeight     = 30
     let g:VimuxUseNearest = 1
+
+    augroup Vimux  " {{{
+      autocmd!
+      autocmd VimLeavePre * :VimuxCloseRunner
+    augroup END  " }}}
   endfunction  " }}}
 
-  function! ConfigPluginOnPostSource_vimux() abort  " {{{
+  function! s:ConfigPluginOnPostSource_vimux() abort  " {{{
     " overriding default function: use current pane's next one
     execute join([
     \   'function! _VimuxNearestIndex() abort',
@@ -1809,10 +1808,12 @@ if s:TapPlugin("vimux")  " {{{
     \ ], "\n")
   endfunction  " }}}
 
-  augroup Vimux  " {{{
-    autocmd!
-    autocmd VimLeavePre * :VimuxCloseRunner
-  augroup END  " }}}
+  call s:ConfigPlugin({
+     \   "lazy":     1,
+     \   "on_event": "VimEnter",
+     \   "hook_source":      function("s:ConfigPluginOnSource_vimux"),
+     \   "hook_post_source": function("s:ConfigPluginOnPostSource_vimux"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("winresizer")  " {{{
