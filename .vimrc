@@ -823,6 +823,7 @@ if s:TapPlugin("unite.vim")  " {{{
       " http://nanasi.jp/articles/vim/hz_ja_vim.html
       let g:unite_source_menu_menus.shortcuts.candidates = [
         \   ["[Plugins] Update Plugins                 ", "call UpdatePlugins()"],
+        \   ["[Plugins] Resume Update Plugins          ", "UniteResume update_plugins"],
         \
         \   ["[String Utility] All to Hankaku          ", "'<,'>Hankaku"],
         \   ["[String Utility] Alphanumerics to Hankaku", "'<,'>HzjaConvert han_eisu"],
