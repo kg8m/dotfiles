@@ -817,90 +817,140 @@ if s:TapPlugin("unite.vim")  " {{{
       " http://d.hatena.ne.jp/tyru/20120110/prompt
       let g:unite_source_menu_menus = {}
       let g:unite_source_menu_menus.shortcuts = {
-        \   "description": "shortcuts"
+        \   "description": "My Shortcuts"
         \ }
 
       " http://nanasi.jp/articles/vim/hz_ja_vim.html
       let g:unite_source_menu_menus.shortcuts.candidates = [
-        \   ["[Plugins] Update Plugins                 ", "call UpdatePlugins()"],
-        \   ["[Plugins] Resume Update Plugins          ", "UniteResume update_plugins"],
+        \   ["[Plugins] Update Plugins",        "call UpdatePlugins()"],
+        \   ["[Plugins] Resume Update Plugins", "UniteResume update_plugins"],
         \
-        \   ["[String Utility] All to Hankaku          ", "'<,'>Hankaku"],
+        \   ["[String Utility] All to Hankaku",           "'<,'>Hankaku"],
         \   ["[String Utility] Alphanumerics to Hankaku", "'<,'>HzjaConvert han_eisu"],
-        \   ["[String Utility] ASCII to Hankaku        ", "'<,'>HzjaConvert han_ascii"],
-        \   ["[String Utility] All to Zenkaku          ", "'<,'>Zenkaku"],
-        \   ["[String Utility] Kana to Zenkaku         ", "'<,'>HzjaConvert zen_kana"],
+        \   ["[String Utility] ASCII to Hankaku",         "'<,'>HzjaConvert han_ascii"],
+        \   ["[String Utility] All to Zenkaku",           "'<,'>Zenkaku"],
+        \   ["[String Utility] Kana to Zenkaku",          "'<,'>HzjaConvert zen_kana"],
         \
-        \   ["[Reload with Encoding] latin1            ", "edit ++enc=latin1 +set\\ noreadonly"],
-        \   ["[Reload with Encoding] cp932             ", "edit ++enc=cp932 +set\\ noreadonly"],
-        \   ["[Reload with Encoding] shift-jis         ", "edit ++enc=shift-jis +set\\ noreadonly"],
-        \   ["[Reload with Encoding] iso-2022-jp       ", "edit ++enc=iso-2022-jp +set\\ noreadonly"],
-        \   ["[Reload with Encoding] euc-jp            ", "edit ++enc=euc-jp +set\\ noreadonly"],
-        \   ["[Reload with Encoding] utf-8             ", "edit ++enc=utf-8 +set\\ noreadonly"],
+        \   ["[Reload with Encoding] latin1",      "edit ++enc=latin1 +set\\ noreadonly"],
+        \   ["[Reload with Encoding] cp932",       "edit ++enc=cp932 +set\\ noreadonly"],
+        \   ["[Reload with Encoding] shift-jis",   "edit ++enc=shift-jis +set\\ noreadonly"],
+        \   ["[Reload with Encoding] iso-2022-jp", "edit ++enc=iso-2022-jp +set\\ noreadonly"],
+        \   ["[Reload with Encoding] euc-jp",      "edit ++enc=euc-jp +set\\ noreadonly"],
+        \   ["[Reload with Encoding] utf-8",       "edit ++enc=utf-8 +set\\ noreadonly"],
         \
-        \   ["[Reload by Sudo]                         ", "edit sudo:%"],
+        \   ["[Reload by Sudo]", "edit sudo:%"],
         \
-        \   ["[Set Encoding] latin1                    ", "set fenc=latin1"],
-        \   ["[Set Encoding] cp932                     ", "set fenc=cp932"],
-        \   ["[Set Encoding] shift-jis                 ", "set fenc=shift-jis"],
-        \   ["[Set Encoding] iso-2022-jp               ", "set fenc=iso-2022-jp"],
-        \   ["[Set Encoding] euc-jp                    ", "set fenc=euc-jp"],
-        \   ["[Set Encoding] utf-8                     ", "set fenc=utf-8"],
+        \   ["[Set Encoding] latin1",      "set fenc=latin1"],
+        \   ["[Set Encoding] cp932",       "set fenc=cp932"],
+        \   ["[Set Encoding] shift-jis",   "set fenc=shift-jis"],
+        \   ["[Set Encoding] iso-2022-jp", "set fenc=iso-2022-jp"],
+        \   ["[Set Encoding] euc-jp",      "set fenc=euc-jp"],
+        \   ["[Set Encoding] utf-8",       "set fenc=utf-8"],
         \
-        \   ["[Set File Format] dos                    ", "set ff=dos"],
-        \   ["[Set File Format] unix                   ", "set ff=unix"],
-        \   ["[Set File Format] mac                    ", "set ff=mac"],
+        \   ["[Set File Format] dos",  "set ff=dos"],
+        \   ["[Set File Format] unix", "set ff=unix"],
+        \   ["[Set File Format] mac",  "set ff=mac"],
         \
-        \   ["[Manipulate File] set noreadonly         ", "set noreadonly"],
-        \   ["[Manipulate File] to HTML                ", "colorscheme h2u_white | TOhtml"],
-        \   ["[Manipulate File] sed all buffers [Edit] ", "bufdo set eventignore-=Syntax | %s/{foo}/{bar}/gce | update"],
+        \   ["[Manipulate File] Make Editable",                           "set noreadonly"],
+        \   ["[Manipulate File] Convert to HTML",                         "colorscheme h2u_white | TOhtml"],
+        \   ["[Manipulate File] Replace/Sed Texts of All Buffers [Edit]", "bufdo set eventignore-=Syntax | %s/{foo}/{bar}/gce | update"],
         \
-        \   ["[Autoformat] format source codes         ", "Autoformat"],
-        \   ["[JpFormat] format all selected for mail  ", "'<,'>JpFormatAll!"],
+        \   ["[Autoformat] Format Source Codes",        "Autoformat"],
+        \   ["[JpFormat] Format All Selected for Mail", "'<,'>JpFormatAll!"],
         \
-        \   ["[Calendar] Year View                     ", "Calendar -view=year  -position=hear!"],
-        \   ["[Calendar] Month View                    ", "Calendar -view=month -position=hear!"],
-        \   ["[Calendar] Week View                     ", "Calendar -view=week  -position=hear!"],
-        \   ["[Calendar] Day View                      ", "Calendar -view=day   -position=hear! -split=vertical -width=75"],
+        \   ["[Calendar] Year View",  "Calendar -view=year  -position=hear!"],
+        \   ["[Calendar] Month View", "Calendar -view=month -position=hear!"],
+        \   ["[Calendar] Week View",  "Calendar -view=week  -position=hear!"],
+        \   ["[Calendar] Day View",   "Calendar -view=day   -position=hear! -split=vertical -width=75"],
         \
-        \   ["[Diff] Linediff                          ", "'<,'>Linediff"],
-        \   ["[Diff] DirDiff [Edit]                    ", "DirDiff {dir1} {dir2}"],
+        \   ["[Diff] Linediff",       "'<,'>Linediff"],
+        \   ["[Diff] DirDiff [Edit]", "DirDiff {dir1} {dir2}"],
         \
-        \   ["[Rails] Reset Buffer                     ", "if RailsDetect() | call rails#buffer_setup() | endif"],
+        \   ["[Rails] Reset Buffer", "if RailsDetect() | call rails#buffer_setup() | endif"],
         \
-        \   ["[Unicode-RST-Tables] Create Table        ", "python CreateTable()"],
-        \   ["[Unicode-RST-Tables] Fix Table           ", "python FixTable()"],
+        \   ["[Unicode-RST-Tables] Create Table", "python CreateTable()"],
+        \   ["[Unicode-RST-Tables] Fix Table",    "python FixTable()"],
         \
-        \   ["[Unite plugin] gist                      ", "Unite gista"],
-        \   ["[Unite plugin] mru files list            ", "Unite neomru/file"],
-        \   ["[Unite plugin] outline                   ", "Unite outline:!"],
-        \   ["[Unite plugin] mark                      ", "Unite mark"],
-        \   ["[Unite plugin] tag with cursor word      ", "UniteWithCursorWord tag"],
-        \   ["[Unite plugin] versions/status           ", "UniteVersions status:./"],
-        \   ["[Unite plugin] versions/log              ", "UniteVersions log:./"],
-        \   ["[Unite plugin] giti/status               ", "Unite giti/status"],
-        \   ["[Unite plugin] svn/status                ", "Unite svn/status"],
-        \   ["[Unite plugin] webcolorname              ", "Unite webcolorname"],
-        \   ["[Unite] buffers list                     ", "Unite buffer"],
-        \   ["[Unite] files list                       ", "UniteWithBufferDir file"],
-        \   ["[Unite] various sources list             ", "UniteWithBufferDir buffer neomru/file bookmark file"],
-        \   ["[Unite] history/yank                     ", "Unite history/yank"],
-        \   ["[Unite] register                         ", "Unite register"],
-        \   ["[Unite] grep [Edit]                      ", "Unite -no-quit grep:./::{words}"],
-        \   ["[Unite] resume [Edit]                    ", "UniteResume {buffer-name}"],
+        \   ["[Unite plugin] gist",                 "Unite gista"],
+        \   ["[Unite plugin] mru files",            "Unite neomru/file"],
+        \   ["[Unite plugin] outline",              "Unite outline:!"],
+        \   ["[Unite plugin] mark",                 "Unite mark"],
+        \   ["[Unite plugin] tag with cursor word", "UniteWithCursorWord tag"],
+        \   ["[Unite plugin] versions/status",      "UniteVersions status:./"],
+        \   ["[Unite plugin] versions/log",         "UniteVersions log:./"],
+        \   ["[Unite plugin] giti/status",          "Unite giti/status"],
+        \   ["[Unite plugin] svn/status",           "Unite svn/status"],
+        \   ["[Unite plugin] webcolorname",         "Unite webcolorname"],
         \
-        \   ["[Help] autocommand-events                ", "help autocommand-events"],
+        \   ["[Unite] buffers",         "Unite buffer"],
+        \   ["[Unite] files",           "UniteWithBufferDir file"],
+        \   ["[Unite] various sources", "UniteWithBufferDir buffer neomru/file bookmark file"],
+        \   ["[Unite] history/yank",    "Unite history/yank"],
+        \   ["[Unite] register",        "Unite register"],
+        \   ["[Unite] grep [Edit]",     "Unite -no-quit grep:./::{words}"],
+        \   ["[Unite] resume [Edit]",   "UniteResume {buffer-name}"],
+        \
+        \   ["[Help] autocommand-events", "help autocommand-events"],
         \ ]
 
-      function! g:unite_source_menu_menus.shortcuts.map(key, value) abort  " {{{
-        let [word, value] = a:value
+      " show formatted candidates, for example:
+      "   [Plugins] Update Plugins                   --  `call UpdatePlugins()`
+      "   [Plugins] Resume Update Plugins            --  `UniteResume update_plugins`
+      "
+      "   [String Utility] All to Hankaku            --  `'<,'>Hankaku`
+      "   [String Utility] Alphanumerics to Hankaku  --  `'<,'>HzjaConvert han_eisu`
+      "   ....
+      function! s:FormatUniteShortcuts() abort  " {{{
+        function! s:UniteShortcutsPrefix(word) abort  " {{{
+          return substitute(a:word, '\v^\[([^]]+)\].*$', '\1', "")
+        endfunction  " }}}
 
-        return {
-             \   "word": word . "  --  `" . value . "`",
-             \   "kind": "command",
-             \   "action__command": value,
-             \ }
+        function! s:UniteShortcutsWordPadding(word) abort  " {{{
+          return repeat(" ", s:max_unite_shortcuts_word_length - strlen(a:word))
+        endfunction  " }}}
+
+        function! s:GroupUniteShortcuts() abort  " {{{
+          let first_candidate                      = g:unite_source_menu_menus.shortcuts.candidates[0]
+          let temporary_unite_shortcuts_prefix     = s:UniteShortcutsPrefix(first_candidate[0])
+          let temporary_unite_shortcuts_candidates = []
+
+          for candidate in g:unite_source_menu_menus.shortcuts.candidates
+            let prefix = s:UniteShortcutsPrefix(candidate[0])
+
+            if prefix != temporary_unite_shortcuts_prefix
+              call add(temporary_unite_shortcuts_candidates, ["", ""])
+              let temporary_unite_shortcuts_prefix = prefix
+            endif
+
+            call add(temporary_unite_shortcuts_candidates, candidate)
+          endfor
+
+          let g:unite_source_menu_menus.shortcuts.candidates = temporary_unite_shortcuts_candidates
+        endfunction  " }}}
+
+        call s:GroupUniteShortcuts()
+        let s:max_unite_shortcuts_word_length = max(
+          \   map(
+          \     copy(g:unite_source_menu_menus.shortcuts.candidates),
+          \     "strlen(v:val[0])"
+          \   )
+          \ )
+
+        function! g:unite_source_menu_menus.shortcuts.map(key, value) abort  " {{{
+          let [word, value] = a:value
+
+          if empty(word) && empty(value)
+            return { "word": "", "kind": "" }
+          else
+            return {
+                 \   "word": word . s:UniteShortcutsWordPadding(word) . "  --  `" . value . "`",
+                 \   "kind": "command",
+                 \   "action__command": value,
+                 \ }
+          endif
+        endfunction  " }}}
       endfunction  " }}}
+      call s:FormatUniteShortcuts()
     " }}}
   endfunction  " }}}
 
