@@ -2,3 +2,5 @@
 .bundle/cache
 .tmux
 .vim-sessions
+Gemfile.local
+Gemfile.local.lock
