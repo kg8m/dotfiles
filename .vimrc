@@ -1543,6 +1543,12 @@ if s:TapPlugin("vim-rails")  " {{{
     \   "spec/support",
     \ ]
 
+  augroup SetupRails
+    autocmd!
+    autocmd BufEnter,BufWinEnter,WinEnter * 
+          \ if RailsDetect() | call rails#buffer_setup() | endif
+  augroup END
+
   " prevent `rails.vim` from defining keymappings
   nmap <Leader>Rwf  <Plug>RailsSplitFind
   nmap <Leader>Rwgf <Plug>RailsTabFind
