@@ -184,7 +184,7 @@ call s:RegisterPlugin("itchyny/calendar.vim")
 call s:RegisterPlugin("tyru/caw.vim")
 call s:RegisterPlugin("cocopon/colorswatch.vim")
 call s:RegisterPlugin("Shougo/context_filetype.vim")
-call s:RegisterPlugin("chrisbra/csv.vim", { "if": 0 })               " sometimes excessively works
+call s:RegisterPlugin("chrisbra/csv.vim")
 call s:RegisterPlugin("spolu/dwm.vim")
 call s:RegisterPlugin("mattn/emmet-vim")                             " former zencoding-vim
 call s:RegisterPlugin("bogado/file-line", { "if": 0 })               " conflicts with sudo.vim (`vim sudo:path/to/file` not working)
@@ -386,6 +386,13 @@ if s:TapPlugin("colorswatch.vim")  " {{{
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "ColorSwatchGenerate",
+     \ })
+endif  " }}}
+
+if s:TapPlugin("csv.vim")  " {{{
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": ["CSVArrangeColumn", "CSVUnArrangeColumn", "CSVInit"],
      \ })
 endif  " }}}
 
@@ -862,6 +869,10 @@ if s:TapPlugin("unite.vim")  " {{{
         \   ["[Calendar] Month View", "Calendar -view=month -position=hear!"],
         \   ["[Calendar] Week View",  "Calendar -view=week  -position=hear!"],
         \   ["[Calendar] Day View",   "Calendar -view=day   -position=hear! -split=vertical -width=75"],
+        \
+        \   ["[CSV] Arrange/Align Columns",     "%CSVArrangeColumn"],
+        \   ["[CSV] Unarrange/Unalign Columns", "%CSVUnArrangeColumn"],
+        \   ["[CSV] Initialize CSV",            "%CSVInit"],
         \
         \   ["[Diff] Linediff",       "'<,'>Linediff"],
         \   ["[Diff] DirDiff [Edit]", "DirDiff {dir1} {dir2}"],
