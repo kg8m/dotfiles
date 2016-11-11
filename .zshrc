@@ -32,6 +32,10 @@ SAVEHIST=100000
 
 bindkey -v
 
+# emacs like keybinds for INSERT mode
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+
 # http://blog.blueblack.net/item_204
 setopt prompt_subst                          # 色を使う
 setopt nobeep                                # ビープを鳴らさない
