@@ -1672,12 +1672,12 @@ if s:TapPlugin("vim-startify")  " {{{
     let g:startify_change_to_dir  = 0
     let g:startify_relative_path  = 1
     let g:startify_list_order     = [
-      \   ["My sessions:"],
-      \   "sessions",
-      \   ["My bookmarks:"],
-      \   "bookmarks",
       \   ["My commands:"],
       \   "commands",
+      \   ["My bookmarks:"],
+      \   "bookmarks",
+      \   ["My sessions:"],
+      \   "sessions",
       \   ["Recently opened files:"],
       \   "files",
       \   ["Recently modified files in the current directory:"],
