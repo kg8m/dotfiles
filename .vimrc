@@ -2128,7 +2128,7 @@ if s:on_tmux
       let filter = " | tr -d '\\n'"
     endif
 
-    call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main pbcopy")
+    call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main 'LC_CTYPE=UTF-8 pbcopy'")
     echomsg "Copy the Selection by pbcopy."
   endfunction  " }}}
 
