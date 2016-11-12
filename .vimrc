@@ -603,11 +603,6 @@ if s:TapPlugin("lightline.vim")  " {{{
   function! ModifiedSymbolForLightline() abort  " {{{
     return &ft =~ 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
   endfunction  " }}}
-
-  call s:ConfigPlugin({
-     \   "lazy":    0,
-     \   "depends": ["vim-anzu"],
-     \ })
 endif  " }}}
 
 if s:TapPlugin("linediff.vim")  " {{{
@@ -1314,8 +1309,9 @@ if s:TapPlugin("vim-anzu")  " {{{
   " see incsearch for more settings
 
   call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": "<Plug>(anzu-",
+     \   "lazy":    1,
+     \   "on_map":  "<Plug>(anzu-",
+     \   "on_func": ["anzu#search_status", "anzu#clear_search_status"],
      \ })
 endif  " }}}
 
