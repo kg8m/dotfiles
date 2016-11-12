@@ -566,6 +566,7 @@ if s:TapPlugin("lightline.vim")  " {{{
     \     [ "lineinfo_with_percent" ],
     \   ],
     \   "right": [
+    \     [ "anzu" ],
     \   ],
     \ }
   let g:lightline = {
@@ -577,6 +578,7 @@ if s:TapPlugin("lightline.vim")  " {{{
     \   },
     \   "component_function": {
     \     "filename": "FilepathForLightline",
+    \     "anzu":     "anzu#search_status",
     \   },
     \   "colorscheme": "molokai",
     \ }
@@ -601,6 +603,11 @@ if s:TapPlugin("lightline.vim")  " {{{
   function! ModifiedSymbolForLightline() abort  " {{{
     return &ft =~ 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":    0,
+     \   "depends": ["vim-anzu"],
+     \ })
 endif  " }}}
 
 if s:TapPlugin("linediff.vim")  " {{{
@@ -1302,12 +1309,14 @@ if s:TapPlugin("vim-alignta")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-anzu")  " {{{
+  nnoremap <Leader>/ :<C-u>nohlsearch<Cr>:call anzu#clear_search_status()<Cr>
+
+  " see incsearch for more settings
+
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": "<Plug>(anzu-",
      \ })
-
-  " see incsearch
 endif  " }}}
 
 if s:TapPlugin("vim-asterisk")  " {{{
@@ -2102,7 +2111,9 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand("#"))
 nnoremap <Leader>r :<C-u>source ~/.vimrc<Cr>
 
 " <C-/> => nohilight
-nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
+if mapcheck("<Leader>/") == ""
+  nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
+endif
 
 " ,v => vsplit
 nnoremap <Leader>v :<C-u>vsplit<Cr>
