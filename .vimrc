@@ -2151,6 +2151,8 @@ inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
 
 " Page scroll in INSERT mode
 inoremap <C-f> <PageDown>
