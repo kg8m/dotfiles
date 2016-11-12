@@ -1140,7 +1140,7 @@ if s:TapPlugin("unite.vim")  " {{{
   endif  " }}}
 
   if s:TapPlugin("vim-unite-giti")  " {{{
-    if !mapcheck("<Leader>uv")
+    if mapcheck("<Leader>uv") == ""
       nnoremap <Leader>uv :<C-u>Unite giti/status<Cr>
     endif
 
@@ -1190,7 +1190,7 @@ if s:TapPlugin("unite.vim")  " {{{
   endif  " }}}
 
   if s:TapPlugin("vim-unite-svn")  " {{{
-    if !mapcheck("<Leader>uv")
+    if mapcheck("<Leader>uv") == ""
       nnoremap <Leader>uv :<C-u>Unite svn/status<Cr>
     endif
 
