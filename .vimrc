@@ -560,13 +560,13 @@ if s:TapPlugin("lightline.vim")  " {{{
   set laststatus=2
   let s:lightline_elements = {
     \   "left": [
-    \     [ "mode", "paste" ],
-    \     [ "bufnum", "filename" ],
-    \     [ "filetype", "fileencoding", "fileformat" ],
-    \     [ "lineinfo_with_percent" ],
+    \     ["mode", "paste"],
+    \     ["bufnum", "filename"],
+    \     ["filetype", "fileencoding", "fileformat"],
+    \     ["lineinfo_with_percent"],
     \   ],
     \   "right": [
-    \     [ "anzu" ],
+    \     ["anzu"],
     \   ],
     \ }
   let g:lightline = {
