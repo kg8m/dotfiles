@@ -2050,14 +2050,16 @@ set wildmenu
 set wildmode=list:longest,full
 
 " ctags
-function! s:SetupTags() abort
-  for ruby_gem_path in split(RubyGemPaths(), ":")
-    if isdirectory(ruby_gem_path)
-      let &tags = &tags . "," . ruby_gem_path . "/tags"
-    endif
-  endfor
-endfunction
-call s:SetupTags()
+if has("vim_starting")
+  function! s:SetupTags() abort  " {{{
+    for ruby_gem_path in split(RubyGemPaths(), ":")
+      if isdirectory(ruby_gem_path)
+        let &tags = &tags . "," . ruby_gem_path . "/tags"
+      endif
+    endfor
+  endfunction  " }}}
+  call s:SetupTags()
+endif
 
 " auto reload
 augroup CheckTimeHook  " {{{
