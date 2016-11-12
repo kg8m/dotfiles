@@ -1589,11 +1589,8 @@ if s:TapPlugin("vim-rubytest")  " {{{
      \ })
 endif  " }}}
 
-" also see vim-startify's settings
 if s:TapPlugin("vim-session")  " {{{
-  call s:ConfigPlugin({
-     \   "depends": ["vim-misc"],
-     \ })
+  " also see vim-startify's settings
 
   let g:session_directory         = getcwd() . "/.vim-sessions"
   let g:session_autoload          = "no"
@@ -1628,6 +1625,10 @@ if s:TapPlugin("vim-session")  " {{{
           \ " | /usr/bin/env tail -n +11"
           \ " | /usr/bin/env xargs -I% rm -f " . g:session_directory . "/%"
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "depends": ["vim-misc"],
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-singleton")  " {{{
