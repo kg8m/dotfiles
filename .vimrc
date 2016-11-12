@@ -2113,14 +2113,6 @@ nnoremap <Leader>r :<C-u>source ~/.vimrc<Cr>
 " ,v => vsplit
 nnoremap <Leader>v :<C-u>vsplit<Cr>
 
-" ,d => svn diff
-nnoremap <Leader>d :<C-u>call SvnDiff()<Cr>
-function! SvnDiff() abort  " {{{
-  edit diff
-  silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
-  execute "normal :r!svn diff\n"
-endfunction  " }}}
-
 " ,y/,p => copy/paste by clipboard
 if s:on_tmux
   function! RegisterToRemoteCopy() abort  " {{{
@@ -2143,9 +2135,6 @@ else
   vnoremap <Leader>y "*y
 endif
 nnoremap <Leader>p "*p
-
-" ,w => <C-w>
-nnoremap <Leader>w <C-w>
 
 " ,w => erase spaces of EOL for selected
 vnoremap <Leader>w :s/\s\+$//ge<Cr>
