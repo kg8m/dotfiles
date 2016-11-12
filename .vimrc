@@ -1620,9 +1620,9 @@ if s:TapPlugin("vim-session")  " {{{
   endfunction  " }}}
 
   function! s:CleanUpSession() abort  " {{{
-    execute " ! /usr/bin/env ls -at " . g:session_directory
-          \ " | /usr/bin/env grep '\\.vim$'"
-          \ " | /usr/bin/env tail -n +11"
+    execute " ! /usr/bin/env ls -at " . g:session_directory .
+          \ " | /usr/bin/env grep '\\.vim$'" .
+          \ " | /usr/bin/env tail -n +11" .
           \ " | /usr/bin/env xargs -I% rm -f " . g:session_directory . "/%"
   endfunction  " }}}
 
