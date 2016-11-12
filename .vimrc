@@ -2107,9 +2107,8 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand("#"))
 nnoremap <Leader>r :<C-u>source ~/.vimrc<Cr>
 
 " <C-/> => nohilight
-if mapcheck("<Leader>/") == ""
-  nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
-endif
+" see vim-anzu's settings
+" nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
 
 " ,v => vsplit
 nnoremap <Leader>v :<C-u>vsplit<Cr>
