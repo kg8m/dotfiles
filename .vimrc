@@ -2085,8 +2085,10 @@ nnoremap <Leader>r :<C-u>source ~/.vimrc<Cr>
 " see vim-anzu's settings
 " nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
 
-" ,v => vsplit
+" ,v => vertically split window
+" ,h => horizontally split window
 nnoremap <Leader>v :<C-u>vsplit<Cr>
+nnoremap <Leader>h :<C-u>split<Cr>
 
 " ,y/,p => copy/paste by clipboard
 if s:on_tmux
