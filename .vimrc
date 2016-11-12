@@ -2115,7 +2115,7 @@ nnoremap <Leader>v :<C-u>vsplit<Cr>
 
 " ,y/,p => copy/paste by clipboard
 if s:on_tmux
-  function! RegisterToRemoteCopy() abort  " {{{
+  function! s:RegisterToRemoteCopy() abort  " {{{
     let text = @"
     let text = substitute(text, "^\\n\\+", "", "")
     let text = substitute(text, "\\n\\+$", "", "")
@@ -2130,7 +2130,7 @@ if s:on_tmux
     echomsg "Copy the Selection by pbcopy."
   endfunction  " }}}
 
-  vnoremap <Leader>y "yy:<C-u>call RegisterToRemoteCopy()<Cr>
+  vnoremap <Leader>y "yy:<C-u>call <SID>RegisterToRemoteCopy()<Cr>
 else
   vnoremap <Leader>y "*y
 endif
