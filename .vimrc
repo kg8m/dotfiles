@@ -1863,12 +1863,12 @@ if s:TapPlugin("vimux")  " {{{
 endif  " }}}
 
 if s:TapPlugin("winresizer")  " {{{
+  let g:winresizer_start_key = "<C-w><C-e>"
+
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_map": "<C-w><C-e>",
+     \   "on_map": g:winresizer_start_key,
      \ })
-
-  let g:winresizer_start_key = "<C-w><C-e>"
 endif  " }}}
 
 if s:TapPlugin("yankround.vim")  " {{{
