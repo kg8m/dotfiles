@@ -8,13 +8,7 @@ let s:on_windows = has("win32") || has("win64")
 let s:on_mac     = has("mac")
 let s:on_tmux    = exists("$TMUX")
 
-" http://rhysd.hatenablog.com/entry/2013/08/24/223438
-let s:neocomplete_available = has("lua") && (v:version > 703 || (v:version == 703 && has("patch885")))
-
-let s:pt_available     = executable("pt")
-let s:ag_available     = executable("ag")
-let s:ack_available    = executable("ack")
-let s:migemo_available = has("migemo") || executable("cmigemo")
+let s:ack_available = executable("ack")
 
 " plugin management functions  " {{{
 function! UpdatePlugins() abort  " {{{
@@ -75,10 +69,6 @@ endfunction  " }}}
 " }}}
 
 " utility functions  " {{{
-function! s:AvailabilityMessage(target) abort  " {{{
-  return a:target . " is " . (eval("s:" . a:target . "_available") ? "" : "NOT ") . "available"
-endfunction  " }}}
-
 function! OnTmux() abort  " {{{
   return s:on_tmux
 endfunction  " }}}
@@ -798,22 +788,10 @@ if s:TapPlugin("unite.vim")  " {{{
     let g:unite_winheight = "100%"
     let g:unite_cursor_line_highlight = "CursorLine"
 
-    " use ack because pt and ag don't sort search result
-    if s:pt_available || s:ag_available || s:ack_available
+    if s:ack_available
+      let g:unite_source_grep_command       = "ack"
       let g:unite_source_grep_recursive_opt = ""
-
-      if s:pt_available && 0
-        let g:unite_source_grep_command      = "pt"
-        let g:unite_source_grep_default_opts = "--nocolor --nogroup"
-      else
-        let g:unite_source_grep_default_opts = "--nocolor --nogroup --nopager"
-
-        if s:ag_available && 0
-          let g:unite_source_grep_command = "ag"
-        elseif s:ack_available
-          let g:unite_source_grep_command = "ack"
-        endif
-      endif
+      let g:unite_source_grep_default_opts  = "--nocolor --nogroup --nopager"
     endif
 
     let g:unite_source_grep_search_word_highlight = "Special"
@@ -1715,12 +1693,6 @@ if s:TapPlugin("vim-startify")  " {{{
       \   "",
       \   "",
       \   "     * Vim version: " . v:version,
-      \   "",
-      \   "     * " . s:AvailabilityMessage("neocomplete"),
-      \   "     * " . s:AvailabilityMessage("pt"),
-      \   "     * " . s:AvailabilityMessage("ag"),
-      \   "     * " . s:AvailabilityMessage("ack"),
-      \   "     * " . s:AvailabilityMessage("migemo"),
       \   "",
       \   "",
       \ ]
