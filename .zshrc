@@ -58,15 +58,12 @@ setopt share_history                         # ヒストリを共有
 zstyle ':completion:*:default' menu select=1 # 補完候補のカーソル選択を有効に
 setopt auto_cd                               # ディレクトリ名だけで cd
 setopt auto_param_keys                       # カッコの対応などを自動的に補完
-setopt auto_param_slash                      # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
 setopt brace_ccl                             # {a-c} を a b c に展開する機能を使えるようにする
 setopt NO_flow_control                       # Ctrl+S/Ctrl+Q によるフロー制御を使わないようにする
 setopt hist_ignore_space                     # コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
 setopt interactivecomments                   # コマンドラインでも # 以降をコメントと見なす
-setopt mark_dirs                             # ファイル名の展開でディレクトリにマッチした場合末尾に / を付加する
 setopt hist_no_store                         # history (fc -l) コマンドをヒストリリストから取り除く。
 setopt list_packed                           # 補完候補を詰めて表示
-setopt noautoremoveslash                     # 最後のスラッシュを自動的に削除しない
 
 # prevent `zsh: no matches found: ....`
 setopt nonomatch
@@ -78,10 +75,6 @@ setopt chase_links
 
 # prevent careless logout
 setopt ignore_eof
-
-# completion candidates include aliases
-# incompatible with cd-bookmark
-# setopt complete_aliases
 
 # https://github.com/Shougo/shougo-s-github/blob/master/.zshrc
 zstyle ':completion:*' matcher-list \
