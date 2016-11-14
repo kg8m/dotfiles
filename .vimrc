@@ -1,8 +1,8 @@
 " ----------------------------------------------
 " initialize  " {{{
-let $vim_root_path       = expand("~/.vim")
-let $plugins_path        = expand($vim_root_path . "/plugins")
-let $plugin_manager_path = expand($plugins_path . "/dein.vim")
+let s:vim_root_path       = expand("~/.vim")
+let s:plugins_path        = expand(s:vim_root_path . "/plugins")
+let s:plugin_manager_path = expand(s:plugins_path . "/dein.vim")
 
 let s:on_windows = has("win32") || has("win64")
 let s:on_mac     = has("mac")
@@ -152,15 +152,15 @@ scriptencoding utf-8
 " plugins  " {{{
 " initialize plugin manager  " {{{
 if has("vim_starting")
-  if !isdirectory($plugin_manager_path)
+  if !isdirectory(s:plugin_manager_path)
     echo "Installing plugin manager...."
-    call system("git clone https://github.com/Shougo/dein.vim " . $plugin_manager_path)
+    call system("git clone https://github.com/Shougo/dein.vim " . s:plugin_manager_path)
   endif
 
-  set runtimepath+=$plugin_manager_path
+  execute "set runtimepath+=" . s:plugin_manager_path
 endif
 
-call s:SetupPluginStart($plugins_path)
+call s:SetupPluginStart(s:plugins_path)
 " }}}
 
 " plugins list  " {{{
