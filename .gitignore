@@ -1,5 +1,6 @@
 *.un~
 .bundle/cache
+.envrc
 .tmux
 .vim-sessions
 Gemfile.local
