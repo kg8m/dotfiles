@@ -130,7 +130,7 @@ function! ExecuteWithConfirm(command) abort  " {{{
 endfunction  " }}}
 
 function! ConfirmCommand(command) abort  " {{{
-  if input("execute `" . a:command . "` ? [y/n] : ") !~ "[yY]"
+  if input("execute `" . a:command . "` ? [y/n] : ") !~? "y"
     echo " -> canceled."
     return 0
   endif
@@ -608,7 +608,7 @@ if s:TapPlugin("lightline.vim")  " {{{
   endfunction  " }}}
 
   function! ModifiedSymbolForLightline() abort  " {{{
-    return &ft =~ 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
+    return &ft =~? 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
   endfunction  " }}}
 endif  " }}}
 
@@ -1023,7 +1023,7 @@ if s:TapPlugin("unite.vim")  " {{{
       function! AutoMark() abort  " {{{
         let mark_increment_key = s:DetectMarkIncrementKey()
 
-        if mark_increment_key =~ s:mark_increment_key_regexp
+        if mark_increment_key =~# s:mark_increment_key_regexp
           echo "Already marked to " . mark_increment_key
           return
         endif
@@ -2070,7 +2070,7 @@ augroup END  " }}}
 function! s:WriteCheckTypo(file) abort  " {{{
   let writecmd = "write".(v:cmdbang ? "!" : "")." ".a:file
 
-  if a:file =~ "[qfreplace]"
+  if a:file =~? "[qfreplace]"
     return
   endif
 
@@ -2114,7 +2114,7 @@ if s:on_tmux
     let text = substitute(text, "^\\n\\+", "", "")
     let text = substitute(text, "\\n\\+$", "", "")
 
-    if text =~ "\n"
+    if text =~# "\n"
       let filter = ""
     else
       let filter = " | tr -d '\\n'"
