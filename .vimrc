@@ -25,6 +25,16 @@ function! s:SetupPluginEnd() abort  " {{{
 endfunction  " }}}
 
 function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
+  " FIXME: gundo: dein does not support hg
+  if a:plugin_name =~# "/gundo\.vim$"
+    if !isdirectory("~/.vim/bundle/gundo.vim")
+      call system("hg clone https://bitbucket.org/heavenshell/gundo.vim ~/.vim/bundle/gundo.vim")
+    endif
+
+    set runtimepath+=~/.vim/bundle/gundo.vim
+    return 1
+  endif
+
   let options = get(a:000, 0, {})
 
   " sometimes dein doesn't add runtimepath if no options given
@@ -36,10 +46,22 @@ function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
 endfunction  " }}}
 
 function! s:TapPlugin(plugin_name) abort  " {{{
+  " FIXME: gundo: dein does not support hg
+  if a:plugin_name == "gundo.vim"
+    let g:dein#name = a:plugin_name
+    return 1
+  endif
+
   return dein#tap(a:plugin_name)
 endfunction  " }}}
 
 function! s:ConfigPlugin(arg, ...) abort  " {{{
+  " FIXME: gundo: dein does not support hg
+  if g:dein#name == "gundo.vim"
+    call a:arg.hook_source()
+    return 1
+  endif
+
   if type(a:arg) != type([])
     return dein#config(a:arg, get(a:000, 0, {}))
   else
@@ -179,12 +201,7 @@ call s:RegisterPlugin("spolu/dwm.vim")
 call s:RegisterPlugin("mattn/emmet-vim")                             " former zencoding-vim
 call s:RegisterPlugin("bogado/file-line", { "if": 0 })               " conflicts with sudo.vim (`vim sudo:path/to/file` not working)
 call s:RegisterPlugin("leafcage/foldCC")
-" dein does not support hg
-" call s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")
-if !isdirectory("~/.vim/bundle/gundo.vim")
-  call system("hg clone https://bitbucket.org/heavenshell/gundo.vim ~/.vim/bundle/gundo.vim")
-endif
-set runtimepath+=~/.vim/bundle/gundo.vim
+call s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")
 call s:RegisterPlugin("sk1418/HowMuch")
 call s:RegisterPlugin("nishigori/increment-activator")
 call s:RegisterPlugin("haya14busa/incsearch.vim")
@@ -452,21 +469,21 @@ if s:TapPlugin("foldCC")  " {{{
   set foldtext=FoldCCtext()
 endif  " }}}
 
-" if s:TapPlugin("gundo.vim")  " {{{
+if s:TapPlugin("gundo.vim")  " {{{
   nnoremap <F5> :<C-u>GundoToggle<Cr>
 
-"   function! s:ConfigPluginOnSource_gundo() abort  " {{{
+  function! s:ConfigPluginOnSource_gundo() abort  " {{{
     " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
     let g:gundo_auto_preview = 0
     let g:gundo_prefer_python3 = 1
-"   endfunction  " }}}
+  endfunction  " }}}
 
-"   call s:ConfigPlugin({
-"      \   "lazy":   1,
-"      \   "on_cmd": "GundoToggle",
-"      \   "hook_source": function("s:ConfigPluginOnSource_gundo"),
-"      \ })
-" endif  " }}}
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": "GundoToggle",
+     \   "hook_source": function("s:ConfigPluginOnSource_gundo"),
+     \ })
+endif  " }}}
 
 if s:TapPlugin("HowMuch")  " {{{
   vmap <Leader>?  <Plug>AutoCalcReplace
