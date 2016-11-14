@@ -12,90 +12,6 @@ function execute_commands_with_echo {
   done
 }
 
-function sdiff {
-  _sdiff "-b -B"
-}
-
-function sdiff_all {
-  _sdiff
-}
-
-function _sdiff {
-  execute_with_echo "svn diff --diff-cmd /usr/bin/diff -x '-U 10 $1' | view -c 'set filetype=diff' -";
-}
-
-function slog {
-  if (($# == 1)) then
-    _limit=$1;
-  else
-    _limit="10";
-  fi
-
-  execute_with_echo "svn log -r HEAD:1 --limit ${_limit} --stop-on-copy";
-}
-
-function diffb {
-  date=`date +"%y%m%d"`;
-
-  if ! (($# == 1 || $# == 3)) then
-    echo 'diffb: create a diff file for a branch and open it by Vim'
-    echo 'Usage (1): `diffb {revision_number}`'
-    echo 'Usage (2): `diffb {branch_name} {revision_number_from} {revision_number_to}`'
-    return
-  elif (($# == 1)) then
-    rev=$1;
-    filename="${date}_${APP_NAME}_@${rev}.diff";
-    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10 -b -B' ${TARGET_REPOSITORY_URL}/branches/ -c ${rev} > ${filename}";
-  elif (($# == 3)) then
-    branch=$1;
-    rev_from=$2;
-    rev_to=$3;
-    filename="${date}_${APP_NAME}_${branch}_@${rev_from}-${rev_to}.diff";
-    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10 -b -B' ${TARGET_REPOSITORY_URL}/branches/${branch}/ -r ${rev_from}:${rev_to} > ${filename}";
-  fi
-
-  execute_with_echo ${cmd}
-  execute_with_echo "vim -c ':e ++enc=utf-8' ${filename}";
-}
-
-function difft {
-  date=`date +"%y%m%d"`;
-
-  if ! (($# == 1 || $# == 2)) then
-    echo 'difft: create a diff file for the trunk and open it by Vim'
-    echo 'Usage (1): `difft {revision_number}`'
-    echo 'Usage (2): `difft {revision_number_from} {revision_number_to}`'
-    return
-  elif (($# == 1)) then
-    rev=$1;
-    filename="${date}_${APP_NAME}_@${rev}_trunk.diff";
-    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10 -b -B' ${TARGET_REPOSITORY_URL}/trunk/ -c ${rev} > ${filename}";
-  elif (($# == 2)) then
-    rev_from=$1;
-    rev_to=$2;
-    filename="${date}_${APP_NAME}_trunk_@${rev_from}-${rev_to}.diff";
-    cmd="svn diff --diff-cmd /usr/bin/diff -x '-U 10 -b -B' ${TARGET_REPOSITORY_URL}/trunk/ -r ${rev_from}:${rev_to} > ${filename}";
-  fi
-
-  execute_with_echo ${cmd}
-  execute_with_echo "vim -c ':e ++enc=utf-8' ${filename}";
-}
-
-function logb {
-  branch=$1;
-  rev_from=$2;
-  rev_to=$3;
-
-  execute_with_echo "svn log ${TARGET_REPOSITORY_URL}/branches/${branch}/ -r ${rev_from}:${rev_to} --stop-on-copy";
-}
-
-function logt {
-  rev_from=$1;
-  rev_to=$2;
-
-  execute_with_echo "svn log ${TARGET_REPOSITORY_URL}/trunk/ -r ${rev_from}:${rev_to} --stop-on-copy";
-}
-
 function migrate {
   if (($# == 1)) then
     cmd="rake db:migrate VERSION=$1";
@@ -118,22 +34,6 @@ function mysql_current {
   fi
 
   execute_with_echo "mysql -u root ${dbname} $@";
-}
-
-function separated_rake_test {
-  if (($# == 0)); then
-    targets=(unit functional integration)
-  else
-    eval "targets=($@)"
-  fi
-
-  for target in $targets ; do
-    echo "----- test test/${target}/**/*_test.rb ----------"
-
-    for f in `/bin/ls test/${target}/**/*_test.rb`; do
-      execute_with_echo "ruby $f"
-    done
-  done
 }
 
 function tmux_setup_default {
@@ -210,12 +110,4 @@ function color_pallet() {
 
 function viack() {
   vi `ack $@ -l`
-}
-
-function viag() {
-  vi `ag $@ -l --nocolor`
-}
-
-function vipt() {
-  vi `pt $@ -l --nocolor`
 }
