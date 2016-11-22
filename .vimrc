@@ -587,7 +587,7 @@ if s:TapPlugin("lightline.vim")  " {{{
     \     "filename": "FilepathForLightline",
     \     "anzu":     "anzu#search_status",
     \   },
-    \   "colorscheme": "molokai",
+    \   "colorscheme": "kg8m",
     \ }
 
   function! ReadonlySymbolForLightline() abort  " {{{
