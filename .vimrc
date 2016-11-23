@@ -1388,6 +1388,7 @@ if s:TapPlugin("vim-easymotion")  " {{{
   nmap <Leader>f <Plug>(easymotion-s)
   vmap <Leader>f <Plug>(easymotion-s)
   omap <Leader>f <Plug>(easymotion-s)
+  nmap <Leader>w <Plug>(easymotion-overwin-f)
   " replace default `f`
   nmap f <Plug>(easymotion-fl)
   vmap f <Plug>(easymotion-fl)
