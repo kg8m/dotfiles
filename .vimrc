@@ -1,6 +1,6 @@
 " ----------------------------------------------
 " initialize  " {{{
-let s:vim_root_path       = expand("~/.vim")
+let s:vim_root_path       = expand($HOME . "/.vim")
 let s:plugins_path        = expand(s:vim_root_path . "/plugins")
 let s:plugin_manager_path = expand(s:plugins_path . "/dein.vim")
 
@@ -27,11 +27,11 @@ endfunction  " }}}
 function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
   " FIXME: gundo: dein does not support hg
   if a:plugin_name =~# "/gundo\.vim$"
-    if !isdirectory("~/.vim/bundle/gundo.vim")
-      call system("hg clone https://bitbucket.org/heavenshell/gundo.vim ~/.vim/bundle/gundo.vim")
+    if !isdirectory($HOME . "/.vim/bundle/gundo.vim")
+      call system("hg clone https://bitbucket.org/heavenshell/gundo.vim " . $HOME . "/.vim/bundle/gundo.vim")
     endif
 
-    set runtimepath+=~/.vim/bundle/gundo.vim
+    set runtimepath+=$HOME/.vim/bundle/gundo.vim
     return 1
   endif
 
@@ -1501,7 +1501,7 @@ if s:TapPlugin("vim-parenmatch")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-plugin-autosess")  " {{{
-  let g:autosess_dir = "~/.cache/autosess/"
+  let g:autosess_dir = $HOME . "/.cache/autosess/"
 endif  " }}}
 
 if s:TapPlugin("vim-prettyprint")  " {{{
@@ -2107,7 +2107,7 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand("#"))
 " ----------------------------------------------
 " keymappings  " {{{
 " ,r => reload .vimrc
-nnoremap <Leader>r :<C-u>source ~/.vimrc<Cr>
+nnoremap <Leader>r :<C-u>source $HOME/.vimrc<Cr>
 
 " <C-/> => nohilight
 " see vim-anzu's settings
@@ -2200,7 +2200,7 @@ endif
 
 " ----------------------------------------------
 " external sources  " {{{
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
+if filereadable($HOME . "/.vimrc.local")
+  source $HOME/.vimrc.local
 endif
 " }}}
