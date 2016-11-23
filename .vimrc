@@ -2029,12 +2029,22 @@ set ttyfast
 
 " backup, recover
 set nobackup
-set directory=~/tmp
+
+let s:swapdir = "~/tmp/.vimswap"
+if !isdirectory(s:swapdir)
+  silent execute "!mkdir -p " . s:swapdir
+endif
+execute "set directory=" . s:swapdir
 
 " undo
 set hidden
 set undofile
-set undodir=~/tmp
+
+let s:undodir = "~/tmp/.vimundo"
+if !isdirectory(s:undodir)
+  silent execute "!mkdir -p " . s:undodir
+endif
+execute "set undodir=" . s:undodir
 
 " wildmode
 set wildmenu
