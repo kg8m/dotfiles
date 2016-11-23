@@ -2030,9 +2030,9 @@ set ttyfast
 " backup, recover
 set nobackup
 
-let s:swapdir = "~/tmp/.vimswap"
+let s:swapdir = $HOME . "/tmp/.vimswap"
 if !isdirectory(s:swapdir)
-  silent execute "!mkdir -p " . s:swapdir
+  call mkdir(s:swapdir, "p")
 endif
 execute "set directory=" . s:swapdir
 
@@ -2040,9 +2040,9 @@ execute "set directory=" . s:swapdir
 set hidden
 set undofile
 
-let s:undodir = "~/tmp/.vimundo"
+let s:undodir = $HOME . "/tmp/.vimundo"
 if !isdirectory(s:undodir)
-  silent execute "!mkdir -p " . s:undodir
+  call mkdir(s:undodir, "p")
 endif
 execute "set undodir=" . s:undodir
 
