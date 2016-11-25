@@ -16,8 +16,8 @@ function! UpdatePlugins() abort  " {{{
   Unite dein/log -buffer-name=update_plugins -input=!Same\\ revision\ !Already\\ up-to-date.\ !git\\ pull
 endfunction  " }}}
 
-function! s:SetupPluginStart(plugins_path) abort  " {{{
-  return dein#begin(a:plugins_path)
+function! s:SetupPluginStart() abort  " {{{
+  return dein#begin(s:plugins_path)
 endfunction  " }}}
 
 function! s:SetupPluginEnd() abort  " {{{
@@ -182,7 +182,7 @@ if has("vim_starting")
   execute "set runtimepath+=" . s:plugin_manager_path
 endif
 
-call s:SetupPluginStart(s:plugins_path)
+call s:SetupPluginStart()
 " }}}
 
 " plugins list  " {{{
