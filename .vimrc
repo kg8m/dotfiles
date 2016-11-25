@@ -834,6 +834,7 @@ if s:TapPlugin("unite.vim")  " {{{
         \   ["[String Utility] ASCII to Hankaku",         "'<,'>HzjaConvert han_ascii"],
         \   ["[String Utility] All to Zenkaku",           "'<,'>Zenkaku"],
         \   ["[String Utility] Kana to Zenkaku",          "'<,'>HzjaConvert zen_kana"],
+        \   ["[String Utility] Translate",                "'<,'>Translate"],
         \
         \   ["[Reload with Encoding] latin1",      "edit ++enc=latin1 +set\\ noreadonly"],
         \   ["[Reload with Encoding] cp932",       "edit ++enc=cp932 +set\\ noreadonly"],
@@ -2102,6 +2103,9 @@ endfunction  " }}}
 " http://vim-users.jp/2009/05/hack17/
 " :Rename newfilename.ext
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand("#"))
+
+" http://qiita.com/momo-lab/items/7d35acc8ed835471ad4c
+command! -range Translate <line1>,<line2>!trans -b
 " }}}
 
 " ----------------------------------------------
