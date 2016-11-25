@@ -186,7 +186,7 @@ call s:SetupPluginStart(s:plugins_path)
 " }}}
 
 " plugins list  " {{{
-call s:RegisterPlugin("Shougo/dein.vim")
+call s:RegisterPlugin(s:plugin_manager_path)
 call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 
 call s:RegisterPlugin("kg8m/.vim")
