@@ -2,7 +2,7 @@
 " initialize  " {{{
 let s:vim_root_path       = expand($HOME . "/.vim")
 let s:plugins_path        = expand(s:vim_root_path . "/plugins")
-let s:plugin_manager_path = expand(s:plugins_path . "/dein.vim")
+let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/dein.vim")
 
 let s:on_windows = has("win32") || has("win64")
 let s:on_mac     = has("mac")
