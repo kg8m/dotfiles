@@ -201,6 +201,7 @@ call s:RegisterPlugin("spolu/dwm.vim")
 call s:RegisterPlugin("mattn/emmet-vim")                             " former zencoding-vim
 call s:RegisterPlugin("bogado/file-line", { "if": 0 })               " conflicts with sudo.vim (`vim sudo:path/to/file` not working)
 call s:RegisterPlugin("leafcage/foldCC")
+call s:RegisterPlugin("rhysd/github-complete.vim")
 call s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")
 call s:RegisterPlugin("sk1418/HowMuch")
 call s:RegisterPlugin("nishigori/increment-activator")
@@ -467,6 +468,19 @@ if s:TapPlugin("foldCC")  " {{{
   let g:foldCCtext_enable_autofdc_adjuster = 1
   let g:foldCCtext_maxchars = 120
   set foldtext=FoldCCtext()
+endif  " }}}
+
+if s:TapPlugin("github-complete.vim")  " {{{
+  function! s:ConfigPluginOnSource_github_complete() abort  " {{{
+    let g:github_complete_enable_neocomplete = 1
+  endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":    1,
+     \   "on_i":    1,
+     \   "depends": ["neocomplete.vim"],
+     \   "hook_source": function("s:ConfigPluginOnSource_github_complete"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("gundo.vim")  " {{{
