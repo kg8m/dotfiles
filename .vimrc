@@ -1592,11 +1592,17 @@ if s:TapPlugin("vim-ref")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-ruby")  " {{{
+  " see vim-gemfile
+  augroup PreventVimRubyFromChangingSettings  " {{{
+    autocmd!
+    autocmd BufEnter Gemfile set filetype=Gemfile
+  augroup END  " }}}
+
+  let g:no_ruby_maps = 1
+
   call s:ConfigPlugin({
      \   "lazy": 0,
      \ })
-
-  let g:no_ruby_maps = 1
 endif  " }}}
 
 if s:TapPlugin("vim-ruby-heredoc-syntax")  " {{{
