@@ -478,8 +478,7 @@ if s:TapPlugin("github-complete.vim")  " {{{
 
   call s:ConfigPlugin({
      \   "lazy":    1,
-     \   "on_i":    1,
-     \   "depends": ["neocomplete.vim"],
+     \   "on_ft": ["markdown", "gitcommit"],
      \   "hook_source": function("s:ConfigPluginOnSource_github_complete"),
      \ })
 endif  " }}}
