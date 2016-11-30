@@ -473,6 +473,7 @@ endif  " }}}
 if s:TapPlugin("github-complete.vim")  " {{{
   function! s:ConfigPluginOnSource_github_complete() abort  " {{{
     let g:github_complete_enable_neocomplete = 1
+    let g:github_complete_emoji_japanese_workaround = 1
   endfunction  " }}}
 
   call s:ConfigPlugin({
