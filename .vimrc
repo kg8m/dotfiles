@@ -1469,9 +1469,14 @@ if s:TapPlugin("vim-markdown")  " {{{
     \   },
     \ }
 
-  augroup ResetMarkdownIndentexpr  " {{{
+  function! s:ResetMarkdownIndentSettings() abort  " {{{
+    setlocal indentexpr=smartindent
+    setlocal formatoptions-=r
+  endfunction  " }}}
+
+  augroup ResetMarkdownIndentSettings  " {{{
     autocmd!
-    autocmd FileType markdown setlocal indentexpr=smartindent
+    autocmd InsertEnter * if &ft == "markdown" | call s:ResetMarkdownIndentSettings() | endif
   augroup END  " }}}
 endif  " }}}
 
