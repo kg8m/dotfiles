@@ -471,16 +471,8 @@ if s:TapPlugin("foldCC")  " {{{
 endif  " }}}
 
 if s:TapPlugin("github-complete.vim")  " {{{
-  function! s:ConfigPluginOnSource_github_complete() abort  " {{{
-    let g:github_complete_enable_neocomplete = 1
-    let g:github_complete_emoji_japanese_workaround = 1
-  endfunction  " }}}
-
-  call s:ConfigPlugin({
-     \   "lazy":    1,
-     \   "on_ft": ["markdown", "gitcommit"],
-     \   "hook_source": function("s:ConfigPluginOnSource_github_complete"),
-     \ })
+  let g:github_complete_enable_neocomplete = 1
+  let g:github_complete_emoji_japanese_workaround = 1
 endif  " }}}
 
 if s:TapPlugin("gundo.vim")  " {{{
