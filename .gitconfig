@@ -149,6 +149,9 @@ da = diff HEAD
 
 diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
 
+vimdiff = difftool --tool=vimdiff --no-prompt
+vimdiff-without-space-changes = !git vimdiff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
+
 compare-branches   = !git diff-branches
 diff-stat-branches = !git diff-branches --stat-width=150
 
