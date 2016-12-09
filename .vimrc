@@ -898,13 +898,14 @@ if s:TapPlugin("unite.vim")  " {{{
         \   ["[Unite plugin] svn/status",           "Unite svn/status"],
         \   ["[Unite plugin] webcolorname",         "Unite webcolorname"],
         \
-        \   ["[Unite] buffers",         "Unite buffer"],
-        \   ["[Unite] files",           "UniteWithBufferDir file"],
-        \   ["[Unite] various sources", "UniteWithBufferDir buffer neomru/file bookmark file"],
-        \   ["[Unite] history/yank",    "Unite history/yank"],
-        \   ["[Unite] register",        "Unite register"],
-        \   ["[Unite] grep [Edit]",     "Unite -no-quit grep:./::{words}"],
-        \   ["[Unite] resume [Edit]",   "UniteResume {buffer-name}"],
+        \   ["[Unite] buffers",                       "Unite buffer"],
+        \   ["[Unite] files",                         "UniteWithBufferDir file"],
+        \   ["[Unite] various sources",               "UniteWithBufferDir buffer neomru/file bookmark file"],
+        \   ["[Unite] history/yank",                  "Unite history/yank"],
+        \   ["[Unite] register",                      "Unite register"],
+        \   ["[Unite] grep current directory [Edit]", "Unite -no-quit grep:./::{words}"],
+        \   ["[Unite] grep all buffers [Edit]",       "Unite -no-quit grep:$buffers::{words}"],
+        \   ["[Unite] resume [Edit]",                 "UniteResume {buffer-name}"],
         \
         \   ["[Help] autocommand-events", "help autocommand-events"],
         \ ]
