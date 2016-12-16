@@ -803,8 +803,8 @@ endif  " }}}
 if s:TapPlugin("unite.vim")  " {{{
   nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
-  nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=50% grep:./::
-  vnoremap <Leader>ug "gy:<C-u>Unite -no-quit -winheight=50% grep:./::<C-r>"
+  nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::
+  vnoremap <Leader>ug "gy:<C-u>Unite -no-quit -winheight=30% -buffer-name=grep_<C-r>" grep:./::<C-r>"
   nnoremap <Leader>uy :<C-u>Unite history/yank<Cr>
   nnoremap <F4> :<C-u>Unite buffer<Cr>
 
@@ -903,8 +903,8 @@ if s:TapPlugin("unite.vim")  " {{{
         \   ["[Unite] various sources",               "UniteWithBufferDir buffer neomru/file bookmark file"],
         \   ["[Unite] history/yank",                  "Unite history/yank"],
         \   ["[Unite] register",                      "Unite register"],
-        \   ["[Unite] grep current directory [Edit]", "Unite -no-quit grep:./::{words}"],
-        \   ["[Unite] grep all buffers [Edit]",       "Unite -no-quit grep:$buffers::{words}"],
+        \   ["[Unite] grep current directory [Edit]", "Unite -no-quit -winheight=30% -buffer-name=grep grep:./::{words}"],
+        \   ["[Unite] grep all buffers [Edit]",       "Unite -no-quit -winheight=30% -buffer-name=grep grep:$buffers::{words}"],
         \   ["[Unite] resume [Edit]",                 "UniteResume {buffer-name}"],
         \
         \   ["[Help] autocommand-events", "help autocommand-events"],
