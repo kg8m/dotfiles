@@ -1418,6 +1418,13 @@ if s:TapPlugin("vim-easymotion")  " {{{
   let g:EasyMotion_skipfoldedline   = 0
 endif  " }}}
 
+if s:TapPlugin("vim-fugitive")  " {{{
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": ["Git", "Gstatus", "Glog", "Gdiff", "Gremove", "Gblame"],
+     \ })
+endif  " }}}
+
 if s:TapPlugin("vim-gista")  " {{{
   function! s:ConfigPluginOnSource_vim_gista() abort  " {{{
     let g:gista#github_user = "kg8m"
