@@ -13,7 +13,7 @@ let s:ack_available = executable("ack")
 " plugin management functions  " {{{
 function! UpdatePlugins() abort  " {{{
   call dein#update()
-  Unite dein/log -buffer-name=update_plugins -input=!Same\\ revision\ !Already\\ up-to-date.\ !git\\ pull
+  Unite dein/log -buffer-name=update_plugins
 endfunction  " }}}
 
 function! s:SetupPluginStart() abort  " {{{
