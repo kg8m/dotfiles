@@ -7,6 +7,7 @@
 
 --regex-ruby=/\s*(class|module)\s+[a-zA-Z0-9_:]+:([a-zA-Z0-9_]+)/\2/
 --regex-ruby=/^\s*(belongs_to|has_one|has_many|has_and_belongs_to_many)\s+:([a-zA-Z0-9_]+)/\2/
+--regex-ruby=/^\s*attr_(accessor|reader|writer)\s+([:a-zA-Z0-9_?, ]+)/\2/
 --regex-ruby=/^\s*named_scope\s*:([a-zA-Z0-9_]+)/\1/
 --regex-ruby=/^\s*scope\s*:([a-zA-Z0-9_]+)/\1/
 --regex-ruby=/^\s*def_erb_method\s*\(?[\s\r\n]*["']([a-zA-Z0-9_]+)/\1/
