@@ -1108,7 +1108,7 @@ if s:TapPlugin("unite.vim")  " {{{
        \ })
 
     nnoremap g] :<C-u>UniteWithCursorWord -immediately tag<Cr>
-    vnoremap g] "ty:<C-u>Unite -immediately tag:<C-r>"<Cr>
+    vnoremap g] :<C-u>UniteWithCursorWord -immediately tag<Cr>
     nnoremap g[ :<C-u>Unite jump<Cr>
     nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
 
