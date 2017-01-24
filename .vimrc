@@ -14,6 +14,7 @@ let s:ack_available = executable("ack")
 function! UpdatePlugins() abort  " {{{
   call dein#update()
   Unite dein/log -buffer-name=update_plugins
+  let @/ = "Updated"
 endfunction  " }}}
 
 function! s:SetupPluginStart() abort  " {{{
