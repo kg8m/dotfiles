@@ -14,6 +14,8 @@
 --regex-ruby=/([A-Z0-9_]+)\s*=($|[^=>])/\1/
 --regex-ruby=/const_set(\s+|\():([A-Z0-9_]+)/\2/
 --regex-ruby=/shared_(examples|context|examples_for)\s+["'](.*?)["']\s+do/\2/
+--regex-ruby=/^\s*alias\s+:?([a-zA-Z0-9_]+)/\1/
+--regex-ruby=/^\s*alias_method\s+:([a-zA-Z0-9_]+)/\1/
 
 --regex-javascript=/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*function[ \t]*\(/\5/,function/
 --regex-javascript=/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*function[ \t]*\(/\2/,function/
