@@ -12,6 +12,11 @@ function execute_commands_with_echo {
   done
 }
 
+function notify {
+  message=$( printf %q "[$USER@$HOST] ${@:-Command finished.}" )
+  ssh main "growlnotify -m $message -a iTerm -s"
+}
+
 function migrate {
   if (($# == 1)) then
     cmd="rake db:migrate VERSION=$1";
