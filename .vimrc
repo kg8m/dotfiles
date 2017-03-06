@@ -202,7 +202,7 @@ call s:RegisterPlugin("spolu/dwm.vim")
 call s:RegisterPlugin("mattn/emmet-vim")                             " former zencoding-vim
 call s:RegisterPlugin("bogado/file-line", { "if": 0 })               " conflicts with sudo.vim (`vim sudo:path/to/file` not working)
 call s:RegisterPlugin("leafcage/foldCC")
-call s:RegisterPlugin("rhysd/github-complete.vim")
+call s:RegisterPlugin("rhysd/github-complete.vim", { "if": 0 })
 call s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")
 call s:RegisterPlugin("sk1418/HowMuch")
 call s:RegisterPlugin("nishigori/increment-activator")
