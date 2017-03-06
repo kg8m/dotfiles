@@ -7,6 +7,17 @@ set! ui.key.generalAccessKey=0
 
 set hlsearch
 
+" temporarily fix search
+" https://github.com/vimperator/vimperator-labs/issues/676
+" https://github.com/SammysHP/vimperator-labs/commit/b266c237b8c03716a95d461752cb302198a74aa5
+javascript <<JS
+  finder.highlight = function() {
+    this.setupFindbar();
+    this.findbar.toggleHighlight(true);
+  };
+JS
+
+
 set visualbell
 highlight Bell display: none;
 
