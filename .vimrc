@@ -1463,6 +1463,9 @@ endif  " }}}
 
 if s:TapPlugin("vim-markdown")  " {{{
   let g:markdown_quote_syntax_filetypes = {
+    \   "css": {
+    \     "start": "css",
+    \   },
     \   "coffee": {
     \     "start": "coffee",
     \   },
