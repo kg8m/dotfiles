@@ -201,7 +201,7 @@ execute-with-confirm = "!f() {\
 user = kg8m
 
 [diff]
-algorithm = histogram
+algorithm = patience
 context = 10
 compactionHeuristic = true
 
