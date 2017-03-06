@@ -210,6 +210,12 @@ liberator.globalVariables.webSearchTemplates = [
     url:               'https://github.com/search?q=%KEYWORD%',
     urlWithoutKeyword: 'https://github.com/kg8m',
   },
+  {
+    names:             ['devdocs'],
+    description:       'Search keywords on DevDocs',
+    url:               'https://devdocs.io#q=%KEYWORD%',
+    urlWithoutKeyword: 'https://devdocs.io',
+  },
 ];
 JS
 " }}}
