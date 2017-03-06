@@ -1646,6 +1646,8 @@ if s:TapPlugin("vim-session")  " {{{
   let g:session_autosave          = "no"
   let g:session_autosave_periodic = 0
 
+  set sessionoptions=buffers,curdir
+
   augroup ExtendPluginSession  " {{{
     autocmd!
     autocmd BufWritePost * silent call s:SaveSession()
