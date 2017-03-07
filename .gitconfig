@@ -37,7 +37,7 @@ autosetupmerge = true
 [alias]
 # base
 aliases = !git alias
-alias   = !git config --get-regexp '^alias\\.' | sed 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
+alias   = !git config --get-regexp '^alias\\.' | sed -e 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
 
 ignore = !( [ ! -e .gitignore ] && touch .gitignore ) | echo $1 >> .gitignore
 find   = !git ls-files | grep --ignore-case --color=always
