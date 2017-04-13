@@ -868,8 +868,9 @@ if s:TapPlugin("unite.vim")  " {{{
         \   ["[Manipulate File] Convert to HTML",                         "colorscheme h2u_white | TOhtml"],
         \   ["[Manipulate File] Replace/Sed Texts of All Buffers [Edit]", "bufdo set eventignore-=Syntax | %s/{foo}/{bar}/gce | update"],
         \
-        \   ["[Autoformat] Format Source Codes",        "Autoformat"],
-        \   ["[JpFormat] Format All Selected for Mail", "'<,'>JpFormatAll!"],
+        \   ["[Autoformat] Format Source Codes",         "Autoformat"],
+        \   ["[JpFormat] Format All Selected for Mail",  "'<,'>JpFormatAll!"],
+        \   ["[autoft] Enable autoft on current buffer", "let b:autoft_enable = 1"],
         \
         \   ["[Calendar] Year View",  "Calendar -view=year  -position=hear!"],
         \   ["[Calendar] Month View", "Calendar -view=month -position=hear!"],
@@ -1347,6 +1348,7 @@ if s:TapPlugin("vim-autoformat")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-autoft")  " {{{
+  let g:autoft_enable = 0
   let g:autoft_config = [
     \   { "filetype": "html",       "pattern": '<\%(!DOCTYPE\|html\|head\|script\)' },
     \   { "filetype": "javascript", "pattern": '\%(^\s*\<var\>\s\+[a-zA-Z]\+\)\|\%(function\%(\s\+[a-zA-Z]\+\)\?\s*(\)' },
