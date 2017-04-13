@@ -33,6 +33,8 @@ alias ls='ls --color -a'
 alias ll='ls -l'
 alias diff='diff -U 10 -b -B'
 alias _diff='/usr/bin/diff'
+alias _watch='/usr/bin/watch'
+alias watch='watch --color'
 
 alias log='     tail -F log/development.log log/production*.log'
 alias log_test='tail -F log/test.log'
