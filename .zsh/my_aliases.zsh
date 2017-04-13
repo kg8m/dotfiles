@@ -4,6 +4,7 @@ alias -g L="| less"
 alias -g H="| head"
 alias -g T="| tail"
 alias -g P="| peco"
+alias -g GW='--ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change'  # for Git: ignore whitespace changes
 alias -g FFTEST="TESTOPTS='--runner=failfast'"
 
 alias g='git'
