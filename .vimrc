@@ -581,7 +581,6 @@ if s:TapPlugin("lightline.vim")  " {{{
     \     ["lineinfo_with_percent"],
     \   ],
     \   "right": [
-    \     ["anzu"],
     \   ],
     \ }
   let g:lightline = {
@@ -593,7 +592,6 @@ if s:TapPlugin("lightline.vim")  " {{{
     \   },
     \   "component_function": {
     \     "filename": "FilepathForLightline",
-    \     "anzu":     "anzu#search_status",
     \   },
     \   "colorscheme": "kg8m",
     \ }
