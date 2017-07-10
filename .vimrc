@@ -4,9 +4,8 @@ let s:vim_root_path       = expand($HOME . "/.vim")
 let s:plugins_path        = expand(s:vim_root_path . "/plugins")
 let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/dein.vim")
 
-let s:on_windows = has("win32") || has("win64")
-let s:on_mac     = has("mac")
-let s:on_tmux    = exists("$TMUX")
+let s:on_mac  = has("mac")
+let s:on_tmux = exists("$TMUX")
 
 let s:ack_available = executable("ack")
 
@@ -193,22 +192,17 @@ call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 call s:RegisterPlugin("kg8m/.vim")
 call s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })
 call s:RegisterPlugin("vim-scripts/autodate.vim")
-call s:RegisterPlugin("itchyny/calendar.vim")
 call s:RegisterPlugin("tyru/caw.vim")
-call s:RegisterPlugin("cocopon/colorswatch.vim")
 call s:RegisterPlugin("Shougo/context_filetype.vim")
-call s:RegisterPlugin("chrisbra/csv.vim")
 call s:RegisterPlugin("spolu/dwm.vim")
 call s:RegisterPlugin("mattn/emmet-vim")                             " former zencoding-vim
 call s:RegisterPlugin("bogado/file-line", { "if": 0 })               " conflicts with sudo.vim (`vim sudo:path/to/file` not working)
 call s:RegisterPlugin("leafcage/foldCC")
-call s:RegisterPlugin("rhysd/github-complete.vim", { "if": 0 })
 call s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")
 call s:RegisterPlugin("sk1418/HowMuch")
 call s:RegisterPlugin("nishigori/increment-activator")
 call s:RegisterPlugin("haya14busa/incsearch.vim")
 call s:RegisterPlugin("haya14busa/incsearch-index.vim", { "if": 0 }) " experimental
-call s:RegisterPlugin("fuenor/JpFormat.vim")
 call s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git")
 call s:RegisterPlugin("itchyny/lightline.vim")
 call s:RegisterPlugin("AndrewRadev/linediff.vim")
@@ -230,7 +224,6 @@ call s:RegisterPlugin("jiangmiao/simple-javascript-indenter")
 call s:RegisterPlugin("AndrewRadev/splitjoin.vim")
 call s:RegisterPlugin("vim-scripts/sudo.vim")
 call s:RegisterPlugin("kg8m/svn-diff.vim", { "if": OnSvnDir() })
-call s:RegisterPlugin("vim-scripts/Unicode-RST-Tables")
 call s:RegisterPlugin("Shougo/unite.vim")
 call s:RegisterPlugin("kg8m/unite-dwm")
 call s:RegisterPlugin("osyo-manga/unite-filetype")
@@ -239,7 +232,6 @@ call s:RegisterPlugin("kg8m/unite-mark")
 call s:RegisterPlugin("Shougo/unite-outline")
 call s:RegisterPlugin("basyura/unite-rails", { "if": OnRailsDir() })
 call s:RegisterPlugin("tsukkee/unite-tag")
-call s:RegisterPlugin("pasela/unite-webcolorname")
 call s:RegisterPlugin("h1mesuke/vim-alignta")
 call s:RegisterPlugin("osyo-manga/vim-anzu")
 call s:RegisterPlugin("haya14busa/vim-asterisk")
@@ -254,17 +246,15 @@ call s:RegisterPlugin("hail2u/vim-css-syntax")
 call s:RegisterPlugin("hail2u/vim-css3-syntax")
 call s:RegisterPlugin("itchyny/vim-cursorword", { "if": 0 })         " confusing with IME's underline
 call s:RegisterPlugin("Lokaltog/vim-easymotion")
-call s:RegisterPlugin("tpope/vim-endwise", { "if": 0 })              " incompatible with neosnippet
 call s:RegisterPlugin("kg8m/vim-dirdiff")
 call s:RegisterPlugin("thinca/vim-ft-diff_fold")
 call s:RegisterPlugin("thinca/vim-ft-help_fold")
 call s:RegisterPlugin("thinca/vim-ft-markdown_fold")
 call s:RegisterPlugin("tpope/vim-fugitive", { "if": OnGitDir() })
-call s:RegisterPlugin("lambdalisue/vim-gista")
 call s:RegisterPlugin("thinca/vim-ft-svn_diff")
 call s:RegisterPlugin("muz/vim-gemfile")
 call s:RegisterPlugin("tpope/vim-git")
-call s:RegisterPlugin("lambdalisue/vim-gita", { "if": 0 })           " hope to future features
+call s:RegisterPlugin("lambdalisue/vim-gita", { "if": 0 })           " interested in future features
 call s:RegisterPlugin("tpope/vim-haml")
 call s:RegisterPlugin("michaeljsmith/vim-indent-object")
 call s:RegisterPlugin("jelera/vim-javascript-syntax")
@@ -286,7 +276,6 @@ call s:RegisterPlugin("kana/vim-operator-replace")
 call s:RegisterPlugin("rhysd/vim-operator-surround", { "if": 0 })    " not working in some edge cases
 call s:RegisterPlugin("kana/vim-operator-user")
 call s:RegisterPlugin("itchyny/vim-parenmatch")
-call s:RegisterPlugin("powerman/vim-plugin-autosess", { "if": 0 })   " behaviors are undesirable for me
 call s:RegisterPlugin("thinca/vim-prettyprint")
 call s:RegisterPlugin("thinca/vim-qfreplace")
 call s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() })
@@ -363,19 +352,6 @@ if s:TapPlugin("autodate.vim")  " {{{
   let g:autodate_keyword_post = '\.$'
 endif  " }}}
 
-if s:TapPlugin("calendar.vim")  " {{{
-  function! s:ConfigPluginOnSource_calendar() abort  " {{{
-    let g:calendar_google_calendar = 1
-    let g:calendar_first_day       = "monday"
-  endfunction  " }}}
-
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": "Calendar",
-     \   "hook_source": function("s:ConfigPluginOnSource_calendar"),
-     \ })
-endif  " }}}
-
 if s:TapPlugin("caw.vim")  " {{{
   nmap gc <Plug>(caw:hatpos:toggle)
   vmap gc <Plug>(caw:hatpos:toggle)
@@ -389,20 +365,6 @@ if s:TapPlugin("caw.vim")  " {{{
      \   "lazy":   1,
      \   "on_map": "<Plug>(caw:",
      \   "hook_source": function("s:ConfigPluginOnSource_caw"),
-     \ })
-endif  " }}}
-
-if s:TapPlugin("colorswatch.vim")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": "ColorSwatchGenerate",
-     \ })
-endif  " }}}
-
-if s:TapPlugin("csv.vim")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": ["CSVArrangeColumn", "CSVUnArrangeColumn", "CSVInit"],
      \ })
 endif  " }}}
 
@@ -470,11 +432,6 @@ if s:TapPlugin("foldCC")  " {{{
   let g:foldCCtext_enable_autofdc_adjuster = 1
   let g:foldCCtext_maxchars = 120
   set foldtext=FoldCCtext()
-endif  " }}}
-
-if s:TapPlugin("github-complete.vim")  " {{{
-  let g:github_complete_enable_neocomplete = 1
-  let g:github_complete_emoji_japanese_workaround = 1
 endif  " }}}
 
 if s:TapPlugin("gundo.vim")  " {{{
@@ -560,10 +517,6 @@ if s:TapPlugin("incsearch.vim")  " {{{
     map /  <Plug>(incsearch-index-/)
     map ?  <Plug>(incsearch-index-?)
   endif  " }}}
-endif  " }}}
-
-if s:TapPlugin("JpFormat.vim")  " {{{
-  let JpCountChars = 37
 endif  " }}}
 
 if s:TapPlugin("jscomplete-vim.git")  " {{{
@@ -795,10 +748,6 @@ if s:TapPlugin("splitjoin.vim")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("Unicode-RST-Tables")  " {{{
-  let g:no_rst_table_maps = 0
-endif  " }}}
-
 if s:TapPlugin("unite.vim")  " {{{
   nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
@@ -867,25 +816,12 @@ if s:TapPlugin("unite.vim")  " {{{
         \   ["[Manipulate File] Replace/Sed Texts of All Buffers [Edit]", "bufdo set eventignore-=Syntax | %s/{foo}/{bar}/gce | update"],
         \
         \   ["[Autoformat] Format Source Codes",         "Autoformat"],
-        \   ["[JpFormat] Format All Selected for Mail",  "'<,'>JpFormatAll!"],
         \   ["[autoft] Enable autoft on current buffer", "let b:autoft_enable = 1"],
-        \
-        \   ["[Calendar] Year View",  "Calendar -view=year  -position=hear!"],
-        \   ["[Calendar] Month View", "Calendar -view=month -position=hear!"],
-        \   ["[Calendar] Week View",  "Calendar -view=week  -position=hear!"],
-        \   ["[Calendar] Day View",   "Calendar -view=day   -position=hear! -split=vertical -width=75"],
-        \
-        \   ["[CSV] Arrange/Align Columns",     "%CSVArrangeColumn"],
-        \   ["[CSV] Unarrange/Unalign Columns", "%CSVUnArrangeColumn"],
-        \   ["[CSV] Initialize CSV",            "%CSVInit"],
         \
         \   ["[Diff] Linediff",       "'<,'>Linediff"],
         \   ["[Diff] DirDiff [Edit]", "DirDiff {dir1} {dir2}"],
         \
         \   ["[Rails] Reset Buffer", "if RailsDetect() | call rails#buffer_setup() | endif"],
-        \
-        \   ["[Unicode-RST-Tables] Create Table", "python CreateTable()"],
-        \   ["[Unicode-RST-Tables] Fix Table",    "python FixTable()"],
         \
         \   ["[Unite plugin] gist",                 "Unite gista"],
         \   ["[Unite plugin] mru files",            "Unite neomru/file"],
@@ -1121,13 +1057,6 @@ if s:TapPlugin("unite.vim")  " {{{
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \   "hook_source": function("s:ConfigPluginOnSource_unite_tag"),
-       \ })
-  endif  " }}}
-
-  if s:TapPlugin("unite-webcolorname")  " {{{
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_source": "unite.vim",
        \ })
   endif  " }}}
 
@@ -1426,20 +1355,6 @@ if s:TapPlugin("vim-fugitive")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-gista")  " {{{
-  function! s:ConfigPluginOnSource_vim_gista() abort  " {{{
-    let g:gista#github_user = "kg8m"
-  endfunction  " }}}
-
-  call s:ConfigPlugin({
-     \   "lazy":      1,
-     \   "on_cmd":    "Gista",
-     \   "on_map":    "<Plug>(gista-",
-     \   "on_source": "unite.vim",
-     \   "hook_source": function("s:ConfigPluginOnSource_vim_gista"),
-     \ })
-endif  " }}}
-
 if s:TapPlugin("vim-git")  " {{{
   augroup PreventVimGitFromChangingSettings  " {{{
     autocmd!
@@ -1523,10 +1438,6 @@ if s:TapPlugin("vim-parenmatch")  " {{{
     autocmd!
     autocmd VimEnter,ColorScheme * highlight ParenMatch ctermbg=white ctermfg=black guibg=white guifg=black
   augroup END  " }}}
-endif  " }}}
-
-if s:TapPlugin("vim-plugin-autosess")  " {{{
-  let g:autosess_dir = $HOME . "/.cache/autosess/"
 endif  " }}}
 
 if s:TapPlugin("vim-prettyprint")  " {{{
@@ -1852,12 +1763,7 @@ if s:TapPlugin("vimshell")  " {{{
   nnoremap <Leader>s :<C-u>VimShell<Cr>
 
   function! s:ConfigPluginOnSource_vimshell() abort  " {{{
-    if s:on_windows
-      let g:_user_name = $USERNAME
-    else
-      let g:_user_name = $USER
-    endif
-
+    let g:_user_name = $USER
     let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
     let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
     let g:vimshell_prompt = "% "
