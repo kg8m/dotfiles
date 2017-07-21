@@ -1377,6 +1377,8 @@ if s:TapPlugin("vim-json")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-markdown")  " {{{
+  let g:vim_markdown_no_default_key_mappings = 1
+  let g:vim_markdown_conceal = 0
   let g:markdown_quote_syntax_filetypes = {
     \   "css": {
     \     "start": "css",
