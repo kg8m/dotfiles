@@ -124,7 +124,7 @@ rv                = revert
 
 # log
 lg    = !git graph
-graph = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue[C] %cn [A] %an %Creset%s\"
+graph = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%an %Creset%s\"
 la    = log --branches --tags --remotes
 lo    = log --stat
 lp    = log --stat --patch
