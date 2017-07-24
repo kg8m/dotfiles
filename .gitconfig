@@ -125,6 +125,7 @@ rv                = revert
 # log
 lg    = !git graph
 graph = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue[C] %cn [A] %an %Creset%s\"
+la    = log --branches --tags --remotes
 lo    = log --stat
 lp    = log --stat --patch
 
@@ -143,6 +144,7 @@ log-branches = "!f() {\
 # diff
 di = !git diff-without-space-changes
 dc = !git diff-without-space-changes --cached
+ds = !git diff-without-space-changes --staged
 dw = !git diff-without-space-changes --color-words
 dh = !git diff-without-space-changes HEAD
 da = diff HEAD
