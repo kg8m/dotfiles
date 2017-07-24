@@ -1470,18 +1470,21 @@ if s:TapPlugin("vim-rails")  " {{{
   endif
 
   let g:rails_projections["config/*"] = { "command": "config" }
+  let g:rails_projections["script/*.rb"] = {
+    \   "alternate": "test/script/{}_test.rb",
+    \   "test":      "test/script/{}_test.rb",
+    \ }
   let g:rails_projections["script/*"] = {
-    \   "command": "script",
-    \   "test":    [
-    \     "test/script/%s_test.rb",
-    \   ],
+    \   "command":   "script",
+    \   "alternate": "test/script/{}_test.rb",
+    \   "test":      "test/script/{}_test.rb",
     \ }
   let g:rails_projections["spec/fabricators/*_fabricator.rb"] = {
     \   "command":   "fabricator",
     \   "affinity":  "model",
-    \   "alternate": "app/models/%s.rb",
+    \   "alternate": "app/models/{}.rb",
     \   "related":   "db/schema.rb#%p",
-    \   "test":      "spec/models/%s_spec.rb",
+    \   "test":      "spec/models/{}_spec.rb",
     \ }
   let g:rails_projections["spec/support/*.rb"] = { "command": "support" }
 
