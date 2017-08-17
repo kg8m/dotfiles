@@ -921,7 +921,7 @@ if s:TapPlugin("unite.vim")  " {{{
 
     nnoremap <Leader>m :<C-u>Unite neomru/file<Cr>
 
-    let g:neomru#time_format     = "(%Y/%m/%d %H:%M:%S) "
+    let g:neomru#time_format     = "%Y/%m/%d %H:%M:%S"
     let g:neomru#filename_format = ":~:."
     let g:neomru#file_mru_limit  = 1000
   endif  " }}}
