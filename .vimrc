@@ -1545,8 +1545,11 @@ if s:TapPlugin("vim-ruby-heredoc-syntax")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-rubytest")  " {{{
-  nmap <leader>T <Plug>RubyFileRun
-  nmap <leader>t <Plug>RubyTestRun
+  augroup ConfigRubytest  " {{{
+    autocmd!
+    autocmd FileType ruby nmap <buffer> <leader>T <Plug>RubyFileRun
+    autocmd FileType ruby nmap <buffer> <leader>t <Plug>RubyTestRun
+  augroup END  " }}}
 
   function! s:ConfigPluginOnSource_vim_rubytest() abort  " {{{
     let g:no_rubytest_mappings = 1
@@ -1730,8 +1733,11 @@ if s:TapPlugin("vim-textobj-multitextobj")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-turbux")  " {{{
-  map <leader>T <Plug>SendTestToTmux
-  map <leader>t <Plug>SendFocusedTestToTmux
+  augroup ConfigTurbux  " {{{
+    autocmd!
+    autocmd FileType ruby nmap <buffer> <leader>T <Plug>SendTestToTmux
+    autocmd FileType ruby nmap <buffer> <leader>t <Plug>SendFocusedTestToTmux
+  augroup END  " }}}
 
   function! s:ConfigPluginOnSource_vim_turbux() abort  " {{{
     let g:no_turbux_mappings = 1
