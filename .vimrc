@@ -338,6 +338,8 @@ if s:TapPlugin("auto-ctags.vim")  " {{{
 
     execute "cd " . original_current_directory
     let g:auto_ctags_directory_list = original_directory_list
+
+    echomsg "ctags for Ruby gems have been created."
   endfunction  " }}}
 endif  " }}}
 
