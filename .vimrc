@@ -1473,6 +1473,9 @@ if s:TapPlugin("vim-rails")  " {{{
   endif
 
   let g:rails_projections["config/*"] = { "command": "config" }
+  let g:rails_projections["config/database.yml"] = {
+    \   "command": "db",
+    \ }
   let g:rails_projections["script/*.rb"] = {
     \   "alternate": "test/script/{}_test.rb",
     \   "test":      "test/script/{}_test.rb",
