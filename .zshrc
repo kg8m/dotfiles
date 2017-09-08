@@ -29,7 +29,7 @@ export GREP_COLOR='01;35'
 HISTFILE=~/.zsh_histfile
 HISTSIZE=100000
 SAVEHIST=100000
-HISTORY_IGNORE="rm *-f*"
+HISTORY_IGNORE="exit|rm *-f*"
 
 bindkey -v
 
