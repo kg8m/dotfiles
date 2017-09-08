@@ -7,6 +7,7 @@
 --sort-files
 --ignore-dir=.vim-sessions
 --ignore-dir=log
+--ignore-dir=node_modules
 --ignore-dir=tmp/sass-cache
 --ignore-file=match:/_structure\.sql$/
 --ignore-file=match:/\.log$/

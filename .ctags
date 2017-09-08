@@ -4,6 +4,7 @@
 --exclude=*.min.js
 --exclude=jquery*.js
 --exclude=jrails.js
+--exclude=node_modules
 
 --regex-ruby=/\s*(class|module)\s+[a-zA-Z0-9_:]+:([a-zA-Z0-9_]+)/\2/
 --regex-ruby=/^\s*(belongs_to|has_one|has_many|has_and_belongs_to_many)\s+:([a-zA-Z0-9_]+)/\2/
