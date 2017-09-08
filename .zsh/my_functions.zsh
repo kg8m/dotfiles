@@ -28,19 +28,6 @@ function migrate {
   execute_with_echo "rake db:test:load_structure";
 }
 
-function mysql_current {
-  base_dirname='branch'
-  dirname=`basename \`pwd\``
-
-  if [ "${dirname}" = "${base_dirname}" ]; then
-    dbname="${APP_NAME}"
-  else
-    dbname="${APP_NAME}_${dirname}"
-  fi
-
-  execute_with_echo "mysql -u root ${dbname} $@";
-}
-
 function tmux_setup_default {
   tmux new-session -d -s default
   tmux new-window -t default:2
@@ -69,7 +56,7 @@ function attach_or_new_tmux {
   tmux has-session -t $session_name &> /dev/null
 
   if [ $? != 0 ]; then
-    read 'response?Create new session in directory `'$( pwd )'` with session name `'$( echo $session_name )'`? [y/n]: '
+    read 'response?Create new session in directory `'$( pwd )'` with session name `'$session_name'`? [y/n]: '
 
     if [[ $response =~ ^y ]]; then
       if [ $session_name = 'default' ]; then
@@ -106,12 +93,6 @@ function extract() {
   esac
 }
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
-
-function color_pallet() {
-  execute_with_echo 'for c in {000..255}; do echo -n "\e[38;05;${c};48;05;000m $c" ; [ $(($c%16)) -eq 15 ] && echo; done; echo "\e[38;05;255;48;05;000m"'
-  execute_with_echo 'for c in {000..255}; do echo -n "\e[38;05;255;48;05;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo; done; echo "\e[38;05;255;48;05;000m"'
-  execute_with_echo 'for c in {000..255}; do echo -n "\e[38;05;000;48;05;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo; done; echo "\e[38;05;255;48;05;000m"'
-}
 
 function viack() {
   vi `ack $@ -l`
