@@ -148,6 +148,7 @@ lazy fmaps -u='www\.flickr\.com' -events=vkeydown ? l j k
 lazy fmaps -u='www\.flickr\.com' -events=keydown <Left> <Right>
 lazy fmaps -u='www\.gqueues\.com/main' -events=vkeydown ? j k h l <S-j> <S-k> q r / e n <S-c> s d <C-S-d> o <S-o> gi
 lazy fmaps -u='www\.gqueues\.com/main' -events=keydown <Left> <Right>
+lazy fmaps -u='8122\.jp' -events=keydown <Left> <Right>
 lazy fmaps -u='chrome://newsfox/content/newsfox\.xul' r m v
 " }}}
 
