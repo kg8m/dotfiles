@@ -1887,7 +1887,7 @@ if s:TapPlugin("vimux")  " {{{
   endfunction  " }}}
 
   function! s:ConfigPluginOnPostSource_vimux() abort  " {{{
-    " overriding default function: use current pane's next one
+    " overwriting default function: use current pane's next one
     execute join([
     \   'function! _VimuxNearestIndex() abort',
     \     'let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")',
