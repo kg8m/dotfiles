@@ -265,16 +265,7 @@ call s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")
 call s:RegisterPlugin("xolox/vim-misc")
 call s:RegisterPlugin("losingkeys/vim-niji", { "if": 0 })            " sometimes breaks colorschemes
 call s:RegisterPlugin("kana/vim-operator-replace")
-" not working in case like following:
-"   (1) text:      hoge "fu*ga piyo"
-"   (2) call: <Plug>(operator-surround-append)"'
-"   (3) expected:  hoge* '"fuga piyo"'
-"   (4) result:    hoge*' "fuga piyo"'
-" or following:
-"   (2) call: <Plug>(operator-surround-replace)"'
-"   (3) expected:  hoge* 'fuga piyo'
-"   (4) result:    hoge*' fuga piyo'
-call s:RegisterPlugin("rhysd/vim-operator-surround", { "if": 0 })    " not working in some edge cases
+call s:RegisterPlugin("rhysd/vim-operator-surround")
 call s:RegisterPlugin("kana/vim-operator-user")
 call s:RegisterPlugin("itchyny/vim-parenmatch")
 call s:RegisterPlugin("thinca/vim-prettyprint")
@@ -1417,17 +1408,46 @@ if s:TapPlugin("vim-operator-replace")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-operator-surround")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": "<Plug>(operator-surround-",
-     \ })
-
-  nmap <silent>sa <Plug>(operator-surround-append)
-  nmap <silent>sd <Plug>(operator-surround-delete)
-  nmap <silent>sr <Plug>(operator-surround-replace)
+  " sa<Char>         => surround by <Char>
+  " sd<Char>         => delete surrounding <Char>
+  " sr<Char1><Char2> => replace surrounding <Char1> by <Char2>
+  nmap <silent>sa <Plug>(operator-surround-append)aw
+  nmap <silent>sd <Plug>(operator-surround-delete)a
+  nmap <silent>sr <Plug>(operator-surround-replace)a
   vmap <silent>sa <Plug>(operator-surround-append)
-  vmap <silent>sd <Plug>(operator-surround-delete)
-  vmap <silent>sr <Plug>(operator-surround-replace)
+  vmap <silent>sd <Plug>(operator-surround-delete)a
+  vmap <silent>sr <Plug>(operator-surround-replace)a
+
+  function! s:ConfigPluginOnSource_vim_operator_surround() abort  " {{{
+    let g:operator#surround#blocks = { "-": [] }
+
+    " some pairs don't work as `keys` if they require IME's `henkan`
+    " but they works as `block`
+    let pairs = [
+      \   ["（", "）"],
+      \   ["［", "］"],
+      \   ["「", "」"],
+      \   ["『", "』"],
+      \   ["〈", "〉"],
+      \   ["《", "》"],
+      \   ["【", "】"],
+      \   ["“", "”"],
+      \   ["‘", "’"],
+      \ ]
+
+    for pair in pairs
+      call add(g:operator#surround#blocks["-"], {
+        \   "block": pair, "motionwise": ["char", "line", "block"], "keys": pair
+        \ })
+    endfor
+  endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":    1,
+     \   "depends": ["vim-textobj-user"],
+     \   "on_map":  "<Plug>(operator-surround-",
+     \   "hook_source": function("s:ConfigPluginOnSource_vim_operator_surround"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-operator-user")  " {{{
