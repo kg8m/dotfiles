@@ -1753,6 +1753,40 @@ if s:TapPlugin("vim-textobj-multitextobj")  " {{{
     \ ]
 endif  " }}}
 
+if s:TapPlugin("vim-textobj-user")  " {{{
+  function! s:ConfigPluginOnSource_vim_textobj_user() abort
+    " some kakkos are not defined because they require IME's `henkan` and not work
+    " - { "pair": ["｛", "｝"], "name": "bracket" },
+    " - { "pair": ["『", "』"], "name": "double-kakko" },
+    " - { "pair": ["【", "】"], "name": "sumi-kakko" },
+    " - { "pair": ["〈", "〉"], "name": "yama-kakko" },
+    " - { "pair": ["《", "》"], "name": "double-yama-kakko" },
+    let jbrace_specs = [
+      \   { "pair": ["（", "）"], "name": "paren" },
+      \   { "pair": ["［", "］"], "name": "brace" },
+      \   { "pair": ["「", "」"], "name": "kakko" },
+      \   { "pair": ["“", "”"], "name": "double-quotation" },
+      \   { "pair": ["‘", "’"], "name": "single-quotation" },
+      \ ]
+
+    let jbrace_config = {}
+    for spec in jbrace_specs
+      let jbrace_config[spec["name"]] = {
+        \   "pattern":  spec["pair"],
+        \   "select-a": ["a" . spec["pair"][0], "a" . spec["pair"][1]],
+        \   "select-i": ["i" . spec["pair"][0], "i" . spec["pair"][1]],
+        \ }
+    endfor
+    call textobj#user#plugin("myjabraces", jbrace_config)
+  endfunction
+
+  call s:ConfigPlugin({
+     \   "lazy":    1,
+     \   "on_func": "textobj#user",
+     \   "hook_source": function("s:ConfigPluginOnSource_vim_textobj_user"),
+     \ })
+endif  " }}}
+
 if s:TapPlugin("vim-turbux")  " {{{
   augroup ConfigTurbux  " {{{
     autocmd!
