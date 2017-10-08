@@ -1715,7 +1715,31 @@ if s:TapPlugin("vim-stay")  " {{{
   set viewoptions=cursor
 endif  " }}}
 
+if s:TapPlugin("vim-textobj-enclosedsyntax")  " {{{
+  call s:ConfigPlugin({
+     \   "depends": ["vim-textobj-user"],
+     \ })
+endif  " }}}
+
+if s:TapPlugin("vim-textobj-jabraces")  " {{{
+  call s:ConfigPlugin({
+     \   "depends": ["vim-textobj-user"],
+     \ })
+
+  let g:textobj_jabraces_no_default_key_mappings = 1
+endif  " }}}
+
+if s:TapPlugin("vim-textobj-lastpat")  " {{{
+  call s:ConfigPlugin({
+     \   "depends": ["vim-textobj-user"],
+     \ })
+endif  " }}}
+
 if s:TapPlugin("vim-textobj-multitextobj")  " {{{
+  call s:ConfigPlugin({
+     \   "depends": ["vim-textobj-user"],
+     \ })
+
   omap aj <Plug>(textobj-multitextobj-a)
   omap ij <Plug>(textobj-multitextobj-i)
   vmap aj <Plug>(textobj-multitextobj-a)
@@ -1751,6 +1775,12 @@ if s:TapPlugin("vim-textobj-multitextobj")  " {{{
     \     "\<Plug>(textobj-jabraces-sumi-kakko-i)",
     \   ],
     \ ]
+endif  " }}}
+
+if s:TapPlugin("vim-textobj-ruby")  " {{{
+  call s:ConfigPlugin({
+     \   "depends": ["vim-textobj-user"],
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-textobj-user")  " {{{
