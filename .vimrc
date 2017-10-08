@@ -355,11 +355,9 @@ if s:TapPlugin("caw.vim")  " {{{
     let g:caw_hatpos_skip_blank_line = 1
   endfunction  " }}}
 
-  " don't use `"on_map": "<Plug>(caw:"` because not supported by dein:
-  " > Note: You cannot use lazy <Plug> mappings twice.
   call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "on_event": "VimEnter",
+     \   "lazy":   1,
+     \   "on_map": [["nv", "<Plug>(caw:"]],
      \   "hook_source": function("s:ConfigPluginOnSource_caw"),
      \ })
 endif  " }}}
@@ -447,6 +445,12 @@ if s:TapPlugin("gundo.vim")  " {{{
 endif  " }}}
 
 if s:TapPlugin("HowMuch")  " {{{
+  function! s:DefineHowMuchMappings() abort  " {{{
+    vmap <Leader>?  <Plug>AutoCalcReplace
+    vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
+  endfunction  " }}}
+  call s:DefineHowMuchMappings()
+
   function! s:ConfigPluginOnSource_HowMuch() abort  " {{{
     " replace expr with result
     let g:HowMuch_scale = 5
@@ -454,15 +458,12 @@ if s:TapPlugin("HowMuch")  " {{{
 
   function! s:ConfigPluginOnPostSource_HowMuch() abort  " {{{
     " overwriting default mappings
-    vmap <Leader>?  <Plug>AutoCalcReplace
-    vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
+    call s:DefineHowMuchMappings()
   endfunction  " }}}
 
-  " don't use `"on_map": "<Plug>AutoCalc"` because not supported by dein:
-  " > Note: You cannot use lazy <Plug> mappings twice.
   call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "on_event": "VimEnter",
+     \   "lazy":   1,
+     \   "on_map": [["v", "<Plug>AutoCalc"]],
      \   "hook_source":      function("s:ConfigPluginOnSource_HowMuch"),
      \   "hook_post_source": function("s:ConfigPluginOnPostSource_HowMuch"),
      \ })
@@ -683,26 +684,27 @@ if s:TapPlugin("open-browser.vim")  " {{{
       \ ]
   endfunction  " }}}
 
-  " don't use `"on_map": "<Plug>(openbrowser-open)"` because not supported by dein:
-  " > Note: You cannot use lazy <Plug> mappings twice.
   call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "on_cmd":   ["OpenBrowserSearch", "OpenBrowser"],
-     \   "on_func":  "openbrowser#open",
-     \   "on_event": "VimEnter",
+     \   "lazy":    1,
+     \   "on_cmd":  ["OpenBrowserSearch", "OpenBrowser"],
+     \   "on_func": "openbrowser#open",
+     \   "on_map":  [["nv", "<Plug>(openbrowser-open)"]],
      \   "hook_source": function("s:ConfigPluginOnSource_open_browser"),
      \ })
 
 endif  " }}}
 
 if s:TapPlugin("operator-camelize.vim")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": ["<Plug>(operator-camelize)", "<Plug>(operator-decamelize)"],
-     \ })
-
   vmap <Leader>C <Plug>(operator-camelize)
   vmap <Leader>c <Plug>(operator-decamelize)
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_map": [
+     \     ["v", "<Plug>(operator-camelize)"],
+     \     ["v", "<Plug>(operator-decamelize)"]
+     \   ],
+     \ })
 endif  " }}}
 
 if s:TapPlugin("ruby_hl_lvar.vim")  " {{{
@@ -713,20 +715,15 @@ if s:TapPlugin("ruby_hl_lvar.vim")  " {{{
 endif  " }}}
 
 if s:TapPlugin("sequence")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": [
-     \     "<Plug>SequenceV_Increment",
-     \     "<Plug>SequenceV_Decrement",
-     \     "<Plug>SequenceN_Increment",
-     \     "<Plug>SequenceN_Decrement",
-     \   ],
-     \ })
-
   vmap <Leader>+ <Plug>SequenceV_Increment
   vmap <Leader>- <Plug>SequenceV_Decrement
   nmap <Leader>+ <Plug>SequenceN_Increment
   nmap <Leader>- <Plug>SequenceN_Decrement
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_map": [["vn", "<Plug>Sequence"]],
+     \ })
 endif  " }}}
 
 if s:TapPlugin("simple-javascript-indenter")  " {{{
@@ -1408,16 +1405,14 @@ if s:TapPlugin("vim-markdown")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-operator-replace")  " {{{
-  " don't use `"on_map": "<Plug>(operator-replace)"` because not supported by dein:
-  " > note: you cannot use lazy <Plug> mappings twice.
-  call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "depends":  ["vim-operator-user"],
-     \   "on_event": "VimEnter",
-     \ })
-
   nmap r <Plug>(operator-replace)
   vmap r <Plug>(operator-replace)
+
+  call s:ConfigPlugin({
+     \   "lazy":    1,
+     \   "depends": ["vim-operator-user"],
+     \   "on_map":  [["nv", "<Plug>(operator-replace)"]],
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-operator-surround")  " {{{
@@ -1455,12 +1450,10 @@ if s:TapPlugin("vim-operator-surround")  " {{{
     endfor
   endfunction  " }}}
 
-  " don't use `"on_map": "<Plug>(operator-surround-"` because not supported by dein:
-  " > note: you cannot use lazy <Plug> mappings twice.
   call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "depends":  ["vim-operator-user"],
-     \   "on_event": "VimEnter",
+     \   "lazy":    1,
+     \   "depends": ["vim-operator-user"],
+     \   "on_map":  [["nv", "<Plug>(operator-surround-"]],
      \   "hook_source": function("s:ConfigPluginOnSource_vim_operator_surround"),
      \ })
 endif  " }}}
@@ -1550,13 +1543,13 @@ if s:TapPlugin("vim-rails")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-ref")  " {{{
+  nmap K <Plug>(ref-keyword)
+
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "Ref",
-     \   "on_map": "<Plug>(ref-keyword)",
+     \   "on_map": [["n", "<Plug>(ref-keyword)"]],
      \ })
-
-  nmap K <Plug>(ref-keyword)
 endif  " }}}
 
 if s:TapPlugin("vim-ruby")  " {{{
@@ -1594,7 +1587,7 @@ if s:TapPlugin("vim-rubytest")  " {{{
 
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_map": ["<Plug>RubyFileRun", "<Plug>RubyTestRun"],
+     \   "on_map": [["n", "<Plug>RubyFileRun"], ["n", "<Plug>RubyTestRun"]],
      \   "hook_source": function("s:ConfigPluginOnSource_vim_rubytest"),
      \ })
 endif  " }}}
@@ -1781,12 +1774,10 @@ if s:TapPlugin("vim-textobj-multitextobj")  " {{{
     endfor
   endfunction
 
-  " don't use `"on_map": "<Plug>(textobj-multitextobj-"` because not supported by dein:
-  " > note: you cannot use lazy <Plug> mappings twice.
   call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "depends":  ["vim-textobj-user"],
-     \   "on_event": "VimEnter",
+     \   "lazy":    1,
+     \   "depends": ["vim-textobj-user"],
+     \   "on_map":  [["ov", "<Plug>(textobj-multitextobj-"]],
      \   "hook_source": function("s:ConfigPluginOnSource_vim_textobj_multitextobj"),
      \ })
 endif  " }}}
@@ -1845,7 +1836,7 @@ if s:TapPlugin("vim-turbux")  " {{{
 
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_map": ["<Plug>SendTestToTmux", "<Plug>SendFocusedTestToTmux"],
+     \   "on_map": [["n", "<Plug>SendTestToTmux"], ["n", "<Plug>SendFocusedTestToTmux"]],
      \   "hook_source": function("s:ConfigPluginOnSource_vim_turbux"),
      \ })
 endif  " }}}
@@ -1940,7 +1931,7 @@ if s:TapPlugin("winresizer")  " {{{
 
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_map": g:winresizer_start_key,
+     \   "on_map": [["n", g:winresizer_start_key]],
      \ })
 endif  " }}}
 
