@@ -1736,45 +1736,42 @@ if s:TapPlugin("vim-textobj-lastpat")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-textobj-multitextobj")  " {{{
-  call s:ConfigPlugin({
-     \   "depends": ["vim-textobj-user"],
-     \ })
-
   omap aj <Plug>(textobj-multitextobj-a)
   omap ij <Plug>(textobj-multitextobj-i)
   vmap aj <Plug>(textobj-multitextobj-a)
   vmap ij <Plug>(textobj-multitextobj-i)
 
-  let g:textobj_multitextobj_textobjects_a = [
-    \   [
-    \     "\<Plug>(textobj-jabraces-parens-a)",
-    \     "\<Plug>(textobj-jabraces-braces-a)",
-    \     "\<Plug>(textobj-jabraces-brackets-a)",
-    \     "\<Plug>(textobj-jabraces-angles-a)",
-    \     "\<Plug>(textobj-jabraces-double-angles-a)",
-    \     "\<Plug>(textobj-jabraces-kakko-a)",
-    \     "\<Plug>(textobj-jabraces-double-kakko-a)",
-    \     "\<Plug>(textobj-jabraces-yama-kakko-a)",
-    \     "\<Plug>(textobj-jabraces-double-yama-kakko-a)",
-    \     "\<Plug>(textobj-jabraces-kikkou-kakko-a)",
-    \     "\<Plug>(textobj-jabraces-sumi-kakko-a)",
-    \   ],
-    \ ]
-  let g:textobj_multitextobj_textobjects_i = [
-    \   [
-    \     "\<Plug>(textobj-jabraces-parens-i)",
-    \     "\<Plug>(textobj-jabraces-braces-i)",
-    \     "\<Plug>(textobj-jabraces-brackets-i)",
-    \     "\<Plug>(textobj-jabraces-angles-i)",
-    \     "\<Plug>(textobj-jabraces-double-angles-i)",
-    \     "\<Plug>(textobj-jabraces-kakko-i)",
-    \     "\<Plug>(textobj-jabraces-double-kakko-i)",
-    \     "\<Plug>(textobj-jabraces-yama-kakko-i)",
-    \     "\<Plug>(textobj-jabraces-double-yama-kakko-i)",
-    \     "\<Plug>(textobj-jabraces-kikkou-kakko-i)",
-    \     "\<Plug>(textobj-jabraces-sumi-kakko-i)",
-    \   ],
-    \ ]
+  function! s:ConfigPluginOnSource_vim_textobj_multitextobj() abort
+    let g:textobj_multitextobj_textobjects_a = [[]]
+    let g:textobj_multitextobj_textobjects_i = [[]]
+    let textobj_names = [
+      \   "textobj-jabraces-parens",
+      \   "textobj-jabraces-braces",
+      \   "textobj-jabraces-brackets",
+      \   "textobj-jabraces-angles",
+      \   "textobj-jabraces-double-angles",
+      \   "textobj-jabraces-kakko",
+      \   "textobj-jabraces-double-kakko",
+      \   "textobj-jabraces-yama-kakko",
+      \   "textobj-jabraces-double-yama-kakko",
+      \   "textobj-jabraces-kikkou-kakko",
+      \   "textobj-jabraces-sumi-kakko",
+      \   "textobj-myjabraces-double-quotation",
+      \   "textobj-myjabraces-single-quotation",
+      \ ]
+
+    for textobj_name in textobj_names
+      call add(g:textobj_multitextobj_textobjects_a[0], "\<Plug>(" . textobj_name . "-a)")
+      call add(g:textobj_multitextobj_textobjects_i[0], "\<Plug>(" . textobj_name . "-i)")
+    endfor
+  endfunction
+
+  call s:ConfigPlugin({
+     \   "lazy":    1,
+     \   "depends": ["vim-textobj-user"],
+     \   "on_map":  "<Plug>(textobj-multitextobj-",
+     \   "hook_source": function("s:ConfigPluginOnSource_vim_textobj_multitextobj"),
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-textobj-ruby")  " {{{
