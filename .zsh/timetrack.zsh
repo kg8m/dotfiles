@@ -1,47 +1,28 @@
-# http://qiita.com/hayamiz/items/d64730b61b7918fbb970
+TIMETRACK_PATTERN="^$"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *(bin/|bundle exec )?rails r"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *(bin/|bundle exec )?rake\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *(bundle exec )?r?spec\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *(bundle exec )?ruby\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *brew\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *cat\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *for\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *make\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *mysql .*( -e|<)"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *mysqldump\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *pv\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *rsync\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *scp\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *ssh +[a-z0-9_.@]+ +['\"]"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *time\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *yum\\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|^ *zcat\\b"
+
+# inspired by http://qiita.com/hayamiz/items/d64730b61b7918fbb970
 autoload -U add-zsh-hook 2>/dev/null || return
 
 __timetrack_threshold=30  # seconds
-read -r -d '' __timetrack_target_commands <<EOF
-ruby
-ruby_multitest
-spec
-rspec
-rake
-rake_units
-rake_functionals
-rake_integration
-frake
-frake_units
-frake_functionals
-frake_integration
-rake_models
-rake_controllers
-rake_helpers
-prepare
-migrate
-mysql
-mysqldump
-pv
-make
-yum
-cat
-zcat
-scp
-rsync
-time
-EOF
-
-# not used. it is just my note.
-read -r -d '' __timetrack_ignored_commands <<EOF
-svn
-git
-s
-g
-EOF
 
 export __timetrack_threshold
-export __timetrack_target_commands
 
 function __my_preexec_start_timetrack() {
   local command=$1
@@ -52,8 +33,7 @@ function __my_preexec_start_timetrack() {
 
 function __my_preexec_end_timetrack() {
   local exec_time
-  local command=$__timetrack_command
-  local prog=$(echo $command|awk '{print $1}')
+  local command=$( echo $__timetrack_command | sed -e "s/'/'\\\\''/g" )
   local message
 
   export __timetrack_end=`date +%s`
@@ -62,22 +42,20 @@ function __my_preexec_end_timetrack() {
     return
   fi
 
-  for target_command in $(echo $__timetrack_target_commands); do
-    if [ "$prog" = "$target_command" ]; then
+  if [ "$command" =~ $TIMETRACK_PATTERN ]; then
+    exec_time=$((__timetrack_end-__timetrack_start))
+    message="Command finished!!\nTime: $exec_time seconds\nCommand: $command"
 
-      exec_time=$((__timetrack_end-__timetrack_start))
-      message="[$USER@$HOST] Command finished!\nTime: $exec_time seconds\nCommand: $command"
-
-      if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
-        ssh main "echo '$message' | growlnotify -n 'ZSH timetracker' --appIcon iTerm -s"
-      fi
-
-      unset __timetrack_start
-      unset __timetrack_command
-
-      return
+    if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
+      ssh main "echo '[$USER@$HOST] $message' | growlnotify -n 'ZSH timetracker' --appIcon iTerm -s"
+      echo $message
     fi
-  done
+
+    unset __timetrack_start
+    unset __timetrack_command
+
+    return
+  fi
 }
 
 add-zsh-hook preexec __my_preexec_start_timetrack
