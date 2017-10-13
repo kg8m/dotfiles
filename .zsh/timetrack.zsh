@@ -27,14 +27,14 @@ export __timetrack_threshold
 function __my_preexec_start_timetrack() {
   local command=$1
 
-  export __timetrack_start=`date +%s`
+  export __timetrack_start=$( date +%s )
   export __timetrack_command="$command"
 }
 
 function __my_preexec_end_timetrack() {
   local exec_time
-  local command=$( echo $__timetrack_command | sed -e "s/'/'\\\\''/g" )
   local message
+  local command=$( echo $__timetrack_command | sed -e "s/'/'\\\\''/g" )
 
   export __timetrack_end=`date +%s`
 
@@ -43,7 +43,7 @@ function __my_preexec_end_timetrack() {
   fi
 
   if [ "$command" =~ $TIMETRACK_PATTERN ]; then
-    exec_time=$((__timetrack_end-__timetrack_start))
+    exec_time=$(( __timetrack_end - __timetrack_start ))
     message="Command finished!!\nTime: $exec_time seconds\nCommand: $command"
 
     if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
