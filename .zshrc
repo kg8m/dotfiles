@@ -193,7 +193,7 @@ bindkey -a 'q' push-line
 
 [ -f ~/.zsh/timetrack.zsh      ] && source ~/.zsh/timetrack.zsh
 [ -f ~/.zsh/cd-bookmark.zsh    ] && source ~/.zsh/cd-bookmark.zsh
-[ -f ~/.zsh/enhancd/enhancd.sh ] && source ~/.zsh/enhancd/enhancd.sh
+[ -f ~/.zsh/enhancd/init.sh    ] && source ~/.zsh/enhancd/init.sh
 [ -f ~/.zsh/my_aliases.zsh     ] && source ~/.zsh/my_aliases.zsh
 [ -f ~/.zsh/my_functions.zsh   ] && source ~/.zsh/my_functions.zsh
 [ -f ~/.zsh/peco.zsh           ] && source ~/.zsh/peco.zsh
@@ -205,4 +205,3 @@ autoload -U compinit
 compinit
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
