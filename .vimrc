@@ -1861,7 +1861,8 @@ if s:TapPlugin("vimfiler")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin({
-     \   "lazy": 0,
+     \   "lazy":    1,
+     \   "on_func": "VimFilerBufferDir",
      \   "hook_source": function("s:ConfigPluginOnSource_vimfiler"),
      \ })
 endif  " }}}
