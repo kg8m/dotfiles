@@ -1,0 +1,31 @@
+# see `pt --help`
+
+# Output Options
+color   = true
+context = 1
+group   = true
+
+# Search Options
+e                = true
+smart-case       = true
+skip-vcs-ignores = true
+hidden           = true
+follow           = true
+
+# Ignores
+ignore = [
+  ".DS_Store",
+  ".git",
+  ".hg",
+  ".svn",
+  ".vim-sessions",
+  "log",
+  "node_modules",
+  "tmp/sass-cache",
+
+  "*_structure.sql",
+  "*.dat",
+  "*.diff",
+  "*.min.js",
+  "tags",
+]
