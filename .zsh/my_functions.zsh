@@ -1,11 +1,13 @@
 function execute_with_echo {
-  cmd_with_arguments=$@;
+  local cmd_with_arguments=$@;
 
   echo "----- ${cmd_with_arguments} ---------------";
   eval ${cmd_with_arguments};
 }
 
 function execute_commands_with_echo {
+  local command
+
   for command in $@; do
     execute_with_echo $command
     echo
@@ -13,11 +15,13 @@ function execute_commands_with_echo {
 }
 
 function notify {
-  message=$( printf %q "[$USER@$HOST] ${@:-Command finished.}" )
+  local message=$( printf %q "[$USER@$HOST] ${@:-Command finished.}" )
   ssh main "growlnotify -m $message -a iTerm -s"
 }
 
 function migrate {
+  local cmd
+
   if (($# == 1)) then
     cmd="rake db:migrate VERSION=$1";
   else
@@ -47,6 +51,9 @@ function tmux_setup_default {
 }
 
 function attach_or_new_tmux {
+  local session_name
+  local response
+
   if (($# == 0)); then
     session_name='default'
   else
