@@ -66,6 +66,12 @@ function attach_or_new_tmux {
     read 'response?Create new session in directory `'$( pwd )'` with session name `'$session_name'`? [y/n]: '
 
     if [[ $response =~ ^y ]]; then
+      read 'response?Resotre tmux environment for `'$session_name'` session if available? [y/n]: '
+
+      if [[ ! $response =~ ^y ]]; then
+        touch ~/tmux_no_auto_restore
+      fi
+
       if [ $session_name = 'default' ]; then
         tmux_setup_default
       else
@@ -75,6 +81,8 @@ function attach_or_new_tmux {
           tmux send-keys -t $session_name:1 "$2" Enter
         fi
       fi
+
+      rm -f ~/tmux_no_auto_restore
     else
       echo 'Not created.'
     fi
