@@ -7,6 +7,7 @@ let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/de
 let s:on_mac  = has("mac")
 let s:on_tmux = exists("$TMUX")
 
+let s:ag_available  = executable("ag")
 let s:ack_available = executable("ack")
 
 " plugin management functions  " {{{
@@ -761,7 +762,11 @@ if s:TapPlugin("unite.vim")  " {{{
     let g:unite_winheight = "100%"
     let g:unite_cursor_line_highlight = "CursorLine"
 
-    if s:ack_available
+    if s:ag_available
+      let g:unite_source_grep_command       = "ag"
+      let g:unite_source_grep_recursive_opt = ""
+      let g:unite_source_grep_default_opts  = "--vimgrep"
+    elseif s:ack_available
       let g:unite_source_grep_command       = "ack"
       let g:unite_source_grep_recursive_opt = ""
       let g:unite_source_grep_default_opts  = "--nocolor --nogroup --nopager"

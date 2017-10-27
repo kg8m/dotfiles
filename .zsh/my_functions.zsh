@@ -109,6 +109,10 @@ function extract() {
 }
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
+function viag() {
+  vi `ag $@ -l`
+}
+
 function viack() {
   vi `ack $@ -l`
 }

@@ -1,9 +1,14 @@
+.DS_Store
 .git
+.hg
 .svn
+.vim-sessions
 log
+node_modules
 tmp/sass-cache
 
 *_structure.sql
 *.dat
 *.diff
+*.min.js
 tags
