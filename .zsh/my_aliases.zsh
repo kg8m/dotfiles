@@ -36,24 +36,6 @@ alias _diff='/usr/bin/diff'
 alias _watch='/usr/bin/watch'
 alias watch='watch --color'
 
-alias log='     tail -F log/development.log log/production*.log'
-alias log_test='tail -F log/test.log'
-
-alias console='ruby script/console'
-alias prepare='       execute_with_echo "rake db:test:prepare"'
-alias load_structure='execute_with_echo "rake db:test:load_structure"'
-alias rake_units='      execute_with_echo "TEST_ENV_NUMBER=2 prepare; TEST_ENV_NUMBER=2 rake test:units $1"'
-alias rake_functionals='execute_with_echo "TEST_ENV_NUMBER=3 prepare; TEST_ENV_NUMBER=3 rake test:functionals $1"'
-alias rake_integration='execute_with_echo "TEST_ENV_NUMBER=4 prepare; TEST_ENV_NUMBER=4 rake test:integration $1"'
-alias rake_js='         execute_with_echo "rake test:js"'
-alias frake='execute_with_echo "rake FFTEST"'
-alias frake_units='      execute_with_echo "rake_units FFTEST"'
-alias frake_functionals='execute_with_echo "rake_functionals FFTEST"'
-alias frake_integration='execute_with_echo "rake_integration FFTEST"'
-alias rake_models='     execute_with_echo "TEST_ENV_NUMBER=2 rake spec:models"'
-alias rake_controllers='execute_with_echo "TEST_ENV_NUMBER=3 rake spec:controllers"'
-alias rake_helpers='    execute_with_echo "TEST_ENV_NUMBER=4 rake spec:helpers"'
-
 alias reload='source ~/.zshrc; echo "~/.zshrc sourced."'
 
 alias mux='attach_or_new_tmux'  # never use tmuxinator
