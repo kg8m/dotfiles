@@ -57,12 +57,6 @@ function! s:TapPlugin(plugin_name) abort  " {{{
 endfunction  " }}}
 
 function! s:ConfigPlugin(arg, ...) abort  " {{{
-  " FIXME: gundo: dein does not support hg
-  if g:dein#name == "gundo.vim"
-    call a:arg.hook_source()
-    return 1
-  endif
-
   if type(a:arg) != type([])
     return dein#config(a:arg, get(a:000, 0, {}))
   else
@@ -351,15 +345,12 @@ if s:TapPlugin("caw.vim")  " {{{
   nmap gc <Plug>(caw:hatpos:toggle)
   vmap gc <Plug>(caw:hatpos:toggle)
 
-  function! s:ConfigPluginOnSource_caw() abort  " {{{
-    let g:caw_no_default_keymappings = 1
-    let g:caw_hatpos_skip_blank_line = 1
-  endfunction  " }}}
+  let g:caw_no_default_keymappings = 1
+  let g:caw_hatpos_skip_blank_line = 1
 
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": [["nv", "<Plug>(caw:"]],
-     \   "hook_source": function("s:ConfigPluginOnSource_caw"),
      \ })
 endif  " }}}
 
@@ -432,30 +423,24 @@ endif  " }}}
 if s:TapPlugin("gundo.vim")  " {{{
   nnoremap <F5> :<C-u>GundoToggle<Cr>
 
-  function! s:ConfigPluginOnSource_gundo() abort  " {{{
-    " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
-    let g:gundo_auto_preview = 0
-    let g:gundo_prefer_python3 = 1
-  endfunction  " }}}
+  " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
+  let g:gundo_auto_preview = 0
+  let g:gundo_prefer_python3 = 1
 
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "GundoToggle",
-     \   "hook_source": function("s:ConfigPluginOnSource_gundo"),
      \ })
 endif  " }}}
 
 if s:TapPlugin("HowMuch")  " {{{
+  let g:HowMuch_scale = 5
+
   function! s:DefineHowMuchMappings() abort  " {{{
     vmap <Leader>?  <Plug>AutoCalcReplace
     vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
   endfunction  " }}}
   call s:DefineHowMuchMappings()
-
-  function! s:ConfigPluginOnSource_HowMuch() abort  " {{{
-    " replace expr with result
-    let g:HowMuch_scale = 5
-  endfunction  " }}}
 
   function! s:ConfigPluginOnPostSource_HowMuch() abort  " {{{
     " overwriting default mappings
@@ -465,7 +450,6 @@ if s:TapPlugin("HowMuch")  " {{{
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": [["v", "<Plug>AutoCalc"]],
-     \   "hook_source":      function("s:ConfigPluginOnSource_HowMuch"),
      \   "hook_post_source": function("s:ConfigPluginOnPostSource_HowMuch"),
      \ })
 endif  " }}}
@@ -576,14 +560,11 @@ if s:TapPlugin("lightline.vim")  " {{{
 endif  " }}}
 
 if s:TapPlugin("linediff.vim")  " {{{
-  function! s:ConfigPluginOnSource_linediff() abort  " {{{
-    let g:linediff_second_buffer_command = "rightbelow vertical new"
-  endfunction  " }}}
+  let g:linediff_second_buffer_command = "rightbelow vertical new"
 
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "Linediff",
-     \   "hook_source": function("s:ConfigPluginOnSource_linediff"),
      \ })
 endif  " }}}
 
@@ -676,21 +657,18 @@ if s:TapPlugin("open-browser.vim")  " {{{
   nmap <Leader>o <Plug>(openbrowser-open)
   vmap <Leader>o <Plug>(openbrowser-open)
 
-  function! s:ConfigPluginOnSource_open_browser() abort  " {{{
-    let g:openbrowser_browser_commands = [
-      \   {
-      \     "name": "ssh",
-      \     "args": "ssh main 'open '\\''{uri}'\\'''",
-      \   }
-      \ ]
-  endfunction  " }}}
+  let g:openbrowser_browser_commands = [
+    \   {
+    \     "name": "ssh",
+    \     "args": "ssh main 'open '\\''{uri}'\\'''",
+    \   }
+    \ ]
 
   call s:ConfigPlugin({
      \   "lazy":    1,
      \   "on_cmd":  ["OpenBrowserSearch", "OpenBrowser"],
      \   "on_func": "openbrowser#open",
      \   "on_map":  [["nv", "<Plug>(openbrowser-open)"]],
-     \   "hook_source": function("s:ConfigPluginOnSource_open_browser"),
      \ })
 
 endif  " }}}
@@ -736,17 +714,14 @@ if s:TapPlugin("splitjoin.vim")  " {{{
   nnoremap <Leader>J :<C-u>SplitjoinJoin<Cr>
   nnoremap <Leader>S :<C-u>SplitjoinSplit<Cr>
 
-  function! s:ConfigPluginOnSource_splitjoin() abort  " {{{
-    let g:splitjoin_split_mapping       = ""
-    let g:splitjoin_join_mapping        = ""
-    let g:splitjoin_ruby_trailing_comma = 1
-    let g:splitjoin_ruby_hanging_args   = 0
-  endfunction  " }}}
+  let g:splitjoin_split_mapping       = ""
+  let g:splitjoin_join_mapping        = ""
+  let g:splitjoin_ruby_trailing_comma = 1
+  let g:splitjoin_ruby_hanging_args   = 0
 
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": ["SplitjoinJoin", "SplitjoinSplit"],
-     \   "hook_source": function("s:ConfigPluginOnSource_splitjoin"),
      \ })
 endif  " }}}
 
@@ -941,14 +916,11 @@ if s:TapPlugin("unite.vim")  " {{{
   endif  " }}}
 
   if s:TapPlugin("unite-dwm")  " {{{
-    function! s:ConfigPluginOnSource_unite_dwm() abort  " {{{
-      let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,cdable"
-    endfunction  " }}}
+    let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,cdable"
 
     call s:ConfigPlugin({
        \   "lazy":  1,
        \   "on_ft": ["unite", "vimfiler"],
-       \   "hook_source": function("s:ConfigPluginOnSource_unite_dwm"),
        \ })
   endif  " }}}
 
@@ -1055,15 +1027,12 @@ if s:TapPlugin("unite.vim")  " {{{
     nnoremap g[ :<C-u>Unite jump<Cr>
     nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
 
-    function! s:ConfigPluginOnSource_unite_tag() abort  " {{{
-      let g:unite_source_tag_max_name_length  = 50
-      let g:unite_source_tag_max_fname_length = 100
-    endfunction  " }}}
+    let g:unite_source_tag_max_name_length  = 50
+    let g:unite_source_tag_max_fname_length = 100
 
     call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
-       \   "hook_source": function("s:ConfigPluginOnSource_unite_tag"),
        \ })
   endif  " }}}
 
@@ -1079,9 +1048,7 @@ if s:TapPlugin("unite.vim")  " {{{
       nnoremap <Leader>uv :<C-u>Unite giti/status<Cr>
     endif
 
-    function! s:ConfigPluginOnSource_vim_unite_giti() abort  " {{{
-      let g:giti_log_default_line_count = 1000
-    endfunction  " }}}
+    let g:giti_log_default_line_count = 1000
 
     function! s:ConfigPluginOnPostSource_vim_unite_giti() abort  " {{{
       function! s:AddActionsToUniteGiti() abort  " {{{
@@ -1119,7 +1086,6 @@ if s:TapPlugin("unite.vim")  " {{{
     call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
-       \   "hook_source":      function("s:ConfigPluginOnSource_vim_unite_giti"),
        \   "hook_post_source": function("s:ConfigPluginOnPostSource_vim_unite_giti"),
        \ })
   endif  " }}}
@@ -1299,34 +1265,28 @@ endif  " }}}
 if s:TapPlugin("vim-choosewin")  " {{{
   nmap <C-w>f <Plug>(choosewin)
 
-  function! s:ConfigPluginOnSource_vim_choosewin() abort  " {{{
-    let g:choosewin_overlay_enable          = 0  " wanna set true but too heavy
-    let g:choosewin_overlay_clear_multibyte = 1
-    let g:choosewin_blink_on_land           = 0
-    let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
-    let g:choosewin_tabline_replace         = 0
-  endfunction  " }}}
+  let g:choosewin_overlay_enable          = 0  " wanna set true but too heavy
+  let g:choosewin_overlay_clear_multibyte = 1
+  let g:choosewin_blink_on_land           = 0
+  let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
+  let g:choosewin_tabline_replace         = 0
 
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": "<Plug>(choosewin)",
-     \   "hook_source": function("s:ConfigPluginOnSource_vim_choosewin"),
      \ })
 endif  " }}}
 
 if s:TapPlugin("vim-dirdiff")  " {{{
-  function! s:ConfigPluginOnSource_vim_dirdiff() abort  " {{{
-    let g:DirDiffExcludes   = "CVS,*.class,*.exe,.*.swp,*.git,db/development_structure.sql,log,tags,tmp"
-    let g:DirDiffIgnore     = "Id:,Revision:,Date:"
-    let g:DirDiffSort       = 1
-    let g:DirDiffIgnoreCase = 0
-    let g:DirDiffForceLang  = "C"
-  endfunction  " }}}
+  let g:DirDiffExcludes   = "CVS,*.class,*.exe,.*.swp,*.git,db/development_structure.sql,log,tags,tmp"
+  let g:DirDiffIgnore     = "Id:,Revision:,Date:"
+  let g:DirDiffSort       = 1
+  let g:DirDiffIgnoreCase = 0
+  let g:DirDiffForceLang  = "C"
 
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "DirDiff",
-     \   "hook_source": function("s:ConfigPluginOnSource_vim_dirdiff"),
      \ })
 endif  " }}}
 
@@ -1585,15 +1545,12 @@ if s:TapPlugin("vim-rubytest")  " {{{
     autocmd FileType ruby nmap <buffer> <leader>t <Plug>RubyTestRun
   augroup END  " }}}
 
-  function! s:ConfigPluginOnSource_vim_rubytest() abort  " {{{
-    let g:no_rubytest_mappings = 1
-    let g:rubytest_in_vimshell = 1
-  endfunction  " }}}
+  let g:no_rubytest_mappings = 1
+  let g:rubytest_in_vimshell = 1
 
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": [["n", "<Plug>RubyFileRun"], ["n", "<Plug>RubyTestRun"]],
-     \   "hook_source": function("s:ConfigPluginOnSource_vim_rubytest"),
      \ })
 endif  " }}}
 
@@ -1642,16 +1599,13 @@ if s:TapPlugin("vim-session")  " {{{
 endif  " }}}
 
 if s:TapPlugin("vim-singleton")  " {{{
-  function! s:ConfigPluginOnSource_vim_singleton() abort  " {{{
-    if has("gui_running") && !singleton#is_master()
-      let g:singleton#opener = "drop"
-      call singleton#enable()
-    endif
-  endfunction  " }}}
+  if has("gui_running") && !singleton#is_master()
+    let g:singleton#opener = "drop"
+    call singleton#enable()
+  endif
 
   call s:ConfigPlugin({
      \   "gui": 1,
-     \   "hook_source": function("s:ConfigPluginOnSource_vim_singleton"),
      \ })
 endif  " }}}
 
@@ -1834,15 +1788,12 @@ if s:TapPlugin("vim-turbux")  " {{{
     autocmd FileType ruby nmap <buffer> <leader>t <Plug>SendFocusedTestToTmux
   augroup END  " }}}
 
-  function! s:ConfigPluginOnSource_vim_turbux() abort  " {{{
-    let g:no_turbux_mappings = 1
-    let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
-  endfunction  " }}}
+  let g:no_turbux_mappings = 1
+  let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
 
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": [["n", "<Plug>SendTestToTmux"], ["n", "<Plug>SendFocusedTestToTmux"]],
-     \   "hook_source": function("s:ConfigPluginOnSource_vim_turbux"),
      \ })
 endif  " }}}
 
@@ -1875,17 +1826,14 @@ endif  " }}}
 if s:TapPlugin("vimshell")  " {{{
   nnoremap <Leader>s :<C-u>VimShell<Cr>
 
-  function! s:ConfigPluginOnSource_vimshell() abort  " {{{
-    let g:_user_name = $USER
-    let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
-    let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
-    let g:vimshell_prompt = "% "
-  endfunction  " }}}
+  let g:_user_name = $USER
+  let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
+  let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
+  let g:vimshell_prompt = "% "
 
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": ["VimShell", "VimShellExecute"],
-     \   "hook_source": function("s:ConfigPluginOnSource_vimshell"),
      \ })
 endif  " }}}
 
