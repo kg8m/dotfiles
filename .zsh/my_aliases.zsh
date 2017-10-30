@@ -6,7 +6,7 @@ alias -g T="| tail"
 alias -g P="| peco"
 alias -g GW='--ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change'  # for Git: ignore whitespace changes
 
-alias ag="ag --pager=less --color-line-number='1;36' --color-match='30;46' --color-path='1;34'"
+alias ag="ag --pager=less --hidden --color-line-number='1;36' --color-match='30;46' --color-path='1;34'"
 alias g='git'
 
 if builtin command -v colorsvn > /dev/null; then
