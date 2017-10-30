@@ -234,6 +234,7 @@ call s:RegisterPlugin("Townk/vim-autoclose")
 call s:RegisterPlugin("Chiel92/vim-autoformat")
 call s:RegisterPlugin("itchyny/vim-autoft")
 call s:RegisterPlugin("kg8m/vim-blockle")
+call s:RegisterPlugin("jkramer/vim-checkbox")
 call s:RegisterPlugin("t9md/vim-choosewin")
 call s:RegisterPlugin("kchmck/vim-coffee-script")
 call s:RegisterPlugin("kg8m/vim-coloresque")
@@ -1260,6 +1261,18 @@ endif  " }}}
 if s:TapPlugin("vim-blockle")  " {{{
   let g:blockle_mapping = ",b"
   let g:blockle_erase_spaces_around_starting_brace = 1
+endif  " }}}
+
+if s:TapPlugin("vim-checkbox")  " {{{
+  augroup ConfigCheckbox
+    autocmd!
+    autocmd FileType markdown,moin nnoremap <buffer> <Leader>c :ToggleCB<Cr>
+  augroup END
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": "ToggleCB",
+     \ })
 endif  " }}}
 
 if s:TapPlugin("vim-choosewin")  " {{{
