@@ -196,8 +196,14 @@ call s:RegisterPlugin("leafcage/foldCC")
 call s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")
 call s:RegisterPlugin("sk1418/HowMuch")
 call s:RegisterPlugin("nishigori/increment-activator")
-call s:RegisterPlugin("haya14busa/incsearch.vim")
-call s:RegisterPlugin("haya14busa/incsearch-index.vim", { "if": 0 }) " experimental
+
+if v:version >= 800 && has("patch1238")
+  echomsg "use default incremental search instead of incsearch.vim"
+else
+  call s:RegisterPlugin("haya14busa/incsearch.vim")
+  call s:RegisterPlugin("haya14busa/incsearch-index.vim", { "if": 0 }) " experimental
+endif
+
 call s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git")
 call s:RegisterPlugin("itchyny/lightline.vim")
 call s:RegisterPlugin("AndrewRadev/linediff.vim")
