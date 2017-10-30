@@ -1,3 +1,6 @@
+TIMETRACK_IGNORE_PATTERN="^$"
+TIMETRACK_IGNORE_PATTERN="$TIMETRACK_IGNORE_PATTERN|^(ack|ag)\b"
+TIMETRACK_IGNORE_PATTERN="$TIMETRACK_IGNORE_PATTERN|^(viack|viag)\b"
 TIMETRACK_PATTERN="^$"
 TIMETRACK_PATTERN="$TIMETRACK_PATTERN|\b(bin/|bundle exec )?rails r"
 TIMETRACK_PATTERN="$TIMETRACK_PATTERN|\b(bin/|bundle exec )?rake\b"
@@ -42,7 +45,7 @@ function __my_preexec_end_timetrack() {
     return
   fi
 
-  if [ "$command" =~ $TIMETRACK_PATTERN ]; then
+  if ! [ "$command" =~ $TIMETRACK_IGNORE_PATTERN ] && [ "$command" =~ $TIMETRACK_PATTERN ]; then
     exec_time=$(( __timetrack_end - __timetrack_start ))
     message="Command finished!!\nTime: $exec_time seconds\nCommand: $command"
 
