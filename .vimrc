@@ -10,6 +10,8 @@ let s:on_tmux = exists("$TMUX")
 let s:ag_available  = executable("ag")
 let s:ack_available = executable("ack")
 
+let s:native_incsearch_highlightable = v:version >= 800 && has("patch1238")
+
 " plugin management functions  " {{{
 function! UpdatePlugins() abort  " {{{
   call dein#update()
@@ -33,6 +35,8 @@ function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
     endif
 
     set runtimepath+=$HOME/.vim/bundle/gundo.vim
+    let g:dein#name = a:plugin_name
+
     return 1
   endif
 
@@ -43,17 +47,10 @@ function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
     let options["if"] = 1
   endif
 
-  return dein#add(a:plugin_name, options)
-endfunction  " }}}
+  call dein#add(a:plugin_name, options)
 
-function! s:TapPlugin(plugin_name) abort  " {{{
-  " FIXME: gundo: dein does not support hg
-  if a:plugin_name == "gundo.vim"
-    let g:dein#name = a:plugin_name
-    return 1
-  endif
-
-  return dein#tap(a:plugin_name)
+  let normalized_plugin_name = substitute(a:plugin_name, "\\v^.+/", "", "")
+  return dein#tap(normalized_plugin_name)
 endfunction  " }}}
 
 function! s:ConfigPlugin(arg, ...) abort  " {{{
@@ -180,136 +177,13 @@ endif
 call s:SetupPluginStart()
 " }}}
 
-" plugins list  " {{{
+" plugins list and settings  " {{{
 call s:RegisterPlugin(s:plugin_manager_path)
 call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 
 call s:RegisterPlugin("kg8m/.vim")
-call s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })
-call s:RegisterPlugin("vim-scripts/autodate.vim")
-call s:RegisterPlugin("tyru/caw.vim")
-call s:RegisterPlugin("Shougo/context_filetype.vim")
-call s:RegisterPlugin("spolu/dwm.vim")
-call s:RegisterPlugin("mattn/emmet-vim")                             " former zencoding-vim
-call s:RegisterPlugin("bogado/file-line", { "if": 0 })               " conflicts with sudo.vim (`vim sudo:path/to/file` not working)
-call s:RegisterPlugin("leafcage/foldCC")
-call s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")
-call s:RegisterPlugin("sk1418/HowMuch")
-call s:RegisterPlugin("nishigori/increment-activator")
 
-if v:version >= 800 && has("patch1238")
-  echomsg "use default incremental search instead of incsearch.vim"
-else
-  call s:RegisterPlugin("haya14busa/incsearch.vim")
-  call s:RegisterPlugin("haya14busa/incsearch-index.vim", { "if": 0 }) " experimental
-endif
-
-call s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git")
-call s:RegisterPlugin("itchyny/lightline.vim")
-call s:RegisterPlugin("AndrewRadev/linediff.vim")
-call s:RegisterPlugin("vim-scripts/matchit.zip")
-call s:RegisterPlugin("kg8m/moin.vim")
-call s:RegisterPlugin("Shougo/neocomplete.vim")
-call s:RegisterPlugin("Shougo/neomru.vim")
-call s:RegisterPlugin("Shougo/neoyank.vim")
-call s:RegisterPlugin("Shougo/neosnippet")
-call s:RegisterPlugin("Shougo/neosnippet-snippets")
-call s:RegisterPlugin("tyru/open-browser.vim")
-call s:RegisterPlugin("tyru/operator-camelize.vim")
-call s:RegisterPlugin("kien/rainbow_parentheses.vim", { "if": 0 })   " sometimes breaks colorschemes
-call s:RegisterPlugin("chrisbra/Recover.vim")
-call s:RegisterPlugin("todesking/ruby_hl_lvar.vim", { "if": RubyVersion() >= '1.9.0' && 0 })  " mossari
-call s:RegisterPlugin("vim-scripts/sequence")
-call s:RegisterPlugin("joeytwiddle/sexy_scroller.vim")
-call s:RegisterPlugin("jiangmiao/simple-javascript-indenter")
-call s:RegisterPlugin("AndrewRadev/splitjoin.vim")
-call s:RegisterPlugin("vim-scripts/sudo.vim")
-call s:RegisterPlugin("kg8m/svn-diff.vim", { "if": OnSvnDir() })
-call s:RegisterPlugin("Shougo/unite.vim")
-call s:RegisterPlugin("kg8m/unite-dwm")
-call s:RegisterPlugin("osyo-manga/unite-filetype")
-call s:RegisterPlugin("Shougo/unite-help")
-call s:RegisterPlugin("kg8m/unite-mark")
-call s:RegisterPlugin("Shougo/unite-outline")
-call s:RegisterPlugin("basyura/unite-rails", { "if": OnRailsDir() })
-call s:RegisterPlugin("tsukkee/unite-tag")
-call s:RegisterPlugin("h1mesuke/vim-alignta")
-call s:RegisterPlugin("osyo-manga/vim-anzu")
-call s:RegisterPlugin("haya14busa/vim-asterisk")
-call s:RegisterPlugin("Townk/vim-autoclose")
-call s:RegisterPlugin("Chiel92/vim-autoformat")
-call s:RegisterPlugin("itchyny/vim-autoft")
-call s:RegisterPlugin("kg8m/vim-blockle")
-call s:RegisterPlugin("jkramer/vim-checkbox")
-call s:RegisterPlugin("t9md/vim-choosewin")
-call s:RegisterPlugin("kchmck/vim-coffee-script")
-call s:RegisterPlugin("kg8m/vim-coloresque")
-call s:RegisterPlugin("hail2u/vim-css-syntax")
-call s:RegisterPlugin("hail2u/vim-css3-syntax")
-call s:RegisterPlugin("itchyny/vim-cursorword", { "if": 0 })         " confusing with IME's underline
-call s:RegisterPlugin("Lokaltog/vim-easymotion")
-call s:RegisterPlugin("kg8m/vim-dirdiff")
-call s:RegisterPlugin("thinca/vim-ft-diff_fold")
-call s:RegisterPlugin("thinca/vim-ft-help_fold")
-call s:RegisterPlugin("thinca/vim-ft-markdown_fold")
-call s:RegisterPlugin("tpope/vim-fugitive", { "if": OnGitDir() })
-call s:RegisterPlugin("thinca/vim-ft-svn_diff")
-call s:RegisterPlugin("muz/vim-gemfile")
-call s:RegisterPlugin("kana/vim-gf-user")
-call s:RegisterPlugin("tpope/vim-git")
-call s:RegisterPlugin("lambdalisue/vim-gita", { "if": 0 })           " interested in future features
-call s:RegisterPlugin("tpope/vim-haml")
-call s:RegisterPlugin("michaeljsmith/vim-indent-object")
-call s:RegisterPlugin("jelera/vim-javascript-syntax")
-call s:RegisterPlugin("elzr/vim-json")
-call s:RegisterPlugin("rcmdnk/vim-markdown")
-call s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")
-call s:RegisterPlugin("xolox/vim-misc")
-call s:RegisterPlugin("losingkeys/vim-niji", { "if": 0 })            " sometimes breaks colorschemes
-call s:RegisterPlugin("kana/vim-operator-replace")
-call s:RegisterPlugin("rhysd/vim-operator-surround")
-call s:RegisterPlugin("kana/vim-operator-user")
-call s:RegisterPlugin("itchyny/vim-parenmatch")
-call s:RegisterPlugin("thinca/vim-prettyprint")
-call s:RegisterPlugin("thinca/vim-qfreplace")
-call s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() })
-call s:RegisterPlugin("thinca/vim-ref")
-call s:RegisterPlugin("tpope/vim-repeat")
-call s:RegisterPlugin("vim-ruby/vim-ruby")
-call s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax")
-call s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() })
-call s:RegisterPlugin("xolox/vim-session")
-call s:RegisterPlugin("thinca/vim-singleton")
-call s:RegisterPlugin("kg8m/vim-snippets")
-call s:RegisterPlugin("mhinz/vim-startify")
-call s:RegisterPlugin("kopischke/vim-stay")
-call s:RegisterPlugin("tpope/vim-surround")
-call s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")
-call s:RegisterPlugin("kana/vim-textobj-jabraces")
-call s:RegisterPlugin("kana/vim-textobj-lastpat")
-call s:RegisterPlugin("osyo-manga/vim-textobj-multitextobj")
-call s:RegisterPlugin("rhysd/vim-textobj-ruby")
-call s:RegisterPlugin("kana/vim-textobj-user")
-call s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() })
-call s:RegisterPlugin("thinca/vim-unite-history")
-call s:RegisterPlugin("kg8m/vim-unite-giti", { "if": OnGitDir() })
-call s:RegisterPlugin("kmnk/vim-unite-svn", { "if": OnSvnDir() })
-call s:RegisterPlugin("hrsh7th/vim-versions", { "if": OnGitDir() || OnSvnDir() })
-call s:RegisterPlugin("superbrothers/vim-vimperator")
-call s:RegisterPlugin("thinca/vim-zenspace")
-call s:RegisterPlugin("Shougo/vimfiler")
-call s:RegisterPlugin("Shougo/vimshell")
-call s:RegisterPlugin("benmills/vimux", { "if": OnTmux() })
-call s:RegisterPlugin("simeji/winresizer")
-call s:RegisterPlugin("LeafCage/yankround.vim")
-
-" colorschemes
-call s:RegisterPlugin("hail2u/h2u_colorscheme")                      " for printing
-call s:RegisterPlugin("kg8m/molokai")
-" }}}
-
-" plugins settings  " {{{
-if s:TapPlugin("auto-ctags.vim")  " {{{
+if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
   let g:auto_ctags = 1
 
   augroup AutoCtagsAucocommands  " {{{
@@ -337,7 +211,7 @@ if s:TapPlugin("auto-ctags.vim")  " {{{
   endfunction  " }}}
 endif  " }}}
 
-if s:TapPlugin("autodate.vim")  " {{{
+if s:RegisterPlugin("vim-scripts/autodate.vim")  " {{{
   let g:autodate_format       = "%Y/%m/%d"
   let g:autodate_lines        = 100
   let g:autodate_keyword_pre  = '\c\%(' .
@@ -348,7 +222,7 @@ if s:TapPlugin("autodate.vim")  " {{{
   let g:autodate_keyword_post = '\.$'
 endif  " }}}
 
-if s:TapPlugin("caw.vim")  " {{{
+if s:RegisterPlugin("tyru/caw.vim")  " {{{
   nmap gc <Plug>(caw:hatpos:toggle)
   vmap gc <Plug>(caw:hatpos:toggle)
 
@@ -361,7 +235,9 @@ if s:TapPlugin("caw.vim")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("dwm.vim")  " {{{
+call s:RegisterPlugin("Shougo/context_filetype.vim")
+
+if s:RegisterPlugin("spolu/dwm.vim")  " {{{
   nmap <C-w>n       :<C-u>call DWM_New()<Cr>
   nmap <C-w>c       :<C-u>call DWM_Close()<Cr>
   nmap <C-w><Space> :<C-u>call DWM_AutoEnter()<Cr>
@@ -385,7 +261,8 @@ if s:TapPlugin("dwm.vim")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-if s:TapPlugin("emmet-vim")  " {{{
+" former zencoding-vim
+if s:RegisterPlugin("mattn/emmet-vim")  " {{{
   " command: `<C-y>,`, `<C-y>;`
   function! s:ConfigPluginOnSource_emmet_vim() abort  " {{{
     let g:user_emmet_settings = {
@@ -421,13 +298,16 @@ if s:TapPlugin("emmet-vim")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("foldCC")  " {{{
+" conflicts with sudo.vim (`vim sudo:path/to/file` not working)
+call s:RegisterPlugin("bogado/file-line", { "if": 0 })
+
+if s:RegisterPlugin("leafcage/foldCC")  " {{{
   let g:foldCCtext_enable_autofdc_adjuster = 1
   let g:foldCCtext_maxchars = 120
   set foldtext=FoldCCtext()
 endif  " }}}
 
-if s:TapPlugin("gundo.vim")  " {{{
+if s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")  " {{{
   nnoremap <F5> :<C-u>GundoToggle<Cr>
 
   " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
@@ -440,7 +320,7 @@ if s:TapPlugin("gundo.vim")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("HowMuch")  " {{{
+if s:RegisterPlugin("sk1418/HowMuch")  " {{{
   let g:HowMuch_scale = 5
 
   function! s:DefineHowMuchMappings() abort  " {{{
@@ -461,7 +341,7 @@ if s:TapPlugin("HowMuch")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("increment-activator")  " {{{
+if s:RegisterPlugin("nishigori/increment-activator")  " {{{
   let g:increment_activator_filetype_candidates = {
     \   "_": [
     \     ["有", "無"],
@@ -493,32 +373,31 @@ if s:TapPlugin("increment-activator")  " {{{
     \ }
 endif  " }}}
 
-if s:TapPlugin("incsearch.vim")  " {{{
-  map /  <Plug>(incsearch-forward)
-  map ?  <Plug>(incsearch-backward)
-  map g/ <Plug>(incsearch-stay)
-  map n  <Plug>(incsearch-nohl-n)<Plug>(anzu-update-search-status-with-echo)
-  map N  <Plug>(incsearch-nohl-N)<Plug>(anzu-update-search-status-with-echo)
-  " asterisk's `z` commands are "stay star motions"
-  map *  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
-  map #  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
-  map g* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
-  map g# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
+if s:native_incsearch_highlightable
+  nnoremap / /\v
+else
+  if s:RegisterPlugin("haya14busa/incsearch.vim")  " {{{
+    map /  <Plug>(incsearch-forward)
+    map ?  <Plug>(incsearch-backward)
+    map g/ <Plug>(incsearch-stay)
+    map n  <Plug>(incsearch-nohl-n)<Plug>(anzu-update-search-status-with-echo)
+    map N  <Plug>(incsearch-nohl-N)<Plug>(anzu-update-search-status-with-echo)
+    " asterisk's `z` commands are "stay star motions"
+    map *  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
+    map #  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
+    map g* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
+    map g# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 
-  let g:incsearch#auto_nohlsearch = 0
-  let g:incsearch#magic = '\v'
-
-  if s:TapPlugin("incsearch-index.vim")  " {{{
-    map /  <Plug>(incsearch-index-/)
-    map ?  <Plug>(incsearch-index-?)
+    let g:incsearch#auto_nohlsearch = 0
+    let g:incsearch#magic = '\v'
   endif  " }}}
-endif  " }}}
+endif
 
-if s:TapPlugin("jscomplete-vim.git")  " {{{
+if s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git")  " {{{
   let g:jscomplete_use = ["dom", "moz", "es6th"]
 endif  " }}}
 
-if s:TapPlugin("lightline.vim")  " {{{
+if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   " http://d.hatena.ne.jp/itchyny/20130828/1377653592
   set laststatus=2
   let s:lightline_elements = {
@@ -566,7 +445,7 @@ if s:TapPlugin("lightline.vim")  " {{{
   endfunction  " }}}
 endif  " }}}
 
-if s:TapPlugin("linediff.vim")  " {{{
+if s:RegisterPlugin("AndrewRadev/linediff.vim")  " {{{
   let g:linediff_second_buffer_command = "rightbelow vertical new"
 
   call s:ConfigPlugin({
@@ -575,7 +454,10 @@ if s:TapPlugin("linediff.vim")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("neocomplete.vim")  " {{{
+call s:RegisterPlugin("vim-scripts/matchit.zip")
+call s:RegisterPlugin("kg8m/moin.vim")
+
+if s:RegisterPlugin("Shougo/neocomplete.vim")  " {{{
   function! s:ConfigPluginOnSource_neocomplete() abort  " {{{
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_smart_case = 1
@@ -628,7 +510,7 @@ if s:TapPlugin("neocomplete.vim")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("neosnippet")  " {{{
+if s:RegisterPlugin("Shougo/neosnippet")  " {{{
   function! s:ConfigPluginOnSource_neosnippet() abort  " {{{
     imap <expr><Tab>   pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     smap <expr><Tab>   neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
@@ -660,7 +542,9 @@ if s:TapPlugin("neosnippet")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("open-browser.vim")  " {{{
+call s:RegisterPlugin("Shougo/neosnippet-snippets")
+
+if s:RegisterPlugin("tyru/open-browser.vim")  " {{{
   nmap <Leader>o <Plug>(openbrowser-open)
   vmap <Leader>o <Plug>(openbrowser-open)
 
@@ -680,7 +564,7 @@ if s:TapPlugin("open-browser.vim")  " {{{
 
 endif  " }}}
 
-if s:TapPlugin("operator-camelize.vim")  " {{{
+if s:RegisterPlugin("tyru/operator-camelize.vim")  " {{{
   vmap <Leader>C <Plug>(operator-camelize)
   vmap <Leader>c <Plug>(operator-decamelize)
 
@@ -693,14 +577,19 @@ if s:TapPlugin("operator-camelize.vim")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("ruby_hl_lvar.vim")  " {{{
+" sometimes breaks colorschemes
+call s:RegisterPlugin("kien/rainbow_parentheses.vim", { "if": 0 })
+call s:RegisterPlugin("chrisbra/Recover.vim")
+
+" mossari
+if s:RegisterPlugin("todesking/ruby_hl_lvar.vim", { "if": RubyVersion() >= '1.9.0' && 0 })  " {{{
   call s:ConfigPlugin({
      \   "lazy":  1,
      \   "on_ft": ["ruby"],
      \ })
 endif  " }}}
 
-if s:TapPlugin("sequence")  " {{{
+if s:RegisterPlugin("vim-scripts/sequence")  " {{{
   vmap <Leader>+ <Plug>SequenceV_Increment
   vmap <Leader>- <Plug>SequenceV_Decrement
   nmap <Leader>+ <Plug>SequenceN_Increment
@@ -712,12 +601,14 @@ if s:TapPlugin("sequence")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("simple-javascript-indenter")  " {{{
+call s:RegisterPlugin("joeytwiddle/sexy_scroller.vim")
+
+if s:RegisterPlugin("jiangmiao/simple-javascript-indenter")  " {{{
   let g:SimpleJsIndenter_BriefMode = 2
   let g:SimpleJsIndenter_CaseIndentLevel = -1
 endif  " }}}
 
-if s:TapPlugin("splitjoin.vim")  " {{{
+if s:RegisterPlugin("AndrewRadev/splitjoin.vim")  " {{{
   nnoremap <Leader>J :<C-u>SplitjoinJoin<Cr>
   nnoremap <Leader>S :<C-u>SplitjoinSplit<Cr>
 
@@ -732,7 +623,10 @@ if s:TapPlugin("splitjoin.vim")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("unite.vim")  " {{{
+call s:RegisterPlugin("vim-scripts/sudo.vim")
+call s:RegisterPlugin("kg8m/svn-diff.vim", { "if": OnSvnDir() })
+
+if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::
@@ -902,7 +796,7 @@ if s:TapPlugin("unite.vim")  " {{{
      \   "hook_source": function("s:ConfigPluginOnSource_unite"),
      \ })
 
-  if s:TapPlugin("neomru.vim")  " {{{
+  if s:RegisterPlugin("Shougo/neomru.vim")  " {{{
     call s:ConfigPlugin({
        \   "lazy": 0,
        \ })
@@ -914,7 +808,7 @@ if s:TapPlugin("unite.vim")  " {{{
     let g:neomru#file_mru_limit  = 1000
   endif  " }}}
 
-  if s:TapPlugin("neoyank.vim")  " {{{
+  if s:RegisterPlugin("Shougo/neoyank.vim")  " {{{
     call s:ConfigPlugin({
        \   "lazy": 0,
        \ })
@@ -922,7 +816,7 @@ if s:TapPlugin("unite.vim")  " {{{
     let g:neoyank#limit = 300
   endif  " }}}
 
-  if s:TapPlugin("unite-dwm")  " {{{
+  if s:RegisterPlugin("kg8m/unite-dwm")  " {{{
     let g:unite_dwm_source_names_as_default_action = "buffer,file,file_mru,cdable"
 
     call s:ConfigPlugin({
@@ -931,14 +825,16 @@ if s:TapPlugin("unite.vim")  " {{{
        \ })
   endif  " }}}
 
-  if s:TapPlugin("unite-filetype")  " {{{
+  if s:RegisterPlugin("osyo-manga/unite-filetype")  " {{{
     call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \ })
   endif  " }}}
 
-  if s:TapPlugin("unite-mark")  " {{{
+  call s:RegisterPlugin("Shougo/unite-help")
+
+  if s:RegisterPlugin("kg8m/unite-mark")  " {{{
     nnoremap <Leader>um :<C-u>Unite mark<Cr>
     nnoremap <silent> m :<C-u>call AutoMark()<Cr>
 
@@ -1006,7 +902,7 @@ if s:TapPlugin("unite.vim")  " {{{
        \ })
   endif  " }}}
 
-  if s:TapPlugin("unite-outline")  " {{{
+  if s:RegisterPlugin("Shougo/unite-outline")  " {{{
     call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
@@ -1015,7 +911,7 @@ if s:TapPlugin("unite.vim")  " {{{
     nnoremap <Leader>uo :<C-u>Unite outline:!<Cr>
   endif  " }}}
 
-  if s:TapPlugin("unite-rails")  " {{{
+  if s:RegisterPlugin("basyura/unite-rails", { "if": OnRailsDir() })  " {{{
     call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
@@ -1024,7 +920,7 @@ if s:TapPlugin("unite.vim")  " {{{
     nnoremap <Leader>ur :<C-u>Unite rails/
   endif  " }}}
 
-  if s:TapPlugin("unite-tag")  " {{{
+  if s:RegisterPlugin("tsukkee/unite-tag")  " {{{
     call s:ConfigPlugin("unite.vim", {
        \   "on_cmd": s:PluginInfo("unite.vim")["on_cmd"] + ["UniteWithCursorWord"],
        \ })
@@ -1043,14 +939,14 @@ if s:TapPlugin("unite.vim")  " {{{
        \ })
   endif  " }}}
 
-  if s:TapPlugin("vim-unite-history")  " {{{
+  if s:RegisterPlugin("thinca/vim-unite-history")  " {{{
     call s:ConfigPlugin({
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \ })
   endif  " }}}
 
-  if s:TapPlugin("vim-unite-giti")  " {{{
+  if s:RegisterPlugin("kg8m/vim-unite-giti", { "if": OnGitDir() })  " {{{
     if mapcheck("<Leader>uv") == ""
       nnoremap <Leader>uv :<C-u>Unite giti/status<Cr>
     endif
@@ -1097,7 +993,7 @@ if s:TapPlugin("unite.vim")  " {{{
        \ })
   endif  " }}}
 
-  if s:TapPlugin("vim-unite-svn")  " {{{
+  if s:RegisterPlugin("kmnk/vim-unite-svn", { "if": OnSvnDir() })  " {{{
     if mapcheck("<Leader>uv") == ""
       nnoremap <Leader>uv :<C-u>Unite svn/status<Cr>
     endif
@@ -1130,7 +1026,7 @@ if s:TapPlugin("unite.vim")  " {{{
        \ })
   endif  " }}}
 
-  if s:TapPlugin("vim-versions")  " {{{
+  if s:RegisterPlugin("hrsh7th/vim-versions", { "if": OnGitDir() || OnSvnDir() })  " {{{
     nnoremap <Leader>u<S-v> :<C-u>UniteVersions status:./<Cr>
 
     function! s:ConfigPluginOnSource_vim_versions() abort  " {{{
@@ -1172,7 +1068,7 @@ if s:TapPlugin("unite.vim")  " {{{
   endif  " }}}
 endif  " }}}
 
-if s:TapPlugin("vim-alignta")  " {{{
+if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
   call s:ConfigPlugin({
      \   "lazy": 0,
      \ })
@@ -1216,7 +1112,7 @@ if s:TapPlugin("vim-alignta")  " {{{
   unlet s:alignta_comment_leadings
 endif  " }}}
 
-if s:TapPlugin("vim-anzu")  " {{{
+if s:RegisterPlugin("osyo-manga/vim-anzu")  " {{{
   nnoremap <Leader>/ :<C-u>nohlsearch<Cr>:call anzu#clear_search_status()<Cr>
 
   " see incsearch for more settings
@@ -1228,11 +1124,18 @@ if s:TapPlugin("vim-anzu")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-asterisk")  " {{{
-  " see incsearch
+if s:RegisterPlugin("haya14busa/vim-asterisk")  " {{{
+  if s:native_incsearch_highlightable
+    map *  <Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
+    map #  <Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
+    map g* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
+    map g# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
+  else
+    " see incsearch
+  endif
 endif  " }}}
 
-if s:TapPlugin("vim-autoclose")  " {{{
+if s:RegisterPlugin("Townk/vim-autoclose")  " {{{
   " annoying to type "<<" in Ruby code or type "<" for comparing in many languages
   " let g:AutoClosePairs_add = "<>"
   let g:AutoCloseSelectionWrapPrefix = "<Leader>ac"
@@ -1250,11 +1153,11 @@ if s:TapPlugin("vim-autoclose")  " {{{
   endif
 endif  " }}}
 
-if s:TapPlugin("vim-autoformat")  " {{{
+if s:RegisterPlugin("Chiel92/vim-autoformat")  " {{{
   let g:formatdef_jsbeautify_javascript = '"js-beautify -f -s2 -"'
 endif  " }}}
 
-if s:TapPlugin("vim-autoft")  " {{{
+if s:RegisterPlugin("itchyny/vim-autoft")  " {{{
   let g:autoft_enable = 0
   let g:autoft_config = [
     \   { "filetype": "html",       "pattern": '<\%(!DOCTYPE\|html\|head\|script\)' },
@@ -1264,12 +1167,12 @@ if s:TapPlugin("vim-autoft")  " {{{
     \ ]
 endif  " }}}
 
-if s:TapPlugin("vim-blockle")  " {{{
+if s:RegisterPlugin("kg8m/vim-blockle")  " {{{
   let g:blockle_mapping = ",b"
   let g:blockle_erase_spaces_around_starting_brace = 1
 endif  " }}}
 
-if s:TapPlugin("vim-checkbox")  " {{{
+if s:RegisterPlugin("jkramer/vim-checkbox")  " {{{
   augroup ConfigCheckbox
     autocmd!
     autocmd FileType markdown,moin nnoremap <buffer> <Leader>c :ToggleCB<Cr>
@@ -1281,7 +1184,7 @@ if s:TapPlugin("vim-checkbox")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-choosewin")  " {{{
+if s:RegisterPlugin("t9md/vim-choosewin")  " {{{
   nmap <C-w>f <Plug>(choosewin)
 
   let g:choosewin_overlay_enable          = 0  " wanna set true but too heavy
@@ -1296,7 +1199,15 @@ if s:TapPlugin("vim-choosewin")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-dirdiff")  " {{{
+call s:RegisterPlugin("kchmck/vim-coffee-script")
+call s:RegisterPlugin("kg8m/vim-coloresque")
+call s:RegisterPlugin("hail2u/vim-css-syntax")
+call s:RegisterPlugin("hail2u/vim-css3-syntax")
+
+" confusing with IME's underline
+call s:RegisterPlugin("itchyny/vim-cursorword", { "if": 0 })
+
+if s:RegisterPlugin("kg8m/vim-dirdiff")  " {{{
   let g:DirDiffExcludes   = "CVS,*.class,*.exe,.*.swp,*.git,db/development_structure.sql,log,tags,tmp"
   let g:DirDiffIgnore     = "Id:,Revision:,Date:"
   let g:DirDiffSort       = 1
@@ -1309,7 +1220,7 @@ if s:TapPlugin("vim-dirdiff")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-easymotion")  " {{{
+if s:RegisterPlugin("Lokaltog/vim-easymotion")  " {{{
   nmap <Leader>f <Plug>(easymotion-s)
   vmap <Leader>f <Plug>(easymotion-s)
   omap <Leader>f <Plug>(easymotion-s)
@@ -1334,21 +1245,34 @@ if s:TapPlugin("vim-easymotion")  " {{{
   let g:EasyMotion_skipfoldedline   = 0
 endif  " }}}
 
-if s:TapPlugin("vim-fugitive")  " {{{
+call s:RegisterPlugin("thinca/vim-ft-diff_fold")
+call s:RegisterPlugin("thinca/vim-ft-help_fold")
+call s:RegisterPlugin("thinca/vim-ft-markdown_fold")
+
+if s:RegisterPlugin("tpope/vim-fugitive", { "if": OnGitDir() })  " {{{
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": ["Git", "Gstatus", "Glog", "Gdiff", "Gremove", "Gblame"],
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-git")  " {{{
+call s:RegisterPlugin("thinca/vim-ft-svn_diff")
+call s:RegisterPlugin("muz/vim-gemfile")
+call s:RegisterPlugin("kana/vim-gf-user")
+
+if s:RegisterPlugin("tpope/vim-git")  " {{{
   augroup PreventVimGitFromChangingSettings  " {{{
     autocmd!
     autocmd FileType gitcommit let b:did_ftplugin = 1
   augroup END  " }}}
 endif  " }}}
 
-if s:TapPlugin("vim-javascript-syntax")  " {{{
+" interested in future features
+call s:RegisterPlugin("lambdalisue/vim-gita", { "if": 0 })
+call s:RegisterPlugin("tpope/vim-haml")
+call s:RegisterPlugin("michaeljsmith/vim-indent-object")
+
+if s:RegisterPlugin("jelera/vim-javascript-syntax")  " {{{
   function! s:MyJavascriptFold() abort  " {{{
     if !exists("b:javascript_folded")
       call JavaScriptFold()
@@ -1358,11 +1282,11 @@ if s:TapPlugin("vim-javascript-syntax")  " {{{
   endfunction  " }}}
 endif  " }}}
 
-if s:TapPlugin("vim-json")  " {{{
+if s:RegisterPlugin("elzr/vim-json")  " {{{
   let g:vim_json_syntax_conceal = 0
 endif  " }}}
 
-if s:TapPlugin("vim-markdown")  " {{{
+if s:RegisterPlugin("rcmdnk/vim-markdown")  " {{{
   let g:vim_markdown_no_default_key_mappings = 1
   let g:vim_markdown_conceal = 0
   let g:markdown_quote_syntax_filetypes = {
@@ -1388,7 +1312,13 @@ if s:TapPlugin("vim-markdown")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-if s:TapPlugin("vim-operator-replace")  " {{{
+call s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")
+call s:RegisterPlugin("xolox/vim-misc")
+
+" sometimes breaks colorschemes
+call s:RegisterPlugin("losingkeys/vim-niji", { "if": 0 })
+
+if s:RegisterPlugin("kana/vim-operator-replace")  " {{{
   nmap r <Plug>(operator-replace)
   vmap r <Plug>(operator-replace)
 
@@ -1399,7 +1329,7 @@ if s:TapPlugin("vim-operator-replace")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-operator-surround")  " {{{
+if s:RegisterPlugin("rhysd/vim-operator-surround")  " {{{
   " sa<Char>         => surround by <Char>
   " sd<Char>         => delete surrounding <Char>
   " sr<Char1><Char2> => replace surrounding <Char1> by <Char2>
@@ -1442,14 +1372,14 @@ if s:TapPlugin("vim-operator-surround")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-operator-user")  " {{{
+if s:RegisterPlugin("kana/vim-operator-user")  " {{{
   call s:ConfigPlugin({
      \   "lazy":    1,
      \   "on_func": "operator#user#define",
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-parenmatch")  " {{{
+if s:RegisterPlugin("itchyny/vim-parenmatch")  " {{{
   let g:loaded_matchparen = 1
 
   augroup HighlightParenmatch  " {{{
@@ -1458,7 +1388,7 @@ if s:TapPlugin("vim-parenmatch")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-if s:TapPlugin("vim-prettyprint")  " {{{
+if s:RegisterPlugin("thinca/vim-prettyprint")  " {{{
   call s:ConfigPlugin({
      \   "lazy":    1,
      \   "on_cmd":  ["PrettyPrint", "PP"],
@@ -1466,14 +1396,14 @@ if s:TapPlugin("vim-prettyprint")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-qfreplace")  " {{{
+if s:RegisterPlugin("thinca/vim-qfreplace")  " {{{
   call s:ConfigPlugin({
      \   "lazy":  1,
      \   "on_ft": ["unite", "quickfix"]
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-rails")  " {{{
+if s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() })  " {{{
   call s:ConfigPlugin({
      \   "lazy": 0,
      \ })
@@ -1526,7 +1456,7 @@ if s:TapPlugin("vim-rails")  " {{{
   nmap <Leader>Rwgf <Plug>RailsTabFind
 endif  " }}}
 
-if s:TapPlugin("vim-ref")  " {{{
+if s:RegisterPlugin("thinca/vim-ref")  " {{{
   nmap K <Plug>(ref-keyword)
 
   call s:ConfigPlugin({
@@ -1536,7 +1466,9 @@ if s:TapPlugin("vim-ref")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-ruby")  " {{{
+call s:RegisterPlugin("tpope/vim-repeat")
+
+if s:RegisterPlugin("vim-ruby/vim-ruby")  " {{{
   " see vim-gemfile
   augroup PreventVimRubyFromChangingSettings  " {{{
     autocmd!
@@ -1550,14 +1482,14 @@ if s:TapPlugin("vim-ruby")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-ruby-heredoc-syntax")  " {{{
+if s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax")  " {{{
   let g:ruby_heredoc_syntax_filetypes = {
     \   "haml": { "start": "HAML" },
     \   "ruby": { "start": "RUBY" },
     \ }
 endif  " }}}
 
-if s:TapPlugin("vim-rubytest")  " {{{
+if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() })  " {{{
   augroup ConfigRubytest  " {{{
     autocmd!
     autocmd FileType ruby nmap <buffer> <leader>T <Plug>RubyFileRun
@@ -1573,7 +1505,7 @@ if s:TapPlugin("vim-rubytest")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-session")  " {{{
+if s:RegisterPlugin("xolox/vim-session")  " {{{
   " also see vim-startify's settings
 
   let g:session_directory         = getcwd() . "/.vim-sessions"
@@ -1617,7 +1549,7 @@ if s:TapPlugin("vim-session")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-singleton")  " {{{
+if s:RegisterPlugin("thinca/vim-singleton")  " {{{
   if has("gui_running") && !singleton#is_master()
     let g:singleton#opener = "drop"
     call singleton#enable()
@@ -1628,7 +1560,9 @@ if s:TapPlugin("vim-singleton")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-startify")  " {{{
+call s:RegisterPlugin("kg8m/vim-snippets")
+
+if s:RegisterPlugin("mhinz/vim-startify")  " {{{
   function! s:ConfigPluginOnSource_vim_startify() abort  " {{{
     " see vim-session's settings
     let g:startify_session_dir         = g:session_directory
@@ -1697,17 +1631,19 @@ if s:TapPlugin("vim-startify")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-stay")  " {{{
+if s:RegisterPlugin("kopischke/vim-stay")  " {{{
   set viewoptions=cursor
 endif  " }}}
 
-if s:TapPlugin("vim-textobj-enclosedsyntax")  " {{{
+call s:RegisterPlugin("tpope/vim-surround")
+
+if s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")  " {{{
   call s:ConfigPlugin({
      \   "depends": ["vim-textobj-user"],
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-textobj-jabraces")  " {{{
+if s:RegisterPlugin("kana/vim-textobj-jabraces")  " {{{
   call s:ConfigPlugin({
      \   "depends": ["vim-textobj-user"],
      \ })
@@ -1715,13 +1651,13 @@ if s:TapPlugin("vim-textobj-jabraces")  " {{{
   let g:textobj_jabraces_no_default_key_mappings = 1
 endif  " }}}
 
-if s:TapPlugin("vim-textobj-lastpat")  " {{{
+if s:RegisterPlugin("kana/vim-textobj-lastpat")  " {{{
   call s:ConfigPlugin({
      \   "depends": ["vim-textobj-user"],
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-textobj-multitextobj")  " {{{
+if s:RegisterPlugin("osyo-manga/vim-textobj-multitextobj")  " {{{
   omap aj <Plug>(textobj-multitextobj-a)
   omap ij <Plug>(textobj-multitextobj-i)
   vmap aj <Plug>(textobj-multitextobj-a)
@@ -1760,13 +1696,13 @@ if s:TapPlugin("vim-textobj-multitextobj")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-textobj-ruby")  " {{{
+if s:RegisterPlugin("rhysd/vim-textobj-ruby")  " {{{
   call s:ConfigPlugin({
      \   "depends": ["vim-textobj-user"],
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-textobj-user")  " {{{
+if s:RegisterPlugin("kana/vim-textobj-user")  " {{{
   function! s:ConfigPluginOnSource_vim_textobj_user() abort
     " some kakkos are not defined because they require IME's `henkan` and not work
     " - { "pair": ["｛", "｝"], "name": "bracket" },
@@ -1800,7 +1736,7 @@ if s:TapPlugin("vim-textobj-user")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-turbux")  " {{{
+if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() })  " {{{
   augroup ConfigTurbux  " {{{
     autocmd!
     autocmd FileType ruby nmap <buffer> <leader>T <Plug>SendTestToTmux
@@ -1816,7 +1752,9 @@ if s:TapPlugin("vim-turbux")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vim-zenspace")  " {{{
+call s:RegisterPlugin("superbrothers/vim-vimperator")
+
+if s:RegisterPlugin("thinca/vim-zenspace")  " {{{
   let g:zenspace#default_mode = "on"
 
   augroup HighlightZenkakuSpace  " {{{
@@ -1825,7 +1763,7 @@ if s:TapPlugin("vim-zenspace")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-if s:TapPlugin("vimfiler")  " {{{
+if s:RegisterPlugin("Shougo/vimfiler")  " {{{
   nnoremap <Leader>e :<C-u>VimFilerBufferDir -force-quit<Cr>
 
   function! s:ConfigPluginOnSource_vimfiler() abort  " {{{
@@ -1842,7 +1780,7 @@ if s:TapPlugin("vimfiler")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vimshell")  " {{{
+if s:RegisterPlugin("Shougo/vimshell")  " {{{
   nnoremap <Leader>s :<C-u>VimShell<Cr>
 
   let g:_user_name = $USER
@@ -1856,7 +1794,7 @@ if s:TapPlugin("vimshell")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("vimux")  " {{{
+if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() })  " {{{
   function! s:ConfigPluginOnSource_vimux() abort  " {{{
     let g:VimuxHeight     = 30
     let g:VimuxUseNearest = 1
@@ -1899,7 +1837,7 @@ if s:TapPlugin("vimux")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("winresizer")  " {{{
+if s:RegisterPlugin("simeji/winresizer")  " {{{
   let g:winresizer_start_key = "<C-w><C-e>"
 
   call s:ConfigPlugin({
@@ -1908,12 +1846,20 @@ if s:TapPlugin("winresizer")  " {{{
      \ })
 endif  " }}}
 
-if s:TapPlugin("yankround.vim")  " {{{
+if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
   nmap p     <Plug>(yankround-p)
   xmap p     <Plug>(yankround-p)
   nmap P     <Plug>(yankround-P)
   nmap <C-p> <Plug>(yankround-prev)
   nmap <C-n> <Plug>(yankround-next)
+endif  " }}}
+
+" colorschemes
+" h2u_colorscheme for printing
+call s:RegisterPlugin("hail2u/h2u_colorscheme")
+
+if s:RegisterPlugin("kg8m/molokai")  " {{{
+  let g:molokai_original = 1
 endif  " }}}
 " }}}
 
@@ -1929,17 +1875,13 @@ endif
 if s:InstallablePluginExists()
   call s:InstallPlugins()
 endif
-
-" colorscheme
-if s:TapPlugin("molokai")  " {{{
-  let g:molokai_original = 1
-  colorscheme molokai
-endif  " }}}
 " }}}
 " }}}
 
 " ----------------------------------------------
 " general looks  " {{{
+colorscheme molokai
+
 set showmatch
 set number
 set showmode
