@@ -41,16 +41,24 @@ function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
   endif
 
   let options = get(a:000, 0, {})
+  let enabled = 1
 
-  " sometimes dein doesn't add runtimepath if no options given
-  if !has_key(options, "if")
+  if has_key(options, "if")
+    if !options["if"]
+      " don't load but fetch the plugin
+      let options["rtp"] = ""
+      call remove(options, "if")
+      let enabled = 0
+    endif
+  else
+    " sometimes dein doesn't add runtimepath if no options given
     let options["if"] = 1
   endif
 
   call dein#add(a:plugin_name, options)
 
   let normalized_plugin_name = substitute(a:plugin_name, "\\v^.+/", "", "")
-  return dein#tap(normalized_plugin_name)
+  return dein#tap(normalized_plugin_name) && enabled
 endfunction  " }}}
 
 function! s:ConfigPlugin(arg, ...) abort  " {{{
