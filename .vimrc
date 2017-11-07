@@ -393,6 +393,9 @@ else
   endif  " }}}
 endif
 
+" interested in future features
+call s:RegisterPlugin("pocke/iro.vim", { "if": 0 })
+
 if s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git")  " {{{
   let g:jscomplete_use = ["dom", "moz", "es6th"]
 endif  " }}}
