@@ -25,9 +25,12 @@ TIMETRACK_PATTERN="$TIMETRACK_PATTERN|\bzcat\b"
 # inspired by http://qiita.com/hayamiz/items/d64730b61b7918fbb970
 autoload -U add-zsh-hook 2>/dev/null || return
 
-__timetrack_threshold=30  # seconds
+# seconds
+__timetrack_long_threshold=30
+__timetrack_short_threshold=15
 
-export __timetrack_threshold
+export __timetrack_long_threshold
+export __timetrack_short_threshold
 
 function __my_preexec_start_timetrack() {
   local command=$1
@@ -40,10 +43,12 @@ function __my_preexec_end_timetrack() {
   local exec_time
   local message
   local command=$( echo $__timetrack_command | sed -e "s/'/'\\\\''/g" )
+  local growl_options="-n 'ZSH timetracker' --appIcon iTerm"
+  local notify=false
 
   export __timetrack_end=`date +%s`
 
-  if [ -z "$__timetrack_start" ] || [ -z "$__timetrack_threshold" ]; then
+  if [ -z "$__timetrack_start" ] || [ -z "$__timetrack_long_threshold" ] || [ -z "$__timetrack_short_threshold" ]; then
     return
   fi
 
@@ -51,9 +56,18 @@ function __my_preexec_end_timetrack() {
     exec_time=$(( __timetrack_end - __timetrack_start ))
     message="Command finished!!\nTime: $exec_time seconds\nCommand: $command"
 
-    if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
-      ssh main "echo '[$USER@$HOST] $message' | growlnotify -n 'ZSH timetracker' --appIcon iTerm -s"
+    if [ "$exec_time" -ge "$__timetrack_long_threshold" ]; then
+      growl_options="$growl_options -s"
+      notify=true
+    elif [ "$exec_time" -ge "$__timetrack_short_threshold" ]; then
+      notify=true
+    fi
+
+    if $notify; then
+      ssh main "echo '[$USER@$HOST] $message' | growlnotify $growl_options"
+      echo "\n* * *"
       echo $message
+      echo "Notified by \`growlnotify $growl_options\`"
     fi
 
     unset __timetrack_start
