@@ -56,9 +56,7 @@ function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
   endif
 
   call dein#add(a:plugin_name, options)
-
-  let normalized_plugin_name = substitute(a:plugin_name, "\\v^.+/", "", "")
-  return dein#tap(normalized_plugin_name) && enabled
+  return dein#tap(fnamemodify(a:plugin_name, ":t")) && enabled
 endfunction  " }}}
 
 function! s:ConfigPlugin(arg, ...) abort  " {{{
