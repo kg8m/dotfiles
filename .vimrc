@@ -112,7 +112,8 @@ endfunction  " }}}
 
 function! RubyGemPaths() abort  " {{{
   let command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
-  return system(command_prefix . " -e 'print Gem.path.join(\":\")'")
+  let command = command_prefix . " -e 'print Gem.path.join(\"\\n\")'"
+  return split(system(command), "\\n")
 endfunction  " }}}
 
 function! ExecuteWithConfirm(command) abort  " {{{
@@ -202,7 +203,7 @@ if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
     let original_current_directory = getcwd()
     let original_directory_list    = g:auto_ctags_directory_list
 
-    for ruby_gem_path in split(RubyGemPaths(), ":")
+    for ruby_gem_path in RubyGemPaths()
       if isdirectory(ruby_gem_path)
         execute "cd " . ruby_gem_path
         let g:auto_ctags_directory_list = [ruby_gem_path]
@@ -2021,7 +2022,7 @@ set wildmode=list:longest,full
 " ctags
 if has("vim_starting")
   function! s:SetupTags() abort  " {{{
-    for ruby_gem_path in split(RubyGemPaths(), ":")
+    for ruby_gem_path in RubyGemPaths()
       if isdirectory(ruby_gem_path)
         let &tags = &tags . "," . ruby_gem_path . "/tags"
       endif
