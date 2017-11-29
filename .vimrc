@@ -1278,8 +1278,6 @@ if s:RegisterPlugin("tpope/vim-git")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-" interested in future features
-call s:RegisterPlugin("lambdalisue/vim-gita", { "if": 0 })
 call s:RegisterPlugin("tpope/vim-haml")
 call s:RegisterPlugin("michaeljsmith/vim-indent-object")
 
