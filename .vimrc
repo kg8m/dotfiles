@@ -1123,9 +1123,16 @@ if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("osyo-manga/vim-anzu")  " {{{
+  if s:native_incsearch_highlightable
+    map n <Plug>(anzu-n-with-echo)
+    map N <Plug>(anzu-N-with-echo)
+  else
+    " see incsearch
+  endif
+
   nnoremap <Leader>/ :<C-u>nohlsearch<Cr>:call anzu#clear_search_status()<Cr>
 
-  " see incsearch for more settings
+  " see asterisk for more settings
 
   call s:ConfigPlugin({
      \   "lazy":    1,
