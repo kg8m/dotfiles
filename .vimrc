@@ -418,6 +418,7 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \     ["lineinfo_with_percent"],
     \   ],
     \   "right": [
+    \     ["anzu"],
     \   ],
     \ }
   let g:lightline = {
@@ -429,6 +430,7 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \   },
     \   "component_function": {
     \     "filename": "FilepathForLightline",
+    \     "anzu":     "AnzuSearchStatusForLightline",
     \   },
     \   "colorscheme": "kg8m",
     \ }
@@ -452,6 +454,14 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
 
   function! ModifiedSymbolForLightline() abort  " {{{
     return &ft =~? 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
+  endfunction  " }}}
+
+  function! AnzuSearchStatusForLightline() abort  " {{{
+    if winwidth(0) >= 100
+      return anzu#search_status()
+    else
+      return substitute(anzu#search_status(), '\v^.+\(([0-9]+/[0-9]+)\)$', '\1', "")
+    endif
   endfunction  " }}}
 endif  " }}}
 
@@ -1124,8 +1134,10 @@ endif  " }}}
 
 if s:RegisterPlugin("osyo-manga/vim-anzu")  " {{{
   if s:native_incsearch_highlightable
-    map n <Plug>(anzu-n-with-echo)
-    map N <Plug>(anzu-N-with-echo)
+    nmap n <Plug>(anzu-n-with-echo)
+    nmap N <Plug>(anzu-N-with-echo)
+    vmap n n<Plug>(anzu-update-search-status)
+    vmap N N<Plug>(anzu-update-search-status)
   else
     " see incsearch
   endif
@@ -1133,12 +1145,6 @@ if s:RegisterPlugin("osyo-manga/vim-anzu")  " {{{
   nnoremap <Leader>/ :<C-u>nohlsearch<Cr>:call anzu#clear_search_status()<Cr>
 
   " see asterisk for more settings
-
-  call s:ConfigPlugin({
-     \   "lazy":    1,
-     \   "on_map":  "<Plug>(anzu-",
-     \   "on_func": ["anzu#search_status", "anzu#clear_search_status"],
-     \ })
 endif  " }}}
 
 if s:RegisterPlugin("haya14busa/vim-asterisk")  " {{{
