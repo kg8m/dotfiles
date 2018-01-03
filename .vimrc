@@ -646,6 +646,13 @@ endif  " }}}
 call s:RegisterPlugin("vim-scripts/sudo.vim")
 call s:RegisterPlugin("kg8m/svn-diff.vim", { "if": OnSvnDir() })
 
+if s:RegisterPlugin("twitvim/twitvim")  " {{{
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": ["PosttoTwitter", "UserTwitter"],
+     \ })
+endif  " }}}
+
 if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
@@ -725,6 +732,9 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[Diff] DirDiff [Edit]", "DirDiff {dir1} {dir2}"],
         \
         \   ["[Rails] Reset Buffer", "if RailsDetect() | call rails#buffer_setup() | endif"],
+        \
+        \   ["[TwitVim] Post to Twitter",           "PosttoTwitter"],
+        \   ["[TwitVim] View My Timeline",          "UserTwitter"],
         \
         \   ["[Unite plugin] gist",                 "Unite gista"],
         \   ["[Unite plugin] mru files",            "Unite neomru/file"],
