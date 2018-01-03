@@ -2147,6 +2147,12 @@ inoremap <C-e> <End>
 " Page scroll in INSERT mode
 inoremap <C-f> <PageDown>
 inoremap <C-b> <PageUp>
+
+" <C-]> to insert a checkbox `[ ]` on markdown
+augroup ConfigCheckbox
+  autocmd!
+  autocmd FileType markdown inoremap <buffer> <C-]> [<Space>]<Space>
+augroup END
 " }}}
 
 " ----------------------------------------------
