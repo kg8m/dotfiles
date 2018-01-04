@@ -2159,7 +2159,7 @@ inoremap <C-f> <PageDown>
 inoremap <C-b> <PageUp>
 
 " <C-]> to insert a checkbox `[ ]` on markdown
-augroup ConfigCheckbox
+augroup ConfigInsertCheckbox
   autocmd!
   autocmd FileType markdown inoremap <buffer> <C-]> [<Space>]<Space>
 augroup END
