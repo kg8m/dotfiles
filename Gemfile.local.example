@@ -1,7 +1,21 @@
 # http://qiita.com/vzvu3k6k/items/12aff810ea93c7c6f307
 eval_gemfile "Gemfile"
 
-gem "byebug"
-gem "pry-rails"
-gem "pry-doc"
+gem "bundler-audit"
 gem "awesome_print"
+gem "hirb", require: false
+gem "hirb-unicode-steakknife", require: false
+
+group :development do
+  gem "byebug", require: false
+  gem "pry-byebug", require: false
+  gem "pry-doc", require: false
+end
+
+group :development, :production do
+  gem "benchmark-ips", require: false
+end
+
+group :test do
+  gem "minitest-reporters"
+end
