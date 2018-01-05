@@ -724,6 +724,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[Manipulate File] Convert to HTML",                         "colorscheme h2u_white | TOhtml"],
         \   ["[Manipulate File] Replace/Sed Texts of All Buffers [Edit]", "bufdo set eventignore-=Syntax | %s/{foo}/{bar}/gce | update"],
         \   ["[Manipulate File] Transform to New Ruby Hash Syntax",       "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
+        \   ["[Manipulate File] Transform to Old Ruby Hash Syntax",       "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
         \
         \   ["[Autoformat] Format Source Codes",         "Autoformat"],
         \   ["[autoft] Enable autoft on current buffer", "let b:autoft_enable = 1"],
