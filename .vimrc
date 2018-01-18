@@ -1355,12 +1355,12 @@ if s:RegisterPlugin("rhysd/vim-operator-surround")  " {{{
   " sa<Char>         => surround by <Char>
   " sd<Char>         => delete surrounding <Char>
   " sr<Char1><Char2> => replace surrounding <Char1> by <Char2>
-  nmap <silent>sa <Plug>(operator-surround-append)aw
-  nmap <silent>sd <Plug>(operator-surround-delete)a
-  nmap <silent>sr <Plug>(operator-surround-replace)a
-  vmap <silent>sa <Plug>(operator-surround-append)
-  vmap <silent>sd <Plug>(operator-surround-delete)a
-  vmap <silent>sr <Plug>(operator-surround-replace)a
+  nmap <silent><Leader>sa <Plug>(operator-surround-append)aw
+  nmap <silent><Leader>sd <Plug>(operator-surround-delete)a
+  nmap <silent><Leader>sr <Plug>(operator-surround-replace)a
+  vmap <silent><Leader>sa <Plug>(operator-surround-append)
+  vmap <silent><Leader>sd <Plug>(operator-surround-delete)a
+  vmap <silent><Leader>sr <Plug>(operator-surround-replace)a
 
   function! s:ConfigPluginOnSource_vim_operator_surround() abort  " {{{
     let g:operator#surround#blocks = { "-": [] }
@@ -1803,8 +1803,6 @@ if s:RegisterPlugin("Shougo/vimfiler")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("Shougo/vimshell")  " {{{
-  nnoremap <Leader>s :<C-u>VimShell<Cr>
-
   let g:_user_name = $USER
   let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
   let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
