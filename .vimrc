@@ -474,6 +474,7 @@ if s:RegisterPlugin("AndrewRadev/linediff.vim")  " {{{
      \ })
 endif  " }}}
 
+call s:RegisterPlugin("tyru/markdown-codehl-onthefly.vim", { "depends": "vim-markdown" })
 call s:RegisterPlugin("vim-scripts/matchit.zip")
 call s:RegisterPlugin("kg8m/moin.vim")
 
@@ -1308,33 +1309,7 @@ if s:RegisterPlugin("elzr/vim-json")  " {{{
   let g:vim_json_syntax_conceal = 0
 endif  " }}}
 
-if s:RegisterPlugin("rcmdnk/vim-markdown")  " {{{
-  let g:vim_markdown_no_default_key_mappings = 1
-  let g:vim_markdown_conceal = 0
-  let g:markdown_quote_syntax_filetypes = {
-    \   "css": {
-    \     "start": "css",
-    \   },
-    \   "coffee": {
-    \     "start": "coffee",
-    \   },
-    \   "crontab": {
-    \     "start": "cron\\%(tab\\)\\?",
-    \   },
-    \ }
-
-  function! s:ResetMarkdownIndentSettings() abort  " {{{
-    setlocal indentexpr=smartindent
-    setlocal formatoptions-=r
-  endfunction  " }}}
-
-  augroup ResetMarkdownIndentSettings  " {{{
-    autocmd!
-    autocmd InsertEnter * if &ft == "markdown" | call s:ResetMarkdownIndentSettings() | endif
-  augroup END  " }}}
-endif  " }}}
-
-call s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")
+call s:RegisterPlugin("tpope/vim-markdown")
 call s:RegisterPlugin("xolox/vim-misc")
 
 " sometimes breaks colorschemes
