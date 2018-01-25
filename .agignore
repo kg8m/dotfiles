@@ -11,4 +11,6 @@ tmp/sass-cache
 *.dat
 *.diff
 *min.js
+jquery.js
+jquery-ui.js
 tags
