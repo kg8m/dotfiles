@@ -10,5 +10,5 @@ tmp/sass-cache
 *_structure.sql
 *.dat
 *.diff
-*.min.js
+*min.js
 tags
