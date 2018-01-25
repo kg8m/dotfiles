@@ -474,7 +474,14 @@ if s:RegisterPlugin("AndrewRadev/linediff.vim")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("tyru/markdown-codehl-onthefly.vim", { "depends": "vim-markdown" })
+if s:RegisterPlugin("tyru/markdown-codehl-onthefly.vim")  " {{{
+  call s:ConfigPlugin({
+     \   "lazy":    1,
+     \   "on_ft":   "markdown",
+     \   "depends": "vim-markdown",
+     \ })
+endif  " }}}
+
 call s:RegisterPlugin("vim-scripts/matchit.zip")
 call s:RegisterPlugin("kg8m/moin.vim")
 
@@ -1309,7 +1316,15 @@ if s:RegisterPlugin("elzr/vim-json")  " {{{
   let g:vim_json_syntax_conceal = 0
 endif  " }}}
 
-call s:RegisterPlugin("tpope/vim-markdown")
+if s:RegisterPlugin("tpope/vim-markdown")  " {{{
+  let g:markdown_syntax_conceal = 0
+
+  call s:ConfigPlugin({
+     \   "lazy":  1,
+     \   "on_ft": "markdown",
+     \ })
+endif  " }}}
+
 call s:RegisterPlugin("xolox/vim-misc")
 
 " sometimes breaks colorschemes
