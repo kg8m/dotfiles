@@ -236,6 +236,11 @@ if s:RegisterPlugin("tyru/caw.vim")  " {{{
   let g:caw_no_default_keymappings = 1
   let g:caw_hatpos_skip_blank_line = 1
 
+  augroup SetCawSpecialCommentMarkers  " {{{
+    autocmd!
+    autocmd FileType gemfile let b:caw_oneline_comment = "#"
+  augroup END  " }}}
+
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_map": [["nv", "<Plug>(caw:"]],
