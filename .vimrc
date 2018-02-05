@@ -1161,6 +1161,24 @@ if s:RegisterPlugin("osyo-manga/vim-anzu")  " {{{
   " see asterisk for more settings
 endif  " }}}
 
+if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
+  nnoremap <Leader>a :ArgWrap<Cr>
+
+  let g:argwrap_padded_braces = "{"
+
+  augroup ConfigArgWrapAutocmd  " {{{
+    autocmd!
+    autocmd FileType ruby let b:argwrap_tail_comma_braces = "[{"
+    autocmd FileType vim  let b:argwrap_line_prefix = '\'
+    autocmd FileType vim  let b:argwrap_tail_comma_braces = "[{"
+  augroup END  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": "ArgWrap",
+     \ })
+endif  " }}}
+
 if s:RegisterPlugin("haya14busa/vim-asterisk")  " {{{
   if s:native_incsearch_highlightable
     map *  <Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
