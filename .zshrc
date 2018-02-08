@@ -121,36 +121,12 @@ fi
 
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 # prompt as ({current_time}) [{vi_mode}] {user_name}@{hostname} : {current_directory_path}\n% (# if root user)
-prompt_time=$'\e[48;05;024m'"(%D{%Y/%m/%d(%a) %H:%M:%S})"$'\e[48;05;000m'
 prompt_user=$'\e[38;05;009m'"%n@%m"
 prompt_current_dir=$'\e[38;05;030m'"%~"$'%{${reset_color}%}'
-prompt_vcs='$(vcs_super_info)$(git_user_info)'
+prompt_vcs='$(vcs_super_info)'
 prompt_self=$'%{${reset_color}%}'"%(!.#.%#) "
 
-git_user_info() {
-  if [ "$(git status 2> /dev/null)" ]; then
-    echo " - `git config user.name` (`git config user.email`)"
-  fi
-}
-
-set_prompt() {
-  local prompt_mode="INSERT"
-
-  case $KEYMAP in
-    vicmd)
-      local prompt_mode="NORMAL"
-    ;;
-  esac
-
-  PROMPT="${prompt_time} "$'\e[38;05;245m'"[${prompt_mode}] ${prompt_user}"$'\e[38;05;245m'" : ${prompt_current_dir} ${prompt_vcs}"$'\n'"${prompt_self}"
-}
-set_prompt
-
-function zle-keymap-select {
-  set_prompt
-  zle reset-prompt
-}
-zle -N zle-keymap-select
+PROMPT=$'\e[38;05;245m'"${prompt_user}"$'\e[38;05;245m'"  ${prompt_current_dir} ${prompt_vcs}"$'\n'"${prompt_self}"
 
 # zsh-vcs-prompt
 ZSH_VCS_PROMPT_AHEAD_SIGIL='^'
