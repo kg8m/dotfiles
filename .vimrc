@@ -1224,7 +1224,6 @@ endif  " }}}
 
 if s:RegisterPlugin("kg8m/vim-blockle")  " {{{
   let g:blockle_mapping = ",b"
-  let g:blockle_erase_spaces_around_starting_brace = 1
 endif  " }}}
 
 if s:RegisterPlugin("jkramer/vim-checkbox")  " {{{
