@@ -31,7 +31,7 @@ fi
 
 alias _ls='/bin/ls -a'
 alias ls='ls --color -a'
-alias ll='ls -l'
+alias ll='ls -l --time-style=long-iso'
 alias diff='diff -U 10 -b -B'
 alias _diff='/usr/bin/diff'
 alias _watch='/usr/bin/watch'
