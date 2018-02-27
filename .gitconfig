@@ -180,7 +180,7 @@ show-without-diff = show -s
 
 # submodule
 su                = !git update-submodules
-update-submodules = !git submodule update --init --recursive && git submodule update --remote && git status
+update-submodules = !git execute-with-echo 'git submodule update --init --recursive && git submodule update --remote && git status'
 
 # hook
 update-hooks = !( rm -i .git/hooks/* || exit 0 ) && cp ~/.git_templates/hooks/* .git/hooks/ && ls -l .git/hooks/
