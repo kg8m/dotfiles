@@ -215,6 +215,9 @@ compactionHeuristic = true
 [fetch]
 prune = true
 
+[pull]
+rebase = true
+
 [user]
 name  = kg8m
 email = takumi.kagiyama@gmail.com
