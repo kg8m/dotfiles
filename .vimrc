@@ -405,6 +405,31 @@ else
   endif  " }}}
 endif
 
+if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
+  let g:indentLine_char = "|"
+  let g:indentLine_fileTypeExclude = ["", "diff", "startify", "unite", "vimfiler", "vimshell"]
+  let g:indentLine_faster = 1
+
+  function! s:ToggleIndentLine() abort  " {{{
+    if index(g:indentLine_fileTypeExclude, &filetype) != -1
+      IndentLinesDisable
+    else
+      " sometimes conceal variables are changed due to unknown reasons
+      if exists("b:indentLine_ConcealOptionSet")
+        unlet b:indentLine_ConcealOptionSet
+      endif
+
+      IndentLinesEnable
+    endif
+  endfunction  " }}}
+
+  " sometimes indent-lines are removed due to unknown reasons
+  augroup RestoreIndentLine  " {{{
+    autocmd!
+    autocmd WinEnter,InsertEnter,CursorHold * call s:ToggleIndentLine()
+  augroup END  " }}}
+endif  " }}}
+
 " interested in future features
 call s:RegisterPlugin("pocke/iro.vim", { "if": 0 })
 
@@ -669,7 +694,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
 
   function! s:ConfigPluginOnSource_unite() abort  " {{{
     let g:unite_winheight = "100%"
-    let g:unite_cursor_line_highlight = "CursorLine"
 
     if s:ag_available
       let g:unite_source_grep_command       = "ag"
@@ -1918,14 +1942,6 @@ set showmatch
 set number
 set showmode
 set showcmd
-set cursorline
-set cursorcolumn
-
-augroup ToggleActiveWindowCursor  " {{{
-  autocmd!
-  autocmd WinLeave * set nocursorcolumn nocursorline
-  autocmd WinEnter,TabEnter,BufEnter,BufWinEnter,FileType,ColorScheme * set cursorcolumn cursorline
-augroup END  " }}}
 
 set scrolloff=15
 set iskeyword& iskeyword+=-
