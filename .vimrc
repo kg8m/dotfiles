@@ -426,7 +426,7 @@ if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
   " sometimes indent-lines are removed due to unknown reasons
   augroup RestoreIndentLine  " {{{
     autocmd!
-    autocmd WinEnter,InsertEnter,CursorHold * call s:ToggleIndentLine()
+    autocmd VimEnter,WinEnter,InsertEnter,CursorHold * call s:ToggleIndentLine()
   augroup END  " }}}
 endif  " }}}
 
