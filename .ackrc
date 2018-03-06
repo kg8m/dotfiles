@@ -5,10 +5,11 @@
 --pager=less
 --smart-case
 --sort-files
+--ignore-dir=.cache
 --ignore-dir=.vim-sessions
 --ignore-dir=log
 --ignore-dir=node_modules
---ignore-dir=tmp/sass-cache
+--ignore-dir=tmp
 --ignore-file=match:/_structure\.sql$/
 --ignore-file=match:/\.log$/
 --ignore-file=match:/\.diff$/

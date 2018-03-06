@@ -14,6 +14,7 @@ follow           = true
 
 # Ignores
 ignore = [
+  ".cache",
   ".DS_Store",
   ".git",
   ".hg",
@@ -21,7 +22,7 @@ ignore = [
   ".vim-sessions",
   "log",
   "node_modules",
-  "tmp/sass-cache",
+  "tmp",
 
   "*_structure.sql",
   "*.dat",
