@@ -1193,9 +1193,9 @@ if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
   augroup ConfigArgWrapAutocmd  " {{{
     autocmd!
     autocmd FileType eruby let b:argwrap_tail_comma_braces = "[{"
-    autocmd FileType ruby let b:argwrap_tail_comma_braces = "[{"
-    autocmd FileType vim  let b:argwrap_line_prefix = '\'
-    autocmd FileType vim  let b:argwrap_tail_comma_braces = "[{"
+    autocmd FileType ruby  let b:argwrap_tail_comma_braces = "[{"
+    autocmd FileType vim   let b:argwrap_line_prefix = '\'
+    autocmd FileType vim   let b:argwrap_tail_comma_braces = "[{"
   augroup END  " }}}
 
   call s:ConfigPlugin({
