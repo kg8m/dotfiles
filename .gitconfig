@@ -218,6 +218,9 @@ prune = true
 [pull]
 rebase = true
 
+[rerere]
+enabled = true
+
 [user]
 name  = kg8m
 email = takumi.kagiyama@gmail.com
