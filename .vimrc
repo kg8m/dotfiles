@@ -2077,6 +2077,7 @@ augroup CheckTimeHook  " {{{
   autocmd!
   autocmd InsertEnter * checktime
   autocmd InsertLeave * checktime
+  autocmd CursorHold  * checktime
 augroup END  " }}}
 
 " move
