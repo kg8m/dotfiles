@@ -567,10 +567,6 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
     imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
     imap <expr><Cr>    neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? neocomplete#close_popup() : "\<Cr>"
 
-    if has("conceal")
-      set conceallevel=2 concealcursor=i
-    endif
-
     let g:neosnippet#snippets_directory = [
       \   s:PluginInfo(".vim").path . "/snippets",
       \   s:PluginInfo("vim-snippets").path . "/snippets",
@@ -1957,6 +1953,8 @@ set showcmd
 set scrolloff=15
 set iskeyword& iskeyword+=-
 let g:sh_noisk = 1
+
+set conceallevel=2 concealcursor=inc
 
 " for vimdiff
 set wrap
