@@ -504,14 +504,6 @@ if s:RegisterPlugin("AndrewRadev/linediff.vim")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("tyru/markdown-codehl-onthefly.vim")  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":    1,
-     \   "on_ft":   "markdown",
-     \   "depends": "vim-markdown",
-     \ })
-endif  " }}}
-
 call s:RegisterPlugin("vim-scripts/matchit.zip")
 call s:RegisterPlugin("kg8m/moin.vim")
 
@@ -1363,9 +1355,30 @@ if s:RegisterPlugin("elzr/vim-json")  " {{{
   let g:vim_json_syntax_conceal = 0
 endif  " }}}
 
-if s:RegisterPlugin("tpope/vim-markdown")  " {{{
-  let g:markdown_syntax_conceal = 0
+if s:RegisterPlugin("rcmdnk/vim-markdown")  " {{{
+  let g:vim_markdown_override_foldtext = 0
+  let g:vim_markdown_no_default_key_mappings = 1
+  let g:vim_markdown_conceal = 0
+  let g:vim_markdown_no_extensions_in_markdown = 1
+  let g:vim_markdown_autowrite = 1
 
+  function! s:MarkdownCustomFormatoptions() abort  " {{{
+    setlocal formatoptions-=r
+  endfunction  " }}}
+
+  augroup ResetMarkdownSettings  " {{{
+    autocmd!
+    autocmd InsertEnter * if &ft == "markdown" | call s:MarkdownCustomFormatoptions() | endif
+  augroup END  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":    1,
+     \   "depends": "vim-markdown-quote-syntax",
+     \   "on_ft":   "markdown",
+     \ })
+endif  " }}}
+
+if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")  " {{{
   call s:ConfigPlugin({
      \   "lazy":  1,
      \   "on_ft": "markdown",
