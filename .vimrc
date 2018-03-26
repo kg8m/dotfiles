@@ -407,8 +407,15 @@ endif
 
 if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
   let g:indentLine_char = "|"
-  let g:indentLine_fileTypeExclude = ["", "diff", "startify", "unite", "vimfiler", "vimshell"]
   let g:indentLine_faster = 1
+  let g:indentLine_fileTypeExclude = [
+    \   "",
+    \   "diff",
+    \   "startify",
+    \   "unite",
+    \   "vimfiler",
+    \   "vimshell",
+    \ ]
 endif  " }}}
 
 " interested in future features
