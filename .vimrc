@@ -651,8 +651,6 @@ if s:RegisterPlugin("vim-scripts/sequence")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("joeytwiddle/sexy_scroller.vim")
-
 if s:RegisterPlugin("jiangmiao/simple-javascript-indenter")  " {{{
   let g:SimpleJsIndenter_BriefMode = 2
   let g:SimpleJsIndenter_CaseIndentLevel = -1
