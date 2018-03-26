@@ -409,25 +409,6 @@ if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
   let g:indentLine_char = "|"
   let g:indentLine_fileTypeExclude = ["", "diff", "startify", "unite", "vimfiler", "vimshell"]
   let g:indentLine_faster = 1
-
-  function! s:ToggleIndentLine() abort  " {{{
-    if index(g:indentLine_fileTypeExclude, &filetype) != -1
-      IndentLinesDisable
-    else
-      " sometimes conceal variables are changed due to unknown reasons
-      if exists("b:indentLine_ConcealOptionSet")
-        unlet b:indentLine_ConcealOptionSet
-      endif
-
-      IndentLinesEnable
-    endif
-  endfunction  " }}}
-
-  " sometimes indent-lines are removed due to unknown reasons
-  augroup RestoreIndentLine  " {{{
-    autocmd!
-    autocmd VimEnter,WinEnter,InsertEnter,CursorHold * call s:ToggleIndentLine()
-  augroup END  " }}}
 endif  " }}}
 
 " interested in future features
