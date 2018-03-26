@@ -1269,7 +1269,6 @@ if s:RegisterPlugin("t9md/vim-choosewin")  " {{{
 endif  " }}}
 
 call s:RegisterPlugin("kchmck/vim-coffee-script")
-call s:RegisterPlugin("kg8m/vim-coloresque")
 call s:RegisterPlugin("hail2u/vim-css-syntax")
 call s:RegisterPlugin("hail2u/vim-css3-syntax")
 
