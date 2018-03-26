@@ -139,6 +139,9 @@ endfunction  " }}}
 " }}}
 
 let g:mapleader = ","
+
+set conceallevel=2
+set concealcursor=nvic
 " }}}
 
 " ----------------------------------------------
@@ -405,6 +408,8 @@ endif
 if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
   let g:indentLine_char = "|"
   let g:indentLine_faster = 1
+  let g:indentLine_concealcursor = &concealcursor
+  let g:indentLine_conceallevel = &conceallevel
   let g:indentLine_fileTypeExclude = [
     \   "",
     \   "diff",
@@ -1896,8 +1901,6 @@ set showcmd
 set scrolloff=15
 set iskeyword& iskeyword+=-
 let g:sh_noisk = 1
-
-set conceallevel=2 concealcursor=inc
 
 " for vimdiff
 set wrap
