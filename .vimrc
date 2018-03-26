@@ -1244,6 +1244,7 @@ if s:RegisterPlugin("t9md/vim-choosewin")  " {{{
      \ })
 endif  " }}}
 
+call s:RegisterPlugin("kchmck/vim-coffee-script")
 call s:RegisterPlugin("hail2u/vim-css-syntax")
 call s:RegisterPlugin("hail2u/vim-css3-syntax")
 
@@ -1515,6 +1516,10 @@ if s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax")  " {{{
     \   "haml": { "start": "HAML" },
     \   "ruby": { "start": "RUBY" },
     \ }
+
+  call s:ConfigPlugin({
+     \   "depends": "vim-coffee-script",
+     \ })
 endif  " }}}
 
 if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() })  " {{{
