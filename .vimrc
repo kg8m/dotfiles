@@ -310,9 +310,6 @@ if s:RegisterPlugin("mattn/emmet-vim")  " {{{
      \ })
 endif  " }}}
 
-" conflicts with sudo.vim (`vim sudo:path/to/file` not working)
-call s:RegisterPlugin("bogado/file-line", { "if": 0 })
-
 if s:RegisterPlugin("leafcage/foldCC")  " {{{
   let g:foldCCtext_enable_autofdc_adjuster = 1
   let g:foldCCtext_maxchars = 120
@@ -611,17 +608,7 @@ if s:RegisterPlugin("tyru/operator-camelize.vim")  " {{{
      \ })
 endif  " }}}
 
-" sometimes breaks colorschemes
-call s:RegisterPlugin("kien/rainbow_parentheses.vim", { "if": 0 })
 call s:RegisterPlugin("chrisbra/Recover.vim")
-
-" mossari
-if s:RegisterPlugin("todesking/ruby_hl_lvar.vim", { "if": RubyVersion() >= '1.9.0' && 0 })  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":  1,
-     \   "on_ft": ["ruby"],
-     \ })
-endif  " }}}
 
 if s:RegisterPlugin("vim-scripts/sequence")  " {{{
   vmap <Leader>+ <Plug>SequenceV_Increment
@@ -1252,12 +1239,8 @@ if s:RegisterPlugin("t9md/vim-choosewin")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("kchmck/vim-coffee-script")
 call s:RegisterPlugin("hail2u/vim-css-syntax")
 call s:RegisterPlugin("hail2u/vim-css3-syntax")
-
-" confusing with IME's underline
-call s:RegisterPlugin("itchyny/vim-cursorword", { "if": 0 })
 
 if s:RegisterPlugin("kg8m/vim-dirdiff")  " {{{
   let g:DirDiffExcludes   = "CVS,*.class,*.exe,.*.swp,*.git,db/development_structure.sql,log,tags,tmp"
@@ -1304,7 +1287,7 @@ call s:RegisterPlugin("thinca/vim-ft-markdown_fold")
 if s:RegisterPlugin("tpope/vim-fugitive", { "if": OnGitDir() })  " {{{
   call s:ConfigPlugin({
      \   "lazy":   1,
-     \   "on_cmd": ["Git", "Gstatus", "Glog", "Gdiff", "Gremove", "Gblame"],
+     \   "on_cmd": "Gblame",
      \ })
 endif  " }}}
 
@@ -1367,9 +1350,6 @@ if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")  " {{{
 endif  " }}}
 
 call s:RegisterPlugin("xolox/vim-misc")
-
-" sometimes breaks colorschemes
-call s:RegisterPlugin("losingkeys/vim-niji", { "if": 0 })
 
 if s:RegisterPlugin("kana/vim-operator-replace")  " {{{
   nmap r <Plug>(operator-replace)
@@ -1507,16 +1487,6 @@ if s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() })  " {{{
   " prevent `rails.vim` from defining keymappings
   nmap <Leader>Rwf  <Plug>RailsSplitFind
   nmap <Leader>Rwgf <Plug>RailsTabFind
-endif  " }}}
-
-if s:RegisterPlugin("thinca/vim-ref")  " {{{
-  nmap K <Plug>(ref-keyword)
-
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": "Ref",
-     \   "on_map": [["n", "<Plug>(ref-keyword)"]],
-     \ })
 endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-repeat")
@@ -1833,18 +1803,6 @@ if s:RegisterPlugin("Shougo/vimfiler")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("Shougo/vimshell")  " {{{
-  let g:_user_name = $USER
-  let g:vimshell_user_prompt = '"[".g:_user_name."@".hostname()."] ".getcwd()'
-  let g:vimshell_right_prompt = '"(".strftime("%y/%m/%d %H:%M:%S", localtime()).")"'
-  let g:vimshell_prompt = "% "
-
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": ["VimShell", "VimShellExecute"],
-     \ })
-endif  " }}}
-
 if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() })  " {{{
   function! s:ConfigPluginOnSource_vimux() abort  " {{{
     let g:VimuxHeight     = 30
@@ -1906,9 +1864,6 @@ if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
 endif  " }}}
 
 " colorschemes
-" h2u_colorscheme for printing
-call s:RegisterPlugin("hail2u/h2u_colorscheme")
-
 if s:RegisterPlugin("kg8m/molokai")  " {{{
   let g:molokai_original = 1
 endif  " }}}
