@@ -239,6 +239,7 @@ diffFilter = diff-highlight
 
 [commit]
 verbose = true
+cleanup = scissors
 
 [rebase]
 autostash = true
