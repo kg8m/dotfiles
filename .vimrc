@@ -559,8 +559,10 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
 
     let g:neosnippet#snippets_directory = [
       \   s:PluginInfo(".vim").path . "/snippets",
-      \   s:PluginInfo("vim-snippets").path . "/snippets",
       \ ]
+    let g:neosnippet#disable_runtime_snippets = {
+      \   "_" : 1,
+      \ }
 
     augroup NeoSnippetClearMarkers  " {{{
       autocmd!
@@ -573,12 +575,10 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
      \   "on_i":      1,
      \   "on_ft":     ["snippet", "neosnippet"],
      \   "on_source": "unite.vim",
-     \   "depends":   [".vim", "vim-snippets"],
+     \   "depends":   [".vim"],
      \   "hook_source": function("s:ConfigPluginOnSource_neosnippet"),
      \ })
 endif  " }}}
-
-call s:RegisterPlugin("Shougo/neosnippet-snippets")
 
 if s:RegisterPlugin("tyru/open-browser.vim")  " {{{
   nmap <Leader>o <Plug>(openbrowser-open)
@@ -1594,8 +1594,6 @@ if s:RegisterPlugin("thinca/vim-singleton")  " {{{
      \   "gui": 1,
      \ })
 endif  " }}}
-
-call s:RegisterPlugin("kg8m/vim-snippets")
 
 if s:RegisterPlugin("mhinz/vim-startify")  " {{{
   function! s:ConfigPluginOnSource_vim_startify() abort  " {{{
