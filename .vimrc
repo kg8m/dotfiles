@@ -1963,9 +1963,10 @@ if has("vim_starting")
   set foldcolumn=3
   set fillchars=vert:\|
 
-  autocmd FileType vim  setlocal foldmethod=marker
-  autocmd FileType yaml setlocal foldmethod=indent
-  autocmd FileType haml setlocal foldmethod=indent
+  autocmd FileType neosnippet setlocal foldmethod=marker
+  autocmd FileType vim        setlocal foldmethod=marker
+  autocmd FileType yaml       setlocal foldmethod=indent
+  autocmd FileType haml       setlocal foldmethod=indent
   autocmd FileType gitcommit,qfreplace setlocal nofoldenable
   autocmd BufEnter * if &ft == "javascript" | call s:MyJavascriptFold() | endif
 
