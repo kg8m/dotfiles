@@ -276,43 +276,6 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-" former zencoding-vim
-if s:RegisterPlugin("mattn/emmet-vim")  " {{{
-  " command: `<C-y>,`, `<C-y>;`
-  function! s:ConfigPluginOnSource_emmet_vim() abort  " {{{
-    let g:user_emmet_settings = {
-      \   "indentation": "  ",
-      \   "lang": "ja",
-      \   "eruby": {
-      \     "extends": ["javascript", "html"],
-      \   },
-      \   "html": {
-      \     "extends": "javascript",
-      \     "snippets": {
-      \       "label": "<label>${cursor}</label>",
-      \       "script": "<script type=\"text/javascript\">\n  ${cursor}\n</script>",
-      \     },
-      \   },
-      \   "javascript": {
-      \     "snippets": {
-      \       "jq": "jQuery(function() {\n  ${cursor}${child}\n});",
-      \       "jq:each": "jQuery.each(arr, function(index, item)\n  ${child}\n});",
-      \       "fn": "(function() {\n  ${cursor}\n})();",
-      \       "tm": "setTimeout(function() {\n  ${cursor}\n}, 100);",
-      \       "if": "if (${cursor}) {\n};",
-      \       "ife": "if (${cursor}) {\n} else if (${cursor}) {\n} else {\n};",
-      \     },
-      \   },
-      \ }
-  endfunction  " }}}
-
-  call s:ConfigPlugin({
-     \   "lazy": 1,
-     \   "on_i": 1,
-     \   "hook_source": function("s:ConfigPluginOnSource_emmet_vim"),
-     \ })
-endif  " }}}
-
 if s:RegisterPlugin("leafcage/foldCC")  " {{{
   let g:foldCCtext_enable_autofdc_adjuster = 1
   let g:foldCCtext_maxchars = 120
