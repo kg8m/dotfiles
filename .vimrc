@@ -1901,6 +1901,9 @@ set smartindent
 set backspace=indent,eol,start
 
 if has("vim_starting")
+  " (no)expandtab
+  autocmd FileType neosnippet set noexpandtab
+
   " formatoptions
   autocmd FileType * setlocal fo+=q fo+=2 fo+=l
   autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
