@@ -1264,7 +1264,7 @@ call s:RegisterPlugin("thinca/vim-ft-svn_diff")
 call s:RegisterPlugin("muz/vim-gemfile")
 call s:RegisterPlugin("kana/vim-gf-user")
 
-if s:RegisterPlugin("kg8m/vim-git")  " {{{
+if s:RegisterPlugin("tpope/vim-git")  " {{{
   let g:gitcommit_cleanup = "scissors"
 
   augroup PreventVimGitFromChangingSettings  " {{{
