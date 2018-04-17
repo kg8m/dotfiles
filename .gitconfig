@@ -211,6 +211,7 @@ user = kg8m
 algorithm = patience
 context = 10
 compactionHeuristic = true
+colorMoved = plain
 
 [fetch]
 prune = true
