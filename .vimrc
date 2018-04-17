@@ -1628,7 +1628,7 @@ if s:RegisterPlugin("mhinz/vim-startify")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("kopischke/vim-stay")  " {{{
-  set viewoptions=cursor
+  set viewoptions=cursor,folds
 endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-surround")
