@@ -244,6 +244,7 @@ cleanup = scissors
 
 [rebase]
 autostash = true
+showCurrentPatch = true
 
 [status]
 showUntrackedFiles = all
