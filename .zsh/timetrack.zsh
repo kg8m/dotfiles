@@ -22,6 +22,7 @@ TIMETRACK_PATTERN="$TIMETRACK_PATTERN|\bssh +[a-z0-9_.@]+ +['\"]"
 TIMETRACK_PATTERN="$TIMETRACK_PATTERN|\btime\b"
 TIMETRACK_PATTERN="$TIMETRACK_PATTERN|\byum\b"
 TIMETRACK_PATTERN="$TIMETRACK_PATTERN|\bzcat\b"
+TIMETRACK_PATTERN="$TIMETRACK_PATTERN|\.z?sh$"
 
 # inspired by http://qiita.com/hayamiz/items/d64730b61b7918fbb970
 autoload -U add-zsh-hook 2>/dev/null || return
