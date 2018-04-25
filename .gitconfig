@@ -211,7 +211,7 @@ user = kg8m
 algorithm = patience
 context = 10
 compactionHeuristic = true
-colorMoved = plain
+colorMoved = dimmed_zebra
 
 [fetch]
 prune = true
