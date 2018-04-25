@@ -39,12 +39,9 @@ autosetupmerge = true
 aliases = !git alias
 alias   = !git config --get-regexp '^alias\\.' | sed -e 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
 
-ignore = !( [ ! -e .gitignore ] && touch .gitignore ) | echo $1 >> .gitignore
-find   = !git ls-files | grep --ignore-case --color=always
-info   = remote show origin
-ru     = remote update
-sh     = show
-st     = status
+find = !git ls-files | grep --ignore-case --color = always
+info = remote show origin
+st   = status
 
 chmod = "!f() {\
   command=\"git update-index --add --chmod=$@\";\
@@ -52,19 +49,14 @@ chmod = "!f() {\
 }; f"
 
 # clone
-crone                 = !git clone-with-submodules
 clone-with-submodules = clone --recursive
 
 # checkout
 co = checkout
-ch = checkout HEAD
 
 # pull/fetch/merge/rebase
 up = !git update
 f  = fetch
-fc = fetch
-pl = pull --stat
-pr = pull --stat --rebase
 
 update = "!f() {\
   command=\"git pull --stat --rebase || echo 'Error: rebase aborted!!'\";\
@@ -105,13 +97,7 @@ select-a-branch = "!f() {\
   fi;\
 }; f"
 
-# add
-add-all = !git add . && git add --updaste && git status
-ad      = add
-at      = add --intent-to-add
-
 # commit
-cm = commit --ammend
 ci = commit
 ca = commit --all
 
@@ -120,17 +106,14 @@ edit-commits      = "!f() { git rebase --interactive HEAD~$1; }; f"
 reset-commits     = !git edit-commits
 reset-last-commit = reset --soft HEAD~
 undo-add          = reset --soft
-rv                = revert
 
 # log
 lg    = !git graph
 graph = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%an %Creset%s\"
 la    = log --branches --tags --remotes
-lo    = log --stat
 lp    = log --stat --patch
 
 lg-branches = !git log-branches --graph --pretty=format:'%Cgreen%h\\ %ci\\ %Cblue[C]\\ %cn\\ [A]\\ %an\\ %Creset%s'
-lo-branches = !git log-branches --stat
 lp-branches = !git log-branches --stat --patch
 
 log-branches = "!f() {\
@@ -148,13 +131,9 @@ ds = !git diff-without-space-changes --staged
 dw = !git diff-without-space-changes --color-words
 dh = !git diff-without-space-changes HEAD
 dl = !git diff-without-space-changes --no-index
-da = diff HEAD
 
 diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
 diff-local = diff --no-index
-
-vimdiff = difftool --tool=vimdiff --no-prompt
-vimdiff-without-space-changes = !git vimdiff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
 
 compare-branches   = !git diff-branches
 diff-stat-branches = !git diff-branches --stat-width=150
@@ -179,7 +158,6 @@ open-changed-files = "!f() {\
 show-without-diff = show -s
 
 # submodule
-su                = !git update-submodules
 update-submodules = !git execute-with-echo 'git submodule update --init --recursive && git submodule update --remote && git status'
 
 # hook
