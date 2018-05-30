@@ -193,6 +193,13 @@ call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 
 call s:RegisterPlugin("kg8m/.vim")
 
+if s:RegisterPlugin("w0rp/ale", { "if": OnRailsDir() })  " {{{
+  let g:airline#extensions#ale#enabled = 0
+  let g:ale_echo_msg_format = "[%linter%][%severity%] %code: %%s"
+  let g:ale_lint_on_save = 1
+  let g:ale_lint_on_text_changed = 0
+endif  " }}}
+
 if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
   let g:auto_ctags = 1
 
