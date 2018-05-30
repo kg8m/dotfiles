@@ -1450,6 +1450,7 @@ if s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() })  " {{{
     \   "test":      "spec/models/{}_spec.rb",
     \ }
   let g:rails_projections["spec/support/*.rb"] = { "command": "support" }
+  let g:rails_projections["test/support/*.rb"] = { "command": "support" }
 
   if !exists("g:rails_path_additions")
     let g:rails_path_additions = []
