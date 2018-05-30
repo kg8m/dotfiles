@@ -39,7 +39,6 @@ autosetupmerge = true
 aliases = !git alias
 alias   = !git config --get-regexp '^alias\\.' | sed -e 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
 
-find = !git ls-files | grep --ignore-case --color = always
 info = remote show origin
 st   = status
 
