@@ -1756,6 +1756,7 @@ if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() })  " {{{
 endif  " }}}
 
 call s:RegisterPlugin("superbrothers/vim-vimperator")
+call s:RegisterPlugin("posva/vim-vue")
 
 if s:RegisterPlugin("thinca/vim-zenspace")  " {{{
   let g:zenspace#default_mode = "on"
