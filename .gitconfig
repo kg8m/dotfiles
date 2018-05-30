@@ -77,7 +77,7 @@ create-branch = "!f() {\
   branch_name=$1;\
   original_branch=${2:-origin/master};\
   command=\"git checkout -b ${branch_name} ${original_branch}\";\
-  command=${command}\" && git commit --allow-empty --message=' ${commit_messages}'\";\
+  command=${command}\" && git commit --allow-empty --message='${commit_messages}'\";\
   command=${command}\" && git push -u origin ${branch_name}\";\
   command=${command}\"; git branches\";\
   \
