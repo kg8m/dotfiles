@@ -19,19 +19,6 @@ function notify {
   ssh main "growlnotify -m $message -a iTerm -s"
 }
 
-function migrate {
-  local cmd
-
-  if (($# == 1)) then
-    cmd="rake db:migrate VERSION=$1";
-  else
-    cmd="rake db:migrate";
-  fi
-
-  execute_with_echo ${cmd};
-  execute_with_echo "rake db:test:load_structure";
-}
-
 function tmux_setup_default {
   tmux new-session -d -s default
   tmux new-window -t default:2
