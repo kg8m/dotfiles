@@ -14,7 +14,7 @@
 --regex-ruby=/^\s*def_erb_method\s*\(?[\s\r\n]*["']([a-zA-Z0-9_]+)/\1/
 --regex-ruby=/^\s*([A-Z0-9_]+)\s*=($|[^=>])/\1/
 --regex-ruby=/const_set(\s+|\():([A-Z0-9_]+)/\2/
---regex-ruby=/shared_(examples|context|examples_for)\s+["'](.*?)["']\s+do/\2/
+--regex-ruby=/shared_(examples|context|examples_for)\s+["'](.*)["']\s+do/\2/
 --regex-ruby=/^\s*alias\s+:?([a-zA-Z0-9_]+)/\1/
 --regex-ruby=/^\s*alias_method\s+:([a-zA-Z0-9_]+)/\1/
 
