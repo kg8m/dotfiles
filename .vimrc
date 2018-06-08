@@ -231,6 +231,8 @@ if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
   endfunction  " }}}
 endif  " }}}
 
+call s:RegisterPlugin("hotwatermorning/auto-git-diff")
+
 if s:RegisterPlugin("vim-scripts/autodate.vim")  " {{{
   let g:autodate_format       = "%Y/%m/%d"
   let g:autodate_lines        = 100
