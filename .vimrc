@@ -205,8 +205,8 @@ if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
 
   augroup AutoCtagsAucocommands  " {{{
     autocmd!
-    autocmd VimEnter,BufWritePost * silent call auto_ctags#ctags(0)
-    autocmd VimEnter              * silent call s:CreateRubyGemsCtags()
+    autocmd VimEnter * silent call auto_ctags#ctags(0)
+    autocmd VimEnter * silent call s:CreateRubyGemsCtags()
   augroup END  " }}}
 
   function! s:CreateRubyGemsCtags() abort  " {{{
