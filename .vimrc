@@ -202,7 +202,6 @@ endif  " }}}
 
 if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
   let g:auto_ctags = 1
-  let g:auto_ctags_tags_args = "--tag-relative=yes --recurse=yes --sort=yes"
 
   augroup AutoCtagsAucocommands  " {{{
     autocmd!
