@@ -1910,6 +1910,7 @@ set expandtab
 set autoindent
 set smartindent
 set backspace=indent,eol,start
+set nofixeol
 
 if has("vim_starting")
   " (no)expandtab
