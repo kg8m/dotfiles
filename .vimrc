@@ -630,7 +630,77 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   nnoremap <Leader>uy :<C-u>Unite history/yank<Cr>
   nnoremap <F4> :<C-u>Unite buffer<Cr>
 
+  if OnRailsDir()
+    " see s:DefineOreOreUniteCommandsForRails()
+    nnoremap <Leader>ur :<C-u>Unite rails/
+  endif
+
   function! s:ConfigPluginOnSource_unite() abort  " {{{
+    if OnRailsDir()
+      function! s:DefineOreOreUniteCommandsForRails() abort  " {{{
+        let s:unite_rails_definitions = {
+          \   "config": {
+          \     "path":    ["config/**", "*"],
+          \     "to_word": ["^\./config/", ""],
+          \   },
+          \   "gems": {
+          \     "path":    [join(RubyGemPaths(), ","), "gems/**/*"],
+          \     "to_word": ['\(' . join(RubyGemPaths(), '\|') . '\)/gems/', ""],
+          \   },
+          \   "initializers": {
+          \     "path":    ["config/initializers/**", "*"],
+          \     "to_word": ["^\./config/initializers/", ""],
+          \   },
+          \   "javascripts": {
+          \     "path":    ["app/**,public/**", "*.js"],
+          \     "to_word": ["^\./", ""],
+          \   },
+          \   "lib": {
+          \     "path":    ["lib/**", "*"],
+          \     "to_word": ["^\./lib/", ""],
+          \   },
+          \   "stylesheets": {
+          \     "path":    ["app/**,public/**", "*.{css,sass,scss}"],
+          \     "to_word": ["^\./", ""],
+          \   },
+          \ }
+
+        for app_dir in globpath("app", "*", 0, 1)
+          let name = fnamemodify(app_dir, ":t")
+
+          if !has_key(s:unite_rails_definitions, name)
+            let s:unite_rails_definitions[name] = {
+              \   "path":    [app_dir . "/**", "*"],
+              \   "to_word": ["^\./" . app_dir, ""],
+              \ }
+          endif
+        endfor
+
+        for test_dir in globpath("spec,test", "*", 0, 1)
+          let s:unite_rails_definitions[test_dir] = {
+            \   "path":    [test_dir . "/**", "*"],
+            \   "to_word": ["^\./" . test_dir, ""],
+            \ }
+        endfor
+
+        for name in keys(s:unite_rails_definitions)
+          let source = { "name": "rails/" . name }
+          function! source.gather_candidates(args, context) abort  " {{{
+            let name = substitute(a:context.source_name, "^rails/", "", "")
+            let definition = s:unite_rails_definitions[name]
+            let files = sort(globpath(definition.path[0], definition.path[1], 0, 1))
+            return map(files, '{
+                 \   "word": substitute(v:val, definition.to_word[0], definition.to_word[1], ""),
+                 \   "kind": "file",
+                 \   "action__path": v:val,
+                 \ }')
+          endfunction  " }}}
+          call unite#define_source(source)
+        endfor
+      endfunction  " }}}
+      call s:DefineUniteCommandsForRails()
+    endif
+
     let g:unite_winheight = "100%"
 
     if s:ag_available
@@ -905,15 +975,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
        \ })
 
     nnoremap <Leader>uo :<C-u>Unite outline:!<Cr>
-  endif  " }}}
-
-  if s:RegisterPlugin("basyura/unite-rails", { "if": OnRailsDir() })  " {{{
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_source": "unite.vim",
-       \ })
-
-    nnoremap <Leader>ur :<C-u>Unite rails/
   endif  " }}}
 
   if s:RegisterPlugin("tsukkee/unite-tag")  " {{{
