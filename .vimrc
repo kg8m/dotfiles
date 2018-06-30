@@ -698,7 +698,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           call unite#define_source(source)
         endfor
       endfunction  " }}}
-      call s:DefineUniteCommandsForRails()
+      call s:DefineOreOreUniteCommandsForRails()
     endif
 
     let g:unite_winheight = "100%"
