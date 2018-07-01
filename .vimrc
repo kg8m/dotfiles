@@ -674,21 +674,25 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           \ }
 
         for app_dir in globpath("app", "*", 0, 1)
-          let name = fnamemodify(app_dir, ":t")
+          if isdirectory(app_dir)
+            let name = fnamemodify(app_dir, ":t")
 
-          if !has_key(s:unite_rails_definitions, name)
-            let s:unite_rails_definitions[name] = {
-              \   "path":    [app_dir . "/**", "*"],
-              \   "to_word": ["^\./" . app_dir, ""],
-              \ }
+            if !has_key(s:unite_rails_definitions, name)
+              let s:unite_rails_definitions[name] = {
+                \   "path":    [app_dir . "/**", "*"],
+                \   "to_word": ["^\./" . app_dir, ""],
+                \ }
+            endif
           endif
         endfor
 
         for test_dir in globpath("spec,test", "*", 0, 1)
-          let s:unite_rails_definitions[test_dir] = {
-            \   "path":    [test_dir . "/**", "*"],
-            \   "to_word": ["^\./" . test_dir, ""],
-            \ }
+          if isdirectory(test_dir)
+            let s:unite_rails_definitions[test_dir] = {
+              \   "path":    [test_dir . "/**", "*"],
+              \   "to_word": ["^\./" . test_dir, ""],
+              \ }
+          endif
         endfor
 
         for name in keys(s:unite_rails_definitions)
