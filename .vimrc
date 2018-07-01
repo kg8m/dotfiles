@@ -659,6 +659,10 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           \     "path":    ["lib/**", "*"],
           \     "to_word": ["^\./lib/", ""],
           \   },
+          \   "script": {
+          \     "path":    ["script/**", "*"],
+          \     "to_word": ["^\./script/", ""],
+          \   },
           \   "spec": {
           \     "path":    ["spec/**", "*"],
           \     "to_word": ["^\./spec/", ""],
