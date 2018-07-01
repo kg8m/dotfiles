@@ -632,7 +632,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
 
   if OnRailsDir()
     " see s:DefineOreOreUniteCommandsForRails()
-    nnoremap <Leader>ur :<C-u>Unite rails/
+    nnoremap <Leader>ur :<C-u>Unite -start-insert menu:rails<Cr>
   endif
 
   function! s:ConfigPluginOnSource_unite() abort  " {{{
@@ -709,6 +709,17 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           endfunction  " }}}
           call unite#define_source(source)
         endfor
+
+        if !exists("g:unite_source_menu_menus")
+          let g:unite_source_menu_menus = {}
+        endif
+        let g:unite_source_menu_menus.rails = {
+          \   "description": "Open files for Rails"
+          \ }
+        let g:unite_source_menu_menus.rails.command_candidates = sort(map(
+          \   keys(s:unite_rails_definitions),
+          \   { key, val -> ["Unite rails/" . val, "Unite -start-insert rails/" . val] }
+          \ ))
       endfunction  " }}}
       call s:DefineOreOreUniteCommandsForRails()
     endif
@@ -733,7 +744,9 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     " unite-shortcut  " {{{
       " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
       " http://d.hatena.ne.jp/tyru/20120110/prompt
-      let g:unite_source_menu_menus = {}
+      if !exists("g:unite_source_menu_menus")
+        let g:unite_source_menu_menus = {}
+      endif
       let g:unite_source_menu_menus.shortcuts = {
         \   "description": "My Shortcuts"
         \ }
