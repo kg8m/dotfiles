@@ -54,7 +54,8 @@ function __my_preexec_end_timetrack() {
     return
   fi
 
-  if ! [ "$command" =~ $TIMETRACK_IGNORE_PATTERN ] && [ "$command" =~ $TIMETRACK_PATTERN ]; then
+  # Don't use `[ "$command" =~ $TIMETRACK_PATTERN ]` because it doesn't work on Mac
+  if [ "$( echo $command | egrep $TIMETRACK_PATTERN | egrep -v $TIMETRACK_IGNORE_PATTERN )" ]; then
     exec_time=$(( __timetrack_end - __timetrack_start ))
     message="Command finished!!\nTime: $exec_time seconds\nCommand: $command"
 
