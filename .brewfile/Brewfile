@@ -23,7 +23,6 @@ brew rbenv
 brew readline
 brew ruby-build
 brew sqlite
-brew tmux
 brew xz
 brew zsh
 
@@ -32,7 +31,10 @@ tap peco/peco
 tap rcmdnk/file
 brew brew-file
 
+# Characters which have ambiguous width are broken
+# on Vim in original tmux window
 tap waltarix/customs
+brew waltarix/customs/tmux
 
 appstore 430173763 Degrees
 appstore 467939042 Growl
