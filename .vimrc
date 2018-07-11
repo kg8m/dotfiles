@@ -632,7 +632,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
 
   if OnRailsDir()
     " see s:DefineOreOreUniteCommandsForRails()
-    nnoremap <Leader>ur :<C-u>Unite -start-insert menu:rails<Cr>
+    nnoremap <Leader>ur :<C-u>Unite -start-insert rails/
   endif
 
   function! s:ConfigPluginOnSource_unite() abort  " {{{
@@ -714,16 +714,33 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           call unite#define_source(source)
         endfor
 
+        let s:sorted_unite_rails_keys = sort(keys(s:unite_rails_definitions))
+
         if !exists("g:unite_source_menu_menus")
           let g:unite_source_menu_menus = {}
         endif
         let g:unite_source_menu_menus.rails = {
           \   "description": "Open files for Rails"
           \ }
-        let g:unite_source_menu_menus.rails.command_candidates = sort(map(
-          \   keys(s:unite_rails_definitions),
+        let g:unite_source_menu_menus.rails.command_candidates = map(
+          \   copy(s:sorted_unite_rails_keys),
           \   { key, val -> ["Unite rails/" . val, "Unite -start-insert rails/" . val] }
-          \ ))
+          \ )
+
+        let source = { "name": "rails" }
+        function! source.gather_candidates(args, context) abort  " {{{
+          return map(copy(s:sorted_unite_rails_keys), '{
+               \   "word": "Unite rails/" . v:val,
+               \   "kind": "command",
+               \   "action__command": "Unite -start-insert rails/" . v:val,
+               \ }')
+        endfunction  " }}}
+        call unite#define_source(source)
+
+        if !exists("g:unite_source_alias_aliases")
+          let g:unite_source_alias_aliases = {}
+        endif
+        let g:unite_source_alias_aliases["rails/"] = { "source": "rails" }
       endfunction  " }}}
       call s:DefineOreOreUniteCommandsForRails()
     endif
