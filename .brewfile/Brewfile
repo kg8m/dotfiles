@@ -1,8 +1,5 @@
-# tap repositories and their packages
 tap argon/mas
 brew mas
-
-tap caskroom/cask
 
 tap homebrew/core
 brew ack
@@ -37,20 +34,7 @@ brew brew-file
 
 tap waltarix/customs
 
-# App Store applications
 appstore 430173763 Degrees
-appstore 668208984 GIPHY CAPTURE
-appstore 408980954 GarageBand
-appstore 682658836 GarageBand
 appstore 467939042 Growl
-appstore 409183694 Keynote
-appstore 555293879 KyPass Companion
-appstore 539883307 LINE
 appstore 540348655 Monosnap
-appstore 409203825 Numbers
-appstore 409201541 Pages
-appstore 844918735 PicGIF Lite
 appstore 414445104 WindowFlow
-appstore 497799835 Xcode
-appstore 408981434 iMovie
-appstore 408981381 iPhoto
