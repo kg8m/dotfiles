@@ -53,6 +53,11 @@ clone-with-submodules = clone --recursive
 # checkout
 co = checkout
 
+cop = "!f() {\
+  local branch=$( git select-a-branch );\
+  [[ \"${branch}\" ]] && git checkout ${branch};\
+}; f"
+
 # pull/fetch/merge/rebase
 up = !git update
 f  = fetch
@@ -86,6 +91,18 @@ create-branch = "!f() {\
 
 select-a-branch = "!f() {\
   prompt=${1:-'select a branch:'};\
+  branches=($( git branch -a | sed -e 's/^[* ] //' | sed -e 's/remotes\\/origin\\///' | egrep -v '\\->' | sort | uniq | peco --prompt \"${prompt}\" ));\
+  \
+  if [[ ! ${#branches[@]} -eq 1 ]]; then\
+    echo 'select only 1 branch.' >&2;\
+    exit 1;\
+  else\
+    echo ${branches};\
+  fi;\
+}; f"
+
+select-a-remote-branch = "!f() {\
+  prompt=${1:-'select a branch:'};\
   branches=($( git branch -r | awk '{print $1}' | peco --prompt \"${prompt}\" ));\
   \
   if [[ ! ${#branches[@]} -eq 1 ]]; then\
@@ -116,8 +133,8 @@ lg-branches = !git log-branches --graph --pretty=format:'%Cgreen%h\\ %ci\\ %Cblu
 lp-branches = !git log-branches --stat --patch
 
 log-branches = "!f() {\
-  branch1=$( git select-a-branch 'select first branch:' ) || exit 1;\
-  branch2=$( git select-a-branch 'select another branch:' ) || exit 1;\
+  branch1=$( git select-a-remote-branch 'select first branch:' ) || exit 1;\
+  branch2=$( git select-a-remote-branch 'select another branch:' ) || exit 1;\
   \
   command=\"git log $@ ${branch1}...${branch2}\";\
   git execute-with-confirm ${command};\
@@ -139,16 +156,16 @@ compare-branches   = !git diff-branches
 diff-stat-branches = !git diff-branches --stat-width=150
 
 diff-branches = "!f() {\
-  branch1=$( git select-a-branch 'select first branch:' ) || exit 1;\
-  branch2=$( git select-a-branch 'select another branch:' ) || exit 1;\
+  branch1=$( git select-a-remote-branch 'select first branch:' ) || exit 1;\
+  branch2=$( git select-a-remote-branch 'select another branch:' ) || exit 1;\
   \
   command=\"git diff-without-space-changes $@ ${branch1}...${branch2}\";\
   git execute-with-confirm ${command};\
 }; f"
 
 open-changed-files = "!f() {\
-  branch1=$( git select-a-branch 'select first branch:' ) || exit 1;\
-  branch2=$( git select-a-branch 'select another branch:' ) || exit 1;\
+  branch1=$( git select-a-remote-branch 'select first branch:' ) || exit 1;\
+  branch2=$( git select-a-remote-branch 'select another branch:' ) || exit 1;\
   \
   command=\"vim \\$( git diff --name-only $@ ${branch1}...${branch2} )\";\
   git execute-with-confirm ${command};\
