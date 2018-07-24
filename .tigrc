@@ -26,3 +26,4 @@ bind generic f scroll-page-down
 bind generic "<Ctrl-e>" edit
 bind generic c !@bash -c "cut -c-7 <<<%(commit) | tr -d '\n' | ssh main pbcopy"
 bind generic C !@bash -c "cut -c-7 <<<%(commit) | tr -d '\n' | ssh main pbcopy"
+bind status p !git add --patch %(file)
