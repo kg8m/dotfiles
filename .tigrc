@@ -1,13 +1,21 @@
 color cursor black white
 
-set id-width = 40
+# tig 2.2.1+
+# set diff-highlight = true
 set diff-options = --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
-set line-graphics = ascii
 set horizontal-scroll = 20%
-set show-author = full
-set show-refs = no
-set show-id = yes
+set id-width = 40
+set line-graphics = ascii
+set vertical-split = no
 set wrap-lines = yes
+
+set main-view  = id date author commit-title:graph=yes,refs=yes
+set blame-view = date:default author:email-user id:yes,color line-number:yes,interval=1 text
+set blob-view  = line-number:yes,interval=1 text
+set diff-view  = line-number:yes,interval=1 text:yes,commit-title-overflow=no
+set log-view   = line-number:yes,interval=1 text
+set pager-view = line-number:yes,interval=1 text
+set stage-view = line-number:yes,interval=1 text
 
 bind generic g move-first-line
 bind generic G move-last-line
@@ -15,6 +23,6 @@ bind generic y scroll-line-up
 bind generic e scroll-line-down
 bind generic b scroll-page-up
 bind generic f scroll-page-down
-bind generic ^e edit
+bind generic "<Ctrl-e>" edit
 bind generic c !@bash -c "cut -c-7 <<<%(commit) | tr -d '\n' | ssh main pbcopy"
 bind generic C !@bash -c "cut -c-7 <<<%(commit) | tr -d '\n' | ssh main pbcopy"
