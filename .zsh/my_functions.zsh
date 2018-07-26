@@ -19,6 +19,18 @@ function notify {
   ssh main "growlnotify -m $message -a iTerm -s"
 }
 
+function batch_move {
+  zmv -n $@ | less
+  read 'response?Execute? [y/n]: '
+
+  if [[ $response =~ ^y ]]; then
+    zmv $@
+  else
+    echo "Canceled."
+  fi
+}
+alias bmv="batch_move"
+
 function tmux_setup_default {
   tmux new-session -d -s default
   tmux new-window -t default:2
