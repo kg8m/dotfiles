@@ -1171,6 +1171,10 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   endif  " }}}
 endif  " }}}
 
+if s:RegisterPlugin("leafgarland/typescript-vim")  " {{{
+  let g:typescript_indent_disable = 1
+endif  " }}}
+
 if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
   call s:ConfigPlugin({
      \   "lazy": 0,
