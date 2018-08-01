@@ -16,3 +16,6 @@
 [submodule ".rbenv/plugins/rbenv-update"]
 	path = .rbenv/plugins/rbenv-update
 	url = https://github.com/rkh/rbenv-update
+[submodule ".rbenv/plugins/rbenv-default-gems"]
+	path = .rbenv/plugins/rbenv-default-gems
+	url = https://github.com/rbenv/rbenv-default-gems.git
