@@ -1637,7 +1637,7 @@ if s:RegisterPlugin("xolox/vim-session")  " {{{
   endfunction  " }}}
 
   function! s:SessionName() abort  " {{{
-    return substitute(substitute(@%, "/", "+=", "g"), "^\.", "_", "")
+    return substitute(substitute(@%, "/", "+=", "g"), '^\.', "_", "")
   endfunction  " }}}
 
   function! s:CleanUpSession() abort  " {{{
