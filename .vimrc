@@ -201,31 +201,46 @@ if s:RegisterPlugin("w0rp/ale", { "if": OnRailsDir() })  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
+  " disable original autocommands
+  let g:loaded_auto_ctags = 1
   let g:auto_ctags = 1
 
-  augroup AutoCtagsAucocommands  " {{{
-    autocmd!
-    autocmd VimEnter * silent call auto_ctags#ctags(0)
-    autocmd VimEnter * silent call s:CreateRubyGemsCtags()
-  augroup END  " }}}
+  function! s:ConfigPluginOnPostSource_auto_ctags_vim() abort  " {{{
+    augroup AutoCtagsAucocommands  " {{{
+      autocmd!
+      autocmd BufWritePost * call s:CreateCtags()
+    augroup END  " }}}
 
-  function! s:CreateRubyGemsCtags() abort  " {{{
-    let original_current_directory = getcwd()
-    let original_directory_list    = g:auto_ctags_directory_list
+    function! s:CreateCtags() abort  " {{{
+      let original_current_directory = getcwd()
+      let original_directory_list    = get(g:, "auto_ctags_directory_list", ["."])
+      let original_tags_args         = get(g:, "auto_ctags_tags_args", ["--tag-relative=yes", "--recurse=yes", "--sort=yes"])
 
-    for ruby_gem_path in RubyGemPaths()
-      if isdirectory(ruby_gem_path)
-        execute "cd " . ruby_gem_path
-        let g:auto_ctags_directory_list = [ruby_gem_path]
-        call auto_ctags#ctags(0)
-      endif
-    endfor
+      for ruby_gem_path in original_directory_list + RubyGemPaths()
+        if isdirectory(ruby_gem_path)
+          execute "cd " . ruby_gem_path
 
-    execute "cd " . original_current_directory
-    let g:auto_ctags_directory_list = original_directory_list
+          if ruby_gem_path == "."
+            let g:auto_ctags_tags_args = original_tags_args + ["--languages=ruby"]
+          endif
 
-    echomsg "ctags for Ruby gems have been created."
+          let g:auto_ctags_directory_list = [ruby_gem_path]
+          call auto_ctags#ctags(0)
+        endif
+      endfor
+
+      execute "cd " . original_current_directory
+      let g:auto_ctags_directory_list = original_directory_list
+      let g:auto_ctags_tags_args      = original_tags_args
+    endfunction  " }}}
+    call s:CreateCtags()
   endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":     1,
+     \   "on_event": "VimEnter",
+     \   "hook_post_source": function("s:ConfigPluginOnPostSource_auto_ctags_vim"),
+     \ })
 endif  " }}}
 
 call s:RegisterPlugin("hotwatermorning/auto-git-diff")
