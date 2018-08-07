@@ -55,7 +55,7 @@ co = checkout
 
 cop = "!f() {\
   local branch=$( git select-a-branch );\
-  [[ \"${branch}\" ]] && git checkout ${branch};\
+  [[ \"${branch}\" ]] && git execute-with-echo \"git checkout ${branch}\";\
 }; f"
 
 # pull/fetch/merge/rebase
