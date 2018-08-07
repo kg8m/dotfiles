@@ -645,6 +645,9 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   nnoremap <Leader>uy :<C-u>Unite history/yank<Cr>
   nnoremap <F4> :<C-u>Unite buffer<Cr>
 
+  " see also ctags settings
+  nnoremap g[ :<C-u>Unite jump<Cr>
+
   if OnRailsDir()
     " see s:DefineOreOreUniteCommandsForRails()
     nnoremap <Leader>ur :<C-u>Unite -start-insert rails/
@@ -837,7 +840,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[Unite plugin] mru files",            "Unite neomru/file"],
         \   ["[Unite plugin] outline",              "Unite outline:!"],
         \   ["[Unite plugin] mark",                 "Unite mark"],
-        \   ["[Unite plugin] tag with cursor word", "UniteWithCursorWord tag"],
         \   ["[Unite plugin] versions/status",      "UniteVersions status:./"],
         \   ["[Unite plugin] versions/log",         "UniteVersions log:./"],
         \   ["[Unite plugin] giti/status",          "Unite giti/status"],
@@ -1036,25 +1038,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
        \ })
 
     nnoremap <Leader>uo :<C-u>Unite outline:!<Cr>
-  endif  " }}}
-
-  if s:RegisterPlugin("tsukkee/unite-tag")  " {{{
-    call s:ConfigPlugin("unite.vim", {
-       \   "on_cmd": s:PluginInfo("unite.vim")["on_cmd"] + ["UniteWithCursorWord"],
-       \ })
-
-    nnoremap g] :<C-u>UniteWithCursorWord -immediately tag<Cr>
-    vnoremap g] :<C-u>UniteWithCursorWord -immediately tag<Cr>
-    nnoremap g[ :<C-u>Unite jump<Cr>
-    nnoremap <Leader>ut :<C-u>UniteWithCursorWord -immediately tag<Cr>
-
-    let g:unite_source_tag_max_name_length  = 50
-    let g:unite_source_tag_max_fname_length = 100
-
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_source": "unite.vim",
-       \ })
   endif  " }}}
 
   if s:RegisterPlugin("thinca/vim-unite-history")  " {{{
@@ -2110,7 +2093,7 @@ execute "set undodir=" . s:undodir
 set wildmenu
 set wildmode=list:longest,full
 
-" ctags
+" ctags  " {{{
 if has("vim_starting")
   function! s:SetupTags() abort  " {{{
     for ruby_gem_path in RubyGemPaths()
@@ -2121,6 +2104,11 @@ if has("vim_starting")
   endfunction  " }}}
   call s:SetupTags()
 endif
+
+" see also unite.vim settings
+nnoremap g] :tjump <C-r>=expand("<cword>")<Cr><Cr>
+vnoremap g] "gy:tjump <C-r>"<Cr>
+" }}}
 
 " auto reload
 augroup CheckTimeHook  " {{{
