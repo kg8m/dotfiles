@@ -85,6 +85,10 @@ function __my_preexec_end_timetrack() {
         message=$( echo $message | sed -e 's/\(Command failed!!\)/\\e[0;31m\1\\e[1;37m/' )
       fi
 
+      if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
+        message=$( echo $message | sed -e "s/\($exec_time seconds\)/\\\\e[1;33m\1\\\\e[1;37m/" )
+      fi
+
       echo "\n* * *"
       echo $message
       echo "Notified by \`growlnotify $growl_options\`"
