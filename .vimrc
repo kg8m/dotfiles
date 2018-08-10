@@ -208,7 +208,7 @@ if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
   function! s:ConfigPluginOnPostSource_auto_ctags_vim() abort  " {{{
     augroup AutoCtagsAucocommands  " {{{
       autocmd!
-      autocmd BufWritePost * call s:CreateCtags()
+      autocmd BufWritePost * silent call s:CreateCtags()
     augroup END  " }}}
 
     function! s:CreateCtags() abort  " {{{
@@ -233,7 +233,7 @@ if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
       let g:auto_ctags_directory_list = original_directory_list
       let g:auto_ctags_tags_args      = original_tags_args
     endfunction  " }}}
-    call s:CreateCtags()
+    silent call s:CreateCtags()
   endfunction  " }}}
 
   call s:ConfigPlugin({
