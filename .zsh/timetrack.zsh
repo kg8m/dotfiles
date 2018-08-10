@@ -45,11 +45,11 @@ function __my_preexec_start_timetrack() {
 }
 
 function __my_preexec_end_timetrack() {
+  local last_status=$?
   local exec_time
   local message
   local command=$( echo $__timetrack_command | sed -e "s/'/'\\\\''/g" )
   local growl_options="-n 'ZSH timetracker' --appIcon iTerm"
-  local notify=false
 
   export __timetrack_end=`date +%s`
 
@@ -60,7 +60,14 @@ function __my_preexec_end_timetrack() {
   # Don't use `[ "$command" =~ $TIMETRACK_PATTERN ]` because it doesn't work on Mac
   if [ "$( echo $command | egrep $TIMETRACK_PATTERN | egrep -v $TIMETRACK_IGNORE_PATTERN )" ]; then
     exec_time=$(( __timetrack_end - __timetrack_start ))
-    message="Command finished!!\nTime: $exec_time seconds\nCommand: $command"
+
+    if [ $last_status = "0" ]; then
+      message='👼 Command succeeded!!'
+    else
+      message='👿 Command failed!!'
+    fi
+
+    message="$message\nTime: $exec_time seconds\nCommand: $command"
 
     if [ "$exec_time" -ge "$__timetrack_long_threshold" ]; then
       growl_options="$growl_options -s"
@@ -71,6 +78,13 @@ function __my_preexec_end_timetrack() {
 
     if $notify; then
       ssh main "echo '[$USER@$HOST] $message' | growlnotify $growl_options"
+
+      if [ $last_status = "0" ]; then
+        message=$( echo $message | sed -e 's/\(Command succeeded!!\)/\\e[0;32m\1\\e[1;37m/' )
+      else
+        message=$( echo $message | sed -e 's/\(Command failed!!\)/\\e[0;31m\1\\e[1;37m/' )
+      fi
+
       echo "\n* * *"
       echo $message
       echo "Notified by \`growlnotify $growl_options\`"
