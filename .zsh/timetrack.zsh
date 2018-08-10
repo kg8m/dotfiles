@@ -31,11 +31,9 @@ TIMETRACK_PATTERN="$TIMETRACK_PATTERN|\.z?sh$"
 autoload -U add-zsh-hook 2>/dev/null || return
 
 # seconds
-__timetrack_long_threshold=30
-__timetrack_short_threshold=15
+__timetrack_threshold=30
 
-export __timetrack_long_threshold
-export __timetrack_short_threshold
+export __timetrack_threshold
 
 function __my_preexec_start_timetrack() {
   local command=$1
@@ -53,7 +51,7 @@ function __my_preexec_end_timetrack() {
 
   export __timetrack_end=`date +%s`
 
-  if [ -z "$__timetrack_start" ] || [ -z "$__timetrack_long_threshold" ] || [ -z "$__timetrack_short_threshold" ]; then
+  if [ -z "$__timetrack_start" ] || [ -z "$__timetrack_threshold" ]; then
     return
   fi
 
@@ -69,7 +67,7 @@ function __my_preexec_end_timetrack() {
 
     message="$message\nTime: $exec_time seconds\nCommand: $command"
 
-    if [ "$exec_time" -ge "$__timetrack_long_threshold" ]; then
+    if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
       growl_options="$growl_options -s"
     fi
 
