@@ -1936,6 +1936,9 @@ if s:RegisterPlugin("simeji/winresizer")  " {{{
      \ })
 endif  " }}}
 
+call s:RegisterPlugin("stephpy/vim-yaml")
+call s:RegisterPlugin("pedrohdz/vim-yaml-folds")
+
 if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
   nmap p     <Plug>(yankround-p)
   xmap p     <Plug>(yankround-p)
@@ -2040,7 +2043,6 @@ if has("vim_starting")
 
   autocmd FileType neosnippet setlocal foldmethod=marker
   autocmd FileType vim        setlocal foldmethod=marker
-  autocmd FileType yaml       setlocal foldmethod=indent
   autocmd FileType haml       setlocal foldmethod=indent
   autocmd FileType gitcommit,qfreplace setlocal nofoldenable
   autocmd BufEnter * if &ft == "javascript" | call s:MyJavascriptFold() | endif
