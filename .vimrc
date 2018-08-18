@@ -2029,7 +2029,7 @@ if has("vim_starting")
   " cinkeys
   autocmd FileType text,markdown,moin setlocal cinkeys-=:
 
-  " folding
+  " folding  " {{{
   " frequently used keys:
   "   zo: open
   "   zc: close
@@ -2054,6 +2054,7 @@ if has("vim_starting")
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * if !exists("w:last_fdm") | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
   autocmd BufWritePost,FileWritePost,WinLeave * if exists("w:last_fdm") | let &foldmethod=w:last_fdm | unlet w:last_fdm | endif
+  " }}}
 
   " update filetype
   autocmd BufWritePost * if &filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
