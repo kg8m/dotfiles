@@ -1837,6 +1837,8 @@ if s:RegisterPlugin("kana/vim-textobj-user")  " {{{
      \ })
 endif  " }}}
 
+call s:RegisterPlugin("cespare/vim-toml")
+
 if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() })  " {{{
   augroup ConfigTurbux  " {{{
     autocmd!
