@@ -410,6 +410,19 @@ endif  " }}}
 " interested in future features
 call s:RegisterPlugin("pocke/iro.vim", { "if": 0 })
 
+if s:RegisterPlugin("othree/javascript-libraries-syntax.vim")  " {{{
+  let g:used_javascript_libs = join([
+    \   "angularjs",
+    \   "backbone",
+    \   "chai",
+    \   "jasmine",
+    \   "jquery",
+    \   "react",
+    \   "underscore",
+    \   "vue",
+    \ ], ",")
+endif  " }}}
+
 if s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git")  " {{{
   let g:jscomplete_use = ["dom", "moz", "es6th"]
 endif  " }}}
@@ -612,11 +625,6 @@ if s:RegisterPlugin("vim-scripts/sequence")  " {{{
      \   "lazy":   1,
      \   "on_map": [["vn", "<Plug>Sequence"]],
      \ })
-endif  " }}}
-
-if s:RegisterPlugin("jiangmiao/simple-javascript-indenter")  " {{{
-  let g:SimpleJsIndenter_BriefMode = 2
-  let g:SimpleJsIndenter_CaseIndentLevel = -1
 endif  " }}}
 
 if s:RegisterPlugin("AndrewRadev/splitjoin.vim")  " {{{
@@ -1394,16 +1402,6 @@ endif  " }}}
 call s:RegisterPlugin("tpope/vim-haml")
 call s:RegisterPlugin("michaeljsmith/vim-indent-object")
 
-if s:RegisterPlugin("jelera/vim-javascript-syntax")  " {{{
-  function! s:MyJavascriptFold() abort  " {{{
-    if !exists("b:javascript_folded")
-      call JavaScriptFold()
-      setl foldlevelstart=0
-      let b:javascript_folded = 1
-    endif
-  endfunction  " }}}
-endif  " }}}
-
 if s:RegisterPlugin("elzr/vim-json")  " {{{
   let g:vim_json_syntax_conceal = 0
 endif  " }}}
@@ -1939,6 +1937,13 @@ endif  " }}}
 call s:RegisterPlugin("stephpy/vim-yaml")
 call s:RegisterPlugin("pedrohdz/vim-yaml-folds")
 
+if s:RegisterPlugin("othree/yajs.vim")  " {{{
+  augroup JavaScriptFold  " {{{
+    autocmd!
+    autocmd FileType javascript setlocal foldmethod=syntax
+  augroup END  " }}}
+endif  " }}}
+
 if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
   nmap p     <Plug>(yankround-p)
   xmap p     <Plug>(yankround-p)
@@ -2045,7 +2050,6 @@ if has("vim_starting")
   autocmd FileType vim        setlocal foldmethod=marker
   autocmd FileType haml       setlocal foldmethod=indent
   autocmd FileType gitcommit,qfreplace setlocal nofoldenable
-  autocmd BufEnter * if &ft == "javascript" | call s:MyJavascriptFold() | endif
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * if !exists("w:last_fdm") | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
