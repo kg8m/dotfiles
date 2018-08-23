@@ -678,7 +678,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           \     "to_word": ["^\./config/initializers/", ""],
           \   },
           \   "javascripts": {
-          \     "path":    ["app/**,public/**", "*.js"],
+          \     "path":    ["app/**,public/**", "*.{js,ts,vue}"],
           \     "to_word": ["^\./", ""],
           \   },
           \   "lib": {
