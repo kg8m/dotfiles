@@ -115,9 +115,10 @@ function extract() {
     *.Z) uncompress $1;;
     *.tar) tar xvf $1;;
     *.arj) unarj $1;;
+    *.zst|*.zstd) unzstd $1;;
   esac
 }
-alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
+alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
 
 function viag() {
   vi `ag $@ -l`
