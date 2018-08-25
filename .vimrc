@@ -644,6 +644,10 @@ endif  " }}}
 call s:RegisterPlugin("vim-scripts/sudo.vim")
 call s:RegisterPlugin("kg8m/svn-diff.vim", { "if": OnSvnDir() })
 
+if s:RegisterPlugin("leafgarland/typescript-vim")  " {{{
+  let g:typescript_indent_disable = 1
+endif  " }}}
+
 if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
@@ -1178,10 +1182,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
        \   "hook_source": function("s:ConfigPluginOnSource_vim_versions"),
        \ })
   endif  " }}}
-endif  " }}}
-
-if s:RegisterPlugin("leafgarland/typescript-vim")  " {{{
-  let g:typescript_indent_disable = 1
 endif  " }}}
 
 if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
