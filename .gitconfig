@@ -91,7 +91,7 @@ create-branch = "!f() {\
 
 select-a-branch = "!f() {\
   prompt=${1:-'select a branch:'};\
-  branches=($( git branch -a | sed -e 's/^[* ] //' | sed -e 's/remotes\\/origin\\///' | egrep -v '\\->' | sort | uniq | peco --prompt \"${prompt}\" ));\
+  branches=($( git branch -a | sed -e 's/^[* ] //' | sed -e 's/remotes\\/origin\\///' | egrep -v '\\->' | sort | uniq | $FILTER --prompt \"${prompt}\" ));\
   \
   if [[ ! ${#branches[@]} -eq 1 ]]; then\
     echo 'select only 1 branch.' >&2;\
@@ -103,7 +103,7 @@ select-a-branch = "!f() {\
 
 select-a-remote-branch = "!f() {\
   prompt=${1:-'select a branch:'};\
-  branches=($( git branch -r | awk '{print $1}' | peco --prompt \"${prompt}\" ));\
+  branches=($( git branch -r | awk '{print $1}' | $FILTER --prompt \"${prompt}\" ));\
   \
   if [[ ! ${#branches[@]} -eq 1 ]]; then\
     echo 'select only 1 branch.' >&2;\

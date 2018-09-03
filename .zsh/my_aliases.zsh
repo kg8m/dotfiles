@@ -3,7 +3,7 @@ alias -g V="| vim -R -"
 alias -g L="| less"
 alias -g H="| head"
 alias -g T="| tail"
-alias -g P="| peco"
+alias -g F="| \$FILTER"
 alias -g GW='--ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change'  # for Git: ignore whitespace changes
 
 alias ag="ag --pager=less --hidden --color-line-number='1;36' --color-match='30;46' --color-path='1;34'"

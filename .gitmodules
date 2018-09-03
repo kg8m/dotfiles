@@ -4,8 +4,8 @@
 [submodule ".zsh/cd-bookmark"]
 	path = .zsh/cd-bookmark
 	url = git://github.com/mollifier/cd-bookmark
-[submodule ".peco/anyframe"]
-	path = .peco/anyframe
+[submodule ".filter/anyframe"]
+	path = .filter/anyframe
 	url = git@github.com:mollifier/anyframe
 [submodule ".zsh/enhancd"]
 	path = .zsh/enhancd
