@@ -4,9 +4,22 @@ alias -g L="| less"
 alias -g H="| head"
 alias -g T="| tail"
 alias -g F="| \$FILTER"
-alias -g GW="--ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change"  # for Git: ignore whitespace changes
 
-alias ag="ag --pager=less --hidden --color-line-number='1;36' --color-match='30;46' --color-path='1;34'"
+GIT_IGNORE_WHITESPACE_CHANGES+=" --ignore-all-space"
+GIT_IGNORE_WHITESPACE_CHANGES+=" --ignore-blank-lines"
+GIT_IGNORE_WHITESPACE_CHANGES+=" --ignore-space-at-eol"
+GIT_IGNORE_WHITESPACE_CHANGES+=" --ignore-space-change"
+alias -g GW=$GIT_IGNORE_WHITESPACE_CHANGES
+unset GIT_IGNORE_WHITESPACE_CHANGES
+
+AG_OPTIONS+=" --pager=less"
+AG_OPTIONS+=" --hidden"
+AG_OPTIONS+=" --color-line-number='1;36'"
+AG_OPTIONS+=" --color-match='30;46'"
+AG_OPTIONS+=" --color-path='1;34'"
+alias ag="ag $AG_OPTIONS"
+unset AG_OPTIONS
+
 alias g="git"
 alias rm="rm -i"
 
@@ -21,4 +34,5 @@ alias watch="watch --color"
 
 alias reload="source ~/.zshrc; echo "~/.zshrc sourced.""
 
-alias mux='attach_or_new_tmux'  # never use tmuxinator
+# never use tmuxinator
+alias mux="attach_or_new_tmux"
