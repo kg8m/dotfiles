@@ -9,12 +9,6 @@ esac
 export VISUAL=vim
 export EDITOR=vim
 
-if [ -e ~/svn_editor.sh ]; then
-  export SVN_EDITOR="sh ~/svn_editor.sh"
-else
-  export SVN_EDITOR=vim
-fi
-
 export GIT_EDITOR=vim
 export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --no-init --quit-if-one-screen"
 
