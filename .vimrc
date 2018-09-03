@@ -2012,35 +2012,42 @@ set smartindent
 set backspace=indent,eol,start
 set nofixeol
 
-if has("vim_starting")
-  " (no)expandtab
+augroup SetupExpandtab  " {{{
+  autocmd!
   autocmd FileType neosnippet set noexpandtab
+augroup END  " }}}
 
-  " formatoptions
+augroup SetupFormatoptions  " {{{
+  autocmd!
   autocmd FileType * setlocal fo+=q fo+=2 fo+=l
   autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
   autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
+augroup END  " }}}
 
-  " cinkeys
+augroup SetupCinkeys  " {{{
+  autocmd!
   autocmd FileType text,markdown,moin setlocal cinkeys-=:
+augroup END  " }}}
 
-  " folding  " {{{
-  " frequently used keys:
-  "   zo: open
-  "   zc: close
-  "   zR: open all
-  "   zM: close all
-  "   zx: recompute all
-  "   [z: move to start of current fold
-  "   ]z: move to end of current fold
-  "   zj: move to start of next fold
-  "   zk: move to end of previous fold
-  set foldmethod=marker
-  set foldopen=hor
-  set foldminlines=0
-  set foldcolumn=3
-  set fillchars=vert:\|
+" folding  " {{{
+" frequently used keys:
+"   zo: open
+"   zc: close
+"   zR: open all
+"   zM: close all
+"   zx: recompute all
+"   [z: move to start of current fold
+"   ]z: move to end of current fold
+"   zj: move to start of next fold
+"   zk: move to end of previous fold
+set foldmethod=marker
+set foldopen=hor
+set foldminlines=0
+set foldcolumn=3
+set fillchars=vert:\|
 
+augroup SetupFoldings  " {{{
+  autocmd!
   autocmd FileType neosnippet setlocal foldmethod=marker
   autocmd FileType vim        setlocal foldmethod=marker
   autocmd FileType haml       setlocal foldmethod=indent
@@ -2049,11 +2056,13 @@ if has("vim_starting")
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * if !exists("w:last_fdm") | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
   autocmd BufWritePost,FileWritePost,WinLeave * if exists("w:last_fdm") | let &foldmethod=w:last_fdm | unlet w:last_fdm | endif
-  " }}}
+augroup END  " }}}
+" }}}
 
-  " update filetype
+augroup UpdateFiletypeAfterSave  " {{{
+  autocmd!
   autocmd BufWritePost * if &filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
-endif
+augroup END  " }}}
 " }}}
 
 " ----------------------------------------------
@@ -2098,16 +2107,14 @@ set wildmenu
 set wildmode=list:longest,full
 
 " ctags  " {{{
-if has("vim_starting")
-  function! s:SetupTags() abort  " {{{
-    for ruby_gem_path in RubyGemPaths()
-      if isdirectory(ruby_gem_path)
-        let &tags = &tags . "," . ruby_gem_path . "/tags"
-      endif
-    endfor
-  endfunction  " }}}
-  call s:SetupTags()
-endif
+function! s:SetupTags() abort  " {{{
+  for ruby_gem_path in RubyGemPaths()
+    if isdirectory(ruby_gem_path)
+      let &tags = &tags . "," . ruby_gem_path . "/tags"
+    endif
+  endfor
+endfunction  " }}}
+call s:SetupTags()
 
 " see also unite.vim settings
 nnoremap g] :tjump <C-r>=expand("<cword>")<Cr><Cr>
