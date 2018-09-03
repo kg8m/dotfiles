@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+if [ -f .git_templates/hooks/post-commit ]; then
+  source .git_templates/hooks/post-commit
+else
+  exit 0
+fi
