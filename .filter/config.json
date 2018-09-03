@@ -19,5 +19,5 @@
     "Query": ["green", "bold"],
     "Matched": ["red"]
   },
-  "Layout": "bottom-up"
+  "InitialFilter": "Fuzzy"
 }
