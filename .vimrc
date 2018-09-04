@@ -668,6 +668,10 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           \     "path":    ["config/**", "*"],
           \     "to_word": ["^\./config/", ""],
           \   },
+          \   "db/migrates": {
+          \     "path":    ["db/migrate", "*"],
+          \     "to_word": ["^db/migrate/", ""],
+          \   },
           \   "gems": {
           \     "path":    [join(RubyGemPaths(), ","), "gems/**/*"],
           \     "to_word": ['\(' . join(RubyGemPaths(), '\|') . '\)/gems/', ""],
