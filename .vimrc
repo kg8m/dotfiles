@@ -494,7 +494,6 @@ if s:RegisterPlugin("AndrewRadev/linediff.vim")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("vim-scripts/matchit.zip")
 call s:RegisterPlugin("kg8m/moin.vim")
 
 if s:RegisterPlugin("Shougo/neocomplete.vim")  " {{{
@@ -1436,6 +1435,7 @@ if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")  " {{{
      \ })
 endif  " }}}
 
+call s:RegisterPlugin("andymass/vim-matchup")
 call s:RegisterPlugin("xolox/vim-misc")
 
 if s:RegisterPlugin("kana/vim-operator-replace")  " {{{
@@ -1497,15 +1497,6 @@ if s:RegisterPlugin("kana/vim-operator-user")  " {{{
      \   "lazy":    1,
      \   "on_func": "operator#user#define",
      \ })
-endif  " }}}
-
-if s:RegisterPlugin("itchyny/vim-parenmatch")  " {{{
-  let g:loaded_matchparen = 1
-
-  augroup HighlightParenmatch  " {{{
-    autocmd!
-    autocmd VimEnter,ColorScheme * highlight ParenMatch ctermbg=white ctermfg=black guibg=white guifg=black
-  augroup END  " }}}
 endif  " }}}
 
 if s:RegisterPlugin("thinca/vim-prettyprint")  " {{{
