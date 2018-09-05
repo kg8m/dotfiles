@@ -1567,6 +1567,11 @@ if s:RegisterPlugin("vim-ruby/vim-ruby")  " {{{
     autocmd BufEnter Gemfile set filetype=Gemfile
   augroup END  " }}}
 
+  augroup UnletRubyNoExpensive  " {{{
+    autocmd!
+    autocmd FileType ruby if exists("b:ruby_no_expensive") | unlet b:ruby_no_expensive | endif
+  augroup END  " }}}
+
   let g:no_ruby_maps = 1
 
   call s:ConfigPlugin({
