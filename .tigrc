@@ -1,7 +1,6 @@
 color cursor black white
 
-# tig 2.2.1+
-# set diff-highlight = true
+set diff-highlight = true
 set diff-options = --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
 set horizontal-scroll = 20%
 set id-width = 40
