@@ -14,6 +14,7 @@ unset GIT_IGNORE_WHITESPACE_CHANGES
 
 AG_OPTIONS+=" --pager=less"
 AG_OPTIONS+=" --hidden"
+AG_OPTIONS+=" --workers=1"
 AG_OPTIONS+=" --color-line-number='1;36'"
 AG_OPTIONS+=" --color-match='30;46'"
 AG_OPTIONS+=" --color-path='1;34'"
