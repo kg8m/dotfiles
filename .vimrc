@@ -1415,6 +1415,7 @@ if s:RegisterPlugin("rcmdnk/vim-markdown")  " {{{
   let g:vim_markdown_conceal = 0
   let g:vim_markdown_no_extensions_in_markdown = 1
   let g:vim_markdown_autowrite = 1
+  let g:vim_markdown_folding_level = 10
 
   function! s:MarkdownCustomFormatoptions() abort  " {{{
     setlocal formatoptions-=r
