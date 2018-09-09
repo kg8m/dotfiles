@@ -5,6 +5,7 @@ alias -g H="| head"
 alias -g T="| tail"
 alias -g F="| \$FILTER"
 
+GIT_IGNORE_WHITESPACE_CHANGES=""
 GIT_IGNORE_WHITESPACE_CHANGES+=" --ignore-all-space"
 GIT_IGNORE_WHITESPACE_CHANGES+=" --ignore-blank-lines"
 GIT_IGNORE_WHITESPACE_CHANGES+=" --ignore-space-at-eol"
@@ -12,6 +13,7 @@ GIT_IGNORE_WHITESPACE_CHANGES+=" --ignore-space-change"
 alias -g GW=$GIT_IGNORE_WHITESPACE_CHANGES
 unset GIT_IGNORE_WHITESPACE_CHANGES
 
+AG_OPTIONS=""
 AG_OPTIONS+=" --pager=less"
 AG_OPTIONS+=" --hidden"
 AG_OPTIONS+=" --workers=1"
