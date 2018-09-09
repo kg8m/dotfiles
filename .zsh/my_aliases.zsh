@@ -35,7 +35,7 @@ alias ll="ls -l --time-style=long-iso"
 alias diff="diff -U 10 -b -B"
 alias watch="watch --color"
 
-alias reload="source ~/.zshrc; echo "~/.zshrc sourced.""
+alias reload="source ~/.zshrc; echo \"~/.zshrc sourced.\""
 
 # never use tmuxinator
 alias mux="attach_or_new_tmux"
