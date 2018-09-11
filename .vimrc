@@ -216,15 +216,15 @@ if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
       let original_directory_list    = get(g:, "auto_ctags_directory_list", ["."])
       let original_tags_args         = get(g:, "auto_ctags_tags_args", ["--tag-relative=yes", "--recurse=yes", "--sort=yes"])
 
-      for ruby_gem_path in original_directory_list + RubyGemPaths()
-        if isdirectory(ruby_gem_path)
-          execute "cd " . ruby_gem_path
+      for path in original_directory_list + RubyGemPaths()
+        if isdirectory(path)
+          execute "cd " . path
 
-          if ruby_gem_path == "."
+          if path == "."
             let g:auto_ctags_tags_args = original_tags_args + ["--languages=ruby"]
           endif
 
-          let g:auto_ctags_directory_list = [ruby_gem_path]
+          let g:auto_ctags_directory_list = [path]
           call auto_ctags#ctags(0)
         endif
       endfor
