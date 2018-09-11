@@ -220,7 +220,7 @@ if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
         if isdirectory(path)
           execute "cd " . path
 
-          if path == "."
+          if path != "."
             let g:auto_ctags_tags_args = original_tags_args + ["--languages=ruby"]
           endif
 
