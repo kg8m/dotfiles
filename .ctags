@@ -2,7 +2,8 @@
 --exclude=.svn
 --exclude=.vim-sessions
 --exclude=*.min.js
---exclude=jquery*.js
+--exclude=jquery.js
+--exclude=jquery-ui.js
 --exclude=jrails.js
 --exclude=node_modules
 --exclude=vendor/bundle
