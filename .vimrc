@@ -300,7 +300,7 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-if s:RegisterPlugin("leafcage/foldCC")  " {{{
+if s:RegisterPlugin("LeafCage/foldCC")  " {{{
   let g:foldCCtext_enable_autofdc_adjuster = 1
   let g:foldCCtext_maxchars = 120
   set foldtext=FoldCCtext()
