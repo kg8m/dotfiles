@@ -163,7 +163,6 @@ bindkey -a 'q' push-line
 
 [ -f ~/.zsh/timetrack.zsh      ] && source ~/.zsh/timetrack.zsh
 [ -f ~/.zsh/cd-bookmark.zsh    ] && source ~/.zsh/cd-bookmark.zsh
-[ -f ~/.zsh/enhancd/init.sh    ] && source ~/.zsh/enhancd/init.sh
 [ -f ~/.zsh/my_aliases.zsh     ] && source ~/.zsh/my_aliases.zsh
 [ -f ~/.zsh/my_functions.zsh   ] && source ~/.zsh/my_functions.zsh
 [ -f ~/.zsh/tmux.zsh           ] && source ~/.zsh/tmux.zsh
@@ -174,5 +173,7 @@ bindkey -a 'q' push-line
 
 autoload -U compinit
 compinit
+
+[ -f ~/.zsh/enhancd/init.sh ] && source ~/.zsh/enhancd/init.sh
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
