@@ -1980,12 +1980,16 @@ colorscheme molokai
 
 set showmatch
 set number
-set showmode
+set noshowmode
 set showcmd
 
 set scrolloff=15
 set iskeyword& iskeyword+=-
 let g:sh_noisk = 1
+
+" cursor form
+let &t_SI = "\e[6 q"  " for INSERT
+let &t_EI = "\e[2 q"  " for NORMAL
 
 " for vimdiff
 set wrap
