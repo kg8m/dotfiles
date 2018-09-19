@@ -19,5 +19,5 @@
     "Query": ["green", "bold"],
     "Matched": ["red"]
   },
-  "InitialFilter": "Fuzzy"
+  "InitialFilter": "Regexp"
 }
