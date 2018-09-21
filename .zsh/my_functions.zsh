@@ -4,11 +4,10 @@ function execute_with_echo {
 }
 
 function execute_commands_with_echo {
-  local command
+  local cmd
 
-  for command in $@; do
-    execute_with_echo $command
-    echo
+  for cmd in $@; do
+    execute_with_echo $cmd
   done
 }
 
