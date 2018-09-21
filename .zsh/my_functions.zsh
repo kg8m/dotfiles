@@ -11,6 +11,24 @@ function execute_commands_with_echo {
   done
 }
 
+function retriable_execute_with_confirm {
+  echo "\\n\\e[0;36mExecute:\\e[1;37m \`$@\`\\n"
+  echo
+  read "response?Are you sure? [y/n]: "
+
+  if [[ ${response} =~ ^y ]]; then
+    eval $@
+    echo
+    read "response?Retry? [y/n]: "
+
+    if [[ ${response} =~ ^y ]]; then
+      retriable_execute $@
+    else
+      echo
+    fi
+  fi
+}
+
 function notify {
   local message=$( printf %q "[$USER@$HOST] ${@:-Command finished.}" )
   ssh main "growlnotify -m $message -a iTerm -s"
