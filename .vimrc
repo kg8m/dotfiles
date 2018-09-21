@@ -30,9 +30,10 @@ endfunction  " }}}
 function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
   " FIXME: gundo: dein does not support hg
   if a:plugin_name =~# "/gundo\.vim$"
-    let gundo_path = s:plugins_path . "/bitbucket.org/heavenshell/gundo.vim"
+    let gundo_path = s:plugins_path . "/repos/bitbucket.org/heavenshell/gundo.vim"
 
     if !isdirectory(gundo_path)
+      echomsg "Install gundo.vim to " . gundo_path
       call system("hg clone https://bitbucket.org/heavenshell/gundo.vim " . gundo_path)
     endif
 
