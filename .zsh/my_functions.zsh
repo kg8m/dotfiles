@@ -1,8 +1,6 @@
 function execute_with_echo {
-  local cmd_with_arguments=$@;
-
-  echo "----- ${cmd_with_arguments} ---------------";
-  eval ${cmd_with_arguments};
+  echo "----- $@ ---------------";
+  eval $@
 }
 
 function execute_commands_with_echo {
