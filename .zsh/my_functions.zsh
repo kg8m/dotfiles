@@ -1,5 +1,5 @@
 function execute_with_echo {
-  echo "----- $@ ---------------";
+  echo "\\n\\e[0;36mExecute:\\e[1;37m \`$@\`\\n"
   eval $@
 }
 
