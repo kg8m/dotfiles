@@ -1870,6 +1870,8 @@ if s:RegisterPlugin("thinca/vim-zenspace")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("Shougo/vimfiler")  " {{{
+  let g:vimfiler_ignore_pattern = ['^\.git$', '^\.DS_Store$']
+
   nnoremap <Leader>e :<C-u>VimFilerBufferDir -force-quit<Cr>
 
   function! s:ConfigPluginOnSource_vimfiler() abort  " {{{
