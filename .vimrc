@@ -656,7 +656,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::
   vnoremap <Leader>ug "gy:<C-u>Unite -no-quit -winheight=30% -buffer-name=grep_<C-r>" grep:./::<C-r>"
-  nnoremap <Leader>uy :<C-u>Unite history/yank<Cr>
+  nnoremap <Leader>uy :<C-u>Unite history/yank -default-action=append<Cr>
   nnoremap <F4> :<C-u>Unite buffer<Cr>
 
   " see also ctags settings
@@ -867,7 +867,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[Unite] buffers",                       "Unite buffer"],
         \   ["[Unite] files",                         "UniteWithBufferDir file"],
         \   ["[Unite] various sources",               "UniteWithBufferDir buffer neomru/file bookmark file"],
-        \   ["[Unite] history/yank",                  "Unite history/yank"],
+        \   ["[Unite] history/yank",                  "Unite history/yank -default-action=append"],
         \   ["[Unite] register",                      "Unite register"],
         \   ["[Unite] grep current directory [Edit]", "Unite -no-quit -winheight=30% -buffer-name=grep grep:./::{words}"],
         \   ["[Unite] grep all buffers [Edit]",       "Unite -no-quit -winheight=30% -buffer-name=grep grep:$buffers::{words}"],
