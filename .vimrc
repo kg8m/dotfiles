@@ -1443,7 +1443,10 @@ if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("andymass/vim-matchup")
+if s:RegisterPlugin("andymass/vim-matchup")  " {{{
+  let g:matchup_matchparen_status_offscreen = 0
+endif  " }}}
+
 call s:RegisterPlugin("xolox/vim-misc")
 
 if s:RegisterPlugin("kana/vim-operator-replace")  " {{{
