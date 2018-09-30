@@ -1992,7 +1992,6 @@ set noshowmode
 set showcmd
 
 set scrolloff=15
-set iskeyword& iskeyword+=-
 let g:sh_noisk = 1
 
 " cursor form
