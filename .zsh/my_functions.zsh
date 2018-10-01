@@ -22,7 +22,7 @@ function retriable_execute_with_confirm {
     read "response?Retry? [y/n]: "
 
     if [[ ${response} =~ ^y ]]; then
-      retriable_execute $@
+      retriable_execute_with_confirm $@
     else
       echo
     fi
