@@ -3,7 +3,7 @@ alias -g V="| vim -R -"
 alias -g L="| less"
 alias -g H="| head"
 alias -g T="| tail"
-alias -g F="| \\$FILTER"
+alias -g F="| filter"
 
 GIT_IGNORE_WHITESPACE_CHANGES=""
 GIT_IGNORE_WHITESPACE_CHANGES+=" --ignore-all-space"

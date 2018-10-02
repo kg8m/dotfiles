@@ -174,6 +174,7 @@ bindkey -a 'q' push-line
 autoload -U compinit
 compinit
 
+export ENHANCD_FILTER=filter
 [ -f ~/.zsh/enhancd/init.sh ] && source ~/.zsh/enhancd/init.sh
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
