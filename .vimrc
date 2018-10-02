@@ -615,6 +615,7 @@ if s:RegisterPlugin("tyru/operator-camelize.vim")  " {{{
      \ })
 endif  " }}}
 
+call s:RegisterPlugin("mechatroner/rainbow_csv")
 call s:RegisterPlugin("chrisbra/Recover.vim")
 
 if s:RegisterPlugin("vim-scripts/sequence")  " {{{
