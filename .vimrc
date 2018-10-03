@@ -1316,7 +1316,7 @@ endif  " }}}
 if s:RegisterPlugin("jkramer/vim-checkbox")  " {{{
   augroup ConfigCheckbox
     autocmd!
-    autocmd FileType markdown,moin nnoremap <buffer> <Leader>c :ToggleCB<Cr>
+    autocmd FileType markdown,moin noremap <buffer> <Leader>c :call checkbox#ToggleCB()<Cr>
   augroup END
 
   call s:ConfigPlugin({
