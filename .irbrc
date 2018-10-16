@@ -2,10 +2,19 @@ class Object
   def __benchmark__(labels_and_procs)
     require "benchmark/ips"
 
+    if defined?(Rails)
+      original_log_level = Rails.logger.level
+      Rails.logger.level = Rails.logger.class::UNKNOWN
+    end
+
     Benchmark.ips do |x|
       labels_and_procs.each do |label, _proc|
         x.report("#{label}:"){ _proc.call }
       end
+    end
+  ensure
+    if defined?(Rails)
+      Rails.logger.level = original_log_level
     end
   end
 end
