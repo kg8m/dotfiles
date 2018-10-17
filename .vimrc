@@ -193,7 +193,6 @@ call s:SetupPluginStart()
 " plugins list and settings  " {{{
 call s:RegisterPlugin(s:plugin_manager_path)
 call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
-call s:RegisterPlugin("vim-jp/vital.vim")
 
 call s:RegisterPlugin("kg8m/.vim")
 
@@ -670,10 +669,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   endif
 
   function! s:ConfigPluginOnSource_unite() abort  " {{{
-    call s:Promise.new({ resolve -> s:ConfigPluginOnSource_unite_origin() })
-  endfunction  " }}}
-
-  function! s:ConfigPluginOnSource_unite_origin() abort  " {{{
     if OnRailsDir()
       function! s:DefineOreOreUniteCommandsForRails() abort  " {{{
         let s:unite_rails_definitions = {
@@ -944,9 +939,8 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "on_cmd":   "Unite",
-     \   "on_event": "VimEnter",
+     \   "lazy":   1,
+     \   "on_cmd": "Unite",
      \   "hook_source": function("s:ConfigPluginOnSource_unite"),
      \ })
 
@@ -1979,11 +1973,9 @@ call s:SetupPluginEnd()
 filetype plugin indent on
 syntax enable
 
-if s:InstallablePluginExists(["vimproc", "vital.vim"])
-  call s:InstallPlugins(["vimproc", "vital.vim"])
+if s:InstallablePluginExists(["vimproc"])
+  call s:InstallPlugins(["vimproc"])
 endif
-
-let s:Promise = vital#vital#new().import("Async.Promise")
 
 if s:InstallablePluginExists()
   call s:InstallPlugins()
