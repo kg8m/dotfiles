@@ -2037,7 +2037,7 @@ augroup END  " }}}
 
 augroup SetupFormatoptions  " {{{
   autocmd!
-  autocmd FileType * setlocal fo+=q fo+=2 fo+=l
+  autocmd FileType * setlocal fo+=q fo+=2 fo+=l fo+=j
   autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
   autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
 augroup END  " }}}
