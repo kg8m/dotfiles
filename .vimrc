@@ -7,9 +7,6 @@ let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/de
 let s:on_mac  = has("mac")
 let s:on_tmux = exists("$TMUX")
 
-let s:ag_available  = executable("ag")
-let s:ack_available = executable("ack")
-
 let s:native_incsearch_highlightable = v:version >= 800 && has("patch1238")
 
 " plugin management functions  " {{{
@@ -103,10 +100,6 @@ endfunction  " }}}
 function! OnGitDir() abort  " {{{
   silent! !git status > /dev/null 2>&1
   return !v:shell_error
-endfunction  " }}}
-
-function! OnSvnDir() abort  " {{{
-  return isdirectory("./.svn")
 endfunction  " }}}
 
 function! RubyVersion() abort  " {{{
@@ -646,7 +639,6 @@ if s:RegisterPlugin("AndrewRadev/splitjoin.vim")  " {{{
 endif  " }}}
 
 call s:RegisterPlugin("vim-scripts/sudo.vim")
-call s:RegisterPlugin("kg8m/svn-diff.vim", { "if": OnSvnDir() })
 
 if s:RegisterPlugin("leafgarland/typescript-vim")  " {{{
   let g:typescript_indent_disable = 1
@@ -784,11 +776,11 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
 
     let g:unite_winheight = "100%"
 
-    if s:ag_available
+    if executable("ag")
       let g:unite_source_grep_command       = "ag"
       let g:unite_source_grep_recursive_opt = ""
       let g:unite_source_grep_default_opts  = "--nocolor --nogroup --nopager --hidden --workers=1"
-    elseif s:ack_available
+    elseif executable("ack")
       let g:unite_source_grep_command       = "ack"
       let g:unite_source_grep_recursive_opt = ""
       let g:unite_source_grep_default_opts  = "--nocolor --nogroup --nopager"
@@ -973,15 +965,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
        \ })
   endif  " }}}
 
-  if s:RegisterPlugin("osyo-manga/unite-filetype")  " {{{
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_source": "unite.vim",
-       \ })
-  endif  " }}}
-
-  call s:RegisterPlugin("Shougo/unite-help")
-
   if s:RegisterPlugin("kg8m/unite-mark")  " {{{
     nnoremap <Leader>um :<C-u>Unite mark<Cr>
     nnoremap <silent> m :<C-u>call AutoMark()<Cr>
@@ -1050,22 +1033,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
        \ })
   endif  " }}}
 
-  if s:RegisterPlugin("Shougo/unite-outline")  " {{{
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_source": "unite.vim",
-       \ })
-
-    nnoremap <Leader>uo :<C-u>Unite outline:!<Cr>
-  endif  " }}}
-
-  if s:RegisterPlugin("thinca/vim-unite-history")  " {{{
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_source": "unite.vim",
-       \ })
-  endif  " }}}
-
   if s:RegisterPlugin("kg8m/vim-unite-giti", { "if": OnGitDir() })  " {{{
     if mapcheck("<Leader>uv") == ""
       nnoremap <Leader>uv :<C-u>Unite giti/status<Cr>
@@ -1110,80 +1077,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
        \   "lazy":      1,
        \   "on_source": "unite.vim",
        \   "hook_post_source": function("s:ConfigPluginOnPostSource_vim_unite_giti"),
-       \ })
-  endif  " }}}
-
-  if s:RegisterPlugin("kmnk/vim-unite-svn", { "if": OnSvnDir() })  " {{{
-    if mapcheck("<Leader>uv") == ""
-      nnoremap <Leader>uv :<C-u>Unite svn/status<Cr>
-    endif
-
-    function! s:ConfigPluginOnPostSource_vim_unite_svn() abort  " {{{
-      function! s:AddActionsToUniteSvn() abort  " {{{
-        let file_delete_action = {
-          \   "description":         "delete/remove directories/files",
-          \   "is_selectable":       1,
-          \   "is_invalidate_cache": 1,
-          \ }
-
-        function! file_delete_action.func(candidates) abort  " {{{
-          let files   = map(copy(a:candidates), "v:val.action__path")
-          let command = printf("yes | rm -r %s", join(files))
-
-          call ExecuteWithConfirm(command)
-        endfunction  " }}}
-
-        call unite#custom_action("source/svn/status/jump_list", "file_delete", file_delete_action)
-        call unite#custom_action("source/svn/status/jump_list", "directory_delete", copy(file_delete_action))
-      endfunction  " }}}
-      call s:AddActionsToUniteSvn()
-    endfunction  " }}}
-
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_source": "unite.vim",
-       \   "hook_post_source": function("s:ConfigPluginOnPostSource_vim_unite_svn"),
-       \ })
-  endif  " }}}
-
-  if s:RegisterPlugin("hrsh7th/vim-versions", { "if": OnGitDir() || OnSvnDir() })  " {{{
-    nnoremap <Leader>u<S-v> :<C-u>UniteVersions status:./<Cr>
-
-    function! s:ConfigPluginOnSource_vim_versions() abort  " {{{
-      let g:versions#type#svn#status#ignore_status = ["X"]
-
-      function! s:AddActionsToVersions() abort  " {{{
-        let action = {
-          \   "description":   "open files",
-          \   "is_selectable": 1,
-          \ }
-
-        function! action.func(candidates) abort  " {{{
-          for candidate in a:candidates
-            let candidate.action__path = candidate.source__args.path . candidate.action__status.path
-            let candidate.action__directory = unite#util#path2directory(candidate.action__path)
-
-            if candidate.action__path == candidate.action__directory
-              let candidate.kind = "directory"
-              call unite#take_action("vimfiler", candidate)
-            else
-              let candidate.kind = "file"
-              call unite#take_action("open", candidate)
-            endif
-          endfor
-        endfunction  " }}}
-
-        call unite#custom#action("versions/git/status,versions/svn/status", "open", action)
-        call unite#custom#default_action("versions/git/status,versions/svn/status", "open")
-      endfunction  " }}}
-      call s:AddActionsToVersions()
-    endfunction  " }}}
-
-    call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_cmd":    "UniteVersions",
-       \   "on_source": "unite.vim",
-       \   "hook_source": function("s:ConfigPluginOnSource_vim_versions"),
        \ })
   endif  " }}}
 endif  " }}}
