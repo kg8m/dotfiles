@@ -196,49 +196,6 @@ if s:RegisterPlugin("w0rp/ale", { "if": OnRailsDir() })  " {{{
   let g:ale_lint_on_text_changed = 0
 endif  " }}}
 
-if s:RegisterPlugin("soramugi/auto-ctags.vim", { "if": OnRailsDir() })  " {{{
-  " disable original autocommands
-  let g:loaded_auto_ctags = 1
-  let g:auto_ctags = 1
-
-  function! s:ConfigPluginOnPostSource_auto_ctags_vim() abort  " {{{
-    augroup AutoCtagsAucocommands  " {{{
-      autocmd!
-      autocmd BufWritePost * silent call s:CreateCtags()
-    augroup END  " }}}
-
-    function! s:CreateCtags() abort  " {{{
-      let original_current_directory = getcwd()
-      let original_directory_list    = get(g:, "auto_ctags_directory_list", ["."])
-      let original_tags_args         = get(g:, "auto_ctags_tags_args", ["--tag-relative=yes", "--recurse=yes", "--sort=yes"])
-
-      for path in original_directory_list + RubyGemPaths()
-        if isdirectory(path)
-          execute "cd " . path
-
-          if path != "."
-            let g:auto_ctags_tags_args = original_tags_args + ["--languages=ruby"]
-          endif
-
-          let g:auto_ctags_directory_list = [path]
-          call auto_ctags#ctags(0)
-        endif
-      endfor
-
-      execute "cd " . original_current_directory
-      let g:auto_ctags_directory_list = original_directory_list
-      let g:auto_ctags_tags_args      = original_tags_args
-    endfunction  " }}}
-    silent call s:CreateCtags()
-  endfunction  " }}}
-
-  call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "on_event": "VimEnter",
-     \   "hook_post_source": function("s:ConfigPluginOnPostSource_auto_ctags_vim"),
-     \ })
-endif  " }}}
-
 call s:RegisterPlugin("hotwatermorning/auto-git-diff")
 
 if s:RegisterPlugin("vim-scripts/autodate.vim")  " {{{
@@ -1828,6 +1785,35 @@ if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() })  " {{{
      \ })
 endif  " }}}
 
+if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
+  " https://github.com/vim-jp/vital.vim/blob/master/doc/vital/Async/Promise.txt
+  function! s:ConfigPluginOnPostSource_vital() abort  " {{{
+    let s:Promise = vital#vital#import("Async.Promise")
+
+    function! s:read(channel, part) abort  " {{{
+      let out = []
+      while ch_status(a:channel, { "part": a:part }) =~# 'open\|buffered'
+        call add(out, ch_read(a:channel, { "part": a:part }))
+      endwhile
+      return join(out, "\n")
+    endfunction  " }}}
+
+    function! SystemAsync(cmd) abort  " {{{
+      return s:Promise.new({ resolve, reject -> job_start(a:cmd, {
+      \   "drop":     "never",
+      \   "close_cb": { ch -> "do nothing" },
+      \   "exit_cb":  { ch, code -> code ? reject(s:read(ch, "err")) : resolve(s:read(ch, "out")) },
+      \ }) })
+    endfunction  " }}}
+  endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":     1,
+     \   "on_event": "VimEnter",
+     \   "hook_post_source": function("s:ConfigPluginOnPostSource_vital"),
+     \ })
+endif  " }}}
+
 if s:RegisterPlugin("simeji/winresizer")  " {{{
   let g:winresizer_start_key = "<C-w><C-e>"
 
@@ -2018,14 +2004,42 @@ set wildmenu
 set wildmode=list:longest,full
 
 " ctags  " {{{
-function! s:SetupTags() abort  " {{{
-  for ruby_gem_path in RubyGemPaths()
-    if isdirectory(ruby_gem_path)
-      let &tags = &tags . "," . ruby_gem_path . "/tags"
-    endif
-  endfor
-endfunction  " }}}
-call s:SetupTags()
+if OnRailsDir()
+  augroup CtagsAucocommands  " {{{
+    autocmd!
+    autocmd VimEnter     * silent call s:SetupTags()
+    autocmd VimEnter     * silent call s:CreateCtags(["."] + RubyGemPaths())
+    autocmd BufWritePost * silent call s:CreateCtags(["."])
+  augroup END  " }}}
+
+  function! s:SetupTags() abort  " {{{
+    for ruby_gem_path in RubyGemPaths()
+      if isdirectory(ruby_gem_path)
+        let &tags = &tags . "," . ruby_gem_path . "/tags"
+      endif
+    endfor
+  endfunction  " }}}
+
+  function! s:CreateCtags(directories) abort  " {{{
+    for directory in a:directories
+      let tags_file = directory . "/tags"
+      let lock_file = directory . "/tags.lock"
+      let temp_file = directory . "/tags.temp"
+
+      let check_command    = "test ! -f " . lock_file
+      let prepare_command  = "touch " . lock_file
+      let ctags_command    = "ctags --tag-relative=yes --recurse=yes --sort=yes -f " . temp_file . " " . directory
+      let replace_command  = "mv -f " . temp_file . " " . tags_file
+      let teardown_command = "rm -f " . lock_file
+
+      call SystemAsync(check_command)
+            \.then({ -> SystemAsync(prepare_command) })
+            \.then({ -> SystemAsync(ctags_command) })
+            \.then({ -> SystemAsync(replace_command) })
+            \.then({ -> SystemAsync(teardown_command) })
+    endfor
+  endfunction  " }}}
+endif
 
 " see also unite.vim settings
 nnoremap g] :tjump <C-r>=expand("<cword>")<Cr><Cr>
