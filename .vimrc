@@ -650,16 +650,16 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           \     "to_word": ["^\./script/", ""],
           \   },
           \   "spec": {
-          \     "path":    ["spec/**", "*"],
-          \     "to_word": ["^\./spec/", ""],
+          \     "path":    ["spec/**,test/**", "*"],
+          \     "to_word": ['^\./', ""],
           \   },
           \   "stylesheets": {
           \     "path":    ["app/**,public/**", "*.{css,sass,scss}"],
           \     "to_word": ["^\./", ""],
           \   },
           \   "test": {
-          \     "path":    ["test/**", "*"],
-          \     "to_word": ["^\./test/", ""],
+          \     "path":    ["spec/**,test/**", "*"],
+          \     "to_word": ['^\./', ""],
           \   },
           \ }
 
