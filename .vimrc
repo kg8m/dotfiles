@@ -1805,6 +1805,45 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
       \   "exit_cb":  { ch, code -> code ? reject(s:read(ch, "err")) : resolve(s:read(ch, "out")) },
       \ }) })
     endfunction  " }}}
+
+    if OnRailsDir()
+      augroup CtagsAucocommands  " {{{
+        autocmd!
+        autocmd BufWritePost * silent call s:CreateCtags(".")
+      augroup END  " }}}
+
+      function! s:SetupTags() abort  " {{{
+        for ruby_gem_path in RubyGemPaths()
+          if isdirectory(ruby_gem_path)
+            let &tags = &tags . "," . ruby_gem_path . "/tags"
+          endif
+        endfor
+      endfunction  " }}}
+      silent call s:SetupTags()
+
+      function! s:CreateCtags(directory) abort  " {{{
+        if isdirectory(a:directory)
+          let tags_file = a:directory . "/tags"
+          let lock_file = a:directory . "/tags.lock"
+          let temp_file = a:directory . "/tags.temp"
+
+          let check_command    = "test ! -f " . lock_file
+          let prepare_command  = "touch " . lock_file
+          let ctags_command    = "ctags --tag-relative=yes --recurse=yes --sort=yes -f " . temp_file . " " . a:directory
+          let replace_command  = "mv -f " . temp_file . " " . tags_file
+          let teardown_command = "rm -f " . lock_file
+
+          call SystemAsync(check_command)
+                \.then({ -> SystemAsync(prepare_command) })
+                \.then({ -> SystemAsync(ctags_command) })
+                \.then({ -> SystemAsync(replace_command) })
+                \.then({ -> SystemAsync(teardown_command) })
+        endif
+      endfunction  " }}}
+      for directory in ["."] + RubyGemPaths()
+        silent call s:CreateCtags(directory)
+      endfor
+    endif
   endfunction  " }}}
 
   call s:ConfigPlugin({
@@ -2004,43 +2043,7 @@ set wildmenu
 set wildmode=list:longest,full
 
 " ctags  " {{{
-if OnRailsDir()
-  augroup CtagsAucocommands  " {{{
-    autocmd!
-    autocmd VimEnter     * silent call s:SetupTags()
-    autocmd VimEnter     * silent call s:CreateCtags(["."] + RubyGemPaths())
-    autocmd BufWritePost * silent call s:CreateCtags(["."])
-  augroup END  " }}}
-
-  function! s:SetupTags() abort  " {{{
-    for ruby_gem_path in RubyGemPaths()
-      if isdirectory(ruby_gem_path)
-        let &tags = &tags . "," . ruby_gem_path . "/tags"
-      endif
-    endfor
-  endfunction  " }}}
-
-  function! s:CreateCtags(directories) abort  " {{{
-    for directory in a:directories
-      let tags_file = directory . "/tags"
-      let lock_file = directory . "/tags.lock"
-      let temp_file = directory . "/tags.temp"
-
-      let check_command    = "test ! -f " . lock_file
-      let prepare_command  = "touch " . lock_file
-      let ctags_command    = "ctags --tag-relative=yes --recurse=yes --sort=yes -f " . temp_file . " " . directory
-      let replace_command  = "mv -f " . temp_file . " " . tags_file
-      let teardown_command = "rm -f " . lock_file
-
-      call SystemAsync(check_command)
-            \.then({ -> SystemAsync(prepare_command) })
-            \.then({ -> SystemAsync(ctags_command) })
-            \.then({ -> SystemAsync(replace_command) })
-            \.then({ -> SystemAsync(teardown_command) })
-    endfor
-  endfunction  " }}}
-endif
-
+" see also settings for vital.vim
 " see also unite.vim settings
 nnoremap g] :tjump <C-r>=expand("<cword>")<Cr><Cr>
 vnoremap g] "gy:tjump <C-r>"<Cr>
