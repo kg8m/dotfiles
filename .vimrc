@@ -1208,10 +1208,10 @@ if s:RegisterPlugin("kg8m/vim-dirdiff")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("Lokaltog/vim-easymotion")  " {{{
-  nmap <Leader>f <Plug>(easymotion-s)
-  vmap <Leader>f <Plug>(easymotion-s)
-  omap <Leader>f <Plug>(easymotion-s)
-  nmap <Leader>w <Plug>(easymotion-overwin-f)
+  nmap <Leader>f <Plug>(easymotion-s2)
+  vmap <Leader>f <Plug>(easymotion-s2)
+  omap <Leader>f <Plug>(easymotion-s2)
+  nmap <Leader>w <Plug>(easymotion-overwin-f2)
   " replace default `f`
   nmap f <Plug>(easymotion-fl)
   vmap f <Plug>(easymotion-fl)
