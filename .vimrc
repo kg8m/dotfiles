@@ -1827,17 +1827,17 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
           let lock_file = a:directory . "/tags.lock"
           let temp_file = a:directory . "/tags.temp"
 
-          let check_command    = "test ! -f " . lock_file
-          let prepare_command  = "touch " . lock_file
-          let ctags_command    = "ctags --tag-relative=yes --recurse=yes --sort=yes -f " . temp_file . " " . a:directory
-          let replace_command  = "mv -f " . temp_file . " " . tags_file
-          let teardown_command = "rm -f " . lock_file
+          if !filereadable(lock_file)
+            let prepare_command  = "touch " . lock_file
+            let ctags_command    = "ctags --tag-relative=yes --recurse=yes --sort=yes -f " . temp_file . " " . a:directory
+            let replace_command  = "mv -f " . temp_file . " " . tags_file
+            let teardown_command = "rm -f " . lock_file
 
-          call SystemAsync(check_command)
-                \.then({ -> SystemAsync(prepare_command) })
-                \.then({ -> SystemAsync(ctags_command) })
-                \.then({ -> SystemAsync(replace_command) })
-                \.then({ -> SystemAsync(teardown_command) })
+            call SystemAsync(prepare_command)
+                  \.then({ -> SystemAsync(ctags_command) })
+                  \.then({ -> SystemAsync(replace_command) })
+                  \.then({ -> SystemAsync(teardown_command) })
+          endif
         endif
       endfunction  " }}}
       for directory in ["."] + RubyGemPaths()
