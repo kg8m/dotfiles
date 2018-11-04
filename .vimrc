@@ -1810,6 +1810,7 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
       augroup CtagsAucocommands  " {{{
         autocmd!
         autocmd BufWritePost * silent call s:CreateCtags(".")
+        autocmd VimLeavePre  * silent call s:CleanupCtags()
       augroup END  " }}}
 
       function! s:SetupTags() abort  " {{{
@@ -1843,6 +1844,18 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
       for directory in ["."] + RubyGemPaths()
         silent call s:CreateCtags(directory)
       endfor
+
+      function! s:CleanupCtags() abort  " {{{
+        for directory in ["."] + RubyGemPaths()
+          if filereadable(directory . "/tags.lock")
+            call delete(directory . "/tags.lock")
+          endif
+
+          if filereadable(directory . "/tags.temp")
+            call delete(directory . "/tags.temp")
+          endif
+        endfor
+      endfunction  " }}}
     endif
   endfunction  " }}}
 
