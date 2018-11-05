@@ -1830,9 +1830,16 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
 
           if !filereadable(lock_file)
             let setup_command    = "touch " . lock_file
-            let ctags_command    = "ctags --tag-relative=yes --recurse=yes --sort=yes -f " . temp_file . " " . a:directory
             let replace_command  = "mv -f " . temp_file . " " . tags_file
             let teardown_command = "rm -f " . lock_file
+
+            let ctags_options = "--tag-relative=yes --recurse=yes --sort=yes -f " . temp_file
+
+            if a:directory != "."
+              let ctags_options .= " --languages=ruby --exclude=test --exclude=spec"
+            endif
+
+            let ctags_command = "ctags " . ctags_options . " " . a:directory
 
             call SystemAsync(setup_command)
                   \.then({ -> SystemAsync(ctags_command) })
