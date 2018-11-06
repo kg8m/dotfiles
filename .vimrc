@@ -1790,7 +1790,7 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
   function! s:ConfigPluginOnPostSource_vital() abort  " {{{
     let s:Promise = vital#vital#import("Async.Promise")
 
-    function! s:read(channel, part) abort  " {{{
+    function! s:ReadStd(channel, part) abort  " {{{
       let out = []
       while ch_status(a:channel, { "part": a:part }) =~# 'open\|buffered'
         call add(out, ch_read(a:channel, { "part": a:part }))
@@ -1802,7 +1802,7 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
       return s:Promise.new({ resolve, reject -> job_start(a:cmd, {
       \   "drop":     "never",
       \   "close_cb": { ch -> "do nothing" },
-      \   "exit_cb":  { ch, code -> code ? reject(s:read(ch, "err")) : resolve(s:read(ch, "out")) },
+      \   "exit_cb":  { ch, code -> code ? reject(s:ReadStd(ch, "err")) : resolve(s:ReadStd(ch, "out")) },
       \ }) })
     endfunction  " }}}
 
