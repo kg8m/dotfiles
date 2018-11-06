@@ -1787,6 +1787,10 @@ endif  " }}}
 
 if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
   " https://github.com/vim-jp/vital.vim/blob/master/doc/vital/Async/Promise.txt
+  function! s:Wait(ms) abort  " {{{
+    return s:Promise().new({ resolve -> timer_start(a:ms, resolve) })
+  endfunction  " }}}
+
   function! s:ReadStd(channel, part) abort  " {{{
     let out = []
     while ch_status(a:channel, { "part": a:part }) =~# 'open\|buffered'
@@ -2005,8 +2009,8 @@ set wildmode=list:longest,full
 if OnRailsDir()  " {{{
   augroup CtagsAucocommands  " {{{
     autocmd!
-    autocmd VimEnter     * silent call s:SetupTags()
-    autocmd VimEnter     * silent call s:CreateAllCtags()
+    autocmd VimEnter     * silent call s:Wait(300).then({ -> execute("call s:SetupTags()", "") })
+    autocmd VimEnter     * silent call s:Wait(500).then({ -> execute("call s:CreateAllCtags()", "") })
     autocmd BufWritePost * silent call s:CreateCtags(".")
     autocmd VimLeavePre  * silent call s:CleanupCtags()
   augroup END  " }}}
