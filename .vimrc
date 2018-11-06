@@ -1787,90 +1787,29 @@ endif  " }}}
 
 if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
   " https://github.com/vim-jp/vital.vim/blob/master/doc/vital/Async/Promise.txt
-  function! s:ConfigPluginOnPostSource_vital() abort  " {{{
-    let s:Promise = vital#vital#import("Async.Promise")
-
-    function! s:ReadStd(channel, part) abort  " {{{
-      let out = []
-      while ch_status(a:channel, { "part": a:part }) =~# 'open\|buffered'
-        call add(out, ch_read(a:channel, { "part": a:part }))
-      endwhile
-      return join(out, "\n")
-    endfunction  " }}}
-
-    function! SystemAsync(cmd) abort  " {{{
-      return s:Promise.new({ resolve, reject -> job_start(a:cmd, {
-      \   "drop":     "never",
-      \   "close_cb": { ch -> "do nothing" },
-      \   "exit_cb":  { ch, code -> code ? reject(s:ReadStd(ch, "err")) : resolve(s:ReadStd(ch, "out")) },
-      \ }) })
-    endfunction  " }}}
-
-    if OnRailsDir()
-      augroup CtagsAucocommands  " {{{
-        autocmd!
-        autocmd BufWritePost * silent call s:CreateCtags(".")
-        autocmd VimLeavePre  * silent call s:CleanupCtags()
-      augroup END  " }}}
-
-      function! s:SetupTags() abort  " {{{
-        for ruby_gem_path in RubyGemPaths()
-          if isdirectory(ruby_gem_path)
-            let &tags = &tags . "," . ruby_gem_path . "/tags"
-          endif
-        endfor
-      endfunction  " }}}
-      silent call s:SetupTags()
-
-      function! s:CreateCtags(directory) abort  " {{{
-        if isdirectory(a:directory)
-          let tags_file = a:directory . "/tags"
-          let lock_file = a:directory . "/tags.lock"
-          let temp_file = a:directory . "/tags.temp"
-
-          if !filereadable(lock_file)
-            let setup_command    = "touch " . lock_file
-            let replace_command  = "mv -f " . temp_file . " " . tags_file
-            let teardown_command = "rm -f " . lock_file
-
-            let ctags_options = "--tag-relative=yes --recurse=yes --sort=yes -f " . temp_file
-
-            if a:directory != "."
-              let ctags_options .= " --languages=ruby --exclude=test --exclude=spec"
-            endif
-
-            let ctags_command = "ctags " . ctags_options . " " . a:directory
-
-            call SystemAsync(setup_command)
-                  \.then({ -> SystemAsync(ctags_command) })
-                  \.then({ -> SystemAsync(replace_command) })
-                  \.then({ -> SystemAsync(teardown_command) })
-          endif
-        endif
-      endfunction  " }}}
-      for directory in ["."] + RubyGemPaths()
-        silent call s:CreateCtags(directory)
-      endfor
-
-      function! s:CleanupCtags() abort  " {{{
-        for directory in ["."] + RubyGemPaths()
-          if filereadable(directory . "/tags.lock")
-            call delete(directory . "/tags.lock")
-          endif
-
-          if filereadable(directory . "/tags.temp")
-            call delete(directory . "/tags.temp")
-          endif
-        endfor
-      endfunction  " }}}
-    endif
+  function! s:ReadStd(channel, part) abort  " {{{
+    let out = []
+    while ch_status(a:channel, { "part": a:part }) =~# 'open\|buffered'
+      call add(out, ch_read(a:channel, { "part": a:part }))
+    endwhile
+    return join(out, "\n")
   endfunction  " }}}
 
-  call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "on_event": "VimEnter",
-     \   "hook_post_source": function("s:ConfigPluginOnPostSource_vital"),
-     \ })
+  function! SystemAsync(cmd) abort  " {{{
+    return s:Promise().new({ resolve, reject -> job_start(a:cmd, {
+    \   "drop":     "never",
+    \   "close_cb": { ch -> "do nothing" },
+    \   "exit_cb":  { ch, code -> code ? reject(s:ReadStd(ch, "err")) : resolve(s:ReadStd(ch, "out")) },
+    \ }) })
+  endfunction  " }}}
+
+  function! s:Promise() abort  " {{{
+    if !exists("s:__Promise__")
+      let s:__Promise__ = vital#vital#import("Async.Promise")
+    endif
+
+    return s:__Promise__
+  endfunction  " }}}
 endif  " }}}
 
 if s:RegisterPlugin("simeji/winresizer")  " {{{
@@ -2063,7 +2002,69 @@ set wildmenu
 set wildmode=list:longest,full
 
 " ctags  " {{{
-" see also settings for vital.vim
+if OnRailsDir()  " {{{
+  augroup CtagsAucocommands  " {{{
+    autocmd!
+    autocmd VimEnter     * silent call s:SetupTags()
+    autocmd VimEnter     * silent call s:CreateAllCtags()
+    autocmd BufWritePost * silent call s:CreateCtags(".")
+    autocmd VimLeavePre  * silent call s:CleanupCtags()
+  augroup END  " }}}
+
+  function! s:SetupTags() abort  " {{{
+    for ruby_gem_path in RubyGemPaths()
+      if isdirectory(ruby_gem_path)
+        let &tags = &tags . "," . ruby_gem_path . "/tags"
+      endif
+    endfor
+  endfunction  " }}}
+
+  function! s:CreateAllCtags() abort  " {{{
+    for directory in ["."] + RubyGemPaths()
+      silent call s:CreateCtags(directory)
+    endfor
+  endfunction  " }}}
+
+  function! s:CreateCtags(directory) abort  " {{{
+    if isdirectory(a:directory)
+      let tags_file = a:directory . "/tags"
+      let lock_file = a:directory . "/tags.lock"
+      let temp_file = a:directory . "/tags.temp"
+
+      if !filereadable(lock_file)
+        let setup_command    = "touch " . lock_file
+        let replace_command  = "mv -f " . temp_file . " " . tags_file
+        let teardown_command = "rm -f " . lock_file
+
+        let ctags_options = "--tag-relative=yes --recurse=yes --sort=yes -f " . temp_file
+
+        if a:directory != "."
+          let ctags_options .= " --languages=ruby --exclude=test --exclude=spec"
+        endif
+
+        let ctags_command = "ctags " . ctags_options . " " . a:directory
+
+        call SystemAsync(setup_command)
+              \.then({ -> SystemAsync(ctags_command) })
+              \.then({ -> SystemAsync(replace_command) })
+              \.then({ -> SystemAsync(teardown_command) })
+      endif
+    endif
+  endfunction  " }}}
+
+  function! s:CleanupCtags() abort  " {{{
+    for directory in ["."] + RubyGemPaths()
+      if filereadable(directory . "/tags.lock")
+        call delete(directory . "/tags.lock")
+      endif
+
+      if filereadable(directory . "/tags.temp")
+        call delete(directory . "/tags.temp")
+      endif
+    endfor
+  endfunction  " }}}
+endif  " }}}
+
 " see also unite.vim settings
 nnoremap g] :tjump <C-r>=expand("<cword>")<Cr><Cr>
 vnoremap g] "gy:tjump <C-r>"<Cr>
