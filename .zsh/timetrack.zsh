@@ -88,6 +88,7 @@ function __my_preexec_end_timetrack() {
     echo "\n* * *"
     echo $message
     echo "Notified by \`growlnotify $growl_options\`"
+    date
 
     unset __timetrack_start
     unset __timetrack_command
