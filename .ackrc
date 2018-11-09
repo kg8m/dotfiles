@@ -15,4 +15,6 @@
 --ignore-file=match:/\.diff$/
 --ignore-file=match:/\.dat$/
 --ignore-file=is:tags
+--ignore-file=is:tags.lock
+--ignore-file=is:tags.temp
 --ignore-file=match:/^jquery(-ui)?(\.min)?\.js$/

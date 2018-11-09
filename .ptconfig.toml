@@ -29,4 +29,6 @@ ignore = [
   "*.diff",
   "*.min.js",
   "tags",
+  "tags.lock",
+  "tags.temp",
 ]

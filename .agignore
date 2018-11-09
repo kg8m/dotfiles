@@ -15,3 +15,5 @@ tmp
 jquery.js
 jquery-ui.js
 ./tags
+./tags.lock
+./tags.temp
