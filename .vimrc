@@ -1288,6 +1288,15 @@ if s:RegisterPlugin("rcmdnk/vim-markdown")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")  " {{{
+  let g:markdown_quote_syntax_filetypes = {
+    \    "css" : {
+    \      "start" : "\\%(css\\|scss\\|sass\\)",
+    \   },
+    \    "haml": {
+    \      "start": "haml",
+    \   },
+    \ }
+
   call s:ConfigPlugin({
      \   "lazy":  1,
      \   "on_ft": "markdown",
