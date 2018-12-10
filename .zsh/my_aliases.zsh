@@ -16,6 +16,12 @@ unset GIT_IGNORE_WHITESPACE_CHANGES
 AG_OPTIONS=""
 AG_OPTIONS+=" --pager=less"
 AG_OPTIONS+=" --hidden"
+
+# `--smart-case` (enabled as default) works as case-sensitive when searching multibyte character.
+# For example, `ag 'a|あ'` matches "a" and "あ" but doesn't match "A".
+# To avoid this confusing behavior, always force `ag` to work as case-insensitive.
+AG_OPTIONS+=" --ignore-case"
+
 AG_OPTIONS+=" --workers=1"
 AG_OPTIONS+=" --color-line-number='1;36'"
 AG_OPTIONS+=" --color-match='30;46'"
