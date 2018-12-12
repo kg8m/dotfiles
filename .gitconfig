@@ -152,8 +152,7 @@ diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --igno
 diff-local = diff --no-index
 diff-local-without-space-changes = !git diff-without-space-changes --no-index
 
-compare-branches   = !git diff-branches
-diff-stat-branches = !git diff-branches --stat-width=150
+diff-stat-branches  = !git diff-branches --stat-width = 150
 
 diff-branches = "!f() {\
   branch1=$( git select-a-remote-branch 'select first branch:' ) || exit 1;\
@@ -163,11 +162,29 @@ diff-branches = "!f() {\
   git execute-with-confirm ${command};\
 }; f"
 
-open-changed-files = "!f() {\
-  branch1=$( git select-a-remote-branch 'select first branch:' ) || exit 1;\
-  branch2=$( git select-a-remote-branch 'select another branch:' ) || exit 1;\
+diff-branch-from = "!f() {\
+  target=$1;\
   \
-  command=\"vim \\$( git diff --name-only $@ ${branch1}...${branch2} )\";\
+  if [[ ! \"${target}\" ]]; then\
+    echo 'Specify branch (e.g., \"master\")' >&2;\
+    exit 1;\
+  fi;\
+  \
+  current=$( git rev-parse --abbrev-ref '@{u}' );\
+  command=\"git diff-without-space-changes origin/${target}...${current}\";\
+  git execute-with-confirm ${command};\
+}; f"
+
+open-changed-files-from = "!f() {\
+  target=$1;\
+  \
+  if [[ ! \"${target}\" ]]; then\
+    echo 'Specify branch (e.g., \"master\")' >&2;\
+    exit 1;\
+  fi;\
+  \
+  current=$( git rev-parse --abbrev-ref '@{u}' );\
+  command=\"vim \\$( git diff --name-only $@ origin/${target}...${current} )\";\
   git execute-with-confirm ${command};\
 }; f"
 
