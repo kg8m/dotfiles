@@ -63,8 +63,8 @@ up = !git update
 f  = fetch
 
 update = "!f() {\
-  command=\"git pull --stat --rebase || echo 'Error: rebase aborted!!'\";\
-  git execute-with-echo ${command};\
+  git execute-with-echo 'git --no-pager show --no-patch && echo';\
+  git execute-with-echo 'git pull --stat --rebase || echo \"Error: rebase aborted!!\"';\
 }; f"
 
 # branch
