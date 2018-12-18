@@ -1510,10 +1510,10 @@ if s:RegisterPlugin("xolox/vim-session")  " {{{
   endfunction  " }}}
 
   function! s:CleanUpSession() abort  " {{{
-    execute " ! /usr/bin/env ls -at " . g:session_directory .
+    execute " ! /usr/bin/env ls -at '" . g:session_directory . "'" .
           \ " | /usr/bin/env grep '\\.vim$'" .
           \ " | /usr/bin/env tail -n +11" .
-          \ " | /usr/bin/env xargs -I% rm -f " . g:session_directory . "/%"
+          \ " | /usr/bin/env xargs -I% rm -f '" . g:session_directory . "/%'"
   endfunction  " }}}
 
   call s:ConfigPlugin({
