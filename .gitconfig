@@ -68,10 +68,10 @@ update = "!f() {\
   echo;\
   git execute-with-echo 'git fetch';\
   echo;\
-  git execute-with-echo 'git log --reverse HEAD.. '${remote_branch};\
+  git execute-with-echo 'git --no-pager log --reverse HEAD.. '${remote_branch};\
   echo;\
   git execute-with-echo 'git pull --stat --rebase || echo \"Error: rebase aborted!!\"';\
-}; f"
+}; f | less"
 
 # branch
 brs      = !git branches
