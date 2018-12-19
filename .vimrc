@@ -1238,7 +1238,6 @@ endif  " }}}
 
 call s:RegisterPlugin("thinca/vim-ft-diff_fold")
 call s:RegisterPlugin("thinca/vim-ft-help_fold")
-call s:RegisterPlugin("thinca/vim-ft-markdown_fold")
 
 if s:RegisterPlugin("tpope/vim-fugitive", { "if": OnGitDir() })  " {{{
   call s:ConfigPlugin({
