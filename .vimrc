@@ -89,12 +89,22 @@ function! OnTmux() abort  " {{{
 endfunction  " }}}
 
 function! OnRailsDir() abort  " {{{
-  return isdirectory("./app") && filereadable("./config/environment.rb")
+  if exists("s:on_rails_dir")
+    return s:on_rails_dir
+  endif
+
+  let s:on_rails_dir = isdirectory("./app") && filereadable("./config/environment.rb")
+  return s:on_rails_dir
 endfunction  " }}}
 
 function! OnGitDir() abort  " {{{
+  if exists("s:on_git_dir")
+    return s:on_git_dir
+  endif
+
   silent! !git status > /dev/null 2>&1
-  return !v:shell_error
+  let s:on_git_dir = !v:shell_error
+  return s:on_git_dir
 endfunction  " }}}
 
 function! RubyVersion() abort  " {{{
@@ -102,9 +112,14 @@ function! RubyVersion() abort  " {{{
 endfunction  " }}}
 
 function! RubyGemPaths() abort  " {{{
+  if exists("s:ruby_gem_paths")
+    return s:ruby_gem_paths
+  endif
+
   let command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
   let command = command_prefix . " -e 'print Gem.path.join(\"\\n\")'"
-  return split(system(command), "\\n")
+  let s:ruby_gem_paths = split(system(command), "\\n")
+  return s:ruby_gem_paths
 endfunction  " }}}
 
 function! ExecuteWithConfirm(command) abort  " {{{
