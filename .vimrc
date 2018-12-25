@@ -4,11 +4,6 @@ let s:vim_root_path       = expand($HOME . "/.vim")
 let s:plugins_path        = expand(s:vim_root_path . "/plugins")
 let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/dein.vim")
 
-let s:on_mac  = has("mac")
-let s:on_tmux = exists("$TMUX")
-
-let s:native_incsearch_highlightable = v:version >= 800 && has("patch1238")
-
 " plugin management functions  " {{{
 function! UpdatePlugins() abort  " {{{
   call dein#update()
@@ -90,7 +85,7 @@ endfunction  " }}}
 
 " utility functions  " {{{
 function! OnTmux() abort  " {{{
-  return s:on_tmux
+  return exists("$TMUX")
 endfunction  " }}}
 
 function! OnRailsDir() abort  " {{{
@@ -324,26 +319,6 @@ if s:RegisterPlugin("nishigori/increment-activator")  " {{{
     \   ],
     \ }
 endif  " }}}
-
-if s:native_incsearch_highlightable
-  nnoremap / /\v
-else
-  if s:RegisterPlugin("haya14busa/incsearch.vim")  " {{{
-    map /  <Plug>(incsearch-forward)
-    map ?  <Plug>(incsearch-backward)
-    map g/ <Plug>(incsearch-stay)
-    map n  <Plug>(incsearch-nohl-n)<Plug>(anzu-update-search-status-with-echo)
-    map N  <Plug>(incsearch-nohl-N)<Plug>(anzu-update-search-status-with-echo)
-    " asterisk's `z` commands are "stay star motions"
-    map *  <Plug>(incsearch-nohl)<Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
-    map #  <Plug>(incsearch-nohl)<Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
-    map g* <Plug>(incsearch-nohl)<Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
-    map g# <Plug>(incsearch-nohl)<Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
-
-    let g:incsearch#auto_nohlsearch = 0
-    let g:incsearch#magic = '\v'
-  endif  " }}}
-endif
 
 if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
   let g:indentLine_char = "|"
@@ -1083,15 +1058,10 @@ if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("osyo-manga/vim-anzu")  " {{{
-  if s:native_incsearch_highlightable
-    nmap n <Plug>(anzu-n-with-echo)
-    nmap N <Plug>(anzu-N-with-echo)
-    vmap n n<Plug>(anzu-update-search-status)
-    vmap N N<Plug>(anzu-update-search-status)
-  else
-    " see incsearch
-  endif
-
+  nmap n <Plug>(anzu-n-with-echo)
+  nmap N <Plug>(anzu-N-with-echo)
+  vmap n n<Plug>(anzu-update-search-status)
+  vmap N N<Plug>(anzu-update-search-status)
   nnoremap <Leader>/ :<C-u>nohlsearch<Cr>:call anzu#clear_search_status()<Cr>
 
   " see asterisk for more settings
@@ -1117,14 +1087,10 @@ if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("haya14busa/vim-asterisk")  " {{{
-  if s:native_incsearch_highlightable
-    map *  <Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
-    map #  <Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
-    map g* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
-    map g# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
-  else
-    " see incsearch
-  endif
+  map *  <Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
+  map #  <Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
+  map g* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
+  map g# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 endif  " }}}
 
 if s:RegisterPlugin("Townk/vim-autoclose")  " {{{
@@ -1133,7 +1099,7 @@ if s:RegisterPlugin("Townk/vim-autoclose")  " {{{
   let g:AutoCloseSelectionWrapPrefix = "<Leader>ac"
 
   " https://github.com/Townk/vim-autoclose/blob/master/plugin/AutoClose.vim#L29
-  if s:on_mac
+  if has("mac")
     imap <silent> <Esc>OA <Up>
     imap <silent> <Esc>OB <Down>
     imap <silent> <Esc>OC <Right>
@@ -1190,7 +1156,6 @@ if s:RegisterPlugin("t9md/vim-choosewin")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("kchmck/vim-coffee-script")
 call s:RegisterPlugin("hail2u/vim-css-syntax")
 call s:RegisterPlugin("hail2u/vim-css3-syntax")
 
@@ -1242,7 +1207,6 @@ if s:RegisterPlugin("tpope/vim-fugitive", { "if": OnGitDir() })  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("thinca/vim-ft-svn_diff")
 call s:RegisterPlugin("muz/vim-gemfile")
 call s:RegisterPlugin("kana/vim-gf-user")
 
@@ -1719,7 +1683,6 @@ if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() })  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("superbrothers/vim-vimperator")
 call s:RegisterPlugin("posva/vim-vue")
 
 if s:RegisterPlugin("thinca/vim-zenspace")  " {{{
@@ -1978,6 +1941,8 @@ set hlsearch
 set ignorecase
 set smartcase
 set incsearch
+
+nnoremap / /\v
 " }}}
 
 " ----------------------------------------------
@@ -2143,7 +2108,7 @@ nnoremap <Leader>v :<C-u>vsplit<Cr>
 nnoremap <Leader>h :<C-u>split<Cr>
 
 " ,y/,p => copy/paste by clipboard
-if s:on_tmux
+if OnTmux()
   function! s:RegisterToRemoteCopy() abort  " {{{
     let text = @"
     let text = substitute(text, "^\\n\\+", "", "")
