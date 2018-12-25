@@ -107,6 +107,15 @@ function! OnGitDir() abort  " {{{
   return s:on_git_dir
 endfunction  " }}}
 
+function! IsGitCommit() abort  " {{{
+  if exists("s:is_git_commit")
+    return s:is_git_commit
+  endif
+
+  let s:is_git_commit = argc() == 1 && argv()[0] =~# '\.git/COMMIT_EDITMSG$'
+  return s:is_git_commit
+endfunction  " }}}
+
 function! RubyVersion() abort  " {{{
   return system("ruby -e 'print RUBY_VERSION'")
 endfunction  " }}}
@@ -199,16 +208,16 @@ call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 
 call s:RegisterPlugin("kg8m/.vim")
 
-if s:RegisterPlugin("w0rp/ale", { "if": OnRailsDir() })  " {{{
+if s:RegisterPlugin("w0rp/ale", { "if": OnRailsDir() && !IsGitCommit() })  " {{{
   let g:airline#extensions#ale#enabled = 0
   let g:ale_echo_msg_format = "[%linter%][%severity%] %code: %%s"
   let g:ale_lint_on_save = 1
   let g:ale_lint_on_text_changed = 0
 endif  " }}}
 
-call s:RegisterPlugin("hotwatermorning/auto-git-diff")
+call s:RegisterPlugin("hotwatermorning/auto-git-diff", { "if": !IsGitCommit() })
 
-if s:RegisterPlugin("vim-scripts/autodate.vim")  " {{{
+if s:RegisterPlugin("vim-scripts/autodate.vim", { "if": !IsGitCommit() })  " {{{
   let g:autodate_format       = "%Y/%m/%d"
   let g:autodate_lines        = 100
   let g:autodate_keyword_pre  = '\c\%(' .
@@ -219,7 +228,7 @@ if s:RegisterPlugin("vim-scripts/autodate.vim")  " {{{
   let g:autodate_keyword_post = '\.$'
 endif  " }}}
 
-if s:RegisterPlugin("tyru/caw.vim")  " {{{
+if s:RegisterPlugin("tyru/caw.vim", { "if": !IsGitCommit() })  " {{{
   nmap gc <Plug>(caw:hatpos:toggle)
   vmap gc <Plug>(caw:hatpos:toggle)
 
@@ -237,7 +246,7 @@ if s:RegisterPlugin("tyru/caw.vim")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("Shougo/context_filetype.vim")
+call s:RegisterPlugin("Shougo/context_filetype.vim", { "if": !IsGitCommit() })
 
 if s:RegisterPlugin("spolu/dwm.vim")  " {{{
   nmap <C-w>n       :<C-u>call DWM_New()<Cr>
@@ -353,7 +362,7 @@ endif  " }}}
 " interested in future features
 call s:RegisterPlugin("pocke/iro.vim", { "if": 0 })
 
-if s:RegisterPlugin("othree/javascript-libraries-syntax.vim")  " {{{
+if s:RegisterPlugin("othree/javascript-libraries-syntax.vim", { "if": !IsGitCommit() })  " {{{
   let g:used_javascript_libs = join([
     \   "angularjs",
     \   "backbone",
@@ -366,7 +375,7 @@ if s:RegisterPlugin("othree/javascript-libraries-syntax.vim")  " {{{
     \ ], ",")
 endif  " }}}
 
-if s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git")  " {{{
+if s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git", { "if": !IsGitCommit() })  " {{{
   let g:jscomplete_use = ["dom", "moz", "es6th"]
 endif  " }}}
 
@@ -437,7 +446,7 @@ if s:RegisterPlugin("AndrewRadev/linediff.vim")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("kg8m/moin.vim")
+call s:RegisterPlugin("kg8m/moin.vim", { "if": !IsGitCommit() })
 
 if s:RegisterPlugin("Shougo/neocomplete.vim")  " {{{
   function! s:ConfigPluginOnSource_neocomplete() abort  " {{{
@@ -555,7 +564,7 @@ if s:RegisterPlugin("tyru/operator-camelize.vim")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("mechatroner/rainbow_csv")
+call s:RegisterPlugin("mechatroner/rainbow_csv", { "if": !IsGitCommit() })
 call s:RegisterPlugin("chrisbra/Recover.vim")
 
 if s:RegisterPlugin("vim-scripts/sequence")  " {{{
@@ -587,7 +596,7 @@ endif  " }}}
 
 call s:RegisterPlugin("vim-scripts/sudo.vim")
 
-if s:RegisterPlugin("leafgarland/typescript-vim")  " {{{
+if s:RegisterPlugin("leafgarland/typescript-vim", { "if": !IsGitCommit() })  " {{{
   let g:typescript_indent_disable = 1
 endif  " }}}
 
@@ -1126,11 +1135,11 @@ if s:RegisterPlugin("Townk/vim-autoclose")  " {{{
   endif
 endif  " }}}
 
-if s:RegisterPlugin("Chiel92/vim-autoformat")  " {{{
+if s:RegisterPlugin("Chiel92/vim-autoformat", { "if": !IsGitCommit() })  " {{{
   let g:formatdef_jsbeautify_javascript = '"js-beautify -f -s2 -"'
 endif  " }}}
 
-if s:RegisterPlugin("itchyny/vim-autoft")  " {{{
+if s:RegisterPlugin("itchyny/vim-autoft", { "if": !IsGitCommit() })  " {{{
   let g:autoft_enable = 0
   let g:autoft_config = [
     \   { "filetype": "html",       "pattern": '<\%(!DOCTYPE\|html\|head\|script\)' },
@@ -1144,7 +1153,7 @@ if s:RegisterPlugin("kg8m/vim-blockle")  " {{{
   let g:blockle_mapping = ",b"
 endif  " }}}
 
-if s:RegisterPlugin("jkramer/vim-checkbox")  " {{{
+if s:RegisterPlugin("jkramer/vim-checkbox", { "if": !IsGitCommit() })  " {{{
   augroup ConfigCheckbox
     autocmd!
     autocmd FileType markdown,moin noremap <buffer> <Leader>c :call checkbox#ToggleCB()<Cr>
@@ -1171,10 +1180,10 @@ if s:RegisterPlugin("t9md/vim-choosewin")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("hail2u/vim-css-syntax")
-call s:RegisterPlugin("hail2u/vim-css3-syntax")
+call s:RegisterPlugin("hail2u/vim-css-syntax", { "if": !IsGitCommit() })
+call s:RegisterPlugin("hail2u/vim-css3-syntax", { "if": !IsGitCommit() })
 
-if s:RegisterPlugin("kg8m/vim-dirdiff")  " {{{
+if s:RegisterPlugin("kg8m/vim-dirdiff", { "if": !IsGitCommit() })  " {{{
   let g:DirDiffExcludes   = "CVS,*.class,*.exe,.*.swp,*.git,db/development_structure.sql,log,tags,tmp"
   let g:DirDiffIgnore     = "Id:,Revision:,Date:"
   let g:DirDiffSort       = 1
@@ -1215,14 +1224,14 @@ endif  " }}}
 call s:RegisterPlugin("thinca/vim-ft-diff_fold")
 call s:RegisterPlugin("thinca/vim-ft-help_fold")
 
-if s:RegisterPlugin("tpope/vim-fugitive", { "if": OnGitDir() })  " {{{
+if s:RegisterPlugin("tpope/vim-fugitive", { "if": OnGitDir() && !IsGitCommit() })  " {{{
   call s:ConfigPlugin({
      \   "lazy":   1,
      \   "on_cmd": "Gblame",
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("muz/vim-gemfile")
+call s:RegisterPlugin("muz/vim-gemfile", { "if": !IsGitCommit() })
 call s:RegisterPlugin("kana/vim-gf-user")
 
 if s:RegisterPlugin("tpope/vim-git")  " {{{
@@ -1234,14 +1243,14 @@ if s:RegisterPlugin("tpope/vim-git")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-call s:RegisterPlugin("tpope/vim-haml")
+call s:RegisterPlugin("tpope/vim-haml", { "if": !IsGitCommit() })
 call s:RegisterPlugin("michaeljsmith/vim-indent-object")
 
-if s:RegisterPlugin("elzr/vim-json")  " {{{
+if s:RegisterPlugin("elzr/vim-json", { "if": !IsGitCommit() })  " {{{
   let g:vim_json_syntax_conceal = 0
 endif  " }}}
 
-if s:RegisterPlugin("rcmdnk/vim-markdown")  " {{{
+if s:RegisterPlugin("rcmdnk/vim-markdown", { "if": !IsGitCommit() })  " {{{
   let g:vim_markdown_override_foldtext = 0
   let g:vim_markdown_no_default_key_mappings = 1
   let g:vim_markdown_conceal = 0
@@ -1265,7 +1274,7 @@ if s:RegisterPlugin("rcmdnk/vim-markdown")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")  " {{{
+if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax", { "if": !IsGitCommit() })  " {{{
   let g:markdown_quote_syntax_filetypes = {
     \    "css" : {
     \      "start" : "\\%(css\\|scss\\|sass\\)",
@@ -1363,7 +1372,7 @@ if s:RegisterPlugin("thinca/vim-qfreplace")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() })  " {{{
+if s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() && !IsGitCommit() })  " {{{
   call s:ConfigPlugin({
      \   "lazy": 0,
      \ })
@@ -1405,7 +1414,7 @@ endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-repeat")
 
-if s:RegisterPlugin("vim-ruby/vim-ruby")  " {{{
+if s:RegisterPlugin("vim-ruby/vim-ruby", { "if": !IsGitCommit() })  " {{{
   " see vim-gemfile
   augroup PreventVimRubyFromChangingSettings  " {{{
     autocmd!
@@ -1424,7 +1433,7 @@ if s:RegisterPlugin("vim-ruby/vim-ruby")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax")  " {{{
+if s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax", { "if": !IsGitCommit() })  " {{{
   let g:ruby_heredoc_syntax_filetypes = {
     \   "haml": { "start": "HAML" },
     \   "ruby": { "start": "RUBY" },
@@ -1435,7 +1444,7 @@ if s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() })  " {{{
+if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() && !IsGitCommit() })  " {{{
   augroup ConfigRubytest  " {{{
     autocmd!
     autocmd FileType ruby nmap <buffer> <leader>T <Plug>RubyFileRun
@@ -1451,7 +1460,7 @@ if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() })  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("xolox/vim-session")  " {{{
+if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() })  " {{{
   " also see vim-startify's settings
 
   let g:session_directory         = getcwd() . "/.vim-sessions"
@@ -1506,7 +1515,7 @@ if s:RegisterPlugin("thinca/vim-singleton")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("mhinz/vim-startify")  " {{{
+if s:RegisterPlugin("mhinz/vim-startify", { "if": !IsGitCommit() })  " {{{
   function! s:ConfigPluginOnSource_vim_startify() abort  " {{{
     " see vim-session's settings
     let g:startify_session_dir         = g:session_directory
@@ -1575,7 +1584,7 @@ if s:RegisterPlugin("mhinz/vim-startify")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("kopischke/vim-stay")  " {{{
+if s:RegisterPlugin("kopischke/vim-stay", { "if": !IsGitCommit() })  " {{{
   set viewoptions=cursor,folds
 endif  " }}}
 
@@ -1680,9 +1689,9 @@ if s:RegisterPlugin("kana/vim-textobj-user")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("cespare/vim-toml")
+call s:RegisterPlugin("cespare/vim-toml", { "if": !IsGitCommit() })
 
-if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() })  " {{{
+if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() && !IsGitCommit() })  " {{{
   augroup ConfigTurbux  " {{{
     autocmd!
     autocmd FileType ruby nmap <buffer> <leader>T <Plug>SendTestToTmux
@@ -1698,7 +1707,7 @@ if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() })  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("posva/vim-vue")
+call s:RegisterPlugin("posva/vim-vue", { "if": !IsGitCommit() })
 
 if s:RegisterPlugin("thinca/vim-zenspace")  " {{{
   let g:zenspace#default_mode = "on"
@@ -1709,7 +1718,7 @@ if s:RegisterPlugin("thinca/vim-zenspace")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-if s:RegisterPlugin("Shougo/vimfiler")  " {{{
+if s:RegisterPlugin("Shougo/vimfiler", { "if": !IsGitCommit() })  " {{{
   let g:vimfiler_ignore_pattern = ['^\.git$', '^\.DS_Store$']
 
   nnoremap <Leader>e :<C-u>VimFilerBufferDir -force-quit<Cr>
@@ -1728,7 +1737,7 @@ if s:RegisterPlugin("Shougo/vimfiler")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() })  " {{{
+if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() && !IsGitCommit() })  " {{{
   function! s:ConfigPluginOnSource_vimux() abort  " {{{
     let g:VimuxHeight     = 30
     let g:VimuxUseNearest = 1
@@ -1811,10 +1820,10 @@ if s:RegisterPlugin("simeji/winresizer")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("stephpy/vim-yaml")
-call s:RegisterPlugin("pedrohdz/vim-yaml-folds")
+call s:RegisterPlugin("stephpy/vim-yaml", { "if": !IsGitCommit() })
+call s:RegisterPlugin("pedrohdz/vim-yaml-folds", { "if": !IsGitCommit() })
 
-if s:RegisterPlugin("othree/yajs.vim")  " {{{
+if s:RegisterPlugin("othree/yajs.vim", { "if": !IsGitCommit() })  " {{{
   augroup JavaScriptFold  " {{{
     autocmd!
     autocmd FileType javascript setlocal foldmethod=syntax
