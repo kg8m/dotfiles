@@ -71,7 +71,7 @@ update = "!f() {\
   git execute-with-echo 'git --no-pager log --reverse HEAD.. '${remote_branch};\
   echo;\
   git execute-with-echo 'git pull --stat --rebase || echo \"Error: rebase aborted!!\"';\
-}; f | less"
+}; f"
 
 # branch
 brs      = !git branches
