@@ -177,7 +177,7 @@ diff-branch-from = "!f() {\
   fi;\
   \
   current=$( git rev-parse --abbrev-ref '@{u}' );\
-  command=\"git diff-without-space-changes origin/${target}...${current}\";\
+  command=\"git diff-without-space-changes ${@:2:($#-1)} origin/${target}...${current}\";\
   git execute-with-confirm ${command};\
 }; f"
 
@@ -190,7 +190,7 @@ open-changed-files-from = "!f() {\
   fi;\
   \
   current=$( git rev-parse --abbrev-ref '@{u}' );\
-  command=\"vim \\$( git diff --name-only $@ origin/${target}...${current} )\";\
+  command=\"vim \\$( git diff --name-only ${@:2:($#-1)} origin/${target}...${current} )\";\
   git execute-with-confirm ${command};\
 }; f"
 
