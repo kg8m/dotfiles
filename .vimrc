@@ -116,10 +116,6 @@ function! IsGitCommit() abort  " {{{
   return s:is_git_commit
 endfunction  " }}}
 
-function! RubyVersion() abort  " {{{
-  return system("ruby -e 'print RUBY_VERSION'")
-endfunction  " }}}
-
 function! RubyGemPaths() abort  " {{{
   if exists("s:ruby_gem_paths")
     return s:ruby_gem_paths
@@ -803,15 +799,9 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \
         \   ["[Rails] Reset Buffer", "if RailsDetect() | call rails#buffer_setup() | endif"],
         \
-        \   ["[Unite plugin] gist",                 "Unite gista"],
         \   ["[Unite plugin] mru files",            "Unite neomru/file"],
-        \   ["[Unite plugin] outline",              "Unite outline:!"],
         \   ["[Unite plugin] mark",                 "Unite mark"],
-        \   ["[Unite plugin] versions/status",      "UniteVersions status:./"],
-        \   ["[Unite plugin] versions/log",         "UniteVersions log:./"],
         \   ["[Unite plugin] giti/status",          "Unite giti/status"],
-        \   ["[Unite plugin] svn/status",           "Unite svn/status"],
-        \   ["[Unite plugin] webcolorname",         "Unite webcolorname"],
         \
         \   ["[Unite] buffers",                       "Unite buffer"],
         \   ["[Unite] files",                         "UniteWithBufferDir file"],
@@ -1056,7 +1046,6 @@ if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
     \   ["Align at ')'        --  `0 )`",                       '0 )'],
     \   ["Align at ']'        --  `0 ]`",                       '0 ]'],
     \   ["Align at '}'        --  `}`",                         '}'],
-    \   ["Align at 'hoge,'    --  `00 \\w\\+, ` -- not working", '00 \w\+, '],
     \ ]
   let s:alignta_comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
   let g:unite_source_alignta_preset_options = [
@@ -1308,9 +1297,6 @@ if s:RegisterPlugin("kana/vim-operator-replace")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("rhysd/vim-operator-surround")  " {{{
-  " sa<Char>         => surround by <Char>
-  " sd<Char>         => delete surrounding <Char>
-  " sr<Char1><Char2> => replace surrounding <Char1> by <Char2>
   nmap <silent><Leader>sa <Plug>(operator-surround-append)aw
   nmap <silent><Leader>sd <Plug>(operator-surround-delete)a
   nmap <silent><Leader>sr <Plug>(operator-surround-replace)a
@@ -1438,10 +1424,6 @@ if s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax", { "if": !IsGitCommit() 
     \   "haml": { "start": "HAML" },
     \   "ruby": { "start": "RUBY" },
     \ }
-
-  call s:ConfigPlugin({
-     \   "depends": "vim-coffee-script",
-     \ })
 endif  " }}}
 
 if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() && !IsGitCommit() })  " {{{
@@ -2116,19 +2098,12 @@ command! -range Translate <line1>,<line2>!trans -b
 
 " ----------------------------------------------
 " keymappings  " {{{
-" ,r => reload .vimrc
 nnoremap <Leader>r :<C-u>source $HOME/.vimrc<Cr>
 
-" <C-/> => nohilight
-" see vim-anzu's settings
-" nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
-
-" ,v => vertically split window
-" ,h => horizontally split window
 nnoremap <Leader>v :<C-u>vsplit<Cr>
 nnoremap <Leader>h :<C-u>split<Cr>
 
-" ,y/,p => copy/paste by clipboard
+" copy by clipboard
 if OnTmux()
   function! s:RegisterToRemoteCopy() abort  " {{{
     let text = @"
@@ -2149,9 +2124,8 @@ if OnTmux()
 else
   vnoremap <Leader>y "*y
 endif
-nnoremap <Leader>p "*p
 
-" ,w => erase spaces of EOL for selected
+" erase spaces of EOL for selected
 vnoremap <Leader>w :s/\s\+$//ge<Cr>
 
 " prevent unconscious operation
@@ -2161,13 +2135,14 @@ inoremap <C-w> <Esc><C-w>
 nmap + <C-a>
 nmap - <C-x>
 
-" emacs like moving in INSERT mode
+" moving in INSERT mode
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
+
 cnoremap <C-h> <Left>
 cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
@@ -2175,11 +2150,10 @@ cnoremap <C-l> <Right>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
-" Page scroll in INSERT mode
 inoremap <C-f> <PageDown>
 inoremap <C-b> <PageUp>
 
-" <C-]> to insert a checkbox `[ ]` on markdown
+" insert a checkbox `[ ]` on markdown
 augroup ConfigInsertCheckbox
   autocmd!
   autocmd FileType markdown inoremap <buffer> <C-]> [<Space>]<Space>
@@ -2191,11 +2165,6 @@ augroup END
 if has("gui_running")
   gui
   set guioptions=none
-  " set clipboard=unnamed
-
-  " reset mswin.vim's mappings
-  nnoremap <C-v> <C-v>
-  nnoremap <C-y> <C-y>
 
   " save window's size and position
   " http://vim-users.jp/2010/01/hack120/
