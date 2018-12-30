@@ -268,7 +268,7 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-if s:RegisterPlugin("LeafCage/foldCC")  " {{{
+if s:RegisterPlugin("LeafCage/foldCC", { "if": !IsGitCommit() })  " {{{
   let g:foldCCtext_enable_autofdc_adjuster = 1
   let g:foldCCtext_maxchars = 120
   set foldtext=FoldCCtext()
@@ -1885,57 +1885,59 @@ set smartindent
 set backspace=indent,eol,start
 set nofixeol
 
-augroup SetupExpandtab  " {{{
-  autocmd!
-  autocmd FileType neosnippet set noexpandtab
-augroup END  " }}}
+if !IsGitCommit()  " {{{
+  augroup SetupExpandtab  " {{{
+    autocmd!
+    autocmd FileType neosnippet set noexpandtab
+  augroup END  " }}}
 
-augroup SetupFormatoptions  " {{{
-  autocmd!
-  autocmd FileType * setlocal fo+=q fo+=2 fo+=l fo+=j
-  autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
-  autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
-augroup END  " }}}
+  augroup SetupFormatoptions  " {{{
+    autocmd!
+    autocmd FileType * setlocal fo+=q fo+=2 fo+=l fo+=j
+    autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
+    autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
+  augroup END  " }}}
 
-augroup SetupCinkeys  " {{{
-  autocmd!
-  autocmd FileType text,markdown,moin setlocal cinkeys-=:
-augroup END  " }}}
+  augroup SetupCinkeys  " {{{
+    autocmd!
+    autocmd FileType text,markdown,moin setlocal cinkeys-=:
+  augroup END  " }}}
 
-" folding  " {{{
-" frequently used keys:
-"   zo: open
-"   zc: close
-"   zR: open all
-"   zM: close all
-"   zx: recompute all
-"   [z: move to start of current fold
-"   ]z: move to end of current fold
-"   zj: move to start of next fold
-"   zk: move to end of previous fold
-set foldmethod=marker
-set foldopen=hor
-set foldminlines=0
-set foldcolumn=3
-set fillchars=vert:\|
+  " folding  " {{{
+  " frequently used keys:
+  "   zo: open
+  "   zc: close
+  "   zR: open all
+  "   zM: close all
+  "   zx: recompute all
+  "   [z: move to start of current fold
+  "   ]z: move to end of current fold
+  "   zj: move to start of next fold
+  "   zk: move to end of previous fold
+  set foldmethod=marker
+  set foldopen=hor
+  set foldminlines=0
+  set foldcolumn=3
+  set fillchars=vert:\|
 
-augroup SetupFoldings  " {{{
-  autocmd!
-  autocmd FileType neosnippet setlocal foldmethod=marker
-  autocmd FileType vim        setlocal foldmethod=marker
-  autocmd FileType haml       setlocal foldmethod=indent
-  autocmd FileType gitcommit,qfreplace setlocal nofoldenable
+  augroup SetupFoldings  " {{{
+    autocmd!
+    autocmd FileType neosnippet setlocal foldmethod=marker
+    autocmd FileType vim        setlocal foldmethod=marker
+    autocmd FileType haml       setlocal foldmethod=indent
+    autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 
-  " http://d.hatena.ne.jp/gnarl/20120308/1331180615
-  autocmd InsertEnter * if !exists("w:last_fdm") | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-  autocmd BufWritePost,FileWritePost,WinLeave * if exists("w:last_fdm") | let &foldmethod=w:last_fdm | unlet w:last_fdm | endif
-augroup END  " }}}
-" }}}
+    " http://d.hatena.ne.jp/gnarl/20120308/1331180615
+    autocmd InsertEnter * if !exists("w:last_fdm") | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
+    autocmd BufWritePost,FileWritePost,WinLeave * if exists("w:last_fdm") | let &foldmethod=w:last_fdm | unlet w:last_fdm | endif
+  augroup END  " }}}
+  " }}}
 
-augroup UpdateFiletypeAfterSave  " {{{
-  autocmd!
-  autocmd BufWritePost * if &filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
-augroup END  " }}}
+  augroup UpdateFiletypeAfterSave  " {{{
+    autocmd!
+    autocmd BufWritePost * if &filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
+  augroup END  " }}}
+endif  " }}}
 " }}}
 
 " ----------------------------------------------
@@ -1982,7 +1984,7 @@ set wildmenu
 set wildmode=list:longest,full
 
 " ctags  " {{{
-if OnRailsDir()  " {{{
+if OnRailsDir() && !IsGitCommit()  " {{{
   augroup CtagsAucocommands  " {{{
     autocmd!
     autocmd VimEnter     * silent call s:Wait(300).then({ -> execute("call s:SetupTags()", "") })
@@ -2061,29 +2063,31 @@ augroup END  " }}}
 " move
 set whichwrap=b,s,h,l,<,>,[,],~
 
-" http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
-augroup CheckTypo  " {{{
-  autocmd!
-  autocmd BufWriteCmd *[,*] call s:WriteCheckTypo(expand("<afile>"))
-augroup END  " }}}
+if !IsGitCommit()  " {{{
+  " http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
+  augroup CheckTypo  " {{{
+    autocmd!
+    autocmd BufWriteCmd *[,*] call s:WriteCheckTypo(expand("<afile>"))
+  augroup END  " }}}
 
-function! s:WriteCheckTypo(file) abort  " {{{
-  let writecmd = "write".(v:cmdbang ? "!" : "")." ".a:file
+  function! s:WriteCheckTypo(file) abort  " {{{
+    let writecmd = "write".(v:cmdbang ? "!" : "")." ".a:file
 
-  if a:file =~? "[qfreplace]"
-    return
-  endif
+    if a:file =~? "[qfreplace]"
+      return
+    endif
 
-  let prompt = "possible typo: really want to write to '" . a:file . "'?(y/n):"
-  let input = input(prompt)
+    let prompt = "possible typo: really want to write to '" . a:file . "'?(y/n):"
+    let input = input(prompt)
 
-  if input ==# "YES"
-    execute writecmd
-    let b:write_check_typo_nocheck = 1
-  elseif input =~? '^y\(es\)\=$'
-    execute writecmd
-  endif
-endfunction  " }}}
+    if input ==# "YES"
+      execute writecmd
+      let b:write_check_typo_nocheck = 1
+    elseif input =~? '^y\(es\)\=$'
+      execute writecmd
+    endif
+  endfunction  " }}}
+endif  " }}}
 " }}}
 
 " ----------------------------------------------
