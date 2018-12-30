@@ -21,7 +21,7 @@ endfunction  " }}}
 
 function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
   " FIXME: gundo: dein does not support hg
-  if a:plugin_name =~# "/gundo\.vim$"
+  if a:plugin_name =~# '/gundo\.vim$'
     let gundo_path = s:plugins_path . "/repos/bitbucket.org/heavenshell/gundo.vim"
 
     if !isdirectory(gundo_path)
@@ -665,7 +665,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
             if !has_key(s:unite_rails_definitions, name)
               let s:unite_rails_definitions[name] = {
                 \   "path":    [app_dir . "/**", "*"],
-                \   "to_word": ["^\./" . app_dir, ""],
+                \   "to_word": ['^\./' . app_dir, ""],
                 \ }
             endif
           endif
@@ -675,7 +675,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           if isdirectory(test_dir)
             let s:unite_rails_definitions[test_dir] = {
               \   "path":    [test_dir . "/**", "*"],
-              \   "to_word": ["^\./" . test_dir, ""],
+              \   "to_word": ['^\./' . test_dir, ""],
               \ }
           endif
         endfor
