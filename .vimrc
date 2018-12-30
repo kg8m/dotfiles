@@ -397,18 +397,18 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \     "lineinfo_with_percent": "%l/%L(%p%%) : %v",
     \   },
     \   "component_function": {
-    \     "filename": "FilepathForLightline",
-    \     "anzu":     "AnzuSearchStatusForLightline",
+    \     "filename": "Lightline_Filepath",
+    \     "anzu":     "Lightline_AnzuSearchStatus",
     \   },
     \   "colorscheme": "kg8m",
     \ }
 
-  function! ReadonlySymbolForLightline() abort  " {{{
+  function! Lightline_ReadonlySymbol() abort  " {{{
     return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? "X" : ""
   endfunction  " }}}
 
-  function! FilepathForLightline() abort  " {{{
-    return ("" != ReadonlySymbolForLightline() ? ReadonlySymbolForLightline() . " " : "") .
+  function! Lightline_Filepath() abort  " {{{
+    return ("" != Lightline_ReadonlySymbol() ? Lightline_ReadonlySymbol() . " " : "") .
          \ (
          \   &ft == "vimfiler" ? vimfiler#get_status_string() :
          \   &ft == "unite" ? unite#get_status_string() :
@@ -417,14 +417,14 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
          \     winwidth(0) >= 100 ? expand("%:F") : expand("%:t")
          \   ) : "[No Name]"
          \ ) .
-         \ ("" != ModifiedSymbolForLightline() ? " " . ModifiedSymbolForLightline() : "")
+         \ ("" != Lightline_ModifiedSymbol() ? " " . Lightline_ModifiedSymbol() : "")
   endfunction  " }}}
 
-  function! ModifiedSymbolForLightline() abort  " {{{
+  function! Lightline_ModifiedSymbol() abort  " {{{
     return &ft =~? 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
   endfunction  " }}}
 
-  function! AnzuSearchStatusForLightline() abort  " {{{
+  function! Lightline_AnzuSearchStatus() abort  " {{{
     if winwidth(0) >= 100
       return anzu#search_status()
     else
