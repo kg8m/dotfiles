@@ -2132,8 +2132,13 @@ else
   vnoremap <Leader>y "*y
 endif
 
-" erase spaces of EOL for selected
-vnoremap <Leader>w :s/\s\+$//ge<Cr>
+" Remove selected trailing whitespaces
+function! RemoveTrailingWhitespaces() abort  " {{{
+  let position = getpos(".")
+  keeppatterns '<,'>s/\s\+$//ge
+  call setpos(".", position)
+endfunction  " }}}
+vnoremap <Leader>w :<C-u>call RemoveTrailingWhitespaces()<Cr>
 
 " prevent unconscious operation
 inoremap <C-w> <Esc><C-w>
