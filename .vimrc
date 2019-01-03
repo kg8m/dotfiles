@@ -1903,10 +1903,15 @@ if !IsGitCommit()  " {{{
   "   zR: Open all folds
   "   zM: Close all folds
   "   zx: Recompute all folds
-  "   [z: Move to start of current fold
-  "   ]z: Move to end of current fold
+  "   z[: Move to start of current fold
+  "   z]: Move to end of current fold
   "   zj: Move to start of next fold
   "   zk: Move to end of previous fold
+  nnoremap z[ [z
+  nnoremap z] ]z
+  vnoremap z[ [z
+  vnoremap z] ]z
+
   set foldmethod=marker
   set foldopen=hor
   set foldminlines=0
