@@ -1983,6 +1983,9 @@ execute "set undodir=" . s:undodir
 set wildmenu
 set wildmode=list:longest,full
 
+" Support Japanese kakkos
+set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,〔:〕,“:”,‘:’
+
 " ctags  " {{{
 if OnRailsDir() && !IsGitCommit()  " {{{
   augroup CtagsAucocommands  " {{{
