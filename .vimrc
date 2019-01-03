@@ -1,10 +1,10 @@
 " ----------------------------------------------
-" initialize  " {{{
+" Initialize  " {{{
 let s:vim_root_path       = expand($HOME . "/.vim")
 let s:plugins_path        = expand(s:vim_root_path . "/plugins")
 let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/dein.vim")
 
-" plugin management functions  " {{{
+" Plugin management functions  " {{{
 function! UpdatePlugins() abort  " {{{
   call dein#update()
   Unite dein/log -buffer-name=update_plugins
@@ -40,13 +40,13 @@ function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
 
   if has_key(options, "if")
     if !options["if"]
-      " don't load but fetch the plugin
+      " Don't load but fetch the plugin
       let options["rtp"] = ""
       call remove(options, "if")
       let enabled = 0
     endif
   else
-    " sometimes dein doesn't add runtimepath if no options given
+    " Sometimes dein doesn't add runtimepath if no options given
     let options["if"] = 1
   endif
 
@@ -83,7 +83,7 @@ function! s:InstallPlugins(...) abort  " {{{
 endfunction  " }}}
 " }}}
 
-" utility functions  " {{{
+" Utility functions  " {{{
 function! OnTmux() abort  " {{{
   return exists("$TMUX")
 endfunction  " }}}
@@ -156,7 +156,7 @@ set concealcursor=nvic
 " }}}
 
 " ----------------------------------------------
-" encoding  " {{{
+" Encoding  " {{{
 " http://www.kawaz.jp/pukiwiki/?vim#cb691f26
 if &encoding !=# "utf-8"
   set encoding=japan
@@ -184,8 +184,8 @@ scriptencoding utf-8
 " }}}
 
 " ----------------------------------------------
-" plugins  " {{{
-" initialize plugin manager  " {{{
+" Plugins  " {{{
+" Initialize plugin manager  " {{{
 if has("vim_starting")
   if !isdirectory(s:plugin_manager_path)
     echo "Installing plugin manager...."
@@ -198,7 +198,7 @@ endif
 call s:SetupPluginStart()
 " }}}
 
-" plugins list and settings  " {{{
+" Plugins list and settings  " {{{
 call s:RegisterPlugin(s:plugin_manager_path)
 call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 
@@ -297,7 +297,7 @@ if s:RegisterPlugin("sk1418/HowMuch")  " {{{
   call s:DefineHowMuchMappings()
 
   function! s:ConfigPluginOnPostSource_HowMuch() abort  " {{{
-    " overwriting default mappings
+    " Overwriting default mappings
     call s:DefineHowMuchMappings()
   endfunction  " }}}
 
@@ -355,7 +355,7 @@ if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
     \ ]
 endif  " }}}
 
-" interested in future features
+" Interested in future features
 call s:RegisterPlugin("pocke/iro.vim", { "if": 0 })
 
 if s:RegisterPlugin("othree/javascript-libraries-syntax.vim", { "if": !IsGitCommit() })  " {{{
@@ -604,11 +604,11 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   nnoremap <Leader>uy :<C-u>Unite history/yank -default-action=append<Cr>
   nnoremap <F4> :<C-u>Unite buffer<Cr>
 
-  " see also ctags settings
+  " See also ctags settings
   nnoremap g[ :<C-u>Unite jump<Cr>
 
   if OnRailsDir()
-    " see s:DefineOreOreUniteCommandsForRails()
+    " See s:DefineOreOreUniteCommandsForRails()
     nnoremap <Leader>ur :<C-u>Unite -start-insert rails/
   endif
 
@@ -815,13 +815,13 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[Help] autocommand-events", "help autocommand-events"],
         \ ]
 
-      " show formatted candidates, for example:
+      " Show formatted candidates, for example:
       "   [Plugins] Update Plugins                   --  `call UpdatePlugins()`
       "   [Plugins] Resume Update Plugins            --  `UniteResume update_plugins`
       "
       "   [String Utility] All to Hankaku            --  `'<,'>Hankaku`
       "   [String Utility] Alphanumerics to Hankaku  --  `'<,'>HzjaConvert han_eisu`
-      "   ....
+      "   ...
       function! s:FormatUniteShortcuts() abort  " {{{
         function! s:UniteShortcutsPrefix(word) abort  " {{{
           return substitute(a:word, '\v^\[([^]]+)\].*$', '\1', "")
@@ -1077,7 +1077,7 @@ if s:RegisterPlugin("osyo-manga/vim-anzu")  " {{{
   vmap N N<Plug>(anzu-update-search-status)
   nnoremap <Leader>/ :<C-u>nohlsearch<Cr>:call anzu#clear_search_status()<Cr>
 
-  " see asterisk for more settings
+  " See also asterisk
 endif  " }}}
 
 if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
@@ -1107,9 +1107,11 @@ if s:RegisterPlugin("haya14busa/vim-asterisk")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("Townk/vim-autoclose")  " {{{
-  " annoying to type "<<" in Ruby code or type "<" for comparing in many languages
+  " Annoying to type "<<" or to type "<"
   " let g:AutoClosePairs_add = "<>"
-  let g:AutoCloseSelectionWrapPrefix = "<Leader>ac"
+
+  " Disable default mappings
+  let g:AutoCloseSelectionWrapPrefix = "<Leader>autoclose"
 
   " https://github.com/Townk/vim-autoclose/blob/master/plugin/AutoClose.vim#L29
   if has("mac")
@@ -1190,7 +1192,8 @@ if s:RegisterPlugin("Lokaltog/vim-easymotion")  " {{{
   vmap <Leader>f <Plug>(easymotion-s2)
   omap <Leader>f <Plug>(easymotion-s2)
   nmap <Leader>w <Plug>(easymotion-overwin-f2)
-  " replace default `f`
+
+  " Replace default `f`
   nmap f <Plug>(easymotion-fl)
   vmap f <Plug>(easymotion-fl)
   omap f <Plug>(easymotion-fl)
@@ -1307,8 +1310,8 @@ if s:RegisterPlugin("rhysd/vim-operator-surround")  " {{{
   function! s:ConfigPluginOnSource_vim_operator_surround() abort  " {{{
     let g:operator#surround#blocks = { "-": [] }
 
-    " some pairs don't work as `keys` if they require IME's `henkan`
-    " but they works as `block`
+    " Some pairs don't work as `keys` if they require IME's `henkan`
+    " But they works as `block`
     let pairs = [
       \   ["（", "）"],
       \   ["［", "］"],
@@ -1393,7 +1396,7 @@ if s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() && !IsGitCommit() })
           \ if RailsDetect() | call rails#buffer_setup() | endif
   augroup END
 
-  " prevent `rails.vim` from defining keymappings
+  " Prevent `rails.vim` from defining keymappings
   nmap <Leader>Rwf  <Plug>RailsSplitFind
   nmap <Leader>Rwgf <Plug>RailsTabFind
 endif  " }}}
@@ -1401,7 +1404,7 @@ endif  " }}}
 call s:RegisterPlugin("tpope/vim-repeat")
 
 if s:RegisterPlugin("vim-ruby/vim-ruby", { "if": !IsGitCommit() })  " {{{
-  " see vim-gemfile
+  " See vim-gemfile
   augroup PreventVimRubyFromChangingSettings  " {{{
     autocmd!
     autocmd BufEnter Gemfile set filetype=Gemfile
@@ -1443,7 +1446,7 @@ if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() && !IsGitCommit() }) 
 endif  " }}}
 
 if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() })  " {{{
-  " also see vim-startify's settings
+  " See also vim-startify's settings
 
   let g:session_directory         = getcwd() . "/.vim-sessions"
   let g:session_autoload          = "no"
@@ -1496,7 +1499,7 @@ endif  " }}}
 
 if s:RegisterPlugin("mhinz/vim-startify", { "if": !IsGitCommit() })  " {{{
   function! s:ConfigPluginOnSource_vim_startify() abort  " {{{
-    " see vim-session's settings
+    " See vim-session's settings
     let g:startify_session_dir         = g:session_directory
     let g:startify_session_persistence = 0
     let g:startify_session_sort        = 1
@@ -1636,7 +1639,7 @@ endif  " }}}
 
 if s:RegisterPlugin("kana/vim-textobj-user")  " {{{
   function! s:ConfigPluginOnSource_vim_textobj_user() abort
-    " some kakkos are not defined because they require IME's `henkan` and not work
+    " Some kakkos are not defined because they require IME's `henkan` and not work
     " - { "pair": ["｛", "｝"], "name": "bracket" },
     " - { "pair": ["『", "』"], "name": "double-kakko" },
     " - { "pair": ["【", "】"], "name": "sumi-kakko" },
@@ -1678,7 +1681,7 @@ if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() && !IsGitCommit() }) 
   augroup END  " }}}
 
   let g:no_turbux_mappings = 1
-  let g:turbux_test_type   = ""  " FIXME: escape undefined g:turbux_test_type error
+  let g:turbux_test_type   = ""  " FIXME: Escape undefined g:turbux_test_type error
 
   call s:ConfigPlugin({
      \   "lazy":   1,
@@ -1728,7 +1731,7 @@ if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() && !IsGitCommit() })  " {
   endfunction  " }}}
 
   function! s:ConfigPluginOnPostSource_vimux() abort  " {{{
-    " overwriting default function: use current pane's next one
+    " Overwriting default function: use current pane's next one
     execute join([
     \   'function! _VimuxNearestIndex() abort',
     \     'let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")',
@@ -1817,13 +1820,13 @@ if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
   nmap <C-n> <Plug>(yankround-next)
 endif  " }}}
 
-" colorschemes
+" Colorschemes
 if s:RegisterPlugin("kg8m/molokai")  " {{{
   let g:molokai_original = 1
 endif  " }}}
 " }}}
 
-" finish plugin manager initialization  " {{{
+" Finish plugin manager initialization  " {{{
 call s:SetupPluginEnd()
 filetype plugin indent on
 syntax enable
@@ -1839,7 +1842,7 @@ endif
 " }}}
 
 " ----------------------------------------------
-" general looks  " {{{
+" General looks  " {{{
 colorscheme molokai
 
 set showmatch
@@ -1850,12 +1853,11 @@ set showcmd
 set scrolloff=15
 let g:sh_noisk = 1
 
-" cursor form
 let &t_SI = "\e[6 q"  " for INSERT
 let &t_EI = "\e[2 q"  " for NORMAL
 
-" for vimdiff
 set wrap
+
 " http://stackoverflow.com/questions/16840433/forcing-vimdiff-to-wrap-lines
 augroup SetWrapForVimdiff  " {{{
   autocmd!
@@ -1863,7 +1865,6 @@ augroup SetWrapForVimdiff  " {{{
 augroup END  " }}}
 set diffopt+=horizontal,context:10,iwhite
 
-" make listchars visible
 set list
 set listchars=tab:>\ ,eol:\ ,trail:_
 
@@ -1875,7 +1876,7 @@ augroup END  " }}}
 " }}}
 
 " ----------------------------------------------
-" spaces, indents  " {{{
+" Spaces, Indents  " {{{
 set tabstop=2
 set shiftwidth=2
 set textwidth=0
@@ -1903,17 +1904,17 @@ if !IsGitCommit()  " {{{
     autocmd FileType text,markdown,moin setlocal cinkeys-=:
   augroup END  " }}}
 
-  " folding  " {{{
-  " frequently used keys:
-  "   zo: open
-  "   zc: close
-  "   zR: open all
-  "   zM: close all
-  "   zx: recompute all
-  "   [z: move to start of current fold
-  "   ]z: move to end of current fold
-  "   zj: move to start of next fold
-  "   zk: move to end of previous fold
+  " Folding  " {{{
+  " Frequently used keys:
+  "   zo: Open current fold
+  "   zc: Close current fold
+  "   zR: Open all folds
+  "   zM: Close all folds
+  "   zx: Recompute all folds
+  "   [z: Move to start of current fold
+  "   ]z: Move to end of current fold
+  "   zj: Move to start of next fold
+  "   zk: Move to end of previous fold
   set foldmethod=marker
   set foldopen=hor
   set foldminlines=0
@@ -1941,7 +1942,7 @@ endif  " }}}
 " }}}
 
 " ----------------------------------------------
-" search  " {{{
+" Search  " {{{
 set hlsearch
 set ignorecase
 set smartcase
@@ -1951,16 +1952,16 @@ nnoremap / /\v
 " }}}
 
 " ----------------------------------------------
-" controls  " {{{
+" Controls  " {{{
 set restorescreen
 set mouse=
 set t_vb=
 
-" smoothen screen drawing; wait procedures' completion
+" Smoothen screen drawing; wait procedures' completion
 set lazyredraw
 set ttyfast
 
-" backup, recover
+" Backup, Recover
 set nobackup
 
 let s:swapdir = $HOME . "/tmp/.vimswap"
@@ -1969,7 +1970,7 @@ if !isdirectory(s:swapdir)
 endif
 execute "set directory=" . s:swapdir
 
-" undo
+" Undo
 set hidden
 set undofile
 
@@ -1979,14 +1980,13 @@ if !isdirectory(s:undodir)
 endif
 execute "set undodir=" . s:undodir
 
-" wildmode
 set wildmenu
 set wildmode=list:longest,full
 
 " Support Japanese kakkos
 set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,〔:〕,“:”,‘:’
 
-" ctags  " {{{
+" Ctags  " {{{
 if OnRailsDir() && !IsGitCommit()  " {{{
   augroup CtagsAucocommands  " {{{
     autocmd!
@@ -2050,12 +2050,12 @@ if OnRailsDir() && !IsGitCommit()  " {{{
   endfunction  " }}}
 endif  " }}}
 
-" see also unite.vim settings
+" See also unite.vim settings
 nnoremap g] :tjump <C-r>=expand("<cword>")<Cr><Cr>
 vnoremap g] "gy:tjump <C-r>"<Cr>
 " }}}
 
-" auto reload
+" Auto reload
 augroup CheckTimeHook  " {{{
   autocmd!
   autocmd InsertEnter * checktime
@@ -2063,7 +2063,6 @@ augroup CheckTimeHook  " {{{
   autocmd CursorHold  * checktime
 augroup END  " }}}
 
-" move
 set whichwrap=b,s,h,l,<,>,[,],~
 
 if !IsGitCommit()  " {{{
@@ -2094,9 +2093,8 @@ endif  " }}}
 " }}}
 
 " ----------------------------------------------
-" commands  " {{{
+" Commands  " {{{
 " http://vim-users.jp/2009/05/hack17/
-" :Rename newfilename.ext
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand("#"))
 
 " http://qiita.com/momo-lab/items/7d35acc8ed835471ad4c
@@ -2104,13 +2102,13 @@ command! -range Translate <line1>,<line2>!trans -b
 " }}}
 
 " ----------------------------------------------
-" keymappings  " {{{
+" Keymappings  " {{{
 nnoremap <Leader>r :<C-u>source $HOME/.vimrc<Cr>
 
 nnoremap <Leader>v :<C-u>vsplit<Cr>
 nnoremap <Leader>h :<C-u>split<Cr>
 
-" copy by clipboard
+" Copy by clipboard
 if OnTmux()
   function! s:RegisterToRemoteCopy() abort  " {{{
     let text = @"
@@ -2140,14 +2138,14 @@ function! RemoveTrailingWhitespaces() abort  " {{{
 endfunction  " }}}
 vnoremap <Leader>w :<C-u>call RemoveTrailingWhitespaces()<Cr>
 
-" prevent unconscious operation
+" Prevent unconscious operation
 inoremap <C-w> <Esc><C-w>
 
-" increment/decrement
+" Increment/Decrement
 nmap + <C-a>
 nmap - <C-x>
 
-" moving in INSERT mode
+" Moving in INSERT mode
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
@@ -2165,7 +2163,7 @@ cnoremap <C-e> <End>
 inoremap <C-f> <PageDown>
 inoremap <C-b> <PageUp>
 
-" insert a checkbox `[ ]` on markdown
+" Insert a checkbox `[ ]` on markdown
 augroup ConfigInsertCheckbox
   autocmd!
   autocmd FileType markdown inoremap <buffer> <C-]> [<Space>]<Space>
@@ -2178,7 +2176,7 @@ if has("gui_running")
   gui
   set guioptions=none
 
-  " save window's size and position
+  " Save window's size and position
   " http://vim-users.jp/2010/01/hack120/
   let s:save_window_file = expand("~/.vimwinpos")
   augroup SaveWindow  " {{{
@@ -2202,7 +2200,7 @@ endif
 " }}}
 
 " ----------------------------------------------
-" external sources  " {{{
+" External sources  " {{{
 if filereadable($HOME . "/.vimrc.local")
   source $HOME/.vimrc.local
 endif
