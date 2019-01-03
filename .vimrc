@@ -755,7 +755,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
 
       " http://nanasi.jp/articles/vim/hz_ja_vim.html
       let g:unite_source_menu_menus.shortcuts.candidates = [
-        \   ["[Plugins] Update Plugins",        "call UpdatePlugins()"],
         \   ["[Plugins] Resume Update Plugins", "UniteResume update_plugins"],
         \
         \   ["[String Utility] All to Hankaku",           "'<,'>Hankaku"],
@@ -785,19 +784,15 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[Set File Format] unix", "set ff=unix"],
         \   ["[Set File Format] mac",  "set ff=mac"],
         \
-        \   ["[Manipulate File] Make Editable",                           "set noreadonly"],
         \   ["[Manipulate File] Convert to HTML",                         "colorscheme h2u_white | TOhtml"],
         \   ["[Manipulate File] Replace/Sed Texts of All Buffers [Edit]", "bufdo set eventignore-=Syntax | %s/{foo}/{bar}/gce | update"],
         \   ["[Manipulate File] Transform to New Ruby Hash Syntax",       "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
         \   ["[Manipulate File] Transform to Old Ruby Hash Syntax",       "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
         \
         \   ["[Autoformat] Format Source Codes",         "Autoformat"],
-        \   ["[autoft] Enable autoft on current buffer", "let b:autoft_enable = 1"],
         \
         \   ["[Diff] Linediff",       "'<,'>Linediff"],
         \   ["[Diff] DirDiff [Edit]", "DirDiff {dir1} {dir2}"],
-        \
-        \   ["[Rails] Reset Buffer", "if RailsDetect() | call rails#buffer_setup() | endif"],
         \
         \   ["[Unite plugin] mru files",            "Unite neomru/file"],
         \   ["[Unite plugin] mark",                 "Unite mark"],
@@ -816,7 +811,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \ ]
 
       " Show formatted candidates, for example:
-      "   [Plugins] Update Plugins                   --  `call UpdatePlugins()`
       "   [Plugins] Resume Update Plugins            --  `UniteResume update_plugins`
       "
       "   [String Utility] All to Hankaku            --  `'<,'>Hankaku`
@@ -980,9 +974,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   endif  " }}}
 
   if s:RegisterPlugin("kg8m/vim-unite-giti", { "if": OnGitDir() })  " {{{
-    if mapcheck("<Leader>uv") == ""
-      nnoremap <Leader>uv :<C-u>Unite giti/status<Cr>
-    endif
+    nnoremap <Leader>uv :<C-u>Unite giti/status<Cr>
 
     let g:giti_log_default_line_count = 1000
 
@@ -1159,10 +1151,10 @@ endif  " }}}
 if s:RegisterPlugin("t9md/vim-choosewin")  " {{{
   nmap <C-w>f <Plug>(choosewin)
 
-  let g:choosewin_overlay_enable          = 0  " wanna set true but too heavy
+  let g:choosewin_overlay_enable          = 1
   let g:choosewin_overlay_clear_multibyte = 1
   let g:choosewin_blink_on_land           = 0
-  let g:choosewin_statusline_replace      = 1  " wanna set false and use overlay
+  let g:choosewin_statusline_replace      = 0
   let g:choosewin_tabline_replace         = 0
 
   call s:ConfigPlugin({
