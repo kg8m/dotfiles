@@ -151,8 +151,8 @@ esac
 autoload -U add-zsh-hook
 set_tmux_window_name() {
   if [ $TMUX ]; then
-    local _pwd=${PWD:t}
-    tmux rename-window "$_pwd"
+    local dirname=${PWD:t}
+    tmux rename-window "$dirname"
   fi
 }
 set_tmux_window_name
