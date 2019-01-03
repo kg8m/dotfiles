@@ -152,7 +152,9 @@ autoload -U add-zsh-hook
 set_tmux_window_name() {
   if [ $TMUX ]; then
     local dirname=${PWD:t}
-    tmux rename-window "$dirname"
+    local target=$( tmux display-message -p '#S:#I' )
+
+    tmux rename-window -t ${target} "$dirname"
   fi
 }
 set_tmux_window_name
