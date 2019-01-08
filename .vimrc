@@ -600,7 +600,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::
-  vnoremap <Leader>ug "gy:<C-u>Unite -no-quit -winheight=30% -buffer-name=grep_<C-r>" grep:./::<C-r>"
+  vnoremap <Leader>ug "gy:<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::<C-r>"
   nnoremap <Leader>uy :<C-u>Unite history/yank -default-action=append<Cr>
   nnoremap <F4> :<C-u>Unite buffer<Cr>
 
