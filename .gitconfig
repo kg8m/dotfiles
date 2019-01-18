@@ -78,7 +78,7 @@ brs      = !git branches
 br       = branch
 branches = branch -avv
 
-delete-local-fully-merged-branch = branch --delete
+delete-fully-merged-local-branch = branch --delete
 
 create-branch = "!f() {\
   original_branch=$1;\
