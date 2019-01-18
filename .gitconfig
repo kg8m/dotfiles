@@ -68,9 +68,13 @@ update = "!f() {\
   echo;\
   git execute-with-echo 'git fetch';\
   echo;\
-  git execute-with-echo 'git --no-pager log --reverse HEAD.. '${remote_branch};\
-  echo;\
-  git execute-with-echo 'git pull --stat --rebase || echo \"Error: rebase aborted!!\"';\
+  if [ $( git rev-parse HEAD ) = $( git rev-parse '@{u}' ) ]; then\
+    echo 'Up to date.';\
+  else\
+    git execute-with-echo 'git --no-pager log --reverse HEAD.. '${remote_branch};\
+    echo;\
+    git execute-with-echo 'git pull --stat --rebase || echo \"Error: rebase aborted!!\"';\
+  fi;\
 }; f"
 
 # branch
