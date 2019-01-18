@@ -79,8 +79,6 @@ br       = branch
 branches = branch -avv
 
 delete-local-fully-merged-branch = branch --delete
-delete-local-branch              = branch -D
-delete-remote-branch             = push --delete origin
 
 create-branch = "!f() {\
   original_branch=$1;\
