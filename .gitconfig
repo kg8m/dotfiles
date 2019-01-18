@@ -95,6 +95,28 @@ create-branch = "!f() {\
   git execute-with-confirm ${command};\
 }; f"
 
+delete-local-branches  = "!f() {\
+  branches=$( git branch | filter );\
+  command=\"for branch in ${branches}; do git branch -D \\${branch}; done\";\
+  echo 'Selected branches:';\
+  for branch in ${branches}; do\
+    echo \"  - ${branch}\";\
+  done;\
+  git execute-with-confirm ${command};\
+  git branches;\
+}; f"
+
+delete-remote-branches = "!f() {\
+  branches=$( git branch -r | filter | awk '{ print $1 }' | sed -e 's/^origin\\///' );\
+  command=\"for branch in ${branches}; do git push --delete origin \\${branch}; done\";\
+  echo 'Selected branches:';\
+  for branch in ${branches}; do\
+    echo \"  - ${branch}\";\
+  done;\
+  git execute-with-confirm ${command};\
+  git branches;\
+}; f"
+
 select-a-branch = "!f() {\
   prompt=${1:-'select a branch:'};\
   branches=($( git branch -a | sed -e 's/^[* ] //' | sed -e 's/remotes\\/origin\\///' | egrep -v '\\->' | sort | uniq | filter --prompt \"${prompt}\" ));\
