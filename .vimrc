@@ -640,6 +640,10 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           \     "path":    ["lib/**", "*"],
           \     "to_word": ["^\./lib/", ""],
           \   },
+          \   "public": {
+          \     "path":    ["public/**", "*"],
+          \     "to_word": ["^\./public/", ""],
+          \   },
           \   "script": {
           \     "path":    ["script/**", "*"],
           \     "to_word": ["^\./script/", ""],
