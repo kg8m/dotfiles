@@ -63,12 +63,12 @@ up = !git update
 f  = fetch
 
 update = "!f() {\
-  remote_branch=$( git rev-parse --abbrev-ref '@{u}' );\
+  remote_branch=$( git rev-parse --abbrev-ref '@{upstream}' );\
   git execute-with-echo 'git --no-pager show --no-patch';\
   echo;\
   git execute-with-echo 'git fetch';\
   echo;\
-  if [ $( git rev-parse HEAD ) = $( git rev-parse '@{u}' ) ]; then\
+  if [ $( git rev-parse HEAD ) = $( git rev-parse '@{upstream}' ) ]; then\
     echo 'Up to date.';\
   else\
     git execute-with-echo 'git --no-pager log --reverse HEAD.. '${remote_branch};\
@@ -80,7 +80,7 @@ update = "!f() {\
 # branch
 brs      = !git branches
 br       = branch
-branches = branch -avv
+branches = branch --all -vv
 
 delete-fully-merged-local-branch = branch --delete
 
@@ -91,7 +91,7 @@ create-branch = "!f() {\
   \
   command=\"git checkout -b ${branch_name} ${original_branch}\";\
   command=${command}\" && git commit --allow-empty --message='${commit_messages}'\";\
-  command=${command}\" && git push -u origin ${branch_name}\";\
+  command=${command}\" && git push --set-upstream origin ${branch_name}\";\
   command=${command}\"; git branches\";\
   \
   git execute-with-confirm ${command};\
@@ -109,7 +109,7 @@ delete-local-branches  = "!f() {\
 }; f"
 
 delete-remote-branches = "!f() {\
-  branches=$( git branch -r | filter | awk '{ print $1 }' | sed -e 's/^origin\\///' );\
+  branches=$( git branch --remote | filter | awk '{ print $1 }' | sed -e 's/^origin\\///' );\
   command=\"for branch in ${branches}; do git push --delete origin \\${branch}; done\";\
   echo 'Selected branches:';\
   for branch in ${branches}; do\
@@ -121,7 +121,7 @@ delete-remote-branches = "!f() {\
 
 select-a-branch = "!f() {\
   prompt=${1:-'select a branch:'};\
-  branches=($( git branch -a | sed -e 's/^[* ] //' | sed -e 's/remotes\\/origin\\///' | egrep -v '\\->' | sort | uniq | filter --prompt \"${prompt}\" ));\
+  branches=($( git branch --all | sed -e 's/^[* ] //' | sed -e 's/remotes\\/origin\\///' | egrep -v '\\->' | sort | uniq | filter --prompt \"${prompt}\" ));\
   \
   if [[ ! ${#branches[@]} -eq 1 ]]; then\
     echo 'select only 1 branch.' >&2;\
@@ -133,7 +133,7 @@ select-a-branch = "!f() {\
 
 select-a-remote-branch = "!f() {\
   prompt=${1:-'select a branch:'};\
-  branches=($( git branch -r | awk '{print $1}' | filter --prompt \"${prompt}\" ));\
+  branches=($( git branch --remote | awk '{print $1}' | filter --prompt \"${prompt}\" ));\
   \
   if [[ ! ${#branches[@]} -eq 1 ]]; then\
     echo 'select only 1 branch.' >&2;\
