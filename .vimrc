@@ -1102,7 +1102,7 @@ if s:RegisterPlugin("haya14busa/vim-asterisk")  " {{{
   map g# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 endif  " }}}
 
-if s:RegisterPlugin("Townk/vim-autoclose")  " {{{
+if s:RegisterPlugin("Townk/vim-autoclose", { "if": 0 })  " {{{
   " Annoying to type "<<" or to type "<"
   " let g:AutoClosePairs_add = "<>"
 
