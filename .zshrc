@@ -20,6 +20,8 @@ export GOPATH=$HOME/go
 export GREP_COLOR='01;35'
 # export GREP_OPTIONS='--color=always'
 
+export PROMPT_EOL_MARK=""
+
 HISTFILE=~/.zsh_histfile
 HISTSIZE=100000
 SAVEHIST=100000
