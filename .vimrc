@@ -414,7 +414,7 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
          \   &ft == "unite" ? unite#get_status_string() :
          \   &ft == "vimshell" ? vimshell#get_status_string() :
          \   "" != expand("%:t") ? (
-         \     winwidth(0) >= 100 ? expand("%:F") : expand("%:t")
+         \     winwidth(0) >= 100 ? fnamemodify(expand("%"), ":~:.") : expand("%:t")
          \   ) : "[No Name]"
          \ ) .
          \ ("" != Lightline_ModifiedSymbol() ? " " . Lightline_ModifiedSymbol() : "")
