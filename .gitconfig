@@ -218,6 +218,9 @@ open-changed-files-from = "!f() {\
   git execute-with-confirm ${command};\
 }; f"
 
+# stash
+stash-all-with-message = "!f() { command=\"git stash push --no-keep-index --include-untracked --message '$@'\"; git execute-with-echo ${command}; }; f"
+
 # show
 show-without-diff = show -s
 
