@@ -1854,6 +1854,7 @@ set showmatch
 set number
 set noshowmode
 set showcmd
+set redrawtime=5000
 
 set scrolloff=15
 let g:sh_noisk = 1
