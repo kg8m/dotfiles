@@ -50,6 +50,10 @@ chmod = "!f() {\
 # clone
 clone-with-submodules = clone --recursive
 
+shallow-clone = "!f() {\
+  git execute-with-echo \"git clone --single-branch --depth 1 $@\";\
+}; f"
+
 # checkout
 co = checkout
 
@@ -75,6 +79,10 @@ update = "!f() {\
     echo;\
     git execute-with-echo 'git pull --stat --rebase || echo \"Error: rebase aborted!!\"';\
   fi;\
+}; f"
+
+shallow-update = "!f() {\
+  git execute-with-echo 'git pull --rebase --depth 1';\
 }; f"
 
 # branch
