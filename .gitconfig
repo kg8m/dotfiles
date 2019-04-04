@@ -266,6 +266,7 @@ algorithm = patience
 context = 10
 compactionHeuristic = true
 colorMoved = dimmed_zebra
+colorMovedWS = ignore-all-space
 
 [fetch]
 prune = true
