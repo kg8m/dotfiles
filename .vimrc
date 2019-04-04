@@ -213,7 +213,7 @@ call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 
 call s:RegisterPlugin("kg8m/.vim")
 
-if s:RegisterPlugin("w0rp/ale", { "if": OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:airline#extensions#ale#enabled = 0
   let g:ale_completion_enabled = 1
   let g:ale_echo_msg_format = "[%linter%][%severity%] %code: %%s"
