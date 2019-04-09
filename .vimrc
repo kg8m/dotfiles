@@ -11,6 +11,10 @@ function! UpdatePlugins() abort  " {{{
   let @/ = "Updated"
 endfunction  " }}}
 
+function! IsPluginSourced(plugin_name) abort  " {{{
+  return dein#is_sourced(a:plugin_name)
+endfunction  " }}}
+
 function! s:SetupPluginStart() abort  " {{{
   return dein#begin(s:plugins_path)
 endfunction  " }}}
