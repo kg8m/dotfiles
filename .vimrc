@@ -7,7 +7,17 @@ let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/de
 " Plugin management functions  " {{{
 function! UpdatePlugins() abort  " {{{
   call dein#update()
-  Unite dein/log -buffer-name=update_plugins
+
+  let initiali_input = '!Same\\ revision'
+    \   . '\ !Current\\ branch\\ master\\ is\\ up\\ to\\ date.'
+    \   . '\ !^$'
+    \   . '\ !(*/*)\\ [+'
+    \   . '\ !Created\\ autostash'
+    \   . '\ !Applied\\ autostash'
+    \   . '\ !HEAD\\ is\\ now'
+
+  execute "Unite dein/log -buffer-name=update_plugins -input=" . initiali_input
+
   let @/ = "Updated"
 endfunction  " }}}
 
