@@ -2,7 +2,7 @@ Pry.config.prompt = proc { ">> " }
 
 # Log to STDOUT if in Rails
 case
-when defined?(Rails)
+when defined?(Rails) && Rails.respond_to?(:logger=)
   Rails.logger              = Logger.new($stdout)
   ActiveRecord::Base.logger = Rails.logger
   ActiveSupport::Deprecation.behavior = :stderr
