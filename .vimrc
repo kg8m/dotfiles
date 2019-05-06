@@ -139,6 +139,18 @@ function! IsGitHunkEdit() abort  " {{{
   return s:is_git_hunk_edit
 endfunction  " }}}
 
+function! IsLspAvailable() abort  " {{{
+  if exists("s:is_lsp_available")
+    return s:is_lsp_available
+  endif
+
+  let s:is_lsp_available =
+    \   executable("solargraph") &&
+    \   executable("typescript-language-server") &&
+    \   executable("css-languageserver")
+  return s:is_lsp_available
+endfunction  " }}}
+
 function! RubyGemPaths() abort  " {{{
   if exists("s:ruby_gem_paths")
     return s:ruby_gem_paths
@@ -226,6 +238,62 @@ call s:RegisterPlugin(s:plugin_manager_path)
 call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 
 call s:RegisterPlugin("kg8m/.vim")
+
+" Completion, LSP  " {{{
+call s:RegisterPlugin("prabirshrestha/async.vim", { "if": IsLspAvailable() })
+
+if s:RegisterPlugin("prabirshrestha/asyncomplete.vim", { "if": IsLspAvailable() })  " {{{
+  let g:asyncomplete_auto_popup = 1
+  let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
+  let g:asyncomplete_remove_dupulicate = 1
+endif  " }}}
+
+if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim", { "if": IsLspAvailable() })  " {{{
+  augroup MyConfigAsyncompleteTags  " {{{
+    autocmd!
+    autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
+          \   "name": "tags",
+          \   "whitelist": ["*"],
+          \   "completor": function("asyncomplete#sources#tags#completor"),
+          \ }))
+  augroup END  " }}}
+endif  " }}}
+
+call s:RegisterPlugin("prabirshrestha/asyncomplete-lsp.vim", { "if": IsLspAvailable() })
+
+if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
+  let g:lsp_diagnostics_enabled = 0
+  let g:lsp_log_verbose = 1
+  let g:lsp_log_file = expand("~/tmp/vim-lsp.log")
+
+  augroup MyConfigLsp  " {{{
+    autocmd!
+
+    autocmd FileType ruby setlocal omnifunc=lsp#complete
+    autocmd User lsp_setup call lsp#register_server({
+          \   "name": "solargraph",
+          \   "cmd": { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
+          \   "whitelist": ["ruby"],
+          \ })
+
+    autocmd FileType javascript setlocal omnifunc=lsp#complete
+    autocmd User lsp_setup call lsp#register_server({
+          \   "name": "typescript-language-server",
+          \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
+          \   "whitelist": ["javascript"],
+          \ })
+
+    autocmd FileType css,less,sass setlocal omnifunc=lsp#complete
+    autocmd User lsp_setup call lsp#register_server({
+          \ "name": "css-languageserver",
+          \ "cmd": { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
+          \ "whitelist": ["css", "less", "sass"],
+          \ })
+  augroup END  " }}}
+endif  " }}}
+
+call s:RegisterPlugin("thomasfaingnaert/vim-lsp-neosnippet", { "if": IsLspAvailable() })
+" }}}
 
 if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:airline#extensions#ale#enabled = 0
@@ -473,7 +541,7 @@ endif  " }}}
 
 call s:RegisterPlugin("kg8m/moin.vim", { "if": !IsGitCommit() && !IsGitHunkEdit() })
 
-if s:RegisterPlugin("Shougo/neocomplete.vim")  " {{{
+if s:RegisterPlugin("Shougo/neocomplete.vim", { "if": !IsLspAvailable() })  " {{{
   function! s:ConfigPluginOnSource_neocomplete() abort  " {{{
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_smart_case = 1
