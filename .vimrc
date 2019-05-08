@@ -721,6 +721,15 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   " See also ctags settings
   nnoremap g[ :<C-u>Unite jump<Cr>
 
+  augroup DisableUniteDefaultMappings  " {{{
+    autocmd!
+    autocmd FileType unite call s:DisableUniteDefaultMappings()
+  augroup END  " }}}
+
+  function! s:DisableUniteDefaultMappings() abort  " {{{
+    nunmap <buffer> <S-n>
+  endfunction  " }}}
+
   if OnRailsDir()
     " See s:DefineOreOreUniteCommandsForRails()
     nnoremap <Leader>ur :<C-u>Unite -start-insert rails/
