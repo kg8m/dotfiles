@@ -245,7 +245,6 @@ call s:RegisterPlugin("prabirshrestha/async.vim", { "if": IsLspAvailable() })
 if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = 1
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
-  let g:asyncomplete_remove_dupulicate = 1
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
