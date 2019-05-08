@@ -242,13 +242,57 @@ call s:RegisterPlugin("kg8m/.vim")
 " Completion, LSP  " {{{
 call s:RegisterPlugin("prabirshrestha/async.vim", { "if": IsLspAvailable() })
 
-if s:RegisterPlugin("prabirshrestha/asyncomplete.vim", { "if": IsLspAvailable() })  " {{{
+if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = 1
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
   let g:asyncomplete_remove_dupulicate = 1
 endif  " }}}
 
-if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim", { "if": IsLspAvailable() })  " {{{
+if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
+  augroup MyConfigAsyncompleteBuffer  " {{{
+    autocmd!
+    autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+          \   "name": "02_buffer",
+          \   "whitelist": ["*"],
+          \   "completor": function("asyncomplete#sources#buffer#completor"),
+          \ }))
+  augroup END  " }}}
+endif  " }}}
+
+if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
+  augroup MyConfigAsyncompleteFile  " {{{
+    autocmd!
+    autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+          \   "name": "file",
+          \   "whitelist": ["*"],
+          \   "completor": function("asyncomplete#sources#file#completor")
+          \ }))
+  augroup END  " }}}
+endif  " }}}
+
+if s:RegisterPlugin("prabirshrestha/asyncomplete-necosyntax.vim")  " {{{
+  augroup MyConfigAsyncompleteNecosyntax  " {{{
+    autocmd!
+    autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
+          \   "name": "03_necosyntax",
+          \   "whitelist": ["*"],
+          \   "completor": function("asyncomplete#sources#necosyntax#completor"),
+          \ }))
+  augroup END  " }}}
+endif  " }}}
+
+if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
+  augroup MyConfigAsyncompleteNeosnippet  " {{{
+    autocmd!
+    autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
+          \   "name": "01_neosnippet",
+          \   "whitelist": ["*"],
+          \   "completor": function("asyncomplete#sources#neosnippet#completor"),
+          \ }))
+  augroup END  " }}}
+endif  " }}}
+
+if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
   augroup MyConfigAsyncompleteTags  " {{{
     autocmd!
     autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
@@ -540,66 +584,14 @@ if s:RegisterPlugin("AndrewRadev/linediff.vim")  " {{{
 endif  " }}}
 
 call s:RegisterPlugin("kg8m/moin.vim", { "if": !IsGitCommit() && !IsGitHunkEdit() })
-
-if s:RegisterPlugin("Shougo/neocomplete.vim", { "if": !IsLspAvailable() })  " {{{
-  function! s:ConfigPluginOnSource_neocomplete() abort  " {{{
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_smart_case = 1
-    let g:neocomplete#enable_fuzzy_completion = 1
-    let g:neocomplete#sources#syntax#min_keyword_length = 2
-    let g:neocomplete#auto_completion_start_length = 1
-    let g:neocomplete#manual_completion_start_length = 0
-    let g:neocomplete#min_keyword_length = 3
-    let g:neocomplete#enable_cursor_hold_i = 0
-    let g:neocomplete#cursor_hold_i_time = 300
-    let g:neocomplete#enable_insert_char_pre = 0
-    let g:neocomplete#enable_prefetch = 0
-    let g:neocomplete#force_overwrite_completefunc = 1
-    let g:neocomplete#sources#tags#cache_limit_size = 1000
-
-    if !exists("g:neocomplete#keyword_patterns")
-      let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns["default"] = '\h\w*'
-    let g:neocomplete#keyword_patterns["ruby"] = '\h\w*'
-
-    if !exists("g:neocomplete#sources#omni#input_patterns")
-      let g:neocomplete#sources#omni#input_patterns = {}
-    endif
-    let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-
-    let g:sources#buffer#cache_limit_size = 500000
-
-    if !exists("g:neocomplete#same_filetypes")
-      let g:neocomplete#same_filetypes = {}
-    endif
-    let g:neocomplete#same_filetypes._ = "_"
-
-    augroup SetOmunifuncs  " {{{
-      autocmd!
-      autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-      autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-      " jscomplete
-      autocmd FileType javascript setlocal omnifunc=jscomplete#CompleteJS
-    augroup END  " }}}
-  endfunction  " }}}
-
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_i":   1,
-     \   "on_cmd": "NeoCompleteBufferMakeCache",
-     \   "hook_source": function("s:ConfigPluginOnSource_neocomplete"),
-     \ })
-endif  " }}}
+call s:RegisterPlugin("Shougo/neco-syntax")
 
 if s:RegisterPlugin("Shougo/neosnippet")  " {{{
   function! s:ConfigPluginOnSource_neosnippet() abort  " {{{
     imap <expr><Tab>   pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     smap <expr><Tab>   neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
     imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    imap <expr><Cr>    neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-y>" : "\<Cr>"
+    imap <expr><Cr>    neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? asyncomplete#close_popup() : "\<Cr>"
 
     let g:neosnippet#snippets_directory = [
       \   s:PluginInfo(".vim").path . "/snippets",
