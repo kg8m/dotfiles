@@ -245,6 +245,19 @@ call s:RegisterPlugin("prabirshrestha/async.vim", { "if": IsLspAvailable() })
 if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = 1
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
+
+  " inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
+  function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
+    let sorted_items = []
+    let pattern = "^" . escape(a:ctx.base, '~"\.^$[]*')
+
+    for [source_name, matches] in sort(items(a:matches), { a, b -> a[0] > b[0] ? 1 : -1 })
+      call extend(sorted_items, filter(matches.items, { index, item -> item.word =~? pattern }))
+    endfor
+
+    call asyncomplete#preprocess_complete(a:ctx, sorted_items)
+  endfunction  " }}}
+  let g:asyncomplete_preprocessor = [function("s:AsyncompleteSortedFilter")]
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
