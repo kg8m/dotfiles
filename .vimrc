@@ -406,9 +406,9 @@ endif  " }}}
 call s:RegisterPlugin("Shougo/context_filetype.vim", { "if": !IsGitCommit() && !IsGitHunkEdit() })
 
 if s:RegisterPlugin("spolu/dwm.vim")  " {{{
-  nmap <C-w>n       :<C-u>call DWM_New()<Cr>
-  nmap <C-w>c       :<C-u>call DWM_Close()<Cr>
-  nmap <C-w><Space> :<C-u>call DWM_AutoEnter()<Cr>
+  nnoremap <C-w>n       :<C-u>call DWM_New()<Cr>
+  nnoremap <C-w>c       :<C-u>call DWM_Close()<Cr>
+  nnoremap <C-w><Space> :<C-u>call DWM_AutoEnter()<Cr>
 
   augroup MyDWMMappings  " {{{
     autocmd!
