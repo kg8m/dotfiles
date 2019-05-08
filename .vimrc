@@ -2145,9 +2145,10 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
         let teardown_command = "rm -f " . lock_file
 
         let ctags_options = "--tag-relative=yes --recurse=yes --sort=yes -f " . temp_file
+        let ctags_options .= " --exclude=test --exclude=spec"
 
         if a:directory != "."
-          let ctags_options .= " --languages=ruby --exclude=test --exclude=spec"
+          let ctags_options .= " --languages=ruby"
         endif
 
         let ctags_command = "ctags " . ctags_options . " " . a:directory
