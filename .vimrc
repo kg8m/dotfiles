@@ -541,10 +541,6 @@ if s:RegisterPlugin("othree/javascript-libraries-syntax.vim", { "if": !IsGitComm
     \ ], ",")
 endif  " }}}
 
-if s:RegisterPlugin("https://bitbucket.org/teramako/jscomplete-vim.git", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  let g:jscomplete_use = ["dom", "moz", "es6th"]
-endif  " }}}
-
 if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   " http://d.hatena.ne.jp/itchyny/20130828/1377653592
   set laststatus=2
