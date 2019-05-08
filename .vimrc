@@ -246,6 +246,8 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = 1
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
+  set shortmess+=c
+
   " inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
   function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
     let sorted_items = []
