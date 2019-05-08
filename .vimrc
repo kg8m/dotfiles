@@ -145,8 +145,8 @@ function! IsLspAvailable() abort  " {{{
   endif
 
   let s:is_lsp_available =
-    \   executable("solargraph") &&
-    \   executable("typescript-language-server") &&
+    \   executable("solargraph") ||
+    \   executable("typescript-language-server") ||
     \   executable("css-languageserver")
   return s:is_lsp_available
 endfunction  " }}}
@@ -327,26 +327,32 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
   augroup MyConfigLsp  " {{{
     autocmd!
 
-    autocmd FileType ruby setlocal omnifunc=lsp#complete
-    autocmd User lsp_setup call lsp#register_server({
-          \   "name": "solargraph",
-          \   "cmd": { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
-          \   "whitelist": ["ruby"],
-          \ })
+    if executable("solargraph")
+      autocmd FileType ruby setlocal omnifunc=lsp#complete
+      autocmd User lsp_setup call lsp#register_server({
+            \   "name": "solargraph",
+            \   "cmd": { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
+            \   "whitelist": ["ruby"],
+            \ })
+    endif
 
-    autocmd FileType javascript setlocal omnifunc=lsp#complete
-    autocmd User lsp_setup call lsp#register_server({
-          \   "name": "typescript-language-server",
-          \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
-          \   "whitelist": ["javascript"],
-          \ })
+    if executable("typescript-language-server")
+      autocmd FileType javascript setlocal omnifunc=lsp#complete
+      autocmd User lsp_setup call lsp#register_server({
+            \   "name": "typescript-language-server",
+            \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
+            \   "whitelist": ["javascript"],
+            \ })
+    endif
 
-    autocmd FileType css,less,sass setlocal omnifunc=lsp#complete
-    autocmd User lsp_setup call lsp#register_server({
-          \ "name": "css-languageserver",
-          \ "cmd": { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
-          \ "whitelist": ["css", "less", "sass"],
-          \ })
+    if executable("css-languageserver")
+      autocmd FileType css,less,sass setlocal omnifunc=lsp#complete
+      autocmd User lsp_setup call lsp#register_server({
+            \ "name": "css-languageserver",
+            \ "cmd": { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
+            \ "whitelist": ["css", "less", "sass"],
+            \ })
+    endif
   augroup END  " }}}
 endif  " }}}
 
