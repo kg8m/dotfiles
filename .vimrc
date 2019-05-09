@@ -249,6 +249,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   set shortmess+=c
 
   " inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
+  " LSP's sources are named "asyncomplete_lsp_{original source name}"
   function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
     let sorted_items = []
     let pattern = "^" . escape(a:ctx.base, '~"\.^$[]*')
@@ -266,7 +267,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
   augroup MyConfigAsyncompleteBuffer  " {{{
     autocmd!
     autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-          \   "name": "02_buffer",
+          \   "name": "asyncomplete_source_02_buffer",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#buffer#completor"),
           \ }))
@@ -277,7 +278,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
   augroup MyConfigAsyncompleteFile  " {{{
     autocmd!
     autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-          \   "name": "file",
+          \   "name": "asyncomplete_source_file",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#file#completor")
           \ }))
@@ -288,7 +289,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-necosyntax.vim")  " {{{
   augroup MyConfigAsyncompleteNecosyntax  " {{{
     autocmd!
     autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
-          \   "name": "03_necosyntax",
+          \   "name": "asyncomplete_source_03_necosyntax",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#necosyntax#completor"),
           \ }))
@@ -299,7 +300,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
   augroup MyConfigAsyncompleteNeosnippet  " {{{
     autocmd!
     autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options({
-          \   "name": "01_neosnippet",
+          \   "name": "asyncomplete_source_01_neosnippet",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#neosnippet#completor"),
           \ }))
@@ -310,7 +311,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
   augroup MyConfigAsyncompleteTags  " {{{
     autocmd!
     autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options({
-          \   "name": "tags",
+          \   "name": "asyncomplete_source_tags",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#tags#completor"),
           \ }))
