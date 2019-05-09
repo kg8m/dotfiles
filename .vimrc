@@ -417,15 +417,6 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
   nnoremap <C-w>c       :<C-u>call DWM_Close()<Cr>
   nnoremap <C-w><Space> :<C-u>call DWM_AutoEnter()<Cr>
 
-  augroup MyDWMMappings  " {{{
-    autocmd!
-    autocmd FileType unite call s:DefineMyUniteDWMMappings()
-  augroup END  " }}}
-
-  function! s:DefineMyUniteDWMMappings() abort  " {{{
-    noremap <buffer><expr> <C-o> unite#do_action("dwm_open")
-  endfunction  " }}}
-
   let g:dwm_map_keys = 0
   let g:dwm_augroup_cleared = 0
 
@@ -1031,6 +1022,15 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   endif  " }}}
 
   if s:RegisterPlugin("kg8m/unite-dwm")  " {{{
+    augroup MyDWMMappings  " {{{
+      autocmd!
+      autocmd FileType unite call s:DefineMyUniteDWMMappings()
+    augroup END  " }}}
+
+    function! s:DefineMyUniteDWMMappings() abort  " {{{
+      noremap <buffer><expr> <C-o> unite#do_action("dwm_open")
+    endfunction  " }}}
+
     call s:ConfigPlugin({
        \   "lazy":  1,
        \   "on_ft": ["unite", "vimfiler"],
