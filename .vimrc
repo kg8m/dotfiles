@@ -1028,7 +1028,8 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     augroup END  " }}}
 
     function! s:DefineMyUniteDWMMappings() abort  " {{{
-      noremap <buffer><expr> <C-o> unite#do_action("dwm_open")
+      nnoremap <buffer><expr> <C-o> unite#do_action("dwm_open")
+      inoremap <buffer><expr> <C-o> unite#do_action("dwm_open")
     endfunction  " }}}
 
     call s:ConfigPlugin({
