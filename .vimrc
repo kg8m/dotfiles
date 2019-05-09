@@ -364,8 +364,6 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
     endif
   endfunction  " }}}
 endif  " }}}
-
-call s:RegisterPlugin("thomasfaingnaert/vim-lsp-neosnippet", { "if": IsLspAvailable() })
 " }}}
 
 if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
