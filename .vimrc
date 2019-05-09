@@ -329,7 +329,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
     autocmd!
 
     if executable("solargraph")
-      autocmd FileType ruby setlocal omnifunc=lsp#complete
+      autocmd InsertEnter * call s:SetLSPOmnifunc("ruby")
       autocmd User lsp_setup call lsp#register_server({
             \   "name": "solargraph",
             \   "cmd": { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
@@ -338,7 +338,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
     endif
 
     if executable("typescript-language-server")
-      autocmd FileType javascript setlocal omnifunc=lsp#complete
+      autocmd InsertEnter * call s:SetLSPOmnifunc("javascript")
       autocmd User lsp_setup call lsp#register_server({
             \   "name": "typescript-language-server",
             \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
@@ -347,7 +347,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
     endif
 
     if executable("css-languageserver")
-      autocmd FileType css,less,sass setlocal omnifunc=lsp#complete
+      autocmd InsertEnter * call s:SetLSPOmnifunc("css|less|sass")
       autocmd User lsp_setup call lsp#register_server({
             \ "name": "css-languageserver",
             \ "cmd": { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
@@ -355,6 +355,13 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
             \ })
     endif
   augroup END  " }}}
+
+  " Overwrite other plugins' settings
+  function! s:SetLSPOmnifunc(filetype_pattern) abort  " {{{
+    if &filetype =~# a:filetype_pattern
+      setlocal omnifunc=lsp#complete
+    endif
+  endfunction  " }}}
 endif  " }}}
 
 call s:RegisterPlugin("thomasfaingnaert/vim-lsp-neosnippet", { "if": IsLspAvailable() })
