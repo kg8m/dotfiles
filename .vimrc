@@ -1318,10 +1318,9 @@ if s:RegisterPlugin("kg8m/vim-dirdiff", { "if": !IsGitCommit() && !IsGitHunkEdit
 endif  " }}}
 
 if s:RegisterPlugin("easymotion/vim-easymotion")  " {{{
-  nmap <Leader>f <Plug>(easymotion-s2)
-  vmap <Leader>f <Plug>(easymotion-s2)
-  omap <Leader>f <Plug>(easymotion-s2)
-  nmap <Leader>w <Plug>(easymotion-overwin-f2)
+  nmap <Leader>f <Plug>(easymotion-overwin-f2)
+  vmap <Leader>f <Plug>(easymotion-overwin-f2)
+  omap <Leader>f <Plug>(easymotion-overwin-f2)
 
   " Replace default `f`
   nmap f <Plug>(easymotion-fl)
