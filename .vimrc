@@ -246,6 +246,11 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = 1
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
+  augroup MyToggleAsyncomplete  " {{{
+    autocmd!
+    autocmd FileType unite let b:asyncomplete_enable = 0
+  augroup END  " }}}
+
   set shortmess+=c
 
   " inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
