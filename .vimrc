@@ -1317,7 +1317,7 @@ if s:RegisterPlugin("kg8m/vim-dirdiff", { "if": !IsGitCommit() && !IsGitHunkEdit
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("Lokaltog/vim-easymotion")  " {{{
+if s:RegisterPlugin("easymotion/vim-easymotion")  " {{{
   nmap <Leader>f <Plug>(easymotion-s2)
   vmap <Leader>f <Plug>(easymotion-s2)
   omap <Leader>f <Plug>(easymotion-s2)
