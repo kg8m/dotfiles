@@ -609,8 +609,8 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
          \   &ft == "vimfiler" ? vimfiler#get_status_string() :
          \   &ft == "unite" ? unite#get_status_string() :
          \   &ft == "vimshell" ? vimshell#get_status_string() :
-         \   "" != expand("%:t") ? (
-         \     winwidth(0) >= 100 ? fnamemodify(expand("%"), ":~:.") : expand("%:t")
+         \   "" != CurrentFilename() ? (
+         \     winwidth(0) >= 100 ? CurrentRelativePath() : CurrentFilename()
          \   ) : "[No Name]"
          \ ) .
          \ ("" != Lightline_ModifiedSymbol() ? " " . Lightline_ModifiedSymbol() : "")
