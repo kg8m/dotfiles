@@ -182,6 +182,21 @@ function! ConfirmCommand(command) abort  " {{{
 
   return 1
 endfunction  " }}}
+
+function! RemoteCopy(text) abort  " {{{
+  let text = a:text
+  let text = substitute(text, "^\\n\\+", "", "")
+  let text = substitute(text, "\\n\\+$", "", "")
+
+  if text =~# "\n"
+    let filter = ""
+  else
+    let filter = " | tr -d '\\n'"
+  endif
+
+  call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main 'LC_CTYPE=UTF-8 pbcopy'")
+  echomsg "Copied: " . text
+endfunction  " }}}
 " }}}
 
 let g:mapleader = ","
@@ -2246,22 +2261,7 @@ nnoremap <Leader>h :<C-u>split<Cr>
 
 " Copy by clipboard
 if OnTmux()
-  function! s:RegisterToRemoteCopy() abort  " {{{
-    let text = @"
-    let text = substitute(text, "^\\n\\+", "", "")
-    let text = substitute(text, "\\n\\+$", "", "")
-
-    if text =~# "\n"
-      let filter = ""
-    else
-      let filter = " | tr -d '\\n'"
-    endif
-
-    call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main 'LC_CTYPE=UTF-8 pbcopy'")
-    echomsg "Copy the Selection by pbcopy."
-  endfunction  " }}}
-
-  vnoremap <Leader>y "yy:<C-u>call <SID>RegisterToRemoteCopy()<Cr>
+  vnoremap <Leader>y "yy:<C-u>call RemoteCopy(@")<Cr>
 else
   vnoremap <Leader>y "*y
 endif
