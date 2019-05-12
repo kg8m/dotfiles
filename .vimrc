@@ -197,6 +197,18 @@ function! RemoteCopy(text) abort  " {{{
   call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main 'LC_CTYPE=UTF-8 pbcopy'")
   echomsg "Copied: " . text
 endfunction  " }}}
+
+function! CurrentFilename() abort  " {{{
+  return expand("%:t")
+endfunction  " }}}
+
+function! CurrentRelativePath() abort  " {{{
+  return fnamemodify(expand("%"), ":~:.")
+endfunction  " }}}
+
+function! CurrentAbsolutePath() abort  " {{{
+  return fnamemodify(expand("%"), ":~")
+endfunction  " }}}
 " }}}
 
 let g:mapleader = ","
@@ -933,6 +945,10 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[Manipulate File] Replace/Sed Texts of All Buffers [Edit]", "bufdo set eventignore-=Syntax | %s/{foo}/{bar}/gce | update"],
         \   ["[Manipulate File] Transform to New Ruby Hash Syntax",       "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
         \   ["[Manipulate File] Transform to Old Ruby Hash Syntax",       "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
+        \
+        \   ["[Copy] filename",          "call RemoteCopy(CurrentFilename())"],
+        \   ["[Copy] relative filepath", "call RemoteCopy(CurrentRelativePath())"],
+        \   ["[Copy] absolute filepath", "call RemoteCopy(CurrentAbsolutePath())"],
         \
         \   ["[Autoformat] Format Source Codes",         "Autoformat"],
         \
