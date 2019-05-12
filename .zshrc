@@ -149,18 +149,7 @@ kterm*|xterm*)
   ;;
 esac
 
-# http://mint.hateblo.jp/entry/2012/12/17/175553
 autoload -U add-zsh-hook
-set_tmux_window_name() {
-  if [ $TMUX ]; then
-    local dirname=${PWD:t}
-    local target=$( tmux display-message -p '#S:#I' )
-
-    tmux rename-window -t ${target} "$dirname"
-  fi
-}
-set_tmux_window_name
-add-zsh-hook precmd set_tmux_window_name
 
 # http://memo.officebrook.net/20090316.html
 bindkey -a 'q' push-line
