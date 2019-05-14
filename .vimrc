@@ -2289,12 +2289,7 @@ nnoremap <Leader>r :<C-u>source $HOME/.vimrc<Cr>
 nnoremap <Leader>v :<C-u>vsplit<Cr>
 nnoremap <Leader>h :<C-u>split<Cr>
 
-" Copy by clipboard
-if OnTmux()
-  vnoremap <Leader>y "yy:<C-u>call RemoteCopy(@")<Cr>
-else
-  vnoremap <Leader>y "*y
-endif
+vnoremap <Leader>y "yy:<C-u>call RemoteCopy(@")<Cr>
 
 " Remove selected trailing whitespaces
 function! RemoveTrailingWhitespaces() abort  " {{{
