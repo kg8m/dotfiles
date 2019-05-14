@@ -195,7 +195,13 @@ function! RemoteCopy(text) abort  " {{{
   endif
 
   call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main 'LC_CTYPE=UTF-8 pbcopy'")
-  echomsg "Copied: " . text
+
+  if &columns > 50
+    let truncated = trim(s:StringUtility().truncate(text, &columns - 30))
+    echomsg "Copied: " . truncated . (trim(text) == truncated ? "" : "...")
+  else
+    echomsg "Copied"
+  endif
 endfunction  " }}}
 
 function! CurrentFilename() abort  " {{{
@@ -1950,6 +1956,14 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
     endif
 
     return s:__Promise__
+  endfunction  " }}}
+
+  function! s:StringUtility() abort  " {{{
+    if !exists("s:__StringUtility__")
+      let s:__StringUtility__ = vital#vital#import("Data.String")
+    endif
+
+    return s:__StringUtility__
   endfunction  " }}}
 endif  " }}}
 
