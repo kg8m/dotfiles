@@ -588,7 +588,6 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \     ["lineinfo_with_percent"],
     \   ],
     \   "right": [
-    \     ["anzu"],
     \   ],
     \ }
   let g:lightline = {
@@ -600,7 +599,6 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \   },
     \   "component_function": {
     \     "filename": "Lightline_Filepath",
-    \     "anzu":     "Lightline_AnzuSearchStatus",
     \   },
     \   "colorscheme": "kg8m",
     \ }
@@ -624,14 +622,6 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
 
   function! Lightline_ModifiedSymbol() abort  " {{{
     return &ft =~? 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
-  endfunction  " }}}
-
-  function! Lightline_AnzuSearchStatus() abort  " {{{
-    if winwidth(0) >= 100
-      return anzu#search_status()
-    else
-      return substitute(anzu#search_status(), '\v^.+\(([0-9]+/[0-9]+)\)$', '\1', "")
-    endif
   endfunction  " }}}
 endif  " }}}
 
