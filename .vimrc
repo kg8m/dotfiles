@@ -4,6 +4,8 @@ let s:vim_root_path       = expand($HOME . "/.vim")
 let s:plugins_path        = expand(s:vim_root_path . "/plugins")
 let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/dein.vim")
 
+let s:is_native_keyword_match_count_supported = v:version >= 801 && has("patch1270")
+
 " Plugin management functions  " {{{
 function! UpdatePlugins() abort  " {{{
   call dein#update()
@@ -853,6 +855,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         if !exists("g:unite_source_menu_menus")
           let g:unite_source_menu_menus = {}
         endif
+
         let g:unite_source_menu_menus.rails = {
           \   "description": "Open files for Rails"
           \ }
@@ -1227,7 +1230,7 @@ if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
   unlet s:alignta_comment_leadings
 endif  " }}}
 
-if s:RegisterPlugin("osyo-manga/vim-anzu")  " {{{
+if s:RegisterPlugin("osyo-manga/vim-anzu", { "if": !s:is_native_keyword_match_count_supported })  " {{{
   nmap n <Plug>(anzu-n-with-echo)
   nmap N <Plug>(anzu-N-with-echo)
   vmap n n<Plug>(anzu-update-search-status)
@@ -1257,10 +1260,17 @@ if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("haya14busa/vim-asterisk")  " {{{
-  map *  <Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
-  map #  <Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
-  map g* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
-  map g# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
+  if s:is_native_keyword_match_count_supported
+    map *  <Plug>(asterisk-z*)
+    map #  <Plug>(asterisk-z#)
+    map g* <Plug>(asterisk-gz*)
+    map g# <Plug>(asterisk-gz#)
+  else
+    map *  <Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
+    map #  <Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
+    map g* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
+    map g# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
+  endif
 endif  " }}}
 
 if s:RegisterPlugin("Townk/vim-autoclose", { "if": 0 })  " {{{
@@ -2117,6 +2127,11 @@ set hlsearch
 set ignorecase
 set smartcase
 set incsearch
+set shortmess-=S
+
+if s:is_native_keyword_match_count_supported
+  nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
+endif
 
 nnoremap / /\v
 " }}}
