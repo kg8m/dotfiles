@@ -1356,15 +1356,15 @@ endif  " }}}
 
 if s:RegisterPlugin("easymotion/vim-easymotion")  " {{{
   nmap <Leader>f <Plug>(easymotion-overwin-f2)
-  vmap <Leader>f <Plug>(easymotion-overwin-f2)
-  omap <Leader>f <Plug>(easymotion-overwin-f2)
+  xmap <Leader>f <Plug>(easymotion-bd-f2)
+  omap <Leader>f <Plug>(easymotion-bd-f2)
 
   " Replace default `f`
   nmap f <Plug>(easymotion-fl)
-  vmap f <Plug>(easymotion-fl)
+  xmap f <Plug>(easymotion-fl)
   omap f <Plug>(easymotion-fl)
   nmap F <Plug>(easymotion-Fl)
-  vmap F <Plug>(easymotion-Fl)
+  xmap F <Plug>(easymotion-Fl)
   omap F <Plug>(easymotion-Fl)
 
   " http://haya14busa.com/vim-lazymotion-on-speed/
