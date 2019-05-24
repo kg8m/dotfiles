@@ -189,6 +189,7 @@ function! RemoteCopy(text) abort  " {{{
   let text = a:text
   let text = substitute(text, "^\\n\\+", "", "")
   let text = substitute(text, "\\n\\+$", "", "")
+  let text = substitute(text, '\', '\\\\', "g")
 
   if text =~# "\n"
     let filter = ""
