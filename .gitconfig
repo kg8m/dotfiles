@@ -157,7 +157,7 @@ ci = commit
 ca = commit --all
 
 # reset/revert
-edit-commits      = "!f() { git rebase --interactive HEAD~$1; }; f"
+edit-commits      = "!f() { git rebase --interactive $@; }; f"
 reset-commits     = !git edit-commits
 reset-last-commit = reset --soft HEAD~
 undo-add          = reset --soft
