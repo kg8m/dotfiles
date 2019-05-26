@@ -416,7 +416,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
       autocmd User lsp_setup call lsp#register_server({
             \   "name": "typescript-language-server",
             \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
-            \   "whitelist": ["javascript"],
+            \   "whitelist": ["javascript", "javascript.jsx", "typescript", "typescript.tsx"],
             \ })
     endif
 
