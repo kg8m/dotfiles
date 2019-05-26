@@ -399,6 +399,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
   augroup MyConfigLsp  " {{{
     autocmd!
 
+    " gem install solargraph
     if executable("solargraph")
       autocmd InsertEnter * call s:SetLSPOmnifunc("ruby")
       autocmd User lsp_setup call lsp#register_server({
@@ -409,6 +410,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
             \ })
     endif
 
+    " yarn add typescript-language-server typescript
     if executable("typescript-language-server")
       autocmd InsertEnter * call s:SetLSPOmnifunc("javascript")
       autocmd User lsp_setup call lsp#register_server({
@@ -418,6 +420,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
             \ })
     endif
 
+    " yarn add vscode-css-languageserver-bin
     if executable("css-languageserver")
       autocmd InsertEnter * call s:SetLSPOmnifunc("css|less|sass")
       autocmd User lsp_setup call lsp#register_server({
