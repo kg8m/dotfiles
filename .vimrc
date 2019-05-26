@@ -360,6 +360,36 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
 endif  " }}}
 
 call s:RegisterPlugin("prabirshrestha/asyncomplete-lsp.vim", { "if": IsLspAvailable() })
+call s:RegisterPlugin("Shougo/neco-syntax")
+
+if s:RegisterPlugin("Shougo/neosnippet")  " {{{
+  function! s:ConfigPluginOnSource_neosnippet() abort  " {{{
+    imap <expr><Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    imap <expr><Cr>    neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? asyncomplete#close_popup() : "\<Cr>"
+
+    let g:neosnippet#snippets_directory = [
+      \   s:PluginInfo(".vim").path . "/snippets",
+      \ ]
+    let g:neosnippet#disable_runtime_snippets = {
+      \   "_" : 1,
+      \ }
+
+    augroup NeoSnippetClearMarkers  " {{{
+      autocmd!
+      autocmd InsertLeave * NeoSnippetClearMarkers
+    augroup END  " }}}
+  endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":      1,
+     \   "on_i":      1,
+     \   "on_ft":     ["snippet", "neosnippet"],
+     \   "on_source": "unite.vim",
+     \   "depends":   [".vim"],
+     \   "hook_source": function("s:ConfigPluginOnSource_neosnippet"),
+     \ })
+endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
   let g:lsp_diagnostics_enabled = 0
@@ -638,37 +668,6 @@ if s:RegisterPlugin("AndrewRadev/linediff.vim")  " {{{
 endif  " }}}
 
 call s:RegisterPlugin("kg8m/moin.vim", { "if": !IsGitCommit() && !IsGitHunkEdit() })
-call s:RegisterPlugin("Shougo/neco-syntax")
-
-if s:RegisterPlugin("Shougo/neosnippet")  " {{{
-  function! s:ConfigPluginOnSource_neosnippet() abort  " {{{
-    imap <expr><Tab>   pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-    smap <expr><Tab>   neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-    imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    imap <expr><Cr>    neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? asyncomplete#close_popup() : "\<Cr>"
-
-    let g:neosnippet#snippets_directory = [
-      \   s:PluginInfo(".vim").path . "/snippets",
-      \ ]
-    let g:neosnippet#disable_runtime_snippets = {
-      \   "_" : 1,
-      \ }
-
-    augroup NeoSnippetClearMarkers  " {{{
-      autocmd!
-      autocmd InsertLeave * NeoSnippetClearMarkers
-    augroup END  " }}}
-  endfunction  " }}}
-
-  call s:ConfigPlugin({
-     \   "lazy":      1,
-     \   "on_i":      1,
-     \   "on_ft":     ["snippet", "neosnippet"],
-     \   "on_source": "unite.vim",
-     \   "depends":   [".vim"],
-     \   "hook_source": function("s:ConfigPluginOnSource_neosnippet"),
-     \ })
-endif  " }}}
 
 if s:RegisterPlugin("tyru/open-browser.vim")  " {{{
   nmap <Leader>o <Plug>(openbrowser-open)
