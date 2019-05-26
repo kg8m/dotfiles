@@ -2253,6 +2253,7 @@ augroup CheckTimeHook  " {{{
 augroup END  " }}}
 
 set whichwrap=b,s,h,l,<,>,[,],~
+set maxmempattern=5000
 
 if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   " http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
