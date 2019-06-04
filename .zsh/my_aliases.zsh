@@ -24,6 +24,13 @@ alias ag="ag $AG_OPTIONS"
 unset AG_OPTIONS
 
 alias g="git"
+
+function remove_with_confirm {
+  echo "Removing:"
+  execute_with_echo "ls $@"
+  execute_with_confirm "rm -fr $@"
+}
+alias rmc="remove_with_confirm"
 alias rm="rm -i"
 
 if `crontab -i > /dev/null 2>&1`; then
