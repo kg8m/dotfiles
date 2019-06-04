@@ -86,6 +86,14 @@ shallow-update = "!f() {\
   git execute-with-echo 'git pull --rebase --depth 1';\
 }; f"
 
+update-master = "!f() {\
+  local current_branch=$( git symbolic-ref --short HEAD );\
+  \
+  git checkout master && \
+  git update && \
+  git checkout ${current_branch};\
+}; f"
+
 # branch
 brs      = !git branches
 br       = branch
