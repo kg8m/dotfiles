@@ -429,6 +429,16 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
             \ "whitelist": ["css", "less", "sass"],
             \ })
     endif
+
+    " yarn add bash-language-server
+    if executable("bash-language-server")
+      autocmd InsertEnter * call s:SetLSPOmnifunc("sh")
+      autocmd User lsp_setup call lsp#register_server({
+            \   "name": "bash-language-server",
+            \   "cmd": { server_info -> [&shell, &shellcmdflag, "bash-language-server start"] },
+            \   "whitelist": ["sh"],
+            \ })
+    endif
   augroup END  " }}}
 
   " Overwrite other plugins' settings
