@@ -424,9 +424,9 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
     if executable("css-languageserver")
       autocmd InsertEnter * call s:SetLSPOmnifunc("css|less|sass")
       autocmd User lsp_setup call lsp#register_server({
-            \ "name": "css-languageserver",
-            \ "cmd": { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
-            \ "whitelist": ["css", "less", "sass"],
+            \   "name": "css-languageserver",
+            \   "cmd": { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
+            \   "whitelist": ["css", "less", "sass"],
             \ })
     endif
 
