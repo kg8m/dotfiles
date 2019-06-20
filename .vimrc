@@ -2032,6 +2032,14 @@ endif
 " General looks  " {{{
 colorscheme molokai
 
+" https://qiita.com/Bakudankun/items/649aa6d8b9eccc1712b5
+augroup BlurInactiveWindow  " {{{
+  autocmd!
+  autocmd ColorScheme * highlight NormalNC ctermbg=234 guibg=#3B3A32
+  autocmd WinEnter,BufWiNEnter * set wincolor=
+  autocmd WinLeave,BufWiNLeave * set wincolor=NormalNC
+augroup END  " }}}
+
 set showmatch
 set number
 set noshowmode
