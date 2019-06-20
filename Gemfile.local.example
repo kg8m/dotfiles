@@ -10,6 +10,11 @@ group :development do
   gem "byebug", require: false
   gem "pry-byebug", require: false
   gem "pry-doc", require: false
+
+  gem "rubocop", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-daemon", require: false
 end
 
 group :development, :production do

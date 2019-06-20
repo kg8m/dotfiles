@@ -25,3 +25,6 @@
 [submodule ".rbenv/plugins/ruby-build"]
 	path = .rbenv/plugins/ruby-build
 	url = https://github.com/rbenv/ruby-build.git
+[submodule ".rubocop/plugins/rubocop-daemon"]
+	path = .rubocop/plugins/rubocop-daemon
+	url = https://github.com/fohte/rubocop-daemon.git
