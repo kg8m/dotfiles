@@ -465,6 +465,11 @@ if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  "
   if executable("rubocop-daemon") && executable("rubocop-daemon-wrapper")
     let g:ale_ruby_rubocop_executable = "rubocop-daemon-wrapper"
   endif
+
+  if executable("eslint_d")
+    let g:ale_javascript_eslint_use_global = 1
+    let g:ale_javascript_eslint_executable = "eslint_d"
+  endif
 endif  " }}}
 
 call s:RegisterPlugin("hotwatermorning/auto-git-diff", { "if": !IsGitCommit() && !IsGitHunkEdit() })
