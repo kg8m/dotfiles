@@ -877,7 +877,12 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           function! source.gather_candidates(args, context) abort  " {{{
             let name = substitute(a:context.source_name, "^rails/", "", "")
             let definition = s:unite_rails_definitions[name]
-            let files = sort(globpath(definition.path[0], definition.path[1], 0, 1))
+            let files = sort(
+              \   filter(
+              \     globpath(definition.path[0], definition.path[1], 0, 1),
+              \     { index, value -> value !~# '\v<public/packs(-test)?/' }
+              \   )
+              \ )
             return map(files, '{
                  \   "word": substitute(v:val, definition.to_word[0], definition.to_word[1], ""),
                  \   "kind": "file",
