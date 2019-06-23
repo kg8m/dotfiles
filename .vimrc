@@ -420,6 +420,17 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
             \ })
     endif
 
+    " yarn add vue-language-server typescript
+    if executable("vls")
+      autocmd InsertEnter * call s:SetLSPOmnifunc("vue")
+      autocmd User lsp_setup call lsp#register_server({
+            \   "name": "vue-language-server",
+            \   "cmd": { server_info -> [&shell, &shellcmdflag, "vls"] },
+            \   "initialization_options": { "diagnostics": "true" },
+            \   "whitelist": ["vue"],
+            \ })
+    endif
+
     " yarn add vscode-css-languageserver-bin
     if executable("css-languageserver")
       autocmd InsertEnter * call s:SetLSPOmnifunc("css|less|sass")
