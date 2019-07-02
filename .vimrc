@@ -218,6 +218,10 @@ endfunction  " }}}
 function! CurrentAbsolutePath() abort  " {{{
   return fnamemodify(expand("%"), ":~")
 endfunction  " }}}
+
+function! s:AvailabilityMessage(target) abort  " {{{
+  return get(s:, a:target . "_available", 0) ? "⭕️ available": "❌️ unavailable"
+endfunction  " }}}
 " }}}
 
 let g:mapleader = ","
@@ -401,6 +405,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
 
     " gem install solargraph
     if executable("solargraph")
+      let s:solargraph_available = 1
       autocmd InsertEnter * call s:SetLSPOmnifunc("ruby")
       autocmd User lsp_setup call lsp#register_server({
             \   "name": "solargraph",
@@ -412,6 +417,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
 
     " yarn add typescript-language-server typescript
     if executable("typescript-language-server")
+      let s:typescript_language_server_available = 1
       autocmd InsertEnter * call s:SetLSPOmnifunc("javascript")
       autocmd User lsp_setup call lsp#register_server({
             \   "name": "typescript-language-server",
@@ -422,6 +428,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
 
     " yarn add vue-language-server typescript
     if executable("vls")
+      let s:vls_available = 1
       autocmd InsertEnter * call s:SetLSPOmnifunc("vue")
       autocmd User lsp_setup call lsp#register_server({
             \   "name": "vue-language-server",
@@ -433,6 +440,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
 
     " yarn add vscode-css-languageserver-bin
     if executable("css-languageserver")
+      let s:css_language_server_available = 1
       autocmd InsertEnter * call s:SetLSPOmnifunc("css|less|sass")
       autocmd User lsp_setup call lsp#register_server({
             \   "name": "css-languageserver",
@@ -443,6 +451,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
 
     " yarn add bash-language-server
     if executable("bash-language-server")
+      let s:bash_language_server_available = 1
       autocmd InsertEnter * call s:SetLSPOmnifunc("sh")
       autocmd User lsp_setup call lsp#register_server({
             \   "name": "bash-language-server",
@@ -1753,8 +1762,13 @@ if s:RegisterPlugin("mhinz/vim-startify", { "if": !IsGitCommit() && !IsGitHunkEd
       \   "                      .",
       \   "",
       \   "",
-      \   "     * Vim version: " . v:version,
+      \   "  Vim version: " . v:version,
       \   "",
+      \   "  solargraph: " . s:AvailabilityMessage("sorlargraph"),
+      \   "  typescript-language-server: " . s:AvailabilityMessage("typescript_language_server"),
+      \   "  vue-language-server: " . s:AvailabilityMessage("vls"),
+      \   "  css-language-server: " . s:AvailabilityMessage("css_language_server"),
+      \   "  bash-language-server: " . s:AvailabilityMessage("bash_language_server"),
       \   "",
       \ ]
   endfunction  " }}}
