@@ -169,18 +169,6 @@ function! IsGitHunkEdit() abort  " {{{
   return s:is_git_hunk_edit
 endfunction  " }}}
 
-function! IsLspAvailable() abort  " {{{
-  if exists("s:is_lsp_available")
-    return s:is_lsp_available
-  endif
-
-  let s:is_lsp_available =
-    \   executable("solargraph") ||
-    \   executable("typescript-language-server") ||
-    \   executable("css-languageserver")
-  return s:is_lsp_available
-endfunction  " }}}
-
 function! RubyGemPaths() abort  " {{{
   if exists("s:ruby_gem_paths")
     return s:ruby_gem_paths
@@ -280,7 +268,7 @@ call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 call s:RegisterPlugin("kg8m/.vim")
 
 " Completion, LSP  " {{{
-call s:RegisterPlugin("prabirshrestha/async.vim", { "if": IsLspAvailable() })
+call s:RegisterPlugin("prabirshrestha/async.vim")
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = 1
@@ -363,7 +351,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-call s:RegisterPlugin("prabirshrestha/asyncomplete-lsp.vim", { "if": IsLspAvailable() })
+call s:RegisterPlugin("prabirshrestha/asyncomplete-lsp.vim")
 call s:RegisterPlugin("Shougo/neco-syntax")
 
 if s:RegisterPlugin("Shougo/neosnippet")  " {{{
@@ -395,7 +383,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("prabirshrestha/vim-lsp", { "if": IsLspAvailable() })  " {{{
+if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   let g:lsp_diagnostics_enabled = 0
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand("~/tmp/vim-lsp.log")
