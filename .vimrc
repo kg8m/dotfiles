@@ -235,8 +235,59 @@ function! CurrentAbsolutePath() abort  " {{{
   return fnamemodify(expand("%"), ":~")
 endfunction  " }}}
 
-function! s:AvailabilityMessage(target) abort  " {{{
-  return get(s:, a:target . "_available", 0) ? "⭕️ available": "❌️ unavailable"
+function! s:RegisterLSP(config) abort  " {{{
+  if !exists("s:lsps")
+    let s:lsps = []
+  endif
+
+  if has_key(a:config, "executable_name")
+    let executable_name = a:config.executable_name
+    call remove(a:config, "executable_name")
+  else
+    let executable_name = a:config.name
+  endif
+
+  if executable(executable_name)
+    augroup MyConfigLsp  " {{{
+      autocmd!
+      autocmd FileType * call s:ResetLSPOmnifuncSet()
+      autocmd InsertEnter * call s:SetLSPOmnifunc()
+      autocmd User lsp_setup call s:EnableLSPs()
+    augroup END  " }}}
+
+    let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
+    let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
+    call add(s:lsps, { "name": a:config.name, "available": 1 })
+  else
+    call add(s:lsps, { "name": a:config.name, "available": 0 })
+  endif
+endfunction  " }}}
+
+function! s:EnableLSPs() abort  " {{{
+  for config in get(s:, "lsp_configs", [])
+    call lsp#register_server(config)
+  endfor
+endfunction  " }}}
+
+" Overwrite other plugins' settings
+function! s:SetLSPOmnifunc() abort  " {{{
+  if !exists("b:lsp_omnifunc_set")
+    return
+  endif
+
+  let b:lsp_omnifunc_set = 1
+  let filetype_pattern = join(get(s:, "lsp_filetypes", []), "|")
+
+  if &filetype =~# filetype_pattern
+    setlocal omnifunc=lsp#complete
+  endif
+endfunction  " }}}
+
+" Reset when filetype changes
+function! s:ResetLSPOmnifuncSet() abort  " {{{
+  if exists("b:lsp_omnifunc_set")
+    unlet b:lsp_omnifunc_set
+  endif
 endfunction  " }}}
 " }}}
 
@@ -388,73 +439,43 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
-  augroup MyConfigLsp  " {{{
-    autocmd!
+  " yarn add bash-language-server
+  call s:RegisterLSP({
+     \   "name": "bash-language-server",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "bash-language-server start"] },
+     \   "whitelist": ["sh"],
+     \ })
 
-    " yarn add bash-language-server
-    if executable("bash-language-server")
-      let s:bash_language_server_available = 1
-      autocmd InsertEnter * call s:SetLSPOmnifunc("sh")
-      autocmd User lsp_setup call lsp#register_server({
-            \   "name": "bash-language-server",
-            \   "cmd": { server_info -> [&shell, &shellcmdflag, "bash-language-server start"] },
-            \   "whitelist": ["sh"],
-            \ })
-    endif
+  " yarn add vscode-css-languageserver-bin
+  call s:RegisterLSP({
+     \   "name": "css-languageserver",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
+     \   "whitelist": ["css", "less", "sass"],
+     \ })
 
-    " yarn add vscode-css-languageserver-bin
-    if executable("css-languageserver")
-      let s:css_language_server_available = 1
-      autocmd InsertEnter * call s:SetLSPOmnifunc("css|less|sass")
-      autocmd User lsp_setup call lsp#register_server({
-            \   "name": "css-languageserver",
-            \   "cmd": { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
-            \   "whitelist": ["css", "less", "sass"],
-            \ })
-    endif
+  " gem install solargraph
+  call s:RegisterLSP({
+     \   "name": "solargraph",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
+     \   "initialization_options": { "diagnostics": "true" },
+     \   "whitelist": ["ruby"],
+     \ })
 
-    " gem install solargraph
-    if executable("solargraph")
-      let s:solargraph_available = 1
-      autocmd InsertEnter * call s:SetLSPOmnifunc("ruby")
-      autocmd User lsp_setup call lsp#register_server({
-            \   "name": "solargraph",
-            \   "cmd": { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
-            \   "initialization_options": { "diagnostics": "true" },
-            \   "whitelist": ["ruby"],
-            \ })
-    endif
+  " yarn add typescript-language-server typescript
+  call s:RegisterLSP({
+     \   "name": "typescript-language-server",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
+     \   "whitelist": ["javascript", "javascript.jsx", "typescript", "typescript.tsx"],
+     \ })
 
-    " yarn add typescript-language-server typescript
-    if executable("typescript-language-server")
-      let s:typescript_language_server_available = 1
-      autocmd InsertEnter * call s:SetLSPOmnifunc("javascript")
-      autocmd User lsp_setup call lsp#register_server({
-            \   "name": "typescript-language-server",
-            \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
-            \   "whitelist": ["javascript", "javascript.jsx", "typescript", "typescript.tsx"],
-            \ })
-    endif
-
-    " yarn add vue-language-server typescript
-    if executable("vls")
-      let s:vls_available = 1
-      autocmd InsertEnter * call s:SetLSPOmnifunc("vue")
-      autocmd User lsp_setup call lsp#register_server({
-            \   "name": "vue-language-server",
-            \   "cmd": { server_info -> [&shell, &shellcmdflag, "vls"] },
-            \   "initialization_options": { "diagnostics": "true" },
-            \   "whitelist": ["vue"],
-            \ })
-    endif
-  augroup END  " }}}
-
-  " Overwrite other plugins' settings
-  function! s:SetLSPOmnifunc(filetype_pattern) abort  " {{{
-    if &filetype =~# a:filetype_pattern
-      setlocal omnifunc=lsp#complete
-    endif
-  endfunction  " }}}
+  " yarn add vue-language-server typescript
+  call s:RegisterLSP({
+     \   "name": "vue-language-server",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "vls"] },
+     \   "initialization_options": { "diagnostics": "true" },
+     \   "whitelist": ["vue"],
+     \   "executable_name": "vls",
+     \ })
 endif  " }}}
 " }}}
 
@@ -1752,13 +1773,15 @@ if s:RegisterPlugin("mhinz/vim-startify", { "if": !IsGitCommit() && !IsGitHunkEd
       \   "",
       \   "  Vim version: " . v:version,
       \   "",
-      \   "  bash-language-server: " . s:AvailabilityMessage("bash_language_server"),
-      \   "  css-language-server: " . s:AvailabilityMessage("css_language_server"),
-      \   "  solargraph: " . s:AvailabilityMessage("sorlargraph"),
-      \   "  typescript-language-server: " . s:AvailabilityMessage("typescript_language_server"),
-      \   "  vue-language-server: " . s:AvailabilityMessage("vls"),
-      \   "",
       \ ]
+
+    for lsp in s:lsps
+      let g:startify_custom_header = g:startify_custom_header + [
+        \   "  " . lsp.name . ": " . (lsp.available ? "👏 available" : "☠ unavailable")
+        \ ]
+    endfor
+
+    let g:startify_custom_header = g:startify_custom_header + [""]
   endfunction  " }}}
 
   function! s:ConfigPluginOnPostSource_vim_startify() abort  " {{{
