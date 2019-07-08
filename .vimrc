@@ -810,7 +810,9 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   augroup END  " }}}
 
   function! s:DisableUniteDefaultMappings() abort  " {{{
-    nunmap <buffer> <S-n>
+    if mapcheck("<S-n>", "n")
+      nunmap <buffer> <S-n>
+    endif
   endfunction  " }}}
 
   if OnRailsDir()
