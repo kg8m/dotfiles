@@ -912,6 +912,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
             let name = substitute(a:context.source_name, "^rails/", "", "")
             let definition = s:unite_rails_definitions[name]
             let files = globpath(definition.path[0], definition.path[1], 0, 1)
+            let files = filter(files, { index, value -> filereadable(value) })
 
             if has_key(definition, "ignore")
               let files = filter(files, { index, value -> value !~# definition.ignore })
