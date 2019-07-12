@@ -900,6 +900,12 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           endif
         endfor
 
+        if exists("g:unite_rails_extra_definitions")
+          for name in keys(g:unite_rails_extra_definitions)
+            let s:unite_rails_definitions[name] = g:unite_rails_extra_definitions[name]
+          endfor
+        endif
+
         for name in keys(s:unite_rails_definitions)
           let source = { "name": "rails/" . name }
           function! source.gather_candidates(args, context) abort  " {{{
