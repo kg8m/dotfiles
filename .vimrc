@@ -843,6 +843,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           \   "javascripts": {
           \     "path":    ["app/**,public/**", "*.{js,ts,vue}"],
           \     "to_word": ["^\./", ""],
+          \     "ignore":  '\v<public/packs(-test)?/',
           \   },
           \   "lib": {
           \     "path":    ["lib/**", "*"],
@@ -851,6 +852,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           \   "public": {
           \     "path":    ["public/**", "*"],
           \     "to_word": ["^\./public/", ""],
+          \     "ignore":  '\v<public/packs(-test)?/',
           \   },
           \   "script": {
           \     "path":    ["script/**", "*"],
@@ -863,6 +865,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           \   "stylesheets": {
           \     "path":    ["app/**,public/**", "*.{css,sass,scss}"],
           \     "to_word": ["^\./", ""],
+          \     "ignore":  '\v<public/packs(-test)?/',
           \   },
           \   "test": {
           \     "path":    ["spec/**,test/**", "*"],
@@ -897,13 +900,13 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           function! source.gather_candidates(args, context) abort  " {{{
             let name = substitute(a:context.source_name, "^rails/", "", "")
             let definition = s:unite_rails_definitions[name]
-            let files = sort(
-              \   filter(
-              \     globpath(definition.path[0], definition.path[1], 0, 1),
-              \     { index, value -> value !~# '\v<public/packs(-test)?/' }
-              \   )
-              \ )
-            return map(files, '{
+            let files = globpath(definition.path[0], definition.path[1], 0, 1)
+
+            if has_key(definition, "ignore")
+              let files = filter(files, { index, value -> value !~# definition.ignore })
+            endif
+
+            return map(sort(files), '{
                  \   "word": substitute(v:val, definition.to_word[0], definition.to_word[1], ""),
                  \   "kind": "file",
                  \   "action__path": v:val,
