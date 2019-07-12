@@ -824,6 +824,11 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     if OnRailsDir()
       function! s:DefineOreOreUniteCommandsForRails() abort  " {{{
         let s:unite_rails_definitions = {
+          \   "assets": {
+          \     "path":    ["app/assets/**,app/javascripts/**,public/**", "*"],
+          \     "to_word": ["^\./", ""],
+          \     "ignore":  '\v<public/packs(-test)?/',
+          \   },
           \   "config": {
           \     "path":    ["config/**", "*"],
           \     "to_word": ["^\./config/", ""],
