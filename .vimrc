@@ -125,6 +125,63 @@ function! s:InstallPlugins(...) abort  " {{{
     return dein#install(get(a:000, 0))
   endif
 endfunction  " }}}
+
+" for LSPs  " {{{
+function! s:RegisterLSP(config) abort  " {{{
+  if !exists("s:lsps")
+    let s:lsps = []
+  endif
+
+  if has_key(a:config, "executable_name")
+    let executable_name = a:config.executable_name
+    call remove(a:config, "executable_name")
+  else
+    let executable_name = a:config.name
+  endif
+
+  if executable(executable_name)
+    augroup MyConfigLsp  " {{{
+      autocmd!
+      autocmd FileType * call s:ResetLSPOmnifuncSet()
+      autocmd InsertEnter * call s:SetLSPOmnifunc()
+      autocmd User lsp_setup call s:EnableLSPs()
+    augroup END  " }}}
+
+    let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
+    let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
+    call add(s:lsps, { "name": a:config.name, "available": 1 })
+  else
+    call add(s:lsps, { "name": a:config.name, "available": 0 })
+  endif
+endfunction  " }}}
+
+function! s:EnableLSPs() abort  " {{{
+  for config in get(s:, "lsp_configs", [])
+    call lsp#register_server(config)
+  endfor
+endfunction  " }}}
+
+" Overwrite other plugins' settings
+function! s:SetLSPOmnifunc() abort  " {{{
+  if !exists("b:lsp_omnifunc_set")
+    return
+  endif
+
+  let b:lsp_omnifunc_set = 1
+  let filetype_pattern = join(get(s:, "lsp_filetypes", []), "|")
+
+  if &filetype =~# filetype_pattern
+    setlocal omnifunc=lsp#complete
+  endif
+endfunction  " }}}
+
+" Reset when filetype changes
+function! s:ResetLSPOmnifuncSet() abort  " {{{
+  if exists("b:lsp_omnifunc_set")
+    unlet b:lsp_omnifunc_set
+  endif
+endfunction  " }}}
+" }}}
 " }}}
 
 " Utility functions  " {{{
@@ -233,61 +290,6 @@ endfunction  " }}}
 
 function! CurrentAbsolutePath() abort  " {{{
   return fnamemodify(expand("%"), ":~")
-endfunction  " }}}
-
-function! s:RegisterLSP(config) abort  " {{{
-  if !exists("s:lsps")
-    let s:lsps = []
-  endif
-
-  if has_key(a:config, "executable_name")
-    let executable_name = a:config.executable_name
-    call remove(a:config, "executable_name")
-  else
-    let executable_name = a:config.name
-  endif
-
-  if executable(executable_name)
-    augroup MyConfigLsp  " {{{
-      autocmd!
-      autocmd FileType * call s:ResetLSPOmnifuncSet()
-      autocmd InsertEnter * call s:SetLSPOmnifunc()
-      autocmd User lsp_setup call s:EnableLSPs()
-    augroup END  " }}}
-
-    let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
-    let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
-    call add(s:lsps, { "name": a:config.name, "available": 1 })
-  else
-    call add(s:lsps, { "name": a:config.name, "available": 0 })
-  endif
-endfunction  " }}}
-
-function! s:EnableLSPs() abort  " {{{
-  for config in get(s:, "lsp_configs", [])
-    call lsp#register_server(config)
-  endfor
-endfunction  " }}}
-
-" Overwrite other plugins' settings
-function! s:SetLSPOmnifunc() abort  " {{{
-  if !exists("b:lsp_omnifunc_set")
-    return
-  endif
-
-  let b:lsp_omnifunc_set = 1
-  let filetype_pattern = join(get(s:, "lsp_filetypes", []), "|")
-
-  if &filetype =~# filetype_pattern
-    setlocal omnifunc=lsp#complete
-  endif
-endfunction  " }}}
-
-" Reset when filetype changes
-function! s:ResetLSPOmnifuncSet() abort  " {{{
-  if exists("b:lsp_omnifunc_set")
-    unlet b:lsp_omnifunc_set
-  endif
 endfunction  " }}}
 " }}}
 
