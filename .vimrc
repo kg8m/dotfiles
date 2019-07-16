@@ -1796,7 +1796,7 @@ if s:RegisterPlugin("mhinz/vim-startify", { "if": !IsGitCommit() && !IsGitHunkEd
 
     for lsp in s:lsps
       let g:startify_custom_header = g:startify_custom_header + [
-        \   "  " . lsp.name . ": " . (lsp.available ? "👏 available" : "☠ unavailable")
+        \   "  " . lsp.name . ": " . (lsp.available ? "👏 available" : "☠  unavailable")
         \ ]
     endfor
 
