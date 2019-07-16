@@ -449,7 +449,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   call s:RegisterLSP({
      \   "name": "bash-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "bash-language-server start"] },
-     \   "whitelist": ["sh"],
+     \   "whitelist": ["sh", "zsh"],
      \ })
 
   " yarn add vscode-css-languageserver-bin
