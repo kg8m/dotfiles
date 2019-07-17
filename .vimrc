@@ -499,8 +499,7 @@ if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  "
 
   " gem install rubocop-daemon
   " git submodule update .rubocop/plugins/rubocop-daemon
-  " ln -s ~/bin/rubocop-daemon-wrapper \
-  "   ~/dotfiles/.rubocop/plugins/rubocop-daemon/bin/rubocop-daemon-wrapper
+  " ln -s ~/bin/rubocop-daemon-wrapper ~/dotfiles/.rubocop/plugins/rubocop-daemon/bin/rubocop-daemon-wrapper
   if executable("rubocop-daemon") && executable("rubocop-daemon-wrapper")
     let g:ale_ruby_rubocop_executable = "rubocop-daemon-wrapper"
   endif
