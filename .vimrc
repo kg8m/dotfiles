@@ -459,6 +459,20 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "whitelist": ["css", "less", "sass"],
      \ })
 
+  " yarn add vscode-html-languageserver-bin
+  call s:RegisterLSP({
+     \   "name": "html-languageserver",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "html-languageserver --stdio"] },
+     \   "whitelist": ["html"],
+     \ })
+
+  " yarn add vscode-json-languageserver-bin
+  call s:RegisterLSP({
+     \   "name": "json-languageserver",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "json-languageserver --stdio"] },
+     \   "whitelist": ["json"],
+     \ })
+
   " gem install solargraph
   call s:RegisterLSP({
      \   "name": "solargraph",
