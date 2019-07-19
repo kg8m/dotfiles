@@ -43,15 +43,14 @@ info = remote show origin
 st   = status
 
 chmod = "!f() {\
-  command=\"git update-index --add --chmod=$@\";\
-  git execute-with-echo ${command};\
+  git sh \"execute_with_echo git update-index --add --chmod=$@\";\
 }; f"
 
 # clone
 clone-with-submodules = clone --recursive
 
 shallow-clone = "!f() {\
-  git execute-with-echo \"git clone --single-branch --depth 1 $@\";\
+  git sh \"execute_with_echo git clone --single-branch --depth 1 $@\";\
 }; f"
 
 # checkout
@@ -59,8 +58,8 @@ co = checkout
 cos = checkout-by-select
 
 checkout-by-select = "!f() {\
-  local branch=$( git select-a-branch );\
-  [[ \"${branch}\" ]] && git execute-with-echo \"git checkout ${branch}\";\
+  branch=$( git select-a-branch );\
+  [[ \"${branch}\" ]] && git sh \"execute_with_echo git checkout ${branch}\";\
 }; f"
 
 # pull/fetch/merge/rebase
@@ -69,29 +68,30 @@ f  = fetch
 
 update = "!f() {\
   remote_branch=$( git rev-parse --abbrev-ref '@{upstream}' );\
-  git execute-with-echo 'git --no-pager show --no-patch';\
-  echo;\
-  git execute-with-echo 'git fetch';\
-  echo;\
+  \
+  git sh 'execute_with_echo git --no-pager show --no-patch';\
+  git sh 'execute_with_echo git fetch';\
+  \
   if [ $( git rev-parse HEAD ) = $( git rev-parse '@{upstream}' ) ]; then\
     echo 'Up to date.';\
   else\
-    git execute-with-echo 'git --no-pager log --reverse HEAD.. '${remote_branch};\
-    echo;\
-    git execute-with-echo 'git pull --stat --rebase || echo \"Error: rebase aborted!!\"';\
+    git sh \"execute_with_echo git --no-pager log --reverse HEAD.. ${remote_branch}\";\
+    git sh 'execute_with_echo git pull --stat --rebase';\
   fi;\
 }; f"
 
 shallow-update = "!f() {\
-  git execute-with-echo 'git pull --rebase --depth 1';\
+  git sh 'execute_with_echo git pull --rebase --depth 1';\
 }; f"
 
 update-master = "!f() {\
-  local current_branch=$( git symbolic-ref --short HEAD );\
+  current_branch=$( git symbolic-ref --short HEAD );\
   \
-  git checkout master && \
-  git update && \
-  git checkout ${current_branch};\
+  git sh \"\
+    execute_with_echo git checkout master && \
+    execute_with_echo git update && \
+    execute_with_echo git checkout ${current_branch}\
+  \";\
 }; f"
 
 # branch
@@ -107,33 +107,37 @@ create-branch = "!f() {\
   commit_messages=$3;\
   \
   command=\"git checkout -b ${branch_name} ${original_branch}\";\
-  command=${command}\" && git commit --allow-empty --message='${commit_messages}'\";\
+  command=${command}\" && git commit --allow-empty --message=\\\"${commit_messages}\\\"\";\
   command=${command}\" && git push --set-upstream origin ${branch_name}\";\
   command=${command}\"; git branches\";\
   \
-  git execute-with-confirm ${command};\
+  git sh \"execute_with_confirm '${command}'\";\
 }; f"
 
 delete-local-branches  = "!f() {\
-  branches=$( git branch | filter );\
-  command=\"for branch in ${branches}; do git branch -D \\${branch}; done\";\
+  branches=$( git branch | filter | sed -e 's/^[* ]*//' );\
+  command=\"for branch in $( echo ${branches} ); do git branch -D \\${branch}; done\";\
+  \
   echo 'Selected branches:';\
   for branch in ${branches}; do\
     echo \"  - ${branch}\";\
   done;\
-  git execute-with-confirm ${command};\
-  git branches;\
+  \
+  git sh \"execute_with_confirm '${command}'\";\
+  git sh 'execute_with_echo git branches';\
 }; f"
 
 delete-remote-branches = "!f() {\
   branches=$( git branch --remote | filter | awk '{ print $1 }' | sed -e 's/^origin\\///' );\
-  command=\"for branch in ${branches}; do git push --delete origin \\${branch}; done\";\
+  command=\"for branch in $( echo ${branches} ); do git push --delete origin \\${branch}; done\";\
+  \
   echo 'Selected branches:';\
   for branch in ${branches}; do\
     echo \"  - ${branch}\";\
   done;\
-  git execute-with-confirm ${command};\
-  git branches;\
+  \
+  git sh \"execute_with_confirm '${command}'\";\
+  git sh 'execute_with_echo git branches';\
 }; f"
 
 select-a-branch = "!f() {\
@@ -176,7 +180,7 @@ graph = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%an %Creset%s\"
 la    = log --branches --tags --remotes
 lp    = log --stat --patch
 
-lg-branches = !git log-branches --graph --pretty=format:'%Cgreen%h\\ %ci\\ %Cblue[C]\\ %cn\\ [A]\\ %an\\ %Creset%s'
+lg-branches = !git log-branches --graph --pretty=format:\\\"%Cgreen%h %ci %Cblue[C] %cn [A] %an %Creset%s\\\"
 lp-branches = !git log-branches --stat --patch
 
 log-branches = "!f() {\
@@ -184,7 +188,7 @@ log-branches = "!f() {\
   branch2=$( git select-a-remote-branch 'select another branch:' ) || exit 1;\
   \
   command=\"git log $@ ${branch1}...${branch2}\";\
-  git execute-with-confirm ${command};\
+  git sh \"execute_with_confirm '${command}'\";\
 }; f"
 
 # diff
@@ -206,7 +210,7 @@ diff-branches = "!f() {\
   branch2=$( git select-a-remote-branch 'select another branch:' ) || exit 1;\
   \
   command=\"git diff-without-space-changes $@ ${branch1}...${branch2}\";\
-  git execute-with-confirm ${command};\
+  git sh \"execute_with_confirm ${command}\";\
 }; f"
 
 diff-branch-from = "!f() {\
@@ -219,7 +223,7 @@ diff-branch-from = "!f() {\
   \
   current=$( git rev-parse --abbrev-ref '@{upstream}' );\
   command=\"git diff-without-space-changes ${@:2:($#-1)} origin/${target}...${current}\";\
-  git execute-with-confirm ${command};\
+  git sh \"execute_with_confirm '${command}'\";\
 }; f"
 
 open-changed-files-from = "!f() {\
@@ -232,39 +236,26 @@ open-changed-files-from = "!f() {\
   \
   current=$( git rev-parse --abbrev-ref '@{upstream}' );\
   command=\"vim \\$( git diff --name-only ${@:2:($#-1)} origin/${target}...${current} )\";\
-  git execute-with-confirm ${command};\
+  git sh \"execute_with_confirm '${command}'\";\
 }; f"
 
 # stash
-stash-all-with-message = "!f() { command=\"git stash push --no-keep-index --include-untracked --message '$@'\"; git execute-with-echo ${command}; }; f"
+stash-all-with-message = "!f() {\
+  command=\"git stash push --no-keep-index --include-untracked --message '$@'\";\
+  git sh \"execute_with_echo \\\"${command}\\\"\";\
+}; f"
 
 # show
 show-without-diff = show -s
 
 # submodule
-update-submodules = !git execute-with-echo 'git submodule update --remote --rebase && git status'
+update-submodules = !git sh 'execute_with_echo git submodule update --remote --rebase && execute_with_echo git status'
 
 # hook
 update-hooks = !( rm -i .git/hooks/* || exit 0 ) && cp ~/.git_templates/hooks/* .git/hooks/ && ls -l .git/hooks/
 
 # utility
-execute-with-echo = "!f() {\
-  command=\"$@\";\
-  echo '# '${command};\
-  eval ${command};\
-}; f"
-
-execute-with-confirm = "!f() {\
-  command=\"$@\";\
-  echo '# '${command};\
-  read -p 'Are you sure? [y/n]: ' response;\
-  \
-  if [[ ${response} =~ ^y ]]; then\
-    eval ${command};\
-  else\
-    echo 'aborted.' >&2;\
-  fi;\
-}; f"
+sh = "!f() { zsh -c \"source ~/.zsh/my_functions.zsh; $@\"; }; f"
 
 [github]
 user = kg8m
