@@ -488,13 +488,27 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "whitelist": ["javascript", "javascript.jsx", "typescript", "typescript.tsx"],
      \ })
 
-  " yarn add vue-language-server typescript
+  " yarn add vim-language-server
+  call s:RegisterLSP({
+     \   "name": "vim-language-server",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "vim-language-server --stdio"] },
+     \   "whitelist": ["vim"],
+     \ })
+
+  " yarn add vue-language-server
   call s:RegisterLSP({
      \   "name": "vue-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "vls"] },
      \   "initialization_options": { "diagnostics": "true" },
      \   "whitelist": ["vue"],
      \   "executable_name": "vls",
+     \ })
+
+  " yarn add yaml-language-server
+  call s:RegisterLSP({
+     \   "name": "yaml-language-server",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "yaml-language-server --stdio"] },
+     \   "whitelist": ["yaml"],
      \ })
 endif  " }}}
 " }}}
