@@ -338,9 +338,10 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
     autocmd FileType unite let b:asyncomplete_enable = 0
   augroup END  " }}}
 
+  " Hide messages like "Pattern not found" or "Match 1 of <N>"
   set shortmess+=c
 
-  " inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
+  " Inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
   " LSP's sources are named "asyncomplete_lsp_{original source name}"
   function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
     let sorted_items = []
