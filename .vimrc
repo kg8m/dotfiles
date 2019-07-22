@@ -445,6 +445,13 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
+  augroup MyConfigVimLsp  " {{{
+    autocmd!
+
+    " References for sass is broken
+    autocmd WinEnter * let g:lsp_highlight_references_enabled = (&filetype != "sass")
+  augroup END  " }}}
+
   " yarn add bash-language-server
   call s:RegisterLSP({
      \   "name": "bash-language-server",
