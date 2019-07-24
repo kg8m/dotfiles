@@ -491,6 +491,13 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "whitelist": ["ruby"],
      \ })
 
+  " yarn add sql-language-server
+  call s:RegisterLSP({
+     \   "name": "sql-language-server",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "sql-language-server up --method stdio"] },
+     \   "whitelist": ["sql"],
+     \ })
+
   " yarn add typescript-language-server typescript
   call s:RegisterLSP({
      \   "name": "typescript-language-server",
