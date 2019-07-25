@@ -203,7 +203,6 @@ function! s:SetLSPOmnifunc() abort  " {{{
   endif
 endfunction  " }}}
 
-" Reset when filetype changes
 function! s:ResetLSPOmnifuncSet() abort  " {{{
   if exists("b:lsp_omnifunc_set")
     unlet b:lsp_omnifunc_set
