@@ -190,7 +190,7 @@ endfunction  " }}}
 
 " Overwrite other plugins' settings
 function! s:SetLSPOmnifunc() abort  " {{{
-  if !exists("b:lsp_omnifunc_set")
+  if exists("b:lsp_omnifunc_set")
     return
   endif
 
