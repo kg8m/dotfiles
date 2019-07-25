@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+peco --rcfile ~/.filter/config.json
