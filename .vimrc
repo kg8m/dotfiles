@@ -146,6 +146,7 @@ function! s:RegisterLSP(config) abort  " {{{
   if executable(executable_name)
     augroup MyConfigLsp  " {{{
       autocmd!
+      autocmd FileType * call s:DefineLSPMappings()
       autocmd FileType * call s:ResetLSPOmnifuncSet()
       autocmd InsertEnter * call s:SetLSPOmnifunc()
       autocmd User lsp_setup call s:EnableLSPs()
@@ -153,6 +154,16 @@ function! s:RegisterLSP(config) abort  " {{{
 
     let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
     let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
+    let s:lsp_mappings  = get(s:, "lsp_mappings", {})
+
+    if has_key(a:config, "mappings")
+      for filetype in a:config.whitelist
+        let s:lsp_mappings[filetype] = a:config.mappings
+      endfor
+
+      call remove(a:config, "mappings")
+    endif
+
     call add(s:lsps, { "name": a:config.name, "available": 1 })
   else
     call add(s:lsps, { "name": a:config.name, "available": 0 })
@@ -162,6 +173,18 @@ endfunction  " }}}
 function! s:EnableLSPs() abort  " {{{
   for config in get(s:, "lsp_configs", [])
     call lsp#register_server(config)
+  endfor
+endfunction  " }}}
+
+function! s:DefineLSPMappings() abort  " {{{
+  if !has_key(s:lsp_mappings, &filetype)
+    return
+  endif
+
+  for mapping in s:lsp_mappings[&filetype]
+    if mapping == "definition"
+      nmap <buffer> g] <plug>(lsp-definition)
+    endif
   endfor
 endfunction  " }}}
 
@@ -503,6 +526,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "name": "typescript-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
      \   "whitelist": ["javascript", "javascript.jsx", "typescript", "typescript.tsx"],
+     \   "mappings": ["definition"],
      \ })
 
   " yarn add vim-language-server
@@ -510,6 +534,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "name": "vim-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "vim-language-server --stdio"] },
      \   "whitelist": ["vim"],
+     \   "mappings": ["definition"],
      \ })
 
   " yarn add vue-language-server
@@ -518,6 +543,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "vls"] },
      \   "initialization_options": { "diagnostics": "true" },
      \   "whitelist": ["vue"],
+     \   "mappings": ["definition"],
      \   "executable_name": "vls",
      \ })
 
