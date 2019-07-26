@@ -189,8 +189,8 @@ function! s:SetLSPOmnifunc() abort  " {{{
   endif
 
   let b:lsp_omnifunc_set = 1
-  let filetype_patterns = map(s:lsp_filetypes, { _, filetype -> "^" . filetype . "$" })
-  let filetype_pattern = join(filetype_patterns, "|")
+  let filetype_patterns = map(copy(s:lsp_filetypes), { _, filetype -> "^" . filetype . "$" })
+  let filetype_pattern = '\v' . join(filetype_patterns, "|")
 
   if &filetype =~# filetype_pattern
     setlocal omnifunc=lsp#complete
