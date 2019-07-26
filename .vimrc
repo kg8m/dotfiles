@@ -517,8 +517,14 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   call s:RegisterLSP({
      \   "name": "typescript-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
-     \   "whitelist": ["javascript", "javascript.jsx", "typescript", "typescript.tsx"],
+     \   "whitelist": ["javascript.jsx", "typescript", "typescript.tsx"],
      \   "mapping": 1,
+     \ })
+  call s:RegisterLSP({
+     \   "name": "typescript-language-server without mapping",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
+     \   "whitelist": ["javascript"],
+     \   "executable_name": "typescript-language-server",
      \ })
 
   " yarn add vim-language-server
