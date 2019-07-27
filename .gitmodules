@@ -28,3 +28,6 @@
 [submodule ".rubocop/plugins/rubocop-daemon"]
 	path = .rubocop/plugins/rubocop-daemon
 	url = https://github.com/fohte/rubocop-daemon.git
+[submodule ".goenv"]
+	path = .goenv
+	url = https://github.com/syndbg/goenv.git

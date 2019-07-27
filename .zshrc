@@ -12,10 +12,6 @@ export EDITOR=vim
 export GIT_EDITOR=vim
 export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --no-init --quit-if-one-screen"
 
-export GOROOT=$HOME/.go
-export GOBIN=$GOROOT/bin
-export GOPATH=$HOME/go
-
 # http://dsas.blog.klab.org/archives/50808759.html
 export GREP_COLOR='01;35'
 # export GREP_OPTIONS='--color=always'
@@ -161,6 +157,7 @@ bindkey -a 'q' push-line
 [ -f ~/.zsh/tmux.zsh           ] && source ~/.zsh/tmux.zsh
 [ -f ~/.zsh/filter.zsh         ] && source ~/.zsh/filter.zsh
 [ -f ~/.zsh/direnv.zsh         ] && source ~/.zsh/direnv.zsh
+[ -f ~/.zsh/goenv.zsh          ] && source ~/.zsh/goenv.zsh
 [ -f ~/.zsh/rbenv.zsh          ] && source ~/.zsh/rbenv.zsh
 [ -f ~/.zsh/nodenv.zsh         ] && source ~/.zsh/nodenv.zsh
 
