@@ -146,19 +146,17 @@ function! s:RegisterLSP(config) abort  " {{{
   if executable(executable_name)
     augroup MyConfigLsp  " {{{
       autocmd!
-      autocmd FileType * call s:DefineLSPMappings()
       autocmd FileType * call s:ResetLSPOmnifuncSet()
       autocmd InsertEnter * call s:SetLSPOmnifunc()
       autocmd User lsp_setup call s:EnableLSPs()
     augroup END  " }}}
 
-    let s:lsp_configs           = get(s:, "lsp_configs", []) + [a:config]
-    let s:lsp_filetypes         = get(s:, "lsp_filetypes", []) + a:config.whitelist
-    let s:lsp_mapping_filetypes = get(s:, "lsp_mapping_filetypes", [])
+    let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
+    let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
 
-    if has_key(a:config, "mapping")
-      let s:lsp_mapping_filetypes = s:lsp_mapping_filetypes + a:config.whitelist
-      call remove(a:config, "mapping")
+    if has_key(a:config, "use_definition")
+      call s:UseLSPDefinition(a:config.whitelist)
+      call remove(a:config, "use_definition")
     endif
 
     call add(s:lsps, { "name": a:config.name, "available": 1 })
@@ -173,13 +171,13 @@ function! s:EnableLSPs() abort  " {{{
   endfor
 endfunction  " }}}
 
-function! s:DefineLSPMappings() abort  " {{{
-  let filetype_patterns = map(copy(s:lsp_mapping_filetypes), { _, filetype -> "^" . filetype . "$" })
-  let filetype_pattern = '\v' . join(filetype_patterns, "|")
+function! s:UseLSPDefinition(filetypes) abort  " {{{
+  let pattern = join(a:filetypes, ",")
 
-  if &filetype =~# filetype_pattern
-    nmap <buffer> g] <plug>(lsp-definition)
-  endif
+  execute "augroup MyConfigLspDefinition" . join(a:filetypes, "")
+    autocmd!
+    execute "autocmd FileType " . pattern . " nmap <buffer> g] <Plug>(lsp-definition)"
+  augroup END
 endfunction  " }}}
 
 " Overwrite other plugins' settings
@@ -499,6 +497,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "name": "gopls",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "gopls -mode stdio"] },
      \   "whitelist": ["go"],
+     \   "use_definition": 1,
      \ })
 
   " yarn add vscode-html-languageserver-bin
@@ -535,10 +534,10 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "name": "typescript-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
      \   "whitelist": ["javascript.jsx", "typescript", "typescript.tsx"],
-     \   "mapping": 1,
+     \   "use_definition": 1,
      \ })
   call s:RegisterLSP({
-     \   "name": "typescript-language-server without mapping",
+     \   "name": "typescript-language-server without using definition",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
      \   "whitelist": ["javascript"],
      \   "executable_name": "typescript-language-server",
@@ -549,7 +548,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "name": "vim-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "vim-language-server --stdio"] },
      \   "whitelist": ["vim"],
-     \   "mapping": 1,
+     \   "use_definition": 1,
      \ })
 
   " yarn add vue-language-server
@@ -558,7 +557,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "vls"] },
      \   "initialization_options": { "diagnostics": "true" },
      \   "whitelist": ["vue"],
-     \   "mapping": 1,
+     \   "use_definition": 1,
      \   "executable_name": "vls",
      \ })
 
