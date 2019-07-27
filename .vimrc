@@ -555,12 +555,13 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "executable_name": "vls",
      \ })
 
+  " Disable because something is wrong and an error (-32603) occurs
   " yarn add yaml-language-server
-  call s:RegisterLSP({
-     \   "name": "yaml-language-server",
-     \   "cmd": { server_info -> [&shell, &shellcmdflag, "yaml-language-server --stdio"] },
-     \   "whitelist": ["yaml"],
-     \ })
+  " call s:RegisterLSP({
+  "   \   "name": "yaml-language-server",
+  "   \   "cmd": { server_info -> [&shell, &shellcmdflag, "yaml-language-server --stdio"] },
+  "   \   "whitelist": ["yaml", "eruby.yaml"],
+  "   \ })
 endif  " }}}
 " }}}
 
