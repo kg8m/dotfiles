@@ -494,6 +494,13 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "whitelist": ["css", "less", "sass"],
      \ })
 
+  " go get -u golang.org/x/tools/cmd/gopls
+  call s:RegisterLSP({
+     \   "name": "gopls",
+     \   "cmd": { server_info -> [&shell, &shellcmdflag, "gopls -mode stdio"] },
+     \   "whitelist": ["go"],
+     \ })
+
   " yarn add vscode-html-languageserver-bin
   call s:RegisterLSP({
      \   "name": "html-languageserver",
@@ -1562,6 +1569,17 @@ if s:RegisterPlugin("tpope/vim-git")  " {{{
     autocmd!
     autocmd FileType gitcommit let b:did_ftplugin = 1
   augroup END  " }}}
+endif  " }}}
+
+" See also LSP configs
+if s:RegisterPlugin("fatih/vim-go")  " {{{
+  let g:go_def_mapping_enabled = 0
+  let g:go_doc_keywordprg_enabled = 0
+
+  call s:ConfigPlugin({
+     \   "lazy":  1,
+     \   "on_ft": "go",
+     \ })
 endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-haml", { "if": !IsGitCommit() && !IsGitHunkEdit() })
