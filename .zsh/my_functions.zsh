@@ -13,7 +13,6 @@ function execute_commands_with_echo {
 
 function execute_with_confirm {
   echo "\\n\\e[0;36mExecute:\\e[1;37m \`$@\`\\n"
-  echo
   read "response?Are you sure? [y/n]: "
 
   if [[ ${response} =~ ^y ]]; then
