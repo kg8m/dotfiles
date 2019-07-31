@@ -475,7 +475,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
     autocmd!
 
     " References for sass is broken
-    autocmd WinEnter * let g:lsp_highlight_references_enabled = (&filetype != "sass")
+    autocmd BufEnter,BufWinEnter,WinEnter * let g:lsp_highlight_references_enabled = (&filetype != "sass")
   augroup END  " }}}
 
   " yarn add bash-language-server
