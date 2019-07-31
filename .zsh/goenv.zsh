@@ -4,6 +4,6 @@ if [ -d ~/.goenv ]; then
 
   eval "$( goenv init - )"
 
-  export PATH="$GOROOT/bin:$PATH"
-  export PATH="$GOPATH/bin:$PATH"
+  export PATH=$GOROOT/bin:$PATH
+  export PATH=$GOPATH/bin:$PATH
 fi
