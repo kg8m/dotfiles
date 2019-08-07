@@ -36,8 +36,6 @@ function retriable_execute_with_confirm {
 
     if [[ ${response} =~ ^y ]]; then
       retriable_execute_with_confirm $@
-    else
-      echo
     fi
   fi
 }
