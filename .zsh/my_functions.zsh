@@ -20,6 +20,7 @@ function execute_with_confirm {
     eval $@
   else
     export __execute_with_confirm_executed=""
+    echo "Canceled."
   fi
 }
 
