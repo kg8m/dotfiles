@@ -25,8 +25,11 @@ function execute_with_confirm {
 
 function retriable_execute_with_confirm {
   execute_with_confirm "$@"
+  local result=$?
 
   if [[ "$__execute_with_confirm_executed" = "1" ]]; then
+    echo
+    [[ $result = 0 ]] && echo "👼 Succeeded." || echo "👿 Failed."
     echo
     read "response?Retry? [y/n]: "
 
