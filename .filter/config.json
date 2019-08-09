@@ -1,4 +1,6 @@
 {
+  "Prompt": ">",
+  "StickySelection": true,
   "Keymap": {
     "ArrowLeft": "peco.BackwardChar",
     "ArrowRight": "peco.ForwardChar",
@@ -19,5 +21,6 @@
     "Query": ["green", "bold"],
     "Matched": ["red"]
   },
+  "Layout": "bottom-up",
   "InitialFilter": "Regexp"
 }
