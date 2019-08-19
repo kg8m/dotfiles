@@ -50,7 +50,8 @@ chmod = "!f() {\
 clone-with-submodules = clone --recursive
 
 shallow-clone = "!f() {\
-  git sh \"execute_with_echo git clone --single-branch --depth 1 $@\";\
+  arguments=\"$@\";\
+  git sh \"execute_with_echo git clone --single-branch --depth 1 ${arguments}\";\
 }; f"
 
 # checkout
