@@ -583,6 +583,20 @@ if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  "
   let g:ale_lint_on_text_changed = 0
   let g:ale_open_list = 0
 
+  " go get github.com/golangci/golangci-lint/cmd/golangci-lint
+  " go get golang.org/x/tools/cmd/goimports
+  let g:ale_linters = {
+    \   "go": ["golangci-lint"],
+    \ }
+  let g:ale_fixers = {
+    \   "go": ["goimports"],
+    \ }
+
+  augroup MyConfigAle  " {{{
+    autocmd!
+    autocmd FileType go let b:ale_fix_on_save = 1
+  augroup END  " }}}
+
   " gem install rubocop-daemon
   " git submodule update .rubocop/plugins/rubocop-daemon
   " ln -s ~/bin/rubocop-daemon-wrapper ~/dotfiles/.rubocop/plugins/rubocop-daemon/bin/rubocop-daemon-wrapper
@@ -1573,7 +1587,7 @@ endif  " }}}
 " See also LSP configs
 if s:RegisterPlugin("fatih/vim-go")  " {{{
   let g:go_code_completion_enabled = 0
-  let g:go_fmt_command = "goimports"
+  let g:go_fmt_autosave = 0
   let g:go_doc_keywordprg_enabled = 0
   let g:go_def_mapping_enabled = 0
 
