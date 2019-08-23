@@ -1,4 +1,4 @@
-builtin command -v peco > /dev/null || return
+which peco > /dev/null 2>&1 || return
 
 fpath=(~/.filter/anyframe(N-/) $fpath)
 
