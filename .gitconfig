@@ -227,7 +227,7 @@ diff-branch-from = "!f() {\
   git sh \"execute_with_confirm '${command}'\";\
 }; f"
 
-open-changed-files-from = "!f() {\
+changed-files-from = "!f() {\
   target=$1;\
   \
   if [[ ! \"${target}\" ]]; then\
@@ -236,8 +236,8 @@ open-changed-files-from = "!f() {\
   fi;\
   \
   current=$( git rev-parse --abbrev-ref '@{upstream}' );\
-  command=\"vim \\$( git diff --name-only ${@:2:($#-1)} origin/${target}...${current} )\";\
-  git sh \"execute_with_confirm '${command}'\";\
+  command=\"git diff --name-only ${@:2:($#-1)} origin/${target}...${current}\";\
+  git sh \"execute_with_echo '${command}'\";\
 }; f"
 
 # stash
