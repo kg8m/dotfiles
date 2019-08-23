@@ -44,5 +44,5 @@ alias watch="watch --color"
 
 alias reload="source ~/.zshrc; echo \"~/.zshrc sourced.\""
 
-# never use tmuxinator
+# Never use tmuxinator
 alias mux="attach_or_new_tmux"
