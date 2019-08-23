@@ -2526,8 +2526,6 @@ command! -range Translate <line1>,<line2>!trans -b
 
 " ----------------------------------------------
 " Keymappings  " {{{
-nnoremap <Leader>r :<C-u>source $HOME/.vimrc<Cr>
-
 nnoremap <Leader>v :<C-u>vsplit<Cr>
 nnoremap <Leader>h :<C-u>split<Cr>
 
