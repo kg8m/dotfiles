@@ -361,8 +361,8 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
     let pattern = "^" . escape(a:ctx.base, '~"\.^$[]*')
 
     for [source_name, matches] in sort(items(a:matches), { a, b -> a[0] > b[0] ? 1 : -1 })
-      " XXX: `user_data` generated from solargraph is invalid and unintentionally deletes following characters at completion
-      if source_name =~# "solargraph"
+      " XXX: `user_data` generated from some servers is invalid and unintentionally deletes following characters at completion
+      if source_name =~# 'gopls\|solargraph'
         for item in matches.items
           if has_key(item, "user_data")
             call asyncomplete#log("kg8m customized preprocessor", 'Remove user_data for "' . item.word . '": ' . string(item.user_data))
