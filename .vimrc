@@ -401,17 +401,6 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-if s:RegisterPlugin("prabirshrestha/asyncomplete-necosyntax.vim")  " {{{
-  augroup MyConfigAsyncompleteNecosyntax  " {{{
-    autocmd!
-    autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#necosyntax#get_source_options({
-          \   "name": "asyncomplete_source_03_necosyntax",
-          \   "whitelist": ["*"],
-          \   "completor": function("asyncomplete#sources#necosyntax#completor"),
-          \ }))
-  augroup END  " }}}
-endif  " }}}
-
 if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
   augroup MyConfigAsyncompleteNeosnippet  " {{{
     autocmd!
@@ -435,7 +424,6 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
 endif  " }}}
 
 call s:RegisterPlugin("prabirshrestha/asyncomplete-lsp.vim")
-call s:RegisterPlugin("Shougo/neco-syntax")
 
 if s:RegisterPlugin("Shougo/neosnippet")  " {{{
   function! s:ConfigPluginOnSource_neosnippet() abort  " {{{
