@@ -167,4 +167,14 @@ compinit
 export ENHANCD_FILTER=filter
 [ -f ~/.zsh/enhancd/init.sh ] && source ~/.zsh/enhancd/init.sh
 
+function cd_with_mkdir() {
+  if [[ ! "$@" = "" ]] && [ ! -d "$@" ]; then
+    echo "$@ not exists"
+    execute_with_confirm "mkdir -p \"$@\""
+  fi
+
+  __enhancd::cd "$@"
+}
+alias cd="cd_with_mkdir"
+
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
