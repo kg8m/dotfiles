@@ -2157,6 +2157,20 @@ if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() && !IsGitCommit() && !IsG
      \ })
 endif  " }}}
 
+if s:RegisterPlugin("benmills/vimux-golang", { "if": OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+  augroup MyConfigVimuxGolang  " {{{
+    autocmd!
+    autocmd FileType go nmap <buffer> <leader>T :GolangTestCurrentPackage<Cr>
+    autocmd FileType go nmap <buffer> <leader>t :GolangTestFocused<Cr>
+    autocmd FileType go nmap <buffer> <leader>r :GolangRun<Cr>
+  augroup END  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": ["GolangTestCurrentPackage", "GolangTestFocused", "GolangRun"],
+     \ })
+endif  " }}}
+
 if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
   " https://github.com/vim-jp/vital.vim/blob/master/doc/vital/Async/Promise.txt
   function! s:Wait(ms) abort  " {{{
