@@ -575,14 +575,22 @@ if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  "
   " go get golang.org/x/tools/cmd/goimports
   let g:ale_linters = {
     \   "go": ["golangci-lint"],
+    \   "javascript": ["eslint"],
+    \   "ruby": ["ruby", "rubocop"],
+    \   "typescript": ["eslint"],
     \ }
   let g:ale_fixers = {
     \   "go": ["goimports"],
+    \   "javascript": ["eslint"],
+    \   "ruby": ["rubocop"],
+    \   "typescript": ["eslint"],
     \ }
 
   augroup MyConfigAle  " {{{
     autocmd!
     autocmd FileType go let b:ale_fix_on_save = 1
+    autocmd FileType javascript,typescript let b:ale_fix_on_save = !!$FIX_ON_SAVE_JS
+    autocmd FileType ruby let b:ale_fix_on_save = !!$FIX_ON_SAVE_RUBY
   augroup END  " }}}
 
   " gem install rubocop-daemon
