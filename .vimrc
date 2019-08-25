@@ -581,9 +581,9 @@ if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  "
     \ }
   let g:ale_fixers = {
     \   "go": ["goimports"],
-    \   "javascript": ["eslint"],
+    \   "javascript": ["prettier", "eslint"],
     \   "ruby": ["rubocop"],
-    \   "typescript": ["eslint"],
+    \   "typescript": ["prettier", "eslint"],
     \ }
 
   augroup MyConfigAle  " {{{
