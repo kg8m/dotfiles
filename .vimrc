@@ -1958,7 +1958,7 @@ if s:RegisterPlugin("mhinz/vim-startify", { "if": !IsGitCommit() && !IsGitHunkEd
 endif  " }}}
 
 if s:RegisterPlugin("kopischke/vim-stay", { "if": !IsGitCommit() })  " {{{
-  set viewoptions=cursor,folds
+  set viewoptions=cursor
 endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-surround")
