@@ -1558,7 +1558,7 @@ if s:RegisterPlugin("easymotion/vim-easymotion")  " {{{
   let g:EasyMotion_skipfoldedline   = 0
 endif  " }}}
 
-call s:RegisterPlugin("thinca/vim-ft-diff_fold")
+call s:RegisterPlugin("thinca/vim-ft-diff_fold", { "if": !IsGitCommit() && !IsGitHunkEdit() })
 call s:RegisterPlugin("thinca/vim-ft-help_fold")
 
 if s:RegisterPlugin("tpope/vim-fugitive", { "if": OnGitDir() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
