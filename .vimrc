@@ -593,6 +593,8 @@ if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  "
     autocmd FileType ruby let b:ale_fix_on_save = !!$FIX_ON_SAVE_RUBY
   augroup END  " }}}
 
+  let g:ale_go_golangci_lint_package = 1
+
   " gem install rubocop-daemon
   " git submodule update .rubocop/plugins/rubocop-daemon
   " ln -s ~/bin/rubocop-daemon-wrapper ~/dotfiles/.rubocop/plugins/rubocop-daemon/bin/rubocop-daemon-wrapper
