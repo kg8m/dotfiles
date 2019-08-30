@@ -595,17 +595,17 @@ if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  "
 
   let g:ale_go_golangci_lint_package = 1
 
+  " yarn add eslint_d
+  if executable("eslint_d")
+    let g:ale_javascript_eslint_use_global = 1
+    let g:ale_javascript_eslint_executable = "eslint_d"
+  endif
+
   " gem install rubocop-daemon
   " git submodule update .rubocop/plugins/rubocop-daemon
   " ln -s ~/bin/rubocop-daemon-wrapper ~/dotfiles/.rubocop/plugins/rubocop-daemon/bin/rubocop-daemon-wrapper
   if executable("rubocop-daemon") && executable("rubocop-daemon-wrapper")
     let g:ale_ruby_rubocop_executable = "rubocop-daemon-wrapper"
-  endif
-
-  " yarn add eslint_d
-  if executable("eslint_d")
-    let g:ale_javascript_eslint_use_global = 1
-    let g:ale_javascript_eslint_executable = "eslint_d"
   endif
 endif  " }}}
 
