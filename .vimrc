@@ -1430,8 +1430,7 @@ if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
     autocmd!
     autocmd FileType eruby let b:argwrap_tail_comma_braces = "[{"
     autocmd FileType ruby  let b:argwrap_tail_comma_braces = "[{"
-    autocmd FileType vim   let b:argwrap_line_prefix = '\'
-    autocmd FileType vim   let b:argwrap_tail_comma_braces = "[{"
+    autocmd FileType vim   let b:argwrap_tail_comma_braces = "[{" | let b:argwrap_line_prefix = '\'
   augroup END  " }}}
 
   call s:ConfigPlugin({
@@ -1815,9 +1814,13 @@ endif  " }}}
 if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   augroup MyConfigRubytest  " {{{
     autocmd!
-    autocmd FileType ruby nmap <buffer> <leader>T <Plug>RubyFileRun
-    autocmd FileType ruby nmap <buffer> <leader>t <Plug>RubyTestRun
+    autocmd FileType ruby call s:SetupRubyTestMappings()
   augroup END  " }}}
+
+  function! s:SetupRubyTestMappings() abort  " {{{
+    nmap <buffer> <leader>T <Plug>RubyFileRun
+    nmap <buffer> <leader>t <Plug>RubyTestRun
+  endfunction  " }}}
 
   let g:no_rubytest_mappings = 1
   let g:rubytest_in_vimshell = 1
@@ -2069,9 +2072,13 @@ call s:RegisterPlugin("cespare/vim-toml", { "if": !IsGitCommit() && !IsGitHunkEd
 if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   augroup MyConfigTurbux  " {{{
     autocmd!
-    autocmd FileType ruby nmap <buffer> <leader>T <Plug>SendTestToTmux
-    autocmd FileType ruby nmap <buffer> <leader>t <Plug>SendFocusedTestToTmux
+    autocmd FileType ruby call s:SetupTurbuxMappings()
   augroup END  " }}}
+
+  function! s:SetupTurbuxMappings() abort  " {{{
+    nmap <buffer> <leader>T <Plug>SendTestToTmux
+    nmap <buffer> <leader>t <Plug>SendFocusedTestToTmux
+  endfunction  " }}}
 
   let g:no_turbux_mappings = 1
   let g:turbux_test_type   = ""  " FIXME: Escape undefined g:turbux_test_type error
@@ -2158,10 +2165,14 @@ endif  " }}}
 if s:RegisterPlugin("benmills/vimux-golang", { "if": OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   augroup MyConfigVimuxGolang  " {{{
     autocmd!
-    autocmd FileType go nmap <buffer> <leader>T :GolangTestCurrentPackage<Cr>
-    autocmd FileType go nmap <buffer> <leader>t :GolangTestFocused<Cr>
-    autocmd FileType go nmap <buffer> <leader>r :GolangRun<Cr>
+    autocmd FileType go call s:SetupVimuxGolangMappings()
   augroup END  " }}}
+
+  function! s:SetupVimuxGolangMappings() abort  " {{{
+    nnoremap <buffer> <leader>T :GolangTestCurrentPackage<Cr>
+    nnoremap <buffer> <leader>t :GolangTestFocused<Cr>
+    nnoremap <buffer> <leader>r :GolangRun<Cr>
+  endfunction  " }}}
 
   call s:ConfigPlugin({
      \   "lazy":   1,
@@ -2318,8 +2329,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
 
   augroup MySetupFormatoptions  " {{{
     autocmd!
-    autocmd FileType * setlocal fo+=q fo+=2 fo+=l fo+=j
-    autocmd FileType * setlocal fo-=t fo-=c fo-=a fo-=b
+    autocmd FileType * setlocal fo+=q fo+=2 fo+=l fo+=j | setlocal fo-=t fo-=c fo-=a fo-=b
     autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
   augroup END  " }}}
 
@@ -2492,9 +2502,7 @@ vnoremap g] "gy:tjump <C-r>"<Cr>
 " Auto reload
 augroup MyCheckTimeHook  " {{{
   autocmd!
-  autocmd InsertEnter * checktime
-  autocmd InsertLeave * checktime
-  autocmd CursorHold  * checktime
+  autocmd InsertEnter,InsertLeave,CursorHold,WinEnter,BufWinEnter * checktime
 augroup END  " }}}
 
 set whichwrap=b,s,h,l,<,>,[,],~
