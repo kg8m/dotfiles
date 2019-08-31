@@ -2305,7 +2305,7 @@ set listchars=tab:>\ ,eol:\ ,trail:_
 " https://teratail.com/questions/24046
 augroup MyLimitLargeFileSyntax  " {{{
   autocmd!
-  autocmd Syntax * if 10000 < line("$") | syntax sync minlines=1000 | endif
+  autocmd Syntax * if line("$") > 10000 | syntax sync minlines=1000 | endif
 augroup END  " }}}
 " }}}
 
