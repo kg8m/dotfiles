@@ -1774,8 +1774,7 @@ if s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() && !IsGitCommit() &&
 
   augroup MySetupRails
     autocmd!
-    autocmd BufEnter,BufWinEnter,WinEnter * 
-          \ if RailsDetect() | call rails#buffer_setup() | endif
+    autocmd BufEnter,BufWinEnter,WinEnter * if RailsDetect() | call rails#buffer_setup() | endif
   augroup END
 
   " Prevent `rails.vim` from defining keymappings
