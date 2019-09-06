@@ -340,6 +340,18 @@ call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 call s:RegisterPlugin("kg8m/.vim")
 
 " Completion, LSP  " {{{
+let s:asyncomplete_events = [
+  \   "BufEnter",
+  \   "BufWinEnter",
+  \   "WinEnter",
+  \   "BufWritePost",
+  \   "CursorHold",
+  \   "CursorHoldI",
+  \   "TextChanged",
+  \   "TextChangedI",
+  \   "VimEnter",
+  \ ]
+
 call s:RegisterPlugin("prabirshrestha/async.vim")
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
@@ -376,6 +388,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
           \   "name": "asyncomplete_source_02_buffer",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#buffer#completor"),
+          \   "events": s:asyncomplete_events,
           \ }))
   augroup END  " }}}
 endif  " }}}
@@ -386,7 +399,8 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
     autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
           \   "name": "asyncomplete_source_file",
           \   "whitelist": ["*"],
-          \   "completor": function("asyncomplete#sources#file#completor")
+          \   "completor": function("asyncomplete#sources#file#completor"),
+          \   "events": s:asyncomplete_events,
           \ }))
   augroup END  " }}}
 endif  " }}}
@@ -398,6 +412,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
           \   "name": "asyncomplete_source_01_neosnippet",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#neosnippet#completor"),
+          \   "events": s:asyncomplete_events,
           \ }))
   augroup END  " }}}
 endif  " }}}
@@ -409,6 +424,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
           \   "name": "asyncomplete_source_tags",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#tags#completor"),
+          \   "events": s:asyncomplete_events,
           \ }))
   augroup END  " }}}
 endif  " }}}
