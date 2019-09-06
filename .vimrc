@@ -361,16 +361,6 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
     let pattern = "^" . escape(a:ctx.base, '~"\.^$[]*')
 
     for [source_name, matches] in sort(items(a:matches), { a, b -> a[0] > b[0] ? 1 : -1 })
-      " XXX: `user_data` generated from some servers is invalid and unintentionally deletes following characters at completion
-      if source_name =~# 'gopls\|solargraph'
-        for item in matches.items
-          if has_key(item, "user_data")
-            call asyncomplete#log("kg8m customized preprocessor", 'Remove user_data for "' . item.word . '": ' . string(item.user_data))
-            call remove(item, "user_data")
-          endif
-        endfor
-      endif
-
       call extend(sorted_items, filter(matches.items, { index, item -> item.word =~? pattern }))
     endfor
 
@@ -458,6 +448,10 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   let g:lsp_diagnostics_enabled = 0
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand("~/tmp/vim-lsp.log")
+
+  " https://github.com/prabirshrestha/asyncomplete.vim/issues/156
+  " Supporting for textEdit is unstable, so sometimes characters are removed unintantionally
+  let g:lsp_text_edit_enabled = 0
 
   augroup MyConfigVimLsp  " {{{
     autocmd!
