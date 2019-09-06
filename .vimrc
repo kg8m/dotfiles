@@ -1330,7 +1330,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     function! s:ConfigPluginOnPostSource_vim_unite_giti() abort  " {{{
       function! s:AddActionsToUniteGiti() abort  " {{{
         let kind = unite#kinds#giti#status#define()
-        let kind.action_table.file_delete = {
+        let kind.action_table.delete = {
           \   "description":         "delete/remove directories/files",
           \   "is_selectable":       1,
           \   "is_invalidate_cache": 1,
@@ -1341,7 +1341,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           \   "is_invalidate_cache": 1,
           \ }
 
-        function! kind.action_table.file_delete.func(candidates) abort  " {{{
+        function! kind.action_table.delete.func(candidates) abort  " {{{
           let files   = map(copy(a:candidates), "v:val.action__path")
           let command = printf("yes | rm -r %s", join(files))
 
@@ -1354,8 +1354,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
 
           return giti#system(command)
         endfunction  " }}}
-
-        let kind.alias_table.directory_delete = "file_delete"
       endfunction  " }}}
       call s:AddActionsToUniteGiti()
     endfunction  " }}}
