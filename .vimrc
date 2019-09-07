@@ -2242,7 +2242,12 @@ endif  " }}}
 
 " Finish plugin manager initialization  " {{{
 call s:SetupPluginEnd()
+
+" Disable filetype before enabling filetype
+" https://gitter.im/vim-jp/reading-vimrc?at=5d73bf673b1e5e5df16c0559
+filetype off
 filetype plugin indent on
+
 syntax enable
 
 if s:InstallablePluginExists(["vimproc"])
