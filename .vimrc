@@ -252,7 +252,7 @@ function! RubyGemPaths() abort  " {{{
 
   let command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
   let command = command_prefix . " -e 'print Gem.path.join(\"\\n\")'"
-  let s:ruby_gem_paths = split(system(command), "\\n")
+  let s:ruby_gem_paths = split(system(command), '\n')
   return s:ruby_gem_paths
 endfunction  " }}}
 
@@ -279,8 +279,8 @@ endfunction  " }}}
 
 function! RemoteCopy(text) abort  " {{{
   let text = a:text
-  let text = substitute(text, "^\\n\\+", "", "")
-  let text = substitute(text, "\\n\\+$", "", "")
+  let text = substitute(text, '^\n\+', "", "")
+  let text = substitute(text, '\n\+$', "", "")
   let text = substitute(text, '\', '\\\\', "g")
 
   if text =~# "\n"
@@ -1640,7 +1640,7 @@ endif  " }}}
 if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:markdown_quote_syntax_filetypes = {
     \    "css" : {
-    \      "start" : "\\%(css\\|scss\\|sass\\)",
+    \      "start" : '\%(css\|scss\|sass\)',
     \   },
     \    "haml": {
     \      "start": "haml",
