@@ -1462,26 +1462,6 @@ if s:RegisterPlugin("haya14busa/vim-asterisk")  " {{{
   endif
 endif  " }}}
 
-if s:RegisterPlugin("Townk/vim-autoclose", { "if": 0 })  " {{{
-  " Annoying to type "<<" or to type "<"
-  " let g:AutoClosePairs_add = "<>"
-
-  " Disable default mappings
-  let g:AutoCloseSelectionWrapPrefix = "<Leader>autoclose"
-
-  " https://github.com/Townk/vim-autoclose/blob/master/plugin/AutoClose.vim#L29
-  if has("mac")
-    imap <silent> <Esc>OA <Up>
-    imap <silent> <Esc>OB <Down>
-    imap <silent> <Esc>OC <Right>
-    imap <silent> <Esc>OD <Left>
-    imap <silent> <Esc>OH <Home>
-    imap <silent> <Esc>OF <End>
-    imap <silent> <Esc>[5~ <PageUp>
-    imap <silent> <Esc>[6~ <PageDown>
-  endif
-endif  " }}}
-
 if s:RegisterPlugin("Chiel92/vim-autoformat", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:formatdef_jsbeautify_javascript = '"js-beautify -f -s2 -"'
 endif  " }}}
