@@ -144,12 +144,7 @@ function! s:RegisterLSP(config) abort  " {{{
   endif
 
   if executable(executable_name)
-    augroup MyConfigLsp  " {{{
-      autocmd!
-      autocmd FileType * call s:ResetLSPOmnifuncSet()
-      autocmd InsertEnter * call s:SetLSPOmnifunc()
-      autocmd User lsp_setup call s:EnableLSPs()
-    augroup END  " }}}
+    call s:DefineLSPHooks()
 
     let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
     let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
@@ -163,6 +158,21 @@ function! s:RegisterLSP(config) abort  " {{{
   else
     call add(s:lsps, { "name": a:config.name, "available": 0 })
   endif
+endfunction  " }}}
+
+function! s:DefineLSPHooks() abort  " {{{
+  if exists("s:is_lsp_hooks_defined")
+    return
+  endif
+
+  augroup MyLspHooks  " {{{
+    autocmd!
+    autocmd FileType * call s:ResetLSPOmnifuncSet()
+    autocmd InsertEnter * call s:SetLSPOmnifunc()
+    autocmd User lsp_setup call s:EnableLSPs()
+  augroup END  " }}}
+
+  let s:is_lsp_hooks_defined = 1
 endfunction  " }}}
 
 function! s:EnableLSPs() abort  " {{{
