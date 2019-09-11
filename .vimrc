@@ -2288,6 +2288,10 @@ set noshowmode
 set showcmd
 set redrawtime=5000
 
+if has("&cursorlineopt")
+  set cursorlineopt=number
+endif
+
 set scrolloff=15
 let g:sh_noisk = 1
 
