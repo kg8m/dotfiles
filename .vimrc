@@ -595,7 +595,7 @@ if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  "
   " go get github.com/golangci/golangci-lint/cmd/golangci-lint
   " go get golang.org/x/tools/cmd/goimports
   let g:ale_linters = {
-    \   "go": ["golangci-lint"],
+    \   "go": ["golangci-lint", "govet"],
     \   "javascript": ["eslint"],
     \   "ruby": ["ruby", "rubocop"],
     \   "typescript": ["eslint"],
