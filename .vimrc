@@ -2288,8 +2288,14 @@ set noshowmode
 set showcmd
 set redrawtime=5000
 
-if has("&cursorlineopt")
+if v:version >= 801 && has("patch2019")
+  set cursorline
   set cursorlineopt=number
+
+  augroup MyHighlightCursorline  " {{{
+    autocmd!
+    autocmd ColorScheme * highlight CursorLineNr ctermfg=yellow guifg=yellow
+  augroup END  " }}}
 endif
 
 set scrolloff=15
