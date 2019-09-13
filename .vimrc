@@ -1754,14 +1754,10 @@ if s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() && !IsGitCommit() &&
     let g:rails_projections = {}
   endif
 
-  let g:rails_projections["script/*.rb"] = {
-    \   "alternate": "test/script/{}_test.rb",
-    \   "test":      "test/script/{}_test.rb",
-    \ }
-  let g:rails_projections["script/*"] = {
-    \   "alternate": "test/script/{}_test.rb",
-    \   "test":      "test/script/{}_test.rb",
-    \ }
+  let g:rails_projections["script/*.rb"] = { "test": ["test/script/{}_test.rb", "spec/script/{}_spec.rb"] }
+  let g:rails_projections["script/*"]    = { "test": ["test/script/{}_test.rb", "spec/script/{}_spec.rb"] }
+  let g:rails_projections["test/script/*_test.rb"] = { "alternate": ["script/{}", "script/{}.rb"] }
+  let g:rails_projections["spec/script/*_spec.rb"] = { "alternate": ["script/{}", "script/{}.rb"] }
 
   if !exists("g:rails_path_additions")
     let g:rails_path_additions = []
