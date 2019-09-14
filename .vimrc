@@ -2061,6 +2061,7 @@ if s:RegisterPlugin("kana/vim-textobj-user")  " {{{
      \ })
 endif  " }}}
 
+call s:RegisterPlugin("tmux-plugins/vim-tmux")
 call s:RegisterPlugin("cespare/vim-toml", { "if": !IsGitCommit() && !IsGitHunkEdit() })
 
 if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
