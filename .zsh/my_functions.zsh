@@ -79,17 +79,6 @@ function attach_or_new_tmux {
   local session_name
   local response
 
-  # Check whether tmux is available or not; and create a dummy session
-  # https://github.com/tmuxinator/tmuxinator/issues/536
-  # > tmuxinator won't run untill another tmux session exists
-  # > the bug in tmux that was causing this issue has been fixed in master and will become part of that tool's 2.6 release
-  tmux ls &> /dev/null
-
-  if [ $? != 0 ]; then
-    tmux start &> /dev/null
-    tmux new-session -d -s dummy &> /dev/null
-  fi
-
   if (($# == 0)); then
     session_name=default
   else
