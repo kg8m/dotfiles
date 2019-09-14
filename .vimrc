@@ -36,7 +36,7 @@ scriptencoding utf-8
 function! UpdatePlugins() abort  " {{{
   call dein#update()
 
-  let initiali_input = '!Same\\ revision'
+  let initial_input = '!Same\\ revision'
     \   . '\ !Current\\ branch\\ master\\ is\\ up\\ to\\ date.'
     \   . '\ !^$'
     \   . '\ !(*/*)\\ [+'
@@ -48,7 +48,7 @@ function! UpdatePlugins() abort  " {{{
     \   . '\ !^Fast-forwarded\\ master\\ to'
     \   . '\ !^From\\ https://'
 
-  execute "Unite dein/log -buffer-name=update_plugins -input=" . initiali_input
+  execute "Unite dein/log -buffer-name=update_plugins -input=" . initial_input
 
   let @/ = "Updated"
 endfunction  " }}}
