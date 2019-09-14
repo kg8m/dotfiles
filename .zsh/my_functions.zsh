@@ -76,18 +76,16 @@ function tmux_setup_default {
 }
 
 function attach_or_new_tmux {
-  local session_name
-  local response
-
   if (($# == 0)); then
-    session_name=default
+    local session_name=default
   else
-    session_name=$1
+    local session_name=$1
   fi
 
   tmux has-session -t $session_name &> /dev/null
 
   if [ $? != 0 ]; then
+    local response
     read 'response?Create new session in directory `'$( pwd )'` with session name `'$session_name'`? [y/n]: '
 
     if [[ $response =~ ^y ]]; then
