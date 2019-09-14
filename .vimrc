@@ -4,8 +4,6 @@ let s:vim_root_path       = expand($HOME . "/.vim")
 let s:plugins_path        = expand(s:vim_root_path . "/plugins")
 let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/dein.vim")
 
-let s:is_native_keyword_match_count_supported = v:version >= 801 && has("patch1270")
-
 " ----------------------------------------------
 " Encoding  " {{{
 " http://www.kawaz.jp/pukiwiki/?vim#cb691f26
@@ -1430,16 +1428,6 @@ if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
   unlet s:alignta_comment_leadings
 endif  " }}}
 
-if s:RegisterPlugin("osyo-manga/vim-anzu", { "if": !s:is_native_keyword_match_count_supported })  " {{{
-  nmap n <Plug>(anzu-n-with-echo)
-  nmap N <Plug>(anzu-N-with-echo)
-  vmap n n<Plug>(anzu-update-search-status)
-  vmap N N<Plug>(anzu-update-search-status)
-  nnoremap <Leader>/ :<C-u>nohlsearch<Cr>:call anzu#clear_search_status()<Cr>
-
-  " See also asterisk
-endif  " }}}
-
 if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
   nnoremap <Leader>a :ArgWrap<Cr>
 
@@ -1459,17 +1447,10 @@ if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("haya14busa/vim-asterisk")  " {{{
-  if s:is_native_keyword_match_count_supported
-    map *  <Plug>(asterisk-z*)
-    map #  <Plug>(asterisk-z#)
-    map g* <Plug>(asterisk-gz*)
-    map g# <Plug>(asterisk-gz#)
-  else
-    map *  <Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
-    map #  <Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
-    map g* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
-    map g# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
-  endif
+  map *  <Plug>(asterisk-z*)
+  map #  <Plug>(asterisk-z#)
+  map g* <Plug>(asterisk-gz*)
+  map g# <Plug>(asterisk-gz#)
 endif  " }}}
 
 if s:RegisterPlugin("Chiel92/vim-autoformat", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
@@ -2393,9 +2374,7 @@ set smartcase
 set incsearch
 set shortmess-=S
 
-if s:is_native_keyword_match_count_supported
-  nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
-endif
+nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
 
 nnoremap / /\v
 " }}}
