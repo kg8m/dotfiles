@@ -1801,15 +1801,7 @@ if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() && !IsGitHunkEdi
   augroup END  " }}}
 
   function! s:SaveSession() abort  " {{{
-    if s:IsSessionSavable()
       execute "SaveSession " . s:SessionName()
-    endif
-  endfunction  " }}}
-
-  function! s:IsSessionSavable() abort  " {{{
-    return bufname(1) != ".git/COMMIT_EDITMSG" &&
-         \ bufname(1) != ".git/addp-hunk-edit.diff" &&
-         \ bufname(1) != "Startify"
   endfunction  " }}}
 
   function! s:SessionName() abort  " {{{
