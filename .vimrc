@@ -2328,9 +2328,23 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
     autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 
     " http://d.hatena.ne.jp/gnarl/20120308/1331180615
-    autocmd InsertEnter * if !exists("w:last_fdm") | let w:last_fdm=&foldmethod | setlocal foldmethod=manual | endif
-    autocmd BufWritePost,FileWritePost,WinLeave * if exists("w:last_fdm") | let &foldmethod=w:last_fdm | unlet w:last_fdm | endif
+    autocmd InsertEnter * call s:SwitchToManualFolding()
+    autocmd BufWritePost,FileWritePost,WinLeave * call s:RestoreFoldmethod()
   augroup END  " }}}
+
+  function! s:SwitchToManualFolding() abort  " {{{
+    if !exists("w:last_fdm")
+      let w:last_fdm=&foldmethod
+      setlocal foldmethod=manual
+    endif
+  endfunction  " }}}
+
+  function! s:RestoreFoldmethod() abort  " {{{
+    if exists("w:last_fdm")
+      let &foldmethod=w:last_fdm
+      unlet w:last_fdm
+    endif
+  endfunction  " }}}
   " }}}
 
   augroup MyUpdateFiletypeAfterSave  " {{{
