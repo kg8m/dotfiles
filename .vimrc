@@ -2248,22 +2248,20 @@ set number
 set noshowmode
 set showcmd
 set redrawtime=5000
+set scrolloff=15
+set wrap
+set diffopt+=horizontal,context:10,iwhite
+set list
+set listchars=tab:>\ ,eol:\ ,trail:_
 
 if v:version >= 801 && has("patch2019")
   set cursorline
   set cursorlineopt=number
 endif
 
-set scrolloff=15
 " Cursor shapes
 let &t_SI = "\e[6 q"  " |
 let &t_EI = "\e[2 q"  " ▍
-
-set wrap
-set diffopt+=horizontal,context:10,iwhite
-
-set list
-set listchars=tab:>\ ,eol:\ ,trail:_
 
 " https://teratail.com/questions/24046
 augroup MyLimitLargeFileSyntax  " {{{
