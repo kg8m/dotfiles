@@ -2290,9 +2290,18 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
 
   augroup MySetupFormatoptions  " {{{
     autocmd!
-    autocmd FileType * setlocal fo+=q fo+=2 fo+=l fo+=j | setlocal fo-=t fo-=c fo-=a fo-=b
-    autocmd FileType text,markdown,moin setlocal fo-=r fo-=o
+    " Lazily set formatoptions to overwrite others
+    autocmd FileType * call s:Wait(300).then({ -> execute("call s:SetupFormatoptions()", "") })
   augroup END  " }}}
+
+  function! s:SetupFormatoptions() abort  " {{{
+    setlocal fo+=q fo+=2 fo+=l fo+=j
+    setlocal fo-=t fo-=c fo-=a fo-=b
+
+    if &filetype =~# '\v^(text|markdown|moin)$'
+      setlocal fo-=r fo-=o
+    endif
+  endfunction  " }}}
 
   augroup MySetupCinkeys  " {{{
     autocmd!
