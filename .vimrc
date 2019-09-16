@@ -76,7 +76,7 @@ function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
       call system("hg clone https://bitbucket.org/heavenshell/gundo.vim " . gundo_path)
     endif
 
-    execute "set runtimepath+=" . gundo_path
+    let &runtimepath .= "," . gundo_path
     let g:dein#name = a:plugin_name
 
     return 1
@@ -337,7 +337,7 @@ if has("vim_starting")
     call system("git clone https://github.com/Shougo/dein.vim " . s:plugin_manager_path)
   endif
 
-  execute "set runtimepath+=" . s:plugin_manager_path
+  let &runtimepath .= "," . s:plugin_manager_path
 endif
 
 call s:SetupPluginStart()
@@ -2411,7 +2411,7 @@ let s:swapdir = $HOME . "/tmp/.vimswap"
 if !isdirectory(s:swapdir)
   call mkdir(s:swapdir, "p")
 endif
-execute "set directory=" . s:swapdir
+let &directory = s:swapdir
 
 " Undo
 set hidden
@@ -2421,7 +2421,7 @@ let s:undodir = $HOME . "/tmp/.vimundo"
 if !isdirectory(s:undodir)
   call mkdir(s:undodir, "p")
 endif
-execute "set undodir=" . s:undodir
+let &undodir = s:undodir
 
 set wildmenu
 set wildmode=list:longest,full
