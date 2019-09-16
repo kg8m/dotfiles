@@ -183,7 +183,7 @@ endfunction  " }}}
 function! s:UseLSPDefinition(filetypes) abort  " {{{
   let pattern = join(a:filetypes, ",")
 
-  execute "augroup MyConfigLspDefinition" . join(a:filetypes, "")
+  execute "augroup MyEnableLspDefinition" . join(a:filetypes, "")
     autocmd!
     execute "autocmd FileType " . pattern . " nmap <buffer> g] <Plug>(lsp-definition)"
   augroup END
@@ -191,11 +191,11 @@ endfunction  " }}}
 
 " Lazily call this function to overwrite other plugins' settings
 function! s:SetLSPOmnifunc() abort  " {{{
-  if exists("b:lsp_omnifunc_set")
+  if exists("b:is_lsp_omnifunc_set")
     return
   endif
 
-  let b:lsp_omnifunc_set = 1
+  let b:is_lsp_omnifunc_set = 1
   let filetype_patterns = map(copy(s:lsp_filetypes), { _, filetype -> "^" . filetype . "$" })
   let filetype_pattern = '\v' . join(filetype_patterns, "|")
 
@@ -205,8 +205,8 @@ function! s:SetLSPOmnifunc() abort  " {{{
 endfunction  " }}}
 
 function! s:ResetLSPOmnifuncSet() abort  " {{{
-  if exists("b:lsp_omnifunc_set")
-    unlet b:lsp_omnifunc_set
+  if exists("b:is_lsp_omnifunc_set")
+    unlet b:is_lsp_omnifunc_set
   endif
 endfunction  " }}}
 " }}}
@@ -607,7 +607,7 @@ if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  "
     \   "typescript": ["prettier", "eslint"],
     \ }
 
-  augroup MyConfigAle  " {{{
+  augroup MyConfigAleFixOnSave  " {{{
     autocmd!
     autocmd FileType go let b:ale_fix_on_save = 1
     autocmd FileType javascript,typescript let b:ale_fix_on_save = !!$FIX_ON_SAVE_JS
@@ -1189,22 +1189,22 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         endfunction  " }}}
 
         function! s:GroupUniteShortcuts() abort  " {{{
-          let first_candidate                      = g:unite_source_menu_menus.shortcuts.candidates[0]
-          let temporary_unite_shortcuts_prefix     = s:UniteShortcutsPrefix(first_candidate[0])
-          let temporary_unite_shortcuts_candidates = []
+          let first_candidate      = g:unite_source_menu_menus.shortcuts.candidates[0]
+          let temporary_prefix     = s:UniteShortcutsPrefix(first_candidate[0])
+          let temporary_candidates = []
 
           for candidate in g:unite_source_menu_menus.shortcuts.candidates
             let prefix = s:UniteShortcutsPrefix(candidate[0])
 
-            if prefix != temporary_unite_shortcuts_prefix
-              call add(temporary_unite_shortcuts_candidates, ["", ""])
-              let temporary_unite_shortcuts_prefix = prefix
+            if prefix != temporary_prefix
+              call add(temporary_candidates, ["", ""])
+              let temporary_prefix = prefix
             endif
 
-            call add(temporary_unite_shortcuts_candidates, candidate)
+            call add(temporary_candidates, candidate)
           endfor
 
-          let g:unite_source_menu_menus.shortcuts.candidates = temporary_unite_shortcuts_candidates
+          let g:unite_source_menu_menus.shortcuts.candidates = temporary_candidates
         endfunction  " }}}
 
         call s:GroupUniteShortcuts()
@@ -1282,11 +1282,11 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
 
     function! s:ConfigPluginOnSource_unite_mark() abort  " {{{
       " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
-      let g:mark_increment_keys = [
+      let s:mark_increment_keys = [
         \   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
         \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
         \ ]
-      let g:unite_source_mark_marks = join(g:mark_increment_keys, "")
+      let g:unite_source_mark_marks = join(s:mark_increment_keys, "")
       let s:mark_increment_key_regexp = "^[" . g:unite_source_mark_marks . "]$"
 
       function! AutoMark() abort  " {{{
@@ -1297,14 +1297,14 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
           return
         endif
 
-        if !exists("g:mark_increment_index")
-          let g:mark_increment_index = 0
+        if !exists("s:mark_increment_index")
+          let s:mark_increment_index = 0
         else
-          let g:mark_increment_index = (g:mark_increment_index + 1) % len(g:mark_increment_keys)
+          let s:mark_increment_index = (s:mark_increment_index + 1) % len(s:mark_increment_keys)
         endif
 
-        execute "mark " . g:mark_increment_keys[g:mark_increment_index]
-        echo "Marked to " . g:mark_increment_keys[g:mark_increment_index]
+        execute "mark " . s:mark_increment_keys[s:mark_increment_index]
+        echo "Marked to " . s:mark_increment_keys[s:mark_increment_index]
       endfunction  " }}}
 
       function! s:DetectMarkIncrementKey() abort  " {{{
@@ -1312,7 +1312,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         let current_filepath    = expand("%")
         let current_line_number = line(".")
 
-        for mark_key in g:mark_increment_keys
+        for mark_key in s:mark_increment_keys
           let position = getpos("'" . mark_key)
 
           if position[0]
@@ -1333,7 +1333,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         return detected_mark_key
       endfunction  " }}}
 
-      execute "delmarks " . join(g:mark_increment_keys, "")
+      execute "delmarks " . join(s:mark_increment_keys, "")
     endfunction  " }}}
 
     call s:ConfigPlugin({
@@ -1436,7 +1436,7 @@ if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
 
   let g:argwrap_padded_braces = "{"
 
-  augroup MyConfigArgWrapAutocmd  " {{{
+  augroup MyConfigArgwrap  " {{{
     autocmd!
     autocmd FileType eruby let b:argwrap_tail_comma_braces = "[{"
     autocmd FileType ruby  let b:argwrap_tail_comma_braces = "[{"
@@ -1558,7 +1558,7 @@ call s:RegisterPlugin("kana/vim-gf-user")
 if s:RegisterPlugin("tpope/vim-git")  " {{{
   let g:gitcommit_cleanup = "scissors"
 
-  augroup MyPreventVimGitFromChangingSettings  " {{{
+  augroup MyDisableVimGitDefaultConfigs  " {{{
     autocmd!
     autocmd FileType gitcommit let b:did_ftplugin = 1
   augroup END  " }}}
@@ -1619,14 +1619,14 @@ if s:RegisterPlugin("rcmdnk/vim-markdown", { "if": !IsGitCommit() && !IsGitHunkE
   let g:vim_markdown_autowrite = 1
   let g:vim_markdown_folding_level = 10
 
-  function! s:MarkdownCustomFormatoptions() abort  " {{{
+  function! s:OverwriteMarkdownDefaultConfigs() abort  " {{{
     " Remove `r` from `formatoptions` (`r`: Automatically insert the current comment leader after hitting `<Enter>` in Insert mode)
     setlocal formatoptions-=r
   endfunction  " }}}
 
-  augroup MyResetMarkdownSettings  " {{{
+  augroup MyOverwriteMarkdownDefaultConfigs  " {{{
     autocmd!
-    autocmd InsertEnter * if &ft == "markdown" | call s:MarkdownCustomFormatoptions() | endif
+    autocmd InsertEnter * if &ft == "markdown" | call s:OverwriteMarkdownDefaultConfigs() | endif
   augroup END  " }}}
 
   call s:ConfigPlugin({
@@ -2431,9 +2431,9 @@ set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,
 
 " Ctags  " {{{
 if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
-  augroup MyCtagsAucocommands  " {{{
+  augroup MySetupCtags  " {{{
     autocmd!
-    autocmd VimEnter     * silent call s:Wait(300).then({ -> execute("call s:SetupTags()", "") })
+    autocmd VimEnter     * silent call s:Wait(300).then({ -> execute("call s:SetupTags()", "")
     autocmd VimEnter     * silent call s:Wait(500).then({ -> execute("call s:CreateAllCtags()", "") })
     autocmd BufWritePost * silent call s:CreateCtags(".")
     autocmd VimLeavePre  * silent call s:CleanupCtags()
@@ -2598,23 +2598,29 @@ if has("gui_running")
 
   " Save window's size and position
   " http://vim-users.jp/2010/01/hack120/
-  let s:save_window_file = expand("~/.vimwinpos")
-  augroup MySaveWindow  " {{{
-    autocmd!
-    autocmd VimLeavePre * call s:SaveWindow()
+  let s:old_save_window_info_filepath = expand("~/.vimwinpos")
+  let s:save_window_info_filepath = expand("~/.vim/gui-window-info")
 
-    function! s:SaveWindow() abort  " {{{
+  if filereadable(s:old_save_window_info_filepath)
+    call rename(s:old_save_window_info_filepath, s:save_window_info_filepath)
+  endif
+
+  augroup MySaveWindowSize  " {{{
+    autocmd!
+    autocmd VimLeavePre * call s:SaveWindowSize()
+
+    function! s:SaveWindowSize() abort  " {{{
       let options = [
         \ "set columns=" . &columns,
         \ "set lines=" . &lines,
         \ "winpos " . getwinposx() . " " . getwinposy(),
         \ ]
-      call writefile(options, s:save_window_file)
+      call writefile(options, s:save_window_info_filepath)
     endfunction  " }}}
   augroup END  " }}}
 
-  if has("vim_starting") && filereadable(s:save_window_file)
-    execute "source" s:save_window_file
+  if has("vim_starting") && filereadable(s:save_window_info_filepath)
+    execute "source" s:save_window_info_filepath
   endif
 endif
 " }}}
