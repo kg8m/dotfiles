@@ -2418,7 +2418,7 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
   function! s:SetupTags() abort  " {{{
     for ruby_gem_path in RubyGemPaths()
       if isdirectory(ruby_gem_path)
-        let &tags = &tags . "," . ruby_gem_path . "/tags"
+        let &tags .= "," . ruby_gem_path . "/tags"
       endif
     endfor
   endfunction  " }}}
