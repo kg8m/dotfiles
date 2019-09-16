@@ -2078,20 +2078,20 @@ if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() && !IsGitCommit() && !IsG
 
   function! s:ConfigPluginOnPostSource_vimux() abort  " {{{
     " Overwrite function: Always use current pane's next one
+    "   Original function:
+    "     function! _VimuxNearestIndex()
+    "       let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")
+    "
+    "       for view in views
+    "         if match(view, "(active)") == -1
+    "           return split(view, ":")[0]
+    "         endif
+    "       endfor
+    "
+    "       return -1
+    "     endfunction
     let func =<< trim VIM
-      " Original function:
-      "   function! _VimuxNearestIndex()
-      "     let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")
-      "
-      "     for view in views
-      "       if match(view, "(active)") == -1
-      "         return split(view, ":")[0]
-      "       endif
-      "     endfor
-      "
-      "     return -1
-      "   endfunction
-      function! _VimuxNearestIndex() abort  " {{{
+      function! _VimuxNearestIndex() abort
         let views = split(_VimuxTmux("list-" . _VimuxRunnerType() . "s"), "\n")
         let index = len(views) - 1
 
@@ -2108,7 +2108,7 @@ if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() && !IsGitCommit() && !IsG
 
           let index = index - 1
         endwhile
-      endfunction  " }}}
+      endfunction
     VIM
 
     execute join(func, "\n")
