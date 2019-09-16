@@ -18,6 +18,9 @@ frag = magenta bold
 old  = cyan
 new  = red
 
+[color "interactive"]
+prompt = yellow bold
+
 [color "status"]
 added     = yellow
 changed   = green
