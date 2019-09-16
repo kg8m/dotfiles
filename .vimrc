@@ -800,15 +800,15 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! Lightline_Filepath() abort  " {{{
-    return ("" != Lightline_ReadonlySymbol() ? Lightline_ReadonlySymbol() . " " : "") .
+    return (Lightline_ReadonlySymbol() != "" ? Lightline_ReadonlySymbol() . " " : "") .
          \ (
          \   &filetype == "vimfiler" ? vimfiler#get_status_string() :
          \   &filetype == "unite" ? unite#get_status_string() :
-         \   "" != CurrentFilename() ? (
+         \   CurrentFilename() != "" ? (
          \     winwidth(0) >= 100 ? CurrentRelativePath() : CurrentFilename()
          \   ) : "[No Name]"
          \ ) .
-         \ ("" != Lightline_ModifiedSymbol() ? " " . Lightline_ModifiedSymbol() : "")
+         \ (Lightline_ModifiedSymbol() != "" ? " " . Lightline_ModifiedSymbol() : "")
   endfunction  " }}}
 
   function! Lightline_ModifiedSymbol() abort  " {{{
