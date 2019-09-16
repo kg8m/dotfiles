@@ -795,12 +795,12 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \   "colorscheme": "kg8m",
     \ }
 
-  function! Lightline_ReadonlySymbol() abort  " {{{
+  function! s:Lightline_ReadonlySymbol() abort  " {{{
     return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? "X" : ""
   endfunction  " }}}
 
   function! Lightline_Filepath() abort  " {{{
-    return (Lightline_ReadonlySymbol() != "" ? Lightline_ReadonlySymbol() . " " : "") .
+    return (s:Lightline_ReadonlySymbol() != "" ? s:Lightline_ReadonlySymbol() . " " : "") .
          \ (
          \   &filetype == "vimfiler" ? vimfiler#get_status_string() :
          \   &filetype == "unite" ? unite#get_status_string() :
@@ -808,10 +808,10 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
          \     winwidth(0) >= 100 ? CurrentRelativePath() : CurrentFilename()
          \   ) : "[No Name]"
          \ ) .
-         \ (Lightline_ModifiedSymbol() != "" ? " " . Lightline_ModifiedSymbol() : "")
+         \ (s:Lightline_ModifiedSymbol() != "" ? " " . s:Lightline_ModifiedSymbol() : "")
   endfunction  " }}}
 
-  function! Lightline_ModifiedSymbol() abort  " {{{
+  function! s:Lightline_ModifiedSymbol() abort  " {{{
     return &filetype =~? 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
   endfunction  " }}}
 endif  " }}}
