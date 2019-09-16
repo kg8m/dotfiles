@@ -1801,7 +1801,8 @@ if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() && !IsGitHunkEdi
   augroup END  " }}}
 
   function! s:SaveSession() abort  " {{{
-      execute "SaveSession " . s:SessionName()
+    call s:RestoreFoldmethod()
+    execute "SaveSession " . s:SessionName()
   endfunction  " }}}
 
   function! s:SessionName() abort  " {{{
@@ -1903,7 +1904,7 @@ if s:RegisterPlugin("mhinz/vim-startify", { "if": !IsGitCommit() && !IsGitHunkEd
 endif  " }}}
 
 if s:RegisterPlugin("kopischke/vim-stay", { "if": !IsGitCommit() })  " {{{
-  set viewoptions=cursor
+  set viewoptions=cursor,folds
 endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-surround")
@@ -2329,7 +2330,6 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
 
     " http://d.hatena.ne.jp/gnarl/20120308/1331180615
     autocmd InsertEnter * call s:SwitchToManualFolding()
-    autocmd BufWritePost,FileWritePost,WinLeave * call s:RestoreFoldmethod()
   augroup END  " }}}
 
   function! s:SwitchToManualFolding() abort  " {{{
