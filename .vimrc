@@ -50,6 +50,7 @@ function! UpdatePlugins() abort  " {{{
 
   execute "Unite dein/log -buffer-name=update_plugins -input=" . initial_input
 
+  " Press `n` key to search "Updated"
   let @/ = "Updated"
 endfunction  " }}}
 
@@ -188,7 +189,7 @@ function! s:UseLSPDefinition(filetypes) abort  " {{{
   augroup END
 endfunction  " }}}
 
-" Overwrite other plugins' settings
+" Lazily call this function to overwrite other plugins' settings
 function! s:SetLSPOmnifunc() abort  " {{{
   if exists("b:lsp_omnifunc_set")
     return
@@ -376,7 +377,8 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   set shortmess+=c
 
   " Inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
-  " LSP's sources are named "asyncomplete_lsp_{original source name}"
+  " cf. LSP's sources are named "asyncomplete_lsp_{original source name}"
+  " cf. asyncomplete sources except for LSPs are named "asyncomplete_source_xxx"
   function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
     let sorted_items = []
     let pattern = "^" . escape(a:ctx.base, '~"\.^$[]*')
@@ -475,7 +477,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   let g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
   " https://github.com/prabirshrestha/asyncomplete.vim/issues/156
-  " Supporting for textEdit is unstable, so sometimes characters are removed unintantionally
+  " Supporting for textEdit is unstable, so sometimes characters are removed unintentionally
   let g:lsp_text_edit_enabled = 0
 
   augroup MyConfigVimLsp  " {{{
@@ -671,6 +673,7 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
 
   function! s:ClearDwmAugroup() abort  " {{{
     if !g:dwm_augroup_cleared
+      " Disable DWM's default behavior on buffer loaded
       augroup dwm  " {{{
         autocmd!
       augroup END  " }}}
@@ -714,7 +717,7 @@ if s:RegisterPlugin("sk1418/HowMuch")  " {{{
   call s:DefineHowMuchMappings()
 
   function! s:ConfigPluginOnPostSource_HowMuch() abort  " {{{
-    " Overwriting default mappings
+    " Overwrite default mappings
     call s:DefineHowMuchMappings()
   endfunction  " }}}
 
@@ -1561,7 +1564,9 @@ if s:RegisterPlugin("tpope/vim-git")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-" See also LSP configs
+" Use LSP for completion and going to definition
+" Use ale for formatting codes
+" Use vim-go's highlightings and foldings
 if s:RegisterPlugin("fatih/vim-go")  " {{{
   let g:go_code_completion_enabled = 0
   let g:go_fmt_autosave = 0
@@ -1598,6 +1603,8 @@ if s:RegisterPlugin("fatih/vim-go")  " {{{
 endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-haml", { "if": !IsGitCommit() && !IsGitHunkEdit() })
+
+" text object for indentation: i
 call s:RegisterPlugin("michaeljsmith/vim-indent-object")
 
 if s:RegisterPlugin("elzr/vim-json", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
@@ -1613,6 +1620,7 @@ if s:RegisterPlugin("rcmdnk/vim-markdown", { "if": !IsGitCommit() && !IsGitHunkE
   let g:vim_markdown_folding_level = 10
 
   function! s:MarkdownCustomFormatoptions() abort  " {{{
+    " Remove `r` from `formatoptions` (`r`: Automatically insert the current comment leader after hitting `<Enter>` in Insert mode)
     setlocal formatoptions-=r
   endfunction  " }}}
 
@@ -1767,6 +1775,7 @@ if s:RegisterPlugin("vim-ruby/vim-ruby", { "if": !IsGitCommit() && !IsGitHunkEdi
     autocmd BufEnter Gemfile set filetype=Gemfile
   augroup END  " }}}
 
+  " Prevent vim-matchup from being wrong for Ruby's modifier `if`/`unless`
   augroup MyUnletRubyNoExpensive  " {{{
     autocmd!
     autocmd FileType ruby if exists("b:ruby_no_expensive") | unlet b:ruby_no_expensive | endif
@@ -1806,9 +1815,8 @@ if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() && !IsGitCommit() && 
      \ })
 endif  " }}}
 
+" See also vim-startify's settings
 if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  " See also vim-startify's settings
-
   let g:session_directory         = getcwd() . "/.vim-sessions"
   let g:session_autoload          = "no"
   let g:session_autosave          = "no"
@@ -1858,9 +1866,9 @@ if s:RegisterPlugin("thinca/vim-singleton")  " {{{
      \ })
 endif  " }}}
 
+" See vim-session's settings
 if s:RegisterPlugin("mhinz/vim-startify", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   function! s:ConfigPluginOnSource_vim_startify() abort  " {{{
-    " See vim-session's settings
     let g:startify_session_dir         = g:session_directory
     let g:startify_session_persistence = 0
     let g:startify_session_sort        = 1
@@ -1943,12 +1951,14 @@ endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-surround")
 
+" text object for quotations: q
 if s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")  " {{{
   call s:ConfigPlugin({
      \   "depends": ["vim-textobj-user"],
      \ })
 endif  " }}}
 
+" text object for Japanese braces: j
 if s:RegisterPlugin("kana/vim-textobj-jabraces")  " {{{
   call s:ConfigPlugin({
      \   "depends": ["vim-textobj-user"],
@@ -1957,6 +1967,7 @@ if s:RegisterPlugin("kana/vim-textobj-jabraces")  " {{{
   let g:textobj_jabraces_no_default_key_mappings = 1
 endif  " }}}
 
+" text object fo last search pattern: /
 if s:RegisterPlugin("kana/vim-textobj-lastpat")  " {{{
   call s:ConfigPlugin({
      \   "depends": ["vim-textobj-user"],
@@ -2002,6 +2013,7 @@ if s:RegisterPlugin("osyo-manga/vim-textobj-multitextobj")  " {{{
      \ })
 endif  " }}}
 
+" text object for Ruby blocks (not only `do-end` nor `{}`): r
 if s:RegisterPlugin("rhysd/vim-textobj-ruby")  " {{{
   call s:ConfigPlugin({
      \   "depends": ["vim-textobj-user"],
@@ -2010,7 +2022,7 @@ endif  " }}}
 
 if s:RegisterPlugin("kana/vim-textobj-user")  " {{{
   function! s:ConfigPluginOnSource_vim_textobj_user() abort
-    " Some kakkos are not defined because they require IME's `henkan` and not work
+    " Some kakkos are not defined because they require IME's `henkan` and don't work
     " - { "pair": ["｛", "｝"], "name": "bracket" },
     " - { "pair": ["『", "』"], "name": "double-kakko" },
     " - { "pair": ["【", "】"], "name": "sumi-kakko" },
@@ -2107,7 +2119,7 @@ if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() && !IsGitCommit() && !IsG
   endfunction  " }}}
 
   function! s:ConfigPluginOnPostSource_vimux() abort  " {{{
-    " Overwriting default function: use current pane's next one
+    " Overwrite function: Always use current pane's next one
     execute join([
     \   'function! _VimuxNearestIndex() abort',
     \     'let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")',
@@ -2273,9 +2285,9 @@ endif
 
 set scrolloff=15
 let g:sh_noisk = 1
-
-let &t_SI = "\e[6 q"  " for INSERT
-let &t_EI = "\e[2 q"  " for NORMAL
+" Cursor shapes
+let &t_SI = "\e[6 q"  " |
+let &t_EI = "\e[2 q"  " ▍
 
 set wrap
 
@@ -2372,10 +2384,13 @@ set hlsearch
 set ignorecase
 set smartcase
 set incsearch
+
+" Don't show search count message when searching
 set shortmess-=S
 
 nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
 
+" Enable very magic
 nnoremap / /\v
 " }}}
 
