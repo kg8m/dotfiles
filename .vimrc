@@ -175,7 +175,7 @@ function! s:DefineLSPHooks() abort  " {{{
 endfunction  " }}}
 
 function! s:EnableLSPs() abort  " {{{
-  for config in get(s:, "lsp_configs", [])
+  for config in s:lsp_configs
     call lsp#register_server(config)
   endfor
 endfunction  " }}}
