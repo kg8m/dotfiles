@@ -805,8 +805,8 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   function! Lightline_Filepath() abort  " {{{
     return ("" != Lightline_ReadonlySymbol() ? Lightline_ReadonlySymbol() . " " : "") .
          \ (
-         \   &ft == "vimfiler" ? vimfiler#get_status_string() :
-         \   &ft == "unite" ? unite#get_status_string() :
+         \   &filetype == "vimfiler" ? vimfiler#get_status_string() :
+         \   &filetype == "unite" ? unite#get_status_string() :
          \   "" != CurrentFilename() ? (
          \     winwidth(0) >= 100 ? CurrentRelativePath() : CurrentFilename()
          \   ) : "[No Name]"
@@ -815,7 +815,7 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! Lightline_ModifiedSymbol() abort  " {{{
-    return &ft =~? 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
+    return &filetype =~? 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
   endfunction  " }}}
 endif  " }}}
 
@@ -1606,7 +1606,7 @@ if s:RegisterPlugin("rcmdnk/vim-markdown", { "if": !IsGitCommit() && !IsGitHunkE
 
   augroup MyOverwriteMarkdownDefaultConfigs  " {{{
     autocmd!
-    autocmd InsertEnter * if &ft == "markdown" | call s:OverwriteMarkdownDefaultConfigs() | endif
+    autocmd InsertEnter * if &filetype == "markdown" | call s:OverwriteMarkdownDefaultConfigs() | endif
   augroup END  " }}}
 
   call s:ConfigPlugin({
