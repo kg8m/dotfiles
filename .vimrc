@@ -145,13 +145,13 @@ function! s:RegisterLSP(config) abort  " {{{
   if executable(executable_name)
     call s:DefineLSPHooks()
 
-    let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
-    let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
-
     if has_key(a:config, "use_definition")
       call s:UseLSPDefinition(a:config.whitelist)
       call remove(a:config, "use_definition")
     endif
+
+    let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
+    let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
 
     call add(s:lsps, { "name": a:config.name, "available": 1 })
   else
