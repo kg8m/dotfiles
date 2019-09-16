@@ -2374,7 +2374,7 @@ nnoremap / /\v
 " Controls  " {{{
 set restorescreen
 set mouse=
-set t_vb=
+set belloff=all
 
 " Smoothen screen drawing; wait procedures' completion
 set lazyredraw
