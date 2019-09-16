@@ -181,9 +181,10 @@ function! s:EnableLSPs() abort  " {{{
 endfunction  " }}}
 
 function! s:UseLSPDefinition(filetypes) abort  " {{{
+  let suffix  = join(a:filetypes, "")
   let pattern = join(a:filetypes, ",")
 
-  execute "augroup MyEnableLspDefinition" . join(a:filetypes, "")
+  execute "augroup MyEnableLspDefinition" . suffix
     autocmd!
     execute "autocmd FileType " . pattern . " nmap <buffer> g] <Plug>(lsp-definition)"
   augroup END
