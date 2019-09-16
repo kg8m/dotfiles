@@ -2077,26 +2077,40 @@ if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() && !IsGitCommit() && !IsG
 
   function! s:ConfigPluginOnPostSource_vimux() abort  " {{{
     " Overwrite function: Always use current pane's next one
-    execute join([
-    \   'function! _VimuxNearestIndex() abort',
-    \     'let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")',
-    \     'let index = len(views) - 1',
-    \
-    \     'while index >= 0',
-    \       'let view = views[index]',
-    \
-    \       'if match(view, "(active)") != -1',
-    \         'if index == len(views) - 1',
-    \           'return -1',
-    \         'else',
-    \           'return split(views[index + 1], ":")[0]',
-    \         'endif',
-    \       'endif',
-    \
-    \       'let index = index - 1',
-    \     'endwhile',
-    \   'endfunction',
-    \ ], "\n")
+    let func =<< trim VIM
+      " Original function:
+      "   function! _VimuxNearestIndex()
+      "     let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")
+      "
+      "     for view in views
+      "       if match(view, "(active)") == -1
+      "         return split(view, ":")[0]
+      "       endif
+      "     endfor
+      "
+      "     return -1
+      "   endfunction
+      function! _VimuxNearestIndex() abort  " {{{
+        let views = split(_VimuxTmux("list-" . _VimuxRunnerType() . "s"), "\n")
+        let index = len(views) - 1
+
+        while index >= 0
+          let view = views[index]
+
+          if match(view, "(active)") != -1
+            if index == len(views) - 1
+              return -1
+            else
+              return split(views[index + 1], ":")[0]
+            endif
+          endif
+
+          let index = index - 1
+        endwhile
+      endfunction  " }}}
+    VIM
+
+    execute join(func, "\n")
   endfunction  " }}}
 
   call s:ConfigPlugin({
