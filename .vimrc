@@ -2349,7 +2349,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
 
   augroup MyUpdateFiletypeAfterSave  " {{{
     autocmd!
-    autocmd BufWritePost * if &filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
+    autocmd BufWritePre * if &filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
   augroup END  " }}}
 endif  " }}}
 " }}}
