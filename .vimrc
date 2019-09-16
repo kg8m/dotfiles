@@ -1633,8 +1633,6 @@ if s:RegisterPlugin("andymass/vim-matchup")  " {{{
   let g:matchup_matchparen_status_offscreen = 0
 endif  " }}}
 
-call s:RegisterPlugin("xolox/vim-misc")
-
 if s:RegisterPlugin("kana/vim-operator-replace")  " {{{
   nmap r <Plug>(operator-replace)
   vmap r <Plug>(operator-replace)
@@ -1825,6 +1823,8 @@ if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() && !IsGitHunkEdi
   call s:ConfigPlugin({
      \   "depends": ["vim-misc"],
      \ })
+
+  call s:RegisterPlugin("xolox/vim-misc")
 endif  " }}}
 
 " See vim-session's settings
