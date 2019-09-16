@@ -2569,6 +2569,15 @@ if has("gui_running")
   gui
   set guioptions=none
 
+  " set guifont=Osaka-Mono:h14
+  set guifont=SFMono-Regular:h12
+
+  set transparency=20
+  set imdisable
+
+  " Always show tabline
+  set showtabline=2
+
   " Save window's size and position
   " http://vim-users.jp/2010/01/hack120/
   let s:old_save_window_info_filepath = expand("~/.vimwinpos")
