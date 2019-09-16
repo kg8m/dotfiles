@@ -2513,7 +2513,7 @@ endif  " }}}
 " ----------------------------------------------
 " Commands  " {{{
 " http://vim-users.jp/2009/05/hack17/
-command! -nargs=1 -complete=file Rename f <args> | call delete(expand("#"))
+command! -nargs=1 -complete=file Rename f <args> | call delete(expand("#")) | write
 " }}}
 
 " ----------------------------------------------
