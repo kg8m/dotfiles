@@ -1805,7 +1805,11 @@ if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() && !IsGitHunkEdi
   endfunction  " }}}
 
   function! s:SessionName() abort  " {{{
-    return substitute(substitute(@%, "/", "+=", "g"), '^\.', "_", "")
+    let name = @%
+    let name = substitute(name, "/", "+=", "g")
+    let name = substitute(name, '^\.', "_", "")
+
+    return name
   endfunction  " }}}
 
   function! s:CleanUpSession() abort  " {{{
