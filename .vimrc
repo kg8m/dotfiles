@@ -660,23 +660,19 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
   nnoremap <C-w><Space> :<C-u>call DWM_AutoEnter()<Cr>
 
   let g:dwm_map_keys = 0
-  let g:dwm_augroup_cleared = 0
 
-  function! s:ClearDwmAugroup() abort  " {{{
-    if !g:dwm_augroup_cleared
-      " Disable DWM's default behavior on buffer loaded
-      augroup dwm  " {{{
-        autocmd!
-      augroup END  " }}}
-
-      let g:dwm_augroup_cleared = 1
-    endif
+  function! s:ConfigPluginOnPostSource_dwm() abort  " {{{
+    " Disable DWM's default behavior on buffer loaded
+    augroup dwm
+      autocmd!
+    augroup END
   endfunction  " }}}
 
-  augroup MyClearDWMAugroup  " {{{
-    autocmd!
-    autocmd VimEnter * call s:ClearDwmAugroup()
-  augroup END  " }}}
+  call s:ConfigPlugin({
+     \   "lazy":     1,
+     \   "on_event": "VimEnter",
+     \   "hook_post_source": function("s:ConfigPluginOnPostSource_dwm"),
+     \ })
 endif  " }}}
 
 if s:RegisterPlugin("LeafCage/foldCC", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
