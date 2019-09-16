@@ -73,7 +73,7 @@ function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
 
     if !isdirectory(gundo_path)
       echomsg "Install gundo.vim to " . gundo_path
-      call system("hg clone https://bitbucket.org/heavenshell/gundo.vim " . gundo_path)
+      call system("hg clone " . a:plugin_name . " " . gundo_path)
     endif
 
     let &runtimepath .= "," . gundo_path
