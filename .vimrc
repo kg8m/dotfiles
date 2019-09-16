@@ -462,11 +462,9 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin({
-     \   "lazy":      1,
-     \   "on_i":      1,
-     \   "on_ft":     ["snippet", "neosnippet"],
-     \   "on_source": "unite.vim",
-     \   "depends":   [".vim"],
+     \   "lazy":    1,
+     \   "on_i":    1,
+     \   "depends": [".vim"],
      \   "hook_source": function("s:ConfigPluginOnSource_neosnippet"),
      \ })
 endif  " }}}
@@ -498,7 +496,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   call s:RegisterLSP({
      \   "name": "css-languageserver",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
-     \   "whitelist": ["css", "less", "sass"],
+     \   "whitelist": ["css", "sass"],
      \ })
 
   " go get -u golang.org/x/tools/cmd/gopls
@@ -542,7 +540,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   call s:RegisterLSP({
      \   "name": "typescript-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
-     \   "whitelist": ["javascript.jsx", "typescript", "typescript.tsx"],
+     \   "whitelist": ["typescript"],
      \   "use_definition": 1,
      \ })
   call s:RegisterLSP({
@@ -569,14 +567,6 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "use_definition": 1,
      \   "executable_name": "vls",
      \ })
-
-  " Disable because something is wrong and an error (-32603) occurs
-  " yarn add yaml-language-server
-  " call s:RegisterLSP({
-  "   \   "name": "yaml-language-server",
-  "   \   "cmd": { server_info -> [&shell, &shellcmdflag, "yaml-language-server --stdio"] },
-  "   \   "whitelist": ["yaml", "eruby.yaml"],
-  "   \ })
 endif  " }}}
 " }}}
 
@@ -752,11 +742,6 @@ if s:RegisterPlugin("nishigori/increment-activator")  " {{{
     \       "sixth", "seventh", "eighth", "ninth", "tenth",
     \     ],
     \   ],
-    \   "ruby": [
-    \     ["should", "should_not"],
-    \     ["be_true", "be_false"],
-    \     ["be_present", "be_blank", "be_empty", "be_nil"],
-    \   ],
     \ }
 endif  " }}}
 
@@ -771,12 +756,8 @@ if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
     \   "startify",
     \   "unite",
     \   "vimfiler",
-    \   "vimshell",
     \ ]
 endif  " }}}
-
-" Interested in future features
-call s:RegisterPlugin("pocke/iro.vim", { "if": 0 })
 
 if s:RegisterPlugin("othree/javascript-libraries-syntax.vim", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:used_javascript_libs = join([
@@ -826,7 +807,6 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
          \ (
          \   &ft == "vimfiler" ? vimfiler#get_status_string() :
          \   &ft == "unite" ? unite#get_status_string() :
-         \   &ft == "vimshell" ? vimshell#get_status_string() :
          \   "" != CurrentFilename() ? (
          \     winwidth(0) >= 100 ? CurrentRelativePath() : CurrentFilename()
          \   ) : "[No Name]"
@@ -1760,10 +1740,6 @@ if s:RegisterPlugin("tpope/vim-rails", { "if": OnRailsDir() && !IsGitCommit() &&
     autocmd!
     autocmd BufEnter,BufWinEnter,WinEnter * if RailsDetect() | call rails#buffer_setup() | endif
   augroup END
-
-  " Prevent `rails.vim` from defining keymappings
-  nmap <Leader>Rwf  <Plug>RailsSplitFind
-  nmap <Leader>Rwgf <Plug>RailsTabFind
 endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-repeat")
@@ -1807,7 +1783,6 @@ if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() && !IsGitCommit() && 
   endfunction  " }}}
 
   let g:no_rubytest_mappings = 1
-  let g:rubytest_in_vimshell = 1
 
   call s:ConfigPlugin({
      \   "lazy":   1,
@@ -1852,17 +1827,6 @@ if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() && !IsGitHunkEdi
 
   call s:ConfigPlugin({
      \   "depends": ["vim-misc"],
-     \ })
-endif  " }}}
-
-if s:RegisterPlugin("thinca/vim-singleton")  " {{{
-  if has("gui_running") && !singleton#is_master()
-    let g:singleton#opener = "drop"
-    call singleton#enable()
-  endif
-
-  call s:ConfigPlugin({
-     \   "gui": 1,
      \ })
 endif  " }}}
 
@@ -2284,18 +2248,11 @@ if v:version >= 801 && has("patch2019")
 endif
 
 set scrolloff=15
-let g:sh_noisk = 1
 " Cursor shapes
 let &t_SI = "\e[6 q"  " |
 let &t_EI = "\e[2 q"  " ▍
 
 set wrap
-
-" http://stackoverflow.com/questions/16840433/forcing-vimdiff-to-wrap-lines
-augroup MySetWrapForVimdiff  " {{{
-  autocmd!
-  autocmd VimEnter * if &diff | execute "windo set wrap" | endif
-augroup END  " }}}
 set diffopt+=horizontal,context:10,iwhite
 
 set list
@@ -2538,9 +2495,6 @@ endif  " }}}
 " Commands  " {{{
 " http://vim-users.jp/2009/05/hack17/
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand("#"))
-
-" http://qiita.com/momo-lab/items/7d35acc8ed835471ad4c
-command! -range Translate <line1>,<line2>!trans -b
 " }}}
 
 " ----------------------------------------------
