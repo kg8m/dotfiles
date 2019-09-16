@@ -278,7 +278,7 @@ function! ExecuteWithConfirm(command) abort  " {{{
 endfunction  " }}}
 
 function! ConfirmCommand(command) abort  " {{{
-  if input("execute `" . a:command . "` ? [y/n] : ") !~? "y"
+  if input("execute `" . a:command . "`? [y/n] : ") !~? "y"
     echo " -> canceled."
     return 0
   endif
@@ -585,15 +585,15 @@ if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  "
   " go get github.com/golangci/golangci-lint/cmd/golangci-lint
   " go get golang.org/x/tools/cmd/goimports
   let g:ale_linters = {
-    \   "go": ["golangci-lint", "govet"],
+    \   "go":         ["golangci-lint", "govet"],
     \   "javascript": ["eslint"],
-    \   "ruby": ["ruby", "rubocop"],
+    \   "ruby":       ["ruby", "rubocop"],
     \   "typescript": ["eslint"],
     \ }
   let g:ale_fixers = {
-    \   "go": ["goimports"],
+    \   "go":         ["goimports"],
     \   "javascript": ["prettier", "eslint"],
-    \   "ruby": ["rubocop"],
+    \   "ruby":       ["rubocop"],
     \   "typescript": ["prettier", "eslint"],
     \ }
 
@@ -1618,12 +1618,8 @@ endif  " }}}
 
 if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:markdown_quote_syntax_filetypes = {
-    \    "css" : {
-    \      "start" : '\%(css\|scss\|sass\)',
-    \   },
-    \    "haml": {
-    \      "start": "haml",
-    \   },
+    \    "css":  { "start": '\%(css\|scss\|sass\)' },
+    \    "haml": { "start": "haml" },
     \ }
 
   call s:ConfigPlugin({
@@ -1822,7 +1818,7 @@ if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() && !IsGitHunkEdi
   endfunction  " }}}
 
   function! s:CleanUpSession() abort  " {{{
-    execute " ! /usr/bin/env find '" . g:session_directory . "' -name '*.vim' -mtime +10 -delete"
+    execute "!/usr/bin/env find '" . g:session_directory . "' -name '*.vim' -mtime +10 -delete"
   endfunction  " }}}
 
   call s:ConfigPlugin({
@@ -2472,7 +2468,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   augroup END  " }}}
 
   function! s:WriteCheckTypo(file) abort  " {{{
-    let writecmd = "write".(v:cmdbang ? "!" : "")." ".a:file
+    let writecmd = "write" . (v:cmdbang ? "!" : "") . " " . a:file
 
     if a:file =~? "[qfreplace]"
       return
@@ -2494,7 +2490,7 @@ endif  " }}}
 " ----------------------------------------------
 " Commands  " {{{
 " http://vim-users.jp/2009/05/hack17/
-command! -nargs=1 -complete=file Rename f <args>|call delete(expand("#"))
+command! -nargs=1 -complete=file Rename f <args> | call delete(expand("#"))
 " }}}
 
 " ----------------------------------------------
@@ -2565,10 +2561,11 @@ if has("gui_running")
 
     function! s:SaveWindowSize() abort  " {{{
       let options = [
-        \ "set columns=" . &columns,
-        \ "set lines=" . &lines,
-        \ "winpos " . getwinposx() . " " . getwinposy(),
+        \   "set columns=" . &columns,
+        \   "set lines=" . &lines,
+        \   "winpos " . getwinposx() . " " . getwinposy(),
         \ ]
+
       call writefile(options, s:save_window_info_filepath)
     endfunction  " }}}
   augroup END  " }}}
