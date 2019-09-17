@@ -2502,7 +2502,7 @@ vnoremap g] "gy:tjump <C-r>"<Cr>
 " Auto reload
 augroup MyCheckTimeHook  " {{{
   autocmd!
-  autocmd InsertEnter,InsertLeave,CursorHold,WinEnter,BufWinEnter * checktime
+  autocmd InsertEnter,InsertLeave,CursorHold,WinEnter,BufWinEnter * silent! checktime
 augroup END  " }}}
 
 set whichwrap=b,s,h,l,<,>,[,],~
