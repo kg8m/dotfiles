@@ -415,7 +415,6 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
           \   "name": "asyncomplete_source_file",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#file#completor"),
-          \   "events": s:asyncomplete_events,
           \ }))
   augroup END  " }}}
 endif  " }}}
@@ -427,7 +426,6 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
           \   "name": "asyncomplete_source_01_neosnippet",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#neosnippet#completor"),
-          \   "events": s:asyncomplete_events,
           \ }))
   augroup END  " }}}
 endif  " }}}
@@ -439,7 +437,6 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
           \   "name": "asyncomplete_source_tags",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#tags#completor"),
-          \   "events": s:asyncomplete_events,
           \ }))
   augroup END  " }}}
 endif  " }}}
