@@ -2306,7 +2306,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
     "   b: Like 'v', but only auto-wrap if you enter a blank at or before the wrap margin.
     "   l: Long lines are not broken in insert mode: When a line was longer than textwidth when the insert command started, Vim does not.
     "   j: Where it makes sense, remove a comment leader when joining lines.
-    setlocal fo+=q fo+=2 fo+=l fo+=j
+    setlocal fo+=r fo+=q fo+=2 fo+=l fo+=j
     setlocal fo-=t fo-=c fo-=a fo-=b
 
     if &filetype =~# '\v^(text|markdown|moin)$'
