@@ -2129,8 +2129,8 @@ if s:RegisterPlugin("benmills/vimux-golang", { "if": OnTmux() && !IsGitCommit() 
   augroup END  " }}}
 
   function! s:SetupVimuxGolangMappings() abort  " {{{
-    nnoremap <buffer> <leader>T :GolangTestCurrentPackage<Cr>
-    nnoremap <buffer> <leader>t :GolangTestFocused<Cr>
+    nnoremap <buffer> <leader>T :write<Cr>:GolangTestCurrentPackage<Cr>
+    nnoremap <buffer> <leader>t :write<Cr>:GolangTestFocused<Cr>
     nnoremap <buffer> <leader>r :write<Cr>:GolangRun<Cr>
   endfunction  " }}}
 
