@@ -2296,16 +2296,16 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
 
   function! s:SetupFormatoptions() abort  " {{{
     " Formatoptions:
-    "   q: Allow formatting of comments with "gq".
-    "   2: When formatting text, use the indent of the second line of a paragraph for the rest of the paragraph, instead of the indent of the first line.
-    "   l: Long lines are not broken in insert mode: When a line was longer than textwidth when the insert command started, Vim does not.
-    "   j: Where it makes sense, remove a comment leader when joining lines.
     "   t: Auto-wrap text using textwidth.
     "   c: Auto-wrap comments using textwidth, inserting the current comment leader automatically.
-    "   a: Automatic formatting of paragraphs. Every time text is inserted or deleted the paragraph will be reformatted.
-    "   b: Like 'v', but only auto-wrap if you enter a blank at or before the wrap margin.
     "   r: Automatically insert the current comment leader after hitting <Enter> in Insert mode.
     "   o: Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
+    "   q: Allow formatting of comments with "gq".
+    "   a: Automatic formatting of paragraphs. Every time text is inserted or deleted the paragraph will be reformatted.
+    "   2: When formatting text, use the indent of the second line of a paragraph for the rest of the paragraph, instead of the indent of the first line.
+    "   b: Like 'v', but only auto-wrap if you enter a blank at or before the wrap margin.
+    "   l: Long lines are not broken in insert mode: When a line was longer than textwidth when the insert command started, Vim does not.
+    "   j: Where it makes sense, remove a comment leader when joining lines.
     setlocal fo+=q fo+=2 fo+=l fo+=j
     setlocal fo-=t fo-=c fo-=a fo-=b
 
