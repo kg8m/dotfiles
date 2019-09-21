@@ -462,9 +462,11 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
     augroup END  " }}}
   endfunction  " }}}
 
+  " `on_ft` for Syntaxes
   call s:ConfigPlugin({
      \   "lazy":    1,
      \   "on_i":    1,
+     \   "on_ft":   ["snippet", "neosnippet"],
      \   "depends": [".vim"],
      \   "hook_source": function("s:ConfigPluginOnSource_neosnippet"),
      \ })
