@@ -2605,7 +2605,7 @@ if has("gui_running")
   " Always show tabline
   set showtabline=2
 
-  " Save window's size and position
+  " Save window's size and position  " {{{
   " http://vim-users.jp/2010/01/hack120/
   let s:old_save_window_info_filepath = expand("~/.vimwinpos")
   let s:save_window_info_filepath = expand("~/.vim/gui-window-info")
@@ -2632,6 +2632,7 @@ if has("gui_running")
   if has("vim_starting") && filereadable(s:save_window_info_filepath)
     execute "source" s:save_window_info_filepath
   endif
+  " }}}
 endif
 " }}}
 
