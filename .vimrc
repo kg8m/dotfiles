@@ -369,8 +369,12 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = 1
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
-  inoremap <silent> <expr> <BS> "\<BS>" . asyncomplete#force_refresh()
-  inoremap <silent> <expr> .    "." . asyncomplete#force_refresh()
+  " Too slow in MacVim GUI when inputting Japanese texts and doing `henkan`
+  if !has("gui_running")
+    inoremap <silent> <expr> <BS> "\<BS>" . asyncomplete#force_refresh()
+  endif
+
+  inoremap <silent> <expr> . "." . asyncomplete#force_refresh()
 
   augroup MyToggleAsyncomplete  " {{{
     autocmd!
