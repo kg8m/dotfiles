@@ -1572,7 +1572,7 @@ endif  " }}}
 
 " Use LSP for completion and going to definition
 " Use ale for formatting codes
-" Use vim-go's highlightings and foldings
+" Use vim-go's highlightings, foldings, and commands/functions
 if s:RegisterPlugin("fatih/vim-go")  " {{{
   let g:go_code_completion_enabled = 0
   let g:go_fmt_autosave = 0
@@ -1601,6 +1601,40 @@ if s:RegisterPlugin("fatih/vim-go")  " {{{
     autocmd!
     autocmd FileType go setlocal foldmethod=syntax
   augroup END  " }}}
+
+  augroup MyGoMappings  " {{{
+    autocmd!
+    autocmd FileType go call s:SetupGoMappings()
+  augroup END  " }}}
+
+  if OnTmux()
+    function! s:SetupGoMappings() abort  " {{{
+      nnoremap <buffer> <leader>T :write<Cr>:VimuxRunCommand("go test -race")<Cr>
+      nnoremap <buffer> <leader>t :write<Cr>:VimuxRunCommand("go test -race -run <C-r>=<SID>DetectGoTestFunc()<Cr>")<Cr>
+      nnoremap <buffer> <leader>r :write<Cr>:VimuxRunCommand("go run -race <C-r>%")<Cr>
+    endfunction  " }}}
+
+    " cf. go#test#Func()
+    function! s:DetectGoTestFunc() abort  " {{{
+      let line_number = search('func \(Test\|Example\)', "bcnW")
+
+      if line_number > 0
+        let line      = getline(line_number)
+        let func_def  = split(line, " ")[1]
+        let func_name = split(func_def, "(")[0]
+
+        return func_name . "$"
+      else
+        return "."
+      endif
+    endfunction  " }}}
+  else
+    function! s:SetupGoMappings() abort  " {{{
+      nnoremap <buffer> <leader>T :write<Cr>:GoTest -race<Cr>
+      nnoremap <buffer> <leader>t :write<Cr>:GoTestFunc -race<Cr>
+      nnoremap <buffer> <leader>r :write<Cr>:GoRun -race %<Cr>
+    endfunction  " }}}
+  endif  " }}}
 
   call s:ConfigPlugin({
      \   "lazy":  1,
@@ -2144,24 +2178,6 @@ if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() && !IsGitCommit() && !IsG
      \   "on_event": "VimEnter",
      \   "hook_source":      function("s:ConfigPluginOnSource_vimux"),
      \   "hook_post_source": function("s:ConfigPluginOnPostSource_vimux"),
-     \ })
-endif  " }}}
-
-if s:RegisterPlugin("benmills/vimux-golang", { "if": OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  augroup MyConfigVimuxGolang  " {{{
-    autocmd!
-    autocmd FileType go call s:SetupVimuxGolangMappings()
-  augroup END  " }}}
-
-  function! s:SetupVimuxGolangMappings() abort  " {{{
-    nnoremap <buffer> <leader>T :write<Cr>:GolangTestCurrentPackage<Cr>
-    nnoremap <buffer> <leader>t :write<Cr>:GolangTestFocused<Cr>
-    nnoremap <buffer> <leader>r :write<Cr>:GolangRun<Cr>
-  endfunction  " }}}
-
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": ["GolangTestCurrentPackage", "GolangTestFocused", "GolangRun"],
      \ })
 endif  " }}}
 
