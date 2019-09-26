@@ -1607,7 +1607,7 @@ if s:RegisterPlugin("fatih/vim-go")  " {{{
     autocmd FileType go call s:SetupGoMappings()
   augroup END  " }}}
 
-  if OnTmux()
+  if OnTmux()  " {{{
     function! s:SetupGoMappings() abort  " {{{
       nnoremap <buffer> <leader>T :write<Cr>:VimuxRunCommand("go test -race")<Cr>
       nnoremap <buffer> <leader>t :write<Cr>:VimuxRunCommand("go test -race -run <C-r>=<SID>DetectGoTestFunc()<Cr>")<Cr>
