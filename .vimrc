@@ -369,12 +369,31 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = 1
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
-  " Too slow in MacVim GUI when inputting Japanese texts and doing `henkan`
-  if !has("gui_running")
-    inoremap <silent> <expr> <BS> "\<BS>" . asyncomplete#force_refresh()
-  endif
+  inoremap <silent> <expr> <BS> "\<BS>" . <SID>LazyRefreshCompletion()
+  inoremap <silent> <expr> .    "."     . <SID>LazyRefreshCompletion()
 
-  inoremap <silent> <expr> . "." . asyncomplete#force_refresh()
+  function! s:LazyRefreshCompletion() abort  " {{{
+    call s:ClearCompletionTimer()
+    call s:StartCompletionTimer()
+    return ""
+  endfunction  " }}}
+
+  function! s:StartCompletionTimer() abort  " {{{
+    let b:my_completion_refresh_timer = timer_start(200, s:force_refresh_completion_function)
+  endfunction  " }}}
+
+  function! s:ClearCompletionTimer() abort  " {{{
+    if exists("b:my_completion_refresh_timer")
+      call timer_stop(b:my_completion_refresh_timer)
+      unlet b:my_completion_refresh_timer
+    endif
+  endfunction  " }}}
+
+  function! s:ForceRefreshCompletion(timer) abort  " {{{
+    call asyncomplete#force_refresh()
+    call s:ClearCompletionTimer()
+  endfunction  " }}}
+  let s:force_refresh_completion_function = function("s:ForceRefreshCompletion")
 
   augroup MyToggleAsyncomplete  " {{{
     autocmd!
