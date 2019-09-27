@@ -390,7 +390,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   endfunction  " }}}
 
   function! s:ForceRefreshCompletion(timer) abort  " {{{
-    call asyncomplete#force_refresh()
+    call asyncomplete#_force_refresh()
     call s:ClearCompletionTimer()
   endfunction  " }}}
   let s:force_refresh_completion_function = function("s:ForceRefreshCompletion")
