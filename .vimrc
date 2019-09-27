@@ -936,10 +936,21 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   " See also ctags settings
   nnoremap g[ :<C-u>Unite jump<Cr>
 
-  augroup MyDisableUniteDefaultMappings  " {{{
+  augroup MyConfigUnite  " {{{
     autocmd!
-    autocmd FileType unite call s:DisableUniteDefaultMappings()
+    autocmd FileType unite call s:ConfigForUniteBuffer()
   augroup END  " }}}
+
+  function! s:ConfigForUniteBuffer() abort  " {{{
+    call s:EnableHighlightingCursorline()
+    call s:DisableUniteDefaultMappings()
+  endfunction  " }}}
+
+  function! s:EnableHighlightingCursorline() abort  " {{{
+    if exists("&cursorlineopt")
+      setlocal cursorlineopt=both
+    endif
+  endfunction  " }}}
 
   function! s:DisableUniteDefaultMappings() abort  " {{{
     if mapcheck("<S-n>", "n")
@@ -2296,7 +2307,7 @@ set diffopt+=horizontal,context:10,iwhite
 set list
 set listchars=tab:>\ ,eol:\ ,trail:_
 
-if v:version >= 801 && has("patch2019")
+if exists("&cursorlineopt")
   set cursorline
   set cursorlineopt=number
 endif
