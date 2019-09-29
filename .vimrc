@@ -2193,10 +2193,6 @@ endif  " }}}
 
 if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
   " https://github.com/vim-jp/vital.vim/blob/master/doc/vital/Async/Promise.txt
-  function! s:Wait(ms) abort  " {{{
-    return s:Promise().new({ resolve -> timer_start(a:ms, resolve) })
-  endfunction  " }}}
-
   function! s:ReadStd(channel, part) abort  " {{{
     let out = []
     while ch_status(a:channel, { "part": a:part }) =~# 'open\|buffered'
@@ -2342,7 +2338,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   augroup MySetupFormatoptions  " {{{
     autocmd!
     " Lazily set formatoptions to overwrite others
-    autocmd FileType * call s:Wait(300).then({ -> call("s:SetupFormatoptions", []) })
+    autocmd FileType * call timer_start(300, { -> call("s:SetupFormatoptions", []) })
   augroup END  " }}}
 
   function! s:SetupFormatoptions() abort  " {{{
@@ -2480,7 +2476,7 @@ set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,
 if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
   augroup MySetupCtags  " {{{
     autocmd!
-    autocmd VimEnter     * silent call s:Wait(500).then({ -> call("s:CreateAllCtags", []) })
+    autocmd VimEnter     * silent call timer_start(500, { -> call("s:CreateAllCtags", []) })
     autocmd BufWritePost * silent call s:CreateCtags(".")
     autocmd VimLeavePre  * silent call s:CleanupCtags()
   augroup END  " }}}
