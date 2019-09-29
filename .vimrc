@@ -957,150 +957,147 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     endif
   endfunction  " }}}
 
-  if OnRailsDir()
-    " See s:DefineOreOreUniteCommandsForRails()
+  if OnRailsDir()  " {{{
     nnoremap <Leader>ur :<C-u>Unite -start-insert rails/
-  endif
 
-  function! s:ConfigPluginOnSource_unite() abort  " {{{
-    if OnRailsDir()
-      function! s:DefineOreOreUniteCommandsForRails() abort  " {{{
-        let s:unite_rails_definitions = {
-          \   "assets": {
-          \     "path":    ["app/assets/**,app/javascripts/**,public/**", "*"],
-          \     "to_word": ["^\./", ""],
-          \     "ignore":  '\v<public/packs(-test)?/',
-          \   },
-          \   "config": {
-          \     "path":    ["config/**", "*"],
-          \     "to_word": ["^\./config/", ""],
-          \   },
-          \   "db/migrates": {
-          \     "path":    ["db/migrate", "*"],
-          \     "to_word": ["^db/migrate/", ""],
-          \   },
-          \   "gems": {
-          \     "path":    [join(RubyGemPaths(), ","), "gems/**/*"],
-          \     "to_word": ['\(' . join(RubyGemPaths(), '\|') . '\)/gems/', ""],
-          \   },
-          \   "initializers": {
-          \     "path":    ["config/initializers/**", "*"],
-          \     "to_word": ["^\./config/initializers/", ""],
-          \   },
-          \   "javascripts": {
-          \     "path":    ["app/**,public/**", "*.{js,ts,vue}"],
-          \     "to_word": ["^\./", ""],
-          \     "ignore":  '\v<public/packs(-test)?/',
-          \   },
-          \   "lib": {
-          \     "path":    ["lib/**", "*"],
-          \     "to_word": ["^\./lib/", ""],
-          \   },
-          \   "public": {
-          \     "path":    ["public/**", "*"],
-          \     "to_word": ["^\./public/", ""],
-          \     "ignore":  '\v<public/packs(-test)?/',
-          \   },
-          \   "script": {
-          \     "path":    ["script/**", "*"],
-          \     "to_word": ["^\./script/", ""],
-          \   },
-          \   "spec": {
-          \     "path":    ["spec/**,test/**", "*"],
-          \     "to_word": ['^\./', ""],
-          \   },
-          \   "stylesheets": {
-          \     "path":    ["app/**,public/**", "*.{css,sass,scss}"],
-          \     "to_word": ["^\./", ""],
-          \     "ignore":  '\v<public/packs(-test)?/',
-          \   },
-          \   "test": {
-          \     "path":    ["spec/**,test/**", "*"],
-          \     "to_word": ['^\./', ""],
-          \   },
-          \ }
+    function! s:DefineOreOreUniteCommandsForRails() abort  " {{{
+      let s:unite_rails_definitions = {
+        \   "assets": {
+        \     "path":    ["app/assets/**,app/javascripts/**,public/**", "*"],
+        \     "to_word": ["^\./", ""],
+        \     "ignore":  '\v<public/packs(-test)?/',
+        \   },
+        \   "config": {
+        \     "path":    ["config/**", "*"],
+        \     "to_word": ["^\./config/", ""],
+        \   },
+        \   "db/migrates": {
+        \     "path":    ["db/migrate", "*"],
+        \     "to_word": ["^db/migrate/", ""],
+        \   },
+        \   "gems": {
+        \     "path":    [join(RubyGemPaths(), ","), "gems/**/*"],
+        \     "to_word": ['\(' . join(RubyGemPaths(), '\|') . '\)/gems/', ""],
+        \   },
+        \   "initializers": {
+        \     "path":    ["config/initializers/**", "*"],
+        \     "to_word": ["^\./config/initializers/", ""],
+        \   },
+        \   "javascripts": {
+        \     "path":    ["app/**,public/**", "*.{js,ts,vue}"],
+        \     "to_word": ["^\./", ""],
+        \     "ignore":  '\v<public/packs(-test)?/',
+        \   },
+        \   "lib": {
+        \     "path":    ["lib/**", "*"],
+        \     "to_word": ["^\./lib/", ""],
+        \   },
+        \   "public": {
+        \     "path":    ["public/**", "*"],
+        \     "to_word": ["^\./public/", ""],
+        \     "ignore":  '\v<public/packs(-test)?/',
+        \   },
+        \   "script": {
+        \     "path":    ["script/**", "*"],
+        \     "to_word": ["^\./script/", ""],
+        \   },
+        \   "spec": {
+        \     "path":    ["spec/**,test/**", "*"],
+        \     "to_word": ['^\./', ""],
+        \   },
+        \   "stylesheets": {
+        \     "path":    ["app/**,public/**", "*.{css,sass,scss}"],
+        \     "to_word": ["^\./", ""],
+        \     "ignore":  '\v<public/packs(-test)?/',
+        \   },
+        \   "test": {
+        \     "path":    ["spec/**,test/**", "*"],
+        \     "to_word": ['^\./', ""],
+        \   },
+        \ }
 
-        for app_dir in globpath("app", "*", 0, 1)
-          if isdirectory(app_dir)
-            let name = fnamemodify(app_dir, ":t")
+      for app_dir in globpath("app", "*", 0, 1)
+        if isdirectory(app_dir)
+          let name = fnamemodify(app_dir, ":t")
 
-            if !has_key(s:unite_rails_definitions, name)
-              let s:unite_rails_definitions[name] = {
-                \   "path":    [app_dir . "/**", "*"],
-                \   "to_word": ['^\./' . app_dir, ""],
-                \ }
-            endif
-          endif
-        endfor
-
-        for test_dir in globpath("spec,test", "*", 0, 1)
-          if isdirectory(test_dir)
-            let s:unite_rails_definitions[test_dir] = {
-              \   "path":    [test_dir . "/**", "*"],
-              \   "to_word": ['^\./' . test_dir, ""],
+          if !has_key(s:unite_rails_definitions, name)
+            let s:unite_rails_definitions[name] = {
+              \   "path":    [app_dir . "/**", "*"],
+              \   "to_word": ['^\./' . app_dir, ""],
               \ }
           endif
-        endfor
-
-        if exists("g:unite_rails_extra_definitions")
-          for name in keys(g:unite_rails_extra_definitions)
-            let s:unite_rails_definitions[name] = g:unite_rails_extra_definitions[name]
-          endfor
         endif
+      endfor
 
-        for name in keys(s:unite_rails_definitions)
-          let source = { "name": "rails/" . name }
-          function! source.gather_candidates(args, context) abort  " {{{
-            let name = substitute(a:context.source_name, "^rails/", "", "")
-            let definition = s:unite_rails_definitions[name]
-            let files = globpath(definition.path[0], definition.path[1], 0, 1)
-            let files = filter(files, { index, value -> filereadable(value) })
-
-            if has_key(definition, "ignore")
-              let files = filter(files, { index, value -> value !~# definition.ignore })
-            endif
-
-            return map(sort(files), '{
-                 \   "word": substitute(v:val, definition.to_word[0], definition.to_word[1], ""),
-                 \   "kind": "file",
-                 \   "action__path": v:val,
-                 \ }')
-          endfunction  " }}}
-          call unite#define_source(source)
-        endfor
-
-        let s:sorted_unite_rails_keys = sort(keys(s:unite_rails_definitions))
-
-        if !exists("g:unite_source_menu_menus")
-          let g:unite_source_menu_menus = {}
+      for test_dir in globpath("spec,test", "*", 0, 1)
+        if isdirectory(test_dir)
+          let s:unite_rails_definitions[test_dir] = {
+            \   "path":    [test_dir . "/**", "*"],
+            \   "to_word": ['^\./' . test_dir, ""],
+            \ }
         endif
+      endfor
 
-        let g:unite_source_menu_menus.rails = {
-          \   "description": "Open files for Rails"
-          \ }
-        let g:unite_source_menu_menus.rails.command_candidates = map(
-          \   copy(s:sorted_unite_rails_keys),
-          \   { key, val -> ["Unite rails/" . val, "Unite -start-insert rails/" . val] }
-          \ )
+      if exists("g:unite_rails_extra_definitions")
+        for name in keys(g:unite_rails_extra_definitions)
+          let s:unite_rails_definitions[name] = g:unite_rails_extra_definitions[name]
+        endfor
+      endif
 
-        let source = { "name": "rails" }
+      for name in keys(s:unite_rails_definitions)
+        let source = { "name": "rails/" . name }
         function! source.gather_candidates(args, context) abort  " {{{
-          return map(copy(s:sorted_unite_rails_keys), '{
-               \   "word": "Unite rails/" . v:val,
-               \   "kind": "command",
-               \   "action__command": "Unite -start-insert rails/" . v:val,
+          let name = substitute(a:context.source_name, "^rails/", "", "")
+          let definition = s:unite_rails_definitions[name]
+          let files = globpath(definition.path[0], definition.path[1], 0, 1)
+          let files = filter(files, { index, value -> filereadable(value) })
+
+          if has_key(definition, "ignore")
+            let files = filter(files, { index, value -> value !~# definition.ignore })
+          endif
+
+          return map(sort(files), '{
+               \   "word": substitute(v:val, definition.to_word[0], definition.to_word[1], ""),
+               \   "kind": "file",
+               \   "action__path": v:val,
                \ }')
         endfunction  " }}}
         call unite#define_source(source)
+      endfor
 
-        if !exists("g:unite_source_alias_aliases")
-          let g:unite_source_alias_aliases = {}
-        endif
-        let g:unite_source_alias_aliases["rails/"] = { "source": "rails" }
+      let s:sorted_unite_rails_keys = sort(keys(s:unite_rails_definitions))
+
+      if !exists("g:unite_source_menu_menus")
+        let g:unite_source_menu_menus = {}
+      endif
+
+      let g:unite_source_menu_menus.rails = {
+        \   "description": "Open files for Rails"
+        \ }
+      let g:unite_source_menu_menus.rails.command_candidates = map(
+        \   copy(s:sorted_unite_rails_keys),
+        \   { key, val -> ["Unite rails/" . val, "Unite -start-insert rails/" . val] }
+        \ )
+
+      let source = { "name": "rails" }
+      function! source.gather_candidates(args, context) abort  " {{{
+        return map(copy(s:sorted_unite_rails_keys), '{
+             \   "word": "Unite rails/" . v:val,
+             \   "kind": "command",
+             \   "action__command": "Unite -start-insert rails/" . v:val,
+             \ }')
       endfunction  " }}}
-      call s:DefineOreOreUniteCommandsForRails()
-    endif
+      call unite#define_source(source)
 
+      if !exists("g:unite_source_alias_aliases")
+        let g:unite_source_alias_aliases = {}
+      endif
+      let g:unite_source_alias_aliases["rails/"] = { "source": "rails" }
+    endfunction  " }}}
+    call timer_start(300, { -> call("s:DefineOreOreUniteCommandsForRails", []) })
+  endif  " }}}
+
+  function! s:ConfigPluginOnSource_unite() abort  " {{{
     let g:unite_winheight = "100%"
 
     if executable("ag")
@@ -1250,8 +1247,9 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": "Unite",
+     \   "lazy":    1,
+     \   "on_cmd":  "Unite",
+     \   "on_func": "unite#",
      \   "hook_source": function("s:ConfigPluginOnSource_unite"),
      \ })
 
