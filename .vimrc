@@ -379,7 +379,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   endfunction  " }}}
 
   function! s:StartCompletionTimer() abort  " {{{
-    let b:my_completion_refresh_timer = timer_start(200, s:force_refresh_completion_function)
+    let b:my_completion_refresh_timer = timer_start(200, { -> call("s:ForceRefreshCompletion", []) })
   endfunction  " }}}
 
   function! s:ClearCompletionTimer() abort  " {{{
@@ -389,11 +389,10 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
     endif
   endfunction  " }}}
 
-  function! s:ForceRefreshCompletion(timer) abort  " {{{
+  function! s:ForceRefreshCompletion() abort  " {{{
     call asyncomplete#_force_refresh()
     call s:ClearCompletionTimer()
   endfunction  " }}}
-  let s:force_refresh_completion_function = function("s:ForceRefreshCompletion")
 
   augroup MyToggleAsyncomplete  " {{{
     autocmd!
@@ -2343,7 +2342,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   augroup MySetupFormatoptions  " {{{
     autocmd!
     " Lazily set formatoptions to overwrite others
-    autocmd FileType * call s:Wait(300).then({ -> execute("call s:SetupFormatoptions()", "") })
+    autocmd FileType * call s:Wait(300).then({ -> call("s:SetupFormatoptions", []) })
   augroup END  " }}}
 
   function! s:SetupFormatoptions() abort  " {{{
@@ -2481,7 +2480,7 @@ set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,
 if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
   augroup MySetupCtags  " {{{
     autocmd!
-    autocmd VimEnter     * silent call s:Wait(500).then({ -> execute("call s:CreateAllCtags()", "") })
+    autocmd VimEnter     * silent call s:Wait(500).then({ -> call("s:CreateAllCtags", []) })
     autocmd BufWritePost * silent call s:CreateCtags(".")
     autocmd VimLeavePre  * silent call s:CleanupCtags()
   augroup END  " }}}
