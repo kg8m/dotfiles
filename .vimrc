@@ -2202,10 +2202,10 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
 
   function! SystemAsync(cmd) abort  " {{{
     return s:Promise().new({ resolve, reject -> job_start(a:cmd, {
-    \   "drop":     "never",
-    \   "close_cb": { ch -> "do nothing" },
-    \   "exit_cb":  { ch, code -> code ? reject(s:ReadStd(ch, "err")) : resolve(s:ReadStd(ch, "out")) },
-    \ }) })
+         \   "drop":     "never",
+         \   "close_cb": { ch -> "do nothing" },
+         \   "exit_cb":  { ch, code -> code ? reject(s:ReadStd(ch, "err")) : resolve(s:ReadStd(ch, "out")) },
+         \ }) })
   endfunction  " }}}
 
   function! s:Promise() abort  " {{{
@@ -2520,9 +2520,9 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
         let ctags_command = "ctags " . ctags_options . " " . a:directory
 
         call SystemAsync(setup_command)
-              \.then({ -> SystemAsync(ctags_command) })
-              \.then({ -> SystemAsync(replace_command) })
-              \.then({ -> SystemAsync(teardown_command) })
+               \.then({ -> SystemAsync(ctags_command) })
+               \.then({ -> SystemAsync(replace_command) })
+               \.then({ -> SystemAsync(teardown_command) })
       endif
     endif
   endfunction  " }}}
