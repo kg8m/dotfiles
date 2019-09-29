@@ -379,13 +379,13 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   endfunction  " }}}
 
   function! s:StartCompletionTimer() abort  " {{{
-    let b:my_completion_refresh_timer = timer_start(200, { -> call("s:ForceRefreshCompletion", []) })
+    let s:my_completion_refresh_timer = timer_start(200, { -> call("s:ForceRefreshCompletion", []) })
   endfunction  " }}}
 
   function! s:ClearCompletionTimer() abort  " {{{
-    if exists("b:my_completion_refresh_timer")
-      call timer_stop(b:my_completion_refresh_timer)
-      unlet b:my_completion_refresh_timer
+    if exists("s:my_completion_refresh_timer")
+      call timer_stop(s:my_completion_refresh_timer)
+      unlet s:my_completion_refresh_timer
     endif
   endfunction  " }}}
 
