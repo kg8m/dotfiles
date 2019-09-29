@@ -1115,7 +1115,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     call unite#custom#source("buffer", "sorters", "sorter_word")
     call unite#custom#source("grep", "max_candidates", 10000)
 
-    " unite-shortcut  " {{{
+    function! s:SetupUniteShortcut() abort  " {{{
       " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
       " http://d.hatena.ne.jp/tyru/20120110/prompt
       if !exists("g:unite_source_menu_menus")
@@ -1243,7 +1243,8 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         endfunction  " }}}
       endfunction  " }}}
       call s:FormatUniteShortcuts()
-    " }}}
+    endfunction  " }}}
+    call s:SetupUniteShortcut()
   endfunction  " }}}
 
   call s:ConfigPlugin({
