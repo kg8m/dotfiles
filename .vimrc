@@ -2486,21 +2486,17 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
         let &tags .= "," . ruby_gem_path . "/tags"
       endif
     endfor
-
-    let s:is_tags_setup_done = 1
   endfunction  " }}}
 
   function! s:CreateAllCtags() abort  " {{{
+    call s:SetupTags()
+
     for directory in ["."] + RubyGemPaths()
       silent call s:CreateCtags(directory)
     endfor
   endfunction  " }}}
 
   function! s:CreateCtags(directory) abort  " {{{
-    if !exists("s:is_tags_setup_done")
-      call s:SetupTags()
-    endif
-
     if isdirectory(a:directory)
       let tags_file = a:directory . "/tags"
       let lock_file = a:directory . "/tags.lock"
