@@ -2475,7 +2475,7 @@ set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,
 if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
   augroup MySetupCtags  " {{{
     autocmd!
-    autocmd VimEnter     * silent call timer_start(500, { -> call("s:CreateAllCtags", []) })
+    autocmd VimEnter     * silent call s:CreateAllCtags()
     autocmd BufWritePost * silent call s:CreateCtags(".")
     autocmd VimLeavePre  * silent call s:CleanupCtags()
   augroup END  " }}}
@@ -2492,8 +2492,12 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
     call s:SetupTags()
 
     for directory in ["."] + RubyGemPaths()
-      silent call s:CreateCtags(directory)
+      call s:CreateCtagsAsync(directory)
     endfor
+  endfunction  " }}}
+
+  function! s:CreateCtagsAsync(directory) abort  " {{{
+    call timer_start(300, { -> call("s:CreateCtags", [a:directory]) })
   endfunction  " }}}
 
   function! s:CreateCtags(directory) abort  " {{{
