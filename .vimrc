@@ -595,7 +595,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
 endif  " }}}
 " }}}
 
-if s:RegisterPlugin("w0rp/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+if s:RegisterPlugin("dense-analysis/ale", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:airline#extensions#ale#enabled = 0
   let g:ale_completion_enabled = 0
   let g:ale_echo_msg_format = "[%linter%][%severity%] %code: %%s"
