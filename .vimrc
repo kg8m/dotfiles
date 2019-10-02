@@ -2297,7 +2297,7 @@ set showcmd
 set redrawtime=5000
 set scrolloff=15
 set wrap
-set diffopt+=horizontal,context:10,iwhite
+set diffopt+=context:10
 set list
 set listchars=tab:>\ ,eol:\ ,trail:_
 
