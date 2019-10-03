@@ -164,8 +164,30 @@ bindkey -a 'q' push-line
 autoload -U compinit
 compinit
 
-export ENHANCD_FILTER=filter
-[ -f ~/.zsh/enhancd/init.sh ] && source ~/.zsh/enhancd/init.sh
+if [ -f ~/.zsh/enhancd/init.sh ]; then
+  export ENHANCD_FILTER=filter
+  source ~/.zsh/enhancd/init.sh
+
+  # Rollback removal of enhancd's sources for fish in `init.sh`.
+  # It makes enhancd submodule dirty.
+  function cleanup_enhancd_dirty() {
+    local currentdir=$( pwd )
+    cd ~/.zsh/enhancd
+
+    if ( git diff --quiet ); then
+      echo "enhancd is clean. There is no need to execute \`git checkout\`." >&2
+    else
+      git checkout . > /dev/null 2>&1
+    fi
+
+    cd $currentdir
+  }
+  cleanup_enhancd_dirty
+
+  alias mycd="__enhancd::cd"
+else
+  alias mycd="cd"
+fi
 
 function cd_with_mkdir() {
   if [[ ! "$@" =~ "^$|^-$" ]] && [ ! -d "$@" ]; then
@@ -173,7 +195,7 @@ function cd_with_mkdir() {
     execute_with_confirm "mkdir -p \"$@\""
   fi
 
-  __enhancd::cd "$@"
+  mycd "$@"
 }
 alias cd="cd_with_mkdir"
 
