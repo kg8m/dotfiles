@@ -168,21 +168,23 @@ if [ -f ~/.zsh/enhancd/init.sh ]; then
   export ENHANCD_FILTER=filter
   source ~/.zsh/enhancd/init.sh
 
-  # Rollback removal of enhancd's sources for fish in `init.sh`.
-  # It makes enhancd submodule dirty.
-  function cleanup_enhancd_dirty() {
-    local currentdir=$( pwd )
-    cd ~/.zsh/enhancd
+  if [ -d ~/.zsh/enhancd/.git ]; then
+    # Rollback removal of enhancd's sources for fish in `init.sh`.
+    # It makes enhancd submodule dirty.
+    function cleanup_enhancd_dirty() {
+      local currentdir=$( pwd )
+      cd ~/.zsh/enhancd
 
-    if ( git diff --quiet ); then
-      echo "enhancd is clean. There is no need to execute \`git checkout\`." >&2
-    else
-      git checkout . > /dev/null 2>&1
-    fi
+      if ( git diff --quiet ); then
+        echo "enhancd is clean. There is no need to execute \`git checkout\`." >&2
+      else
+        git checkout . > /dev/null 2>&1
+      fi
 
-    cd $currentdir
-  }
-  cleanup_enhancd_dirty
+      cd $currentdir
+    }
+    cleanup_enhancd_dirty
+  fi
 
   alias mycd="__enhancd::cd"
 else
