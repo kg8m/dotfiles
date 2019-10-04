@@ -168,7 +168,7 @@ if [ -f ~/.zsh/enhancd/init.sh ]; then
   export ENHANCD_FILTER=filter
   source ~/.zsh/enhancd/init.sh
 
-  if [ -d ~/.zsh/enhancd/.git ]; then
+  if ( command ls ~/.zsh/enhancd/.git > /dev/null 2>&1 ); then
     # Rollback removal of enhancd's sources for fish in `init.sh`.
     # It makes enhancd submodule dirty.
     function cleanup_enhancd_dirty() {
