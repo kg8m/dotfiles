@@ -325,6 +325,8 @@ endfunction  " }}}
 
 let g:mapleader = ","
 
+language C
+
 set conceallevel=2
 set concealcursor=nvic
 " }}}
