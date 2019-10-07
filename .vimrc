@@ -949,9 +949,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   endfunction  " }}}
 
   function! s:EnableHighlightingCursorline() abort  " {{{
-    if exists("&cursorlineopt")
-      setlocal cursorlineopt=both
-    endif
+    setlocal cursorlineopt=both
   endfunction  " }}}
 
   function! s:DisableUniteDefaultMappings() abort  " {{{
@@ -2306,11 +2304,8 @@ set wrap
 set diffopt+=context:10
 set list
 set listchars=tab:>\ ,eol:\ ,trail:_
-
-if exists("&cursorlineopt")
-  set cursorline
-  set cursorlineopt=number
-endif
+set cursorline
+set cursorlineopt=number
 
 " Cursor shapes
 let &t_SI = "\e[6 q"  " |
