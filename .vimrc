@@ -647,6 +647,7 @@ if s:RegisterPlugin("dense-analysis/ale", { "if": !IsGitCommit() && !IsGitHunkEd
   endif
 endif  " }}}
 
+call s:RegisterPlugin("pearofducks/ansible-vim", { "if": !IsGitCommit() && !IsGitHunkEdit() })
 call s:RegisterPlugin("hotwatermorning/auto-git-diff", { "if": !IsGitCommit() && !IsGitHunkEdit() })
 
 if s:RegisterPlugin("vim-scripts/autodate.vim", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
