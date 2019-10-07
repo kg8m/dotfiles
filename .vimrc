@@ -1173,6 +1173,9 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[Diff] Linediff",       "'<,'>Linediff"],
         \   ["[Diff] DirDiff [Edit]", "DirDiff {dir1} {dir2}"],
         \
+        \   ["[CSV] Align CSV columns with whitespaces",                      "RainbowAlign"],
+        \   ["[CSV] Remove leading and trailing whitespaces from all fields", "RainbowShrink"],
+        \
         \   ["[Unite plugin] mru files",            "Unite neomru/file"],
         \   ["[Unite plugin] mark",                 "Unite mark"],
         \   ["[Unite plugin] giti/status",          "Unite giti/status"],
