@@ -113,12 +113,12 @@ fi
 
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 # prompt as ({current_time}) [{vi_mode}] {user_name}@{hostname} : {current_directory_path}\n% (# if root user)
-prompt_user=$'\e[38;05;009m'"%n@%m"
-prompt_current_dir=$'\e[38;05;030m'"%~"$'%{${reset_color}%}'
+prompt_user="%{${fg[green]}%}%n@%m"
+prompt_current_dir="%{${fg[cyan]}%}%~%{${reset_color}%}"
 prompt_vcs='$(vcs_super_info)'
-prompt_self=$'%{${reset_color}%}'"%(!.#.%#) "
+prompt_self="%{${reset_color}%}%(!.#.%#) "
 
-PROMPT=$'\e[38;05;245m'"${prompt_user}"$'\e[38;05;245m'"  ${prompt_current_dir} ${prompt_vcs}"$'\n'"${prompt_self}"
+PROMPT="${prompt_user} ${prompt_current_dir} ${prompt_vcs}"$'\n'"${prompt_self}"
 
 # zsh-vcs-prompt
 ZSH_VCS_PROMPT_AHEAD_SIGIL='^'
