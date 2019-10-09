@@ -1,4 +1,4 @@
-alias -g G="| egrep --color=auto"
+alias -g G="| rg_without_pager --color auto"
 alias -g V="| vim -R -"
 alias -g L="| less"
 alias -g H="| head"

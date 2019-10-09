@@ -133,10 +133,19 @@ function extract() {
 }
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
 
-function viag() {
-  vi `ag $@ -l`
+function rg_without_pager() {
+  command rg $@
 }
 
-function viack() {
-  vi `ack $@ -l`
+function rg_with_pager() {
+  rg_without_pager $@ | less
+}
+alias rg="rg_with_pager"
+
+function rg_for_grep() {
+  command rg --color never --files-with-matches $@ -l
+}
+
+function vig() {
+  vi $( rg_for_grep )
 }

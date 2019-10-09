@@ -1099,7 +1099,11 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   function! s:ConfigPluginOnSource_unite() abort  " {{{
     let g:unite_winheight = "100%"
 
-    if executable("ag")
+    if executable("rg")
+      let g:unite_source_grep_command       = "rg"
+      let g:unite_source_grep_recursive_opt = ""
+      let g:unite_source_grep_default_opts  = "--color never --no-heading"
+    elseif executable("ag")
       let g:unite_source_grep_command       = "ag"
       let g:unite_source_grep_recursive_opt = ""
       let g:unite_source_grep_default_opts  = "--nocolor --nogroup --nopager --hidden --workers=1"

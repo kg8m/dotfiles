@@ -1,0 +1,59 @@
+# Dynamically choose between supported regex engines depending on the features used in the pattern
+--auto-hybrid-regex
+
+# Search hidden files and directories
+--hidden
+
+# Alias for "--color always --heading --line-number"
+# Always enable colors regardless of where output is sent
+--pretty
+
+# Search case insensitively if the pattern is all lowercase; case sensitively otherwise
+--smart-case
+
+# Sort results by file path
+--sort=path
+
+# Colors
+--colors=line:fg:blue
+--colors=line:style:bold
+--colors=match:bg:cyan
+--colors=match:fg:black
+--colors=match:style:bold
+--colors=path:fg:yellow
+--colors=path:style:bold
+
+# Exclude directories
+--glob=!.cache/
+--glob=!.git/
+--glob=!.hg/
+--glob=!.svn/
+--glob=!.vim-sessions/
+--glob=!log/
+--glob=!node_modules/
+--glob=!tmp/
+
+# Exclude files by filetype: see by `rg --type-list`
+--type-add=dat:*.dat
+--type-not=dat
+
+--type-add=diff:*.diff
+--type-not=diff
+
+--type-add=minjs:*.min.js
+--type-not=minjs
+
+--type-add=rails:db/*_structure.sql
+--type-not=rails
+
+--type-add=macos:.DS_Store
+--type-not=macos
+
+--type-add=jquery:jquery-ui.js
+--type-add=jquery:jquery.js
+--type-not=jquery
+
+--type-add=tags:tags
+--type-add=tags:tags.lock
+--type-add=tags:tags.temp
+--type-not=tags
