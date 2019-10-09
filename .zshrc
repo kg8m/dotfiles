@@ -112,7 +112,6 @@ else
 fi
 
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
-# prompt as ({current_time}) [{vi_mode}] {user_name}@{hostname} : {current_directory_path}\n% (# if root user)
 prompt_user="%{${fg[green]}%}%n@%m"
 prompt_current_dir="%{${fg[cyan]}%}%~%{${reset_color}%}"
 prompt_vcs='$(vcs_super_info)'
