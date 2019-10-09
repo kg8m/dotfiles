@@ -4,10 +4,6 @@
 # Search hidden files and directories
 --hidden
 
-# Alias for "--color always --heading --line-number"
-# Always enable colors regardless of where output is sent
---pretty
-
 # Search case insensitively if the pattern is all lowercase; case sensitively otherwise
 --smart-case
 

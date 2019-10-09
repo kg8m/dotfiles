@@ -138,7 +138,8 @@ function rg_without_pager() {
 }
 
 function rg_with_pager() {
-  rg_without_pager $@ | less
+  # Enable colors, group by filepath, and show line numbers
+  rg_without_pager --pretty $@ | less
 }
 alias rg="rg_with_pager"
 
