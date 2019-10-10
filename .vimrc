@@ -1102,7 +1102,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     if executable("rg")
       let g:unite_source_grep_command       = "rg"
       let g:unite_source_grep_recursive_opt = ""
-      let g:unite_source_grep_default_opts  = "--color never --no-heading"
+      let g:unite_source_grep_default_opts  = "--color never --no-heading --line-number"
     elseif executable("ag")
       let g:unite_source_grep_command       = "ag"
       let g:unite_source_grep_recursive_opt = ""
