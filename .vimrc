@@ -1866,7 +1866,7 @@ if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() && !IsGitHunkEdi
   let g:session_autosave          = "no"
   let g:session_autosave_periodic = 0
 
-  set sessionoptions=buffers,curdir
+  set sessionoptions=buffers,folds
 
   augroup MyExtendPluginSession  " {{{
     autocmd!
