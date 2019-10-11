@@ -22,5 +22,5 @@
     "Matched": ["red"]
   },
   "Layout": "bottom-up",
-  "InitialFilter": "Regexp"
+  "InitialFilter": "SmartCase"
 }
