@@ -1,12 +1,3 @@
-[submodule ".zsh/cd-bookmark"]
-	path = .zsh/cd-bookmark
-	url = git://github.com/mollifier/cd-bookmark
-[submodule ".filter/anyframe"]
-	path = .filter/anyframe
-	url = git@github.com:mollifier/anyframe
-[submodule ".zsh/enhancd"]
-	path = .zsh/enhancd
-	url = git@github.com:b4b4r07/enhancd
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
 	url = git@github.com:tmux-plugins/tpm
@@ -28,6 +19,3 @@
 [submodule ".goenv"]
 	path = .goenv
 	url = https://github.com/syndbg/goenv.git
-[submodule ".zsh/git-prompt.zsh"]
-	path = .zsh/git-prompt.zsh
-	url = https://github.com/woefe/git-prompt.zsh

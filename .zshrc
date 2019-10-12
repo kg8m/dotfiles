@@ -25,9 +25,6 @@ HISTORY_IGNORE="exit|rm *-f*"
 
 setopt hist_ignore_all_dups  # remove duplicated older command history
 
-# http://subtech.g.hatena.ne.jp/secondlife/20110222/1298354852
-bindkey '^R' history-incremental-pattern-search-backward
-
 # http://news.mynavi.jp/column/zsh/004/
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
@@ -107,29 +104,13 @@ colors
 PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 
-# woefe/git-prompt.zsh  {{{
-ZSH_THEME_GIT_PROMPT_PREFIX="["
-ZSH_THEME_GIT_PROMPT_SUFFIX="]"
-ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
-ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_bold[cyan]%}:"
-ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-ZSH_THEME_GIT_PROMPT_BEHIND="v"
-ZSH_THEME_GIT_PROMPT_AHEAD="^"
-ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}C"
-ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[blue]%}+"
-ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[yellow]%}!"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="?"
-ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[cyan]%}*"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}#"
-ZSH_GIT_PROMPT_SHOW_STASH=1
-
-source ~/.zsh/git-prompt.zsh/git-prompt.zsh
-# }}}
-
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 prompt_user="%{${fg[green]}%}%n@%m"
 prompt_current_dir="%{${fg[cyan]}%}%~%{${reset_color}%}"
+
+# cf. woefe/git-prompt.zsh
 prompt_git='$(gitprompt)'
+
 prompt_self="%{${reset_color}%}%(!.#.%#) "
 
 PROMPT="${prompt_user} ${prompt_current_dir} ${prompt_git}"$'\n'"${prompt_self}"
@@ -137,57 +118,29 @@ PROMPT="${prompt_user} ${prompt_current_dir} ${prompt_git}"$'\n'"${prompt_self}"
 
 autoload -U add-zsh-hook
 
-source ~/.zsh/timetrack.zsh
-source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/my_aliases.zsh
 source ~/.zsh/my_functions.zsh
+source ~/.zsh/timetrack.zsh
 source ~/.zsh/tmux.zsh
-source ~/.zsh/filter.zsh
-source ~/.zsh/direnv.zsh
-source ~/.zsh/goenv.zsh
-source ~/.zsh/rbenv.zsh
-source ~/.zsh/nodenv.zsh
 
 autoload -U compinit
 compinit
 
-# cd with b4b4r07/enhancd  {{{
-if [ -f ~/.zsh/enhancd/init.sh ]; then
-  export ENHANCD_FILTER=filter
-  source ~/.zsh/enhancd/init.sh
-
-  if ( command ls ~/.zsh/enhancd/.git > /dev/null 2>&1 ); then
-    # Rollback removal of enhancd's sources for fish in `init.sh`.
-    # It makes enhancd submodule dirty.
-    function cleanup_enhancd_dirty() {
-      local currentdir=$( pwd )
-      cd ~/.zsh/enhancd
-
-      if ( git diff --quiet ); then
-        echo "enhancd is clean. There is no need to execute \`git checkout\`." >&2
-      else
-        git checkout . > /dev/null 2>&1
-      fi
-
-      cd $currentdir
-    }
-    cleanup_enhancd_dirty
-  fi
-
-  alias mycd="__enhancd::cd"
-else
-  alias mycd="cd"
-fi
-
-function cd_with_mkdir() {
-  if [[ ! "$@" =~ "^$|^-$" ]] && [ ! -d "$@" ]; then
-    echo "$@ not exists"
-    execute_with_confirm "mkdir -p \"$@\""
-  fi
-
-  mycd "$@"
-}
-alias cd="cd_with_mkdir"
+# zdharma/zplugin  {{{
+source ~/.zplugin/bin/zplugin.zsh
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
 # }}}
 
+source ~/.zsh/cd-bookmark.zsh
+source ~/.zsh/direnv.zsh
+source ~/.zsh/enhancd.zsh
+source ~/.zsh/filter.zsh
+source ~/.zsh/git-prompt.zsh
+source ~/.zsh/goenv.zsh
+source ~/.zsh/nodenv.zsh
+source ~/.zsh/rbenv.zsh
+
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+zplugin ice silent wait"!0" atinit"zpcompinit"
