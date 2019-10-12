@@ -150,16 +150,16 @@ autoload -U add-zsh-hook
 # http://memo.officebrook.net/20090316.html
 bindkey -a 'q' push-line
 
-[ -f ~/.zsh/timetrack.zsh      ] && source ~/.zsh/timetrack.zsh
-[ -f ~/.zsh/cd-bookmark.zsh    ] && source ~/.zsh/cd-bookmark.zsh
-[ -f ~/.zsh/my_aliases.zsh     ] && source ~/.zsh/my_aliases.zsh
-[ -f ~/.zsh/my_functions.zsh   ] && source ~/.zsh/my_functions.zsh
-[ -f ~/.zsh/tmux.zsh           ] && source ~/.zsh/tmux.zsh
-[ -f ~/.zsh/filter.zsh         ] && source ~/.zsh/filter.zsh
-[ -f ~/.zsh/direnv.zsh         ] && source ~/.zsh/direnv.zsh
-[ -f ~/.zsh/goenv.zsh          ] && source ~/.zsh/goenv.zsh
-[ -f ~/.zsh/rbenv.zsh          ] && source ~/.zsh/rbenv.zsh
-[ -f ~/.zsh/nodenv.zsh         ] && source ~/.zsh/nodenv.zsh
+[ -f ~/.zsh/timetrack.zsh    ] && source ~/.zsh/timetrack.zsh
+[ -f ~/.zsh/cd-bookmark.zsh  ] && source ~/.zsh/cd-bookmark.zsh
+[ -f ~/.zsh/my_aliases.zsh   ] && source ~/.zsh/my_aliases.zsh
+[ -f ~/.zsh/my_functions.zsh ] && source ~/.zsh/my_functions.zsh
+[ -f ~/.zsh/tmux.zsh         ] && source ~/.zsh/tmux.zsh
+[ -f ~/.zsh/filter.zsh       ] && source ~/.zsh/filter.zsh
+[ -f ~/.zsh/direnv.zsh       ] && source ~/.zsh/direnv.zsh
+[ -f ~/.zsh/goenv.zsh        ] && source ~/.zsh/goenv.zsh
+[ -f ~/.zsh/rbenv.zsh        ] && source ~/.zsh/rbenv.zsh
+[ -f ~/.zsh/nodenv.zsh       ] && source ~/.zsh/nodenv.zsh
 
 autoload -U compinit
 compinit
