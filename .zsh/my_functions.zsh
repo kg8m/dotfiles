@@ -57,6 +57,27 @@ function batch_move {
 }
 alias bmv="batch_move"
 
+function trash {
+  local filename
+  local new_filename
+  local timestamp=$( date +%H.%M.%S )
+  local trash_path=${TRASH_PATH-/tmp}
+
+  for source in $@; do
+    filename=$( basename $( echo $source ) )
+
+    if [ -f $trash_path/$filename ] || [ -d $trash_path/$filename ]; then
+      sed_expr='s/^\([^.]\+\)\./\1 '$timestamp'./'
+      new_filename=$( echo $filename | sed -e $sed_expr )
+    else
+      new_filename=$filename
+    fi
+
+    touch $source
+    execute_with_echo "mv -i '$source' '$trash_path/$new_filename'"
+  done
+}
+
 function tmux_setup_default {
   tmux new-session -d -s default
   tmux new-window -t default:2
