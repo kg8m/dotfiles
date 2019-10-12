@@ -254,6 +254,13 @@ show-without-diff = show -s
 
 # submodule
 update-submodules = !git sh 'execute_with_echo git submodule update --remote --rebase && execute_with_echo git status'
+remove-submodules = "!f() {\
+  for target in $@; do\
+    git sh \"execute_with_echo git submodule deinit $target\";\
+    git sh \"execute_with_echo git rm $target\";\
+    git sh \"execute_with_echo trash $target\";\
+  done;\
+}; f"
 
 # hook
 update-hooks = !( rm -i .git/hooks/* || exit 0 ) && cp ~/.git_templates/hooks/* .git/hooks/ && ls -l .git/hooks/
