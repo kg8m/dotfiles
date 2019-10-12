@@ -103,31 +103,32 @@ colors
 PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 
-# https://github.com/yonchu/zsh-vcs-prompt
-if [ -f ~/.zsh/zsh-vcs-prompt/zshrc.sh ]; then
-  ZSH_VCS_PROMPT_ENABLE_CACHING='true'
-  source ~/.zsh/zsh-vcs-prompt/zshrc.sh
-else
-  function vcs_super_info {}
+if [ -f ~/.zsh/git-prompt.zsh/git-prompt.zsh ]; then
+  ZSH_THEME_GIT_PROMPT_PREFIX="["
+  ZSH_THEME_GIT_PROMPT_SUFFIX="]"
+  ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
+  ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_bold[cyan]%}:"
+  ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
+  ZSH_THEME_GIT_PROMPT_BEHIND="v"
+  ZSH_THEME_GIT_PROMPT_AHEAD="^"
+  ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}C"
+  ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[blue]%}+"
+  ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[yellow]%}!"
+  ZSH_THEME_GIT_PROMPT_UNTRACKED="?"
+  ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[cyan]%}*"
+  ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}#"
+  ZSH_GIT_PROMPT_SHOW_STASH=1
+
+  source ~/.zsh/git-prompt.zsh/git-prompt.zsh
 fi
 
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 prompt_user="%{${fg[green]}%}%n@%m"
 prompt_current_dir="%{${fg[cyan]}%}%~%{${reset_color}%}"
-prompt_vcs='$(vcs_super_info)'
+prompt_git='$(gitprompt)'
 prompt_self="%{${reset_color}%}%(!.#.%#) "
 
-PROMPT="${prompt_user} ${prompt_current_dir} ${prompt_vcs}"$'\n'"${prompt_self}"
-
-# zsh-vcs-prompt
-ZSH_VCS_PROMPT_AHEAD_SIGIL='^'
-ZSH_VCS_PROMPT_BEHIND_SIGIL='v'
-ZSH_VCS_PROMPT_STAGED_SIGIL='+'
-ZSH_VCS_PROMPT_CONFLICTS_SIGIL='C'
-ZSH_VCS_PROMPT_UNSTAGED_SIGIL='!'
-ZSH_VCS_PROMPT_UNTRACKED_SIGIL='?'
-ZSH_VCS_PROMPT_STASHED_SIGIL='!?'
-ZSH_VCS_PROMPT_CLEAN_SIGIL='#'
+PROMPT="${prompt_user} ${prompt_current_dir} ${prompt_git}"$'\n'"${prompt_self}"
 
 # http://news.mynavi.jp/column/zsh/002/
 # show terminal title as {user_name}@{hostname}:{current_directory}
