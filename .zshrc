@@ -17,16 +17,35 @@ export GREP_COLOR='01;35'
 
 export PROMPT_EOL_MARK=""
 
+# History  {{{
 HISTFILE=~/.zsh_histfile
 HISTSIZE=100000
 SAVEHIST=100000
 HISTORY_IGNORE="exit|rm *-f*"
 
+setopt hist_ignore_all_dups  # remove duplicated older command history
+
+# http://subtech.g.hatena.ne.jp/secondlife/20110222/1298354852
+bindkey '^R' history-incremental-pattern-search-backward
+
+# http://news.mynavi.jp/column/zsh/004/
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
+# }}}
+
+# Key Mappings: See also "History"  {{{
 bindkey -v
 
 # emacs like keybinds for INSERT mode
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
+
+# http://memo.officebrook.net/20090316.html
+bindkey -a "q" push-line
+# }}}
 
 # http://blog.blueblack.net/item_204
 setopt prompt_subst                          # 色を使う
@@ -60,8 +79,6 @@ setopt list_packed                           # 補完候補を詰めて表示
 # prevent `zsh: no matches found: ....`
 setopt nonomatch
 
-setopt hist_ignore_all_dups  # remove duplicated older command history
-
 # follow original file/directory via symbolic link
 setopt chase_links
 
@@ -82,19 +99,7 @@ zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate
 # http://d.hatena.ne.jp/mollifier/20101227/p1
 autoload -Uz zmv
 
-# http://subtech.g.hatena.ne.jp/secondlife/20110222/1298354852
-# <C-r> for incremental history search
-# wild cards enabled
-bindkey '^R' history-incremental-pattern-search-backward
-
-# http://news.mynavi.jp/column/zsh/004/
-# search command history
-autoload history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
-
+# Prompt  {{{
 # http://blog.blueblack.net/item_207
 # prompt styles
 autoload colors
@@ -102,6 +107,7 @@ colors
 PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 
+# woefe/git-prompt.zsh  {{{
 ZSH_THEME_GIT_PROMPT_PREFIX="["
 ZSH_THEME_GIT_PROMPT_SUFFIX="]"
 ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
@@ -118,6 +124,7 @@ ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}#"
 ZSH_GIT_PROMPT_SHOW_STASH=1
 
 source ~/.zsh/git-prompt.zsh/git-prompt.zsh
+# }}}
 
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 prompt_user="%{${fg[green]}%}%n@%m"
@@ -126,11 +133,9 @@ prompt_git='$(gitprompt)'
 prompt_self="%{${reset_color}%}%(!.#.%#) "
 
 PROMPT="${prompt_user} ${prompt_current_dir} ${prompt_git}"$'\n'"${prompt_self}"
+# }}}
 
 autoload -U add-zsh-hook
-
-# http://memo.officebrook.net/20090316.html
-bindkey -a 'q' push-line
 
 source ~/.zsh/timetrack.zsh
 source ~/.zsh/cd-bookmark.zsh
@@ -146,6 +151,7 @@ source ~/.zsh/nodenv.zsh
 autoload -U compinit
 compinit
 
+# cd with b4b4r07/enhancd  {{{
 if [ -f ~/.zsh/enhancd/init.sh ]; then
   export ENHANCD_FILTER=filter
   source ~/.zsh/enhancd/init.sh
@@ -182,5 +188,6 @@ function cd_with_mkdir() {
   mycd "$@"
 }
 alias cd="cd_with_mkdir"
+# }}}
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
