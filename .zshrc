@@ -14,7 +14,6 @@ export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --no-init --quit-if-one-screen"
 
 # http://dsas.blog.klab.org/archives/50808759.html
 export GREP_COLOR='01;35'
-# export GREP_OPTIONS='--color=always'
 
 export PROMPT_EOL_MARK=""
 
@@ -103,24 +102,22 @@ colors
 PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
 SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
 
-if [ -f ~/.zsh/git-prompt.zsh/git-prompt.zsh ]; then
-  ZSH_THEME_GIT_PROMPT_PREFIX="["
-  ZSH_THEME_GIT_PROMPT_SUFFIX="]"
-  ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
-  ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_bold[cyan]%}:"
-  ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-  ZSH_THEME_GIT_PROMPT_BEHIND="v"
-  ZSH_THEME_GIT_PROMPT_AHEAD="^"
-  ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}C"
-  ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[blue]%}+"
-  ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[yellow]%}!"
-  ZSH_THEME_GIT_PROMPT_UNTRACKED="?"
-  ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[cyan]%}*"
-  ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}#"
-  ZSH_GIT_PROMPT_SHOW_STASH=1
+ZSH_THEME_GIT_PROMPT_PREFIX="["
+ZSH_THEME_GIT_PROMPT_SUFFIX="]"
+ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
+ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_bold[cyan]%}:"
+ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
+ZSH_THEME_GIT_PROMPT_BEHIND="v"
+ZSH_THEME_GIT_PROMPT_AHEAD="^"
+ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}C"
+ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[blue]%}+"
+ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[yellow]%}!"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="?"
+ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[cyan]%}*"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}#"
+ZSH_GIT_PROMPT_SHOW_STASH=1
 
-  source ~/.zsh/git-prompt.zsh/git-prompt.zsh
-fi
+source ~/.zsh/git-prompt.zsh/git-prompt.zsh
 
 # http://d.hatena.ne.jp/koyudoon/20111203/1322915316
 prompt_user="%{${fg[green]}%}%n@%m"
@@ -130,36 +127,21 @@ prompt_self="%{${reset_color}%}%(!.#.%#) "
 
 PROMPT="${prompt_user} ${prompt_current_dir} ${prompt_git}"$'\n'"${prompt_self}"
 
-# http://news.mynavi.jp/column/zsh/002/
-# show terminal title as {user_name}@{hostname}:{current_directory}
-case "${TERM}" in
-kterm*|xterm*)
-  precmd() {
-    echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-  }
-
-  # http://webtech-walker.com/archive/2008/12/15101251.html
-  export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
-  export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
-  zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
-  ;;
-esac
-
 autoload -U add-zsh-hook
 
 # http://memo.officebrook.net/20090316.html
 bindkey -a 'q' push-line
 
-[ -f ~/.zsh/timetrack.zsh    ] && source ~/.zsh/timetrack.zsh
-[ -f ~/.zsh/cd-bookmark.zsh  ] && source ~/.zsh/cd-bookmark.zsh
-[ -f ~/.zsh/my_aliases.zsh   ] && source ~/.zsh/my_aliases.zsh
-[ -f ~/.zsh/my_functions.zsh ] && source ~/.zsh/my_functions.zsh
-[ -f ~/.zsh/tmux.zsh         ] && source ~/.zsh/tmux.zsh
-[ -f ~/.zsh/filter.zsh       ] && source ~/.zsh/filter.zsh
-[ -f ~/.zsh/direnv.zsh       ] && source ~/.zsh/direnv.zsh
-[ -f ~/.zsh/goenv.zsh        ] && source ~/.zsh/goenv.zsh
-[ -f ~/.zsh/rbenv.zsh        ] && source ~/.zsh/rbenv.zsh
-[ -f ~/.zsh/nodenv.zsh       ] && source ~/.zsh/nodenv.zsh
+source ~/.zsh/timetrack.zsh
+source ~/.zsh/cd-bookmark.zsh
+source ~/.zsh/my_aliases.zsh
+source ~/.zsh/my_functions.zsh
+source ~/.zsh/tmux.zsh
+source ~/.zsh/filter.zsh
+source ~/.zsh/direnv.zsh
+source ~/.zsh/goenv.zsh
+source ~/.zsh/rbenv.zsh
+source ~/.zsh/nodenv.zsh
 
 autoload -U compinit
 compinit
