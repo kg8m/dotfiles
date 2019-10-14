@@ -119,6 +119,7 @@ autoload -Uz _zplugin
 # }}}
 
 source ~/.zsh/cd-bookmark.zsh
+source ~/.zsh/completion.zsh
 source ~/.zsh/direnv.zsh
 source ~/.zsh/enhancd.zsh
 source ~/.zsh/filter.zsh
