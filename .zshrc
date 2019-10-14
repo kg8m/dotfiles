@@ -82,17 +82,6 @@ setopt chase_links
 # prevent careless logout
 setopt ignore_eof
 
-# https://github.com/Shougo/shougo-s-github/blob/master/.zshrc
-zstyle ':completion:*' matcher-list \
-       '' \
-       'm:{a-z}={A-Z}' \
-       'l:|=* r:|[.,_-]=* r:|=* m:{a-z}={A-Z}'
-
-# http://d.hatena.ne.jp/tarao/20100531/1275322620
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' keep-prefix
-zstyle ':completion:*' completer _oldlist _complete _match _ignored _approximate _list _history
-
 # http://d.hatena.ne.jp/mollifier/20101227/p1
 autoload -Uz zmv
 
@@ -123,9 +112,6 @@ source ~/.zsh/my_functions.zsh
 source ~/.zsh/timetrack.zsh
 source ~/.zsh/tmux.zsh
 
-autoload -U compinit
-compinit
-
 # zdharma/zplugin  {{{
 source ~/.zplugin/bin/zplugin.zsh
 autoload -Uz _zplugin
@@ -140,6 +126,9 @@ source ~/.zsh/git-prompt.zsh
 source ~/.zsh/goenv.zsh
 source ~/.zsh/nodenv.zsh
 source ~/.zsh/rbenv.zsh
+
+autoload -U compinit
+compinit
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
