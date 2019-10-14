@@ -98,19 +98,18 @@ autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 # }}}
 
+zplugin ice silent wait; zplugin snippet ~/.zsh/direnv.zsh
+zplugin ice silent wait; zplugin snippet ~/.zsh/goenv.zsh
+zplugin ice silent wait; zplugin snippet ~/.zsh/nodenv.zsh
+zplugin ice silent wait; zplugin snippet ~/.zsh/rbenv.zsh
+
 source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/completion.zsh
-source ~/.zsh/direnv.zsh
 source ~/.zsh/enhancd.zsh
 source ~/.zsh/filter.zsh
-source ~/.zsh/goenv.zsh
-source ~/.zsh/nodenv.zsh
 source ~/.zsh/prompt.zsh
-source ~/.zsh/rbenv.zsh
 
 autoload -U compinit
 compinit
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-zplugin ice silent wait"!0" atinit"zpcompinit"

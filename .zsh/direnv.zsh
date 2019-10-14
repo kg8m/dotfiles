@@ -1,5 +1,5 @@
 if which direnv > /dev/null 2>&1; then
-  zplugin ice wait atinit'eval "$( direnv hook zsh )"'
+  eval "$( direnv hook zsh )"
 else
   error_for_envrc() {
     if [[ -f .envrc ]]; then
