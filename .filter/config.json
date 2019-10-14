@@ -12,7 +12,8 @@
     "C-k": "peco.SelectUp",
     "C-f": "peco.ScrollPageDown",
     "C-b": "peco.ScrollPageUp",
-    "C-v": "peco.ToggleSelectionAndSelectNext"
+    "C-v": "peco.ToggleSelectionAndSelectNext",
+    "C-r": "peco.RotateFilter"
   },
   "Style": {
     "Basic": ["on_default", "default"],
