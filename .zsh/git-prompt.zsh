@@ -13,4 +13,4 @@ ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[cyan]%}*"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}#"
 ZSH_GIT_PROMPT_SHOW_STASH=1
 
-zplugin ice silent pick"git-prompt.zsh"; zplugin light "woefe/git-prompt.zsh"
+zplugin ice silent pick"git-prompt.zsh"; zplugin light woefe/git-prompt.zsh
