@@ -1,3 +1,14 @@
+# http://voidy21.hatenablog.jp/entry/20090902/1251918174
+# https://qiita.com/kotashiratsuka/items/ae37757aa1d31d1d4f4d
+zstyle ':completion:*' menu select=1
+zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' keep-prefix
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+setopt complete_in_word
+
 zplugin ice lucid wait; zplugin light zsh-users/zsh-completions
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666,bold,underline"
