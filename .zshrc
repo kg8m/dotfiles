@@ -45,8 +45,6 @@ bindkey -a "q" push-line
 # }}}
 
 # http://blog.blueblack.net/item_204
-setopt prompt_subst                          # 色を使う
-setopt nobeep                                # ビープを鳴らさない
 setopt long_list_jobs                        # 内部コマンド jobs の出力をデフォルトで jobs -l にする
 setopt list_types                            # 補完候補一覧でファイルの種別をマーク表示
 setopt auto_resume                           # サスペンド中のプロセスと同じコマンド名を実行した場合はリジューム
@@ -54,14 +52,10 @@ setopt auto_list                             # 補完候補を一覧表示
 setopt hist_ignore_dups                      # 直前と同じコマンドをヒストリに追加しない
 setopt auto_pushd                            # cd 時に自動で push
 setopt pushd_ignore_dups                     # 同じディレクトリを pushd しない
-setopt extended_glob                         # ファイル名で #, ~, ^ の 3 文字を正規表現として扱う
 setopt auto_menu                             # TAB で順に補完候補を切り替える
 setopt extended_history                      # zsh の開始, 終了時刻をヒストリファイルに書き込む
-setopt equals                                # =command を command のパス名に展開する
-setopt magic_equal_subst                     # --prefix=/usr などの = 以降も補完
 setopt hist_verify                           # ヒストリを呼び出してから実行する間に一旦編集
 setopt numeric_glob_sort                     # ファイル名の展開で辞書順ではなく数値的にソート
-setopt print_eight_bit                       # 出力時8ビットを通す
 setopt share_history                         # ヒストリを共有
 zstyle ':completion:*:default' menu select=1 # 補完候補のカーソル選択を有効に
 setopt auto_cd                               # ディレクトリ名だけで cd
