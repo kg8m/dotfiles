@@ -8,10 +8,10 @@
     "ArrowDown": "peco.SelectNext",
     "C-h": "peco.BackwardChar",
     "C-l": "peco.ForwardChar",
-    "C-j": "peco.SelectNext",
-    "C-k": "peco.SelectPrevious",
-    "C-f": "peco.SelectNextPage",
-    "C-b": "peco.SelectPreviousPage",
+    "C-j": "peco.SelectDown",
+    "C-k": "peco.SelectUp",
+    "C-f": "peco.ScrollPageDown",
+    "C-b": "peco.ScrollPageUp",
     "C-v": "peco.ToggleSelectionAndSelectNext"
   },
   "Style": {
