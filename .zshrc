@@ -92,10 +92,10 @@ autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 # }}}
 
-zplugin ice silent wait; zplugin snippet ~/.zsh/direnv.zsh
-zplugin ice silent wait; zplugin snippet ~/.zsh/goenv.zsh
-zplugin ice silent wait; zplugin snippet ~/.zsh/nodenv.zsh
-zplugin ice silent wait; zplugin snippet ~/.zsh/rbenv.zsh
+zplugin ice lucid wait; zplugin snippet ~/.zsh/direnv.zsh
+zplugin ice lucid wait; zplugin snippet ~/.zsh/goenv.zsh
+zplugin ice lucid wait; zplugin snippet ~/.zsh/nodenv.zsh
+zplugin ice lucid wait; zplugin snippet ~/.zsh/rbenv.zsh
 
 source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/completion.zsh

@@ -8,4 +8,4 @@ function setup_anyframe {
   bindkey "^R" anyframe-widget-put-history
 }
 
-zplugin ice silent wait atload"setup_anyframe"; zplugin light mollifier/anyframe
+zplugin ice lucid wait atload"setup_anyframe"; zplugin light mollifier/anyframe

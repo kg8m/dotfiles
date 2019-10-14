@@ -8,4 +8,4 @@ function cd_with_mkdir() {
 }
 
 export ENHANCD_FILTER=filter
-zplugin ice silent wait atload'alias cd="cd_with_mkdir"'; zplugin light b4b4r07/enhancd
+zplugin ice lucid wait atload'alias cd="cd_with_mkdir"'; zplugin light b4b4r07/enhancd

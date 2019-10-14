@@ -1,4 +1,4 @@
-zplugin ice silent wait; zplugin light zsh-users/zsh-completions
+zplugin ice lucid wait; zplugin light zsh-users/zsh-completions
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666,bold,underline"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
