@@ -1,3 +1,16 @@
+autoload colors
+colors
+
+PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
+SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
+
+prompt_user="%{${fg[green]}%}%n@%m"
+prompt_current_dir="%{${fg[cyan]}%}%~%{${reset_color}%}"
+prompt_git='$(gitprompt)'
+prompt_self="%{${reset_color}%}%(!.#.%#) "
+
+PROMPT="${prompt_user} ${prompt_current_dir} ${prompt_git}"$'\n'"${prompt_self}"
+
 ZSH_THEME_GIT_PROMPT_PREFIX="["
 ZSH_THEME_GIT_PROMPT_SUFFIX="]"
 ZSH_THEME_GIT_PROMPT_SEPARATOR="|"

@@ -85,26 +85,6 @@ setopt ignore_eof
 # http://d.hatena.ne.jp/mollifier/20101227/p1
 autoload -Uz zmv
 
-# Prompt  {{{
-# http://blog.blueblack.net/item_207
-# prompt styles
-autoload colors
-colors
-PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
-SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
-
-# http://d.hatena.ne.jp/koyudoon/20111203/1322915316
-prompt_user="%{${fg[green]}%}%n@%m"
-prompt_current_dir="%{${fg[cyan]}%}%~%{${reset_color}%}"
-
-# cf. woefe/git-prompt.zsh
-prompt_git='$(gitprompt)'
-
-prompt_self="%{${reset_color}%}%(!.#.%#) "
-
-PROMPT="${prompt_user} ${prompt_current_dir} ${prompt_git}"$'\n'"${prompt_self}"
-# }}}
-
 autoload -U add-zsh-hook
 
 source ~/.zsh/my_aliases.zsh
