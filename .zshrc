@@ -110,7 +110,7 @@ source ~/.zsh/filter.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/syntax-highlighting.zsh
 
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
 autoload -U compinit
 compinit
-
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
