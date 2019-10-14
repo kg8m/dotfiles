@@ -108,6 +108,7 @@ source ~/.zsh/completion.zsh
 source ~/.zsh/enhancd.zsh
 source ~/.zsh/filter.zsh
 source ~/.zsh/prompt.zsh
+source ~/.zsh/syntax-highlighting.zsh
 
 autoload -U compinit
 compinit
