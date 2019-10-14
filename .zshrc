@@ -123,9 +123,9 @@ source ~/.zsh/completion.zsh
 source ~/.zsh/direnv.zsh
 source ~/.zsh/enhancd.zsh
 source ~/.zsh/filter.zsh
-source ~/.zsh/git-prompt.zsh
 source ~/.zsh/goenv.zsh
 source ~/.zsh/nodenv.zsh
+source ~/.zsh/prompt.zsh
 source ~/.zsh/rbenv.zsh
 
 autoload -U compinit
