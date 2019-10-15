@@ -314,5 +314,8 @@ showCurrentPatch = true
 [status]
 showUntrackedFiles = all
 
+[mergetool]
+keepBackup = false
+
 [include]
 path = ~/.gitconfig.local
