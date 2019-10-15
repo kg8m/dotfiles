@@ -17,6 +17,10 @@ export GREP_COLOR='01;35'
 
 export PROMPT_EOL_MARK=""
 
+# Also see `zstyle ':completion:*' list-colors`
+export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
+export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
+
 # History  {{{
 HISTFILE=~/.zsh_histfile
 HISTSIZE=100000
