@@ -14,7 +14,7 @@ setopt complete_in_word
 
 zplugin ice lucid wait; zplugin light zsh-users/zsh-completions
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666,bold,underline"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=245,bold"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
