@@ -482,6 +482,65 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
       autocmd!
       autocmd InsertLeave * NeoSnippetClearMarkers
     augroup END  " }}}
+
+    function! s:SetupRubySnippets() abort  " {{{
+      let s:snippets_dirpath = s:PluginInfo(".vim").path . "/snippets/"
+
+      function! s:SourceSnippetFile(filename) abort  " {{{
+        let filepath = s:snippets_dirpath . a:filename
+
+        if filereadable(filepath)
+          execute "NeoSnippetSource " . filepath
+        endif
+      endfunction  " }}}
+
+      function! s:SourceRubySnippets() abort  " {{{
+        let filepath = CurrentRelativePath()
+
+        if filepath =~# '_test\.rb$'
+          call s:SourceSnippetFile("ruby-minitest.snip")
+        elseif filepath =~# '_spec\.rb$'
+          call s:SourceSnippetFile("ruby-rspec.snip")
+        endif
+      endfunction  " }}}
+
+      function! s:SourceRailsSnippets() abort  " {{{
+        call s:SourceRubySnippets()
+        call s:SourceSnippetFile("ruby-rails.snip")
+
+        let filepath = CurrentRelativePath()
+
+        if filepath =~# '^app/controllers'
+          call s:SourceSnippetFile("ruby-rails-controller.snip")
+        elseif filepath =~# '^app/models'
+          call s:SourceSnippetFile("ruby-rails-model.snip")
+        elseif filepath =~# '^db/migrate'
+          call s:SourceSnippetFile("ruby-rails-migration.snip")
+        elseif filepath =~# '\v(_test|_spec)\.rb$'
+          call s:SourceSnippetFile("ruby-rails-test.snip")
+
+          if filepath =~# '_test\.rb$'
+            call s:SourceSnippetFile("ruby-rails-minitest.snip")
+          elseif filepath =~# '_spec\.rb$'
+            call s:SourceSnippetFile("ruby-rails-rspec.snip")
+          endif
+        endif
+      endfunction  " }}}
+
+      function! s:SourceContextualSnippets(filetype) abort  " {{{
+        if a:filetype == "ruby" && OnRailsDir()
+          call s:SourceRailsSnippets()
+        elseif a:filetype == "ruby"
+          call s:SourceRubySnippets()
+        endif
+      endfunction  " }}}
+
+      augroup MyNeoSnippetSourceRailsSnippets  " {{{
+        autocmd!
+        autocmd FileType * call timer_start(300, { -> call("s:SourceContextualSnippets", [&filetype]) })
+      augroup END  " }}}
+    endfunction  " }}}
+    call s:SetupRubySnippets()
   endfunction  " }}}
 
   " `on_ft` for Syntaxes
