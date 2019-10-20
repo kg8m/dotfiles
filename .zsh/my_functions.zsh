@@ -165,9 +165,9 @@ function rg_with_pager() {
 alias rg="rg_with_pager"
 
 function rg_for_grep() {
-  command rg --color never --files-with-matches $@ -l
+  command rg --color never --files-with-matches $@
 }
 
 function vig() {
-  vi $( rg_for_grep )
+  vi $( rg_for_grep $@ )
 }
