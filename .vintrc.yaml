@@ -28,7 +28,7 @@ policies:
   ProhibitSetNoCompatible:
     enabled: yes
   ProhibitUnnecessaryDoubleQuote:
-    enabled: yes
+    enabled: no
   ProhibitUnusedVariable:
     enabled: yes
   ProhibitUsingUndeclaredVariable:
