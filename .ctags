@@ -20,6 +20,7 @@
 --regex-ruby=/shared_(examples|context|examples_for)\s+["'](.*)["']\s+do/\2/
 --regex-ruby=/\balias\s+:?([a-zA-Z0-9_]+[!?]?)/\1/
 --regex-ruby=/\balias_method\s+:([a-zA-Z0-9_]+[!?]?)/\1/
+--regex-ruby=/\bFabricator(\s+|\():([a-zA-Z0-9_]+)/\2/
 
 --regex-javascript=/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*function\b/\5/,function/
 --regex-javascript=/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*function\b\(/\2/,function/
