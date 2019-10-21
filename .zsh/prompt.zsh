@@ -1,29 +1,29 @@
 autoload colors
 colors
 
-PROMPT2="%{${fg[green]}%}%_> %{${reset_color}%}"
-SPROMPT="%{${fg[yellow]}%}correct: %R -> %r [nyae]? %{${reset_color}%}"
+PROMPT2="%F{green}%_>%f "
+SPROMPT="%F{yellow}correct: %R -> %r [nyae]? %f"
 
-prompt_user="%{${fg[green]}%}%n@%m"
-prompt_current_dir="%{${fg[cyan]}%}%~%{${reset_color}%}"
+prompt_user="%F{green}%n@%m%f"
+prompt_current_dir="%F{cyan}%~%f"
 prompt_git='$(gitprompt)'
-prompt_self="%{${reset_color}%}%(!.#.%#) "
+prompt_mark="%F{white}%(!.#.%#)%f "
 
-PROMPT="${prompt_user} ${prompt_current_dir} ${prompt_git}"$'\n'"${prompt_self}"
+PROMPT="%B${prompt_user} ${prompt_current_dir}%b ${prompt_git}"$'\n'"${prompt_mark}"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="["
 ZSH_THEME_GIT_PROMPT_SUFFIX="]"
 ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
-ZSH_THEME_GIT_PROMPT_DETACHED="%{$fg_bold[cyan]%}:"
-ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
+ZSH_THEME_GIT_PROMPT_DETACHED="%F{cyan}:"
+ZSH_THEME_GIT_PROMPT_BRANCH="%F{magenta}"
 ZSH_THEME_GIT_PROMPT_BEHIND="-"
 ZSH_THEME_GIT_PROMPT_AHEAD="+"
-ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[red]%}C"
-ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[blue]%}+"
-ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$fg[yellow]%}!"
+ZSH_THEME_GIT_PROMPT_UNMERGED="%F{red}C"
+ZSH_THEME_GIT_PROMPT_STAGED="%F{blue}+"
+ZSH_THEME_GIT_PROMPT_UNSTAGED="%F{yellow}!"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="?"
-ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[cyan]%}*"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}#"
+ZSH_THEME_GIT_PROMPT_STASHED="%F{cyan}*"
+ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}#"
 ZSH_GIT_PROMPT_SHOW_STASH=1
 
 zplugin ice pick"git-prompt.zsh"; zplugin light woefe/git-prompt.zsh
