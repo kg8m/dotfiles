@@ -1,15 +1,13 @@
 autoload colors
 colors
 
-PROMPT2="%F{green}%_>%f "
-SPROMPT="%F{yellow}correct: %R -> %r [nyae]? %f"
-
 prompt_user="%F{green}%n@%m%f"
 prompt_current_dir="%F{cyan}%~%f"
 prompt_git='$(gitprompt)'
 prompt_mark="%F{white}%(!.#.%#)%f "
 
 PROMPT="%B${prompt_user} ${prompt_current_dir}%b ${prompt_git}"$'\n'"${prompt_mark}"
+PROMPT2="%F{green}%_>%f "
 
 ZSH_THEME_GIT_PROMPT_PREFIX="["
 ZSH_THEME_GIT_PROMPT_SUFFIX="]"
