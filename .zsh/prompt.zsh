@@ -1,13 +1,16 @@
-autoload colors
-colors
+setup_prompt() {
+  autoload colors
+  colors
 
-prompt_user="%F{green}%n@%m%f"
-prompt_current_dir="%F{cyan}%~%f"
-prompt_git='$(gitprompt)'
-prompt_mark="%F{white}%(!.#.%#)%f "
+  local user="%F{green}%n@%m%f"
+  local current_dir="%F{cyan}%~%f"
+  local git='$(gitprompt)'
+  local mark="%F{white}%(!.#.%#)%f "
 
-PROMPT="%B${prompt_user} ${prompt_current_dir}%b ${prompt_git}"$'\n'"${prompt_mark}"
-PROMPT2="%F{green}%_>%f "
+  PROMPT="%B${user} ${current_dir}%b ${git}"$'\n'"${mark}"
+  PROMPT2="%F{green}%_>%f "
+}
+setup_prompt
 
 ZSH_THEME_GIT_PROMPT_PREFIX="["
 ZSH_THEME_GIT_PROMPT_SUFFIX="]"
