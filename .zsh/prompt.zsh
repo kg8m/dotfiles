@@ -1,6 +1,5 @@
 setup_prompt() {
-  autoload colors
-  colors
+  autoload colors && colors
 
   local user="%F{green}%n@%m%f"
   local current_dir="%F{cyan}%~%f"
