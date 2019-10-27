@@ -29,15 +29,9 @@ HISTORY_IGNORE="exit|rm *-f*"
 
 setopt hist_ignore_all_dups  # remove duplicated older command history
 
-# http://news.mynavi.jp/column/zsh/004/
-autoload history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
 # }}}
 
-# Key Mappings: See also "History"  {{{
+# Key Mappings  {{{
 bindkey -v
 
 # emacs like keybinds for INSERT mode
@@ -104,6 +98,7 @@ source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/completion.zsh
 source ~/.zsh/enhancd.zsh
 source ~/.zsh/filter.zsh
+source ~/.zsh/history-search.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/syntax-highlighting.zsh
 
