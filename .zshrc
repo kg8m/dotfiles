@@ -27,8 +27,12 @@ HISTSIZE=100000
 SAVEHIST=100000
 HISTORY_IGNORE="exit|rm *-f*"
 
-setopt hist_ignore_all_dups  # remove duplicated older command history
-
+setopt extended_history      # Record each command's timestamp and the duration
+setopt hist_ignore_all_dups  # Remove duplicated older commands from history
+setopt hist_ignore_space     # Remove history when the first character is a space
+setopt hist_no_store         # Ignore the `history` (`fc -l`) command
+setopt hist_verify           # Expand a command from history, but not execute it directly
+setopt share_history         # Share history
 # }}}
 
 # Key Mappings  {{{
@@ -47,30 +51,24 @@ setopt long_list_jobs       # 内部コマンド jobs の出力をデフォル�
 setopt list_types           # 補完候補一覧でファイルの種別をマーク表示
 setopt auto_resume          # サスペンド中のプロセスと同じコマンド名を実行した場合はリジューム
 setopt auto_list            # 補完候補を一覧表示
-setopt hist_ignore_dups     # 直前と同じコマンドをヒストリに追加しない
 setopt auto_pushd           # cd 時に自動で push
 setopt pushd_ignore_dups    # 同じディレクトリを pushd しない
 setopt auto_menu            # TAB で順に補完候補を切り替える
-setopt extended_history     # zsh の開始, 終了時刻をヒストリファイルに書き込む
-setopt hist_verify          # ヒストリを呼び出してから実行する間に一旦編集
 setopt numeric_glob_sort    # ファイル名の展開で辞書順ではなく数値的にソート
-setopt share_history        # ヒストリを共有
 setopt auto_cd              # ディレクトリ名だけで cd
 setopt auto_param_keys      # カッコの対応などを自動的に補完
 setopt brace_ccl            # {a-c} を a b c に展開する機能を使えるようにする
 setopt NO_flow_control      # Ctrl+S/Ctrl+Q によるフロー制御を使わないようにする
-setopt hist_ignore_space    # コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
 setopt interactivecomments  # コマンドラインでも # 以降をコメントと見なす
-setopt hist_no_store        # history (fc -l) コマンドをヒストリリストから取り除く。
 setopt list_packed          # 補完候補を詰めて表示
 
-# prevent `zsh: no matches found: ....`
+# Prevent `zsh: no matches found: ....`
 setopt nonomatch
 
-# follow original file/directory via symbolic link
+# Follow original file/directory via symbolic link
 setopt chase_links
 
-# prevent careless logout
+# Prevent careless logout
 setopt ignore_eof
 
 # http://d.hatena.ne.jp/mollifier/20101227/p1
