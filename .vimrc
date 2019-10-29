@@ -2706,7 +2706,7 @@ if has("gui_running")
   " set guifont=Osaka-Mono:h14
   set guifont=SFMono-Regular:h12
 
-  set transparency=20
+  set transparency=5
   set imdisable
 
   " Always show tabline
