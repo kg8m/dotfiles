@@ -1997,13 +1997,13 @@ if s:RegisterPlugin("janko/vim-test", { "if": !IsGitCommit() && !IsGitHunkEdit()
   nnoremap <Leader>t :write<Cr>:TestNearest<Cr>
 
   if OnTmux()
-    let test#strategy = "vimux"
+    let g:test#strategy = "vimux"
   endif
 
   let g:test#preserve_screen = 1
 
-  let test#go#gotest#options = "-race"
-  let test#ruby#bundle_exec = 0
+  let g:test#go#gotest#options = "-race"
+  let g:test#ruby#bundle_exec = 0
 
   call s:ConfigPlugin({
      \   "lazy":   1,
