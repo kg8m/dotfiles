@@ -1997,6 +1997,13 @@ if s:RegisterPlugin("janko/vim-test", { "if": !IsGitCommit() && !IsGitHunkEdit()
   nnoremap <Leader>t :write<Cr>:TestNearest<Cr>
 
   if OnTmux()
+    function! MyVimTestVimuxStrategy(command) abort  " {{{
+      " Just execute the command without echo it
+      call VimuxRunCommand(a:command)
+    endfunction  " }}}
+
+    let g:test#custom_strategies = get(g:, "test#custom_strategies", {})
+    let g:test#custom_strategies.vimux = function("MyVimTestVimuxStrategy")
     let g:test#strategy = "vimux"
   endif
 
