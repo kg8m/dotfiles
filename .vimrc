@@ -1671,29 +1671,10 @@ if s:RegisterPlugin("fatih/vim-go")  " {{{
 
   if OnTmux()  " {{{
     function! s:SetupGoMappings() abort  " {{{
-      nnoremap <buffer> <leader>T :write<Cr>:VimuxRunCommand("go test -race")<Cr>
-      nnoremap <buffer> <leader>t :write<Cr>:VimuxRunCommand("go test -race -run <C-r>=<SID>DetectGoTestFunc()<Cr>")<Cr>
       nnoremap <buffer> <leader>r :write<Cr>:VimuxRunCommand("go run -race <C-r>%")<Cr>
-    endfunction  " }}}
-
-    " cf. go#test#Func()
-    function! s:DetectGoTestFunc() abort  " {{{
-      let line_number = search('func \(Test\|Example\)', "bcnW")
-
-      if line_number > 0
-        let line      = getline(line_number)
-        let func_def  = split(line, " ")[1]
-        let func_name = split(func_def, "(")[0]
-
-        return func_name . "$"
-      else
-        return "."
-      endif
     endfunction  " }}}
   else
     function! s:SetupGoMappings() abort  " {{{
-      nnoremap <buffer> <leader>T :write<Cr>:GoTest -race<Cr>
-      nnoremap <buffer> <leader>t :write<Cr>:GoTestFunc -race<Cr>
       nnoremap <buffer> <leader>r :write<Cr>:GoRun -race %<Cr>
     endfunction  " }}}
   endif  " }}}
@@ -1887,25 +1868,6 @@ if s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax", { "if": !IsGitCommit() 
     \ }
 endif  " }}}
 
-if s:RegisterPlugin("kg8m/vim-rubytest", { "if": !OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  augroup MyConfigRubytest  " {{{
-    autocmd!
-    autocmd FileType ruby call s:SetupRubyTestMappings()
-  augroup END  " }}}
-
-  function! s:SetupRubyTestMappings() abort  " {{{
-    nmap <buffer> <leader>T <Plug>RubyFileRun
-    nmap <buffer> <leader>t <Plug>RubyTestRun
-  endfunction  " }}}
-
-  let g:no_rubytest_mappings = 1
-
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": [["n", "<Plug>RubyFileRun"], ["n", "<Plug>RubyTestRun"]],
-     \ })
-endif  " }}}
-
 " See also vim-startify's settings
 if s:RegisterPlugin("xolox/vim-session", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:session_directory         = getcwd() . "/.vim-sessions"
@@ -2030,6 +1992,25 @@ endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-surround")
 
+if s:RegisterPlugin("janko/vim-test", { "if": !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+  nnoremap <Leader>T :write<Cr>:TestFile<Cr>
+  nnoremap <Leader>t :write<Cr>:TestNearest<Cr>
+
+  if OnTmux()
+    let test#strategy = "vimux"
+  endif
+
+  let g:test#preserve_screen = 1
+
+  let test#go#gotest#options = "-race"
+  let test#ruby#bundle_exec = 0
+
+  call s:ConfigPlugin({
+     \   "lazy":   1,
+     \   "on_cmd": ["TestFile", "TestNearest"],
+     \ })
+endif  " }}}
+
 " text object for quotations: q
 if s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")  " {{{
   call s:ConfigPlugin({
@@ -2135,27 +2116,6 @@ endif  " }}}
 
 call s:RegisterPlugin("tmux-plugins/vim-tmux", { "if": !IsGitCommit() && !IsGitHunkEdit() })
 call s:RegisterPlugin("cespare/vim-toml", { "if": !IsGitCommit() && !IsGitHunkEdit() })
-
-if s:RegisterPlugin("jgdavey/vim-turbux", { "if": OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  augroup MyConfigTurbux  " {{{
-    autocmd!
-    autocmd FileType ruby call s:SetupTurbuxMappings()
-  augroup END  " }}}
-
-  function! s:SetupTurbuxMappings() abort  " {{{
-    nmap <buffer> <leader>T <Plug>SendTestToTmux
-    nmap <buffer> <leader>t <Plug>SendFocusedTestToTmux
-  endfunction  " }}}
-
-  let g:no_turbux_mappings = 1
-  let g:turbux_test_type   = ""  " FIXME: Escape undefined g:turbux_test_type error
-
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_map": [["n", "<Plug>SendTestToTmux"], ["n", "<Plug>SendFocusedTestToTmux"]],
-     \ })
-endif  " }}}
-
 call s:RegisterPlugin("posva/vim-vue", { "if": !IsGitCommit() && !IsGitHunkEdit() })
 
 if s:RegisterPlugin("thinca/vim-zenspace")  " {{{
