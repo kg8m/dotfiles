@@ -1723,6 +1723,7 @@ if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax", { "if": !IsGitCommit(
   let g:markdown_quote_syntax_filetypes = {
     \    "css":  { "start": '\%(css\|scss\|sass\)' },
     \    "haml": { "start": "haml" },
+    \    "xml":  { "start": "xml" },
     \ }
 
   call s:ConfigPlugin({
