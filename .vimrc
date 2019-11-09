@@ -351,20 +351,6 @@ call s:RegisterPlugin("Shougo/vimproc", { "build": "make" })
 call s:RegisterPlugin("kg8m/.vim")
 
 " Completion, LSP  " {{{
-let s:asyncomplete_events = [
-  \   "BufEnter",
-  \   "BufWinEnter",
-  \   "WinEnter",
-  \   "BufWritePost",
-  \   "CursorHold",
-  \   "CursorHoldI",
-  \   "TextChanged",
-  \   "TextChangedI",
-  \   "VimEnter",
-  \ ]
-
-call s:RegisterPlugin("prabirshrestha/async.vim")
-
 if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = 1
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
@@ -416,6 +402,18 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
     call asyncomplete#preprocess_complete(a:ctx, sorted_items)
   endfunction  " }}}
   let g:asyncomplete_preprocessor = [function("s:AsyncompleteSortedFilter")]
+
+  function! s:ConfigPluginOnPostSource_asyncomplete() abort  " {{{
+    if get(b:, "asyncomplete_enable", 1)
+      call asyncomplete#enable_for_buffer()
+    endif
+  endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy": 1,
+     \   "on_i": 1,
+     \   "hook_post_source": function("s:ConfigPluginOnPostSource_asyncomplete"),
+     \ })
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
@@ -425,9 +423,23 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
           \   "name": "asyncomplete_source_02_buffer",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#buffer#completor"),
-          \   "events": s:asyncomplete_events,
           \ }))
   augroup END  " }}}
+
+  function! s:ActivateAsyncompleteBuffer() abort  " {{{
+    " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/af184c84fc22e36446ed264d46b7588a42746e87/autoload/asyncomplete/sources/buffer.vim#L34
+    doautocmd CursorHold
+  endfunction  " }}}
+
+  function! s:ConfigPluginOnPostSource_asyncomplete_buffer() abort  " {{{
+    call s:ActivateAsyncompleteBuffer()
+  endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":      1,
+     \   "on_source": "asyncomplete.vim",
+     \   "hook_post_source": function("s:ConfigPluginOnPostSource_asyncomplete_buffer"),
+     \ })
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
@@ -439,6 +451,11 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
           \   "completor": function("asyncomplete#sources#file#completor"),
           \ }))
   augroup END  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":      1,
+     \   "on_source": "asyncomplete.vim",
+     \ })
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
@@ -450,6 +467,11 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
           \   "completor": function("asyncomplete#sources#neosnippet#completor"),
           \ }))
   augroup END  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":      1,
+     \   "on_source": ["asyncomplete.vim", "neosnippet"],
+     \ })
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
@@ -461,9 +483,19 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
           \   "completor": function("asyncomplete#sources#tags#completor"),
           \ }))
   augroup END  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":      1,
+     \   "on_source": "asyncomplete.vim",
+     \ })
 endif  " }}}
 
-call s:RegisterPlugin("prabirshrestha/asyncomplete-lsp.vim")
+if s:RegisterPlugin("prabirshrestha/asyncomplete-lsp.vim")  " {{{
+  call s:ConfigPlugin({
+     \   "lazy":      1,
+     \   "on_source": ["asyncomplete.vim", "vim-lsp"],
+     \ })
+endif  " }}}
 
 if s:RegisterPlugin("Shougo/neosnippet")  " {{{
   function! s:ConfigPluginOnSource_neosnippet() abort  " {{{
@@ -536,7 +568,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
      \   "lazy":    1,
      \   "on_i":    1,
      \   "on_ft":   ["snippet", "neosnippet"],
-     \   "depends": [".vim"],
+     \   "depends": ".vim",
      \   "hook_source": function("s:ConfigPluginOnSource_neosnippet"),
      \ })
 endif  " }}}
@@ -639,6 +671,24 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "use_definition": 1,
      \   "executable_name": "vls",
      \ })
+
+  function! s:ConfigPluginOnPostSource_lsp() abort  " {{{
+    call lsp#enable()
+  endfunction  " }}}
+
+  call s:ConfigPlugin({
+     \   "lazy":    1,
+     \   "on_i":    1,
+     \   "on_cmd":  ["LspDefinition", "LspRename", "LspStatus"],
+     \   "depends": "async.vim",
+     \   "hook_post_source": function("s:ConfigPluginOnPostSource_lsp"),
+     \ })
+
+  if s:RegisterPlugin("prabirshrestha/async.vim")  " {{{
+    call s:ConfigPlugin({
+      \   "lazy": 1,
+      \ })
+  endif  " }}}
 endif  " }}}
 " }}}
 
