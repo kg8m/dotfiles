@@ -1457,9 +1457,9 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     endfunction  " }}}
 
     call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_func":   "AutoMark",
-       \   "on_source": "unite.vim",
+       \   "lazy":    1,
+       \   "on_func": "AutoMark",
+       \   "depends": "unite.vim",
        \   "hook_source": function("s:ConfigPluginOnSource_unite_mark"),
        \ })
   endif  " }}}
@@ -1501,8 +1501,8 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     endfunction  " }}}
 
     call s:ConfigPlugin({
-       \   "lazy":      1,
-       \   "on_source": "unite.vim",
+       \   "lazy":    1,
+       \   "depends": "unite.vim",
        \   "hook_post_source": function("s:ConfigPluginOnPostSource_vim_unite_giti"),
        \ })
   endif  " }}}
