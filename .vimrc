@@ -589,6 +589,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
     autocmd BufEnter,BufWinEnter,WinEnter * let g:lsp_highlight_references_enabled = (&filetype != "sass")
   augroup END  " }}}
 
+  " Register SLPs  {{{
   " yarn add bash-language-server
   call s:RegisterLSP({
      \   "name": "bash-language-server",
@@ -671,6 +672,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "use_definition": 1,
      \   "executable_name": "vls",
      \ })
+  " }}}
 
   function! s:ConfigPluginOnPostSource_lsp() abort  " {{{
     call lsp#enable()
@@ -2496,7 +2498,7 @@ set ignorecase
 set smartcase
 set incsearch
 
-" Don't show search count message when searching
+" Show search count message when searching
 set shortmess-=S
 
 nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
