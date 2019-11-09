@@ -67,21 +67,6 @@ function! s:SetupPluginEnd() abort  " {{{
 endfunction  " }}}
 
 function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
-  " FIXME: gundo: dein does not support hg
-  if a:plugin_name =~# '/gundo\.vim$'
-    let gundo_path = s:plugins_path . "/repos/bitbucket.org/heavenshell/gundo.vim"
-
-    if !isdirectory(gundo_path)
-      echomsg "Install gundo.vim to " . gundo_path
-      call system("hg clone " . a:plugin_name . " " . gundo_path)
-    endif
-
-    let &runtimepath .= "," . gundo_path
-    let g:dein#name = a:plugin_name
-
-    return 1
-  endif
-
   let options = get(a:000, 0, {})
   let enabled = 1
 
@@ -810,7 +795,7 @@ if s:RegisterPlugin("LeafCage/foldCC", { "if": !IsGitCommit() && !IsGitHunkEdit(
   set foldtext=FoldCCtext()
 endif  " }}}
 
-if s:RegisterPlugin("https://bitbucket.org/heavenshell/gundo.vim")  " {{{
+if s:RegisterPlugin("kg8m/gundo.vim")  " {{{
   nnoremap <F5> :<C-u>GundoToggle<Cr>
 
   " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
