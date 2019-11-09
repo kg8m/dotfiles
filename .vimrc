@@ -793,8 +793,8 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "on_event": "VimEnter",
+     \   "lazy":    1,
+     \   "on_func": ["DWM_New", "DWM_Close", "DWM_AutoEnter"],
      \   "hook_post_source": function("s:ConfigPluginOnPostSource_dwm"),
      \ })
 endif  " }}}
@@ -1723,7 +1723,7 @@ if s:RegisterPlugin("fatih/vim-go")  " {{{
 
   if OnTmux()  " {{{
     function! s:SetupGoMappings() abort  " {{{
-      nnoremap <buffer> <leader>r :write<Cr>:VimuxRunCommand("go run -race <C-r>%")<Cr>
+      nnoremap <buffer> <leader>r :write<Cr>:call VimuxRunCommand("go run -race <C-r>%")<Cr>
     endfunction  " }}}
   else
     function! s:SetupGoMappings() abort  " {{{
@@ -2256,8 +2256,9 @@ if s:RegisterPlugin("benmills/vimux", { "if": OnTmux() && !IsGitCommit() && !IsG
   endfunction  " }}}
 
   call s:ConfigPlugin({
-     \   "lazy":     1,
-     \   "on_event": "VimEnter",
+     \   "lazy":    1,
+     \   "on_cmd":  "VimuxCloseRunner",
+     \   "on_func": "VimuxRunCommand",
      \   "hook_source":      function("s:ConfigPluginOnSource_vimux"),
      \   "hook_post_source": function("s:ConfigPluginOnPostSource_vimux"),
      \ })
