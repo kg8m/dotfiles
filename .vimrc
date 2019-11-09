@@ -2342,10 +2342,6 @@ filetype plugin indent on
 
 syntax enable
 
-if s:InstallablePluginExists(["vimproc"])
-  call s:InstallPlugins(["vimproc"])
-endif
-
 if s:InstallablePluginExists()
   call s:InstallPlugins()
 endif
