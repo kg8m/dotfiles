@@ -260,9 +260,14 @@ function! RubyGemPaths() abort  " {{{
     return s:ruby_gem_paths
   endif
 
-  let command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
-  let command = command_prefix . " -e 'print Gem.path.join(\"\\n\")'"
-  let s:ruby_gem_paths = split(system(command), '\n')
+  if exists("$RUBY_GEM_PATHS")
+    let s:ruby_gem_paths = split($RUBY_GEM_PATHS, '\n')
+  else
+    let command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
+    let command = command_prefix . " -e 'print Gem.path.join(\"\\n\")'"
+    let s:ruby_gem_paths = split(system(command), '\n')
+  endif
+
   return s:ruby_gem_paths
 endfunction  " }}}
 
