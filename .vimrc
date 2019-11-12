@@ -2383,7 +2383,7 @@ augroup END  " }}}
 " Spaces, Indents  " {{{
 set tabstop=2
 set shiftwidth=2
-set shiftround
+set noshiftround
 set textwidth=0
 set expandtab
 set autoindent
