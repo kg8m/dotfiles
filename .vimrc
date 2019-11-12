@@ -599,6 +599,11 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "name": "gopls",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "gopls -mode stdio"] },
      \   "whitelist": ["go"],
+     \   "workspace_config": {
+     \     "gopls": {
+     \       "completeUnimported": 1,
+     \     },
+     \   },
      \   "use_definition": 1,
      \ })
 
