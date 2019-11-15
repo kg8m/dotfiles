@@ -789,7 +789,7 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
 
   call s:ConfigPlugin({
      \   "lazy":    1,
-     \   "on_func": ["DWM_New", "DWM_Close", "DWM_AutoEnter"],
+     \   "on_func": ["DWM_New", "DWM_Close", "DWM_AutoEnter", "DWM_Stack"],
      \   "hook_post_source": function("s:ConfigPluginOnPostSource_dwm"),
      \ })
 endif  " }}}
