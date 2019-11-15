@@ -570,7 +570,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
 
   augroup MyConfigVimLsp  " {{{
     autocmd!
-    autocmd BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
+    autocmd FileType,BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
   augroup END  " }}}
 
   function! s:SwitchLSPGlobalConfigs() abort  " {{{
