@@ -1187,7 +1187,11 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
       endif
       let g:unite_source_alias_aliases["rails/"] = { "source": "rails" }
     endfunction  " }}}
-    call timer_start(300, { -> call("s:DefineOreOreUniteCommandsForRails", []) })
+
+    augroup MySetupOreOreUniteCommandsForRails  " {{{
+      autocmd!
+      autocmd VimEnter * call timer_start(300, { -> call("s:DefineOreOreUniteCommandsForRails", []) })
+    augroup END  " }}}
   endif  " }}}
 
   function! s:ConfigPluginOnSource_unite() abort  " {{{
