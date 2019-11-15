@@ -379,14 +379,16 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   set shortmess+=c
 
   " Inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
+  " Fuzzy matcher is mattn's idea
   " cf. LSP's sources are named "asyncomplete_lsp_{original source name}"
   " cf. asyncomplete sources except for LSPs are named "asyncomplete_source_xxx"
   function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
     let sorted_items = []
-    let pattern = "^" . escape(a:ctx.base, '~"\.^$[]*')
+    let base_matcher = escape(a:ctx.base, '~"\.^$[]*')
+    let fuzzy_matcher = join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
 
     for [source_name, matches] in sort(items(a:matches), { a, b -> a[0] > b[0] ? 1 : -1 })
-      call extend(sorted_items, filter(matches.items, { index, item -> item.word =~? pattern }))
+      call extend(sorted_items, filter(matches.items, { index, item -> item.word =~? fuzzy_matcher }))
     endfor
 
     call asyncomplete#preprocess_complete(a:ctx, sorted_items)
