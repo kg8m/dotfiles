@@ -1684,7 +1684,7 @@ if s:RegisterPlugin("tpope/vim-git")  " {{{
 endif  " }}}
 
 " Use LSP for completion and going to definition
-" Use ale for formatting codes
+" Use ale for linting/formatting codes
 " Use vim-go's highlightings, foldings, and commands/functions
 if s:RegisterPlugin("fatih/vim-go")  " {{{
   let g:go_code_completion_enabled = 0
