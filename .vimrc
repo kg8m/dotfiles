@@ -677,6 +677,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "lazy":    1,
      \   "on_i":    1,
      \   "on_cmd":  ["LspDefinition", "LspRename", "LspStatus"],
+     \   "on_ft":   get(s:, "lsp_filetypes", []),
      \   "depends": "async.vim",
      \   "hook_post_source": function("s:ConfigPluginOnPostSource_lsp"),
      \ })
