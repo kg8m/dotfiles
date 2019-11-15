@@ -568,16 +568,19 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
-  " https://github.com/prabirshrestha/asyncomplete.vim/issues/156
-  " Supporting for textEdit is unstable, so sometimes characters are removed unintentionally
-  let g:lsp_text_edit_enabled = 0
-
   augroup MyConfigVimLsp  " {{{
     autocmd!
+    autocmd BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
+  augroup END  " }}}
+
+  function! s:SwitchLSPGlobalConfigs() abort  " {{{
+    " https://github.com/prabirshrestha/asyncomplete.vim/issues/156
+    " Supporting for textEdit is unstable, so sometimes characters are removed unintentionally
+    let g:lsp_text_edit_enabled = (&filetype !~# '\v^(go|ruby)$')
 
     " References for sass is broken
-    autocmd BufEnter,BufWinEnter,WinEnter * let g:lsp_highlight_references_enabled = (&filetype != "sass")
-  augroup END  " }}}
+    let g:lsp_highlight_references_enabled = (&filetype != "sass")
+  endfunction  " }}}
 
   " Register SLPs  {{{
   " yarn add bash-language-server
