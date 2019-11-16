@@ -585,21 +585,23 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   endfunction  " }}}
 
   " Register SLPs  {{{
-  " yarn add bash-language-server
+  " yarn add bash-language-server  {{{
   call s:RegisterLSP({
      \   "name": "bash-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "bash-language-server start"] },
      \   "whitelist": ["sh", "zsh"],
      \ })
+  " }}}
 
-  " yarn add vscode-css-languageserver-bin
+  " yarn add vscode-css-languageserver-bin  {{{
   call s:RegisterLSP({
      \   "name": "css-languageserver",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
      \   "whitelist": ["css", "sass"],
      \ })
+  " }}}
 
-  " go get -u golang.org/x/tools/cmd/gopls
+  " go get -u golang.org/x/tools/cmd/gopls  {{{
   call s:RegisterLSP({
      \   "name": "gopls",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "gopls -mode stdio"] },
@@ -611,37 +613,42 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   },
      \   "use_definition": 1,
      \ })
+  " }}}
 
-  " yarn add vscode-html-languageserver-bin
+  " yarn add vscode-html-languageserver-bin  {{{
   call s:RegisterLSP({
      \   "name": "html-languageserver",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "html-languageserver --stdio"] },
      \   "whitelist": ["html"],
      \ })
+  " }}}
 
-  " yarn add vscode-json-languageserver-bin
+  " yarn add vscode-json-languageserver-bin  {{{
   call s:RegisterLSP({
      \   "name": "json-languageserver",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "json-languageserver --stdio"] },
      \   "whitelist": ["json"],
      \ })
+  " }}}
 
-  " gem install solargraph
+  " gem install solargraph  {{{
   call s:RegisterLSP({
      \   "name": "solargraph",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
      \   "initialization_options": { "diagnostics": "true" },
      \   "whitelist": ["ruby"],
      \ })
+  " }}}
 
-  " yarn add sql-language-server
+  " yarn add sql-language-server  {{{
   call s:RegisterLSP({
      \   "name": "sql-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "sql-language-server up --method stdio"] },
      \   "whitelist": ["sql"],
      \ })
+  " }}}
 
-  " yarn add typescript-language-server typescript
+  " yarn add typescript-language-server typescript  {{{
   call s:RegisterLSP({
      \   "name": "typescript-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
@@ -654,16 +661,18 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "whitelist": ["javascript"],
      \   "executable_name": "typescript-language-server",
      \ })
+  " }}}
 
-  " yarn add vim-language-server
+  " yarn add vim-language-server  {{{
   call s:RegisterLSP({
      \   "name": "vim-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "vim-language-server --stdio"] },
      \   "whitelist": ["vim"],
      \   "use_definition": 1,
      \ })
+  " }}}
 
-  " yarn add vue-language-server
+  " yarn add vue-language-server  {{{
   call s:RegisterLSP({
      \   "name": "vue-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "vls"] },
@@ -672,6 +681,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "use_definition": 1,
      \   "executable_name": "vls",
      \ })
+  " }}}
   " }}}
 
   function! s:ConfigPluginOnPostSource_lsp() abort  " {{{
