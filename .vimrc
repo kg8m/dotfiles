@@ -2532,7 +2532,9 @@ set ttyfast
 " Backup, Recover
 set nobackup
 
-let s:swapdir = $HOME . "/tmp/.vimswap"
+" Double slash:    fullpath like `%home%admin%.vimrc.swp`
+" Sinble/no slash: only filename like `.vimrc.swp`
+let s:swapdir = $HOME . "/tmp/.vimswap//"
 if !isdirectory(s:swapdir)
   call mkdir(s:swapdir, "p")
 endif
