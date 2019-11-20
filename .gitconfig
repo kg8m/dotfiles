@@ -2,10 +2,22 @@
 # http://klabgames.tech.blog.jp.klab.com/archives/1033121546.html
 templatedir = ~/.git_templates/
 
+[github]
+user = kg8m
+
+[user]
+name  = kg8m
+email = takumi.kagiyama@gmail.com
+useConfigOnly = true
+
+[branch]
+autosetupmerge = true
+
 [color]
 branch = auto
 diff   = auto
 status = auto
+ui = true
 
 [color "branch"]
 current = white red
@@ -26,16 +38,51 @@ added     = yellow
 changed   = green
 untracked = cyan
 
-[color]
-ui = true
+[commit]
+verbose = true
+cleanup = scissors
 
 [core]
 whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 editor = vim
 excludesfile = ~/.gitignore
 
-[branch]
-autosetupmerge = true
+[diff]
+algorithm = patience
+context = 10
+compactionHeuristic = true
+colorMoved = dimmed_zebra
+colorMovedWS = ignore-all-space
+
+[fetch]
+prune = true
+
+[interactive]
+diffFilter = diff-highlight
+
+[mergetool]
+keepBackup = false
+
+[pager]
+log  = diff-highlight | less --LINE-NUMBERS
+show = diff-highlight | less --LINE-NUMBERS
+diff = diff-highlight | less --LINE-NUMBERS
+
+[pull]
+rebase = true
+
+[rebase]
+autostash = true
+showCurrentPatch = true
+
+[rerere]
+enabled = true
+
+[status]
+showUntrackedFiles = all
+
+[submodule]
+fetchJobs = 4
 
 [alias]
 # base
@@ -267,55 +314,6 @@ update-hooks = !( rm -i .git/hooks/* || exit 0 ) && cp ~/.git_templates/hooks/* 
 
 # utility
 sh = "!f() { zsh -c \"source ~/.zsh/my_functions.zsh; $@\"; }; f"
-
-[github]
-user = kg8m
-
-[diff]
-algorithm = patience
-context = 10
-compactionHeuristic = true
-colorMoved = dimmed_zebra
-colorMovedWS = ignore-all-space
-
-[fetch]
-prune = true
-
-[pull]
-rebase = true
-
-[rerere]
-enabled = true
-
-[user]
-name  = kg8m
-email = takumi.kagiyama@gmail.com
-useConfigOnly = true
-
-[submodule]
-fetchJobs = 4
-
-[pager]
-log  = diff-highlight | less --LINE-NUMBERS
-show = diff-highlight | less --LINE-NUMBERS
-diff = diff-highlight | less --LINE-NUMBERS
-
-[interactive]
-diffFilter = diff-highlight
-
-[commit]
-verbose = true
-cleanup = scissors
-
-[rebase]
-autostash = true
-showCurrentPatch = true
-
-[status]
-showUntrackedFiles = all
-
-[mergetool]
-keepBackup = false
 
 [include]
 path = ~/.gitconfig.local
