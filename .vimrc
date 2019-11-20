@@ -2687,8 +2687,9 @@ function! RemoveTrailingWhitespaces() abort  " {{{
 endfunction  " }}}
 vnoremap <Leader>w :<C-u>call RemoveTrailingWhitespaces()<Cr>
 
-" Prevent unconscious operation
+" Prevent unconscious operation (<Nul> == <C-Space>)
 inoremap <C-w> <Esc><C-w>
+inoremap <Nul> <Space>
 
 " Increment/Decrement
 nmap + <C-a>
