@@ -676,10 +676,49 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   " }}}
 
   " yarn add vue-language-server  {{{
+  " cf. https://github.com/sublimelsp/LSP-vue/blob/master/LSP-vue.sublime-settings
   call s:RegisterLSP({
      \   "name": "vue-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "vls"] },
-     \   "initialization_options": { "diagnostics": "true" },
+     \   "initialization_options": {
+     \     "config": {
+     \       "vetur": {
+     \         "completion": {
+     \           "autoImport": 0,
+     \           "tagCasing": "kebab",
+     \           "useScaffoldSnippets": 0
+     \         },
+     \         "format": {
+     \           "defaultFormatter": {
+     \             "js": "none",
+     \             "ts": "none"
+     \           },
+     \           "defaultFormatterOptions": {},
+     \           "scriptInitialIndent": 0,
+     \           "styleInitialIndent": 0,
+     \           "options": {}
+     \         },
+     \         "useWorkspaceDependencies": 0,
+     \         "validation": {
+     \           "script": 1,
+     \           "style": 1,
+     \           "template": 1
+     \         }
+     \       },
+     \       "css": {},
+     \       "emmet": {},
+     \       "stylusSupremacy": {},
+     \       "html": {
+     \         "suggest": {}
+     \       },
+     \       "javascript": {
+     \         "format": {}
+     \       },
+     \       "typescript": {
+     \         "format": {}
+     \       }
+     \     }
+     \   },
      \   "whitelist": ["vue"],
      \   "use_definition": 1,
      \   "executable_name": "vls",
