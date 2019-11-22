@@ -130,9 +130,12 @@ function! s:RegisterLSP(config) abort  " {{{
   if executable(executable_name)
     call s:DefineLSPHooks()
 
-    if has_key(a:config, "use_definition")
+    if has_key(a:config, "use_definition") || !OnRailsDir()
       call s:UseLSPDefinition(a:config.whitelist)
-      call remove(a:config, "use_definition")
+
+      if has_key(a:config, "use_definition")
+        call remove(a:config, "use_definition")
+      endif
     endif
 
     let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
