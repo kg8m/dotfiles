@@ -577,16 +577,35 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
 
   augroup MyConfigVimLsp  " {{{
     autocmd!
-    autocmd FileType,BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
+    autocmd FileType                      * call s:ReswitchLSPGlobalConfigs()
+    autocmd BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
   augroup END  " }}}
+
+  function! s:ReswitchLSPGlobalConfigs() abort  " {{{
+    if exists("b:lsp_text_edit_enabled")
+      unlet b:lsp_text_edit_enabled
+    endif
+
+    if exists("b:lsp_highlight_references_enabled")
+      unlet b:lsp_highlight_references_enabled
+    endif
+
+    call s:SwitchLSPGlobalConfigs()
+  endfunction  " }}}
 
   function! s:SwitchLSPGlobalConfigs() abort  " {{{
     " https://github.com/prabirshrestha/asyncomplete.vim/issues/156
-    " Supporting for textEdit is unstable, so sometimes characters are removed unintentionally
-    let g:lsp_text_edit_enabled = (&filetype !~# '\v^(go|ruby)$')
+    " Prevent vim-lsp from unintentional removing trailing characters
+    if !exists("b:lsp_text_edit_enabled")
+      let b:lsp_text_edit_enabled = (&filetype !~# '\v^(go|ruby)$')
+    endif
+    let g:lsp_text_edit_enabled = b:lsp_text_edit_enabled
 
     " References for sass is broken
-    let g:lsp_highlight_references_enabled = (&filetype != "sass")
+    if !exists("b:lsp_highlight_references_enabled")
+      let b:lsp_highlight_references_enabled = (&filetype != "sass")
+    endif
+    let g:lsp_highlight_references_enabled = b:lsp_highlight_references_enabled
   endfunction  " }}}
 
   " Register SLPs  {{{
