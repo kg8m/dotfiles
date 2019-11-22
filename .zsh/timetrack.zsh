@@ -87,9 +87,9 @@ function __my_preexec_end_timetrack() {
     ssh main "echo '[$USER@$HOST] $message' | growlnotify $growl_options"
 
     if [ $last_status = "0" ]; then
-      message=$( echo $message | sed -e 's/\(Command succeeded!!\)/\\e[0;32m\1\\e[1;37m/' )
+      message=$( echo -e $message | sed -e 's/\(Command succeeded!!\)/\\e[0;32m\1\\e[1;37m/' )
     else
-      message=$( echo $message | sed -e 's/\(Command failed!!\)/\\e[0;31m\1\\e[1;37m/' )
+      message=$( echo -e $message | sed -e 's/\(Command failed!!\)/\\e[0;31m\1\\e[1;37m/' )
     fi
 
     if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
