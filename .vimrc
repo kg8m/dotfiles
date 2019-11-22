@@ -705,6 +705,20 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
       \   "lazy": 1,
       \ })
   endif  " }}}
+
+  if s:RegisterPlugin("thomasfaingnaert/vim-lsp-snippets")  " {{{
+    call s:ConfigPlugin({
+       \   "on_i": 1,
+       \   "lazy": 1,
+       \ })
+  endif  " }}}
+
+  if s:RegisterPlugin("thomasfaingnaert/vim-lsp-neosnippet")  " {{{
+    call s:ConfigPlugin({
+       \   "on_i": 1,
+       \   "lazy": 1,
+       \ })
+  endif  " }}}
 endif  " }}}
 " }}}
 
