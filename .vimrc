@@ -702,8 +702,8 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
 
   if s:RegisterPlugin("prabirshrestha/async.vim")  " {{{
     call s:ConfigPlugin({
-      \   "lazy": 1,
-      \ })
+       \   "lazy": 1,
+       \ })
   endif  " }}}
 
   if s:RegisterPlugin("thomasfaingnaert/vim-lsp-snippets")  " {{{
