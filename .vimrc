@@ -422,8 +422,8 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
   augroup END  " }}}
 
   function! s:ActivateAsyncompleteBuffer() abort  " {{{
-    " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/af184c84fc22e36446ed264d46b7588a42746e87/autoload/asyncomplete/sources/buffer.vim#L34
-    doautocmd CursorHold
+    " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
+    doautocmd BufWinEnter
   endfunction  " }}}
 
   function! s:ConfigPluginOnPostSource_asyncomplete_buffer() abort  " {{{
