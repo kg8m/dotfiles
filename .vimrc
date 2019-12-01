@@ -608,7 +608,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
     let g:lsp_highlight_references_enabled = b:lsp_highlight_references_enabled
   endfunction  " }}}
 
-  " Register SLPs  {{{
+  " Register LSPs  {{{
   " yarn add bash-language-server  {{{
   call s:RegisterLSP({
      \   "name": "bash-language-server",
