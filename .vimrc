@@ -190,6 +190,12 @@ endfunction  " }}}
 " }}}
 
 " Utility functions  " {{{
+function! s:EchoErrorMsg(message) abort  " {{{
+  echohl ErrorMsg
+  echomsg a:message
+  echohl None
+endfunction  " }}}
+
 function! OnTmux() abort  " {{{
   return exists("$TMUX")
 endfunction  " }}}
@@ -400,21 +406,56 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
+  " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
+  let s:asyncomplete_buffer_events = [
+    \   "BufWinEnter",
+    \   "BufWritePost",
+    \   "CursorHold",
+    \   "CursorHoldI",
+    \   "InsertLeave",
+    \   "TextChanged",
+    \ ]
+
   augroup MyConfigAsyncompleteBuffer  " {{{
     autocmd!
     autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
           \   "name": "asyncomplete_source_02_buffer",
           \   "whitelist": ["*"],
           \   "completor": function("asyncomplete#sources#buffer#completor"),
+          \   "events": s:asyncomplete_buffer_events,
+          \   "on_event": function("s:AsyncompleteBufferOnEvent"),
           \ }))
   augroup END  " }}}
 
+  " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
+  function! s:AsyncompleteBufferOnEvent(...) abort  " {{{
+    call s:AsyncompleteBufferRefreshKeywords()
+  endfunction  " }}}
+
+  function! s:SetupAsyncompleteBufferRefreshKeywords() abort  " {{{
+    for scriptname in split(execute(":scriptnames"), '\n')
+      if scriptname =~# 'asyncomplete-buffer\.vim/autoload/asyncomplete/sources/buffer\.vim'
+        let asyncomplete_buffer_sid = matchstr(scriptname, '\v^ *(\d+)')
+        break
+      endif
+    endfor
+
+    if !exists("asyncomplete_buffer_sid")
+      function! s:AsyncompleteBufferRefreshKeywords() abort
+        call s:EchoErrorMsg("Cannot refresh keywords because asyncomplete-buffer.vim's SID is not found.")
+      endfunction
+    else
+      let s:AsyncompleteBufferRefreshKeywords = function("<SNR>" . asyncomplete_buffer_sid . "_refresh_keywords")
+    endif
+  endfunction  " }}}
+
   function! s:ActivateAsyncompleteBuffer() abort  " {{{
-    " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
-    doautocmd BufWinEnter
+    " Trigger one of the s:asyncomplete_buffer_events
+    doautocmd TextChanged
   endfunction  " }}}
 
   function! s:ConfigPluginOnPostSource_asyncomplete_buffer() abort  " {{{
+    call s:SetupAsyncompleteBufferRefreshKeywords()
     call s:ActivateAsyncompleteBuffer()
   endfunction  " }}}
 
