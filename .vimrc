@@ -2762,10 +2762,11 @@ nmap + <C-a>
 nmap - <C-x>
 
 " Exchange pasting with adjusting indentations or not
-nnoremap p ]p
-nnoremap <S-p> ]<S-p>
-nnoremap ]p p
-nnoremap ]<S-p> <S-p>
+" Disable exchanging because sometimes indentation is bad
+" nnoremap p ]p
+" nnoremap <S-p> ]<S-p>
+" nnoremap ]p p
+" nnoremap ]<S-p> <S-p>
 
 " Moving in INSERT mode
 inoremap <C-h> <Left>
