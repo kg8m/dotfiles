@@ -2443,12 +2443,14 @@ augroup MyBlurInactiveWindow  " {{{
 augroup END  " }}}
 
 set showmatch
+set matchtime=1
 set number
 set noshowmode
 set showcmd
 set redrawtime=5000
 set scrolloff=15
 set wrap
+set display+=lastline
 set diffopt+=context:10
 set list
 set listchars=tab:>\ ,eol:\ ,trail:_
@@ -2470,6 +2472,7 @@ augroup END  " }}}
 " Spaces, Indents  " {{{
 set tabstop=2
 set shiftwidth=2
+set softtabstop=-1
 set noshiftround
 set textwidth=0
 set expandtab
@@ -2501,8 +2504,9 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
     "   2: When formatting text, use the indent of the second line of a paragraph for the rest of the paragraph, instead of the indent of the first line.
     "   b: Like 'v', but only auto-wrap if you enter a blank at or before the wrap margin.
     "   l: Long lines are not broken in insert mode: When a line was longer than textwidth when the insert command started, Vim does not.
+    "   M: When joining lines, don't insert a space before or after a multi-byte character.  Overrules the 'B' flag.
     "   j: Where it makes sense, remove a comment leader when joining lines.
-    setlocal fo+=r fo+=q fo+=2 fo+=l fo+=j
+    setlocal fo+=roq2lMj
     setlocal fo-=t fo-=c fo-=a fo-=b  " `fo-=tcab` doesn't work
 
     if &filetype =~# '\v^(text|markdown|moin)$'
