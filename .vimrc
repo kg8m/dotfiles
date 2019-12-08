@@ -2761,6 +2761,12 @@ inoremap <Nul> <Space>
 nmap + <C-a>
 nmap - <C-x>
 
+" Exchange pasting with adjusting indentations or not
+nnoremap p ]p
+nnoremap <S-p> ]<S-p>
+nnoremap ]p p
+nnoremap ]<S-p> <S-p>
+
 " Moving in INSERT mode
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
