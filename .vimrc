@@ -786,20 +786,6 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
        \   "lazy": 1,
        \ })
   endif  " }}}
-
-  if s:RegisterPlugin("thomasfaingnaert/vim-lsp-snippets")  " {{{
-    call s:ConfigPlugin({
-       \   "on_i": 1,
-       \   "lazy": 1,
-       \ })
-  endif  " }}}
-
-  if s:RegisterPlugin("thomasfaingnaert/vim-lsp-neosnippet")  " {{{
-    call s:ConfigPlugin({
-       \   "on_i": 1,
-       \   "lazy": 1,
-       \ })
-  endif  " }}}
 endif  " }}}
 " }}}
 
@@ -1777,14 +1763,6 @@ endif  " }}}
 
 call s:RegisterPlugin("thinca/vim-ft-diff_fold", { "if": !IsGitCommit() && !IsGitHunkEdit() })
 call s:RegisterPlugin("thinca/vim-ft-help_fold")
-
-if s:RegisterPlugin("tpope/vim-fugitive", { "if": OnGitDir() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  call s:ConfigPlugin({
-     \   "lazy":   1,
-     \   "on_cmd": "Gblame",
-     \ })
-endif  " }}}
-
 call s:RegisterPlugin("muz/vim-gemfile", { "if": !IsGitCommit() && !IsGitHunkEdit() })
 call s:RegisterPlugin("kana/vim-gf-user")
 
@@ -1866,16 +1844,6 @@ if s:RegisterPlugin("rcmdnk/vim-markdown", { "if": !IsGitCommit() && !IsGitHunkE
   let g:vim_markdown_no_extensions_in_markdown = 1
   let g:vim_markdown_autowrite = 1
   let g:vim_markdown_folding_level = 10
-
-  function! s:OverwriteMarkdownDefaultConfigs() abort  " {{{
-    " Remove `r` from `formatoptions` (`r`: Automatically insert the current comment leader after hitting `<Enter>` in Insert mode)
-    setlocal formatoptions-=r
-  endfunction  " }}}
-
-  augroup MyOverwriteMarkdownDefaultConfigs  " {{{
-    autocmd!
-    autocmd InsertEnter * if &filetype == "markdown" | call s:OverwriteMarkdownDefaultConfigs() | endif
-  augroup END  " }}}
 
   call s:ConfigPlugin({
      \   "lazy":    1,
