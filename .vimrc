@@ -2356,7 +2356,7 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
     return join(out, "\n")
   endfunction  " }}}
 
-  function! SystemAsync(cmd) abort  " {{{
+  function! s:SystemAsync(cmd) abort  " {{{
     return s:Promise().new({ resolve, reject -> job_start(a:cmd, {
          \   "drop":     "never",
          \   "close_cb": { ch -> "do nothing" },
@@ -2671,10 +2671,10 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
 
         let ctags_command = "ctags " . ctags_options . " " . a:directory
 
-        call SystemAsync(setup_command)
-               \.then({ -> SystemAsync(ctags_command) })
-               \.then({ -> SystemAsync(replace_command) })
-               \.then({ -> SystemAsync(teardown_command) })
+        call s:SystemAsync(setup_command)
+               \.then({ -> s:SystemAsync(ctags_command) })
+               \.then({ -> s:SystemAsync(replace_command) })
+               \.then({ -> s:SystemAsync(teardown_command) })
       endif
     endif
   endfunction  " }}}
@@ -2746,13 +2746,12 @@ nnoremap <Leader>h :<C-u>split<Cr>
 
 vnoremap <Leader>y "yy:<C-u>call RemoteCopy(@")<Cr>
 
-" Remove selected trailing whitespaces
-function! RemoveTrailingWhitespaces() abort  " {{{
+function! s:RemoveTrailingWhitespaces() abort  " {{{
   let position = getpos(".")
   keeppatterns '<,'>s/\s\+$//ge
   call setpos(".", position)
 endfunction  " }}}
-vnoremap <Leader>w :<C-u>call RemoveTrailingWhitespaces()<Cr>
+vnoremap <Leader>w :<C-u>call <SID>RemoveTrailingWhitespaces()<Cr>
 
 " Prevent unconscious operation (<Nul> == <C-Space>)
 inoremap <C-w> <Esc><C-w>
