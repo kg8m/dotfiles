@@ -54,6 +54,7 @@ function! UpdatePlugins() abort  " {{{
   let @/ = "Updated"
 endfunction  " }}}
 
+" Global scope for calling by external sources
 function! IsPluginSourced(plugin_name) abort  " {{{
   return dein#is_sourced(a:plugin_name)
 endfunction  " }}}
@@ -2533,7 +2534,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
     "   l: Long lines are not broken in insert mode: When a line was longer than textwidth when the insert command started, Vim does not.
     "   j: Where it makes sense, remove a comment leader when joining lines.
     setlocal fo+=r fo+=q fo+=2 fo+=l fo+=j
-    setlocal fo-=t fo-=c fo-=a fo-=b
+    setlocal fo-=t fo-=c fo-=a fo-=b  " `fo-=tcab` doesn't work
 
     if &filetype =~# '\v^(text|markdown|moin)$'
       setlocal fo-=r fo-=o
