@@ -128,19 +128,10 @@ function! s:RegisterLSP(config) abort  " {{{
   endif
 
   if executable(executable_name)
-    call s:DefineLSPHooks()
-
-    if has_key(a:config, "use_definition") || !OnRailsDir()
-      call s:UseLSPDefinition(a:config.whitelist)
-
-      if has_key(a:config, "use_definition")
-        call remove(a:config, "use_definition")
-      endif
-    endif
-
     let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
     let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
 
+    call s:DefineLSPHooks()
     call add(s:lsps, { "name": a:config.name, "available": 1 })
   else
     call add(s:lsps, { "name": a:config.name, "available": 0 })
@@ -166,16 +157,13 @@ function! s:EnableLSPs() abort  " {{{
   for config in s:lsp_configs
     call lsp#register_server(config)
   endfor
-endfunction  " }}}
 
-function! s:UseLSPDefinition(filetypes) abort  " {{{
-  let suffix  = join(a:filetypes, "")
-  let pattern = join(a:filetypes, ",")
-
-  execute "augroup MyEnableLspDefinition" . suffix
+  augroup MyEnableLspDefinition
     autocmd!
-    execute "autocmd FileType " . pattern . " nmap <buffer> g] <Plug>(lsp-definition)"
+    execute "autocmd FileType " . join(s:lsp_filetypes, ",") . " nmap <buffer> g] <Plug>(lsp-definition)"
   augroup END
+
+  doautocmd FileType
 endfunction  " }}}
 
 " Lazily call this function to overwrite other plugins' settings
@@ -568,7 +556,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
      \ })
 endif  " }}}
 
-if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
+if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   let g:lsp_diagnostics_enabled = 0
   let g:lsp_async_completion = 1
 
@@ -579,6 +567,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
     autocmd!
     autocmd FileType                      * call s:ReswitchLSPGlobalConfigs()
     autocmd BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
+    autocmd User lsp_definition_failed      execute "tjump " . expand("<cword>")
   augroup END  " }}}
 
   function! s:ReswitchLSPGlobalConfigs() abort  " {{{
@@ -635,7 +624,6 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \       "completeUnimported": 1,
      \     },
      \   },
-     \   "use_definition": 1,
      \ })
   " }}}
 
@@ -676,14 +664,7 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
   call s:RegisterLSP({
      \   "name": "typescript-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
-     \   "whitelist": ["typescript"],
-     \   "use_definition": 1,
-     \ })
-  call s:RegisterLSP({
-     \   "name": "typescript-language-server without using definition",
-     \   "cmd": { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
-     \   "whitelist": ["javascript"],
-     \   "executable_name": "typescript-language-server",
+     \   "whitelist": ["typescript", "javascript"],
      \ })
   " }}}
 
@@ -692,7 +673,6 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \   "name": "vim-language-server",
      \   "cmd": { server_info -> [&shell, &shellcmdflag, "vim-language-server --stdio"] },
      \   "whitelist": ["vim"],
-     \   "use_definition": 1,
      \ })
   " }}}
 
@@ -741,7 +721,6 @@ if s:RegisterPlugin("prabirshrestha/vim-lsp")  " {{{
      \     }
      \   },
      \   "whitelist": ["vue"],
-     \   "use_definition": 1,
      \   "executable_name": "vls",
      \ })
   " }}}
@@ -2702,7 +2681,7 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
   endfunction  " }}}
 endif  " }}}
 
-" See also unite.vim settings
+" See also vim-lsp and unite.vim settings
 nnoremap g] :tjump <C-r>=expand("<cword>")<Cr><Cr>
 vnoremap g] "gy:tjump <C-r>"<Cr>
 " }}}
