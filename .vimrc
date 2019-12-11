@@ -430,23 +430,32 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
 
   " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
   function! s:AsyncompleteBufferOnEvent(...) abort  " {{{
+    if !exists("s:asyncomplete_buffer_sid")
+      call s:SetupAsyncompleteBufferRefreshKeywords()
+    endif
+
     call s:AsyncompleteBufferRefreshKeywords()
   endfunction  " }}}
 
   function! s:SetupAsyncompleteBufferRefreshKeywords() abort  " {{{
     for scriptname in split(execute(":scriptnames"), '\n')
       if scriptname =~# 'asyncomplete-buffer\.vim/autoload/asyncomplete/sources/buffer\.vim'
-        let asyncomplete_buffer_sid = matchstr(scriptname, '\v^ *(\d+)')
+        let s:asyncomplete_buffer_sid = matchstr(scriptname, '\v^ *(\d+)')
         break
       endif
     endfor
 
-    if !exists("asyncomplete_buffer_sid")
-      function! s:AsyncompleteBufferRefreshKeywords() abort
+    if exists("s:asyncomplete_buffer_sid")
+      let s:AsyncompleteBufferRefreshKeywords = function("<SNR>" . s:asyncomplete_buffer_sid . "_refresh_keywords")
+    else
+      if exists("s:AsyncompleteBufferRefreshKeywords")
+        return
+      endif
+
+      function! s:AsyncompleteBufferCannotRefreshKeywords() abort
         call s:EchoErrorMsg("Cannot refresh keywords because asyncomplete-buffer.vim's SID is not found.")
       endfunction
-    else
-      let s:AsyncompleteBufferRefreshKeywords = function("<SNR>" . asyncomplete_buffer_sid . "_refresh_keywords")
+      let s:AsyncompleteBufferRefreshKeywords = function("AsyncompleteBufferCannotRefreshKeywords")
     endif
   endfunction  " }}}
 
@@ -456,7 +465,6 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
   endfunction  " }}}
 
   function! s:ConfigPluginOnPostSource_asyncomplete_buffer() abort  " {{{
-    call s:SetupAsyncompleteBufferRefreshKeywords()
     call s:ActivateAsyncompleteBuffer()
   endfunction  " }}}
 
