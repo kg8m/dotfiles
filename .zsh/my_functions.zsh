@@ -155,7 +155,7 @@ function extract() {
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
 
 function rg_without_pager() {
-  command rg $@
+  command rg $RIPGREP_EXTRA_OPTIONS $@
 }
 
 function rg_with_pager() {
@@ -164,10 +164,6 @@ function rg_with_pager() {
 }
 alias rg="rg_with_pager"
 
-function rg_for_grep() {
-  command rg --color never --files-with-matches $@
-}
-
 function vig() {
-  vi $( rg_for_grep $@ )
+  vi $( rg_without_pager --color never --files-with-matches $@ )
 }
