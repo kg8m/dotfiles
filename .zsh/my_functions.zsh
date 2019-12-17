@@ -168,3 +168,17 @@ function vig() {
   vi $( rg_without_pager --color never --files-with-matches $@ )
 }
 alias virg="vig"
+
+function tig {
+  case "$1" in
+    bl*)
+      execute_with_echo "command tig blame $@"
+      ;;
+    st*)
+      execute_with_echo "command tig status"
+      ;;
+    *)
+      execute_with_echo "command tig $@"
+      ;;
+  esac
+}
