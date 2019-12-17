@@ -1903,21 +1903,23 @@ if s:RegisterPlugin("rhysd/vim-operator-surround")  " {{{
 
     " Some pairs don't work as `keys` if they require IME's `henkan`
     " But they works as `block`
-    let pairs = [
-      \   ["（", "）"],
-      \   ["［", "］"],
-      \   ["「", "」"],
-      \   ["『", "』"],
-      \   ["〈", "〉"],
-      \   ["《", "》"],
-      \   ["【", "】"],
-      \   ["“", "”"],
-      \   ["‘", "’"],
+    let configs = [
+      \   { "block": ["[ ", " ]"], "keys": [" [", " ]"] },
+      \   { "block": ["（", "）"] },
+      \   { "block": ["［", "］"] },
+      \   { "block": ["「", "」"] },
+      \   { "block": ["『", "』"] },
+      \   { "block": ["〈", "〉"] },
+      \   { "block": ["《", "》"] },
+      \   { "block": ["【", "】"] },
+      \   { "block": ["“", "”"] },
+      \   { "block": ["‘", "’"] },
       \ ]
 
-    for pair in pairs
+    for config in configs
+      let keys = has_key(config, "keys") ? config.keys : config.block
       call add(g:operator#surround#blocks["-"], {
-        \   "block": pair, "motionwise": ["char", "line", "block"], "keys": pair
+        \   "block": config.block, "motionwise": ["char", "line", "block"], "keys": keys
         \ })
     endfor
   endfunction  " }}}
