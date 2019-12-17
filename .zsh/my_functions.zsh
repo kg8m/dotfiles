@@ -167,3 +167,4 @@ alias rg="rg_with_pager"
 function vig() {
   vi $( rg_without_pager --color never --files-with-matches $@ )
 }
+alias virg="vig"
