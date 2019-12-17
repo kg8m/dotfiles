@@ -27,6 +27,13 @@ HISTSIZE=100000
 SAVEHIST=100000
 HISTORY_IGNORE="exit|rm *-f*"
 
+# https://mollifier.hatenablog.com/entry/20090728/p1
+zshaddhistory() {
+  local line=${1%%$'\n'}
+
+  [[ ${#line} -ge 10 ]]
+}
+
 setopt extended_history      # Record each command's timestamp and the duration
 setopt hist_ignore_all_dups  # Remove duplicated older commands from history
 setopt hist_ignore_space     # Remove history when the first character is a space
