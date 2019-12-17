@@ -617,6 +617,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
     autocmd!
     autocmd FileType                      * call s:ReswitchLSPGlobalConfigs()
     autocmd BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
+    autocmd User lsp_buffer_enabled         call s:SwitchLSPGlobalConfigs()
     autocmd User lsp_definition_failed      execute "tjump " . expand("<cword>")
   augroup END  " }}}
 
