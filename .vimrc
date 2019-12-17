@@ -2635,6 +2635,9 @@ let &undodir = s:undodir
 set wildmenu
 set wildmode=list:longest,full
 
+" Time to wait for a key code or mapped key sequence
+set timeoutlen=3000
+
 " Support Japanese kakkos
 set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,〔:〕,“:”,‘:’
 
