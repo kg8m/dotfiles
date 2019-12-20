@@ -154,20 +154,19 @@ function extract() {
 }
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
 
-function rg_without_pager() {
+function my_grep_without_pager() {
   command rg $RIPGREP_EXTRA_OPTIONS $@
 }
 
-function rg_with_pager() {
+function my_grep_with_pager() {
   # Enable colors, group by filepath, and show line numbers
-  rg_without_pager --pretty $@ | less
+  my_grep_without_pager --pretty $@ | less
 }
-alias rg="rg_with_pager"
+alias gr="my_grep_with_pager"
 
-function vig() {
-  vi $( rg_without_pager --color never --files-with-matches $@ )
+function vigr() {
+  vi $( my_grep_without_pager --color never --files-with-matches $@ )
 }
-alias virg="vig"
 
 function tig {
   case "$1" in
