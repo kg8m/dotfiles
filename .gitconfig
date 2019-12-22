@@ -31,7 +31,7 @@ old  = cyan
 new  = red
 
 [color "interactive"]
-prompt = yellow bold
+prompt = 236 yellow bold
 
 [color "status"]
 added     = yellow
