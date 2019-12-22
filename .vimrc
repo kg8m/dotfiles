@@ -607,7 +607,10 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
-  let g:lsp_diagnostics_enabled = 0
+  let g:lsp_diagnostics_enabled = 1
+  let g:lsp_diagnostics_echo_cursor = 1
+  let g:lsp_signs_enabled = 1
+
   let g:lsp_async_completion = 1
 
   let g:lsp_log_verbose = 1
@@ -698,7 +701,6 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "solargraph",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
-     \   initialization_options: { diagnostics: "true" },
      \   whitelist: ["ruby"],
      \ })
   " }}}
