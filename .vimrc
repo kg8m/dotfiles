@@ -2473,6 +2473,7 @@ set list
 set listchars=tab:>\ ,eol:\ ,trail:_
 set cursorline
 set cursorlineopt=number
+set pumheight=20
 
 " Cursor shapes
 let &t_SI = "\e[6 q"  " |
