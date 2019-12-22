@@ -701,6 +701,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "solargraph",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
+     \   root_uri: { server_info -> lsp#utils#path_to_uri(getcwd()) },
      \   whitelist: ["ruby"],
      \ })
   " }}}
