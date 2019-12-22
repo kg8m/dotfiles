@@ -1,2 +1,9 @@
 #!/usr/bin/env zsh
-peco --rcfile ~/.filter/config.json
+if which fzf > /dev/null 2>&1; then
+  fzf
+elif which peco > /dev/null 2>&1; then
+  peco --rcfile ~/.filter/config.json
+else
+  echo "Any filter is not found." >&2
+  cat
+fi
