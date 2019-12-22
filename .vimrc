@@ -804,6 +804,7 @@ endif  " }}}
 if s:RegisterPlugin("dense-analysis/ale", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:airline#extensions#ale#enabled = 0
   let g:ale_completion_enabled = 0
+  let g:ale_disable_lsp = 1
   let g:ale_echo_msg_format = "[%linter%][%severity%] %code: %%s"
   let g:ale_fix_on_save = 0
   let g:ale_lint_on_enter = 1
