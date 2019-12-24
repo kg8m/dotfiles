@@ -1815,15 +1815,18 @@ if s:RegisterPlugin("fatih/vim-go")  " {{{
   let g:go_highlight_variable_declarations = 1
   let g:go_highlight_variable_assignments = 1
 
-  augroup MyGoFold  " {{{
+  augroup MyVimGo  " {{{
     autocmd!
-    autocmd FileType go setlocal foldmethod=syntax
+    autocmd FileType go call s:SetupVimGo()
   augroup END  " }}}
 
-  augroup MyGoMappings  " {{{
-    autocmd!
-    autocmd FileType go call s:SetupGoMappings()
-  augroup END  " }}}
+  function! s:SetupVimGo() abort  " {{{
+    " Disable vim-go's `go#lsp#DidOpen()`
+    let b:go_lsp_did_open = 1
+
+    setlocal foldmethod=syntax
+    call s:SetupGoMappings()
+  endfunction  " }}}
 
   if OnTmux()  " {{{
     function! s:SetupGoMappings() abort  " {{{
