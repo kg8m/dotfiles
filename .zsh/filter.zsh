@@ -24,6 +24,7 @@ function setup_anyframe {
   autoload -Uz anyframe-init
   anyframe-init
 
+  # `filter` is `.zsh/bin/filter`
   if which fzf > /dev/null 2>&1; then
     setup_fzf
     zstyle ":anyframe:selector:" use fzf
