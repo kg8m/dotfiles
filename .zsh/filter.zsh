@@ -1,8 +1,5 @@
 function setup_anyframe {
-  autoload -Uz anyframe-init
-  anyframe-init
-
-  if which fzf > /dev/null 2>&1; then
+  function setup_fzf {
     local fzf_binds=""
     fzf_binds+="ctrl-f:page-down"
     fzf_binds+=",ctrl-b:page-up"
@@ -10,7 +7,13 @@ function setup_anyframe {
     fzf_binds+=",ctrl-h:backward-char"
     fzf_binds+=",ctrl-l:forward-char"
     export FZF_DEFAULT_OPTS="--ansi --multi --select-1 --bind=$fzf_binds"
+  }
 
+  autoload -Uz anyframe-init
+  anyframe-init
+
+  if which fzf > /dev/null 2>&1; then
+    setup_fzf
     zstyle ":anyframe:selector:" use fzf
     zstyle ":anyframe:selector:fzf:" command filter
   elif which peco > /dev/null 2>&1; then
