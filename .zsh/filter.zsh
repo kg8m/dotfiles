@@ -1,12 +1,24 @@
 function setup_anyframe {
   function setup_fzf {
-    local fzf_binds=""
-    fzf_binds+="ctrl-f:page-down"
-    fzf_binds+=",ctrl-b:page-up"
-    fzf_binds+=",ctrl-space:toggle+up"
-    fzf_binds+=",ctrl-h:backward-char"
-    fzf_binds+=",ctrl-l:forward-char"
-    export FZF_DEFAULT_OPTS="--ansi --multi --select-1 --bind=$fzf_binds"
+    local binds=""
+    binds+="ctrl-f:page-down"
+    binds+=",ctrl-b:page-up"
+    binds+=",ctrl-space:toggle+down"
+    binds+=",ctrl-h:backward-char"
+    binds+=",ctrl-l:forward-char"
+    binds+=",tab:toggle-preview"
+
+    local options=""
+    options+="--ansi"
+    options+=" --bind='$binds'"
+    options+=" --exit-0"
+    options+=" --multi"
+    options+=" --reverse"
+    options+=" --preview='echo {}'"
+    options+=" --preview-window='down:3:hidden:wrap'"
+    options+=" --select-1"
+
+    export FZF_DEFAULT_OPTS="$options"
   }
 
   autoload -Uz anyframe-init
