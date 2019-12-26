@@ -2455,6 +2455,7 @@ set list
 set listchars=tab:>\ ,eol:\ ,trail:_
 set cursorline
 set cursorlineopt=number
+set completeopt=menu,menuone,popup,noinsert,noselect
 set pumheight=20
 
 " Cursor shapes
