@@ -3,10 +3,9 @@ function setup_anyframe {
     local binds=""
     binds+="ctrl-f:page-down"
     binds+=",ctrl-b:page-up"
-    binds+=",ctrl-space:toggle+down"
     binds+=",ctrl-h:backward-char"
     binds+=",ctrl-l:forward-char"
-    binds+=",tab:toggle-preview"
+    binds+=",ctrl-space:toggle-preview"
 
     local options=""
     options+="--ansi"
