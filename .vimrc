@@ -2311,7 +2311,8 @@ if s:RegisterPlugin("benmills/vimux", #{ if: OnTmux() && !IsGitCommit() && !IsGi
     "
     "       return -1
     "     endfunction
-    let func = << trim VIM
+    " Don't assing by `let func = << trim VIM`, that doesn't work
+    let func =<< trim VIM
       function! _VimuxNearestIndex() abort
         let views = split(_VimuxTmux("list-" . _VimuxRunnerType() . "s"), "\n")
         let index = len(views) - 1
