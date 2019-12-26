@@ -1137,7 +1137,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   vnoremap <Leader>ug "gy:<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::<C-r>"
   nnoremap <Leader>uy :<C-u>Unite history/yank -default-action=append<Cr>
   nnoremap <Leader>ub :<C-u>Unite buffer<Cr>
-  nnoremap <F4>       :<C-u>Unite buffer<Cr>
 
   " See also ctags settings
   nnoremap g[ :<C-u>Unite jump<Cr>
@@ -1386,17 +1385,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[CSV] Align CSV columns with whitespaces",                      "RainbowAlign"],
         \   ["[CSV] Remove leading and trailing whitespaces from all fields", "RainbowShrink"],
         \
-        \   ["[Unite plugin] mru files",            "Unite neomru/file"],
-        \   ["[Unite plugin] mark",                 "Unite mark"],
         \   ["[Unite plugin] giti/status",          "Unite giti/status"],
-        \
-        \   ["[Unite] buffers",                       "Unite buffer"],
-        \   ["[Unite] files",                         "UniteWithBufferDir file"],
-        \   ["[Unite] various sources",               "UniteWithBufferDir buffer neomru/file bookmark file"],
-        \   ["[Unite] history/yank",                  "Unite history/yank -default-action=append"],
-        \   ["[Unite] register",                      "Unite register"],
-        \   ["[Unite] grep current directory [Edit]", "Unite -no-quit -winheight=30% -buffer-name=grep grep:./::{words}"],
-        \   ["[Unite] grep all buffers [Edit]",       "Unite -no-quit -winheight=30% -buffer-name=grep grep:$buffers::{words}"],
         \   ["[Unite] resume [Edit]",                 "UniteResume {buffer-name}"],
         \
         \   ["[Help] autocommand-events", "help autocommand-events"],
@@ -1475,7 +1464,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
        \   lazy: 0,
        \ })
 
-    nnoremap <Leader>m :<C-u>Unite neomru/file<Cr>
+    nnoremap <Leader>uh :<C-u>Unite neomru/file<Cr>
 
     let g:neomru#time_format     = "%Y/%m/%d %H:%M:%S"
     let g:neomru#filename_format = ":~:."
@@ -1821,9 +1810,6 @@ if s:RegisterPlugin("fatih/vim-go")  " {{{
   augroup END  " }}}
 
   function! s:SetupVimGo() abort  " {{{
-    " Disable vim-go's `go#lsp#DidOpen()`
-    let b:go_lsp_did_open = 1
-
     setlocal foldmethod=syntax
     call s:SetupGoMappings()
   endfunction  " }}}
