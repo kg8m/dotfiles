@@ -1135,7 +1135,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::
   vnoremap <Leader>ug "gy:<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::<C-r>"
-  nnoremap <Leader>uy :<C-u>Unite history/yank -default-action=append<Cr>
+  nnoremap <Leader>uy :<C-u>Unite yankround -default-action=append<Cr>
   nnoremap <Leader>ub :<C-u>Unite buffer<Cr>
 
   " See also ctags settings
@@ -1469,14 +1469,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     let g:neomru#time_format     = "%Y/%m/%d %H:%M:%S"
     let g:neomru#filename_format = ":~:."
     let g:neomru#file_mru_limit  = 1000
-  endif  " }}}
-
-  if s:RegisterPlugin("Shougo/neoyank.vim")  " {{{
-    call s:ConfigPlugin(#{
-       \   lazy: 0,
-       \ })
-
-    let g:neoyank#limit = 300
   endif  " }}}
 
   if s:RegisterPlugin("kg8m/unite-dwm")  " {{{
