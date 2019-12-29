@@ -5,7 +5,8 @@ function setup_anyframe {
     binds+=",ctrl-b:page-up"
     binds+=",ctrl-h:backward-char"
     binds+=",ctrl-l:forward-char"
-    binds+=",ctrl-space:toggle-preview"
+    binds+=",ctrl-space:toggle+down"
+    binds+=",tab:toggle-preview"
 
     local options=""
     options+="--ansi"

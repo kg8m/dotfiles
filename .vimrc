@@ -2763,7 +2763,8 @@ vnoremap <Leader>w :<C-u>call <SID>RemoveTrailingWhitespaces()<Cr>
 
 " Prevent unconscious operation (<Nul> == <C-Space>)
 inoremap <C-w> <Esc><C-w>
-inoremap <Nul> <Space>
+inoremap <Nul> <C-Space>
+tnoremap <Nul> <C-Space>
 
 " Increment/Decrement
 nmap + <C-a>
