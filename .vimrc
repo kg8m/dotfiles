@@ -915,6 +915,32 @@ if s:RegisterPlugin("LeafCage/foldCC", #{ if: !IsGitCommit() && !IsGitHunkEdit()
   set foldtext=FoldCCtext()
 endif  " }}}
 
+if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
+  let g:fzf_command_prefix = "Fzf"
+  let g:fzf_buffers_jump = 1
+  let g:fzf_action = #{ ctrl-o: "vsplit" }
+  let g:fzf_layout = #{ up: "~50%" }
+
+  nnoremap <Leader><Leader>g :FzfRg<Space>
+  vnoremap <Leader><Leader>g "gy:FzfRg<Space><C-r>"
+  nnoremap <Leader><Leader>b :FzfBuffers<Cr>
+  nnoremap <Leader><Leader>h :FzfHistory<Cr>
+  nnoremap <Leader><Leader>m :FzfMarks<Cr>
+  nnoremap <Leader><Leader>f :FzfFiles<Cr>
+
+  call s:ConfigPlugin(#{
+    \   lazy:    1,
+    \   depends: "fzf",
+    \   on_cmd: ["FzfFiles", "FzfBuffers", "FzfRg", "FzfMarks", "FzfHistory"],
+    \ })
+
+  if s:RegisterPlugin("junegunn/fzf")  " {{{
+    call s:ConfigPlugin(#{
+      \   lazy: 1,
+      \ })
+  endif  " }}}
+endif  " }}}
+
 if s:RegisterPlugin("kg8m/gundo.vim")  " {{{
   nnoremap <F5> :<C-u>GundoToggle<Cr>
 
