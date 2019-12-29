@@ -385,7 +385,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
     let sorted_items = []
     let base_matcher = escape(a:ctx.base, '~"\.^$[]*')
-    let fuzzy_matcher = join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
+    let fuzzy_matcher = "^" . join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
 
     for [source_name, matches] in sort(items(a:matches), { a, b -> a[0] > b[0] ? 1 : -1 })
       call extend(sorted_items, filter(matches.items, { index, item -> item.word =~? fuzzy_matcher }))
