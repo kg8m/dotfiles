@@ -341,6 +341,7 @@ call s:RegisterPlugin("kg8m/.vim")
 " Completion, LSP  " {{{
 if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = 1
+  let g:asyncomplete_auto_completeopt = 0
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
   inoremap <silent> <expr> <BS> "\<BS>" . <SID>LazyRefreshCompletion()
