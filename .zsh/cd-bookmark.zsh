@@ -3,4 +3,5 @@ function setup_cdbookmark {
   alias cdb="cd-bookmark"
 }
 
-zplugin ice lucid wait atload"setup_cdbookmark"; zplugin light mollifier/cd-bookmark
+zplugin ice lucid wait'[[ -n ${ZLAST_COMMANDS[(r)cdb*]} ]]' atload"setup_cdbookmark"
+zplugin light mollifier/cd-bookmark
