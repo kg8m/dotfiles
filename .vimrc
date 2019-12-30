@@ -2486,8 +2486,44 @@ if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
 endif  " }}}
 
 " Colorschemes
-if s:RegisterPlugin("kg8m/molokai")  " {{{
+if s:RegisterPlugin("tomasr/molokai")  " {{{
   let g:molokai_original = 1
+
+  function! s:OverwriteSyntax() abort  " {{{
+    if has("gui_running")
+      highlight DiffChange   guifg=#FFFFFF guibg=#4C4745
+      highlight DiffFile     guifg=#A6E22E               gui=bold
+      highlight FoldColumn   guifg=#6a7678 guibg=#000000
+      highlight Folded       guifg=#6a7678 guibg=#000000
+      highlight IncSearch    guifg=#FFFFFF guibg=#F92672
+      highlight PmenuSel     guifg=#000000 guibg=#808080
+      highlight Search       guifg=#FFFFFF guibg=#F92672
+      highlight Underlined   guifg=#AAAAAA               gui=underline
+      highlight VisualNOS                  guibg=#403D3D gui=bold
+      highlight Visual                     guibg=#403D3D gui=bold
+      highlight Normal       guifg=#F8F8F2 guibg=#000000
+      highlight Comment      guifg=#AAAAAA
+      highlight CursorLine                 guibg=#1F1E19
+      highlight CursorColumn               guibg=#1F1E19
+    else
+      highlight Normal                    ctermbg=NONE
+      highlight DiffAdd                   ctermbg=23
+      highlight DiffChange   ctermfg=NONE ctermbg=234
+      highlight DiffFile     ctermfg=118              cterm=bold
+      highlight DiffText                  ctermbg=240  cterm=bold
+      highlight FoldColumn   ctermfg=67   ctermbg=NONE
+      highlight Folded       ctermfg=67   ctermbg=NONE
+      highlight IncSearch    ctermfg=255  ctermbg=161
+      highlight Search       ctermfg=255  ctermbg=161
+      highlight Underlined   ctermfg=247               cterm=underline
+      highlight VisualNOS                 ctermbg=238  cterm=bold
+      highlight Visual                    ctermbg=235  cterm=bold
+      highlight Comment      ctermfg=247
+      highlight CursorColumn              ctermbg=234
+      highlight ColorColumn               ctermbg=234
+      highlight LineNr       ctermfg=250  ctermbg=234
+    endif
+  endfunction  " }}}
 endif  " }}}
 " }}}
 
@@ -2510,6 +2546,7 @@ endif
 " ----------------------------------------------
 " General looks  " {{{
 colorscheme molokai
+call s:OverwriteSyntax()
 
 " https://qiita.com/Bakudankun/items/649aa6d8b9eccc1712b5
 augroup MyBlurInactiveWindow  " {{{
