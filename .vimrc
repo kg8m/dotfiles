@@ -534,9 +534,7 @@ endif  " }}}
 
 if s:RegisterPlugin("Shougo/neosnippet")  " {{{
   function! s:ConfigPluginOnSource_neosnippet() abort  " {{{
-    imap <expr><Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-    imap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    imap <expr><Cr>    neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? asyncomplete#close_popup() : "\<Cr>"
+    call s:DefineCompletionMappings()
 
     let g:neosnippet#snippets_directory = [
       \   s:PluginInfo(".vim").path . "/snippets",
@@ -801,6 +799,58 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
        \ })
   endif  " }}}
 endif  " }}}
+
+if s:RegisterPlugin("thomasfaingnaert/vim-lsp-snippets")  " {{{
+  call s:ConfigPlugin(#{
+     \   lazy:      1,
+     \   on_source: "neosnippet",
+     \ })
+
+  if s:RegisterPlugin("thomasfaingnaert/vim-lsp-neosnippet")  " {{{
+    call s:ConfigPlugin(#{
+       \   lazy:      1,
+       \   on_source: "vim-lsp-snippets",
+       \ })
+  endif  " }}}
+endif  " }}}
+
+if s:RegisterPlugin("hrsh7th/vim-vsnip")  " {{{
+  function! s:ConfigPluginOnSource_vim_vsnip() abort  " {{{
+    call s:DefineCompletionMappings()
+  endfunction  " }}}
+
+  call s:ConfigPlugin(#{
+     \   lazy:      1,
+     \   on_func:   "vsnip#",
+     \   on_source: "vim-lsp",
+     \   hook_source: function("s:ConfigPluginOnSource_vim_vsnip"),
+     \ })
+
+  if s:RegisterPlugin("hrsh7th/vim-vsnip-integ")  " {{{
+    call s:ConfigPlugin(#{
+       \   lazy:      1,
+       \   on_source: "vim-vsnip",
+       \ })
+  endif  " }}}
+endif  " }}}
+
+function! s:DefineCompletionMappings() abort  " {{{
+  inoremap <expr><Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  imap     <expr><Cr>    <SID>CrForInsertMode()
+
+  function! s:CrForInsertMode() abort  " {{{
+    if vsnip#available(1)
+      return "\<Plug>(vsnip_expand_or_jump)"
+    else
+      if neosnippet#expandable_or_jumpable()
+        return "\<Plug>(neosnippet_expand_or_jump)"
+      else
+        return pumvisible() ? asyncomplete#close_popup() : "\<Cr>"
+      endif
+    endif
+  endfunction  " }}}
+endfunction  " }}}
 " }}}
 
 if s:RegisterPlugin("dense-analysis/ale", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
