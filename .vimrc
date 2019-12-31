@@ -970,13 +970,13 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   let g:fzf_action = #{ ctrl-o: "vsplit" }
   let g:fzf_layout = #{ up: "~50%" }
 
-  nnoremap <Leader><Leader>g :FzfRg<Space>
-  vnoremap <Leader><Leader>g "gy:FzfRg<Space><C-r>"
-  nnoremap <Leader><Leader>b :FzfBuffers<Cr>
-  nnoremap <Leader><Leader>h :FzfHistory<Cr>
-  nnoremap <Leader><Leader>m :FzfMarks<Cr>
   nnoremap <Leader><Leader>f :FzfFiles<Cr>
   nnoremap <Leader><Leader>v :FzfGFiles?<Cr>
+  nnoremap <Leader><Leader>b :FzfBuffers<Cr>
+  nnoremap <Leader><Leader>g :FzfRg<Space>
+  vnoremap <Leader><Leader>g "gy:FzfRg<Space><C-r>"
+  nnoremap <Leader><Leader>m :FzfMarks<Cr>
+  nnoremap <Leader><Leader>h :FzfHistory<Cr>
 
   call s:ConfigPlugin(#{
     \   lazy:    1,
