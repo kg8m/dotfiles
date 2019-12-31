@@ -976,11 +976,12 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>h :FzfHistory<Cr>
   nnoremap <Leader><Leader>m :FzfMarks<Cr>
   nnoremap <Leader><Leader>f :FzfFiles<Cr>
+  nnoremap <Leader><Leader>v :FzfGFiles?<Cr>
 
   call s:ConfigPlugin(#{
     \   lazy:    1,
     \   depends: "fzf",
-    \   on_cmd: ["FzfFiles", "FzfBuffers", "FzfRg", "FzfMarks", "FzfHistory"],
+    \   on_cmd: ["FzfFiles", "FzfGFiles?", "FzfBuffers", "FzfRg", "FzfMarks", "FzfHistory"],
     \ })
 
   if s:RegisterPlugin("junegunn/fzf")  " {{{
