@@ -188,10 +188,10 @@ function update_zsh_plugins {
 
   local current_dir=$( pwd )
   local enhancd_dir=~/.zplugin/plugins/b4b4r07---enhancd
-  execute_with_echo "\\cd $enhancd_dir"
+  execute_with_echo "cd $enhancd_dir"
   execute_with_echo "git checkout ."
   execute_with_echo "git clean -f ."
-  execute_with_echo "\\cd $current_dir"
+  execute_with_echo "cd $current_dir"
 
   execute_with_echo "zplugin update --all"
   execute_with_echo "exec zsh"
