@@ -692,7 +692,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " go get -u golang.org/x/tools/cmd/gopls  {{{
+  " go get -u golang.org/x/tools/gopls  {{{
   call s:RegisterLSP(#{
      \   name: "gopls",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "gopls -mode stdio"] },
