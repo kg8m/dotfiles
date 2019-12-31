@@ -981,10 +981,19 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>h :FzfHistory<Cr>
 
   call s:ConfigPlugin(#{
-    \   lazy:    1,
-    \   depends: "fzf",
-    \   on_cmd: ["FzfFiles", "FzfGFiles?", "FzfBuffers", "FzfRg", "FzfLines", "FzfMarks", "FzfWindows", "FzfHistory"],
-    \ })
+     \   lazy:    1,
+     \   depends: "fzf",
+     \   on_cmd: [
+     \     "FzfFiles",
+     \     "FzfGFiles?",
+     \     "FzfBuffers",
+     \     "FzfRg",
+     \     "FzfLines",
+     \     "FzfMarks",
+     \     "FzfWindows",
+     \     "FzfHistory",
+     \   ],
+     \ })
 
   if s:RegisterPlugin("junegunn/fzf")  " {{{
     call s:ConfigPlugin(#{
