@@ -129,6 +129,10 @@ function! s:RegisterLSP(config) abort  " {{{
   endif
 
   if executable(executable_name)
+    if !has_key(a:config, "root_uri")
+      let a:config.root_uri = { server_info -> lsp#utils#path_to_uri(getcwd()) }
+    endif
+
     let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
     let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
 
@@ -721,7 +725,6 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "solargraph",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
-     \   root_uri: { server_info -> lsp#utils#path_to_uri(getcwd()) },
      \   whitelist: ["ruby"],
      \ })
   " }}}
