@@ -185,6 +185,7 @@ function tig {
 function update_zsh_plugins {
   execute_with_echo "zplugin self-update"
   execute_with_echo "zplugin delete --clean"
+  execute_with_echo "zplugin cclear"
 
   local current_dir=$( pwd )
   execute_with_echo "cd $__ENHANCD_DIR__"
