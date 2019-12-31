@@ -7,5 +7,10 @@ function cd_with_mkdir() {
   __enhancd::cd "$@"
 }
 
-export ENHANCD_FILTER=filter
-zplugin ice lucid wait atload'alias cd="cd_with_mkdir"'; zplugin light b4b4r07/enhancd
+function setup_enhancd {
+  export ENHANCD_FILTER=filter
+  export __ENHANCD_DIR__=$( pwd )
+  alias cd="cd_with_mkdir"
+}
+
+zplugin ice lucid wait atload"setup_enhancd"; zplugin light b4b4r07/enhancd
