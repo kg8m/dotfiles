@@ -31,7 +31,7 @@ HISTORY_IGNORE="exit|rm *-f*"
 zshaddhistory() {
   local line=${1%%$'\n'}
 
-  [[ ${#line} -ge 10 ]]
+  [[ ${#line} -ge 5 ]]
 }
 
 setopt extended_history      # Record each command's timestamp and the duration
