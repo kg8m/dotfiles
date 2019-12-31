@@ -98,6 +98,7 @@ zplugin ice lucid wait; zplugin snippet ~/.zsh/direnv.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/goenv.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/nodenv.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/rbenv.zsh
+zplugin ice lucid wait; zplugin snippet ~/.zsh/rubocop.zsh
 
 source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/completion.zsh
