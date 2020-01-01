@@ -86,7 +86,6 @@ autoload -U add-zsh-hook
 source ~/.zsh/my_aliases.zsh
 source ~/.zsh/my_functions.zsh
 source ~/.zsh/timetrack.zsh
-source ~/.zsh/tmux.zsh
 
 # zdharma/zplugin  {{{
 source ~/.zplugin/bin/zplugin.zsh
@@ -99,6 +98,7 @@ zplugin ice lucid wait; zplugin snippet ~/.zsh/goenv.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/nodenv.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/rbenv.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/rubocop.zsh
+zplugin ice lucid wait; zplugin snippet ~/.zsh/tmux.zsh
 
 source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/completion.zsh

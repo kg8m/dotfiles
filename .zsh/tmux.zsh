@@ -1,5 +1,5 @@
 # https://gist.github.com/acdvorak/060150b5334999b563eb
-tmux_execute_in_all_panes() {
+function tmux_execute_in_all_panes {
   # Assign the argument to something readable
   local COMMAND=$1
 
@@ -47,3 +47,20 @@ tmux_execute_in_all_panes() {
   tmux select-window -t $ORIG_WINDOW_INDEX
   tmux select-pane -t $ORIG_PANE_INDEX
 }
+
+function setup_tmux_plugin {
+  [ -d ~/.tmux ]            || ln -s ~/dotfiles/.tmux ~/.tmux
+  [ -d ~/.tmux/plugins/$1 ] || ln -s "$( pwd )" ~/.tmux/plugins/$1
+}
+
+zplugin ice lucid wait as"null" atload"setup_tmux_plugin tpm"
+zplugin light tmux-plugins/tpm
+
+zplugin ice lucid wait as"null" atload"setup_tmux_plugin tmux-resurrect"
+zplugin light tmux-plugins/tmux-resurrect
+
+zplugin ice lucid wait as"null" atload"setup_tmux_plugin tmux-continuum"
+zplugin light tmux-plugins/tmux-continuum
+
+zplugin ice lucid wait as"null" atload"setup_tmux_plugin tmux-scroll-copy-mode"
+zplugin light nhdaly/tmux-scroll-copy-mode
