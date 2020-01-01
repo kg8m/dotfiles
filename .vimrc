@@ -688,7 +688,13 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "css-languageserver",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
-     \   whitelist: ["css", "sass"],
+     \   whitelist: ["css", "less", "sass", "scss"],
+     \   workspace_config: #{
+     \     css:  #{ linkt: #{ validProperties: [] } },
+     \     less: #{ linkt: #{ validProperties: [] } },
+     \     sass: #{ linkt: #{ validProperties: [] } },
+     \     scss: #{ linkt: #{ validProperties: [] } },
+     \   },
      \ })
   " }}}
 
@@ -709,6 +715,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "html-languageserver",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "html-languageserver --stdio"] },
+     \   initialization_options: #{ embeddedLanguages: #{ css: 1, html: 1 } },
      \   whitelist: ["html"],
      \ })
   " }}}
@@ -749,6 +756,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "vim-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "vim-language-server --stdio"] },
+     \   initialization_options: #{ vimruntime: $VIMRUNTIME, runtimepath: &runtimepath },
      \   whitelist: ["vim"],
      \ })
   " }}}
