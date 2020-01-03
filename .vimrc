@@ -2526,6 +2526,8 @@ if s:RegisterPlugin("othree/yajs.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit()
 endif  " }}}
 
 if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
+  let g:yankround_max_history = 100
+
   nmap p     <Plug>(yankround-p)
   xmap p     <Plug>(yankround-p)
   nmap <S-p> <Plug>(yankround-P)
