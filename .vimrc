@@ -2548,7 +2548,7 @@ if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
   function! s:YankHandler(yank_item) abort  " {{{
     let old_reg = [getreg('"'), getregtype('"')]
     let index = matchlist(a:yank_item, '\v^\s*(\d+)\t')[1]
-    let [text, regtype]  = yankround#_get_cache_and_regtype(index)
+    let [text, regtype] = yankround#_get_cache_and_regtype(index)
     call setreg('"', text, regtype)
 
     try
