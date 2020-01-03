@@ -1000,9 +1000,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>w     :FzfWindows<Cr>
   nnoremap <Leader><Leader>h     :FzfHistory<Cr>
   nnoremap <Leader><Leader><S-h> :FzfHelptags<Cr>
-  nnoremap <Leader><Leader>y     :FzfYankHistory<Cr>
-
-  command! FzfYankHistory call s:FzfYankHistory()
+  nnoremap <Leader><Leader>y     :call <SID>FzfYankHistory()<Cr>
 
   " https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
   " See yankround.vim
@@ -1021,7 +1019,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
      \   depends: "fzf",
      \   on_cmd: [
      \     "FzfFiles",
-     \     "FzfGFiles?",
+     \     "FzfGFiles",
      \     "FzfBuffers",
      \     "FzfRg",
      \     "FzfLines",
@@ -1030,6 +1028,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
      \     "FzfHistory",
      \     "FzfHelptags",
      \   ],
+     \   on_func:"fzf#",
      \ })
 
   if s:RegisterPlugin("junegunn/fzf")  " {{{
