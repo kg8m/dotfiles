@@ -379,7 +379,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   endfunction  " }}}
 
   function! s:StartCompletionTimer() abort  " {{{
-    let s:my_completion_refresh_timer = timer_start(200, { -> call("s:ForceRefreshCompletion", []) })
+    let s:my_completion_refresh_timer = timer_start(200, { -> s:ForceRefreshCompletion() })
   endfunction  " }}}
 
   function! s:ClearCompletionTimer() abort  " {{{
@@ -614,7 +614,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
 
       augroup MyNeoSnippetSourceRailsSnippets  " {{{
         autocmd!
-        autocmd FileType * call timer_start(300, { -> call("s:SourceContextualSnippets", [&filetype]) })
+        autocmd FileType * call timer_start(300, { -> s:SourceContextualSnippets(&filetype) })
       augroup END  " }}}
     endfunction  " }}}
     call s:SetupNeosnippetContextual()
@@ -1426,7 +1426,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
 
     augroup MySetupOreOreUniteCommandsForRails  " {{{
       autocmd!
-      autocmd VimEnter * call timer_start(300, { -> call("s:DefineOreOreUniteCommandsForRails", []) })
+      autocmd VimEnter * call timer_start(300, { -> s:DefineOreOreUniteCommandsForRails() })
     augroup END  " }}}
   endif  " }}}
 
@@ -2679,7 +2679,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   augroup MySetupFormatoptions  " {{{
     autocmd!
     " Lazily set formatoptions to overwrite others
-    autocmd FileType * call timer_start(300, { -> call("s:SetupFormatoptions", []) })
+    autocmd FileType * call timer_start(300, { -> s:SetupFormatoptions() })
   augroup END  " }}}
 
   function! s:SetupFormatoptions() abort  " {{{
@@ -2845,7 +2845,7 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
   endfunction  " }}}
 
   function! s:CreateCtagsAsync(directory) abort  " {{{
-    call timer_start(300, { -> call("s:CreateCtags", [a:directory]) })
+    call timer_start(300, { -> s:CreateCtags(a:directory) })
   endfunction  " }}}
 
   function! s:CreateCtags(directory) abort  " {{{
