@@ -1000,6 +1000,21 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>w     :FzfWindows<Cr>
   nnoremap <Leader><Leader>h     :FzfHistory<Cr>
   nnoremap <Leader><Leader><S-h> :FzfHelptags<Cr>
+  nnoremap <Leader><Leader>y     :FzfYankHistory<Cr>
+
+  command! FzfYankHistory call s:FzfYankHistory()
+
+  " https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
+  " See yankround.vim
+  function! s:FzfYankHistory() abort  " {{{
+    let options = #{
+      \   source:  s:YankList(),
+      \   sink:    function("s:YankHandler"),
+      \   options: ["--no-multi", "--nth=2", "--tabstop=1"],
+      \ }
+
+    call fzf#run(fzf#wrap("yank-history", options))
+  endfunction  " }}}
 
   call s:ConfigPlugin(#{
      \   lazy:    1,
@@ -2516,6 +2531,30 @@ if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
   nmap <S-p> <Plug>(yankround-P)
   nmap <C-p> <Plug>(yankround-prev)
   nmap <C-n> <Plug>(yankround-next)
+
+  " https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
+  " For fzf.vim
+  function! s:YankList() abort  " {{{
+    return map(copy(g:_yankround_cache), { index, _ -> s:FormatYankItem(index) })
+  endfunction  " }}}
+
+  function! s:FormatYankItem(index) abort  " {{{
+    let [text, _]  = yankround#_get_cache_and_regtype(a:index)
+    return printf("%3d\t%s", a:index, text)
+  endfunction  " }}}
+
+  function! s:YankHandler(yank_item) abort  " {{{
+    let old_reg = [getreg('"'), getregtype('"')]
+    let index = matchlist(a:yank_item, '\v^\s*(\d+)\t')[1]
+    let [text, regtype]  = yankround#_get_cache_and_regtype(index)
+    call setreg('"', text, regtype)
+
+    try
+      execute 'normal! ""p'
+    finally
+      call setreg('"', old_reg[0], old_reg[1])
+    endtry
+  endfunction  " }}}
 endif  " }}}
 
 " Colorschemes
