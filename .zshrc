@@ -108,7 +108,7 @@ source ~/.zsh/history-search.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/syntax-highlighting.zsh
 
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+try_to_source ~/.zshrc.local
 
 autoload -U compinit
 compinit
