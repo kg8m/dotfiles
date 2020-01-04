@@ -695,6 +695,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   workspace_config: #{
      \     gopls: #{
      \       completeUnimported: 1,
+     \       deepCompletion: 1,
      \     },
      \   },
      \ })
