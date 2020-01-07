@@ -88,6 +88,7 @@ source ~/.zsh/my_functions.zsh
 source ~/.zsh/timetrack.zsh
 
 # zdharma/zplugin  {{{
+[ ! -d ~/.zplugin/bin ] || git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
 source ~/.zplugin/bin/zplugin.zsh
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
