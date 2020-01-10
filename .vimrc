@@ -350,14 +350,12 @@ endfunction  " }}}
 " ----------------------------------------------
 " Plugins  " {{{
 " Initialize plugin manager  " {{{
-if has("vim_starting")
-  if !isdirectory(s:plugin_manager_path)
-    echo "Installing plugin manager...."
-    call system("git clone https://github.com/Shougo/dein.vim " . s:plugin_manager_path)
-  endif
-
-  let &runtimepath .= "," . s:plugin_manager_path
+if !isdirectory(s:plugin_manager_path)
+  echo "Installing plugin manager...."
+  call system("git clone https://github.com/Shougo/dein.vim " . s:plugin_manager_path)
 endif
+
+let &runtimepath .= "," . s:plugin_manager_path
 
 call s:SetupPluginStart()
 " }}}
