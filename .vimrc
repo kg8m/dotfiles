@@ -1,8 +1,35 @@
 " ----------------------------------------------
 " Initialize  " {{{
+" Set initial variables/options  " {{{
 let s:vim_root_path       = expand($HOME . "/.vim")
 let s:plugins_path        = expand(s:vim_root_path . "/plugins")
 let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/dein.vim")
+
+let g:no_vimrc_example          = 1
+let g:no_gvimrc_example         = 1
+let g:loaded_gzip               = 1
+let g:loaded_tar                = 1
+let g:loaded_tarPlugin          = 1
+let g:loaded_zip                = 1
+let g:loaded_zipPlugin          = 1
+let g:loaded_rrhelper           = 1
+let g:loaded_vimball            = 1
+let g:loaded_vimballPlugin      = 1
+let g:loaded_getscript          = 1
+let g:loaded_getscriptPlugin    = 1
+let g:loaded_netrw              = 1
+let g:loaded_netrwPlugin        = 1
+let g:loaded_netrwSettings      = 1
+let g:loaded_netrwFileHandlers  = 1
+let g:did_install_default_menus = 1
+let g:skip_loading_mswin        = 1
+let g:did_install_syntax_menu   = 1
+
+let g:mapleader = ","
+
+set conceallevel=2
+set concealcursor=nvic
+" }}}
 
 " Reset my autocommands
 augroup my_vimrc  " {{{
@@ -316,31 +343,6 @@ function! CurrentAbsolutePath() abort  " {{{
   return fnamemodify(expand("%"), ":~")
 endfunction  " }}}
 " }}}
-
-let g:no_vimrc_example          = 1
-let g:no_gvimrc_example         = 1
-let g:loaded_gzip               = 1
-let g:loaded_tar                = 1
-let g:loaded_tarPlugin          = 1
-let g:loaded_zip                = 1
-let g:loaded_zipPlugin          = 1
-let g:loaded_rrhelper           = 1
-let g:loaded_vimball            = 1
-let g:loaded_vimballPlugin      = 1
-let g:loaded_getscript          = 1
-let g:loaded_getscriptPlugin    = 1
-let g:loaded_netrw              = 1
-let g:loaded_netrwPlugin        = 1
-let g:loaded_netrwSettings      = 1
-let g:loaded_netrwFileHandlers  = 1
-let g:did_install_default_menus = 1
-let g:skip_loading_mswin        = 1
-let g:did_install_syntax_menu   = 1
-
-let g:mapleader = ","
-
-set conceallevel=2
-set concealcursor=nvic
 " }}}
 
 " ----------------------------------------------
@@ -375,6 +377,27 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
     autocmd FileType unite let b:asyncomplete_enable = 0
   augroup END  " }}}
 
+  " Hide messages like "Pattern not found" or "Match 1 of <N>"
+  set shortmess+=c
+
+  " Inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
+  " Fuzzy matcher is mattn's idea
+  " cf. LSP's sources are named "asyncomplete_lsp_{original source name}"
+  " cf. asyncomplete sources except for LSPs are named "asyncomplete_source_xxx"
+  function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
+    let sorted_items = []
+    let base_matcher = escape(a:ctx.base, '~"\.^$[]*')
+    let fuzzy_matcher = "^" . join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
+
+    for [source_name, matches] in sort(items(a:matches), { a, b -> a[0] > b[0] ? 1 : -1 })
+      call extend(sorted_items, filter(matches.items, { index, item -> item.word =~? fuzzy_matcher }))
+    endfor
+
+    call asyncomplete#preprocess_complete(a:ctx, sorted_items)
+  endfunction  " }}}
+  let g:asyncomplete_preprocessor = [function("s:AsyncompleteSortedFilter")]
+
+  " Lazy completion  " {{{
   inoremap <silent> <expr> <BS> "\<BS>" . <SID>LazyRefreshCompletion()
   inoremap <silent> <expr> .    "."     . <SID>LazyRefreshCompletion()
 
@@ -399,26 +422,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
     call asyncomplete#_force_refresh()
     call s:ClearCompletionTimer()
   endfunction  " }}}
-
-  " Hide messages like "Pattern not found" or "Match 1 of <N>"
-  set shortmess+=c
-
-  " Inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
-  " Fuzzy matcher is mattn's idea
-  " cf. LSP's sources are named "asyncomplete_lsp_{original source name}"
-  " cf. asyncomplete sources except for LSPs are named "asyncomplete_source_xxx"
-  function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
-    let sorted_items = []
-    let base_matcher = escape(a:ctx.base, '~"\.^$[]*')
-    let fuzzy_matcher = "^" . join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
-
-    for [source_name, matches] in sort(items(a:matches), { a, b -> a[0] > b[0] ? 1 : -1 })
-      call extend(sorted_items, filter(matches.items, { index, item -> item.word =~? fuzzy_matcher }))
-    endfor
-
-    call asyncomplete#preprocess_complete(a:ctx, sorted_items)
-  endfunction  " }}}
-  let g:asyncomplete_preprocessor = [function("s:AsyncompleteSortedFilter")]
+  " }}}
 
   function! s:ConfigPluginOnPostSource_asyncomplete() abort  " {{{
     if get(b:, "asyncomplete_enable", 1)
@@ -662,8 +666,8 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
     let g:lsp_highlight_references_enabled = b:lsp_highlight_references_enabled
   endfunction  " }}}
 
-  " Register LSPs  {{{
-  " yarn add bash-language-server  {{{
+  " Register LSPs  " {{{
+  " yarn add bash-language-server  " {{{
   call s:RegisterLSP(#{
      \   name: "bash-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "bash-language-server start"] },
@@ -671,7 +675,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " yarn add vscode-css-languageserver-bin  {{{
+  " yarn add vscode-css-languageserver-bin  " {{{
   call s:RegisterLSP(#{
      \   name: "css-languageserver",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
@@ -685,7 +689,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " go get -u golang.org/x/tools/gopls  {{{
+  " go get -u golang.org/x/tools/gopls  " {{{
   call s:RegisterLSP(#{
      \   name: "gopls",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "gopls -mode stdio"] },
@@ -699,7 +703,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " yarn add vscode-html-languageserver-bin  {{{
+  " yarn add vscode-html-languageserver-bin  " {{{
   call s:RegisterLSP(#{
      \   name: "html-languageserver",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "html-languageserver --stdio"] },
@@ -708,7 +712,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " yarn add vscode-json-languageserver-bin  {{{
+  " yarn add vscode-json-languageserver-bin  " {{{
   call s:RegisterLSP(#{
      \   name: "json-languageserver",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "json-languageserver --stdio"] },
@@ -716,7 +720,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " gem install solargraph  {{{
+  " gem install solargraph  " {{{
   call s:RegisterLSP(#{
      \   name: "solargraph",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
@@ -724,7 +728,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " yarn add sql-language-server  {{{
+  " yarn add sql-language-server  " {{{
   call s:RegisterLSP(#{
      \   name: "sql-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "sql-language-server up --method stdio"] },
@@ -732,7 +736,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " yarn add typescript-language-server typescript  {{{
+  " yarn add typescript-language-server typescript  " {{{
   call s:RegisterLSP(#{
      \   name: "typescript-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
@@ -740,7 +744,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " yarn add vim-language-server  {{{
+  " yarn add vim-language-server  " {{{
   call s:RegisterLSP(#{
      \   name: "vim-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "vim-language-server --stdio"] },
@@ -749,7 +753,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " yarn add vue-language-server  {{{
+  " yarn add vue-language-server  " {{{
   " cf. https://github.com/sublimelsp/LSP-vue/blob/master/LSP-vue.sublime-settings
   call s:RegisterLSP(#{
      \   name: "vue-language-server",
