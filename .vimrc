@@ -4,6 +4,11 @@ let s:vim_root_path       = expand($HOME . "/.vim")
 let s:plugins_path        = expand(s:vim_root_path . "/plugins")
 let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/dein.vim")
 
+" Reset my autocommands
+augroup my_vimrc  " {{{
+  autocmd!
+augroup END  " }}}
+
 " ----------------------------------------------
 " Encoding  " {{{
 " http://www.kawaz.jp/pukiwiki/?vim#cb691f26
@@ -18,8 +23,7 @@ function! s:RecheckFileencoding() abort  " {{{
   endif
 endfunction  " }}}
 
-augroup MyCheckEncoding  " {{{
-  autocmd!
+augroup my_vimrc  " {{{
   autocmd BufReadPost * call s:RecheckFileencoding()
 augroup END  " }}}
 
@@ -148,8 +152,7 @@ function! s:DefineLSPHooks() abort  " {{{
     return
   endif
 
-  augroup MyLspHooks  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType * call s:ResetLSPOmnifuncSet()
     autocmd InsertEnter * call s:SetLSPOmnifunc()
     autocmd User lsp_setup call s:EnableLSPs()
@@ -163,10 +166,9 @@ function! s:EnableLSPs() abort  " {{{
     call lsp#register_server(config)
   endfor
 
-  augroup MyEnableLspDefinition
-    autocmd!
+  augroup my_vimrc  " {{{
     execute "autocmd FileType " . join(s:lsp_filetypes, ",") . " nmap <buffer> g] <Plug>(lsp-definition)"
-  augroup END
+  augroup END  " }}}
 
   doautocmd FileType
 endfunction  " }}}
@@ -369,6 +371,10 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_completeopt = 0
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
+  augroup my_vimrc  " {{{
+    autocmd FileType unite let b:asyncomplete_enable = 0
+  augroup END  " }}}
+
   inoremap <silent> <expr> <BS> "\<BS>" . <SID>LazyRefreshCompletion()
   inoremap <silent> <expr> .    "."     . <SID>LazyRefreshCompletion()
 
@@ -393,11 +399,6 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
     call asyncomplete#_force_refresh()
     call s:ClearCompletionTimer()
   endfunction  " }}}
-
-  augroup MyToggleAsyncomplete  " {{{
-    autocmd!
-    autocmd FileType unite let b:asyncomplete_enable = 0
-  augroup END  " }}}
 
   " Hide messages like "Pattern not found" or "Match 1 of <N>"
   set shortmess+=c
@@ -567,8 +568,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
       \   _: 1,
       \ }
 
-    augroup MyNeoSnippetClearMarkers  " {{{
-      autocmd!
+    augroup my_vimrc  " {{{
       autocmd InsertLeave * NeoSnippetClearMarkers
     augroup END  " }}}
 
@@ -612,8 +612,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
         endfor
       endfunction  " }}}
 
-      augroup MyNeoSnippetSourceRailsSnippets  " {{{
-        autocmd!
+      augroup my_vimrc  " {{{
         autocmd FileType * call timer_start(300, { -> s:SourceContextualSnippets(&filetype) })
       augroup END  " }}}
     endfunction  " }}}
@@ -640,8 +639,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
-  augroup MyConfigVimLsp  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType                      * call s:ReswitchLSPGlobalConfigs()
     autocmd BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
     autocmd User lsp_buffer_enabled         call s:SwitchLSPGlobalConfigs()
@@ -902,8 +900,7 @@ if s:RegisterPlugin("dense-analysis/ale", #{ if: !IsGitCommit() && !IsGitHunkEdi
     \   typescript: ["prettier", "eslint"],
     \ }
 
-  augroup MyConfigAleFixOnSave  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType go let b:ale_fix_on_save = 1
     autocmd FileType javascript,typescript let b:ale_fix_on_save = !!$FIX_ON_SAVE_JS
     autocmd FileType ruby let b:ale_fix_on_save = !!$FIX_ON_SAVE_RUBY
@@ -945,8 +942,7 @@ if s:RegisterPlugin("tyru/caw.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
   let g:caw_no_default_keymappings = 1
   let g:caw_hatpos_skip_blank_line = 1
 
-  augroup MySetCawSpecialCommentMarkers  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType gemfile let b:caw_oneline_comment = "#"
   augroup END  " }}}
 
@@ -1267,8 +1263,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   " See also ctags settings
   nnoremap g[ :<C-u>Unite jump<Cr>
 
-  augroup MyConfigUnite  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType unite call s:ConfigForUniteBuffer()
   augroup END  " }}}
 
@@ -1425,8 +1420,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
       let g:unite_source_alias_aliases["rails/"] = #{ source: "rails" }
     endfunction  " }}}
 
-    augroup MySetupOreOreUniteCommandsForRails  " {{{
-      autocmd!
+    augroup my_vimrc  " {{{
       autocmd VimEnter * call timer_start(300, { -> s:DefineOreOreUniteCommandsForRails() })
     augroup END  " }}}
   endif  " }}}
@@ -1598,8 +1592,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   endif  " }}}
 
   if s:RegisterPlugin("kg8m/unite-dwm")  " {{{
-    augroup MyDWMMappings  " {{{
-      autocmd!
+    augroup my_vimrc  " {{{
       autocmd FileType unite call s:DefineMyUniteDWMMappings()
     augroup END  " }}}
 
@@ -1774,8 +1767,7 @@ if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
 
   let g:argwrap_padded_braces = "{"
 
-  augroup MyConfigArgwrap  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType eruby let b:argwrap_tail_comma_braces = "[{"
     autocmd FileType ruby  let b:argwrap_tail_comma_braces = "[{"
     autocmd FileType vim   let b:argwrap_tail_comma_braces = "[{" | let b:argwrap_line_prefix = '\'
@@ -1813,10 +1805,9 @@ if s:RegisterPlugin("kg8m/vim-blockle")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("jkramer/vim-checkbox", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  augroup MyConfigCheckbox
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType markdown,moin noremap <buffer> <Leader>c :call checkbox#ToggleCB()<Cr>
-  augroup END
+  augroup END  " }}}
 
   call s:ConfigPlugin(#{
      \   lazy:   1,
@@ -1888,8 +1879,7 @@ call s:RegisterPlugin("kana/vim-gf-user")
 if s:RegisterPlugin("tpope/vim-git")  " {{{
   let g:gitcommit_cleanup = "scissors"
 
-  augroup MyDisableVimGitDefaultConfigs  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType gitcommit let b:did_ftplugin = 1
   augroup END  " }}}
 endif  " }}}
@@ -1922,8 +1912,7 @@ if s:RegisterPlugin("fatih/vim-go")  " {{{
   let g:go_highlight_variable_declarations = 1
   let g:go_highlight_variable_assignments = 1
 
-  augroup MyVimGo  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType go call s:SetupVimGo()
   augroup END  " }}}
 
@@ -2092,24 +2081,19 @@ if s:RegisterPlugin("tpope/vim-rails", #{ if: OnRailsDir() && !IsGitCommit() && 
     \   "spec/support",
     \ ]
 
-  augroup MySetupRails
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd BufEnter,BufWinEnter,WinEnter * if RailsDetect() | call rails#buffer_setup() | endif
-  augroup END
+  augroup END  " }}}
 endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-repeat")
 
 if s:RegisterPlugin("vim-ruby/vim-ruby", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  " See vim-gemfile
-  augroup MyPreventVimRubyFromChangingSettings  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
+    " See vim-gemfile
     autocmd BufEnter Gemfile set filetype=Gemfile
-  augroup END  " }}}
 
-  " Prevent vim-matchup from being wrong for Ruby's modifier `if`/`unless`
-  augroup MyUnletRubyNoExpensive  " {{{
-    autocmd!
+    " Prevent vim-matchup from being wrong for Ruby's modifier `if`/`unless`
     autocmd FileType ruby if exists("b:ruby_no_expensive") | unlet b:ruby_no_expensive | endif
   augroup END  " }}}
 
@@ -2136,8 +2120,7 @@ if s:RegisterPlugin("xolox/vim-session", #{ if: !IsGitCommit() && !IsGitHunkEdit
 
   set sessionoptions=buffers,folds
 
-  augroup MyExtendPluginSession  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd BufWritePost * silent call s:SaveSession()
     autocmd BufWritePost * silent call s:CleanUpSession()
   augroup END  " }}}
@@ -2387,8 +2370,7 @@ call s:RegisterPlugin("posva/vim-vue", #{ if: !IsGitCommit() && !IsGitHunkEdit()
 if s:RegisterPlugin("thinca/vim-zenspace")  " {{{
   let g:zenspace#default_mode = "on"
 
-  augroup MyHighlightZenkakuSpace  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd ColorScheme * highlight ZenSpace term=underline cterm=underline gui=underline ctermbg=DarkGray guibg=DarkGray ctermfg=DarkGray guifg=DarkGray
   augroup END  " }}}
 endif  " }}}
@@ -2417,8 +2399,7 @@ if s:RegisterPlugin("benmills/vimux", #{ if: OnTmux() && !IsGitCommit() && !IsGi
     let g:VimuxHeight     = 30
     let g:VimuxUseNearest = 1
 
-    augroup MyVimux  " {{{
-      autocmd!
+    augroup my_vimrc  " {{{
       autocmd VimLeavePre * :VimuxCloseRunner
     augroup END  " }}}
   endfunction  " }}}
@@ -2519,8 +2500,7 @@ call s:RegisterPlugin("stephpy/vim-yaml", #{ if: !IsGitCommit() && !IsGitHunkEdi
 call s:RegisterPlugin("pedrohdz/vim-yaml-folds", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
 
 if s:RegisterPlugin("othree/yajs.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  augroup MyJavaScriptFold  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType javascript setlocal foldmethod=syntax
   augroup END  " }}}
 endif  " }}}
@@ -2623,8 +2603,7 @@ colorscheme molokai
 call s:OverwriteSyntax()
 
 " https://qiita.com/Bakudankun/items/649aa6d8b9eccc1712b5
-augroup MyBlurInactiveWindow  " {{{
-  autocmd!
+augroup my_vimrc  " {{{
   autocmd ColorScheme * highlight NormalNC ctermbg=234 guibg=#3B3A32
   autocmd WinEnter,BufWiNEnter * set wincolor=
   autocmd WinLeave,BufWiNLeave * set wincolor=NormalNC
@@ -2652,8 +2631,7 @@ let &t_SI = "\e[6 q"  " |
 let &t_EI = "\e[2 q"  " ▍
 
 " https://teratail.com/questions/24046
-augroup MyLimitLargeFileSyntax  " {{{
-  autocmd!
+augroup my_vimrc  " {{{
   autocmd Syntax * if line("$") > 10000 | syntax sync minlines=1000 | endif
 augroup END  " }}}
 " }}}
@@ -2672,15 +2650,14 @@ set backspace=indent,eol,start
 set nofixeol
 
 if !IsGitCommit() && !IsGitHunkEdit()  " {{{
-  augroup MySetupExpandtab  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType neosnippet set noexpandtab
-  augroup END  " }}}
+    autocmd FileType text,markdown,moin setlocal cinkeys-=:
 
-  augroup MySetupFormatoptions  " {{{
-    autocmd!
     " Lazily set formatoptions to overwrite others
     autocmd FileType * call timer_start(300, { -> s:SetupFormatoptions() })
+
+    autocmd BufWritePre * if &filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
   augroup END  " }}}
 
   function! s:SetupFormatoptions() abort  " {{{
@@ -2704,11 +2681,6 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
     endif
   endfunction  " }}}
 
-  augroup MySetupCinkeys  " {{{
-    autocmd!
-    autocmd FileType text,markdown,moin setlocal cinkeys-=:
-  augroup END  " }}}
-
   " Folding  " {{{
   " Frequently used keys:
   "   zo: Open current fold
@@ -2731,8 +2703,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   set foldcolumn=3
   set fillchars=vert:\|
 
-  augroup MySetupFoldings  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd FileType neosnippet setlocal foldmethod=marker
     autocmd FileType vim        setlocal foldmethod=marker
     autocmd FileType haml       setlocal foldmethod=indent
@@ -2756,11 +2727,6 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
     endif
   endfunction  " }}}
   " }}}
-
-  augroup MyUpdateFiletypeAfterSave  " {{{
-    autocmd!
-    autocmd BufWritePre * if &filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
-  augroup END  " }}}
 endif  " }}}
 " }}}
 
@@ -2822,8 +2788,7 @@ set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,
 
 " Ctags  " {{{
 if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
-  augroup MySetupCtags  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd VimEnter     * silent call s:CreateAllCtags()
     autocmd BufWritePost * silent call s:CreateCtags(".")
     autocmd VimLeavePre  * silent call s:CleanupCtags()
@@ -2895,8 +2860,7 @@ vnoremap g] "gy:tjump <C-r>"<Cr>
 " }}}
 
 " Auto reload
-augroup MyCheckTimeHook  " {{{
-  autocmd!
+augroup my_vimrc  " {{{
   autocmd InsertEnter,InsertLeave,CursorHold,WinEnter,BufWinEnter * silent! checktime
 augroup END  " }}}
 
@@ -2905,8 +2869,7 @@ set maxmempattern=5000
 
 if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   " http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
-  augroup MyCheckTypo  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd BufWriteCmd *[,*] call s:WriteCheckTypo(expand("<afile>"))
   augroup END  " }}}
 
@@ -2985,10 +2948,9 @@ inoremap <C-f> <PageDown>
 inoremap <C-b> <PageUp>
 
 " Insert a checkbox `[ ]` on markdown
-augroup MyConfigInsertCheckbox
-  autocmd!
+augroup my_vimrc  " {{{
   autocmd FileType markdown inoremap <buffer> <C-]> [<Space>]<Space>
-augroup END
+augroup END  " }}}
 " }}}
 
 " ----------------------------------------------
@@ -3015,8 +2977,7 @@ if has("gui_running")
     call rename(s:old_save_window_info_filepath, s:save_window_info_filepath)
   endif
 
-  augroup MySaveWindowSize  " {{{
-    autocmd!
+  augroup my_vimrc  " {{{
     autocmd VimLeavePre * call s:SaveWindowSize()
 
     function! s:SaveWindowSize() abort  " {{{
