@@ -21,9 +21,11 @@ let g:loaded_netrw              = 1
 let g:loaded_netrwPlugin        = 1
 let g:loaded_netrwSettings      = 1
 let g:loaded_netrwFileHandlers  = 1
-let g:did_install_default_menus = 1
 let g:skip_loading_mswin        = 1
 let g:did_install_syntax_menu   = 1
+
+" MacVim's Command+v is broken if setting this
+" let g:did_install_default_menus = 1
 
 let g:mapleader = ","
 
