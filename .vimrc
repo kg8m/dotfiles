@@ -899,9 +899,9 @@ if s:RegisterPlugin("dense-analysis/ale", #{ if: !IsGitCommit() && !IsGitHunkEdi
     \ }
   let g:ale_fixers = #{
     \   go:         ["goimports"],
-    \   javascript: ["prettier", "eslint"],
+    \   javascript: ["eslint"],
     \   ruby:       ["rubocop"],
-    \   typescript: ["prettier", "eslint"],
+    \   typescript: ["eslint"],
     \ }
 
   augroup my_vimrc  " {{{
