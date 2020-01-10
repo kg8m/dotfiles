@@ -2763,6 +2763,7 @@ nnoremap / /\v
 set restorescreen
 set mouse=
 set belloff=all
+set nostartofline
 
 " Smoothen screen drawing; wait procedures' completion
 set lazyredraw
