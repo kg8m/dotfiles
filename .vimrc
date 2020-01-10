@@ -2563,11 +2563,13 @@ if s:RegisterPlugin("tomasr/molokai")  " {{{
       highlight Comment      guifg=#AAAAAA
       highlight CursorLine                 guibg=#1F1E19
       highlight CursorColumn               guibg=#1F1E19
+
+      highlight QuickFixLine                             gui=bold
     else
       highlight Normal                    ctermbg=NONE
       highlight DiffAdd                   ctermbg=23
       highlight DiffChange   ctermfg=NONE ctermbg=234
-      highlight DiffFile     ctermfg=118              cterm=bold
+      highlight DiffFile     ctermfg=118               cterm=bold
       highlight DiffText                  ctermbg=240  cterm=bold
       highlight FoldColumn   ctermfg=67   ctermbg=NONE
       highlight Folded       ctermfg=67   ctermbg=NONE
@@ -2577,9 +2579,11 @@ if s:RegisterPlugin("tomasr/molokai")  " {{{
       highlight VisualNOS                 ctermbg=238  cterm=bold
       highlight Visual                    ctermbg=235  cterm=bold
       highlight Comment      ctermfg=247
-      highlight CursorColumn              ctermbg=234
-      highlight ColorColumn               ctermbg=234
+      highlight CursorColumn              ctermbg=237
+      highlight ColorColumn               ctermbg=237
       highlight LineNr       ctermfg=250  ctermbg=234
+
+      highlight QuickFixLine                           cterm=bold
     endif
   endfunction  " }}}
 endif  " }}}
@@ -2625,10 +2629,14 @@ set display+=lastline
 set diffopt+=context:10
 set list
 set listchars=tab:>\ ,eol:\ ,trail:_
-set cursorline
-set cursorlineopt=number
 set completeopt=menu,menuone,popup,noinsert,noselect
 set pumheight=20
+
+set cursorline
+set cursorlineopt=number
+augroup my_vimrc  " {{{
+  autocmd FileType qf set cursorlineopt=both
+augroup END  " }}}
 
 " Cursor shapes
 let &t_SI = "\e[6 q"  " |
