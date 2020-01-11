@@ -5,7 +5,9 @@ function setup_goenv {
   eval "$( goenv init - )"
 
   if [ "$GOROOT" ] && [ "$GOPATH" ]; then
-    export PATH=$GOROOT/bin:$PATH
+    # Disable because this obstructs $GOENV_ROOT/shims
+    # export PATH=$GOROOT/bin:$PATH
+
     export PATH=$PATH:$GOPATH/bin
   fi
 }
