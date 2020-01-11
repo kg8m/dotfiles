@@ -628,13 +628,18 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
     call s:SetupNeosnippetContextual()
   endfunction  " }}}
 
+  function! s:ConfigPluginOnPostSource_neosnippet() abort  " {{{
+    call timer_start(0, { -> s:SourceContextualSnippets(&filetype) })
+  endfunction  " }}}
+
   " `on_ft` for Syntaxes
   call s:ConfigPlugin(#{
      \   lazy:    1,
      \   on_i:    1,
      \   on_ft:   ["snippet", "neosnippet"],
      \   depends: ".vim",
-     \   hook_source: function("s:ConfigPluginOnSource_neosnippet"),
+     \   hook_source:      function("s:ConfigPluginOnSource_neosnippet"),
+     \   hook_post_source: function("s:ConfigPluginOnPostSource_neosnippet"),
      \ })
 endif  " }}}
 
