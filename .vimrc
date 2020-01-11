@@ -600,6 +600,11 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
       endif
 
       function! s:SourceContextualSnippets(filetype) abort  " {{{
+        if exists("b:neosnippet_contextual_sourced")
+          return
+        endif
+
+        let b:neosnippet_contextual_sourced = 1
         let contexts = get(g:neosnippet_contextual#contexts, a:filetype, [])
         let filepath = CurrentRelativePath()
 
