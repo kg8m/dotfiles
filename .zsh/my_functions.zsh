@@ -171,7 +171,8 @@ function vigr() {
 function tig {
   case "$1" in
     bl*)
-      execute_with_echo "command tig blame $@"
+      local args=${@:2:($#-1)}
+      execute_with_echo "command tig blame $args"
       ;;
     st*)
       execute_with_echo "command tig status"
