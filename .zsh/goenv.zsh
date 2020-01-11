@@ -6,7 +6,7 @@ function setup_goenv {
 
   if [ "$GOROOT" ] && [ "$GOPATH" ]; then
     export PATH=$GOROOT/bin:$PATH
-    export PATH=$GOPATH/bin:$PATH
+    export PATH=$PATH:$GOPATH/bin
   fi
 }
 zplugin ice lucid wait as"null" atload"setup_goenv"; zplugin light syndbg/goenv
