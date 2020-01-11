@@ -858,6 +858,12 @@ if s:RegisterPlugin("hrsh7th/vim-vsnip")  " {{{
 endif  " }}}
 
 function! s:DefineCompletionMappings() abort  " {{{
+  if exists("s:completion_mappings_defined")
+    return
+  endif
+
+  let s:completion_mappings_defined = 1
+
   inoremap <expr><Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
   imap     <expr><Cr>    <SID>CrForInsertMode()
