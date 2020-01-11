@@ -37,6 +37,7 @@ if `crontab -i > /dev/null 2>&1`; then
   alias crontab="crontab -i"
 fi
 
+alias sudo='sudo env PATH=$PATH'
 alias ls="ls --color -a"
 alias ll="ls -l --time-style=long-iso"
 alias diff="diff -U 10 -b -B"
