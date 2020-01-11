@@ -397,11 +397,11 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   endfunction  " }}}
   let g:asyncomplete_preprocessor = [function("s:AsyncompleteSortedFilter")]
 
-  " Lazy completion  " {{{
-  inoremap <silent> <expr> <BS> "\<BS>" . <SID>LazyRefreshCompletion()
-  inoremap <silent> <expr> .    "."     . <SID>LazyRefreshCompletion()
+  " Asynchronous refresh completion  " {{{
+  inoremap <silent> <expr> <BS> "\<BS>" . <SID>RefreshCompletionAsync()
+  inoremap <silent> <expr> .    "."     . <SID>RefreshCompletionAsync()
 
-  function! s:LazyRefreshCompletion() abort  " {{{
+  function! s:RefreshCompletionAsync() abort  " {{{
     call s:ClearCompletionTimer()
     call s:StartCompletionTimer()
     return ""
