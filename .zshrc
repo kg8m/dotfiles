@@ -94,12 +94,14 @@ autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 # }}}
 
-zplugin ice lucid wait; zplugin snippet ~/.zsh/direnv.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/goenv.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/nodenv.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/rbenv.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/rubocop.zsh
 zplugin ice lucid wait; zplugin snippet ~/.zsh/tmux.zsh
+
+# Don't load lazily because direnv doesn't work at the zsh start
+source ~/.zsh/direnv.zsh
 
 source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/completion.zsh
