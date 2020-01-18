@@ -88,6 +88,25 @@ showUntrackedFiles = all
 fetchJobs = 4
 
 [alias]
+# add  # {{{
+bulk-intent-to-add = bulk-add-with-intent
+
+bulk-add = "!f() {\
+  git sh 'execute_with_echo git add -- $( git select-unstaged-files )';\
+  git sh 'execute_with_echo git status';\
+}; f"
+
+bulk-add-with-intent = "!f() {\
+  git sh 'execute_with_echo git add --intent-to-add -- $( git select-unstaged-files )';\
+  git sh 'execute_with_echo git status';\
+}; f"
+
+bulk-add-by-patch = "!f() {\
+  git sh 'execute_with_echo git add --patch -- $( git select-unstaged-files )';\
+  git sh 'execute_with_echo git status';\
+}; f"
+# }}}
+
 # clone  # {{{
 clone-with-submodules = clone --recursive
 
@@ -99,12 +118,26 @@ shallow-clone = "!f() {\
 
 # checkout  # {{{
 co = checkout
-cos = checkout-by-select
+cos = checkout-branch-by-select
 
-checkout-by-select = "!f() {\
+checkout-branch-by-select = "!f() {\
   branch=$( git select-a-branch );\
   [[ \"${branch}\" ]] && git sh \"execute_with_echo git checkout ${branch}\";\
 }; f"
+
+bulk-checkout-files = "!f() {\
+  files=$( git select-status-changed-files );\
+  command=\"git checkout -- $( echo ${files} )\";\
+  \
+  echo 'Selected files:';\
+  for file in ${files}; do\
+    echo \"  - ${file}\";\
+  done;\
+  \
+  git sh \"execute_with_confirm '${command}'\";\
+  git sh 'execute_with_echo git status';\
+}; f"
+# }}}
 
 # pull/fetch/merge/rebase  # {{{
 up = !git update
@@ -145,6 +178,8 @@ br       = branch
 branches = branch --all -vv
 
 delete-fully-merged-local-branch = branch --delete
+delete-local-branches = bulk-delete-local-branches
+delete-remote-branches = bulk-delete-remote-branches
 
 create-branch = "!f() {\
   original_branch=$1;\
@@ -159,7 +194,7 @@ create-branch = "!f() {\
   git sh \"execute_with_confirm '${command}'\";\
 }; f"
 
-delete-local-branches  = "!f() {\
+bulk-delete-local-branches = "!f() {\
   branches=$( git branch | filter | sed -e 's/^[* ]*//' );\
   command=\"for branch in $( echo ${branches} ); do git branch -D \\${branch}; done\";\
   \
@@ -172,7 +207,7 @@ delete-local-branches  = "!f() {\
   git sh 'execute_with_echo git branches';\
 }; f"
 
-delete-remote-branches = "!f() {\
+bulk-delete-remote-branches = "!f() {\
   branches=$( git branch --remote | filter | awk '{ print $1 }' | sed -e 's/^origin\\///' );\
   command=\"for branch in $( echo ${branches} ); do git push --delete origin \\${branch}; done\";\
   \
@@ -220,6 +255,35 @@ edit-commits      = "!f() { git rebase --interactive $@; }; f"
 reset-commits     = !git edit-commits
 reset-last-commit = reset --soft HEAD~
 undo-add          = reset --soft
+
+bulk-reset = "!f() {\
+  files=$( git select-staged-files );\
+  command=\"git reset -- $( echo ${files} )\";\
+  \
+  echo 'Selected files:';\
+  for file in ${files}; do\
+    echo \"  - ${file}\";\
+  done;\
+  \
+  git sh \"execute_with_confirm '${command}'\";\
+  git sh 'execute_with_echo git status';\
+}; f"
+# }}}
+
+# clean  # {{{
+bulk-clean = "!f() {\
+  files=$( git select-untracked-files );\
+  command=\"git clean --force -- $( echo ${files} )\";\
+  \
+  echo 'Selected files:';\
+  for file in ${files}; do\
+    echo \"  - ${file}\";\
+  done;\
+  \
+  git sh \"execute_with_confirm '${command}'\";\
+  git sh 'execute_with_echo git status';\
+}; f"
+# }}}
 
 # log  # {{{
 lg    = !git graph
@@ -297,6 +361,29 @@ stash-all-with-message = "!f() {\
 
 # show  # {{{
 show-without-diff = show -s
+# }}}
+
+# status  # {{{
+select-status-changed-files = "!f() {\
+  git status --short | git filter-status-changed-files;\
+}; f"
+
+select-staged-files = "!f() {\
+  git status --short | egrep '^[^ ]' | git filter-status-changed-files;\
+}; f"
+
+select-unstaged-files = "!f() {\
+  git status --short | egrep '^.[^ ]' | git filter-status-changed-files;\
+}; f"
+
+select-untracked-files = "!f() {\
+  git status --short | egrep '^\\?\\?' | git filter-status-changed-files;\
+}; f"
+
+filter-status-changed-files = "!f() {\
+  prompt=${1:-'select files: '};\
+  filter --prompt \"${prompt}\" | awk '{ print $2 }';\
+}; f"
 # }}}
 
 # submodule  # {{{
