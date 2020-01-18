@@ -89,6 +89,10 @@ fetchJobs = 4
 
 [alias]
 # add  # {{{
+bad  = bulk-add
+badi = bulk-add-with-intent
+badp = bulk-add-by-patch
+
 bulk-intent-to-add = bulk-add-with-intent
 
 bulk-add = "!f() {\
@@ -117,8 +121,9 @@ shallow-clone = "!f() {\
 # }}}
 
 # checkout  # {{{
-co = checkout
+co  = checkout
 cos = checkout-branch-by-select
+bco = bulk-checkout-files
 
 checkout-branch-by-select = "!f() {\
   branch=$( git select-a-branch );\
@@ -178,8 +183,8 @@ br       = branch
 branches = branch --all -vv
 
 delete-fully-merged-local-branch = branch --delete
-delete-local-branches = bulk-delete-local-branches
-delete-remote-branches = bulk-delete-remote-branches
+delete-local-branches            = bulk-delete-local-branches
+delete-remote-branches           = bulk-delete-remote-branches
 
 create-branch = "!f() {\
   original_branch=$1;\
@@ -251,6 +256,7 @@ ca = commit --all
 # }}}
 
 # reset/revert  # {{{
+breset            = bulk-reset
 edit-commits      = "!f() { git rebase --interactive $@; }; f"
 reset-commits     = !git edit-commits
 reset-last-commit = reset --soft HEAD~
@@ -271,6 +277,8 @@ bulk-reset = "!f() {\
 # }}}
 
 # clean  # {{{
+bclean = bulk-clean
+
 bulk-clean = "!f() {\
   files=$( git select-untracked-files );\
   command=\"git clean --force -- $( echo ${files} )\";\
