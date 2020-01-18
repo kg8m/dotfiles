@@ -88,7 +88,7 @@ showUntrackedFiles = all
 fetchJobs = 4
 
 [alias]
-# base
+# base  # {{{
 aliases = !git alias
 alias   = !git config --get-regexp '^alias\\.' | sed -e 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
 
@@ -98,16 +98,18 @@ st   = status
 chmod = "!f() {\
   git sh \"execute_with_echo git update-index --add --chmod=$@\";\
 }; f"
+# }}}
 
-# clone
+# clone  # {{{
 clone-with-submodules = clone --recursive
 
 shallow-clone = "!f() {\
   arguments=\"$@\";\
   git sh \"execute_with_echo git clone --single-branch --depth 1 ${arguments}\";\
 }; f"
+# }}}
 
-# checkout
+# checkout  # {{{
 co = checkout
 cos = checkout-by-select
 
@@ -116,7 +118,7 @@ checkout-by-select = "!f() {\
   [[ \"${branch}\" ]] && git sh \"execute_with_echo git checkout ${branch}\";\
 }; f"
 
-# pull/fetch/merge/rebase
+# pull/fetch/merge/rebase  # {{{
 up = !git update
 f  = fetch
 
@@ -147,8 +149,9 @@ update-master = "!f() {\
     execute_with_echo git checkout ${current_branch}\
   \";\
 }; f"
+# }}}
 
-# branch
+# branch  # {{{
 brs      = !git branches
 br       = branch
 branches = branch --all -vv
@@ -217,18 +220,20 @@ select-a-remote-branch = "!f() {\
     echo ${branches};\
   fi;\
 }; f"
+# }}}
 
-# commit
+# commit  # {{{
 ci = commit
 ca = commit --all
+# }}}
 
-# reset/revert
+# reset/revert  # {{{
 edit-commits      = "!f() { git rebase --interactive $@; }; f"
 reset-commits     = !git edit-commits
 reset-last-commit = reset --soft HEAD~
 undo-add          = reset --soft
 
-# log
+# log  # {{{
 lg    = !git graph
 graph = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%an %Creset%s\"
 la    = log --branches --tags --remotes
@@ -244,8 +249,9 @@ log-branches = "!f() {\
   command=\"git log $@ ${branch1}...${branch2}\";\
   git sh \"execute_with_confirm '${command}'\";\
 }; f"
+# }}}
 
-# diff
+# diff  # {{{
 di = !git diff-without-space-changes
 dc = !git diff-without-space-changes --cached
 ds = !git diff-without-space-changes --staged
@@ -292,17 +298,20 @@ changed-files-from = "!f() {\
   command=\"git diff --name-only ${@:2:($#-1)} origin/${target}...${current}\";\
   git sh \"execute_with_echo '${command}'\";\
 }; f"
+# }}}
 
-# stash
+# stash  # {{{
 stash-all-with-message = "!f() {\
   command=\"git stash push --no-keep-index --include-untracked --message '$@'\";\
   git sh \"execute_with_echo \\\"${command}\\\"\";\
 }; f"
+# }}}
 
-# show
+# show  # {{{
 show-without-diff = show -s
+# }}}
 
-# submodule
+# submodule  # {{{
 update-submodules = !git sh 'execute_with_echo git submodule update --remote --rebase && execute_with_echo git status'
 remove-submodules = "!f() {\
   for target in $@; do\
@@ -311,12 +320,15 @@ remove-submodules = "!f() {\
     git sh \"execute_with_echo trash $target\";\
   done;\
 }; f"
+# }}}
 
-# hook
+# hook  # {{{
 update-hooks = !( rm -i .git/hooks/* || exit 0 ) && cp ~/.git_templates/hooks/* .git/hooks/ && ls -l .git/hooks/
+# }}}
 
-# utility
+# utility  # {{{
 sh = "!f() { zsh -c \"source ~/.zsh/my_functions.zsh; $@\"; }; f"
+# }}}
 
 [include]
 path = ~/.gitconfig.local
