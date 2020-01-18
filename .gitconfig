@@ -97,7 +97,7 @@ bulk-add = "!f() {\
 }; f"
 
 bulk-add-with-intent = "!f() {\
-  git sh 'execute_with_echo git add --intent-to-add -- $( git select-unstaged-files )';\
+  git sh 'execute_with_echo git add --intent-to-add -- $( git select-untracked-files )';\
   git sh 'execute_with_echo git status';\
 }; f"
 
