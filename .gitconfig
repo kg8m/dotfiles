@@ -88,18 +88,6 @@ showUntrackedFiles = all
 fetchJobs = 4
 
 [alias]
-# base  # {{{
-aliases = !git alias
-alias   = !git config --get-regexp '^alias\\.' | sed -e 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
-
-info = remote show origin
-st   = status
-
-chmod = "!f() {\
-  git sh \"execute_with_echo git update-index --add --chmod=$@\";\
-}; f"
-# }}}
-
 # clone  # {{{
 clone-with-submodules = clone --recursive
 
@@ -327,6 +315,16 @@ update-hooks = !( rm -i .git/hooks/* || exit 0 ) && cp ~/.git_templates/hooks/* 
 # }}}
 
 # utility  # {{{
+aliases = !git alias
+alias   = !git config --get-regexp '^alias\\.' | sed -e 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
+
+info = remote show origin
+st   = status
+
+chmod = "!f() {\
+  git sh \"execute_with_echo git update-index --add --chmod=$@\";\
+}; f"
+
 sh = "!f() { zsh -c \"source ~/.zsh/my_functions.zsh; $@\"; }; f"
 # }}}
 
