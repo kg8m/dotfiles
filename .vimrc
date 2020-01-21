@@ -1186,7 +1186,17 @@ if s:RegisterPlugin("tyru/operator-camelize.vim")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("mechatroner/rainbow_csv", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
+if s:RegisterPlugin("mechatroner/rainbow_csv", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+  augroup my_vimrc  " {{{
+    autocmd BufNewFile,BufRead *.csv set filetype=csv
+  augroup END  " }}}
+
+  call s:ConfigPlugin(#{
+     \   lazy:  1,
+     \   on_ft: "csv",
+     \ })
+endif  " }}}
+
 call s:RegisterPlugin("chrisbra/Recover.vim")
 
 if s:RegisterPlugin("vim-scripts/sequence")  " {{{
@@ -1688,11 +1698,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
-  call s:ConfigPlugin(#{
-     \   lazy: 0,
-     \ })
-
-  vnoremap <Leader>a  :Alignta<Space>
+  vnoremap <Leader>a :Alignta<Space>
   vnoremap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
 
   let g:unite_source_alignta_preset_arguments = [
@@ -1707,6 +1713,11 @@ if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
     \   ["Align at ']'        --  `0 ]`",                       '0 ]'],
     \   ["Align at '}'        --  `}`",                         '}'],
     \ ]
+
+  call s:ConfigPlugin(#{
+     \   lazy:   1,
+     \   on_cmd: "Alignta",
+     \ })
 endif  " }}}
 
 if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
@@ -1743,8 +1754,8 @@ if s:RegisterPlugin("jkramer/vim-checkbox", #{ if: !IsGitCommit() && !IsGitHunkE
   augroup END  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
-     \   on_cmd: "ToggleCB",
+     \   lazy:    1,
+     \   on_func: "checkbox#",
      \ })
 endif  " }}}
 
@@ -1788,6 +1799,11 @@ if s:RegisterPlugin("easymotion/vim-easymotion")  " {{{
   let g:EasyMotion_use_migemo  = 1
   let g:EasyMotion_enter_jump_first = 1
   let g:EasyMotion_skipfoldedline   = 0
+
+  call s:ConfigPlugin(#{
+     \   lazy:   1,
+     \   on_map: "<Plug>(easymotion-",
+     \ })
 endif  " }}}
 
 call s:RegisterPlugin("thinca/vim-ft-diff_fold", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
@@ -2025,6 +2041,11 @@ if s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax", #{ if: !IsGitCommit() &
     \   haml: #{ start: "HAML" },
     \   ruby: #{ start: "RUBY" },
     \ }
+
+  call s:ConfigPlugin(#{
+     \   lazy:  1,
+     \   on_ft: "ruby",
+     \ })
 endif  " }}}
 
 " See also vim-startify's settings
@@ -2059,10 +2080,16 @@ if s:RegisterPlugin("xolox/vim-session", #{ if: !IsGitCommit() && !IsGitHunkEdit
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   depends: ["vim-misc"],
+     \   lazy:    1,
+     \   on_cmd:  "SaveSession",
+     \   depends: "vim-misc",
      \ })
 
-  call s:RegisterPlugin("xolox/vim-misc")
+  if s:RegisterPlugin("xolox/vim-misc")  " {{{
+    call s:ConfigPlugin(#{
+       \   lazy: 1,
+       \ })
+  endif  " }}}
 endif  " }}}
 
 " See vim-session's settings
@@ -2179,6 +2206,8 @@ endif  " }}}
 " Text object for quotations: q
 if s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")  " {{{
   call s:ConfigPlugin(#{
+     \   lazy:    1,
+     \   on_ft:   ["ruby", "eruby"],
      \   depends: "vim-textobj-user",
      \ })
 endif  " }}}
@@ -2202,6 +2231,8 @@ endif  " }}}
 " Text object for Ruby blocks (not only `do-end` nor `{}`): r
 if s:RegisterPlugin("rhysd/vim-textobj-ruby")  " {{{
   call s:ConfigPlugin(#{
+     \   lazy:    1,
+     \   on_ft:   "ruby",
      \   depends: "vim-textobj-user",
      \ })
 endif  " }}}
@@ -2380,6 +2411,11 @@ if s:RegisterPlugin("othree/yajs.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit()
   augroup my_vimrc  " {{{
     autocmd FileType javascript setlocal foldmethod=syntax
   augroup END  " }}}
+
+  call s:ConfigPlugin(#{
+     \   lazy:  1,
+     \   on_ft: "javascript",
+     \ })
 endif  " }}}
 
 if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
