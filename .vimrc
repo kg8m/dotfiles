@@ -938,8 +938,7 @@ if s:RegisterPlugin("vim-scripts/autodate.vim", #{ if: !IsGitCommit() && !IsGitH
 endif  " }}}
 
 if s:RegisterPlugin("tyru/caw.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  nmap gc <Plug>(caw:hatpos:toggle)
-  vmap gc <Plug>(caw:hatpos:toggle)
+  map gc <Plug>(caw:hatpos:toggle)
 
   let g:caw_no_default_keymappings = 1
   let g:caw_hatpos_skip_blank_line = 1
@@ -1161,8 +1160,7 @@ endif  " }}}
 call s:RegisterPlugin("kg8m/moin.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
 
 if s:RegisterPlugin("tyru/open-browser.vim")  " {{{
-  nmap <Leader>o <Plug>(openbrowser-open)
-  vmap <Leader>o <Plug>(openbrowser-open)
+  map <Leader>o <Plug>(openbrowser-open)
 
   let g:openbrowser_browser_commands = [
     \   #{
@@ -1194,10 +1192,8 @@ call s:RegisterPlugin("mechatroner/rainbow_csv", #{ if: !IsGitCommit() && !IsGit
 call s:RegisterPlugin("chrisbra/Recover.vim")
 
 if s:RegisterPlugin("vim-scripts/sequence")  " {{{
-  vmap <Leader>+ <Plug>SequenceV_Increment
-  vmap <Leader>- <Plug>SequenceV_Decrement
-  nmap <Leader>+ <Plug>SequenceN_Increment
-  nmap <Leader>- <Plug>SequenceN_Decrement
+  map <Leader>+ <Plug>SequenceV_Increment
+  map <Leader>- <Plug>SequenceV_Decrement
 
   call s:ConfigPlugin(#{
      \   lazy:   1,
@@ -1904,8 +1900,7 @@ if s:RegisterPlugin("andymass/vim-matchup")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("kana/vim-operator-replace")  " {{{
-  nmap r <Plug>(operator-replace)
-  vmap r <Plug>(operator-replace)
+  map r <Plug>(operator-replace)
 
   call s:ConfigPlugin(#{
      \   lazy:    1,
@@ -1916,11 +1911,9 @@ endif  " }}}
 
 if s:RegisterPlugin("rhysd/vim-operator-surround")  " {{{
   nmap <silent><Leader>sa <Plug>(operator-surround-append)aw
-  nmap <silent><Leader>sd <Plug>(operator-surround-delete)a
-  nmap <silent><Leader>sr <Plug>(operator-surround-replace)a
   vmap <silent><Leader>sa <Plug>(operator-surround-append)
-  vmap <silent><Leader>sd <Plug>(operator-surround-delete)a
-  vmap <silent><Leader>sr <Plug>(operator-surround-replace)a
+  map  <silent><Leader>sd <Plug>(operator-surround-delete)a
+  map  <silent><Leader>sr <Plug>(operator-surround-replace)a
 
   function! s:ConfigPluginOnSource_vim_operator_surround() abort  " {{{
     let g:operator#surround#blocks = #{ -: [] }
@@ -2586,10 +2579,8 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   "   z]: Move to end of current fold
   "   zj: Move to start of next fold
   "   zk: Move to end of previous fold
-  nnoremap z[ [z
-  nnoremap z] ]z
-  vnoremap z[ [z
-  vnoremap z] ]z
+  noremap z[ [z
+  noremap z] ]z
 
   set foldmethod=marker
   set foldopen=hor
