@@ -1022,6 +1022,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>y :call <SID>FzfYankHistory()<Cr>
   noremap  <Leader><Leader>s :<C-u>call <SID>FzfMyShortcuts("")<Cr>
   noremap  <Leader><Leader>a :<C-u>call <SID>FzfMyShortcuts("'Alignta")<Cr>
+  nnoremap <Leader><Leader>r :call <SID>SetupFzfRails()<Cr>:FzfRails<Space>
 
   " Grep  " {{{
   " https://github.com/junegunn/fzf.vim/blob/dc4c4c22715c060a2babd5a5187004bdecbcdea7/plugin/fzf.vim#L52
@@ -1244,6 +1245,136 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     call s:FzfMyShortcutsCountMaxWordLength()
     call s:FzfMyShortcutsMakeGroups()
     call s:FzfMyShortcutsFormatList()
+  endfunction  " }}}
+  " }}}
+
+  " Rails  " {{{
+  function! s:SetupFzfRails() abort  " {{{
+    let s:fzf_rails_specs = #{
+      \   assets: #{
+      \     dir:      "{app/assets,app/javascripts,public}",
+      \     excludes: ["-path 'public/packs*'"],
+      \   },
+      \   config: #{
+      \     dir: "config",
+      \   },
+      \   initializers: #{
+      \     dir: "config/initializers",
+      \   },
+      \   javascripts: #{
+      \     dir:      "{app,public}",
+      \     pattern:  '.*\.(jsx?|tsx?|vue)$',
+      \     excludes: ["-path 'public/packs*'"],
+      \   },
+      \   lib: #{
+      \     dir: "lib",
+      \   },
+      \   locales: #{
+      \     dir: "config/locales",
+      \   },
+      \   public: #{
+      \     dir:      "public",
+      \     excludes: ["-path 'public/packs*'"],
+      \   },
+      \   script: #{
+      \     dir: "script",
+      \   },
+      \   spec: #{
+      \     dir: "{spec,test}",
+      \   },
+      \   stylesheets: #{
+      \     dir:      "{app,public}",
+      \     pattern:  '.*\.(sass|s?css)$',
+      \     excludes: ["-path 'public/packs*'"],
+      \   },
+      \   test: #{
+      \     dir: "{spec,test}",
+      \   },
+      \ }
+
+    let s:fzf_rails_specs["db/migrates"] = #{ dir: "db/migrate" }
+
+    if len(RubyGemPaths()) > 1
+      let s:fzf_rails_specs["gems"] = #{ dir: "{" . join(RubyGemPaths(), ",") . "}/gems" }
+    elseif len(RubyGemPaths()) == 1
+      let s:fzf_rails_specs["gems"] = #{ dir: RubyGemPaths()[0] . "/gems" }
+    endif
+
+    for app_dir in globpath("app", "*", 0, 1)
+      if isdirectory(app_dir)
+        let name = fnamemodify(app_dir, ":t")
+
+        if !has_key(s:fzf_rails_specs, name)
+          let s:fzf_rails_specs[name] = #{ dir: app_dir }
+        endif
+      endif
+    endfor
+
+    for test_dir in globpath("spec,test", "*", 0, 1)
+      if isdirectory(test_dir)
+        let s:fzf_rails_specs[test_dir] = #{ dir: test_dir }
+      endif
+    endfor
+
+    if exists("g:fzf_rails_extra_specs")
+      for name in keys(g:fzf_rails_extra_specs)
+        if has_key(s:fzf_rails_specs, name)
+          call extend(
+             \   s:fzf_rails_specs[name],
+             \   g:fzf_rails_extra_specs[name]
+             \ )
+        else
+          let s:fzf_rails_specs[name] = g:fzf_rails_extra_specs[name]
+        endif
+      endfor
+    endif
+
+    command! -nargs=1 -complete=customlist,s:FzfRailsTypeNames FzfRails call <SID>FzfRails(<q-args>)
+    nnoremap <Leader><Leader>r :FzfRails<Space>
+  endfunction  " }}}
+
+  function! s:FzfRailsTypeNames(arglead, cmdline, curpos) abort  " {{{
+    if !exists("s:fzf_rails_type_names")
+      let s:fzf_rails_type_names = sort(keys(s:fzf_rails_specs))
+    endif
+
+    if a:arglead == ""
+      return s:fzf_rails_type_names
+    else
+      return filter(
+           \   copy(s:fzf_rails_type_names),
+           \   { _, name -> name =~# "^" . a:arglead }
+           \ )
+    endif
+  endfunction  " }}}
+
+  function! s:FzfRails(type) abort  " {{{
+    let type_spec = s:fzf_rails_specs[a:type]
+
+    if has("mac")
+      let command = "find -E " . type_spec.dir
+    else
+      let command = "find " . type_spec.dir . " -regextype posix-egrep"
+    endif
+
+    if has_key(type_spec, "pattern")
+      let command .= " \\( -regex '" . type_spec.pattern . "' \\)"
+    endif
+
+    if has_key(type_spec, "excludes")
+      let excludes = join(type_spec.excludes, " -not ")
+      let command .= " \\( -not " . excludes . " \\)"
+    endif
+
+    let command .= " -type f -not -name '.keep'"
+    let command .= " | sort"
+
+    let options = {
+      \   "source":  command,
+      \   "options": ["--prompt", "Rails/" . a:type . "> "],
+      \ }
+
+    call fzf#run(fzf#wrap("rails", options))
   endfunction  " }}}
   " }}}
 
@@ -1500,149 +1631,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
       nunmap <buffer> <S-n>
     endif
   endfunction  " }}}
-
-  if OnRailsDir()  " {{{
-    nnoremap <Leader>ur :<C-u>Unite -start-insert rails/
-
-    function! s:DefineOreOreUniteCommandsForRails() abort  " {{{
-      let s:unite_rails_definitions = #{
-        \   assets: #{
-        \     path:    ["app/assets/**,app/javascripts/**,public/**", "*"],
-        \     to_word: ["^\./", ""],
-        \     ignore:  '\v<public/packs(-test)?/',
-        \   },
-        \   config: #{
-        \     path:    ["config/**", "*"],
-        \     to_word: ["^\./config/", ""],
-        \   },
-        \   gems: #{
-        \     path:    [join(RubyGemPaths(), ","), "gems/**/*"],
-        \     to_word: ['\(' . join(RubyGemPaths(), '\|') . '\)/gems/', ""],
-        \   },
-        \   initializers: #{
-        \     path:    ["config/initializers/**", "*"],
-        \     to_word: ["^\./config/initializers/", ""],
-        \   },
-        \   javascripts: #{
-        \     path:    ["app/**,public/**", "*.{js,ts,vue}"],
-        \     to_word: ["^\./", ""],
-        \     ignore:  '\v<public/packs(-test)?/',
-        \   },
-        \   lib: #{
-        \     path:    ["lib/**", "*"],
-        \     to_word: ["^\./lib/", ""],
-        \   },
-        \   public: #{
-        \     path:    ["public/**", "*"],
-        \     to_word: ["^\./public/", ""],
-        \     ignore:  '\v<public/packs(-test)?/',
-        \   },
-        \   script: #{
-        \     path:    ["script/**", "*"],
-        \     to_word: ["^\./script/", ""],
-        \   },
-        \   spec: #{
-        \     path:    ["spec/**,test/**", "*"],
-        \     to_word: ['^\./', ""],
-        \   },
-        \   stylesheets: #{
-        \     path:    ["app/**,public/**", "*.{css,sass,scss}"],
-        \     to_word: ["^\./", ""],
-        \     ignore:  '\v<public/packs(-test)?/',
-        \   },
-        \   test: #{
-        \     path:    ["spec/**,test/**", "*"],
-        \     to_word: ['^\./', ""],
-        \   },
-        \ }
-      let s:unite_rails_definitions["db/migrates"] = #{
-        \   path:    ["db/migrate", "*"],
-        \   to_word: ["^db/migrate/", ""],
-        \ }
-
-      for app_dir in globpath("app", "*", 0, 1)
-        if isdirectory(app_dir)
-          let name = fnamemodify(app_dir, ":t")
-
-          if !has_key(s:unite_rails_definitions, name)
-            let s:unite_rails_definitions[name] = #{
-              \   path:    [app_dir . "/**", "*"],
-              \   to_word: ['^\./' . app_dir, ""],
-              \ }
-          endif
-        endif
-      endfor
-
-      for test_dir in globpath("spec,test", "*", 0, 1)
-        if isdirectory(test_dir)
-          let s:unite_rails_definitions[test_dir] = #{
-            \   path:    [test_dir . "/**", "*"],
-            \   to_word: ['^\./' . test_dir, ""],
-            \ }
-        endif
-      endfor
-
-      if exists("g:unite_rails_extra_definitions")
-        for name in keys(g:unite_rails_extra_definitions)
-          let s:unite_rails_definitions[name] = g:unite_rails_extra_definitions[name]
-        endfor
-      endif
-
-      for name in keys(s:unite_rails_definitions)
-        let source = #{ name: "rails/" . name }
-        function! source.gather_candidates(args, context) abort  " {{{
-          let name = substitute(a:context.source_name, "^rails/", "", "")
-          let definition = s:unite_rails_definitions[name]
-          let files = globpath(definition.path[0], definition.path[1], 0, 1)
-          let files = filter(files, { index, value -> filereadable(value) })
-
-          if has_key(definition, "ignore")
-            let files = filter(files, { index, value -> value !~# definition.ignore })
-          endif
-
-          return map(sort(files), '#{
-               \   word: substitute(v:val, definition.to_word[0], definition.to_word[1], ""),
-               \   kind: "file",
-               \   action__path: v:val,
-               \ }')
-        endfunction  " }}}
-        call unite#define_source(source)
-      endfor
-
-      let s:sorted_unite_rails_keys = sort(keys(s:unite_rails_definitions))
-
-      if !exists("g:unite_source_menu_menus")
-        let g:unite_source_menu_menus = {}
-      endif
-
-      let g:unite_source_menu_menus.rails = #{
-        \   description: "Open files for Rails"
-        \ }
-      let g:unite_source_menu_menus.rails.command_candidates = map(
-        \   copy(s:sorted_unite_rails_keys),
-        \   { key, val -> ["Unite rails/" . val, "Unite -start-insert rails/" . val] }
-        \ )
-
-      let source = #{ name: "rails" }
-      function! source.gather_candidates(args, context) abort  " {{{
-        return map(copy(s:sorted_unite_rails_keys), '#{
-             \   word: "Unite rails/" . v:val,
-             \   kind: "command",
-             \   action__command: "Unite -start-insert rails/" . v:val,
-             \ }')
-      endfunction  " }}}
-      call unite#define_source(source)
-
-      if !exists("g:unite_source_alias_aliases")
-        let g:unite_source_alias_aliases = {}
-      endif
-      let g:unite_source_alias_aliases["rails/"] = #{ source: "rails" }
-    endfunction  " }}}
-
-    augroup my_vimrc  " {{{
-      autocmd VimEnter * call timer_start(300, { -> s:DefineOreOreUniteCommandsForRails() })
-    augroup END  " }}}
-  endif  " }}}
 
   function! s:ConfigPluginOnSource_unite() abort  " {{{
     let g:unite_winheight = "100%"
