@@ -1047,10 +1047,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
      \     "FzfFiles",
      \     "FzfGFiles",
      \     "FzfBuffers",
-     \     "FzfRg",
-     \     "FzfLines",
      \     "FzfMarks",
-     \     "FzfWindows",
      \     "FzfHistory",
      \     "FzfHelptags",
      \   ],
@@ -1478,7 +1475,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[String Utility] ASCII to Hankaku",         "'<,'>HzjaConvert han_ascii"],
         \   ["[String Utility] All to Zenkaku",           "'<,'>Zenkaku"],
         \   ["[String Utility] Kana to Zenkaku",          "'<,'>HzjaConvert zen_kana"],
-        \   ["[String Utility] Translate",                "'<,'>Translate"],
         \
         \   ["[Reload with Encoding] latin1",      "edit ++enc=latin1 +set\\ noreadonly"],
         \   ["[Reload with Encoding] cp932",       "edit ++enc=cp932 +set\\ noreadonly"],
@@ -1500,8 +1496,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[Set File Format] unix", "set ff=unix"],
         \   ["[Set File Format] mac",  "set ff=mac"],
         \
-        \   ["[Manipulate File] Convert to HTML",                         "colorscheme h2u_white | TOhtml"],
-        \   ["[Manipulate File] Replace/Sed Texts of All Buffers [Edit]", "bufdo set eventignore-=Syntax | %s/{foo}/{bar}/gce | update"],
         \   ["[Manipulate File] Transform to New Ruby Hash Syntax",       "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
         \   ["[Manipulate File] Transform to Old Ruby Hash Syntax",       "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
         \
@@ -1512,15 +1506,8 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
         \   ["[Autoformat] Format Source Codes",         "Autoformat"],
         \
         \   ["[Diff] Linediff",       "'<,'>Linediff"],
-        \   ["[Diff] DirDiff [Edit]", "DirDiff {dir1} {dir2}"],
-        \
-        \   ["[CSV] Align CSV columns with whitespaces",                      "RainbowAlign"],
-        \   ["[CSV] Remove leading and trailing whitespaces from all fields", "RainbowShrink"],
         \
         \   ["[Unite plugin] giti/status",          "Unite giti/status"],
-        \   ["[Unite] resume [Edit]",                 "UniteResume {buffer-name}"],
-        \
-        \   ["[Help] autocommand-events", "help autocommand-events"],
         \ ]
 
       " Show formatted candidates, for example:
