@@ -1607,12 +1607,6 @@ if s:RegisterPlugin("leafgarland/typescript-vim", #{ if: !IsGitCommit() && !IsGi
 endif  " }}}
 
 if s:RegisterPlugin("Shougo/unite.vim")  " {{{
-  nnoremap <Leader>uy :<C-u>Unite yankround -default-action=append<Cr>
-  nnoremap <Leader>ub :<C-u>Unite buffer<Cr>
-
-  " See also ctags settings
-  nnoremap g[ :<C-u>Unite jump<Cr>
-
   augroup my_vimrc  " {{{
     autocmd FileType unite call s:ConfigForUniteBuffer()
   augroup END  " }}}
@@ -1632,106 +1626,11 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     endif
   endfunction  " }}}
 
-  function! s:ConfigPluginOnSource_unite() abort  " {{{
-    let g:unite_winheight = "100%"
-
-    if executable("rg")
-      let g:unite_source_grep_command       = "rg"
-      let g:unite_source_grep_recursive_opt = ""
-      let g:unite_source_grep_default_opts  = "--color never --no-heading --line-number"
-    elseif executable("ag")
-      let g:unite_source_grep_command       = "ag"
-      let g:unite_source_grep_recursive_opt = ""
-      let g:unite_source_grep_default_opts  = "--nocolor --nogroup --nopager --hidden --workers=1"
-    elseif executable("ack")
-      let g:unite_source_grep_command       = "ack"
-      let g:unite_source_grep_recursive_opt = ""
-      let g:unite_source_grep_default_opts  = "--nocolor --nogroup --nopager"
-    endif
-
-    let g:unite_source_grep_search_word_highlight = "Special"
-
-    call unite#custom#source("buffer", "sorters", "sorter_word")
-    call unite#custom#source("grep", "max_candidates", 10000)
-  endfunction  " }}}
-
   call s:ConfigPlugin(#{
      \   lazy:    1,
      \   on_cmd:  "Unite",
      \   on_func: "unite#",
-     \   hook_source: function("s:ConfigPluginOnSource_unite"),
      \ })
-
-  if s:RegisterPlugin("Shougo/neomru.vim")  " {{{
-    call s:ConfigPlugin(#{
-       \   lazy: 0,
-       \ })
-
-    nnoremap <Leader>uh :<C-u>Unite neomru/file<Cr>
-
-    let g:neomru#time_format     = "%Y/%m/%d %H:%M:%S"
-    let g:neomru#filename_format = ":~:."
-    let g:neomru#file_mru_limit  = 1000
-  endif  " }}}
-
-  if s:RegisterPlugin("kg8m/unite-dwm")  " {{{
-    augroup my_vimrc  " {{{
-      autocmd FileType unite call s:DefineMyUniteDWMMappings()
-    augroup END  " }}}
-
-    function! s:DefineMyUniteDWMMappings() abort  " {{{
-      nnoremap <buffer><expr> <C-o> unite#do_action("dwm_open")
-      inoremap <buffer><expr> <C-o> unite#do_action("dwm_open")
-    endfunction  " }}}
-
-    call s:ConfigPlugin(#{
-       \   lazy:  1,
-       \   on_ft: ["unite", "vimfiler"],
-       \ })
-  endif  " }}}
-
-  if s:RegisterPlugin("kg8m/vim-unite-giti", #{ if: OnGitDir() })  " {{{
-    nnoremap <Leader>uv :<C-u>Unite giti/status<Cr>
-
-    let g:giti_log_default_line_count = 1000
-
-    function! s:ConfigPluginOnPostSource_vim_unite_giti() abort  " {{{
-      function! s:AddActionsToUniteGiti() abort  " {{{
-        let kind = unite#kinds#giti#status#define()
-        let kind.action_table.delete = #{
-          \   description:         "delete/remove directories/files",
-          \   is_selectable:       1,
-          \   is_invalidate_cache: 1,
-          \ }
-        let kind.action_table.intent_to_add = #{
-          \   description:         "add --intent-to-add",
-          \   is_selectable:       1,
-          \   is_invalidate_cache: 1,
-          \ }
-
-        function! kind.action_table.delete.func(candidates) abort  " {{{
-          let files   = map(copy(a:candidates), "v:val.action__path")
-          let command = printf("yes | rm -r %s", join(files))
-
-          call ExecuteWithConfirm(command)
-        endfunction  " }}}
-
-        function! kind.action_table.intent_to_add.func(candidates) abort  " {{{
-          let files   = map(copy(a:candidates), "v:val.action__path")
-          let command = printf("add --intent-to-add %s", join(files))
-
-          return giti#system(command)
-        endfunction  " }}}
-      endfunction  " }}}
-      call s:AddActionsToUniteGiti()
-    endfunction  " }}}
-
-    call s:ConfigPlugin(#{
-       \   lazy:      1,
-       \   on_source: "unite.vim",
-       \   hook_post_source: function("s:ConfigPluginOnPostSource_vim_unite_giti"),
-       \ })
-  endif  " }}}
 endif  " }}}
 
 if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
@@ -2316,6 +2215,13 @@ if s:RegisterPlugin("Shougo/vimfiler", #{ if: !IsGitCommit() && !IsGitHunkEdit()
      \   on_func: "VimFilerBufferDir",
      \   hook_source: function("s:ConfigPluginOnSource_vimfiler"),
      \ })
+
+  if s:RegisterPlugin("kg8m/unite-dwm")  " {{{
+    call s:ConfigPlugin(#{
+       \   lazy:  1,
+       \   on_ft: "vimfiler",
+       \ })
+  endif  " }}}
 endif  " }}}
 
 if s:RegisterPlugin("benmills/vimux", #{ if: OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
