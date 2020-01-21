@@ -984,17 +984,15 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   let g:fzf_action = #{ ctrl-o: "vsplit" }
   let g:fzf_layout = #{ up: "~50%" }
 
-  nnoremap <Leader><Leader>f     :FzfFiles<Cr>
-  nnoremap <Leader><Leader>v     :FzfGFiles?<Cr>
-  nnoremap <Leader><Leader>b     :FzfBuffers<Cr>
-  nnoremap <Leader><Leader>g     :FzfRg<Space>
-  vnoremap <Leader><Leader>g     "gy:FzfRg<Space><C-r>"
-  nnoremap <Leader><Leader>l     :FzfLines<Cr>
-  nnoremap <Leader><Leader>m     :FzfMarks<Cr>
-  nnoremap <Leader><Leader>w     :FzfWindows<Cr>
-  nnoremap <Leader><Leader>h     :FzfHistory<Cr>
-  nnoremap <Leader><Leader><S-h> :FzfHelptags<Cr>
-  nnoremap <Leader><Leader>y     :call <SID>FzfYankHistory()<Cr>
+  nnoremap <Leader><Leader>f :FzfFiles<Cr>
+  nnoremap <Leader><Leader>v :FzfGFiles?<Cr>
+  nnoremap <Leader><Leader>b :FzfBuffers<Cr>
+  nnoremap <Leader><Leader>g :FzfGrep<Space>
+  vnoremap <Leader><Leader>g "gy:FzfGrep<Space><C-r>"
+  nnoremap <Leader><Leader>m :FzfMarks<Cr>
+  nnoremap <Leader><Leader>h :FzfHistory<Cr>
+  nnoremap <Leader><Leader>H :FzfHelptags<Cr>
+  nnoremap <Leader><Leader>y :call <SID>FzfYankHistory()<Cr>
 
   " https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
   " See yankround.vim
