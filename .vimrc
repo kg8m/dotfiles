@@ -24,7 +24,7 @@ let g:loaded_netrwFileHandlers  = 1
 let g:skip_loading_mswin        = 1
 let g:did_install_syntax_menu   = 1
 
-" MacVim's Command+v is broken if setting this
+" MacVim's features, e.g., Command+v, are broken if setting this
 " let g:did_install_default_menus = 1
 
 let g:mapleader = ","
@@ -351,7 +351,7 @@ endfunction  " }}}
 " Plugins  " {{{
 " Initialize plugin manager  " {{{
 if !isdirectory(s:plugin_manager_path)
-  echo "Installing plugin manager...."
+  echo "Installing plugin manager..."
   call system("git clone https://github.com/Shougo/dein.vim " . s:plugin_manager_path)
 endif
 
@@ -382,7 +382,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
 
   " Inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
   " Fuzzy matcher is mattn's idea
-  " cf. LSP's sources are named "asyncomplete_lsp_{original source name}"
+  " cf. LSP sources are named "asyncomplete_lsp_{original source name}"
   " cf. asyncomplete sources except for LSPs are named "asyncomplete_source_xxx"
   function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
     let sorted_items = []
@@ -484,7 +484,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
       endif
 
       function! s:AsyncompleteBufferCannotRefreshKeywords() abort
-        call s:EchoErrorMsg("Cannot refresh keywords because asyncomplete-buffer.vim's SID is not found.")
+        call s:EchoErrorMsg("Cannot refresh keywords because asyncomplete-buffer.vim's SID can't be detected.")
       endfunction
       let s:AsyncompleteBufferRefreshKeywords = function("AsyncompleteBufferCannotRefreshKeywords")
     endif
@@ -814,6 +814,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   " }}}
 
   function! s:ConfigPluginOnPostSource_lsp() abort  " {{{
+    " https://github.com/prabirshrestha/vim-lsp/blob/e2a052acce38bd0ae25e57fff734a14a9e2c9ef7/plugin/lsp.vim#L52
     call lsp#enable()
   endfunction  " }}}
 
@@ -921,9 +922,9 @@ if s:RegisterPlugin("dense-analysis/ale", #{ if: !IsGitCommit() && !IsGitHunkEdi
     \ }
 
   augroup my_vimrc  " {{{
-    autocmd FileType go let b:ale_fix_on_save = 1
+    autocmd FileType go                    let b:ale_fix_on_save = 1
     autocmd FileType javascript,typescript let b:ale_fix_on_save = !!$FIX_ON_SAVE_JS
-    autocmd FileType ruby let b:ale_fix_on_save = !!$FIX_ON_SAVE_RUBY
+    autocmd FileType ruby                  let b:ale_fix_on_save = !!$FIX_ON_SAVE_RUBY
   augroup END  " }}}
 
   let g:ale_go_golangci_lint_package = 1
@@ -942,6 +943,8 @@ if s:RegisterPlugin("dense-analysis/ale", #{ if: !IsGitCommit() && !IsGitHunkEdi
 endif  " }}}
 
 call s:RegisterPlugin("pearofducks/ansible-vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
+
+" Show diff in Git's interactive rebase
 call s:RegisterPlugin("hotwatermorning/auto-git-diff", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
 
 if s:RegisterPlugin("vim-scripts/autodate.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
@@ -1048,6 +1051,8 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
      \   on_func:"fzf#",
      \ })
 
+  " Add to runtimepath (and use its Vim scripts) but don't use its binary
+  " Use fzf binary already installed instead
   if s:RegisterPlugin("junegunn/fzf")  " {{{
     call s:ConfigPlugin(#{
       \   lazy: 1,
@@ -1959,7 +1964,7 @@ endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-haml", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
 
-" text object for indentation: i
+" Text object for indentation: i
 call s:RegisterPlugin("michaeljsmith/vim-indent-object")
 
 if s:RegisterPlugin("elzr/vim-json", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
@@ -2280,14 +2285,14 @@ if s:RegisterPlugin("janko/vim-test", #{ if: !IsGitCommit() && !IsGitHunkEdit() 
      \ })
 endif  " }}}
 
-" text object for quotations: q
+" Text object for quotations: q
 if s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")  " {{{
   call s:ConfigPlugin(#{
      \   depends: ["vim-textobj-user"],
      \ })
 endif  " }}}
 
-" text object for Japanese braces: j
+" Text object for Japanese braces: j
 if s:RegisterPlugin("kana/vim-textobj-jabraces")  " {{{
   call s:ConfigPlugin(#{
      \   depends: ["vim-textobj-user"],
@@ -2296,7 +2301,7 @@ if s:RegisterPlugin("kana/vim-textobj-jabraces")  " {{{
   let g:textobj_jabraces_no_default_key_mappings = 1
 endif  " }}}
 
-" text object fo last search pattern: /
+" Text object fo last search pattern: /
 if s:RegisterPlugin("kana/vim-textobj-lastpat")  " {{{
   call s:ConfigPlugin(#{
      \   depends: ["vim-textobj-user"],
@@ -2342,7 +2347,7 @@ if s:RegisterPlugin("osyo-manga/vim-textobj-multitextobj")  " {{{
      \ })
 endif  " }}}
 
-" text object for Ruby blocks (not only `do-end` nor `{}`): r
+" Text object for Ruby blocks (not only `do-end` nor `{}`): r
 if s:RegisterPlugin("rhysd/vim-textobj-ruby")  " {{{
   call s:ConfigPlugin(#{
      \   depends: ["vim-textobj-user"],
@@ -2655,8 +2660,8 @@ augroup my_vimrc  " {{{
 augroup END  " }}}
 
 " Cursor shapes
-let &t_SI = "\e[6 q"  " |
-let &t_EI = "\e[2 q"  " ▍
+let &t_SI = "\e[6 q"  " vertical line
+let &t_EI = "\e[2 q"  " vertical bold line
 
 " https://teratail.com/questions/24046
 augroup my_vimrc  " {{{
