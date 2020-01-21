@@ -290,6 +290,7 @@ function! RemoteCopy(text) abort  " {{{
   let text = substitute(text, '^\n\+', "", "")
   let text = substitute(text, '\n\+$', "", "")
   let text = substitute(text, '\', '\\\\', "g")
+  let text = substitute(text, "'", "'\\\\''", "g")
 
   if text =~# "\n"
     let filter = ""
@@ -297,7 +298,7 @@ function! RemoteCopy(text) abort  " {{{
     let filter = " | tr -d '\\n'"
   endif
 
-  call system("echo '" . substitute(text, "'", "'\\\\''", "g") . "'" . filter . " | ssh main 'LC_CTYPE=UTF-8 pbcopy'")
+  call system("echo '" . text . "'" . filter . " | ssh main 'LC_CTYPE=UTF-8 pbcopy'")
 
   if &columns > 50
     let text = substitute(text, '\v\n|\t', " ", "g")
