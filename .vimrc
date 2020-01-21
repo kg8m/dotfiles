@@ -1831,19 +1831,18 @@ if s:RegisterPlugin("rcmdnk/vim-markdown", #{ if: !IsGitCommit() && !IsGitHunkEd
      \   depends: "vim-markdown-quote-syntax",
      \   on_ft:   "markdown",
      \ })
-endif  " }}}
 
-if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  let g:markdown_quote_syntax_filetypes = #{
-    \    css:  #{ start: '\%(css\|scss\|sass\)' },
-    \    haml: #{ start: "haml" },
-    \    xml:  #{ start: "xml" },
-    \ }
+  if s:RegisterPlugin("joker1007/vim-markdown-quote-syntax")  " {{{
+    let g:markdown_quote_syntax_filetypes = #{
+      \    css:  #{ start: '\%(css\|scss\|sass\)' },
+      \    haml: #{ start: "haml" },
+      \    xml:  #{ start: "xml" },
+      \ }
 
-  call s:ConfigPlugin(#{
-     \   lazy:  1,
-     \   on_ft: "markdown",
-     \ })
+    call s:ConfigPlugin(#{
+       \   lazy: 1,
+       \ })
+  endif  " }}}
 endif  " }}}
 
 if s:RegisterPlugin("andymass/vim-matchup")  " {{{
