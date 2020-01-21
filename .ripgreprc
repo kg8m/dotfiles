@@ -4,6 +4,9 @@
 # Search hidden files and directories
 --hidden
 
+# Search ignored files
+--no-ignore-vcs
+
 # Search case insensitively if the pattern is all lowercase; case sensitively otherwise
 --smart-case
 
