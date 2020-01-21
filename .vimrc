@@ -1021,9 +1021,12 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>H :FzfHelptags<Cr>
   nnoremap <Leader><Leader>y :call <SID>FzfYankHistory()<Cr>
 
+  " Grep  " {{{
   " https://github.com/junegunn/fzf.vim/blob/dc4c4c22715c060a2babd5a5187004bdecbcdea7/plugin/fzf.vim#L52
   command! -bang -nargs=* FzfGrep call fzf#vim#grep("rg --column --line-number --no-heading --color=always " . $RIPGREP_EXTRA_OPTIONS . " " . shellescape(<q-args>), 1, <bang>0)
+  " }}}
 
+  " Yank History  " {{{
   " https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
   " See yankround.vim
   function! s:FzfYankHistory() abort  " {{{
@@ -1035,6 +1038,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
     call fzf#run(fzf#wrap("yank-history", options))
   endfunction  " }}}
+  " }}}
 
   call s:ConfigPlugin(#{
      \   lazy:    1,
