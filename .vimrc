@@ -1378,18 +1378,20 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
   " }}}
 
+  let s:fzf_commands = [
+    \   "FzfFiles",
+    \   "FzfGFiles",
+    \   "FzfBuffers",
+    \   "FzfMarks",
+    \   "FzfHistory",
+    \   "FzfHelptags",
+    \ ]
+
   call s:ConfigPlugin(#{
      \   lazy:    1,
+     \   on_cmd:  s:fzf_commands,
+     \   on_func: "fzf#",
      \   depends: "fzf",
-     \   on_cmd: [
-     \     "FzfFiles",
-     \     "FzfGFiles",
-     \     "FzfBuffers",
-     \     "FzfMarks",
-     \     "FzfHistory",
-     \     "FzfHelptags",
-     \   ],
-     \   on_func:"fzf#",
      \ })
 
   " Add to runtimepath (and use its Vim scripts) but don't use its binary
