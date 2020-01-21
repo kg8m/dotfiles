@@ -1026,6 +1026,69 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   command! -bang -nargs=* FzfGrep call fzf#vim#grep("rg --column --line-number --no-heading --color=always " . $RIPGREP_EXTRA_OPTIONS . " " . shellescape(<q-args>), 1, <bang>0)
   " }}}
 
+  " Marks  " {{{
+  nnoremap <silent> m :call <SID>IncrementalMark()<Cr>
+
+  " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
+  function! s:SetupIncrementalMark() abort  " {{{
+    if exists("s:incremental_mark_keys")
+      return
+    endif
+
+    let s:incremental_mark_keys = [
+      \   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+      \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+      \ ]
+    let s:incremental_mark_keys_pattern = "^[A-Z]$"
+
+    execute "delmarks " . join(s:incremental_mark_keys, "")
+  endfunction  " }}}
+
+  function! s:IncrementalMark() abort  " {{{
+    call s:SetupIncrementalMark()
+
+    let incremental_mark_key = s:IncrementalMarkDetectKey()
+
+    if incremental_mark_key =~# s:incremental_mark_keys_pattern
+      echo "Already marked to " . incremental_mark_key
+      return
+    endif
+
+    if !exists("s:incremental_mark_index")
+      let s:incremental_mark_index = 0
+    else
+      let s:incremental_mark_index = (s:incremental_mark_index + 1) % len(s:incremental_mark_keys)
+    endif
+
+    execute "mark " . s:incremental_mark_keys[s:incremental_mark_index]
+    echo "Marked to " . s:incremental_mark_keys[s:incremental_mark_index]
+  endfunction  " }}}
+
+  function! s:IncrementalMarkDetectKey() abort  " {{{
+    let detected_mark_key   = 0
+    let current_filepath    = expand("%")
+    let current_line_number = line(".")
+
+    for mark_key in s:incremental_mark_keys
+      let position = getpos("'" . mark_key)
+
+      if position[0]
+        let filepath    = bufname(position[0])
+        let line_number = position[1]
+
+        if filepath == current_filepath && line_number == current_line_number
+          let detected_mark_key = mark_key
+          break
+        else
+          continue
+        endif
+      endif
+    endfor
+
+    return detected_mark_key
+  endfunction  " }}}
+  " }}}
+
   " Yank History  " {{{
   " https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
   " See yankround.vim
@@ -1603,74 +1666,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
     call s:ConfigPlugin(#{
        \   lazy:  1,
        \   on_ft: ["unite", "vimfiler"],
-       \ })
-  endif  " }}}
-
-  if s:RegisterPlugin("kg8m/unite-mark")  " {{{
-    nnoremap <Leader>um :<C-u>Unite mark<Cr>
-    nnoremap <silent> m :<C-u>call AutoMark()<Cr>
-
-    function! s:ConfigPluginOnSource_unite_mark() abort  " {{{
-      " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
-      let s:mark_increment_keys = [
-        \   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-        \   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-        \ ]
-      let g:unite_source_mark_marks = join(s:mark_increment_keys, "")
-      let s:mark_increment_key_regexp = "^[" . g:unite_source_mark_marks . "]$"
-
-      function! AutoMark() abort  " {{{
-        let mark_increment_key = s:DetectMarkIncrementKey()
-
-        if mark_increment_key =~# s:mark_increment_key_regexp
-          echo "Already marked to " . mark_increment_key
-          return
-        endif
-
-        if !exists("s:mark_increment_index")
-          let s:mark_increment_index = 0
-        else
-          let s:mark_increment_index = (s:mark_increment_index + 1) % len(s:mark_increment_keys)
-        endif
-
-        execute "mark " . s:mark_increment_keys[s:mark_increment_index]
-        echo "Marked to " . s:mark_increment_keys[s:mark_increment_index]
-      endfunction  " }}}
-
-      function! s:DetectMarkIncrementKey() abort  " {{{
-        let detected_mark_key   = 0
-        let current_filepath    = expand("%")
-        let current_line_number = line(".")
-
-        for mark_key in s:mark_increment_keys
-          let position = getpos("'" . mark_key)
-
-          if position[0]
-            let filepath    = bufname(position[0])
-            let line_number = position[1]
-
-            if filepath == current_filepath && line_number == current_line_number
-              let detected_mark_key = mark_key
-              break
-            else
-              continue
-            endif
-          else
-            continue
-          endif
-        endfor
-
-        return detected_mark_key
-      endfunction  " }}}
-
-      execute "delmarks " . join(s:mark_increment_keys, "")
-    endfunction  " }}}
-
-    call s:ConfigPlugin(#{
-       \   lazy:      1,
-       \   on_func:   "AutoMark",
-       \   on_source: "unite.vim",
-       \   hook_source: function("s:ConfigPluginOnSource_unite_mark"),
        \ })
   endif  " }}}
 
