@@ -29,19 +29,15 @@ let g:did_install_syntax_menu   = 1
 
 let g:mapleader = ","
 
-set conceallevel=2
-set concealcursor=nvic
+set fileformats=unix,dos,mac
+set ambiwidth=double
+scriptencoding utf-8
 " }}}
 
 " Reset my autocommands
 augroup my_vimrc  " {{{
   autocmd!
 augroup END  " }}}
-
-set fileformats=unix,dos,mac
-set ambiwidth=double
-scriptencoding utf-8
-" }}}
 
 " ----------------------------------------------
 " Plugin management functions  " {{{
@@ -1072,6 +1068,9 @@ if s:RegisterPlugin("sk1418/HowMuch")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
+  set concealcursor=nvic
+  set conceallevel=2
+
   let g:indentLine_char = "|"
   let g:indentLine_faster = 1
   let g:indentLine_concealcursor = &concealcursor
