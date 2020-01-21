@@ -1020,6 +1020,8 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>h :FzfHistory<Cr>
   nnoremap <Leader><Leader>H :FzfHelptags<Cr>
   nnoremap <Leader><Leader>y :call <SID>FzfYankHistory()<Cr>
+  noremap  <Leader><Leader>s :<C-u>call <SID>FzfMyShortcuts("")<Cr>
+  noremap  <Leader><Leader>a :<C-u>call <SID>FzfMyShortcuts("'Alignta")<Cr>
 
   " Grep  " {{{
   " https://github.com/junegunn/fzf.vim/blob/dc4c4c22715c060a2babd5a5187004bdecbcdea7/plugin/fzf.vim#L52
@@ -1100,6 +1102,135 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       \ }
 
     call fzf#run(fzf#wrap("yank-history", options))
+  endfunction  " }}}
+  " }}}
+
+  " My Shortcuts  " {{{
+  function! s:FzfMyShortcuts(query) abort  " {{{
+    let options = {
+      \   "source":  s:FzfMyShortcutsList(),
+      \   "sink":    function("s:FzfMyShortcutsHandler"),
+      \   "options": ["--no-multi", "--query", a:query],
+      \ }
+
+    call fzf#run(fzf#wrap("my-shortcuts", options))
+  endfunction  " }}}
+
+  function! s:FzfMyShortcutsList() abort  " {{{
+    call s:SetupFzfMyShortcuts()
+    return s:fzf_my_shortcuts_list
+  endfunction  " }}}
+
+  function! s:FzfMyShortcutsHandler(item) abort  " {{{
+    execute substitute(a:item, '\v.*--\s+`(.+)`$', '\1', "")
+  endfunction  " }}}
+
+  function! s:SetupFzfMyShortcuts() abort  " {{{
+    if exists("s:fzf_my_shortcuts_list")
+      return
+    endif
+
+    function! s:FzfMyShortcutsDefineRawList() abort  " {{{
+      " Hankaku/Zenkaku: http://nanasi.jp/articles/vim/hz_ja_vim.html
+      let s:fzf_my_shortcuts_list = [
+        \   ["[Hankaku/Zenkaku] All to Hankaku",           "'<,'>Hankaku"],
+        \   ["[Hankaku/Zenkaku] Alphanumerics to Hankaku", "'<,'>HzjaConvert han_eisu"],
+        \   ["[Hankaku/Zenkaku] ASCII to Hankaku",         "'<,'>HzjaConvert han_ascii"],
+        \   ["[Hankaku/Zenkaku] All to Zenkaku",           "'<,'>Zenkaku"],
+        \   ["[Hankaku/Zenkaku] Kana to Zenkaku",          "'<,'>HzjaConvert zen_kana"],
+        \
+        \   ["[Reload with Encoding] latin1",      "edit ++encoding=latin1 +set\\ noreadonly"],
+        \   ["[Reload with Encoding] cp932",       "edit ++encoding=cp932 +set\\ noreadonly"],
+        \   ["[Reload with Encoding] shift-jis",   "edit ++encoding=shift-jis +set\\ noreadonly"],
+        \   ["[Reload with Encoding] iso-2022-jp", "edit ++encoding=iso-2022-jp +set\\ noreadonly"],
+        \   ["[Reload with Encoding] euc-jp",      "edit ++encoding=euc-jp +set\\ noreadonly"],
+        \   ["[Reload with Encoding] utf-8",       "edit ++encoding=utf-8 +set\\ noreadonly"],
+        \
+        \   ["[Reload by Sudo]", "edit sudo:%"],
+        \
+        \   ["[Set Encoding] latin1",      "set fileencoding=latin1"],
+        \   ["[Set Encoding] cp932",       "set fileencoding=cp932"],
+        \   ["[Set Encoding] shift-jis",   "set fileencoding=shift-jis"],
+        \   ["[Set Encoding] iso-2022-jp", "set fileencoding=iso-2022-jp"],
+        \   ["[Set Encoding] euc-jp",      "set fileencoding=euc-jp"],
+        \   ["[Set Encoding] utf-8",       "set fileencoding=utf-8"],
+        \
+        \   ["[Set File Format] dos",  "set fileformat=dos"],
+        \   ["[Set File Format] unix", "set fileformat=unix"],
+        \   ["[Set File Format] mac",  "set fileformat=mac"],
+        \
+        \   ["[Copy] filename",          "call RemoteCopy(CurrentFilename())"],
+        \   ["[Copy] relative filepath", "call RemoteCopy(CurrentRelativePath())"],
+        \   ["[Copy] absolute filepath", "call RemoteCopy(CurrentAbsolutePath())"],
+        \
+        \   ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
+        \   ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
+        \
+        \   ["[Autoformat] Format Source Codes", "Autoformat"],
+        \
+        \   ["[Diff] Linediff", "'<,'>Linediff"],
+        \
+        \   ["[Unite] Resume Update Plugins", "UniteResume update_plugins"],
+        \   ["[Unite] giti/status",           "Unite giti/status"],
+        \ ]
+    endfunction  " }}}
+
+    function! s:FzfMyShortcutsCountMaxWordLength() abort  " {{{
+      let s:fzf_my_shortcuts_max_word_length = max(
+        \   map(
+        \     copy(s:fzf_my_shortcuts_list),
+        \     { _, item -> strlen(item[0]) }
+        \   )
+        \ )
+    endfunction  " }}}
+
+    function! s:FzfMyShortcutsMakeGroups() abort  " {{{
+      function! s:FzfMyShortcutsGroupName(item) abort  " {{{
+        return matchstr(a:item, '\v^\[[^]]+\]')
+      endfunction  " }}}
+
+      let prev_prefix = ""
+      let new_list    = []
+
+      for candidate in s:fzf_my_shortcuts_list
+        let current_prefix = s:FzfMyShortcutsGroupName(candidate[0])
+
+        if !empty(new_list) && current_prefix != prev_prefix
+          call add(new_list, ["", ""])
+        endif
+
+        call add(new_list, candidate)
+        let prev_prefix = current_prefix
+      endfor
+
+      let s:fzf_my_shortcuts_list = new_list
+    endfunction  " }}}
+
+    function! s:FzfMyShortcutsFormatList() abort  " {{{
+      let s:fzf_my_shortcuts_list = map(
+        \   s:fzf_my_shortcuts_list,
+        \   function("s:FzfMyShortcutsFormatItem")
+        \ )
+    endfunction  " }}}
+
+    function! s:FzfMyShortcutsFormatItem(_, item) abort  " {{{
+      let [description, command] = a:item
+
+      if empty(description)
+        return ""
+      else
+        return description . s:FzfMyShortcutsWordPadding(description) . "  --  `" . command . "`"
+      endif
+    endfunction  " }}}
+
+    function! s:FzfMyShortcutsWordPadding(item) abort  " {{{
+      return repeat(" ", s:fzf_my_shortcuts_max_word_length - strlen(a:item))
+    endfunction  " }}}
+
+    call s:FzfMyShortcutsDefineRawList()
+    call s:FzfMyShortcutsCountMaxWordLength()
+    call s:FzfMyShortcutsMakeGroups()
+    call s:FzfMyShortcutsFormatList()
   endfunction  " }}}
   " }}}
 
@@ -1325,8 +1456,6 @@ if s:RegisterPlugin("leafgarland/typescript-vim", #{ if: !IsGitCommit() && !IsGi
 endif  " }}}
 
 if s:RegisterPlugin("Shougo/unite.vim")  " {{{
-  nnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
-  vnoremap <Leader>us :<C-u>Unite menu:shortcuts<Cr>
   nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::
   vnoremap <Leader>ug "gy:<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::<C-r>"
   nnoremap <Leader>uy :<C-u>Unite yankround -default-action=append<Cr>
@@ -1518,120 +1647,6 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
 
     call unite#custom#source("buffer", "sorters", "sorter_word")
     call unite#custom#source("grep", "max_candidates", 10000)
-
-    function! s:SetupUniteShortcut() abort  " {{{
-      " http://d.hatena.ne.jp/osyo-manga/20130225/1361794133
-      " http://d.hatena.ne.jp/tyru/20120110/prompt
-      if !exists("g:unite_source_menu_menus")
-        let g:unite_source_menu_menus = {}
-      endif
-      let g:unite_source_menu_menus.shortcuts = #{
-        \   description: "My Shortcuts"
-        \ }
-
-      " http://nanasi.jp/articles/vim/hz_ja_vim.html
-      let g:unite_source_menu_menus.shortcuts.candidates = [
-        \   ["[Plugins] Resume Update Plugins", "UniteResume update_plugins"],
-        \
-        \   ["[String Utility] All to Hankaku",           "'<,'>Hankaku"],
-        \   ["[String Utility] Alphanumerics to Hankaku", "'<,'>HzjaConvert han_eisu"],
-        \   ["[String Utility] ASCII to Hankaku",         "'<,'>HzjaConvert han_ascii"],
-        \   ["[String Utility] All to Zenkaku",           "'<,'>Zenkaku"],
-        \   ["[String Utility] Kana to Zenkaku",          "'<,'>HzjaConvert zen_kana"],
-        \
-        \   ["[Reload with Encoding] latin1",      "edit ++enc=latin1 +set\\ noreadonly"],
-        \   ["[Reload with Encoding] cp932",       "edit ++enc=cp932 +set\\ noreadonly"],
-        \   ["[Reload with Encoding] shift-jis",   "edit ++enc=shift-jis +set\\ noreadonly"],
-        \   ["[Reload with Encoding] iso-2022-jp", "edit ++enc=iso-2022-jp +set\\ noreadonly"],
-        \   ["[Reload with Encoding] euc-jp",      "edit ++enc=euc-jp +set\\ noreadonly"],
-        \   ["[Reload with Encoding] utf-8",       "edit ++enc=utf-8 +set\\ noreadonly"],
-        \
-        \   ["[Reload by Sudo]", "edit sudo:%"],
-        \
-        \   ["[Set Encoding] latin1",      "set fenc=latin1"],
-        \   ["[Set Encoding] cp932",       "set fenc=cp932"],
-        \   ["[Set Encoding] shift-jis",   "set fenc=shift-jis"],
-        \   ["[Set Encoding] iso-2022-jp", "set fenc=iso-2022-jp"],
-        \   ["[Set Encoding] euc-jp",      "set fenc=euc-jp"],
-        \   ["[Set Encoding] utf-8",       "set fenc=utf-8"],
-        \
-        \   ["[Set File Format] dos",  "set ff=dos"],
-        \   ["[Set File Format] unix", "set ff=unix"],
-        \   ["[Set File Format] mac",  "set ff=mac"],
-        \
-        \   ["[Manipulate File] Transform to New Ruby Hash Syntax",       "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
-        \   ["[Manipulate File] Transform to Old Ruby Hash Syntax",       "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
-        \
-        \   ["[Copy] filename",          "call RemoteCopy(CurrentFilename())"],
-        \   ["[Copy] relative filepath", "call RemoteCopy(CurrentRelativePath())"],
-        \   ["[Copy] absolute filepath", "call RemoteCopy(CurrentAbsolutePath())"],
-        \
-        \   ["[Autoformat] Format Source Codes",         "Autoformat"],
-        \
-        \   ["[Diff] Linediff",       "'<,'>Linediff"],
-        \
-        \   ["[Unite plugin] giti/status",          "Unite giti/status"],
-        \ ]
-
-      " Show formatted candidates, for example:
-      "   [Plugins] Resume Update Plugins            --  `UniteResume update_plugins`
-      "
-      "   [String Utility] All to Hankaku            --  `'<,'>Hankaku`
-      "   [String Utility] Alphanumerics to Hankaku  --  `'<,'>HzjaConvert han_eisu`
-      "   ...
-      function! s:FormatUniteShortcuts() abort  " {{{
-        function! s:UniteShortcutsPrefix(word) abort  " {{{
-          return substitute(a:word, '\v^\[([^]]+)\].*$', '\1', "")
-        endfunction  " }}}
-
-        function! s:UniteShortcutsWordPadding(word) abort  " {{{
-          return repeat(" ", s:max_unite_shortcuts_word_length - strlen(a:word))
-        endfunction  " }}}
-
-        function! s:GroupUniteShortcuts() abort  " {{{
-          let first_candidate      = g:unite_source_menu_menus.shortcuts.candidates[0]
-          let temporary_prefix     = s:UniteShortcutsPrefix(first_candidate[0])
-          let temporary_candidates = []
-
-          for candidate in g:unite_source_menu_menus.shortcuts.candidates
-            let prefix = s:UniteShortcutsPrefix(candidate[0])
-
-            if prefix != temporary_prefix
-              call add(temporary_candidates, ["", ""])
-              let temporary_prefix = prefix
-            endif
-
-            call add(temporary_candidates, candidate)
-          endfor
-
-          let g:unite_source_menu_menus.shortcuts.candidates = temporary_candidates
-        endfunction  " }}}
-
-        call s:GroupUniteShortcuts()
-        let s:max_unite_shortcuts_word_length = max(
-          \   map(
-          \     copy(g:unite_source_menu_menus.shortcuts.candidates),
-          \     "strlen(v:val[0])"
-          \   )
-          \ )
-
-        function! g:unite_source_menu_menus.shortcuts.map(key, value) abort  " {{{
-          let [word, value] = a:value
-
-          if empty(word) && empty(value)
-            return #{ word: "", kind: "" }
-          else
-            return #{
-                 \   word: word . s:UniteShortcutsWordPadding(word) . "  --  `" . value . "`",
-                 \   kind: "command",
-                 \   action__command: value,
-                 \ }
-          endif
-        endfunction  " }}}
-      endfunction  " }}}
-      call s:FormatUniteShortcuts()
-    endfunction  " }}}
-    call s:SetupUniteShortcut()
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
