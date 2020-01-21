@@ -1501,18 +1501,31 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \ }
 
   function! Lightline_Filepath() abort  " {{{
+    let filepath        = s:Lightline_Filepath()
     let readonly_symbol = s:Lightline_ReadonlySymbol()
     let modified_symbol = s:Lightline_ModifiedSymbol()
 
     return (readonly_symbol != "" ? readonly_symbol . " " : "") .
-         \ (
-         \   &filetype == "vimfiler" ? vimfiler#get_status_string() :
-         \   &filetype == "unite" ? unite#get_status_string() :
-         \   CurrentFilename() != "" ? (
-         \     winwidth(0) >= 100 ? CurrentRelativePath() : CurrentFilename()
-         \   ) : "[No Name]"
-         \ ) .
+         \ filepath .
          \ (modified_symbol != "" ? " " . modified_symbol : "")
+  endfunction  " }}}
+
+  function! s:Lightline_Filepath() abort  " {{{
+    if &filetype == "vimfiler"
+      return vimfiler#get_status_string()
+    endif
+
+    if &filetype == "unite"
+      return unite#get_status_string()
+    endif
+
+    let filename = CurrentFilename()
+
+    if filename == ""
+      return "[No Name]"
+    else
+      return winwidth(0) >= 100 ? CurrentRelativePath() : filename
+    endif
   endfunction  " }}}
 
   function! s:Lightline_ReadonlySymbol() abort  " {{{
