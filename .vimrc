@@ -1181,6 +1181,8 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \
         \   ["[Diff] Linediff", "'<,'>Linediff"],
         \
+        \   ["[QuickFix] Replace", "Qfreplace"],
+        \
         \   ["[Unite] Resume Update Plugins", "UniteResume update_plugins"],
         \   ["[Unite] giti/status",           "Unite giti/status"],
         \ ]
@@ -1265,6 +1267,13 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     call s:ConfigPlugin(#{
       \   lazy: 1,
       \ })
+  endif  " }}}
+
+  if s:RegisterPlugin("thinca/vim-qfreplace")  " {{{
+    call s:ConfigPlugin(#{
+       \   lazy:   1,
+       \   on_cmd: "Qfreplace",
+       \ })
   endif  " }}}
 endif  " }}}
 
@@ -1467,8 +1476,6 @@ if s:RegisterPlugin("leafgarland/typescript-vim", #{ if: !IsGitCommit() && !IsGi
 endif  " }}}
 
 if s:RegisterPlugin("Shougo/unite.vim")  " {{{
-  nnoremap <Leader>ug :<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::
-  vnoremap <Leader>ug "gy:<C-u>Unite -no-quit -winheight=30% -buffer-name=grep grep:./::<C-r>"
   nnoremap <Leader>uy :<C-u>Unite yankround -default-action=append<Cr>
   nnoremap <Leader>ub :<C-u>Unite buffer<Cr>
 
@@ -2006,13 +2013,6 @@ if s:RegisterPlugin("thinca/vim-prettyprint")  " {{{
      \   lazy:    1,
      \   on_cmd:  ["PrettyPrint", "PP"],
      \   on_func: ["PrettyPrint", "PP"],
-     \ })
-endif  " }}}
-
-if s:RegisterPlugin("thinca/vim-qfreplace")  " {{{
-  call s:ConfigPlugin(#{
-     \   lazy:  1,
-     \   on_ft: ["unite", "quickfix"]
      \ })
 endif  " }}}
 
