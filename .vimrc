@@ -2712,8 +2712,10 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
 endif  " }}}
 
 " See also vim-lsp and unite.vim settings
-nnoremap g] :tjump <C-r>=expand("<cword>")<Cr><Cr>
-vnoremap g] "gy:tjump <C-r>"<Cr>
+" g<C-]>: Jump to a tag by `:tjump`
+" <C-o>:  Jump back
+noremap  g] g<C-]>
+nnoremap g[ <C-o>
 " }}}
 
 " Auto reload
