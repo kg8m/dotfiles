@@ -958,6 +958,31 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
 
   let g:dwm_map_keys = 0
 
+  " For fzf.vim
+  command! -nargs=1 -complete=file DWMOpen call <SID>DWMOpen(<q-args>)
+
+  function! s:DWMOpen(filepath) abort  " {{{
+    if bufexists(a:filepath)
+      let winnr = bufwinnr(a:filepath)
+
+      if winnr == -1
+        call DWM_Stack(1)
+        split
+        execute "edit " . a:filepath
+        call DWM_AutoEnter()
+      else
+        execute winnr . "wincmd w"
+        call DWM_AutoEnter()
+      endif
+    else
+      if bufname("%") != ""
+        call DWM_New()
+      endif
+
+      execute "edit " . a:filepath
+    endif
+  endfunction  " }}}
+
   function! s:ConfigPluginOnPostSource_dwm() abort  " {{{
     " Disable DWM's default behavior on buffer loaded
     augroup dwm
@@ -981,8 +1006,10 @@ endif  " }}}
 if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   let g:fzf_command_prefix = "Fzf"
   let g:fzf_buffers_jump = 1
-  let g:fzf_action = #{ ctrl-o: "vsplit" }
   let g:fzf_layout = #{ up: "~50%" }
+
+  " See dwm.vim
+  let g:fzf_action = #{ ctrl-o: "DWMOpen" }
 
   nnoremap <Leader><Leader>f :FzfFiles<Cr>
   nnoremap <Leader><Leader>v :FzfGFiles?<Cr>
