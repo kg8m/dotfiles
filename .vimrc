@@ -666,10 +666,10 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   cmd: { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
      \   whitelist: ["css", "less", "sass", "scss"],
      \   workspace_config: #{
-     \     css:  #{ linkt: #{ validProperties: [] } },
-     \     less: #{ linkt: #{ validProperties: [] } },
-     \     sass: #{ linkt: #{ validProperties: [] } },
-     \     scss: #{ linkt: #{ validProperties: [] } },
+     \     css:  #{ lint: #{ validProperties: [] } },
+     \     less: #{ lint: #{ validProperties: [] } },
+     \     sass: #{ lint: #{ validProperties: [] } },
+     \     scss: #{ lint: #{ validProperties: [] } },
      \   },
      \ })
   " }}}
