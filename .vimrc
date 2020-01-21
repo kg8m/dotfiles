@@ -38,33 +38,12 @@ augroup my_vimrc  " {{{
   autocmd!
 augroup END  " }}}
 
-" ----------------------------------------------
-" Encoding  " {{{
-" http://www.kawaz.jp/pukiwiki/?vim#cb691f26
-if &encoding !=# "utf-8"
-  set encoding=japan
-  set fileencoding=japan
-endif
-
-function! s:RecheckFileencoding() abort  " {{{
-  if &fileencoding =~# "iso-2022-jp" && search("[^\x01-\x7e]", "n") == 0
-    let &fileencoding=&encoding
-  endif
-endfunction  " }}}
-
-augroup my_vimrc  " {{{
-  autocmd BufReadPost * call s:RecheckFileencoding()
-augroup END  " }}}
-
 set fileformats=unix,dos,mac
-
-if exists("&ambiwidth")
-  set ambiwidth=double
-endif
-
+set ambiwidth=double
 scriptencoding utf-8
 " }}}
 
+" ----------------------------------------------
 " Plugin management functions  " {{{
 function! UpdatePlugins() abort  " {{{
   call dein#update()
@@ -978,9 +957,8 @@ endif  " }}}
 call s:RegisterPlugin("Shougo/context_filetype.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
 
 if s:RegisterPlugin("spolu/dwm.vim")  " {{{
-  nnoremap <C-w>n       :<C-u>call DWM_New()<Cr>
-  nnoremap <C-w>c       :<C-u>call DWM_Close()<Cr>
-  nnoremap <C-w><Space> :<C-u>call DWM_AutoEnter()<Cr>
+  nnoremap <C-w>n       :call DWM_New()<Cr>
+  nnoremap <C-w><Space> :call DWM_AutoEnter()<Cr>
 
   let g:dwm_map_keys = 0
 
@@ -993,7 +971,7 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
 
   call s:ConfigPlugin(#{
      \   lazy:    1,
-     \   on_func: ["DWM_New", "DWM_Close", "DWM_AutoEnter", "DWM_Stack"],
+     \   on_func: ["DWM_New", "DWM_AutoEnter", "DWM_Stack"],
      \   hook_post_source: function("s:ConfigPluginOnPostSource_dwm"),
      \ })
 endif  " }}}
@@ -1061,7 +1039,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("kg8m/gundo.vim")  " {{{
-  nnoremap <F5> :<C-u>GundoToggle<Cr>
+  nnoremap <F5> :GundoToggle<Cr>
 
   " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
   let g:gundo_auto_preview = 0
@@ -1092,33 +1070,6 @@ if s:RegisterPlugin("sk1418/HowMuch")  " {{{
      \   on_map: [["v", "<Plug>AutoCalc"]],
      \   hook_post_source: function("s:ConfigPluginOnPostSource_HowMuch"),
      \ })
-endif  " }}}
-
-if s:RegisterPlugin("nishigori/increment-activator")  " {{{
-  let g:increment_activator_filetype_candidates = #{
-    \   _: [
-    \     ["有", "無"],
-    \     ["日", "月", "火", "水", "木", "金", "土"],
-    \     [
-    \       "a", "b", "c", "d", "e", "f", "g",
-    \       "h", "i", "j", "k", "l", "m", "n", "o", "p",
-    \       "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-    \     ],
-    \     [
-    \       "A", "B", "C", "D", "E", "F", "G",
-    \       "H", "I", "J", "K", "L", "M", "N", "O", "P",
-    \       "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-    \     ],
-    \     [
-    \       "①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩",
-    \       "⑪", "⑫", "⑬", "⑭", "⑮", "⑯", "⑰", "⑱", "⑲", "⑳",
-    \     ],
-    \     [
-    \       "first", "second", "third", "fourth", "fifth",
-    \       "sixth", "seventh", "eighth", "ninth", "tenth",
-    \     ],
-    \   ],
-    \ }
 endif  " }}}
 
 if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
@@ -1221,10 +1172,8 @@ if s:RegisterPlugin("tyru/open-browser.vim")  " {{{
     \ ]
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
-     \   on_cmd:  ["OpenBrowserSearch", "OpenBrowser"],
-     \   on_func: "openbrowser#open",
-     \   on_map:  [["nv", "<Plug>(openbrowser-open)"]],
+     \   lazy:   1,
+     \   on_map: [["nv", "<Plug>(openbrowser-open)"]],
      \ })
 endif  " }}}
 
@@ -1257,8 +1206,8 @@ if s:RegisterPlugin("vim-scripts/sequence")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("AndrewRadev/splitjoin.vim")  " {{{
-  nnoremap <Leader>J :<C-u>SplitjoinJoin<Cr>
-  nnoremap <Leader>S :<C-u>SplitjoinSplit<Cr>
+  nnoremap <Leader>J :SplitjoinJoin<Cr>
+  nnoremap <Leader>S :SplitjoinSplit<Cr>
 
   let g:splitjoin_split_mapping       = ""
   let g:splitjoin_join_mapping        = ""
@@ -1764,27 +1713,6 @@ if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
     \   ["Align at ']'        --  `0 ]`",                       '0 ]'],
     \   ["Align at '}'        --  `}`",                         '}'],
     \ ]
-  let s:alignta_comment_leadings = '^\s*\("\|#\|/\*\|//\|<!--\)'
-  let g:unite_source_alignta_preset_options = [
-    \   ["Justify Left",      "<<"],
-    \   ["Justify Center",    "||"],
-    \   ["Justify Right",     ">>"],
-    \   ["Justify None",      "=="],
-    \   ["Shift Left",        "<-"],
-    \   ["Shift Right",       "->"],
-    \   ["Shift Left [Tab]",  "<--"],
-    \   ["Shift Right [Tab]", "-->"],
-    \   ["Margin 0:0",        "0"],
-    \   ["Margin 0:1",        "01"],
-    \   ["Margin 1:0",        "10"],
-    \   ["Margin 1:1",        "1"],
-    \
-    \   ["Regexp", "-r {regexp}/{regexp_options}"],
-    \
-    \   "v/" . s:alignta_comment_leadings,
-    \   "g/" . s:alignta_comment_leadings,
-    \ ]
-  unlet s:alignta_comment_leadings
 endif  " }}}
 
 if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
@@ -1815,20 +1743,6 @@ if s:RegisterPlugin("Chiel92/vim-autoformat", #{ if: !IsGitCommit() && !IsGitHun
   let g:formatdef_jsbeautify_javascript = '"js-beautify -f -s2 -"'
 endif  " }}}
 
-if s:RegisterPlugin("itchyny/vim-autoft", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  let g:autoft_enable = 0
-  let g:autoft_config = [
-    \   #{ filetype: "html",       pattern: '<\%(!DOCTYPE\|html\|head\|script\)' },
-    \   #{ filetype: "javascript", pattern: '\%(^\s*\<var\>\s\+[a-zA-Z]\+\)\|\%(function\%(\s\+[a-zA-Z]\+\)\?\s*(\)' },
-    \   #{ filetype: "c",          pattern: '^\s*#\s*\%(include\|define\)\>' },
-    \   #{ filetype: "sh",         pattern: '^#!.*\%(\<sh\>\|\<bash\>\)\s*$' },
-    \ ]
-endif  " }}}
-
-if s:RegisterPlugin("kg8m/vim-blockle")  " {{{
-  let g:blockle_mapping = ",b"
-endif  " }}}
-
 if s:RegisterPlugin("jkramer/vim-checkbox", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   augroup my_vimrc  " {{{
     autocmd FileType markdown,moin noremap <buffer> <Leader>c :call checkbox#ToggleCB()<Cr>
@@ -1855,21 +1769,7 @@ if s:RegisterPlugin("t9md/vim-choosewin")  " {{{
      \ })
 endif  " }}}
 
-call s:RegisterPlugin("hail2u/vim-css-syntax", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
 call s:RegisterPlugin("hail2u/vim-css3-syntax", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
-
-if s:RegisterPlugin("kg8m/vim-dirdiff", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  let g:DirDiffExcludes   = "CVS,*.class,*.exe,.*.swp,*.git,db/development_structure.sql,log,tags,tmp"
-  let g:DirDiffIgnore     = "Id:,Revision:,Date:"
-  let g:DirDiffSort       = 1
-  let g:DirDiffIgnoreCase = 0
-  let g:DirDiffForceLang  = "C"
-
-  call s:ConfigPlugin(#{
-     \   lazy:   1,
-     \   on_cmd: "DirDiff",
-     \ })
-endif  " }}}
 
 if s:RegisterPlugin("easymotion/vim-easymotion")  " {{{
   nmap <Leader>f <Plug>(easymotion-overwin-f2)
@@ -2288,14 +2188,14 @@ endif  " }}}
 " Text object for quotations: q
 if s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")  " {{{
   call s:ConfigPlugin(#{
-     \   depends: ["vim-textobj-user"],
+     \   depends: "vim-textobj-user",
      \ })
 endif  " }}}
 
 " Text object for Japanese braces: j
 if s:RegisterPlugin("kana/vim-textobj-jabraces")  " {{{
   call s:ConfigPlugin(#{
-     \   depends: ["vim-textobj-user"],
+     \   depends: "vim-textobj-user",
      \ })
 
   let g:textobj_jabraces_no_default_key_mappings = 1
@@ -2304,53 +2204,14 @@ endif  " }}}
 " Text object fo last search pattern: /
 if s:RegisterPlugin("kana/vim-textobj-lastpat")  " {{{
   call s:ConfigPlugin(#{
-     \   depends: ["vim-textobj-user"],
-     \ })
-endif  " }}}
-
-if s:RegisterPlugin("osyo-manga/vim-textobj-multitextobj")  " {{{
-  omap aj <Plug>(textobj-multitextobj-a)
-  omap ij <Plug>(textobj-multitextobj-i)
-  vmap aj <Plug>(textobj-multitextobj-a)
-  vmap ij <Plug>(textobj-multitextobj-i)
-
-  function! s:ConfigPluginOnSource_vim_textobj_multitextobj() abort
-    let g:textobj_multitextobj_textobjects_a = [[]]
-    let g:textobj_multitextobj_textobjects_i = [[]]
-    let textobj_names = [
-      \   "textobj-jabraces-parens",
-      \   "textobj-jabraces-braces",
-      \   "textobj-jabraces-brackets",
-      \   "textobj-jabraces-angles",
-      \   "textobj-jabraces-double-angles",
-      \   "textobj-jabraces-kakko",
-      \   "textobj-jabraces-double-kakko",
-      \   "textobj-jabraces-yama-kakko",
-      \   "textobj-jabraces-double-yama-kakko",
-      \   "textobj-jabraces-kikkou-kakko",
-      \   "textobj-jabraces-sumi-kakko",
-      \   "textobj-myjabraces-double-quotation",
-      \   "textobj-myjabraces-single-quotation",
-      \ ]
-
-    for textobj_name in textobj_names
-      call add(g:textobj_multitextobj_textobjects_a[0], "\<Plug>(" . textobj_name . "-a)")
-      call add(g:textobj_multitextobj_textobjects_i[0], "\<Plug>(" . textobj_name . "-i)")
-    endfor
-  endfunction
-
-  call s:ConfigPlugin(#{
-     \   lazy:    1,
-     \   depends: ["vim-textobj-user"],
-     \   on_map:  [["ov", "<Plug>(textobj-multitextobj-"]],
-     \   hook_source: function("s:ConfigPluginOnSource_vim_textobj_multitextobj"),
+     \   depends: "vim-textobj-user",
      \ })
 endif  " }}}
 
 " Text object for Ruby blocks (not only `do-end` nor `{}`): r
 if s:RegisterPlugin("rhysd/vim-textobj-ruby")  " {{{
   call s:ConfigPlugin(#{
-     \   depends: ["vim-textobj-user"],
+     \   depends: "vim-textobj-user",
      \ })
 endif  " }}}
 
@@ -2403,7 +2264,7 @@ endif  " }}}
 if s:RegisterPlugin("Shougo/vimfiler", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:vimfiler_ignore_pattern = ['^\.git$', '^\.DS_Store$']
 
-  nnoremap <Leader>e :<C-u>VimFilerBufferDir -force-quit<Cr>
+  nnoremap <Leader>e :VimFilerBufferDir -force-quit<Cr>
 
   function! s:ConfigPluginOnSource_vimfiler() abort  " {{{
     call vimfiler#custom#profile("default", "context", #{
@@ -2773,7 +2634,7 @@ set incsearch
 " Show search count message when searching
 set shortmess-=S
 
-nnoremap <Leader>/ :<C-u>nohlsearch<Cr>
+nnoremap <Leader>/ :nohlsearch<Cr>
 
 " Enable very magic
 nnoremap / /\v
@@ -2917,10 +2778,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
     let prompt = "possible typo: really want to write to '" . a:file . "'?(y/n):"
     let input = input(prompt)
 
-    if input ==# "YES"
-      execute writecmd
-      let b:write_check_typo_nocheck = 1
-    elseif input =~? '^y\(es\)\=$'
+    if input =~? '^y'
       execute writecmd
     endif
   endfunction  " }}}
@@ -2935,17 +2793,17 @@ command! -nargs=1 -complete=file Rename f <args> | call delete(expand("#")) | wr
 
 " ----------------------------------------------
 " Keymappings  " {{{
-nnoremap <Leader>v :<C-u>vsplit<Cr>
-nnoremap <Leader>h :<C-u>split<Cr>
+nnoremap <Leader>v :vsplit<Cr>
+nnoremap <Leader>h :split<Cr>
 
-vnoremap <Leader>y "yy:<C-u>call RemoteCopy(@")<Cr>
+vnoremap <Leader>y "yy:call RemoteCopy(@")<Cr>
 
 function! s:RemoveTrailingWhitespaces() abort  " {{{
   let position = getpos(".")
   keeppatterns '<,'>s/\s\+$//ge
   call setpos(".", position)
 endfunction  " }}}
-vnoremap <Leader>w :<C-u>call <SID>RemoveTrailingWhitespaces()<Cr>
+vnoremap <Leader>w :call <SID>RemoveTrailingWhitespaces()<Cr>
 
 " Prevent unconscious operation (<Nul> == <C-Space>)
 inoremap <C-w> <Esc><C-w>
