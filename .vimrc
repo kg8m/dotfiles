@@ -1166,6 +1166,17 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
         \   ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
         \
+        \   ["[Alignta] '=>'",       "'<,'>Alignta =>"],
+        \   ["[Alignta] /\\S/",      "'<,'>Alignta \\S\\+"],
+        \   ["[Alignta] /\\S/ once", "'<,'>Alignta \\S\\+/1"],
+        \   ["[Alignta] '='",        "'<,'>Alignta =>\\="],
+        \   ["[Alignta] ':hoge'",    "'<,'>Alignta 10 :"],
+        \   ["[Alignta] 'hoge:'",    "'<,'>Alignta 00 [a-zA-Z0-9_\"']\\\\+:\\\\s"],
+        \   ["[Alignta] '|'",        "'<,'>Alignta |"],
+        \   ["[Alignta] ')'",        "'<,'>Alignta 0 )"],
+        \   ["[Alignta] ']'",        "'<,'>Alignta 0 ]"],
+        \   ["[Alignta] '}'",        "'<,'>Alignta }"],
+        \
         \   ["[Autoformat] Format Source Codes", "Autoformat"],
         \
         \   ["[Diff] Linediff", "'<,'>Linediff"],
@@ -1730,20 +1741,6 @@ endif  " }}}
 
 if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
   vnoremap <Leader>a :Alignta<Space>
-  vnoremap <Leader>ua :<C-u>Unite alignta:arguments<Cr>
-
-  let g:unite_source_alignta_preset_arguments = [
-    \   ["Align at '=>'       --  `=>`",                        '=>'],
-    \   ["Align at /\\S/      --  `\\S\\+`",                    '\S\+'],
-    \   ["Align at /\\S/ once --  `\\S\\+/1`",                  '\S\+/1'],
-    \   ["Align at '='        --  `=>\\=`",                     '=>\='],
-    \   ["Align at ':hoge'    --  `10 :`",                      '10 :'],
-    \   ["Align at 'hoge:'    --  `00 [a-zA-Z0-9_\"']\\+:\\s`", "00 [a-zA-Z0-9_\"']\\+:\\s"],
-    \   ["Align at '|'        --  `|`",                         '|'],
-    \   ["Align at ')'        --  `0 )`",                       '0 )'],
-    \   ["Align at ']'        --  `0 ]`",                       '0 ]'],
-    \   ["Align at '}'        --  `}`",                         '}'],
-    \ ]
 
   call s:ConfigPlugin(#{
      \   lazy:   1,
