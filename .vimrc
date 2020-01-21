@@ -272,7 +272,7 @@ function! ExecuteWithConfirm(command) abort  " {{{
   let result = system(a:command)
 
   if v:shell_error
-    echomsg result
+    call s:EchoErrorMsg(result)
   endif
 endfunction  " }}}
 
