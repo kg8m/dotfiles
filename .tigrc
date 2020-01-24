@@ -25,7 +25,7 @@ bind generic f scroll-page-down
 bind generic o edit
 bind generic c @bash -c "echo -n '%(commit)' | ssh main pbcopy; ssh main 'growlnotify -m \"Copied: %(commit)\" -a iTerm'"
 bind generic C @bash -c "echo -n '%(commit)' | ssh main pbcopy; ssh main 'growlnotify -m \"Copied: %(commit)\" -a iTerm'"
-bind status c !git commit -- %(file)
+bind status c @bash -c "echo -n '%(file)' | ssh main pbcopy; ssh main 'growlnotify -m \"Copied: %(file)\" -a iTerm'"
 bind status C !git commit
 bind status i @git add --intent-to-add %(file)
 bind status p !git add --patch %(file)
