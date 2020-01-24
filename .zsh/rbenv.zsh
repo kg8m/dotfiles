@@ -25,12 +25,12 @@ if [ -d ~/.rbenv ] && which rbenv > /dev/null 2>&1; then
     fi
   }
 
-  zplugin ice lucid wait as"null" atload"setup_rbenv_default_gems"
-  zplugin light rbenv/rbenv-default-gems
+  zinit ice lucid wait as"null" atload"setup_rbenv_default_gems"
+  zinit light rbenv/rbenv-default-gems
 
-  zplugin ice lucid wait as"null" atload"setup_rbenv_each"
-  zplugin light rbenv/rbenv-each
+  zinit ice lucid wait as"null" atload"setup_rbenv_each"
+  zinit light rbenv/rbenv-each
 
-  zplugin ice lucid wait as"null" atload"setup_ruby_build"
-  zplugin light rbenv/ruby-build
+  zinit ice lucid wait as"null" atload"setup_ruby_build"
+  zinit light rbenv/ruby-build
 fi

@@ -53,14 +53,14 @@ function setup_tmux_plugin {
   [ -d ~/.tmux/plugins/$1 ] || ln -s "$( pwd )" ~/.tmux/plugins/$1
 }
 
-zplugin ice lucid wait as"null" atload"setup_tmux_plugin tpm"
-zplugin light tmux-plugins/tpm
+zinit ice lucid wait as"null" atload"setup_tmux_plugin tpm"
+zinit light tmux-plugins/tpm
 
-zplugin ice lucid wait as"null" atload"setup_tmux_plugin tmux-resurrect"
-zplugin light tmux-plugins/tmux-resurrect
+zinit ice lucid wait as"null" atload"setup_tmux_plugin tmux-resurrect"
+zinit light tmux-plugins/tmux-resurrect
 
-zplugin ice lucid wait as"null" atload"setup_tmux_plugin tmux-continuum"
-zplugin light tmux-plugins/tmux-continuum
+zinit ice lucid wait as"null" atload"setup_tmux_plugin tmux-continuum"
+zinit light tmux-plugins/tmux-continuum
 
-zplugin ice lucid wait as"null" atload"setup_tmux_plugin tmux-scroll-copy-mode"
-zplugin light nhdaly/tmux-scroll-copy-mode
+zinit ice lucid wait as"null" atload"setup_tmux_plugin tmux-scroll-copy-mode"
+zinit light nhdaly/tmux-scroll-copy-mode

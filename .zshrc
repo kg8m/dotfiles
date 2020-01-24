@@ -87,18 +87,18 @@ source ~/.zsh/my_aliases.zsh
 source ~/.zsh/my_functions.zsh
 source ~/.zsh/timetrack.zsh
 
-# zdharma/zplugin  {{{
-[ -d ~/.zplugin/bin ] || git clone https://github.com/zdharma/zplugin.git ~/.zplugin/bin
-source ~/.zplugin/bin/zplugin.zsh
-autoload -Uz _zplugin
-(( ${+_comps} )) && _comps[zplugin]=_zplugin
+# zdharma/zinit  {{{
+[ -d ~/.zinit/bin ] || git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
+source ~/.zinit/bin/zinit.zsh
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 # }}}
 
-zplugin ice lucid wait; zplugin snippet ~/.zsh/goenv.zsh
-zplugin ice lucid wait; zplugin snippet ~/.zsh/nodenv.zsh
-zplugin ice lucid wait; zplugin snippet ~/.zsh/rbenv.zsh
-zplugin ice lucid wait; zplugin snippet ~/.zsh/rubocop.zsh
-zplugin ice lucid wait; zplugin snippet ~/.zsh/tmux.zsh
+zinit ice lucid wait; zinit snippet ~/.zsh/goenv.zsh
+zinit ice lucid wait; zinit snippet ~/.zsh/nodenv.zsh
+zinit ice lucid wait; zinit snippet ~/.zsh/rbenv.zsh
+zinit ice lucid wait; zinit snippet ~/.zsh/rubocop.zsh
+zinit ice lucid wait; zinit snippet ~/.zsh/tmux.zsh
 
 # Don't load lazily because direnv doesn't work at the zsh start
 source ~/.zsh/direnv.zsh

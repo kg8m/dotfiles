@@ -12,11 +12,11 @@ zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 
 setopt complete_in_word
 
-zplugin ice lucid wait; zplugin light zsh-users/zsh-completions
+zinit ice lucid wait; zinit light zsh-users/zsh-completions
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=245,bold"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-# Don't use `zplugin ice wait` because it prevents autosuggestions startup
-zplugin light zsh-users/zsh-autosuggestions
+# Don't use `zinit ice wait` because it prevents autosuggestions startup
+zinit light zsh-users/zsh-autosuggestions

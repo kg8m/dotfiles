@@ -43,5 +43,5 @@ function setup_anyframe {
   bindkey "^R" anyframe-widget-put-history
 }
 
-zplugin ice lucid wait pick"shell/completion.zsh"; zplugin light junegunn/fzf
-zplugin ice lucid wait atload"setup_anyframe"; zplugin light mollifier/anyframe
+zinit ice lucid wait pick"shell/completion.zsh"; zinit light junegunn/fzf
+zinit ice lucid wait atload"setup_anyframe"; zinit light mollifier/anyframe

@@ -13,4 +13,4 @@ function setup_enhancd {
   alias cd="cd_with_mkdir"
 }
 
-zplugin ice lucid wait atload"setup_enhancd"; zplugin light b4b4r07/enhancd
+zinit ice lucid wait atload"setup_enhancd"; zinit light b4b4r07/enhancd

@@ -1,1 +1,1 @@
-zplugin ice lucid wait; zplugin light zdharma/fast-syntax-highlighting
+zinit ice lucid wait; zinit light zdharma/fast-syntax-highlighting

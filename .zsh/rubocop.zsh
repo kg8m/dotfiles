@@ -1,2 +1,2 @@
-zplugin ice lucid wait as"program" pick"bin/rubocop-daemon-wrapper"
-zplugin light fohte/rubocop-daemon
+zinit ice lucid wait as"program" pick"bin/rubocop-daemon-wrapper"
+zinit light fohte/rubocop-daemon
