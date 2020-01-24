@@ -95,6 +95,10 @@ badp = bulk-add-by-patch
 
 bulk-intent-to-add = bulk-add-with-intent
 
+add-by-select             = bulk-add
+add-with-intent-by-select = bulk-add-with-intent
+add-by-patch-by-select    = bulk-add-by-patch
+
 bulk-add = "!f() {\
   git sh 'execute_with_echo git add -- $( git select-unstaged-files )';\
   git sh 'execute_with_echo git status';\
@@ -124,6 +128,8 @@ shallow-clone = "!f() {\
 co  = checkout
 cos = checkout-branch-by-select
 bco = bulk-checkout-files
+
+checkout-files-by-select = bulk-checkout-files
 
 checkout-branch-by-select = "!f() {\
   branch=$( git select-a-branch );\
@@ -185,6 +191,9 @@ branches = branch --all -vv
 delete-fully-merged-local-branch = branch --delete
 delete-local-branches            = bulk-delete-local-branches
 delete-remote-branches           = bulk-delete-remote-branches
+
+branch-delete-locals  = bulk-delete-local-branches
+branch-delete-remotes = bulk-delete-remote-branches
 
 create-branch = "!f() {\
   original_branch=$1;\
@@ -262,6 +271,8 @@ reset-commits     = !git edit-commits
 reset-last-commit = reset --soft HEAD~
 undo-add          = reset --soft
 
+reset-by-select = bulk-reset
+
 bulk-reset = "!f() {\
   files=$( git select-staged-files );\
   command=\"git reset -- $( echo ${files} )\";\
@@ -278,6 +289,8 @@ bulk-reset = "!f() {\
 
 # clean  # {{{
 bclean = bulk-clean
+
+clean-by-select = bulk-clean
 
 bulk-clean = "!f() {\
   files=$( git select-untracked-files );\
@@ -372,6 +385,11 @@ show-without-diff = show -s
 # }}}
 
 # status  # {{{
+status-only-changed-by-select   = select-status-changed-files
+status-only-staged-by-select    = select-staged-files
+status-only-unstaged-by-select  = select-unstaged-files
+status-only-untracked-by-select = select-untracked-files
+
 select-status-changed-files = "!f() {\
   git status --short | git filter-status-changed-files;\
 }; f"
@@ -395,6 +413,9 @@ filter-status-changed-files = "!f() {\
 # }}}
 
 # submodule  # {{{
+submodule-update-all = update-submodules
+submodule-remove     = remove-submodules
+
 update-submodules = !git sh 'execute_with_echo git submodule update --remote --rebase && execute_with_echo git status'
 remove-submodules = "!f() {\
   for target in $@; do\
@@ -406,6 +427,8 @@ remove-submodules = "!f() {\
 # }}}
 
 # hook  # {{{
+hook-update-all = update-hooks
+
 update-hooks = !( rm -i .git/hooks/* || exit 0 ) && cp ~/.git_templates/hooks/* .git/hooks/ && ls -l .git/hooks/
 # }}}
 
