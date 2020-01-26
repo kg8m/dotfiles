@@ -2743,6 +2743,10 @@ nnoremap <Leader>h :split<Cr>
 
 vnoremap <Leader>y "yy:call RemoteCopy(@")<Cr>
 
+" Open help for current word
+" See `:help K`
+noremap <S-h> <S-k>
+
 function! s:RemoveTrailingWhitespaces() abort  " {{{
   let position = getpos(".")
   keeppatterns '<,'>s/\s\+$//ge
