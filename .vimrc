@@ -393,7 +393,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
     \ ]
 
   augroup my_vimrc  " {{{
-    autocmd User asyncomplete_setup call s:SetupAsyncompleteBuffer()
+    autocmd User asyncomplete_setup call timer_start(0, { -> s:SetupAsyncompleteBuffer() })
   augroup END  " }}}
 
   function! s:SetupAsyncompleteBuffer() abort  " {{{
@@ -404,6 +404,8 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
        \   events: s:asyncomplete_buffer_events,
        \   on_event: function("s:AsyncompleteBufferOnEventAsync"),
        \ }))
+
+    call s:ActivateAsyncompleteBuffer()
   endfunction  " }}}
 
   function! s:AsyncompleteBufferOnEventAsync(...) abort  " {{{
@@ -460,14 +462,9 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
     doautocmd TextChanged
   endfunction  " }}}
 
-  function! s:ConfigPluginOnPostSource_asyncomplete_buffer() abort  " {{{
-    call s:ActivateAsyncompleteBuffer()
-  endfunction  " }}}
-
   call s:ConfigPlugin(#{
      \   lazy:      1,
      \   on_source: "asyncomplete.vim",
-     \   hook_post_source: function("s:ConfigPluginOnPostSource_asyncomplete_buffer"),
      \ })
 endif  " }}}
 
