@@ -1316,10 +1316,13 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
     for app_dir in globpath("app", "*", 0, 1)
       if isdirectory(app_dir)
-        let name = fnamemodify(app_dir, ":t")
+        let s:fzf_rails_specs[app_dir] = #{ dir: app_dir }
 
-        if !has_key(s:fzf_rails_specs, name)
-          let s:fzf_rails_specs[name] = #{ dir: app_dir }
+        " e.g., `app/controllers` => `controllers`
+        let alternative = fnamemodify(app_dir, ":t")
+
+        if !has_key(s:fzf_rails_specs, alternative)
+          let s:fzf_rails_specs[alternative] = #{ dir: app_dir }
         endif
       endif
     endfor
@@ -1327,6 +1330,10 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     for test_dir in globpath("spec,test", "*", 0, 1)
       if isdirectory(test_dir)
         let s:fzf_rails_specs[test_dir] = #{ dir: test_dir }
+
+        " e.g., `test/fixtures` => `fixtures_test`
+        let alternative = join(reverse(split(test_dir, "/")), "_")
+        let s:fzf_rails_specs[alternative] = #{ dir: test_dir }
       endif
     endfor
 
