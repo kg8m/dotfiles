@@ -1567,6 +1567,7 @@ call s:RegisterPlugin("kg8m/moin.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit()
 if s:RegisterPlugin("tyru/open-browser.vim")  " {{{
   map <Leader>o <Plug>(openbrowser-open)
 
+  " `main` server configs in `.ssh/config` is required
   let g:openbrowser_browser_commands = [
     \   #{
     \     name: "ssh",
@@ -1963,7 +1964,7 @@ call s:RegisterPlugin("tpope/vim-repeat")
 
 if s:RegisterPlugin("vim-ruby/vim-ruby", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   augroup my_vimrc  " {{{
-    " See vim-gemfile
+    " vim-ruby overwrites vim-gemfile's filetype detection
     autocmd BufEnter Gemfile set filetype=Gemfile
 
     " Prevent vim-matchup from being wrong for Ruby's modifier `if`/`unless`
@@ -1978,6 +1979,7 @@ if s:RegisterPlugin("vim-ruby/vim-ruby", #{ if: !IsGitCommit() && !IsGitHunkEdit
 endif  " }}}
 
 if s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+  " Default: JS, SQL, HTML
   let g:ruby_heredoc_syntax_filetypes = #{
     \   haml: #{ start: "HAML" },
     \   ruby: #{ start: "RUBY" },
@@ -2431,6 +2433,7 @@ endif
 colorscheme molokai
 call s:OverwriteSyntax()
 
+" Blur inactive windows
 " https://qiita.com/Bakudankun/items/649aa6d8b9eccc1712b5
 augroup my_vimrc  " {{{
   autocmd ColorScheme * highlight NormalNC ctermbg=234 guibg=#3B3A32
@@ -2551,6 +2554,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
     endif
   endfunction  " }}}
 
+  " Call this before saving session
   function! s:RestoreFoldmethod() abort  " {{{
     if exists("w:last_fdm")
       let &foldmethod = w:last_fdm
@@ -2686,7 +2690,7 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
   endfunction  " }}}
 endif  " }}}
 
-" See also vim-lsp and unite.vim settings
+" See also vim-lsp settings
 " g<C-]>: Jump to a tag by `:tjump`
 " <C-o>:  Jump back
 noremap  g] g<C-]>
