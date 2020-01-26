@@ -593,7 +593,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
       endfunction  " }}}
 
       augroup my_vimrc  " {{{
-        autocmd FileType * call timer_start(300, { -> s:SourceContextualSnippets(&filetype) })
+        execute "autocmd FileType " . join(keys(g:neosnippet_contextual#contexts), ",") . " call timer_start(50, { -> s:SourceContextualSnippets() })"
       augroup END  " }}}
     endfunction  " }}}
     call s:SetupNeosnippetContextual()
