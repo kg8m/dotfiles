@@ -387,11 +387,9 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
   " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
   let s:asyncomplete_buffer_events = [
     \   "BufWinEnter",
-    \   "BufWritePost",
-    \   "CursorHold",
-    \   "CursorHoldI",
-    \   "InsertLeave",
     \   "TextChanged",
+    \   "TextChangedI",
+    \   "TextChangedP",
     \ ]
 
   augroup my_vimrc  " {{{
@@ -404,17 +402,34 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
        \   whitelist: ["*"],
        \   completor: function("asyncomplete#sources#buffer#completor"),
        \   events: s:asyncomplete_buffer_events,
-       \   on_event: function("s:AsyncompleteBufferOnEvent"),
+       \   on_event: function("s:AsyncompleteBufferOnEventAsync"),
        \ }))
   endfunction  " }}}
 
+  function! s:AsyncompleteBufferOnEventAsync(...) abort  " {{{
+    call s:AsyncompleteBufferOnEventClearTimer()
+    call s:AsyncompleteBufferOnEventStartTimer()
+  endfunction  " }}}
+
+  function! s:AsyncompleteBufferOnEventStartTimer() abort  " {{{
+    let s:asyncomplete_buffer_on_event_timer = timer_start(200, { -> s:AsyncompleteBufferOnEvent() })
+  endfunction  " }}}
+
+  function! s:AsyncompleteBufferOnEventClearTimer() abort  " {{{
+    if exists("s:asyncomplete_buffer_on_event_timer")
+      call timer_stop(s:asyncomplete_buffer_on_event_timer)
+      unlet s:asyncomplete_buffer_on_event_timer
+    endif
+  endfunction  " }}}
+
   " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
-  function! s:AsyncompleteBufferOnEvent(...) abort  " {{{
+  function! s:AsyncompleteBufferOnEvent() abort  " {{{
     if !exists("s:asyncomplete_buffer_sid")
       call s:SetupAsyncompleteBufferRefreshKeywords()
     endif
 
     call s:AsyncompleteBufferRefreshKeywords()
+    call s:AsyncompleteBufferOnEventClearTimer()
   endfunction  " }}}
 
   function! s:SetupAsyncompleteBufferRefreshKeywords() abort  " {{{
@@ -441,6 +456,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
 
   function! s:ActivateAsyncompleteBuffer() abort  " {{{
     " Trigger one of the s:asyncomplete_buffer_events
+    " Don't use `TextChangedI` or `TextChangedP` because they cause asyncomplete.vim's error about previous_position
     doautocmd TextChanged
   endfunction  " }}}
 
