@@ -1200,9 +1200,6 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Diff] Linediff", "'<,'>Linediff"],
         \
         \   ["[QuickFix] Replace", "Qfreplace"],
-        \
-        \   ["[Unite] Resume Update Plugins", "UniteResume update_plugins"],
-        \   ["[Unite] giti/status",           "Unite giti/status"],
         \ ]
     endfunction  " }}}
 
@@ -1480,13 +1477,8 @@ endif  " }}}
 
 if s:RegisterPlugin("othree/javascript-libraries-syntax.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:used_javascript_libs = join([
-    \   "angularjs",
-    \   "backbone",
-    \   "chai",
-    \   "jasmine",
     \   "jquery",
     \   "react",
-    \   "underscore",
     \   "vue",
     \ ], ",")
 endif  " }}}
@@ -1958,10 +1950,6 @@ if s:RegisterPlugin("tpope/vim-rails", #{ if: OnRailsDir() && !IsGitCommit() && 
   let g:rails_path_additions += [
     \   "spec/support",
     \ ]
-
-  augroup my_vimrc  " {{{
-    autocmd BufEnter,BufWinEnter,WinEnter * if RailsDetect() | call rails#buffer_setup() | endif
-  augroup END  " }}}
 endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-repeat")
@@ -2158,15 +2146,6 @@ if s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")  " {{{
      \ })
 endif  " }}}
 
-" Text object for Japanese braces: j
-if s:RegisterPlugin("kana/vim-textobj-jabraces")  " {{{
-  call s:ConfigPlugin(#{
-     \   depends: "vim-textobj-user",
-     \ })
-
-  let g:textobj_jabraces_no_default_key_mappings = 1
-endif  " }}}
-
 " Text object fo last search pattern: /
 if s:RegisterPlugin("kana/vim-textobj-lastpat")  " {{{
   call s:ConfigPlugin(#{
@@ -2184,36 +2163,9 @@ if s:RegisterPlugin("rhysd/vim-textobj-ruby")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("kana/vim-textobj-user")  " {{{
-  function! s:ConfigPluginOnSource_vim_textobj_user() abort
-    " Some kakkos are not defined because they require IME's `henkan` and don't work
-    " - #{ pair: ["｛", "｝"], name: "bracket" },
-    " - #{ pair: ["『", "』"], name: "double-kakko" },
-    " - #{ pair: ["【", "】"], name: "sumi-kakko" },
-    " - #{ pair: ["〈", "〉"], name: "yama-kakko" },
-    " - #{ pair: ["《", "》"], name: "double-yama-kakko" },
-    let jbrace_specs = [
-      \   #{ pair: ["（", "）"], name: "paren" },
-      \   #{ pair: ["［", "］"], name: "brace" },
-      \   #{ pair: ["「", "」"], name: "kakko" },
-      \   #{ pair: ["“", "”"], name: "double-quotation" },
-      \   #{ pair: ["‘", "’"], name: "single-quotation" },
-      \ ]
-
-    let jbrace_config = {}
-    for spec in jbrace_specs
-      let jbrace_config[spec["name"]] = #{
-        \   pattern:  spec["pair"],
-        \   select-a: ["a" . spec["pair"][0], "a" . spec["pair"][1]],
-        \   select-i: ["i" . spec["pair"][0], "i" . spec["pair"][1]],
-        \ }
-    endfor
-    call textobj#user#plugin("myjabraces", jbrace_config)
-  endfunction
-
   call s:ConfigPlugin(#{
      \   lazy:    1,
      \   on_func: "textobj#user",
-     \   hook_source: function("s:ConfigPluginOnSource_vim_textobj_user"),
      \ })
 endif  " }}}
 
@@ -2828,7 +2780,6 @@ augroup END  " }}}
 " ----------------------------------------------
 " GUI settings  " {{{
 if has("gui_running")
-  gui
   set guioptions=none
 
   " set guifont=Osaka-Mono:h14
