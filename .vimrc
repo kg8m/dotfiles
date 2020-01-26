@@ -1350,6 +1350,12 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       endfor
     endif
 
+    if exists("g:fzf#rails#specs_formatters")
+      for Formatter in g:fzf#rails#specs_formatters
+        call Formatter(s:fzf_rails_specs)
+      endfor
+    endif
+
     command! -nargs=1 -complete=customlist,s:FzfRailsTypeNames FzfRails call <SID>FzfRails(<q-args>)
     nnoremap <Leader><Leader>r :FzfRails<Space>
   endfunction  " }}}
