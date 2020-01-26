@@ -435,7 +435,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
   endfunction  " }}}
 
   function! s:SetupAsyncompleteBufferRefreshKeywords() abort  " {{{
-    for scriptname in split(execute(":scriptnames"), '\n')
+    for scriptname in split(execute("scriptnames"), '\n')
       if scriptname =~# 'asyncomplete-buffer\.vim/autoload/asyncomplete/sources/buffer\.vim'
         let s:asyncomplete_buffer_sid = matchstr(scriptname, '\v^ *(\d+)')
         break
