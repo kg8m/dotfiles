@@ -502,7 +502,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
 
   call s:ConfigPlugin(#{
      \   lazy:      1,
-     \   on_source: ["asyncomplete.vim", "neosnippet"],
+     \   on_source: "asyncomplete.vim",
      \ })
 endif  " }}}
 
@@ -528,7 +528,7 @@ endif  " }}}
 if s:RegisterPlugin("prabirshrestha/asyncomplete-lsp.vim")  " {{{
   call s:ConfigPlugin(#{
      \   lazy:      1,
-     \   on_source: ["asyncomplete.vim", "vim-lsp"],
+     \   on_source: "asyncomplete.vim",
      \ })
 endif  " }}}
 
@@ -605,10 +605,11 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
 
   " `on_ft` for Syntaxes
   call s:ConfigPlugin(#{
-     \   lazy:    1,
-     \   on_i:    1,
-     \   on_ft:   ["snippet", "neosnippet"],
-     \   depends: ".vim",
+     \   lazy:      1,
+     \   on_ft:     ["snippet", "neosnippet"],
+     \   on_func:   "neosnippet#",
+     \   on_source: "asyncomplete.vim",
+     \   depends:   ".vim",
      \   hook_source:      function("s:ConfigPluginOnSource_neosnippet"),
      \   hook_post_source: function("s:ConfigPluginOnPostSource_neosnippet"),
      \ })
@@ -807,7 +808,6 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
 
   call s:ConfigPlugin(#{
      \   lazy:    1,
-     \   on_i:    1,
      \   on_cmd:  ["LspDefinition", "LspRename", "LspStatus"],
      \   on_ft:   get(s:, "lsp_filetypes", []),
      \   depends: "async.vim",
@@ -831,7 +831,7 @@ endif  " }}}
 if s:RegisterPlugin("thomasfaingnaert/vim-lsp-snippets")  " {{{
   call s:ConfigPlugin(#{
      \   lazy:      1,
-     \   on_source: "neosnippet",
+     \   on_source: "vim-lsp",
      \ })
 
   if s:RegisterPlugin("thomasfaingnaert/vim-lsp-neosnippet")  " {{{
