@@ -1639,6 +1639,8 @@ if s:RegisterPlugin("leafgarland/typescript-vim", #{ if: !IsGitCommit() && !IsGi
 endif  " }}}
 
 if s:RegisterPlugin("Shougo/unite.vim")  " {{{
+  let g:unite_winheight = "100%"
+
   augroup my_vimrc  " {{{
     autocmd FileType unite call s:ConfigForUniteBuffer()
   augroup END  " }}}
