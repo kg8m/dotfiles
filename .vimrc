@@ -616,14 +616,14 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
-  let g:lsp_diagnostics_enabled = 1
+  let g:lsp_diagnostics_enabled     = 1
   let g:lsp_diagnostics_echo_cursor = 1
-  let g:lsp_signs_enabled = 1
+  let g:lsp_signs_enabled           = 1
 
   let g:lsp_async_completion = 1
 
   let g:lsp_log_verbose = 1
-  let g:lsp_log_file = expand("~/tmp/vim-lsp.log")
+  let g:lsp_log_file    = expand("~/tmp/vim-lsp.log")
 
   augroup my_vimrc  " {{{
     autocmd User lsp_setup          call s:EnableLSPs()
@@ -889,16 +889,16 @@ endfunction  " }}}
 
 if s:RegisterPlugin("dense-analysis/ale", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:airline#extensions#ale#enabled = 0
-  let g:ale_completion_enabled = 0
-  let g:ale_disable_lsp = 1
-  let g:ale_echo_msg_format = "[%linter%][%severity%] %code: %%s"
-  let g:ale_fix_on_save = 0
-  let g:ale_lint_on_enter = 1
-  let g:ale_lint_on_filetype_changed = 1
-  let g:ale_lint_on_insert_leave = 0
-  let g:ale_lint_on_save = 1
-  let g:ale_lint_on_text_changed = 0
-  let g:ale_open_list = 0
+  let g:ale_completion_enabled         = 0
+  let g:ale_disable_lsp                = 1
+  let g:ale_echo_msg_format            = "[%linter%][%severity%] %code: %%s"
+  let g:ale_fix_on_save                = 0
+  let g:ale_lint_on_enter              = 1
+  let g:ale_lint_on_filetype_changed   = 1
+  let g:ale_lint_on_insert_leave       = 0
+  let g:ale_lint_on_save               = 1
+  let g:ale_lint_on_text_changed       = 0
+  let g:ale_open_list                  = 0
 
   " go get github.com/golangci/golangci-lint/cmd/golangci-lint
   " go get golang.org/x/tools/cmd/goimports
@@ -1023,8 +1023,8 @@ endif  " }}}
 
 if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   let g:fzf_command_prefix = "Fzf"
-  let g:fzf_buffers_jump = 1
-  let g:fzf_layout = #{ up: "~50%" }
+  let g:fzf_buffers_jump   = 1
+  let g:fzf_layout         = #{ up: "~50%" }
 
   " See dwm.vim
   let g:fzf_action = #{ ctrl-o: "DWMOpen" }
@@ -1432,7 +1432,7 @@ if s:RegisterPlugin("kg8m/gundo.vim")  " {{{
   nnoremap <F5> :GundoToggle<Cr>
 
   " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
-  let g:gundo_auto_preview = 0
+  let g:gundo_auto_preview   = 0
   let g:gundo_prefer_python3 = 1
 
   call s:ConfigPlugin(#{
@@ -1466,10 +1466,10 @@ if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
   set concealcursor=nvic
   set conceallevel=2
 
-  let g:indentLine_char = "|"
-  let g:indentLine_faster = 1
-  let g:indentLine_concealcursor = &concealcursor
-  let g:indentLine_conceallevel = &conceallevel
+  let g:indentLine_char            = "|"
+  let g:indentLine_faster          = 1
+  let g:indentLine_concealcursor   = &concealcursor
+  let g:indentLine_conceallevel    = &conceallevel
   let g:indentLine_fileTypeExclude = [
     \   "",
     \   "diff",
@@ -1745,13 +1745,13 @@ if s:RegisterPlugin("easymotion/vim-easymotion")  " {{{
   omap F <Plug>(easymotion-Fl)
 
   " http://haya14busa.com/vim-lazymotion-on-speed/
-  let g:EasyMotion_do_mapping  = 0
-  let g:EasyMotion_do_shade    = 0
-  let g:EasyMotion_startofline = 0
-  let g:EasyMotion_smartcase   = 1
-  let g:EasyMotion_use_upper   = 1
-  let g:EasyMotion_keys        = "FJKLASDHGUIONMEREWCX,.;/ZQP"
-  let g:EasyMotion_use_migemo  = 1
+  let g:EasyMotion_do_mapping       = 0
+  let g:EasyMotion_do_shade         = 0
+  let g:EasyMotion_startofline      = 0
+  let g:EasyMotion_smartcase        = 1
+  let g:EasyMotion_use_upper        = 1
+  let g:EasyMotion_keys             = "FJKLASDHGUIONMEREWCX,.;/ZQP"
+  let g:EasyMotion_use_migemo       = 1
   let g:EasyMotion_enter_jump_first = 1
   let g:EasyMotion_skipfoldedline   = 0
 
@@ -1779,28 +1779,28 @@ endif  " }}}
 " Use vim-go's highlightings, foldings, and commands/functions
 if s:RegisterPlugin("fatih/vim-go")  " {{{
   let g:go_code_completion_enabled = 0
-  let g:go_fmt_autosave = 0
-  let g:go_doc_keywordprg_enabled = 0
-  let g:go_def_mapping_enabled = 0
-  let g:go_gopls_enabled = 0
+  let g:go_fmt_autosave            = 0
+  let g:go_doc_keywordprg_enabled  = 0
+  let g:go_def_mapping_enabled     = 0
+  let g:go_gopls_enabled           = 0
 
-  let g:go_highlight_array_whitespace_error = 1
-  let g:go_highlight_chan_whitespace_error = 1
-  let g:go_highlight_extra_types = 1
-  let g:go_highlight_space_tab_error = 1
+  let g:go_highlight_array_whitespace_error    = 1
+  let g:go_highlight_chan_whitespace_error     = 1
+  let g:go_highlight_extra_types               = 1
+  let g:go_highlight_space_tab_error           = 1
   let g:go_highlight_trailing_whitespace_error = 1
-  let g:go_highlight_operators = 1
-  let g:go_highlight_functions = 1
-  let g:go_highlight_function_parameters = 1
-  let g:go_highlight_function_calls = 1
-  let g:go_highlight_types = 1
-  let g:go_highlight_fields = 1
-  let g:go_highlight_build_constraints = 1
-  let g:go_highlight_generate_tags = 1
-  let g:go_highlight_string_spellcheck = 1
-  let g:go_highlight_format_strings = 1
-  let g:go_highlight_variable_declarations = 1
-  let g:go_highlight_variable_assignments = 1
+  let g:go_highlight_operators                 = 1
+  let g:go_highlight_functions                 = 1
+  let g:go_highlight_function_parameters       = 1
+  let g:go_highlight_function_calls            = 1
+  let g:go_highlight_types                     = 1
+  let g:go_highlight_fields                    = 1
+  let g:go_highlight_build_constraints         = 1
+  let g:go_highlight_generate_tags             = 1
+  let g:go_highlight_string_spellcheck         = 1
+  let g:go_highlight_format_strings            = 1
+  let g:go_highlight_variable_declarations     = 1
+  let g:go_highlight_variable_assignments      = 1
 
   augroup my_vimrc  " {{{
     autocmd FileType go call s:SetupVimGo()
@@ -1837,12 +1837,12 @@ if s:RegisterPlugin("elzr/vim-json", #{ if: !IsGitCommit() && !IsGitHunkEdit() }
 endif  " }}}
 
 if s:RegisterPlugin("rcmdnk/vim-markdown", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  let g:vim_markdown_override_foldtext = 0
-  let g:vim_markdown_no_default_key_mappings = 1
-  let g:vim_markdown_conceal = 0
+  let g:vim_markdown_override_foldtext         = 0
+  let g:vim_markdown_no_default_key_mappings   = 1
+  let g:vim_markdown_conceal                   = 0
   let g:vim_markdown_no_extensions_in_markdown = 1
-  let g:vim_markdown_autowrite = 1
-  let g:vim_markdown_folding_level = 10
+  let g:vim_markdown_autowrite                 = 1
+  let g:vim_markdown_folding_level             = 10
 
   call s:ConfigPlugin(#{
      \   lazy:    1,
