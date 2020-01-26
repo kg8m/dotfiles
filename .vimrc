@@ -685,13 +685,15 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "gopls",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "gopls -mode stdio"] },
-     \   whitelist: ["go"],
-     \   workspace_config: #{
-     \     gopls: #{
-     \       completeUnimported: 1,
-     \       deepCompletion: 1,
-     \     },
+     \   initialization_options: #{
+     \     completeUnimported: 1,
+     \     completionDocumentation: 1,
+     \     deepCompletion: 1,
+     \     hoverKind: "SynopsisDocumentation",
+     \     staticcheck: 1,
+     \     usePlaceholders: 1,
      \   },
+     \   whitelist: ["go"],
      \ })
   " }}}
 
@@ -722,6 +724,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "solargraph",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "solargraph stdio"] },
+     \   initialization_options: #{ diagnostics: "true" },
      \   whitelist: ["ruby"],
      \ })
   " }}}
@@ -738,7 +741,8 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "typescript-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
-     \   whitelist: ["typescript", "javascript", "typescript.tsx", "javascript.jsx"],
+     \   initialization_options: #{ diagnostics: "true" },
+     \   whitelist: ["typescript", "javascript", "typescriptreact", "javascriptreact"],
      \ })
   " }}}
 
@@ -762,38 +766,33 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \         completion: #{
      \           autoImport: 0,
      \           tagCasing: "kebab",
-     \           useScaffoldSnippets: 0
+     \           useScaffoldSnippets: 0,
      \         },
      \         format: #{
      \           defaultFormatter: #{
-     \             js: "none",
-     \             ts: "none"
+     \             js: v:none,
+     \             ts: v:none,
      \           },
      \           defaultFormatterOptions: {},
      \           scriptInitialIndent: 0,
      \           styleInitialIndent: 0,
-     \           options: {}
+     \           options: {},
      \         },
      \         useWorkspaceDependencies: 0,
      \         validation: #{
      \           script: 1,
      \           style: 1,
-     \           template: 1
-     \         }
+     \           template: 1,
+     \         },
+     \         dev: #{ logLevel: "DEBUG" },
      \       },
      \       css: {},
      \       emmet: {},
      \       stylusSupremacy: {},
-     \       html: #{
-     \         suggest: {}
-     \       },
-     \       javascript: #{
-     \         format: {}
-     \       },
-     \       typescript: #{
-     \         format: {}
-     \       }
-     \     }
+     \       html: #{ suggest: {} },
+     \       javascript: #{ format: {} },
+     \       typescript: #{ format: {} },
+     \     },
      \   },
      \   whitelist: ["vue"],
      \   executable_name: "vls",
