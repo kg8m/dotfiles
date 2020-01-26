@@ -2535,7 +2535,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
 
   set foldmethod=marker
   set foldopen=hor
-  set foldminlines=0
+  set foldminlines=1
   set foldcolumn=3
   set fillchars=vert:\|
 
