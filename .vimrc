@@ -394,16 +394,19 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
     \   "TextChanged",
     \ ]
 
-  augroup MyConfigAsyncompleteBuffer  " {{{
-    autocmd!
-    autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options(#{
-          \   name: "asyncomplete_source_02_buffer",
-          \   whitelist: ["*"],
-          \   completor: function("asyncomplete#sources#buffer#completor"),
-          \   events: s:asyncomplete_buffer_events,
-          \   on_event: function("s:AsyncompleteBufferOnEvent"),
-          \ }))
+  augroup my_vimrc  " {{{
+    autocmd User asyncomplete_setup call s:SetupAsyncompleteBuffer()
   augroup END  " }}}
+
+  function! s:SetupAsyncompleteBuffer() abort  " {{{
+    call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options(#{
+       \   name: "asyncomplete_source_02_buffer",
+       \   whitelist: ["*"],
+       \   completor: function("asyncomplete#sources#buffer#completor"),
+       \   events: s:asyncomplete_buffer_events,
+       \   on_event: function("s:AsyncompleteBufferOnEvent"),
+       \ }))
+  endfunction  " }}}
 
   " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
   function! s:AsyncompleteBufferOnEvent(...) abort  " {{{
@@ -453,14 +456,17 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
-  augroup MyConfigAsyncompleteFile  " {{{
-    autocmd!
-    autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options(#{
-          \   name: "asyncomplete_source_file",
-          \   whitelist: ["*"],
-          \   completor: function("asyncomplete#sources#file#completor"),
-          \ }))
+  augroup my_vimrc  " {{{
+    autocmd User asyncomplete_setup call s:SetupAsyncompleteFile()
   augroup END  " }}}
+
+  function! s:SetupAsyncompleteFile() abort  " {{{
+    call asyncomplete#register_source(asyncomplete#sources#file#get_source_options(#{
+       \   name: "asyncomplete_source_file",
+       \   whitelist: ["*"],
+       \   completor: function("asyncomplete#sources#file#completor"),
+       \ }))
+  endfunction  " }}}
 
   call s:ConfigPlugin(#{
      \   lazy:      1,
@@ -469,14 +475,17 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
-  augroup MyConfigAsyncompleteNeosnippet  " {{{
-    autocmd!
-    autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options(#{
-          \   name: "asyncomplete_source_01_neosnippet",
-          \   whitelist: ["*"],
-          \   completor: function("asyncomplete#sources#neosnippet#completor"),
-          \ }))
+  augroup my_vimrc  " {{{
+    autocmd User asyncomplete_setup call s:SetupAsyncompleteNeosnippet()
   augroup END  " }}}
+
+  function! s:SetupAsyncompleteNeosnippet() abort  " {{{
+    call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options(#{
+       \   name: "asyncomplete_source_01_neosnippet",
+       \   whitelist: ["*"],
+       \   completor: function("asyncomplete#sources#neosnippet#completor"),
+       \ }))
+  endfunction  " }}}
 
   call s:ConfigPlugin(#{
      \   lazy:      1,
@@ -485,14 +494,17 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
-  augroup MyConfigAsyncompleteTags  " {{{
-    autocmd!
-    autocmd User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options(#{
-          \   name: "asyncomplete_source_tags",
-          \   whitelist: ["*"],
-          \   completor: function("asyncomplete#sources#tags#completor"),
-          \ }))
+  augroup my_vimrc  " {{{
+    autocmd User asyncomplete_setup call s:SetupAsyncompleteTags()
   augroup END  " }}}
+
+  function! s:SetupAsyncompleteTags() abort  " {{{
+    call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options(#{
+       \   name: "asyncomplete_source_tags",
+       \   whitelist: ["*"],
+       \   completor: function("asyncomplete#sources#tags#completor"),
+       \ }))
+  endfunction  " }}}
 
   call s:ConfigPlugin(#{
      \   lazy:      1,
