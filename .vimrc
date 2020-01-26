@@ -2470,7 +2470,7 @@ let &t_EI = "\e[2 q"  " vertical bold line
 
 " https://teratail.com/questions/24046
 augroup my_vimrc  " {{{
-  autocmd Syntax * if line("$") > 10000 | syntax sync minlines=1000 | endif
+  autocmd Syntax * if line("$") > 10000 | syntax sync minlines=10000 | endif
 augroup END  " }}}
 " }}}
 
