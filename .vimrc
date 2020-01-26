@@ -144,58 +144,16 @@ function! s:RegisterLSP(config) abort  " {{{
     let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
     let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
 
-    call s:DefineLSPHooks()
     call add(s:lsps, #{ name: a:config.name, available: 1 })
   else
     call add(s:lsps, #{ name: a:config.name, available: 0 })
   endif
 endfunction  " }}}
 
-function! s:DefineLSPHooks() abort  " {{{
-  if exists("s:is_lsp_hooks_defined")
-    return
-  endif
-
-  augroup my_vimrc  " {{{
-    autocmd FileType * call s:ResetLSPOmnifuncSet()
-    autocmd InsertEnter * call s:SetLSPOmnifunc()
-    autocmd User lsp_setup call s:EnableLSPs()
-  augroup END  " }}}
-
-  let s:is_lsp_hooks_defined = 1
-endfunction  " }}}
-
 function! s:EnableLSPs() abort  " {{{
   for config in s:lsp_configs
     call lsp#register_server(config)
   endfor
-
-  augroup my_vimrc  " {{{
-    execute "autocmd FileType " . join(s:lsp_filetypes, ",") . " nmap <buffer> g] <Plug>(lsp-definition)"
-  augroup END  " }}}
-
-  doautocmd FileType
-endfunction  " }}}
-
-" Lazily call this function to overwrite other plugins' settings
-function! s:SetLSPOmnifunc() abort  " {{{
-  if exists("b:is_lsp_omnifunc_set")
-    return
-  endif
-
-  let b:is_lsp_omnifunc_set = 1
-  let filetype_patterns = map(copy(s:lsp_filetypes), { _, filetype -> "^" . filetype . "$" })
-  let filetype_pattern = '\v' . join(filetype_patterns, "|")
-
-  if &filetype =~# filetype_pattern
-    setlocal omnifunc=lsp#complete
-  endif
-endfunction  " }}}
-
-function! s:ResetLSPOmnifuncSet() abort  " {{{
-  if exists("b:is_lsp_omnifunc_set")
-    unlet b:is_lsp_omnifunc_set
-  endif
 endfunction  " }}}
 " }}}
 " }}}
@@ -630,11 +588,21 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   let g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
   augroup my_vimrc  " {{{
+    autocmd User lsp_setup          call s:EnableLSPs()
+    autocmd User lsp_buffer_enabled call s:OnLSPBufferEnabled()
+
     autocmd FileType                      * call s:ReswitchLSPGlobalConfigs()
     autocmd BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
-    autocmd User lsp_buffer_enabled         call s:SwitchLSPGlobalConfigs()
-    autocmd User lsp_definition_failed      execute "tjump " . expand("<cword>")
+
+    autocmd User lsp_definition_failed execute "tjump " . expand("<cword>")
   augroup END  " }}}
+
+  function! s:OnLSPBufferEnabled() abort  " {{{
+    setlocal omnifunc=lsp#complete
+    nmap <buffer> g] <Plug>(lsp-definition)
+
+    call s:SwitchLSPGlobalConfigs()
+  endfunction  " }}}
 
   function! s:ReswitchLSPGlobalConfigs() abort  " {{{
     if exists("b:lsp_highlight_references_enabled")
