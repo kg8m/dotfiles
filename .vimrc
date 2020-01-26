@@ -152,6 +152,14 @@ endfunction  " }}}
 
 function! s:EnableLSPs() abort  " {{{
   for config in s:lsp_configs
+    if has_key(config, "initialization_options") && type(config.initialization_options) == v:t_func
+      let config.initialization_options = config.initialization_options()
+    endif
+
+    if has_key(config, "workspace_config") && type(config.workspace_config) == v:t_func
+      let config.workspace_config = config.workspace_config()
+    endif
+
     call lsp#register_server(config)
   endfor
 endfunction  " }}}
@@ -671,6 +679,12 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   name: "json-languageserver",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "json-languageserver --stdio"] },
      \   whitelist: ["json"],
+     \   workspace_config: { -> #{
+     \     json: #{
+     \       format: #{ enable: 1 },
+     \       schemas: json_decode(join(readfile(s:PluginInfo("vim-lsp-settings").path . "/data/catalog.json"), "\n"))["schemas"],
+     \    },
+     \   } },
      \ })
   " }}}
 
@@ -702,7 +716,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "vim-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "vim-language-server --stdio"] },
-     \   initialization_options: #{ vimruntime: $VIMRUNTIME, runtimepath: &runtimepath },
+     \   initialization_options: { -> #{ vimruntime: $VIMRUNTIME, runtimepath: &runtimepath } },
      \   whitelist: ["vim"],
      \ })
   " }}}
@@ -774,6 +788,13 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   if s:RegisterPlugin("prabirshrestha/async.vim")  " {{{
     call s:ConfigPlugin(#{
        \   lazy: 1,
+       \ })
+  endif  " }}}
+
+  if s:RegisterPlugin("mattn/vim-lsp-settings", #{ if: 0 })  " {{{
+    call s:ConfigPlugin(#{
+       \   lazy:      1,
+       \   on_source: "vim-lsp",
        \ })
   endif  " }}}
 endif  " }}}
