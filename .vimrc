@@ -570,13 +570,13 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
           \ ]
       endif
 
-      function! s:SourceContextualSnippets(filetype) abort  " {{{
+      function! s:SourceContextualSnippets() abort  " {{{
         if exists("b:neosnippet_contextual_sourced")
           return
         endif
 
         let b:neosnippet_contextual_sourced = 1
-        let contexts = get(g:neosnippet_contextual#contexts, a:filetype, [])
+        let contexts = get(g:neosnippet_contextual#contexts, &filetype, [])
         let filepath = CurrentRelativePath()
 
         for context in contexts
@@ -600,7 +600,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
   endfunction  " }}}
 
   function! s:ConfigPluginOnPostSource_neosnippet() abort  " {{{
-    call timer_start(0, { -> s:SourceContextualSnippets(&filetype) })
+    call timer_start(0, { -> s:SourceContextualSnippets() })
   endfunction  " }}}
 
   " `on_ft` for Syntaxes
