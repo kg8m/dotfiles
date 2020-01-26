@@ -1337,15 +1337,15 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       endif
     endfor
 
-    if exists("g:fzf_rails_extra_specs")
-      for name in keys(g:fzf_rails_extra_specs)
+    if exists("g:fzf#rails#extra_specs")
+      for name in keys(g:fzf#rails#extra_specs)
         if has_key(s:fzf_rails_specs, name)
           call extend(
              \   s:fzf_rails_specs[name],
-             \   g:fzf_rails_extra_specs[name]
+             \   g:fzf#rails#extra_specs[name]
              \ )
         else
-          let s:fzf_rails_specs[name] = g:fzf_rails_extra_specs[name]
+          let s:fzf_rails_specs[name] = g:fzf#rails#extra_specs[name]
         endif
       endfor
     endif
