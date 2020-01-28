@@ -710,7 +710,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "html-languageserver",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "html-languageserver --stdio"] },
-     \   initialization_options: #{ embeddedLanguages: #{ css: 1, html: 1 } },
+     \   initialization_options: #{ embeddedLanguages: #{ css: 1, javascript: 1 } },
      \   whitelist: ["html"],
      \ })
   " }}}
