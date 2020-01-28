@@ -5,27 +5,27 @@ let s:vim_root_path       = expand($HOME . "/.vim")
 let s:plugins_path        = expand(s:vim_root_path . "/plugins")
 let s:plugin_manager_path = expand(s:plugins_path . "/repos/github.com/Shougo/dein.vim")
 
-let g:no_vimrc_example          = 1
-let g:no_gvimrc_example         = 1
-let g:loaded_gzip               = 1
-let g:loaded_tar                = 1
-let g:loaded_tarPlugin          = 1
-let g:loaded_zip                = 1
-let g:loaded_zipPlugin          = 1
-let g:loaded_rrhelper           = 1
-let g:loaded_vimball            = 1
-let g:loaded_vimballPlugin      = 1
-let g:loaded_getscript          = 1
-let g:loaded_getscriptPlugin    = 1
-let g:loaded_netrw              = 1
-let g:loaded_netrwPlugin        = 1
-let g:loaded_netrwSettings      = 1
-let g:loaded_netrwFileHandlers  = 1
-let g:skip_loading_mswin        = 1
-let g:did_install_syntax_menu   = 1
+let g:no_vimrc_example          = v:true
+let g:no_gvimrc_example         = v:true
+let g:loaded_gzip               = v:true
+let g:loaded_tar                = v:true
+let g:loaded_tarPlugin          = v:true
+let g:loaded_zip                = v:true
+let g:loaded_zipPlugin          = v:true
+let g:loaded_rrhelper           = v:true
+let g:loaded_vimball            = v:true
+let g:loaded_vimballPlugin      = v:true
+let g:loaded_getscript          = v:true
+let g:loaded_getscriptPlugin    = v:true
+let g:loaded_netrw              = v:true
+let g:loaded_netrwPlugin        = v:true
+let g:loaded_netrwSettings      = v:true
+let g:loaded_netrwFileHandlers  = v:true
+let g:skip_loading_mswin        = v:true
+let g:did_install_syntax_menu   = v:true
 
 " MacVim's features, e.g., Command+v, are broken if setting this
-" let g:did_install_default_menus = 1
+" let g:did_install_default_menus = v:true
 
 let g:mapleader = ","
 
@@ -77,18 +77,18 @@ endfunction  " }}}
 
 function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
   let options = get(a:000, 0, {})
-  let enabled = 1
+  let enabled = v:true
 
   if has_key(options, "if")
     if !options["if"]
       " Don't load but fetch the plugin
       let options["rtp"] = ""
       call remove(options, "if")
-      let enabled = 0
+      let enabled = v:false
     endif
   else
     " Sometimes dein doesn't add runtimepath if no options given
-    let options["if"] = 1
+    let options["if"] = v:true
   endif
 
   call dein#add(a:plugin_name, options)
@@ -144,9 +144,9 @@ function! s:RegisterLSP(config) abort  " {{{
     let s:lsp_configs   = get(s:, "lsp_configs", []) + [a:config]
     let s:lsp_filetypes = get(s:, "lsp_filetypes", []) + a:config.whitelist
 
-    call add(s:lsps, #{ name: a:config.name, available: 1 })
+    call add(s:lsps, #{ name: a:config.name, available: v:true })
   else
-    call add(s:lsps, #{ name: a:config.name, available: 0 })
+    call add(s:lsps, #{ name: a:config.name, available: v:false })
   endif
 endfunction  " }}}
 
@@ -245,10 +245,10 @@ endfunction  " }}}
 function! ConfirmCommand(command) abort  " {{{
   if input("execute `" . a:command . "`? [y/n] : ") !~? "y"
     echo " -> canceled."
-    return 0
+    return v:false
   endif
 
-  return 1
+  return v:true
 endfunction  " }}}
 
 function! RemoteCopy(text) abort  " {{{
@@ -310,13 +310,13 @@ call s:RegisterPlugin("kg8m/.vim")
 
 " Completion, LSP  " {{{
 if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
-  let g:asyncomplete_auto_popup = 1
+  let g:asyncomplete_auto_popup = v:true
   let g:asyncomplete_popup_delay = 50
-  let g:asyncomplete_auto_completeopt = 0
+  let g:asyncomplete_auto_completeopt = v:false
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
   augroup my_vimrc  " {{{
-    autocmd FileType unite let b:asyncomplete_enable = 0
+    autocmd FileType unite let b:asyncomplete_enable = v:false
   augroup END  " }}}
 
   " Hide messages like "Pattern not found" or "Match 1 of <N>"
@@ -371,14 +371,14 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   function! s:ConfigPluginOnPostSource_asyncomplete() abort  " {{{
     call timer_start(0, { -> s:DefineRefreshCompletionAsyncMappings() })
 
-    if get(b:, "asyncomplete_enable", 1)
+    if get(b:, "asyncomplete_enable", v:true)
       call asyncomplete#enable_for_buffer()
     endif
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy: 1,
-     \   on_i: 1,
+     \   lazy: v:true,
+     \   on_i: v:true,
      \   hook_post_source: function("s:ConfigPluginOnPostSource_asyncomplete"),
      \ })
 endif  " }}}
@@ -463,7 +463,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:      1,
+     \   lazy:      v:true,
      \   on_source: "asyncomplete.vim",
      \ })
 endif  " }}}
@@ -482,7 +482,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:      1,
+     \   lazy:      v:true,
      \   on_source: "asyncomplete.vim",
      \ })
 endif  " }}}
@@ -501,7 +501,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:      1,
+     \   lazy:      v:true,
      \   on_source: "asyncomplete.vim",
      \ })
 endif  " }}}
@@ -520,14 +520,14 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:      1,
+     \   lazy:      v:true,
      \   on_source: "asyncomplete.vim",
      \ })
 endif  " }}}
 
 if s:RegisterPlugin("prabirshrestha/asyncomplete-lsp.vim")  " {{{
   call s:ConfigPlugin(#{
-     \   lazy:      1,
+     \   lazy:      v:true,
      \   on_source: "asyncomplete.vim",
      \ })
 endif  " }}}
@@ -540,7 +540,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
       \   s:PluginInfo(".vim").path . "/snippets",
       \ ]
     let g:neosnippet#disable_runtime_snippets = #{
-      \   _: 1,
+      \   _: v:true,
       \ }
 
     augroup my_vimrc  " {{{
@@ -575,7 +575,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
           return
         endif
 
-        let b:neosnippet_contextual_sourced = 1
+        let b:neosnippet_contextual_sourced = v:true
         let contexts = get(g:neosnippet_contextual#contexts, &filetype, [])
         let filepath = CurrentRelativePath()
 
@@ -605,7 +605,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
 
   " `on_ft` for Syntaxes
   call s:ConfigPlugin(#{
-     \   lazy:      1,
+     \   lazy:      v:true,
      \   on_ft:     ["snippet", "neosnippet"],
      \   on_func:   "neosnippet#",
      \   on_source: "asyncomplete.vim",
@@ -616,13 +616,13 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
-  let g:lsp_diagnostics_enabled     = 1
-  let g:lsp_diagnostics_echo_cursor = 1
-  let g:lsp_signs_enabled           = 1
+  let g:lsp_diagnostics_enabled     = v:true
+  let g:lsp_diagnostics_echo_cursor = v:true
+  let g:lsp_signs_enabled           = v:true
 
-  let g:lsp_async_completion = 1
+  let g:lsp_async_completion = v:true
 
-  let g:lsp_log_verbose = 1
+  let g:lsp_log_verbose = v:true
   let g:lsp_log_file    = expand("~/tmp/vim-lsp.log")
 
   augroup my_vimrc  " {{{
@@ -695,12 +695,12 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   name: "gopls",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "gopls -mode stdio"] },
      \   initialization_options: #{
-     \     completeUnimported: 1,
-     \     completionDocumentation: 1,
-     \     deepCompletion: 1,
+     \     completeUnimported: v:true,
+     \     completionDocumentation: v:true,
+     \     deepCompletion: v:true,
      \     hoverKind: "SynopsisDocumentation",
-     \     staticcheck: 1,
-     \     usePlaceholders: 1,
+     \     staticcheck: v:true,
+     \     usePlaceholders: v:true,
      \   },
      \   whitelist: ["go"],
      \ })
@@ -710,7 +710,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "html-languageserver",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "html-languageserver --stdio"] },
-     \   initialization_options: #{ embeddedLanguages: #{ css: 1, javascript: 1 } },
+     \   initialization_options: #{ embeddedLanguages: #{ css: v:true, javascript: v:true } },
      \   whitelist: ["html"],
      \ })
   " }}}
@@ -722,7 +722,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   whitelist: ["json"],
      \   workspace_config: { -> #{
      \     json: #{
-     \       format: #{ enable: 1 },
+     \       format: #{ enable: v:true },
      \       schemas: s:LSPSchemasJson(),
      \    },
      \   } },
@@ -773,9 +773,9 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \     config: #{
      \       vetur: #{
      \         completion: #{
-     \           autoImport: 0,
+     \           autoImport: v:false,
      \           tagCasing: "kebab",
-     \           useScaffoldSnippets: 0,
+     \           useScaffoldSnippets: v:false,
      \         },
      \         format: #{
      \           defaultFormatter: #{
@@ -783,15 +783,15 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \             ts: v:none,
      \           },
      \           defaultFormatterOptions: {},
-     \           scriptInitialIndent: 0,
-     \           styleInitialIndent: 0,
+     \           scriptInitialIndent: v:false,
+     \           styleInitialIndent: v:false,
      \           options: {},
      \         },
-     \         useWorkspaceDependencies: 0,
+     \         useWorkspaceDependencies: v:false,
      \         validation: #{
-     \           script: 1,
-     \           style: 1,
-     \           template: 1,
+     \           script: v:true,
+     \           style: v:true,
+     \           template: v:true,
      \         },
      \         dev: #{ logLevel: "DEBUG" },
      \       },
@@ -815,7 +815,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   whitelist: ["yaml"],
      \   workspace_config: { -> #{
      \     json: #{
-     \       format: #{ enable: 1 },
+     \       format: #{ enable: v:true },
      \       schemas: s:LSPSchemasJson(),
      \    },
      \   } },
@@ -829,7 +829,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_cmd:  ["LspDefinition", "LspRename", "LspStatus"],
      \   on_ft:   get(s:, "lsp_filetypes", []),
      \   depends: "async.vim",
@@ -838,13 +838,13 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
 
   if s:RegisterPlugin("prabirshrestha/async.vim")  " {{{
     call s:ConfigPlugin(#{
-       \   lazy: 1,
+       \   lazy: v:true,
        \ })
   endif  " }}}
 
-  if s:RegisterPlugin("mattn/vim-lsp-settings", #{ if: 0 })  " {{{
+  if s:RegisterPlugin("mattn/vim-lsp-settings", #{ if: v:false })  " {{{
     call s:ConfigPlugin(#{
-       \   lazy:      1,
+       \   lazy:      v:true,
        \   on_source: "vim-lsp",
        \ })
   endif  " }}}
@@ -852,13 +852,13 @@ endif  " }}}
 
 if s:RegisterPlugin("thomasfaingnaert/vim-lsp-snippets")  " {{{
   call s:ConfigPlugin(#{
-     \   lazy:      1,
+     \   lazy:      v:true,
      \   on_source: "vim-lsp",
      \ })
 
   if s:RegisterPlugin("thomasfaingnaert/vim-lsp-neosnippet")  " {{{
     call s:ConfigPlugin(#{
-       \   lazy:      1,
+       \   lazy:      v:true,
        \   on_source: "vim-lsp-snippets",
        \ })
   endif  " }}}
@@ -870,7 +870,7 @@ if s:RegisterPlugin("hrsh7th/vim-vsnip")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:      1,
+     \   lazy:      v:true,
      \   on_func:   "vsnip#",
      \   on_source: "vim-lsp",
      \   hook_source: function("s:ConfigPluginOnSource_vim_vsnip"),
@@ -878,7 +878,7 @@ if s:RegisterPlugin("hrsh7th/vim-vsnip")  " {{{
 
   if s:RegisterPlugin("hrsh7th/vim-vsnip-integ")  " {{{
     call s:ConfigPlugin(#{
-       \   lazy:      1,
+       \   lazy:      v:true,
        \   on_source: "vim-vsnip",
        \ })
   endif  " }}}
@@ -889,7 +889,7 @@ function! s:DefineCompletionMappings() abort  " {{{
     return
   endif
 
-  let s:completion_mappings_defined = 1
+  let s:completion_mappings_defined = v:true
 
   inoremap <expr><Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -910,17 +910,17 @@ endfunction  " }}}
 " }}}
 
 if s:RegisterPlugin("dense-analysis/ale", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  let g:airline#extensions#ale#enabled = 0
-  let g:ale_completion_enabled         = 0
-  let g:ale_disable_lsp                = 1
+  let g:airline#extensions#ale#enabled = v:false
+  let g:ale_completion_enabled         = v:false
+  let g:ale_disable_lsp                = v:true
   let g:ale_echo_msg_format            = "[%linter%][%severity%] %code: %%s"
-  let g:ale_fix_on_save                = 0
-  let g:ale_lint_on_enter              = 1
-  let g:ale_lint_on_filetype_changed   = 1
-  let g:ale_lint_on_insert_leave       = 0
-  let g:ale_lint_on_save               = 1
-  let g:ale_lint_on_text_changed       = 0
-  let g:ale_open_list                  = 0
+  let g:ale_fix_on_save                = v:false
+  let g:ale_lint_on_enter              = v:true
+  let g:ale_lint_on_filetype_changed   = v:true
+  let g:ale_lint_on_insert_leave       = v:false
+  let g:ale_lint_on_save               = v:true
+  let g:ale_lint_on_text_changed       = v:false
+  let g:ale_open_list                  = v:false
 
   " go get github.com/golangci/golangci-lint/cmd/golangci-lint
   " go get golang.org/x/tools/cmd/goimports
@@ -938,16 +938,16 @@ if s:RegisterPlugin("dense-analysis/ale", #{ if: !IsGitCommit() && !IsGitHunkEdi
     \ }
 
   augroup my_vimrc  " {{{
-    autocmd FileType go                    let b:ale_fix_on_save = 1
+    autocmd FileType go                    let b:ale_fix_on_save = v:true
     autocmd FileType javascript,typescript let b:ale_fix_on_save = !!$FIX_ON_SAVE_JS
     autocmd FileType ruby                  let b:ale_fix_on_save = !!$FIX_ON_SAVE_RUBY
   augroup END  " }}}
 
-  let g:ale_go_golangci_lint_package = 1
+  let g:ale_go_golangci_lint_package = v:true
 
   " yarn add eslint_d
   if executable("eslint_d")
-    let g:ale_javascript_eslint_use_global = 1
+    let g:ale_javascript_eslint_use_global = v:true
     let g:ale_javascript_eslint_executable = "eslint_d"
   endif
 
@@ -977,15 +977,15 @@ endif  " }}}
 if s:RegisterPlugin("tyru/caw.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   map gc <Plug>(caw:hatpos:toggle)
 
-  let g:caw_no_default_keymappings = 1
-  let g:caw_hatpos_skip_blank_line = 1
+  let g:caw_no_default_keymappings = v:true
+  let g:caw_hatpos_skip_blank_line = v:true
 
   augroup my_vimrc  " {{{
     autocmd FileType gemfile let b:caw_oneline_comment = "#"
   augroup END  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_map: [["nv", "<Plug>(caw:"]],
      \ })
 endif  " }}}
@@ -996,7 +996,7 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
   nnoremap <C-w>n       :call DWM_New()<Cr>
   nnoremap <C-w><Space> :call DWM_AutoEnter()<Cr>
 
-  let g:dwm_map_keys = 0
+  let g:dwm_map_keys = v:false
 
   " For fzf.vim
   command! -nargs=1 -complete=file DWMOpen call <SID>DWMOpen(<q-args>)
@@ -1031,21 +1031,21 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_func: ["DWM_New", "DWM_AutoEnter", "DWM_Stack"],
      \   hook_post_source: function("s:ConfigPluginOnPostSource_dwm"),
      \ })
 endif  " }}}
 
 if s:RegisterPlugin("LeafCage/foldCC", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  let g:foldCCtext_enable_autofdc_adjuster = 1
+  let g:foldCCtext_enable_autofdc_adjuster = v:true
   let g:foldCCtext_maxchars = 120
   set foldtext=FoldCCtext()
 endif  " }}}
 
 if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   let g:fzf_command_prefix = "Fzf"
-  let g:fzf_buffers_jump   = 1
+  let g:fzf_buffers_jump   = v:true
   let g:fzf_layout         = #{ up: "~50%" }
 
   " See dwm.vim
@@ -1066,7 +1066,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " Grep  " {{{
   " https://github.com/junegunn/fzf.vim/blob/dc4c4c22715c060a2babd5a5187004bdecbcdea7/plugin/fzf.vim#L52
-  command! -bang -nargs=* FzfGrep call fzf#vim#grep("rg --column --line-number --no-heading --color=always " . $RIPGREP_EXTRA_OPTIONS . " " . shellescape(<q-args>), 1, <bang>0)
+  command! -bang -nargs=* FzfGrep call fzf#vim#grep("rg --column --line-number --no-heading --color=always " . $RIPGREP_EXTRA_OPTIONS . " " . shellescape(<q-args>), v:true, <bang>0)
   " }}}
 
   " Marks  " {{{
@@ -1438,7 +1438,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     \ ]
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_cmd:  s:fzf_commands,
      \   on_func: "fzf#",
      \   depends: "fzf",
@@ -1448,13 +1448,13 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " Use fzf binary already installed instead
   if s:RegisterPlugin("junegunn/fzf")  " {{{
     call s:ConfigPlugin(#{
-      \   lazy: 1,
+      \   lazy: v:true,
       \ })
   endif  " }}}
 
   if s:RegisterPlugin("thinca/vim-qfreplace")  " {{{
     call s:ConfigPlugin(#{
-       \   lazy:   1,
+       \   lazy:   v:true,
        \   on_cmd: "Qfreplace",
        \ })
   endif  " }}}
@@ -1464,11 +1464,11 @@ if s:RegisterPlugin("kg8m/gundo.vim")  " {{{
   nnoremap <F5> :GundoToggle<Cr>
 
   " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
-  let g:gundo_auto_preview   = 0
-  let g:gundo_prefer_python3 = 1
+  let g:gundo_auto_preview   = v:false
+  let g:gundo_prefer_python3 = v:true
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_cmd: "GundoToggle",
      \ })
 endif  " }}}
@@ -1488,7 +1488,7 @@ if s:RegisterPlugin("sk1418/HowMuch")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_map: [["v", "<Plug>AutoCalc"]],
      \   hook_post_source: function("s:ConfigPluginOnPostSource_HowMuch"),
      \ })
@@ -1499,7 +1499,7 @@ if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
   set conceallevel=2
 
   let g:indentLine_char            = "|"
-  let g:indentLine_faster          = 1
+  let g:indentLine_faster          = v:true
   let g:indentLine_concealcursor   = &concealcursor
   let g:indentLine_conceallevel    = &conceallevel
   let g:indentLine_fileTypeExclude = [
@@ -1596,7 +1596,7 @@ if s:RegisterPlugin("AndrewRadev/linediff.vim")  " {{{
   let g:linediff_second_buffer_command = "rightbelow vertical new"
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_cmd: "Linediff",
      \ })
 endif  " }}}
@@ -1615,7 +1615,7 @@ if s:RegisterPlugin("tyru/open-browser.vim")  " {{{
     \ ]
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_map: [["nv", "<Plug>(openbrowser-open)"]],
      \ })
 endif  " }}}
@@ -1625,7 +1625,7 @@ if s:RegisterPlugin("tyru/operator-camelize.vim")  " {{{
   vmap <Leader>c <Plug>(operator-decamelize)
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_map: [
      \     ["v", "<Plug>(operator-camelize)"],
      \     ["v", "<Plug>(operator-decamelize)"]
@@ -1639,7 +1639,7 @@ if s:RegisterPlugin("mechatroner/rainbow_csv", #{ if: !IsGitCommit() && !IsGitHu
   augroup END  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:  1,
+     \   lazy:  v:true,
      \   on_ft: "csv",
      \ })
 endif  " }}}
@@ -1651,7 +1651,7 @@ if s:RegisterPlugin("vim-scripts/sequence")  " {{{
   map <Leader>- <Plug>SequenceV_Decrement
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_map: [["vn", "<Plug>Sequence"]],
      \ })
 endif  " }}}
@@ -1662,11 +1662,11 @@ if s:RegisterPlugin("AndrewRadev/splitjoin.vim")  " {{{
 
   let g:splitjoin_split_mapping       = ""
   let g:splitjoin_join_mapping        = ""
-  let g:splitjoin_ruby_trailing_comma = 1
-  let g:splitjoin_ruby_hanging_args   = 0
+  let g:splitjoin_ruby_trailing_comma = v:true
+  let g:splitjoin_ruby_hanging_args   = v:false
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_cmd: ["SplitjoinJoin", "SplitjoinSplit"],
      \ })
 endif  " }}}
@@ -1674,7 +1674,7 @@ endif  " }}}
 call s:RegisterPlugin("vim-scripts/sudo.vim")
 
 if s:RegisterPlugin("leafgarland/typescript-vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  let g:typescript_indent_disable = 1
+  let g:typescript_indent_disable = v:true
 endif  " }}}
 
 if s:RegisterPlugin("Shougo/unite.vim")  " {{{
@@ -1700,7 +1700,7 @@ if s:RegisterPlugin("Shougo/unite.vim")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_cmd:  "Unite",
      \   on_func: "unite#",
      \ })
@@ -1710,7 +1710,7 @@ if s:RegisterPlugin("h1mesuke/vim-alignta")  " {{{
   vnoremap <Leader>a :Alignta<Space>
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_cmd: "Alignta",
      \ })
 endif  " }}}
@@ -1727,7 +1727,7 @@ if s:RegisterPlugin("FooSoft/vim-argwrap")  " {{{
   augroup END  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_cmd: "ArgWrap",
      \ })
 endif  " }}}
@@ -1749,7 +1749,7 @@ if s:RegisterPlugin("jkramer/vim-checkbox", #{ if: !IsGitCommit() && !IsGitHunkE
   augroup END  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_func: "checkbox#",
      \ })
 endif  " }}}
@@ -1757,14 +1757,14 @@ endif  " }}}
 if s:RegisterPlugin("t9md/vim-choosewin")  " {{{
   nmap <C-w>f <Plug>(choosewin)
 
-  let g:choosewin_overlay_enable          = 0
-  let g:choosewin_overlay_clear_multibyte = 0
-  let g:choosewin_blink_on_land           = 0
-  let g:choosewin_statusline_replace      = 1
-  let g:choosewin_tabline_replace         = 0
+  let g:choosewin_overlay_enable          = v:false
+  let g:choosewin_overlay_clear_multibyte = v:false
+  let g:choosewin_blink_on_land           = v:false
+  let g:choosewin_statusline_replace      = v:true
+  let g:choosewin_tabline_replace         = v:false
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_map: "<Plug>(choosewin)",
      \ })
 endif  " }}}
@@ -1785,18 +1785,18 @@ if s:RegisterPlugin("easymotion/vim-easymotion")  " {{{
   omap F <Plug>(easymotion-Fl)
 
   " http://haya14busa.com/vim-lazymotion-on-speed/
-  let g:EasyMotion_do_mapping       = 0
-  let g:EasyMotion_do_shade         = 0
-  let g:EasyMotion_startofline      = 0
-  let g:EasyMotion_smartcase        = 1
-  let g:EasyMotion_use_upper        = 1
+  let g:EasyMotion_do_mapping       = v:false
+  let g:EasyMotion_do_shade         = v:false
+  let g:EasyMotion_startofline      = v:false
+  let g:EasyMotion_smartcase        = v:true
+  let g:EasyMotion_use_upper        = v:true
   let g:EasyMotion_keys             = "FJKLASDHGUIONMEREWCX,.;/ZQP"
-  let g:EasyMotion_use_migemo       = 1
-  let g:EasyMotion_enter_jump_first = 1
-  let g:EasyMotion_skipfoldedline   = 0
+  let g:EasyMotion_use_migemo       = v:true
+  let g:EasyMotion_enter_jump_first = v:true
+  let g:EasyMotion_skipfoldedline   = v:false
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_map: "<Plug>(easymotion-",
      \ })
 endif  " }}}
@@ -1810,7 +1810,7 @@ if s:RegisterPlugin("tpope/vim-git")  " {{{
   let g:gitcommit_cleanup = "scissors"
 
   augroup my_vimrc  " {{{
-    autocmd FileType gitcommit let b:did_ftplugin = 1
+    autocmd FileType gitcommit let b:did_ftplugin = v:true
   augroup END  " }}}
 endif  " }}}
 
@@ -1818,29 +1818,29 @@ endif  " }}}
 " Use ale for linting/formatting codes
 " Use vim-go's highlightings, foldings, and commands/functions
 if s:RegisterPlugin("fatih/vim-go")  " {{{
-  let g:go_code_completion_enabled = 0
-  let g:go_fmt_autosave            = 0
-  let g:go_doc_keywordprg_enabled  = 0
-  let g:go_def_mapping_enabled     = 0
-  let g:go_gopls_enabled           = 0
+  let g:go_code_completion_enabled = v:false
+  let g:go_fmt_autosave            = v:false
+  let g:go_doc_keywordprg_enabled  = v:false
+  let g:go_def_mapping_enabled     = v:false
+  let g:go_gopls_enabled           = v:false
 
-  let g:go_highlight_array_whitespace_error    = 1
-  let g:go_highlight_chan_whitespace_error     = 1
-  let g:go_highlight_extra_types               = 1
-  let g:go_highlight_space_tab_error           = 1
-  let g:go_highlight_trailing_whitespace_error = 1
-  let g:go_highlight_operators                 = 1
-  let g:go_highlight_functions                 = 1
-  let g:go_highlight_function_parameters       = 1
-  let g:go_highlight_function_calls            = 1
-  let g:go_highlight_types                     = 1
-  let g:go_highlight_fields                    = 1
-  let g:go_highlight_build_constraints         = 1
-  let g:go_highlight_generate_tags             = 1
-  let g:go_highlight_string_spellcheck         = 1
-  let g:go_highlight_format_strings            = 1
-  let g:go_highlight_variable_declarations     = 1
-  let g:go_highlight_variable_assignments      = 1
+  let g:go_highlight_array_whitespace_error    = v:true
+  let g:go_highlight_chan_whitespace_error     = v:true
+  let g:go_highlight_extra_types               = v:true
+  let g:go_highlight_space_tab_error           = v:true
+  let g:go_highlight_trailing_whitespace_error = v:true
+  let g:go_highlight_operators                 = v:true
+  let g:go_highlight_functions                 = v:true
+  let g:go_highlight_function_parameters       = v:true
+  let g:go_highlight_function_calls            = v:true
+  let g:go_highlight_types                     = v:true
+  let g:go_highlight_fields                    = v:true
+  let g:go_highlight_build_constraints         = v:true
+  let g:go_highlight_generate_tags             = v:true
+  let g:go_highlight_string_spellcheck         = v:true
+  let g:go_highlight_format_strings            = v:true
+  let g:go_highlight_variable_declarations     = v:true
+  let g:go_highlight_variable_assignments      = v:true
 
   augroup my_vimrc  " {{{
     autocmd FileType go call s:SetupVimGo()
@@ -1862,7 +1862,7 @@ if s:RegisterPlugin("fatih/vim-go")  " {{{
   endif  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:  1,
+     \   lazy:  v:true,
      \   on_ft: "go",
      \ })
 endif  " }}}
@@ -1873,19 +1873,19 @@ call s:RegisterPlugin("tpope/vim-haml", #{ if: !IsGitCommit() && !IsGitHunkEdit(
 call s:RegisterPlugin("michaeljsmith/vim-indent-object")
 
 if s:RegisterPlugin("elzr/vim-json", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  let g:vim_json_syntax_conceal = 0
+  let g:vim_json_syntax_conceal = v:false
 endif  " }}}
 
 if s:RegisterPlugin("rcmdnk/vim-markdown", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  let g:vim_markdown_override_foldtext         = 0
-  let g:vim_markdown_no_default_key_mappings   = 1
-  let g:vim_markdown_conceal                   = 0
-  let g:vim_markdown_no_extensions_in_markdown = 1
-  let g:vim_markdown_autowrite                 = 1
+  let g:vim_markdown_override_foldtext         = v:false
+  let g:vim_markdown_no_default_key_mappings   = v:true
+  let g:vim_markdown_conceal                   = v:false
+  let g:vim_markdown_no_extensions_in_markdown = v:true
+  let g:vim_markdown_autowrite                 = v:true
   let g:vim_markdown_folding_level             = 10
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   depends: "vim-markdown-quote-syntax",
      \   on_ft:   "markdown",
      \ })
@@ -1898,20 +1898,20 @@ if s:RegisterPlugin("rcmdnk/vim-markdown", #{ if: !IsGitCommit() && !IsGitHunkEd
       \ }
 
     call s:ConfigPlugin(#{
-       \   lazy: 1,
+       \   lazy: v:true,
        \ })
   endif  " }}}
 endif  " }}}
 
 if s:RegisterPlugin("andymass/vim-matchup")  " {{{
-  let g:matchup_matchparen_status_offscreen = 0
+  let g:matchup_matchparen_status_offscreen = v:false
 endif  " }}}
 
 if s:RegisterPlugin("kana/vim-operator-replace")  " {{{
   map r <Plug>(operator-replace)
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   depends: ["vim-operator-user"],
      \   on_map:  [["nv", "<Plug>(operator-replace)"]],
      \ })
@@ -1953,7 +1953,7 @@ if s:RegisterPlugin("rhysd/vim-operator-surround")  " {{{
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   depends: ["vim-operator-user"],
      \   on_map:  [["nv", "<Plug>(operator-surround-"]],
      \   hook_source: function("s:ConfigPluginOnSource_vim_operator_surround"),
@@ -1962,14 +1962,14 @@ endif  " }}}
 
 if s:RegisterPlugin("kana/vim-operator-user")  " {{{
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_func: "operator#user#define",
      \ })
 endif  " }}}
 
 if s:RegisterPlugin("thinca/vim-prettyprint")  " {{{
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_cmd:  ["PrettyPrint", "PP"],
      \   on_func: ["PrettyPrint", "PP"],
      \ })
@@ -1977,7 +1977,7 @@ endif  " }}}
 
 if s:RegisterPlugin("tpope/vim-rails", #{ if: OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   call s:ConfigPlugin(#{
-     \   lazy: 0,
+     \   lazy: v:false,
      \ })
 
   " http://fg-180.katamayu.net/archives/2006/09/02/125150
@@ -2012,10 +2012,10 @@ if s:RegisterPlugin("vim-ruby/vim-ruby", #{ if: !IsGitCommit() && !IsGitHunkEdit
     autocmd FileType ruby if exists("b:ruby_no_expensive") | unlet b:ruby_no_expensive | endif
   augroup END  " }}}
 
-  let g:no_ruby_maps = 1
+  let g:no_ruby_maps = v:true
 
   call s:ConfigPlugin(#{
-     \   lazy: 0,
+     \   lazy: v:false,
      \ })
 endif  " }}}
 
@@ -2027,7 +2027,7 @@ if s:RegisterPlugin("joker1007/vim-ruby-heredoc-syntax", #{ if: !IsGitCommit() &
     \ }
 
   call s:ConfigPlugin(#{
-     \   lazy:  1,
+     \   lazy:  v:true,
      \   on_ft: "ruby",
      \ })
 endif  " }}}
@@ -2037,7 +2037,7 @@ if s:RegisterPlugin("xolox/vim-session", #{ if: !IsGitCommit() && !IsGitHunkEdit
   let g:session_directory         = getcwd() . "/.vim-sessions"
   let g:session_autoload          = "no"
   let g:session_autosave          = "no"
-  let g:session_autosave_periodic = 0
+  let g:session_autosave_periodic = v:false
 
   set sessionoptions=buffers,folds
 
@@ -2064,14 +2064,14 @@ if s:RegisterPlugin("xolox/vim-session", #{ if: !IsGitCommit() && !IsGitHunkEdit
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_cmd:  "SaveSession",
      \   depends: "vim-misc",
      \ })
 
   if s:RegisterPlugin("xolox/vim-misc")  " {{{
     call s:ConfigPlugin(#{
-       \   lazy: 1,
+       \   lazy: v:true,
        \ })
   endif  " }}}
 endif  " }}}
@@ -2080,12 +2080,12 @@ endif  " }}}
 if s:RegisterPlugin("mhinz/vim-startify", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   function! s:ConfigPluginOnSource_vim_startify() abort  " {{{
     let g:startify_session_dir         = g:session_directory
-    let g:startify_session_persistence = 0
-    let g:startify_session_sort        = 1
+    let g:startify_session_persistence = v:false
+    let g:startify_session_sort        = v:true
 
-    let g:startify_enable_special = 1
-    let g:startify_change_to_dir  = 0
-    let g:startify_relative_path  = 1
+    let g:startify_enable_special = v:true
+    let g:startify_change_to_dir  = v:false
+    let g:startify_relative_path  = v:true
     let g:startify_list_order     = [
       \   ["My commands:"],
       \   "commands",
@@ -2148,7 +2148,7 @@ if s:RegisterPlugin("mhinz/vim-startify", #{ if: !IsGitCommit() && !IsGitHunkEdi
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:     1,
+     \   lazy:     v:true,
      \   on_event: "VimEnter",
      \   hook_source:      function("s:ConfigPluginOnSource_vim_startify"),
      \   hook_post_source: function("s:ConfigPluginOnPostSource_vim_startify"),
@@ -2176,13 +2176,13 @@ if s:RegisterPlugin("janko/vim-test", #{ if: !IsGitCommit() && !IsGitHunkEdit() 
     let g:test#strategy = "vimux"
   endif
 
-  let g:test#preserve_screen = 1
+  let g:test#preserve_screen = v:true
 
   let g:test#go#gotest#options = "-race"
-  let g:test#ruby#bundle_exec = 0
+  let g:test#ruby#bundle_exec = v:false
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_cmd: ["TestFile", "TestNearest"],
      \ })
 endif  " }}}
@@ -2190,7 +2190,7 @@ endif  " }}}
 " Text object for quotations: q
 if s:RegisterPlugin("deris/vim-textobj-enclosedsyntax")  " {{{
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_ft:   ["ruby", "eruby"],
      \   depends: "vim-textobj-user",
      \ })
@@ -2206,7 +2206,7 @@ endif  " }}}
 " Text object for Ruby blocks (not only `do-end` nor `{}`): r
 if s:RegisterPlugin("rhysd/vim-textobj-ruby")  " {{{
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_ft:   "ruby",
      \   depends: "vim-textobj-user",
      \ })
@@ -2214,7 +2214,7 @@ endif  " }}}
 
 if s:RegisterPlugin("kana/vim-textobj-user")  " {{{
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_func: "textobj#user",
      \ })
 endif  " }}}
@@ -2238,20 +2238,20 @@ if s:RegisterPlugin("Shougo/vimfiler", #{ if: !IsGitCommit() && !IsGitHunkEdit()
 
   function! s:ConfigPluginOnSource_vimfiler() abort  " {{{
     call vimfiler#custom#profile("default", "context", #{
-       \   safe: 0,
+       \   safe: v:false,
        \   split_action: "dwm_open",
        \ })
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_func: "VimFilerBufferDir",
      \   hook_source: function("s:ConfigPluginOnSource_vimfiler"),
      \ })
 
   if s:RegisterPlugin("kg8m/unite-dwm")  " {{{
     call s:ConfigPlugin(#{
-       \   lazy:  1,
+       \   lazy:  v:true,
        \   on_ft: "vimfiler",
        \ })
   endif  " }}}
@@ -2260,7 +2260,7 @@ endif  " }}}
 if s:RegisterPlugin("benmills/vimux", #{ if: OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   function! s:ConfigPluginOnSource_vimux() abort  " {{{
     let g:VimuxHeight     = 30
-    let g:VimuxUseNearest = 1
+    let g:VimuxUseNearest = v:true
 
     augroup my_vimrc  " {{{
       autocmd VimLeavePre * :VimuxCloseRunner
@@ -2307,7 +2307,7 @@ if s:RegisterPlugin("benmills/vimux", #{ if: OnTmux() && !IsGitCommit() && !IsGi
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:    1,
+     \   lazy:    v:true,
      \   on_cmd:  "VimuxCloseRunner",
      \   on_func: "VimuxRunCommand",
      \   hook_source:      function("s:ConfigPluginOnSource_vimux"),
@@ -2354,7 +2354,7 @@ if s:RegisterPlugin("simeji/winresizer")  " {{{
   let g:winresizer_start_key = "<C-w><C-e>"
 
   call s:ConfigPlugin(#{
-     \   lazy:   1,
+     \   lazy:   v:true,
      \   on_map: [["n", g:winresizer_start_key]],
      \ })
 endif  " }}}
@@ -2368,7 +2368,7 @@ if s:RegisterPlugin("othree/yajs.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit()
   augroup END  " }}}
 
   call s:ConfigPlugin(#{
-     \   lazy:  1,
+     \   lazy:  v:true,
      \   on_ft: "javascript",
      \ })
 endif  " }}}
@@ -2409,7 +2409,7 @@ endif  " }}}
 
 " Colorschemes
 if s:RegisterPlugin("tomasr/molokai")  " {{{
-  let g:molokai_original = 1
+  let g:molokai_original = v:true
 
   augroup my_vimrc  " {{{
     autocmd ColorScheme molokai call s:OverwriteMolokai()
