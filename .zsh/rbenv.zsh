@@ -1,5 +1,7 @@
 if [ -d ~/.rbenv ] && which rbenv > /dev/null 2>&1; then
-  eval "$( rbenv init - )"
+  setup_my_rbenv() {
+    eval "$( rbenv init - )"
+  }
 
   [ -d ~/.rbenv/plugins ] || mkdir -p ~/.rbenv/plugins
 
@@ -24,6 +26,8 @@ if [ -d ~/.rbenv ] && which rbenv > /dev/null 2>&1; then
       ln -s "$( pwd )" ~/.rbenv/plugins/ruby-build
     fi
   }
+
+  zinit ice lucid wait at_load"setup_my_rbenv"; zinit snippet ~/.zsh/dummy.zsh
 
   zinit ice lucid wait as"null" atload"setup_rbenv_default_gems"
   zinit light rbenv/rbenv-default-gems

@@ -94,12 +94,6 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 # }}}
 
-zinit ice lucid wait; zinit snippet ~/.zsh/goenv.zsh
-zinit ice lucid wait; zinit snippet ~/.zsh/nodenv.zsh
-zinit ice lucid wait; zinit snippet ~/.zsh/rbenv.zsh
-zinit ice lucid wait; zinit snippet ~/.zsh/rubocop.zsh
-zinit ice lucid wait; zinit snippet ~/.zsh/tmux.zsh
-
 # Don't load lazily because direnv doesn't work at the zsh start
 source ~/.zsh/direnv.zsh
 
@@ -107,9 +101,14 @@ source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/completion.zsh
 source ~/.zsh/enhancd.zsh
 source ~/.zsh/filter.zsh
+source ~/.zsh/goenv.zsh
 source ~/.zsh/history-search.zsh
+source ~/.zsh/nodenv.zsh
 source ~/.zsh/prompt.zsh
+source ~/.zsh/rbenv.zsh
+source ~/.zsh/rubocop.zsh
 source ~/.zsh/syntax-highlighting.zsh
+source ~/.zsh/tmux.zsh
 
 try_to_source ~/.zshrc.local
 
