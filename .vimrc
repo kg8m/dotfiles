@@ -1790,7 +1790,7 @@ if s:RegisterPlugin("easymotion/vim-easymotion")  " {{{
   let g:EasyMotion_startofline      = v:false
   let g:EasyMotion_smartcase        = v:true
   let g:EasyMotion_use_upper        = v:true
-  let g:EasyMotion_keys             = "FJKLASDHGUIONMEREWCX,.;/ZQP"
+  let g:EasyMotion_keys             = "FKLASDHGUIONMREWCVTYBX,.;J"
   let g:EasyMotion_use_migemo       = v:true
   let g:EasyMotion_enter_jump_first = v:true
   let g:EasyMotion_skipfoldedline   = v:false
