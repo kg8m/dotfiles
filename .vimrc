@@ -640,6 +640,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
     nmap <buffer> g] <Plug>(lsp-definition)
 
     call s:SwitchLSPGlobalConfigs()
+    let b:lsp_buffer_enabled = 1
   endfunction  " }}}
 
   function! s:ReswitchLSPGlobalConfigs() abort  " {{{
@@ -1507,6 +1508,7 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \     ["lineinfo_with_percent"],
     \   ],
     \   right: [
+    \     ["lsp_status"],
     \   ],
     \ }
   let g:lightline = #{
@@ -1518,6 +1520,7 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \   },
     \   component_function: #{
     \     filename: "Lightline_Filepath",
+    \     lsp_status: "Lightline_LSPStatus",
     \   },
     \   colorscheme: "kg8m",
     \ }
@@ -1556,6 +1559,14 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
 
   function! s:Lightline_ModifiedSymbol() abort  " {{{
     return &filetype =~? 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
+  endfunction  " }}}
+
+  function! Lightline_LSPStatus() abort  " {{{
+    if exists("b:lsp_buffer_enabled")
+      return "LSP: OK"
+    else
+      return "LSP: -"
+    endif
   endfunction  " }}}
 endif  " }}}
 
