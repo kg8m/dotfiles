@@ -659,6 +659,14 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
     let g:lsp_highlight_references_enabled = b:lsp_highlight_references_enabled
   endfunction  " }}}
 
+  function! s:LSPSchemasJson() abort  " {{{
+    if !exists("s:lsp_schemas_json")
+      let s:lsp_schemas_json = json_decode(join(readfile(s:PluginInfo("vim-lsp-settings").path . "/data/catalog.json"), "\n"))["schemas"]
+    endif
+
+    return s:lsp_schemas_json
+  endfunction  " }}}
+
   " Register LSPs  " {{{
   " yarn add bash-language-server  " {{{
   call s:RegisterLSP(#{
@@ -715,7 +723,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   workspace_config: { -> #{
      \     json: #{
      \       format: #{ enable: 1 },
-     \       schemas: json_decode(join(readfile(s:PluginInfo("vim-lsp-settings").path . "/data/catalog.json"), "\n"))["schemas"],
+     \       schemas: s:LSPSchemasJson(),
      \    },
      \   } },
      \ })
@@ -797,6 +805,20 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   },
      \   whitelist: ["vue"],
      \   executable_name: "vls",
+     \ })
+  " }}}
+
+  " yarn add yaml-language-server  " {{{
+  call s:RegisterLSP(#{
+     \   name: "yaml-language-server",
+     \   cmd: { server_info -> [&shell, &shellcmdflag, "yaml-language-server --stdio"] },
+     \   whitelist: ["yaml"],
+     \   workspace_config: { -> #{
+     \     json: #{
+     \       format: #{ enable: 1 },
+     \       schemas: s:LSPSchemasJson(),
+     \    },
+     \   } },
      \ })
   " }}}
   " }}}
