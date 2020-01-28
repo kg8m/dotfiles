@@ -2411,7 +2411,11 @@ endif  " }}}
 if s:RegisterPlugin("tomasr/molokai")  " {{{
   let g:molokai_original = 1
 
-  function! s:OverwriteSyntax() abort  " {{{
+  augroup my_vimrc  " {{{
+    autocmd ColorScheme molokai call s:OverwriteMolokai()
+  augroup END  " }}}
+
+  function! s:OverwriteMolokai() abort  " {{{
     if has("gui_running")
       highlight DiffChange   guifg=#FFFFFF guibg=#4C4745
       highlight DiffFile     guifg=#A6E22E               gui=bold
@@ -2472,7 +2476,6 @@ endif
 " ----------------------------------------------
 " General looks  " {{{
 colorscheme molokai
-call s:OverwriteSyntax()
 
 " Blur inactive windows
 " https://qiita.com/Bakudankun/items/649aa6d8b9eccc1712b5
