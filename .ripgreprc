@@ -31,6 +31,7 @@
 --glob=!log/
 --glob=!node_modules/
 --glob=!tmp/
+--glob=!vendor/bundle/
 
 # Exclude files by filetype: see by `rg --type-list`
 --type-add=dat:*.dat
@@ -42,8 +43,8 @@
 --type-add=minjs:*.min.js
 --type-not=minjs
 
---type-add=rails:db/*_structure.sql
---type-not=rails
+--type-add=railsignore:db/*_structure.sql
+--type-not=railsignore
 
 --type-add=macos:.DS_Store
 --type-not=macos
