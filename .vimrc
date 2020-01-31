@@ -125,7 +125,7 @@ endfunction  " }}}
 
 " for LSPs  " {{{
 function! s:RegisterLSP(config) abort  " {{{
-  if !exists("s:lsps")
+  if !has_key(s:, "lsps")
     let s:lsps = []
   endif
 
@@ -178,7 +178,7 @@ function! OnTmux() abort  " {{{
 endfunction  " }}}
 
 function! OnRailsDir() abort  " {{{
-  if exists("s:on_rails_dir")
+  if has_key(s:, "on_rails_dir")
     return s:on_rails_dir
   endif
 
@@ -187,7 +187,7 @@ function! OnRailsDir() abort  " {{{
 endfunction  " }}}
 
 function! OnGitDir() abort  " {{{
-  if exists("s:on_git_dir")
+  if has_key(s:, "on_git_dir")
     return s:on_git_dir
   endif
 
@@ -197,7 +197,7 @@ function! OnGitDir() abort  " {{{
 endfunction  " }}}
 
 function! IsGitCommit() abort  " {{{
-  if exists("s:is_git_commit")
+  if has_key(s:, "is_git_commit")
     return s:is_git_commit
   endif
 
@@ -206,7 +206,7 @@ function! IsGitCommit() abort  " {{{
 endfunction  " }}}
 
 function! IsGitHunkEdit() abort  " {{{
-  if exists("s:is_git_hunk_edit")
+  if has_key(s:, "is_git_hunk_edit")
     return s:is_git_hunk_edit
   endif
 
@@ -215,7 +215,7 @@ function! IsGitHunkEdit() abort  " {{{
 endfunction  " }}}
 
 function! RubyGemPaths() abort  " {{{
-  if exists("s:ruby_gem_paths")
+  if has_key(s:, "ruby_gem_paths")
     return s:ruby_gem_paths
   endif
 
@@ -352,17 +352,18 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   endfunction  " }}}
 
   function! s:StartCompletionTimer() abort  " {{{
-    let s:completion_refresh_timer = timer_start(200, { -> s:ForceRefreshCompletion() })
+    " OPTIMIZE: Use function instead of lambda for performance
+    let s:completion_refresh_timer = timer_start(200, function("s:ForceRefreshCompletion"))
   endfunction  " }}}
 
   function! s:ClearCompletionTimer() abort  " {{{
-    if exists("s:completion_refresh_timer")
+    if has_key(s:, "completion_refresh_timer")
       call timer_stop(s:completion_refresh_timer)
       unlet s:completion_refresh_timer
     endif
   endfunction  " }}}
 
-  function! s:ForceRefreshCompletion() abort  " {{{
+  function! s:ForceRefreshCompletion(timer) abort  " {{{
     call asyncomplete#_force_refresh()
     call s:ClearCompletionTimer()
   endfunction  " }}}
@@ -414,19 +415,20 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
   endfunction  " }}}
 
   function! s:AsyncompleteBufferOnEventStartTimer() abort  " {{{
-    let s:asyncomplete_buffer_on_event_timer = timer_start(200, { -> s:AsyncompleteBufferOnEvent() })
+    " OPTIMIZE: Use function instead of lambda for performance
+    let s:asyncomplete_buffer_on_event_timer = timer_start(200, function("AsyncompleteBufferOnEvent"))
   endfunction  " }}}
 
   function! s:AsyncompleteBufferOnEventClearTimer() abort  " {{{
-    if exists("s:asyncomplete_buffer_on_event_timer")
+    if has_key(s:, "asyncomplete_buffer_on_event_timer")
       call timer_stop(s:asyncomplete_buffer_on_event_timer)
       unlet s:asyncomplete_buffer_on_event_timer
     endif
   endfunction  " }}}
 
   " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
-  function! s:AsyncompleteBufferOnEvent() abort  " {{{
-    if !exists("s:asyncomplete_buffer_sid")
+  function! s:AsyncompleteBufferOnEvent(timer) abort  " {{{
+    if !has_key(s:, "asyncomplete_buffer_sid")
       call s:SetupAsyncompleteBufferRefreshKeywords()
     endif
 
@@ -442,10 +444,10 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
       endif
     endfor
 
-    if exists("s:asyncomplete_buffer_sid")
+    if has_key(s:, "asyncomplete_buffer_sid")
       let s:AsyncompleteBufferRefreshKeywords = function("<SNR>" . s:asyncomplete_buffer_sid . "_refresh_keywords")
     else
-      if exists("s:AsyncompleteBufferRefreshKeywords")
+      if has_key(s:, "AsyncompleteBufferRefreshKeywords")
         return
       endif
 
@@ -571,7 +573,7 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
       endif
 
       function! s:SourceContextualSnippets() abort  " {{{
-        if exists("b:neosnippet_contextual_sourced")
+        if has_key(b:, "neosnippet_contextual_sourced")
           return
         endif
 
@@ -645,7 +647,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   endfunction  " }}}
 
   function! s:ReswitchLSPGlobalConfigs() abort  " {{{
-    if exists("b:lsp_highlight_references_enabled")
+    if has_key(b:, "lsp_highlight_references_enabled")
       unlet b:lsp_highlight_references_enabled
     endif
 
@@ -654,14 +656,14 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
 
   function! s:SwitchLSPGlobalConfigs() abort  " {{{
     " References for sass is broken
-    if !exists("b:lsp_highlight_references_enabled")
+    if !has_key(b:, "lsp_highlight_references_enabled")
       let b:lsp_highlight_references_enabled = (&filetype != "sass")
     endif
     let g:lsp_highlight_references_enabled = b:lsp_highlight_references_enabled
   endfunction  " }}}
 
   function! s:LSPSchemasJson() abort  " {{{
-    if !exists("s:lsp_schemas_json")
+    if !has_key(s:, "lsp_schemas_json")
       let s:lsp_schemas_json = json_decode(join(readfile(s:PluginInfo("vim-lsp-settings").path . "/data/catalog.json"), "\n"))["schemas"]
     endif
 
@@ -886,7 +888,7 @@ if s:RegisterPlugin("hrsh7th/vim-vsnip")  " {{{
 endif  " }}}
 
 function! s:DefineCompletionMappings() abort  " {{{
-  if exists("s:completion_mappings_defined")
+  if has_key(s:, "completion_mappings_defined")
     return
   endif
 
@@ -1075,7 +1077,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
   function! s:SetupIncrementalMark() abort  " {{{
-    if exists("s:incremental_mark_keys")
+    if has_key(s:, "incremental_mark_keys")
       return
     endif
 
@@ -1098,7 +1100,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       return
     endif
 
-    if !exists("s:incremental_mark_index")
+    if !has_key(s:, "incremental_mark_index")
       let s:incremental_mark_index = 0
     else
       let s:incremental_mark_index = (s:incremental_mark_index + 1) % len(s:incremental_mark_keys)
@@ -1168,7 +1170,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
 
   function! s:SetupFzfMyShortcuts() abort  " {{{
-    if exists("s:fzf_my_shortcuts_list")
+    if has_key(s:, "fzf_my_shortcuts_list")
       return
     endif
 
@@ -1361,7 +1363,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       endif
     endfor
 
-    if exists("g:fzf#rails#extra_specs")
+    if has_key(g:, "fzf#rails#extra_specs")
       for name in keys(g:fzf#rails#extra_specs)
         if has_key(s:fzf_rails_specs, name)
           call extend(
@@ -1374,7 +1376,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       endfor
     endif
 
-    if exists("g:fzf#rails#specs_formatters")
+    if has_key(g:, "fzf#rails#specs_formatters")
       for Formatter in g:fzf#rails#specs_formatters
         call Formatter(s:fzf_rails_specs)
       endfor
@@ -1385,7 +1387,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
 
   function! s:FzfRailsTypeNames(arglead, cmdline, curpos) abort  " {{{
-    if !exists("s:fzf_rails_type_names")
+    if !has_key(s:, "fzf_rails_type_names")
       let s:fzf_rails_type_names = sort(keys(s:fzf_rails_specs))
     endif
 
@@ -1585,7 +1587,7 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! Lightline_LSPStatus() abort  " {{{
-    if exists("b:lsp_buffer_enabled")
+    if has_key(b:, "lsp_buffer_enabled")
       return "LSP: OK"
     else
       return "LSP: -"
@@ -1984,7 +1986,7 @@ if s:RegisterPlugin("tpope/vim-rails", #{ if: OnRailsDir() && !IsGitCommit() && 
   " http://fg-180.katamayu.net/archives/2006/09/02/125150
   let g:rails_level = 4
 
-  if !exists("g:rails_projections")
+  if !has_key(g:, "rails_projections")
     let g:rails_projections = {}
   endif
 
@@ -1993,7 +1995,7 @@ if s:RegisterPlugin("tpope/vim-rails", #{ if: OnRailsDir() && !IsGitCommit() && 
   let g:rails_projections["test/script/*_test.rb"] = #{ alternate: ["script/{}", "script/{}.rb"] }
   let g:rails_projections["spec/script/*_spec.rb"] = #{ alternate: ["script/{}", "script/{}.rb"] }
 
-  if !exists("g:rails_path_additions")
+  if !has_key(g:, "rails_path_additions")
     let g:rails_path_additions = []
   endif
 
@@ -2010,7 +2012,7 @@ if s:RegisterPlugin("vim-ruby/vim-ruby", #{ if: !IsGitCommit() && !IsGitHunkEdit
     autocmd BufEnter Gemfile set filetype=Gemfile
 
     " Prevent vim-matchup from being wrong for Ruby's modifier `if`/`unless`
-    autocmd FileType ruby if exists("b:ruby_no_expensive") | unlet b:ruby_no_expensive | endif
+    autocmd FileType ruby if has_key(b:, "ruby_no_expensive") | unlet b:ruby_no_expensive | endif
   augroup END  " }}}
 
   let g:no_ruby_maps = v:true
@@ -2335,7 +2337,7 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
   endfunction  " }}}
 
   function! s:Promise() abort  " {{{
-    if !exists("s:__Promise__")
+    if !has_key(s:, "__Promise__")
       let s:__Promise__ = vital#vital#import("Async.Promise")
     endif
 
@@ -2343,7 +2345,7 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
   endfunction  " }}}
 
   function! s:StringUtility() abort  " {{{
-    if !exists("s:__StringUtility__")
+    if !has_key(s:, "__StringUtility__")
       let s:__StringUtility__ = vital#vital#import("Data.String")
     endif
 
@@ -2538,7 +2540,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
     " Lazily set formatoptions to overwrite others
     autocmd FileType * call timer_start(300, { -> s:SetupFormatoptions() })
 
-    autocmd BufWritePre * if &filetype ==# "" || exists("b:ftdetect") | unlet! b:ftdetect | filetype detect | endif
+    autocmd BufWritePre * if &filetype ==# "" || has_key(b:, "ftdetect") | unlet! b:ftdetect | filetype detect | endif
   augroup END  " }}}
 
   function! s:SetupFormatoptions() abort  " {{{
@@ -2593,7 +2595,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   augroup END  " }}}
 
   function! s:SwitchToManualFolding() abort  " {{{
-    if !exists("w:last_fdm")
+    if !has_key(w:, "last_fdm")
       let w:last_fdm = &foldmethod
       setlocal foldmethod=manual
     endif
@@ -2601,7 +2603,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
 
   " Call this before saving session
   function! s:RestoreFoldmethod() abort  " {{{
-    if exists("w:last_fdm")
+    if has_key(w:, "last_fdm")
       let &foldmethod = w:last_fdm
       unlet w:last_fdm
     endif
