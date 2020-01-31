@@ -901,12 +901,10 @@ function! s:DefineCompletionMappings() abort  " {{{
   function! s:CrForInsertMode() abort  " {{{
     if vsnip#available(1)
       return "\<Plug>(vsnip_expand_or_jump)"
+    elseif neosnippet#expandable_or_jumpable()
+      return "\<Plug>(neosnippet_expand_or_jump)"
     else
-      if neosnippet#expandable_or_jumpable()
-        return "\<Plug>(neosnippet_expand_or_jump)"
-      else
-        return pumvisible() ? asyncomplete#close_popup() : "\<Cr>"
-      endif
+      return pumvisible() ? asyncomplete#close_popup() : "\<Cr>"
     endif
   endfunction  " }}}
 endfunction  " }}}
