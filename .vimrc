@@ -1746,6 +1746,13 @@ if s:RegisterPlugin("Chiel92/vim-autoformat", #{ if: !IsGitCommit() && !IsGitHun
   let g:formatdef_jsbeautify_javascript = '"js-beautify -f -s2 -"'
 endif  " }}}
 
+if s:RegisterPlugin("h1mesuke/vim-benchmark", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+  call s:ConfigPlugin(#{
+     \   lazy:    v:true,
+     \   on_func: "benchmark#",
+     \ })
+endif  " }}}
+
 if s:RegisterPlugin("jkramer/vim-checkbox", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   augroup my_vimrc  " {{{
     autocmd FileType markdown,moin noremap <buffer> <Leader>c :call checkbox#ToggleCB()<Cr>
