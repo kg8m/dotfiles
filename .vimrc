@@ -304,8 +304,6 @@ call s:SetupPluginStart()
 
 " Plugins list and settings  " {{{
 call s:RegisterPlugin(s:plugin_manager_path)
-call s:RegisterPlugin("Shougo/vimproc", #{ build: "make" })
-
 call s:RegisterPlugin("kg8m/.vim")
 
 " Completion, LSP  " {{{
@@ -2263,6 +2261,14 @@ if s:RegisterPlugin("Shougo/vimfiler", #{ if: !IsGitCommit() && !IsGitHunkEdit()
        \   on_ft: "vimfiler",
        \ })
   endif  " }}}
+endif  " }}}
+
+if s:RegisterPlugin("Shougo/vimproc")  " {{{
+  call s:ConfigPlugin(#{
+     \   lazy:    v:true,
+     \   build:   "make",
+     \   on_func: "vimproc#",
+     \ })
 endif  " }}}
 
 if s:RegisterPlugin("benmills/vimux", #{ if: OnTmux() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
