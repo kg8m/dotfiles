@@ -780,13 +780,12 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \         },
      \         format: #{
      \           defaultFormatter: #{
-     \             js: v:none,
-     \             ts: v:none,
+     \             js: "",
+     \             ts: "",
      \           },
      \           defaultFormatterOptions: {},
      \           scriptInitialIndent: v:false,
      \           styleInitialIndent: v:false,
-     \           options: {},
      \         },
      \         useWorkspaceDependencies: v:false,
      \         validation: #{
