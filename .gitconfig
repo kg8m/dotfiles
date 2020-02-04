@@ -209,7 +209,7 @@ create-branch = "!f() {\
 }; f"
 
 bulk-delete-local-branches = "!f() {\
-  branches=$( git branch | filter | sed -e 's/^[* ]*//' );\
+  branches=$( git branch | egrep -v \"${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}\" | filter | sed -e 's/^[* ]*//' );\
   command=\"git branch --delete --force $( echo ${branches} )\";\
   \
   echo 'Selected branches:';\
@@ -222,7 +222,7 @@ bulk-delete-local-branches = "!f() {\
 }; f"
 
 bulk-delete-remote-branches = "!f() {\
-  branches=$( git branch --remote | filter | awk '{ print $1 }' | sed -e 's/^origin\\///' );\
+  branches=$( git branch --remote | egrep -v \"${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}\" | filter | awk '{ print $1 }' | sed -e 's/^origin\\///' );\
   command=\"git push --delete origin $( echo ${branches} )\";\
   \
   echo 'Selected branches:';\

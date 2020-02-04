@@ -101,6 +101,7 @@ source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/completion.zsh
 source ~/.zsh/enhancd.zsh
 source ~/.zsh/filter.zsh
+source ~/.zsh/git.zsh
 source ~/.zsh/goenv.zsh
 source ~/.zsh/history-search.zsh
 source ~/.zsh/nodenv.zsh
