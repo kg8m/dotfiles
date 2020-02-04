@@ -2640,6 +2640,12 @@ nnoremap / /\v
 
 " ----------------------------------------------
 " Controls  " {{{
+" ' => Maximum number of previously edited files for which the marks are remembered.
+" < => Maximum number of lines saved for each register.
+" h => Disable the effect of 'hlsearch' when loading the viminfo file.
+" s => Maximum size of an item in Kbyte.
+set viminfo='10000,<100,h,s10
+
 set restorescreen
 set mouse=
 set belloff=all
