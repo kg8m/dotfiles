@@ -1508,8 +1508,8 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " Use fzf binary already installed instead
   if s:RegisterPlugin("junegunn/fzf")  " {{{
     call s:ConfigPlugin(#{
-      \   lazy: v:true,
-      \ })
+       \   lazy: v:true,
+       \ })
   endif  " }}}
 
   if s:RegisterPlugin("thinca/vim-qfreplace")  " {{{
