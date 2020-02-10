@@ -210,7 +210,7 @@ function! IsGitHunkEdit() abort  " {{{
     return s:is_git_hunk_edit
   endif
 
-  let s:is_git_hunk_edit = argc() == 1 && argv()[0] =~# '\.git/addp-hunk-edit.diff$'
+  let s:is_git_hunk_edit = argc() == 1 && argv()[0] =~# '\.git/addp-hunk-edit\.diff$'
   return s:is_git_hunk_edit
 endfunction  " }}}
 
