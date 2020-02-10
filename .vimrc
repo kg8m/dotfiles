@@ -752,7 +752,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   name: "typescript-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "typescript-language-server --stdio"] },
      \   initialization_options: #{ diagnostics: "true" },
-     \   whitelist: ["typescript", "javascript", "typescriptreact", "javascriptreact"],
+     \   whitelist: ["typescript", "javascript", "typescriptreact", "javascriptreact", "typescript.tsx", "javascript.jsx"],
      \ })
   " }}}
 
