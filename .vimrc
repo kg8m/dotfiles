@@ -1631,10 +1631,24 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! Lightline_LSPStatus() abort  " {{{
-    if has_key(b:, "lsp_buffer_enabled")
-      return "LSP: OK"
+    if !has_key(b:, "lsp_target_buffer")
+      let b:lsp_target_buffer = v:false
+      for filetype in get(s:, "lsp_filetypes", [])
+        if &filetype == filetype
+          let b:lsp_target_buffer = v:true
+          break
+        endif
+      endfor
+    endif
+
+    if b:lsp_target_buffer
+      if has_key(b:, "lsp_buffer_enabled")
+        return "LSP: OK"
+      else
+        return "LSP: -"
+      endif
     else
-      return "LSP: -"
+      return ""
     endif
   endfunction  " }}}
 endif  " }}}
