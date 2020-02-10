@@ -1520,19 +1520,6 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endif  " }}}
 endif  " }}}
 
-if s:RegisterPlugin("kg8m/gundo.vim")  " {{{
-  nnoremap <F5> :GundoToggle<Cr>
-
-  " http://d.hatena.ne.jp/heavenshell/20120218/1329532535
-  let g:gundo_auto_preview   = v:false
-  let g:gundo_prefer_python3 = v:true
-
-  call s:ConfigPlugin(#{
-     \   lazy:   v:true,
-     \   on_cmd: "GundoToggle",
-     \ })
-endif  " }}}
-
 if s:RegisterPlugin("sk1418/HowMuch")  " {{{
   let g:HowMuch_scale = 5
 
@@ -1735,6 +1722,20 @@ call s:RegisterPlugin("vim-scripts/sudo.vim")
 
 if s:RegisterPlugin("leafgarland/typescript-vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
   let g:typescript_indent_disable = v:true
+endif  " }}}
+
+if s:RegisterPlugin("mbbill/undotree")  " {{{
+  nnoremap <Leader>u :UndotreeToggle<Cr>
+
+  let g:undotree_WindowLayout = 2
+  let g:undotree_SplitWidth = 50
+  let g:undotree_DiffpanelHeight = 30
+  let g:undotree_SetFocusWhenToggle = v:true
+
+  call s:ConfigPlugin(#{
+     \   lazy:   v:true,
+     \   on_cmd: "UndotreeToggle",
+     \ })
 endif  " }}}
 
 if s:RegisterPlugin("Shougo/unite.vim")  " {{{
