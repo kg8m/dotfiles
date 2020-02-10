@@ -1044,7 +1044,7 @@ endif  " }}}
 if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   let g:fzf_command_prefix = "Fzf"
   let g:fzf_buffers_jump   = v:true
-  let g:fzf_layout         = #{ up: "~50%" }
+  let g:fzf_layout         = #{ up: "~70%" }
 
   " See dwm.vim
   let g:fzf_action = #{ ctrl-o: "DWMOpen" }
