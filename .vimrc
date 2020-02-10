@@ -1055,7 +1055,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>g :FzfGrep<Space>
   vnoremap <Leader><Leader>g "gy:FzfGrep<Space><C-r>"
   nnoremap <Leader><Leader>m :FzfMarks<Cr>
-  nnoremap <Leader><Leader>h :FzfHistory<Cr>
+  nnoremap <Leader><Leader>h :call <SID>FzfHistory()<Cr>
   nnoremap <Leader><Leader>H :FzfHelptags<Cr>
   nnoremap <Leader><Leader>y :call <SID>FzfYankHistory()<Cr>
   noremap  <Leader><Leader>s :<C-u>call <SID>FzfMyShortcuts("")<Cr>
@@ -1074,6 +1074,59 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     else
       return base . " " . $RIPGREP_EXTRA_OPTIONS
     endif
+  endfunction  " }}}
+  " }}}
+
+  " History  " {{{
+  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/plugin/fzf.vim#L64
+  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/plugin/fzf.vim#L73
+  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L520-L525
+  function! s:FzfHistory() abort  " {{{
+    let options = #{
+      \   source:  s:FzfHistoryFiles(),
+      \   options: ["--header-lines", !empty(expand("%")), "--prompt", "History> ", "--tabstop=5"],
+      \ }
+
+    " https://github.com/junegunn/fzf/blob/0896036266dc951ac03c451f1097171a996eb412/plugin/fzf.vim#L341-L348
+    let wrapped = fzf#wrap("history-files", options)
+    let wrapped.original_sink = remove(wrapped, "sink*")
+
+    function! wrapped.temp_sink(args) abort  " {{{
+      let key       = a:args[0]
+      let items     = a:args[1:]
+      let filepaths = map(copy(items), { _, item -> split(item, "\t")[1] })
+
+      return self.original_sink([key] + filepaths)
+    endfunction  " }}}
+
+    let wrapped["sink*"] = remove(wrapped, "temp_sink")
+
+    call fzf#run(wrapped)
+  endfunction  " }}}
+
+  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L457-L463
+  function! s:FzfHistoryFiles() abort  " {{{
+    let current  = empty(expand("%")) ? [] : [printf("[%%]\t%s", fnamemodify(expand("%"), ":~:."))]
+    let buffers  = s:FzfHistoryBuffers()
+    let oldfiles = s:FzfHistoryOldfiles()
+
+    return s:ListUtility().uniq_by(current + buffers + oldfiles, { item -> split(item, "\t")[1] })
+  endfunction  " }}}
+
+  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L196-L198
+  function! s:FzfHistoryBuffers() abort  " {{{
+    let bufnrs        = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") != "qf" && len(bufname(bufnr)) })
+    let sorted_bufnrs = sort(bufnrs, { lhs, rhs -> bufname(lhs) < bufname(rhs) ? -1 : 1 })
+
+    return map(sorted_bufnrs, { _, bufnr -> printf("[%d]\t%s", bufnr, bufname(bufnr)) })
+  endfunction  " }}}
+
+  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
+  function! s:FzfHistoryOldfiles() abort  " {{{
+    let ignore_pattern = '\v\.git/COMMIT_EDITMSG$|\.git/addp-hunk-edit\.diff$'
+    let filepaths      = filter(copy(v:oldfiles), { _, filepath -> filereadable(fnamemodify(filepath, ":p")) && filepath !~# ignore_pattern })
+
+    return map(filepaths, { _, filepath -> printf(" \t%s", fnamemodify(filepath, ":~:.")) })
   endfunction  " }}}
   " }}}
 
@@ -1441,7 +1494,6 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     \   "FzfGFiles",
     \   "FzfBuffers",
     \   "FzfMarks",
-    \   "FzfHistory",
     \   "FzfHelptags",
     \ ]
 
@@ -2362,6 +2414,14 @@ if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
     endif
 
     return s:__Promise__
+  endfunction  " }}}
+
+  function! s:ListUtility() abort  " {{{
+    if !has_key(s:, "__ListUtility__")
+      let s:__ListUtility__ = vital#vital#import("Data.List")
+    endif
+
+    return s:__ListUtility__
   endfunction  " }}}
 
   function! s:StringUtility() abort  " {{{
