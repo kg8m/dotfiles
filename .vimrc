@@ -414,7 +414,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
 
   function! s:AsyncompleteBufferOnEventStartTimer() abort  " {{{
     " OPTIMIZE: Use function instead of lambda for performance
-    let s:asyncomplete_buffer_on_event_timer = timer_start(200, function("AsyncompleteBufferOnEvent"))
+    let s:asyncomplete_buffer_on_event_timer = timer_start(200, function("s:AsyncompleteBufferOnEvent"))
   endfunction  " }}}
 
   function! s:AsyncompleteBufferOnEventClearTimer() abort  " {{{
