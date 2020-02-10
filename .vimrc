@@ -1200,7 +1200,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     let options = #{
       \   source:  s:YankList(),
       \   sink:    function("s:YankHandler"),
-      \   options: ["--no-multi", "--nth=2", "--tabstop=1"],
+      \   options: ["--no-multi", "--nth=2", "--prompt", "Yank> ", "--tabstop=1"],
       \ }
 
     call fzf#run(fzf#wrap("yank-history", options))
@@ -1212,7 +1212,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     let options = {
       \   "source":  s:FzfMyShortcutsList(),
       \   "sink":    function("s:FzfMyShortcutsHandler"),
-      \   "options": ["--no-multi", "--query", a:query],
+      \   "options": ["--no-multi", "--prompt", "Shortcuts> ", "--query", a:query],
       \ }
 
     call fzf#run(fzf#wrap("my-shortcuts", options))
