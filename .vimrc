@@ -1072,7 +1072,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     if empty($RIPGREP_EXTRA_OPTIONS)
       return base
     else
-      return base . " " . shellescape($RIPGREP_EXTRA_OPTIONS)
+      return base . " " . $RIPGREP_EXTRA_OPTIONS
     endif
   endfunction  " }}}
   " }}}
