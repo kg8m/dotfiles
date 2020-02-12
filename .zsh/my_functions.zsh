@@ -155,7 +155,7 @@ function extract() {
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
 
 function my_grep_without_pager() {
-  eval "rg $RIPGREP_EXTRA_OPTIONS $@"
+  rg $RIPGREP_EXTRA_OPTIONS $@
 }
 
 function my_grep_with_pager() {
