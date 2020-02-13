@@ -75,32 +75,27 @@ function! s:SetupPluginEnd() abort  " {{{
   return dein#end()
 endfunction  " }}}
 
-function! s:RegisterPlugin(plugin_name, ...) abort  " {{{
-  let options = get(a:000, 0, {})
+function! s:RegisterPlugin(plugin_name, options = {}) abort  " {{{
   let enabled = v:true
 
-  if has_key(options, "if")
-    if !options["if"]
+  if has_key(a:options, "if")
+    if !a:options["if"]
       " Don't load but fetch the plugin
-      let options["rtp"] = ""
-      call remove(options, "if")
+      let a:options["rtp"] = ""
+      call remove(a:options, "if")
       let enabled = v:false
     endif
   else
     " Sometimes dein doesn't add runtimepath if no options given
-    let options["if"] = v:true
+    let a:options["if"] = v:true
   endif
 
-  call dein#add(a:plugin_name, options)
+  call dein#add(a:plugin_name, a:options)
   return dein#tap(fnamemodify(a:plugin_name, ":t")) && enabled
 endfunction  " }}}
 
-function! s:ConfigPlugin(arg, ...) abort  " {{{
-  if type(a:arg) != type([])
-    return dein#config(a:arg, get(a:000, 0, {}))
-  else
-    return dein#config(a:arg)
-  endif
+function! s:ConfigPlugin(arg, options = {}) abort  " {{{
+  return dein#config(a:arg, a:options)
 endfunction  " }}}
 
 function! s:PluginInfo(plugin_name) abort  " {{{
