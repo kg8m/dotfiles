@@ -2664,7 +2664,7 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   set foldmethod=marker
   set foldopen=hor
   set foldminlines=1
-  set foldcolumn=3
+  set foldcolumn=5
   set fillchars=vert:\|
 
   augroup my_vimrc  " {{{
