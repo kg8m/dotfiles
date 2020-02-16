@@ -610,10 +610,11 @@ if s:RegisterPlugin("Shougo/neosnippet")  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
-  let g:lsp_diagnostics_enabled     = v:true
-  let g:lsp_diagnostics_echo_cursor = v:true
-  let g:lsp_signs_enabled           = v:true
-  let g:lsp_fold_enabled            = v:false
+  let g:lsp_diagnostics_enabled      = v:true
+  let g:lsp_diagnostics_echo_cursor  = v:false
+  let g:lsp_diagnostics_float_cursor = v:true
+  let g:lsp_signs_enabled            = v:true
+  let g:lsp_fold_enabled             = v:false
 
   let g:lsp_async_completion = v:true
 
