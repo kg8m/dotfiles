@@ -1062,7 +1062,9 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     if empty($RIPGREP_EXTRA_OPTIONS)
       return base
     else
-      return base . " " . $RIPGREP_EXTRA_OPTIONS
+      let splitted = split($RIPGREP_EXTRA_OPTIONS, " ")
+      let escaped  = map(splitted, { _, option -> shellescape(option) })
+      return base . " " . join(escaped, " ")
     endif
   endfunction  " }}}
   " }}}
