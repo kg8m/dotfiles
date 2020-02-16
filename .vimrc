@@ -916,6 +916,7 @@ if s:RegisterPlugin("dense-analysis/ale", #{ if: !IsGitCommit() && !IsGitHunkEdi
     \   javascript: ["eslint"],
     \   ruby:       ["ruby", "rubocop"],
     \   typescript: ["eslint"],
+    \   vim:        ["vint"],
     \ }
   let g:ale_fixers = #{
     \   go:         ["goimports"],
