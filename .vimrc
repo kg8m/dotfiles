@@ -309,7 +309,6 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
   augroup my_vimrc  " {{{
-    autocmd FileType unite let b:asyncomplete_enable = v:false
   augroup END  " }}}
 
   " Hide messages like "Pattern not found" or "Match 1 of <N>"
@@ -808,12 +807,6 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   name: "yaml-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "yaml-language-server --stdio"] },
      \   whitelist: ["yaml"],
-     \   workspace_config: { -> #{
-     \     json: #{
-     \       format: #{ enable: v:true },
-     \       schemas: s:LSPSchemasJson(),
-     \    },
-     \   } },
      \ })
   " }}}
   " }}}
