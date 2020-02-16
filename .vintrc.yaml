@@ -1,35 +1,35 @@
 cmdargs:
-  verbose: no
+  verbose: false
   severity: style_problem
   error-limit: 50
-  stat: yes
-  color: yes
-  json: no
+  stat: true
+  color: true
+  json: false
   env:
-    neovim: no
+    neovim: false
   stdin_display_name: stdin
 policies:
   ProhibitAutocmdWithNoGroup:
-    enabled: yes
+    enabled: true
   ProhibitCommandRelyOnUser:
-    enabled: yes
+    enabled: true
   ProhibitCommandWithUnintendedSideEffect:
-    enabled: yes
+    enabled: true
   ProhibitEncodingOptionAfterScriptEncoding:
-    enabled: yes
+    enabled: true
   ProhibitEqualTildeOperator:
-    enabled: yes
+    enabled: true
   ProhibitImplicitScopeBuiltinVariable:
-    enabled: yes
+    enabled: true
   ProhibitMissingScriptEncoding:
-    enabled: yes
+    enabled: true
   ProhibitNoAbortFunction:
-    enabled: yes
+    enabled: true
   ProhibitSetNoCompatible:
-    enabled: yes
+    enabled: true
   ProhibitUnnecessaryDoubleQuote:
-    enabled: no
+    enabled: false
   ProhibitUnusedVariable:
-    enabled: yes
+    enabled: true
   ProhibitUsingUndeclaredVariable:
-    enabled: yes
+    enabled: true
