@@ -1076,7 +1076,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   function! s:FzfHistory() abort  " {{{
     let options = #{
       \   source:  s:FzfHistoryFiles(),
-      \   options: ["--header-lines", !empty(expand("%")), "--prompt", "History> ", "--tabstop=5"],
+      \   options: ["--header-lines", !empty(expand("%")), "--nth=2", "--prompt", "History> ", "--tabstop=5"],
       \ }
 
     " https://github.com/junegunn/fzf/blob/0896036266dc951ac03c451f1097171a996eb412/plugin/fzf.vim#L341-L348
