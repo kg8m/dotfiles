@@ -2724,6 +2724,12 @@ set mouse=
 set belloff=all
 set nostartofline
 
+" This defines what bases Vim will consider for numbers when using the `CTRL-A` and `CTRL-X` commands for adding to and
+" subtracting from a number respectively.
+"   octal: If included, numbers that start with a zero will be considered to be octal. Example: Using CTRL-A on "007"
+"          results in "010".
+set nrformats-=octal
+
 " Smoothen screen drawing; wait procedures' completion
 set lazyredraw
 set ttyfast
