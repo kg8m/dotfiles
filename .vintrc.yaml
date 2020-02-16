@@ -8,7 +8,10 @@ cmdargs:
   env:
     neovim: false
   stdin_display_name: stdin
+
+# https://github.com/Vimjas/vint/wiki/Vint-linting-policy-summary
 policies:
+  # Warnings
   ProhibitAutocmdWithNoGroup:
     enabled: true
   ProhibitCommandRelyOnUser:
