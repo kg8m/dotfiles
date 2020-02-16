@@ -2215,10 +2215,10 @@ if s:RegisterPlugin("mhinz/vim-startify", #{ if: !IsGitCommit() && !IsGitHunkEdi
   endfunction  " }}}
 
   function! s:ConfigPluginOnPostSource_vim_startify() abort  " {{{
-    highlight StartifyFile   ctermfg=255
-    highlight StartifyHeader ctermfg=255
-    highlight StartifyPath   ctermfg=245
-    highlight StartifySlash  ctermfg=245
+    highlight StartifyFile   guifg=#FFFFFF
+    highlight StartifyHeader guifg=#FFFFFF
+    highlight StartifyPath   guifg=#777777
+    highlight StartifySlash  guifg=#777777
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
@@ -2506,43 +2506,26 @@ if s:RegisterPlugin("tomasr/molokai")  " {{{
   augroup END  " }}}
 
   function! s:OverwriteMolokai() abort  " {{{
-    if has("gui_running")
-      highlight DiffChange   guifg=#FFFFFF guibg=#4C4745
-      highlight DiffFile     guifg=#A6E22E               gui=bold
-      highlight FoldColumn   guifg=#6a7678 guibg=#000000
-      highlight Folded       guifg=#6a7678 guibg=#000000
-      highlight IncSearch    guifg=#FFFFFF guibg=#F92672
-      highlight PmenuSel     guifg=#000000 guibg=#808080
-      highlight Search       guifg=#FFFFFF guibg=#F92672
-      highlight Underlined   guifg=#AAAAAA               gui=underline
-      highlight VisualNOS                  guibg=#403D3D gui=bold
-      highlight Visual                     guibg=#403D3D gui=bold
-      highlight Normal       guifg=#F8F8F2 guibg=#000000
-      highlight Comment      guifg=#AAAAAA
-      highlight CursorLine                 guibg=#1F1E19
-      highlight CursorColumn               guibg=#1F1E19
-
-      highlight QuickFixLine                             gui=bold
-    else
-      highlight Normal                    ctermbg=NONE
-      highlight DiffAdd                   ctermbg=23
-      highlight DiffChange   ctermfg=NONE ctermbg=234
-      highlight DiffFile     ctermfg=118               cterm=bold
-      highlight DiffText                  ctermbg=240  cterm=bold
-      highlight FoldColumn   ctermfg=67   ctermbg=NONE
-      highlight Folded       ctermfg=67   ctermbg=NONE
-      highlight IncSearch    ctermfg=255  ctermbg=161
-      highlight Search       ctermfg=255  ctermbg=161
-      highlight Underlined   ctermfg=247               cterm=underline
-      highlight VisualNOS                 ctermbg=238  cterm=bold
-      highlight Visual                    ctermbg=235  cterm=bold
-      highlight Comment      ctermfg=247
-      highlight CursorColumn              ctermbg=237
-      highlight ColorColumn               ctermbg=237
-      highlight LineNr       ctermfg=250  ctermbg=234
-
-      highlight QuickFixLine                           cterm=bold
-    endif
+    highlight Comment       guifg=#AAAAAA
+    highlight CursorColumn                 guibg=#1F1E19
+    highlight CursorLine                   guibg=#1F1E19
+    highlight DiffChange    guifg=#CCCCCC  guibg=#4C4745
+    highlight DiffFile      guifg=#A6E22E                 gui=bold       cterm=bold
+    highlight FoldColumn    guifg=#6A7678  guibg=NONE
+    highlight Folded        guifg=#6A7678  guibg=NONE
+    highlight Ignore        guifg=#808080  guibg=NONE
+    highlight Incsearch     guifg=#FFFFFF  guibg=#F92672
+    highlight LineNr        guifg=#BCBCBC  guibg=#222222
+    highlight Normal        guifg=#F8F8F8  guibg=NONE
+    highlight Pmenu         guifg=#66D9EF  guibg=NONE
+    highlight QuickFixLine                                gui=bold       cterm=bold
+    highlight Search        guifg=#FFFFFF  guibg=#F92672
+    highlight SignColumn    guifg=#A6E22E  guibg=#111111
+    highlight Special       guifg=#66D9EF  guibg=NONE     gui=italic
+    highlight Todo          guifg=#FFFFFF  guibg=NONE     gui=bold
+    highlight Underlined    guifg=#AAAAAA                 gui=underline  cterm=underline
+    highlight Visual                       guibg=#403D3D  gui=bold       cterm=bold
+    highlight VisualNOS                    guibg=#403D3D  gui=bold       cterm=bold
   endfunction  " }}}
 endif  " }}}
 " }}}
@@ -2565,6 +2548,18 @@ endif
 
 " ----------------------------------------------
 " General looks  " {{{
+set termguicolors
+let g:terminal_ansi_colors = [
+ "\   Black,     Dark Red,     Dark GreeN, Brown,
+ "\   Dark Blue, Dark Magenta, Dark CYan,  Light GrEy,
+ "\   Dark Grey, REd,          Green,      YellOw,
+ "\   Blue,      MAgenta,      Cyan,       White,
+  \   "#000000", "#EE7900",    "#BAED00",  "#EBCE00",
+  \   "#00BEF3", "#BAA0F0",    "#66AED7",  "#EAEAEA",
+  \   "#333333", "#FF8200",    "#C1F600",  "#FFE000",
+  \   "#00C2F9", "#C6ABFF",    "#71C0ED",  "#FFFFFF",
+  \ ]
+
 colorscheme molokai
 
 " Blur inactive windows
