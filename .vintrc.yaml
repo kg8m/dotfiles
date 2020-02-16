@@ -36,3 +36,9 @@ policies:
     enabled: true
   ProhibitUsingUndeclaredVariable:
     enabled: true
+
+  # Style Problems
+  ProhibitAbbreviationOption:
+    enabled: true
+  ProhibitImplicitScopeVariable:
+    enabled: false
