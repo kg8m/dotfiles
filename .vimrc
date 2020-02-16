@@ -694,6 +694,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \     completionDocumentation: v:true,
      \     deepCompletion: v:true,
      \     hoverKind: "SynopsisDocumentation",
+     \     matcher: "fuzzy",
      \     staticcheck: v:true,
      \     usePlaceholders: v:true,
      \   },
