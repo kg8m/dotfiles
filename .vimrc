@@ -821,7 +821,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   lazy:    v:true,
      \   on_cmd:  ["LspDefinition", "LspRename", "LspStatus"],
      \   on_ft:   get(s:, "lsp_filetypes", []),
-     \   depends: "async.vim",
+     \   depends: ["asyncomplete.vim", "async.vim"],
      \   hook_post_source: function("s:ConfigPluginOnPostSource_lsp"),
      \ })
 
