@@ -174,6 +174,9 @@ function tig {
       local args=${@:2:($#-1)}
       execute_with_echo "command tig blame $args"
       ;;
+    stash)
+      execute_with_echo "command tig stash"
+      ;;
     st*)
       execute_with_echo "command tig status"
       ;;
