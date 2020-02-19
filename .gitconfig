@@ -235,7 +235,7 @@ bulk-delete-remote-branches = "!f() {\
 }; f"
 
 select-a-branch = "!f() {\
-  prompt=${1:-'select a branch:'};\
+  prompt=${1:-'select a branch: '};\
   branches=($( git branch --all | sed -e 's/^[* ] //' | sed -e 's/remotes\\/origin\\///' | egrep -v '\\->' | sort | uniq | filter --prompt \"${prompt}\" ));\
   \
   if [[ ! ${#branches[@]} -eq 1 ]]; then\
@@ -247,7 +247,7 @@ select-a-branch = "!f() {\
 }; f"
 
 select-a-remote-branch = "!f() {\
-  prompt=${1:-'select a branch:'};\
+  prompt=${1:-'select a branch: '};\
   branches=($( git branch --remote | awk '{print $1}' | filter --prompt \"${prompt}\" ));\
   \
   if [[ ! ${#branches[@]} -eq 1 ]]; then\
