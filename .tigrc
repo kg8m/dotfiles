@@ -1,7 +1,10 @@
 color cursor black white
 
 set diff-highlight = true
-set diff-options = --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
+
+# Respect whitespace changes because ignoring them sometimes conflicts with applying patches
+# set diff-options = --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
+
 set horizontal-scroll = 20%
 set id-width = 40
 set line-graphics = ascii
