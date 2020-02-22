@@ -765,6 +765,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   name: "vim-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "vim-language-server --stdio"] },
      \   initialization_options: { -> #{ vimruntime: $VIMRUNTIME, runtimepath: &runtimepath } },
+     \   root_uri: { server_info -> lsp#utils#path_to_uri($HOME) },
      \   whitelist: ["vim"],
      \ })
   " }}}
