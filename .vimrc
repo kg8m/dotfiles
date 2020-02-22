@@ -147,7 +147,7 @@ endfunction  " }}}
 
 function! s:EnableLSPs() abort  " {{{
   for config in s:lsp_configs
-    for key in ["initialization_options", "workspace_config"]
+    for key in ["config", "initialization_options", "workspace_config"]
       if has_key(config, key) && type(config[key]) == v:t_func
         let config[key] = config[key]()
       endif
@@ -307,6 +307,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
   augroup my_vimrc  " {{{
+    autocmd FileType * let b:asyncomplete_refresh_pattern = s:CompletionRefreshPattern(&filetype)
   augroup END  " }}}
 
   " Hide messages like "Pattern not found" or "Match 1 of <N>"
@@ -317,8 +318,8 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   " cf. LSP sources are named "asyncomplete_lsp_{original source name}"
   " cf. asyncomplete sources except for LSPs are named "asyncomplete_source_xxx"
   function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
-    let sorted_items = []
-    let base_matcher = escape(a:ctx.base, '~"\.^$[]*')
+    let sorted_items  = []
+    let base_matcher  = escape(a:ctx.base, '~"\.^$[]*')
     let fuzzy_matcher = "^" . join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
 
     for [source_name, matches] in sort(items(a:matches), { a, b -> a[0] > b[0] ? 1 : -1 })
@@ -675,6 +676,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   name: "css-languageserver",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "css-languageserver --stdio"] },
      \   whitelist: ["css", "less", "sass", "scss"],
+     \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("css") } },
      \   workspace_config: #{
      \     css:  #{ lint: #{ validProperties: [] } },
      \     less: #{ lint: #{ validProperties: [] } },
@@ -707,6 +709,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   cmd: { server_info -> [&shell, &shellcmdflag, "html-languageserver --stdio"] },
      \   initialization_options: #{ embeddedLanguages: #{ css: v:true, javascript: v:true } },
      \   whitelist: ["html"],
+     \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("html") } },
      \ })
   " }}}
 
@@ -715,6 +718,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   name: "json-languageserver",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "json-languageserver --stdio"] },
      \   whitelist: ["json"],
+     \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("json") } },
      \   workspace_config: { -> #{
      \     json: #{
      \       format: #{ enable: v:true },
@@ -871,6 +875,25 @@ if s:RegisterPlugin("hrsh7th/vim-vsnip")  " {{{
        \ })
   endif  " }}}
 endif  " }}}
+
+function! s:CompletionRefreshPattern(filetype) abort  " {{{
+  if !has_key(s:, "completion_refresh_patterns")
+    let css_pattern = '\v([a-zA-Z0-9_-]+)$'
+    let s:completion_refresh_patterns = #{
+      \   _:    '\v(\k+)$',
+      \   css:  css_pattern,
+      \   html: '\v(/|\k+)$',
+      \   json: '\v("\k*|\[|\k+)$',
+      \   less: css_pattern,
+      \   ruby: '\v([@:]\k*|\k+)$',
+      \   sass: css_pattern,
+      \   scss: css_pattern,
+      \   sql: '\v( \zs\k*|[a-zA-Z0-9_-]+)$',
+      \ }
+  endif
+
+  return get(s:completion_refresh_patterns, a:filetype, s:completion_refresh_patterns["_"])
+endfunction  " }}}
 
 function! s:DefineCompletionMappings() abort  " {{{
   if has_key(s:, "completion_mappings_defined")
