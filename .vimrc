@@ -818,6 +818,17 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   name: "yaml-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "yaml-language-server --stdio"] },
      \   whitelist: ["eruby.yaml", "yaml"],
+     \   workspace_config: #{
+     \     yaml: #{
+     \       completion: v:true,
+     \       customTags: [],
+     \       format: #{ enable: v:true },
+     \       hover: v:true,
+     \       schemas: {},
+     \       schemaStore: #{ enable: v:true },
+     \       validate: v:true,
+     \    },
+     \   },
      \ })
   " }}}
   " }}}
