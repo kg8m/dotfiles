@@ -1534,6 +1534,13 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endif  " }}}
 endif  " }}}
 
+if s:RegisterPlugin("lambdalisue/gina.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+  call s:ConfigPlugin(#{
+     \   lazy:   v:true,
+     \   on_cmd: "Gina",
+     \ })
+endif  " }}}
+
 if s:RegisterPlugin("sk1418/HowMuch")  " {{{
   let g:HowMuch_scale = 5
 
