@@ -1,4 +1,4 @@
-function setup_goenv {
+function setup_my_goenv {
   export GOENV_ROOT="$( pwd )"
   export PATH=$GOENV_ROOT/bin:$PATH
 
@@ -11,4 +11,4 @@ function setup_goenv {
     export PATH=$PATH:$GOPATH/bin
   fi
 }
-zinit ice lucid wait as"null" atload"setup_goenv"; zinit light syndbg/goenv
+zinit ice lucid wait as"null" atload"setup_my_goenv"; zinit light syndbg/goenv

@@ -5,7 +5,7 @@ if [ -d ~/.rbenv ] && which rbenv > /dev/null 2>&1; then
 
   [ -d ~/.rbenv/plugins ] || mkdir -p ~/.rbenv/plugins
 
-  function setup_rbenv_default_gems {
+  function setup_my_rbenv_default_gems {
     if [ ! -d ~/.rbenv/plugins/rbenv-default-gems ]; then
       ln -s "$( pwd )" ~/.rbenv/plugins/rbenv-default-gems
     fi
@@ -15,13 +15,13 @@ if [ -d ~/.rbenv ] && which rbenv > /dev/null 2>&1; then
     fi
   }
 
-  function setup_rbenv_each {
+  function setup_my_rbenv_each {
     if [ ! -d ~/.rbenv/plugins/rbenv-each ]; then
       ln -s "$( pwd )" ~/.rbenv/plugins/rbenv-each
     fi
   }
 
-  function setup_ruby_build {
+  function setup_my_ruby_build {
     if [ ! -d ~/.rbenv/plugins/ruby-build ]; then
       ln -s "$( pwd )" ~/.rbenv/plugins/ruby-build
     fi
@@ -29,12 +29,12 @@ if [ -d ~/.rbenv ] && which rbenv > /dev/null 2>&1; then
 
   zinit ice lucid wait atload"setup_my_rbenv"; zinit snippet ~/.zsh/dummy.zsh
 
-  zinit ice lucid wait as"null" atload"setup_rbenv_default_gems"
+  zinit ice lucid wait as"null" atload"setup_my_rbenv_default_gems"
   zinit light rbenv/rbenv-default-gems
 
-  zinit ice lucid wait as"null" atload"setup_rbenv_each"
+  zinit ice lucid wait as"null" atload"setup_my_rbenv_each"
   zinit light rbenv/rbenv-each
 
-  zinit ice lucid wait as"null" atload"setup_ruby_build"
+  zinit ice lucid wait as"null" atload"setup_my_ruby_build"
   zinit light rbenv/ruby-build
 fi

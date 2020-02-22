@@ -1,5 +1,5 @@
-function setup_anyframe {
-  function setup_fzf {
+function setup_my_anyframe {
+  function setup_my_fzf {
     local binds=""
     binds+="ctrl-f:page-down"
     binds+=",ctrl-b:page-up"
@@ -30,7 +30,7 @@ function setup_anyframe {
 
   # `filter` is `.zsh/bin/filter`
   if which fzf > /dev/null 2>&1; then
-    setup_fzf
+    setup_my_fzf
     zstyle ":anyframe:selector:" use fzf
     zstyle ":anyframe:selector:fzf:" command filter
   elif which peco > /dev/null 2>&1; then
@@ -44,4 +44,4 @@ function setup_anyframe {
 }
 
 zinit ice lucid wait pick"shell/completion.zsh"; zinit light junegunn/fzf
-zinit ice lucid wait atload"setup_anyframe"; zinit light mollifier/anyframe
+zinit ice lucid wait atload"setup_my_anyframe"; zinit light mollifier/anyframe
