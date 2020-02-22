@@ -147,13 +147,11 @@ endfunction  " }}}
 
 function! s:EnableLSPs() abort  " {{{
   for config in s:lsp_configs
-    if has_key(config, "initialization_options") && type(config.initialization_options) == v:t_func
-      let config.initialization_options = config.initialization_options()
-    endif
-
-    if has_key(config, "workspace_config") && type(config.workspace_config) == v:t_func
-      let config.workspace_config = config.workspace_config()
-    endif
+    for key in ["initialization_options", "workspace_config"]
+      if has_key(config, key) && type(config[key]) == v:t_func
+        let config[key] = config[key]()
+      endif
+    endfor
 
     call lsp#register_server(config)
   endfor
