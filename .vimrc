@@ -817,7 +817,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   call s:RegisterLSP(#{
      \   name: "yaml-language-server",
      \   cmd: { server_info -> [&shell, &shellcmdflag, "yaml-language-server --stdio"] },
-     \   whitelist: ["yaml"],
+     \   whitelist: ["eruby.yaml", "yaml"],
      \ })
   " }}}
   " }}}
