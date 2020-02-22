@@ -197,5 +197,7 @@ function update_zsh_plugins {
   execute_with_echo "cd $current_dir"
 
   execute_with_echo "zinit update --all"
+  execute_with_echo "zinit creinstall -q $ZINIT[BIN_DIR]"
+  execute_with_echo "zinit csearch"
   execute_with_echo "exec zsh"
 }
