@@ -94,11 +94,9 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 # }}}
 
-# Don't load lazily because direnv doesn't work at the zsh start
-source ~/.zsh/direnv.zsh
-
 source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/completion.zsh
+source ~/.zsh/direnv.zsh
 source ~/.zsh/enhancd.zsh
 source ~/.zsh/filter.zsh
 source ~/.zsh/git.zsh
