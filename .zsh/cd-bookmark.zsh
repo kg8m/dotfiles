@@ -3,5 +3,5 @@ function setup_my_cdbookmark {
   alias cdb="cd-bookmark"
 }
 
-zinit ice lucid wait blockf atpull"zinit creinstall -q ." atload"setup_my_cdbookmark"
+zinit ice lucid wait"!0a" blockf atpull"zinit creinstall -q ." atload"setup_my_cdbookmark"
 zinit light mollifier/cd-bookmark

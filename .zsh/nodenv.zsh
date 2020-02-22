@@ -6,5 +6,5 @@ if [ -d ~/.nodenv ]; then
       eval "$( nodenv init - )"
     fi
   }
-  zinit ice lucid wait atload"setup_my_nodenv"; zinit snippet ~/.zsh/dummy.zsh
+  zinit ice lucid wait"!0a" atload"setup_my_nodenv"; zinit snippet ~/.zsh/dummy.zsh
 fi
