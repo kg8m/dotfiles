@@ -223,6 +223,12 @@ function! RubyGemPaths() abort  " {{{
   return s:ruby_gem_paths
 endfunction  " }}}
 
+function! ExecuteInTerminal(command) abort  " {{{
+  let options  = #{ term_rows: 100, exit_cb: { -> execute("close") } }
+  let terminal = term_start(a:command, options)
+  call term_wait(terminal, 20)
+endfunction  " }}}
+
 function! ExecuteWithConfirm(command) abort  " {{{
   if !ConfirmCommand(a:command)
     return
@@ -1062,7 +1068,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   let g:fzf_action = #{ ctrl-o: "DWMOpen" }
 
   nnoremap <Leader><Leader>f :FzfFiles<Cr>
-  nnoremap <Leader><Leader>v :FzfGFiles?<Cr>
+  nnoremap <Leader><Leader>v :<C-u>call <SID>FzfMyShortcuts("'Git ")<Cr>
   nnoremap <Leader><Leader>b :FzfBuffers<Cr>
   nnoremap <Leader><Leader>g :FzfGrep<Space>
   vnoremap <Leader><Leader>g "gy:FzfGrep<Space><C-r>"
@@ -1278,6 +1284,15 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Copy] filename",          "call RemoteCopy(CurrentFilename())"],
         \   ["[Copy] relative filepath", "call RemoteCopy(CurrentRelativePath())"],
         \   ["[Copy] absolute filepath", "call RemoteCopy(CurrentAbsolutePath())"],
+        \
+        \   ["[Git] List changed/untracked files",   "FzfGFiles?"],
+        \   ["[Git] Bulk add files",                 "call ExecuteInTerminal('git bulk-add')"],
+        \   ["[Git] Bulk add files with patch mode", "call ExecuteInTerminal('git bulk-add-by-patch')"],
+        \   ["[Git] Bulk intent to add files ",      "call ExecuteInTerminal('git bulk-intent-to-add')"],
+        \   ["[Git] Bulk checkout files",            "call ExecuteInTerminal('git bulk-checkout-files')"],
+        \   ["[Git] Bulk reset files",               "call ExecuteInTerminal('git bulk-reset')"],
+        \   ["[Git] Bulk clean files",               "call ExecuteInTerminal('git bulk-clean')"],
+        \   ["[Git] Gina patch",                     "call <SID>GinaPatch(expand('%'))"],
         \
         \   ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
         \   ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
@@ -1535,6 +1550,13 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 endif  " }}}
 
 if s:RegisterPlugin("lambdalisue/gina.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+  function! s:GinaPatch(filepath) abort  " {{{
+    let original_diffopt = &diffopt
+    set diffopt+=vertical
+    execute "Gina patch " . a:filepath
+    let &diffopt = original_diffopt
+  endfunction  " }}}
+
   call s:ConfigPlugin(#{
      \   lazy:   v:true,
      \   on_cmd: "Gina",
