@@ -1077,7 +1077,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>H :FzfHelptags<Cr>
   nnoremap <Leader><Leader>y :call <SID>FzfYankHistory()<Cr>
   noremap  <Leader><Leader>s :<C-u>call <SID>FzfMyShortcuts("")<Cr>
-  noremap  <Leader><Leader>a :<C-u>call <SID>FzfMyShortcuts("'Alignta")<Cr>
+  noremap  <Leader><Leader>a :<C-u>call <SID>FzfMyShortcuts("'Alignta ")<Cr>
   nnoremap <Leader><Leader>r :call <SID>SetupFzfRails()<Cr>:FzfRails<Space>
 
   " Grep  " {{{
@@ -1104,7 +1104,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   function! s:FzfHistory() abort  " {{{
     let options = #{
       \   source:  s:FzfHistoryFiles(),
-      \   options: ["--header-lines", !empty(expand("%")), "--nth=2", "--prompt", "History> ", "--tabstop=5"],
+      \   options: ["--header-lines", !empty(expand("%")), "--nth=2..", "--prompt", "History> ", "--tabstop=5"],
       \ }
 
     " https://github.com/junegunn/fzf/blob/0896036266dc951ac03c451f1097171a996eb412/plugin/fzf.vim#L341-L348
@@ -1220,7 +1220,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     let options = #{
       \   source:  s:YankList(),
       \   sink:    function("s:YankHandler"),
-      \   options: ["--no-multi", "--nth=2", "--prompt", "Yank> ", "--tabstop=1"],
+      \   options: ["--no-multi", "--nth=2..", "--prompt", "Yank> ", "--tabstop=1"],
       \ }
 
     call fzf#run(fzf#wrap("yank-history", options))
