@@ -194,7 +194,6 @@ function update_zsh_plugins {
   local current_dir=$( pwd )
   execute_with_echo "cd $__ENHANCD_DIR__"
   execute_with_echo "git checkout ."
-  execute_with_echo "git clean -f ."
   execute_with_echo "cd $current_dir"
 
   execute_with_echo "zinit update --all"
