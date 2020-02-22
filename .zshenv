@@ -14,4 +14,14 @@ export PATH=$HOME/dotfiles/.zsh/bin:$PATH
 
 export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
+case "$-" in
+  *i*)  # Interactive shell
+    ;;
+  *)  # Non interactive shell
+    source ~/.zsh/env/fzf.zsh
+    source ~/.zsh/env/go.zsh
+    source ~/.zsh/env/ruby.zsh
+    ;;
+esac
+
 try_to_source ~/.zshenv.local

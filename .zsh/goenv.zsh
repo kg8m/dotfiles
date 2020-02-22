@@ -1,3 +1,4 @@
+# See also `.zsh/env/go.zsh`
 function setup_my_goenv {
   export GOENV_ROOT="$( pwd )"
   export PATH=$GOENV_ROOT/bin:$PATH
