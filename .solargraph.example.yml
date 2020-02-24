@@ -1,0 +1,14 @@
+---
+include:
+  - "**/*.rb"
+require:
+  - actionmailer
+  - actionpack
+  - actionview
+  - activemodel
+  - activerecord
+  - activesupport
+require_paths:
+  - test
+  - test/lib
+  - test/support
