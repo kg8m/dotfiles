@@ -10,5 +10,8 @@ disable=SC2145
 # egrep is non-standard and deprecated. Use grep -E instead.
 disable=SC2196
 
+# which is non-standard. Use builtin 'command -v' instead.
+disable=SC2230
+
 # Prefer putting braces around variable references even when not strictly required.
 disable=SC2250
