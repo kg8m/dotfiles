@@ -12,7 +12,7 @@ export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.git_templates/bin:$PATH
 export PATH=$HOME/dotfiles/.zsh/bin:$PATH
 
-export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
 
 case "$-" in
   *i*)  # Interactive shell
