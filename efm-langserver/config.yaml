@@ -1,0 +1,76 @@
+version: 2
+
+tools:
+  eruby-erb: &eruby-erb
+    lint-command: "erb -x -T - | ruby -c"
+    lint-stdin: true
+    lint-offset: 0
+
+  javascript-eslint: &javascript-eslint
+    lint-command: "eslint --format unix --stdin"
+    lint-ignore-exit-code: true
+    lint-stdin: true
+
+  json-jq: &json-jq
+    lint-command: "jq ."
+
+  make-checkmake: &make-checkmake
+    lint-command: "checkmake"
+    lint-stdin: true
+
+  markdown-markdownlint: &markdown-markdownlint
+    lint-command: "markdownlint --stdin"
+    lint-stdin: true
+    lint-formats:
+      - "%f: %l: %m"
+      - "%f:%l: %m"
+
+  sh-shellcheck: &sh-shellcheck
+    lint-command: "shellcheck --shell=bash --format=gcc --external-sources --enable=all -"
+    lint-stdin: true
+    lint-formats:
+      - "%f:%l:%c: %trror: %m"
+      - "%f:%l:%c: %tarning: %m"
+      - "%f:%l:%c: %tote: %m"
+
+  vim-vint: &vim-vint
+    lint-command: "vint -"
+    lint-stdin: true
+
+  yaml-yamllint: &yaml-yamllint
+    lint-command: "yamllint --format parsable --strict -"
+    lint-stdin: true
+    lint-formats:
+      - "%f:%l:%c: [%trror] %m"
+      - "%f:%l:%c: [%tarning] %m"
+
+languages:
+  eruby:
+    - <<: *eruby-erb
+
+  eruby.yaml:
+    - <<: *yaml-yamllint
+
+  javascript:
+    - <<: *javascript-eslint
+
+  json:
+    - <<: *json-jq
+
+  make:
+    - <<: *make-checkmake
+
+  markdown:
+    - <<: *markdown-markdownlint
+
+  sh:
+    - <<: *sh-shellcheck
+
+  vim:
+    - <<: *vim-vint
+
+  yaml:
+    - <<: *yaml-yamllint
+
+  zsh:
+    - <<: *sh-shellcheck

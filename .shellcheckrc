@@ -1,0 +1,14 @@
+# Can't follow non-constant source. Use a directive to specify location.
+disable=SC1090
+
+# Expressions don't expand in single quotes, use double quotes for that.
+disable=SC2016
+
+# Argument mixes string and array. Use * or separate argument.
+disable=SC2145
+
+# egrep is non-standard and deprecated. Use grep -E instead.
+disable=SC2196
+
+# Prefer putting braces around variable references even when not strictly required.
+disable=SC2250

@@ -692,6 +692,18 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
+  " go get github.com/mattn/efm-langserver  " {{{
+  call s:RegisterLSP(#{
+     \   name: "efm-langserver",
+     \   cmd: { server_info -> ["efm-langserver"] },
+     \   whitelist: [
+     \     "eruby", "javascript", "json", "make", "markdown", "vim",
+     \     "eruby.yaml", "yaml",
+     \     "sh", "zsh",
+     \   ],
+     \ })
+  " }}}
+
   " go get -u golang.org/x/tools/gopls  " {{{
   call s:RegisterLSP(#{
      \   name: "gopls",
