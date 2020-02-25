@@ -1661,6 +1661,10 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \   colorscheme: "kg8m",
     \ }
 
+  augroup my_vimrc  " {{{
+    autocmd FileType * if has_key(b:, "lsp_target_buffer") | unlet b:lsp_target_buffer | endif
+  augroup END  " }}}
+
   function! Lightline_Filepath() abort  " {{{
     let filepath        = s:Lightline_Filepath()
     let readonly_symbol = s:Lightline_ReadonlySymbol()
