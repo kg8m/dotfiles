@@ -2277,7 +2277,7 @@ if s:RegisterPlugin("mhinz/vim-startify", #{ if: !IsGitCommit() && !IsGitHunkEdi
       \   "                      .",
       \   "",
       \   "",
-      \   "  Vim version: " . v:version,
+      \   "  Vim version: " . v:versionlong,
       \   "",
       \ ]
 
