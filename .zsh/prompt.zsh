@@ -8,6 +8,8 @@ setup_my_prompt() {
 
   PROMPT="%B${user} ${current_dir}%b ${git}"$'\n'"${mark}"
   PROMPT2="%F{green}%_>%f "
+
+  unset -f setup_my_prompt
 }
 setup_my_prompt
 

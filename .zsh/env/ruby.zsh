@@ -5,5 +5,7 @@ function setup_my_ruby_path {
   if [ "$_path" ]; then
     export PATH="$PATH:$_path"
   fi
+
+  unset -f setup_my_ruby_path
 }
 setup_my_ruby_path

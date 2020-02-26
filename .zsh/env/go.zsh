@@ -5,5 +5,7 @@ function setup_my_go_path {
   if [ "$_path" ]; then
     export PATH="$PATH:$_path/bin"
   fi
+
+  unset -f setup_my_go_path
 }
 setup_my_go_path

@@ -11,5 +11,7 @@ function setup_my_dircolors {
   #   zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
   eval "$( $dircolors dircolors.ansi-universal )"
   zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
+
+  unset -f setup_my_dircolors
 }
 zinit ice lucid wait"!0a" atload"setup_my_dircolors"; zinit light seebi/dircolors-solarized

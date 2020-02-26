@@ -50,7 +50,8 @@ function tmux_execute_in_all_panes {
 
 function setup_my_tmux_plugin {
   [ -d ~/.tmux ]            || ln -s ~/dotfiles/.tmux ~/.tmux
-  [ -d ~/.tmux/plugins/$1 ] || ln -s "$( pwd )" ~/.tmux/plugins/$1
+  [ -d ~/.tmux/plugins/"$1" ] || ln -s "$( pwd )" ~/.tmux/plugins/"$1"
+  [ "$( /bin/ls ~/.tmux/plugins/ | wc -l )" -eq "4" ] && unset -f setup_my_tmux_plugin
 }
 
 zinit ice lucid wait"!0a" as"null" atload"setup_my_tmux_plugin tpm"

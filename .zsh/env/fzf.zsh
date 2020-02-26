@@ -23,5 +23,7 @@ function setup_my_fzf {
 
   export FZF_DEFAULT_OPTS="$options"
   export FZF_DEFAULT_COMMAND="source ~/.zsh/my_functions.zsh; my_grep_without_pager --files"
+
+  unset -f setup_my_fzf
 }
 setup_my_fzf

@@ -11,5 +11,6 @@ function setup_my_enhancd {
   export ENHANCD_FILTER=filter
   export __ENHANCD_DIR__=$( pwd )
   alias cd="cd_with_mkdir"
+  unset -f setup_my_enhancd
 }
 zinit ice lucid wait"!0a" atload"setup_my_enhancd"; zinit light b4b4r07/enhancd

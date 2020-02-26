@@ -11,5 +11,7 @@ function setup_my_goenv {
 
     export PATH=$PATH:$GOPATH/bin
   fi
+
+  unset -f setup_my_goenv
 }
 zinit ice lucid wait"!0a" as"null" atload"setup_my_goenv"; zinit light syndbg/goenv

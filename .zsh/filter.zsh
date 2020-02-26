@@ -15,7 +15,7 @@ function setup_my_anyframe {
   fi
 
   bindkey "^R" anyframe-widget-put-history
+  unset -f setup_my_anyframe
 }
-
 zinit ice lucid wait"!0a" pick"shell/completion.zsh"; zinit light junegunn/fzf
 zinit ice lucid wait"!0a" atload"setup_my_anyframe"; zinit light mollifier/anyframe
