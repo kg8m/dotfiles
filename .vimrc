@@ -2192,7 +2192,6 @@ if s:RegisterPlugin("xolox/vim-session", #{ if: !IsGitCommit() && !IsGitHunkEdit
 
   augroup my_vimrc  " {{{
     autocmd BufWritePost * silent call s:SaveSession()
-    autocmd BufWritePost * silent call s:CleanUpSession()
   augroup END  " }}}
 
   function! s:SaveSession() abort  " {{{
@@ -2206,10 +2205,6 @@ if s:RegisterPlugin("xolox/vim-session", #{ if: !IsGitCommit() && !IsGitHunkEdit
     let name = substitute(name, '^\.', "_", "")
 
     return name
-  endfunction  " }}}
-
-  function! s:CleanUpSession() abort  " {{{
-    execute "!/usr/bin/env find '" . g:session_directory . "' -name '*.vim' -mtime +10 -delete"
   endfunction  " }}}
 
   call s:ConfigPlugin(#{
