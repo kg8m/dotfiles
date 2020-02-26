@@ -49,10 +49,18 @@ function tmux_execute_in_all_panes {
 }
 
 function setup_my_tmux_plugin {
-  [ -d ~/.tmux ]            || ln -s ~/dotfiles/.tmux ~/.tmux
+  [ -d ~/.tmux ]              || ln -s ~/dotfiles/.tmux ~/.tmux
   [ -d ~/.tmux/plugins/"$1" ] || ln -s "$( pwd )" ~/.tmux/plugins/"$1"
-  [ "$( /bin/ls ~/.tmux/plugins/ | wc -l )" -eq "4" ] && unset -f setup_my_tmux_plugin
+
+  __setup_done_tmux_plugins__+="$1"
+
+  if echo "$__setup_done_tmux_plugins__" | egrep tpm | egrep resurrect | egrep continuum | egrep -q scroll-copy-mode; then
+    unset __setup_done_tmux_plugins__
+    unset -f setup_my_tmux_plugin
+  fi
 }
+
+export __setup_done_tmux_plugins__=""
 
 zinit ice lucid wait"!0c" as"null" atload"setup_my_tmux_plugin tpm"
 zinit light tmux-plugins/tpm
