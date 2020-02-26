@@ -7,9 +7,6 @@ zstyle ':completion:*' keep-prefix
 zstyle ':completion:*' use-cache true
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
-# Also see `export LSCOLORS/LS_COLORS`
-zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
-
 setopt complete_in_word
 
 # https://zdharma.org/zinit/wiki/Example-Minimal-Setup/
