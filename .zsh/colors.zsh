@@ -14,4 +14,4 @@ function setup_my_dircolors {
 
   unset -f setup_my_dircolors
 }
-zinit ice lucid wait"!0a" atload"setup_my_dircolors"; zinit light seebi/dircolors-solarized
+zinit ice lucid wait"!0c" atload"setup_my_dircolors"; zinit light seebi/dircolors-solarized

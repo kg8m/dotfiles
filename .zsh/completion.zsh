@@ -10,7 +10,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 setopt complete_in_word
 
 # https://zdharma.org/zinit/wiki/Example-Minimal-Setup/
-zinit ice lucid wait"!0a" blockf atpull"zinit creinstall -q ."
+zinit ice lucid wait"!0c" blockf atpull"zinit creinstall -q ."
 zinit light zsh-users/zsh-completions
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=245,bold"
@@ -18,5 +18,5 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # https://zdharma.org/zinit/wiki/Example-Minimal-Setup/
-zinit ice lucid wait"!0a" atload"_zsh_autosuggest_start"
+zinit ice lucid wait"!0c" atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
