@@ -864,12 +864,8 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
        \ })
   endif  " }}}
 
-  if s:RegisterPlugin("mattn/vim-lsp-settings", #{ if: v:false })  " {{{
-    call s:ConfigPlugin(#{
-       \   lazy:      v:true,
-       \   on_source: "vim-lsp",
-       \ })
-  endif  " }}}
+  call s:RegisterPlugin("mattn/vim-lsp-settings", #{ if: v:false })
+  call s:RegisterPlugin("tsuyoshicho/vim-efm-langserver-settings", #{ if: v:false })
 endif  " }}}
 
 if s:RegisterPlugin("thomasfaingnaert/vim-lsp-snippets")  " {{{
