@@ -1,5 +1,5 @@
 if which direnv > /dev/null 2>&1; then
-  setup_my_direnv() {
+  function setup_my_direnv {
     eval "$( direnv hook zsh )"
 
     if [[ -f .envrc ]]; then
@@ -11,9 +11,9 @@ if which direnv > /dev/null 2>&1; then
   }
   zinit ice lucid nocd wait"!0b" atload"setup_my_direnv"; zinit snippet ~/.zsh/dummy.zsh
 else
-  error_for_envrc() {
+  function error_for_envrc {
     if [[ -f .envrc ]]; then
-      >&2 echo "WARNING: .envrc exists but direnv isn't installed."
+      echo "WARNING: .envrc exists but direnv isn't installed." >&2
     fi
   }
   add-zsh-hook chpwd error_for_envrc

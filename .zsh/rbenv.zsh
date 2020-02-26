@@ -1,5 +1,5 @@
 if [ -d ~/.rbenv ] && which rbenv > /dev/null 2>&1; then
-  setup_my_rbenv() {
+  function setup_my_rbenv {
     eval "$( rbenv init - )"
     unset -f setup_my_rbenv
   }

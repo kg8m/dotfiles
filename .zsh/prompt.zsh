@@ -1,4 +1,4 @@
-setup_my_prompt() {
+function setup_my_prompt {
   autoload colors && colors
 
   local user="%F{green}%n@%m%f"
