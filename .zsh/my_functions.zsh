@@ -198,7 +198,7 @@ function update_zsh_plugins {
   execute_with_echo "git checkout ."
   execute_with_echo "cd $current_dir"
 
-  execute_with_echo "zinit update --all"
+  execute_with_echo "zinit update --all --parallel --quiet"
 
   # Execute `init.sh` to delete files fo fish because they are treated as completions by zinit
   execute_with_echo "cd $__ENHANCD_DIR__"
