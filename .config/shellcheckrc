@@ -13,6 +13,9 @@ disable=SC2155
 # egrep is non-standard and deprecated. Use grep -E instead.
 disable=SC2196
 
+# Prefer mapfile or read -a to split command output (or quote to avoid splitting).
+disable=SC2207
+
 # which is non-standard. Use builtin 'command -v' instead.
 disable=SC2230
 
