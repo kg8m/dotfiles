@@ -85,7 +85,7 @@ function __my_preexec_end_timetrack() {
       growl_options="$growl_options -s"
     fi
 
-    ssh main "echo '[$USER@$HOST] $message' | growlnotify $growl_options"
+    ssh main -t "echo '[$USER@$HOST] $message' | growlnotify $growl_options"
 
     if [ $last_status = "0" ]; then
       message=$( echo -e $message | sed -e 's/\(Command succeeded!!\)/\\e[0;32m\1\\e[1;37m/' )

@@ -42,7 +42,7 @@ function retriable_execute_with_confirm {
 
 function notify {
   local message=$( printf %q "[$USER@$HOST] ${@:-Command finished.}" )
-  ssh main "growlnotify -m $message -a iTerm -s"
+  ssh main -t "growlnotify -m $message -a iTerm -s"
 }
 
 function batch_move {

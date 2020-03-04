@@ -263,7 +263,7 @@ function! RemoteCopy(text) abort  " {{{
     let filter = " | tr -d '\\n'"
   endif
 
-  call system("echo '" . text . "'" . filter . " | ssh main 'LC_CTYPE=UTF-8 pbcopy'")
+  call system("echo '" . text . "'" . filter . " | ssh main -t 'LC_CTYPE=UTF-8 pbcopy'")
 
   if &columns > 50
     let text = substitute(text, '\v\n|\t', " ", "g")
@@ -1738,7 +1738,7 @@ if s:RegisterPlugin("tyru/open-browser.vim")  " {{{
   let g:openbrowser_browser_commands = [
     \   #{
     \     name: "ssh",
-    \     args: "ssh main 'open '\\''{uri}'\\'''",
+    \     args: "ssh main -t 'open '\\''{uri}'\\'''",
     \   }
     \ ]
 
