@@ -1092,6 +1092,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>f :FzfFiles<Cr>
   nnoremap <Leader><Leader>v :<C-u>call <SID>FzfMyShortcuts("'Git ")<Cr>
   nnoremap <Leader><Leader>b :FzfBuffers<Cr>
+  nnoremap <Leader><Leader>l :FzfLines<Cr>
   nnoremap <Leader><Leader>g :FzfGrep<Space>
   vnoremap <Leader><Leader>g "gy:FzfGrep<Space><C-r>"
   nnoremap <Leader><Leader>m :FzfMarks<Cr>
@@ -1544,6 +1545,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     \   "FzfFiles",
     \   "FzfGFiles",
     \   "FzfBuffers",
+    \   "FzfLines",
     \   "FzfMarks",
     \   "FzfHelptags",
     \ ]
