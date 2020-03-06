@@ -914,7 +914,9 @@ function! s:CompletionRefreshPattern(filetype) abort  " {{{
       \   ruby: '\v([@:]\k*|\k+)$',
       \   sass: css_pattern,
       \   scss: css_pattern,
+      \   sh:  '\v([a-zA-Z0-9_-]+|\k+)$',
       \   sql: '\v( \zs\k*|[a-zA-Z0-9_-]+)$',
+      \   vue: '\v([a-zA-Z0-9_-]+|/|\k+)$',
       \ }
   endif
 
