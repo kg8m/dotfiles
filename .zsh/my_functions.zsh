@@ -42,7 +42,9 @@ function retriable_execute_with_confirm {
 
 function notify {
   local message=$( printf %q "[$USER@$HOST] ${@:-Command finished.}" )
-  ssh main -t "growlnotify -m $message -a iTerm -s"
+
+  # `> /dev/null` for ignoring "Removing previously sent notification" message
+  ssh main -t "echo "$message" | /usr/local/bin/terminal-notifier -group \"NOTIFY_$message\" -sender TERMINAL_NOTIFIER_STAY" > /dev/null
 }
 
 function batch_move {

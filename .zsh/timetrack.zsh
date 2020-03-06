@@ -59,9 +59,10 @@ function __my_preexec_start_timetrack() {
 function __my_preexec_end_timetrack() {
   local last_status=$?
   local exec_time
+  local title
   local message
   local command=$( echo $__timetrack_command | sed -e "s/'/'\\\\''/g" )
-  local growl_options="-n 'ZSH timetracker' --appIcon iTerm"
+  local notifier_options="-group \"TIMETRACK_${USER}@${HOST}_$( printf '%q' "$command" )\""
 
   export __timetrack_end=`date +%s`
 
@@ -74,18 +75,21 @@ function __my_preexec_end_timetrack() {
     exec_time=$(( __timetrack_end - __timetrack_start ))
 
     if [ $last_status = "0" ]; then
-      message='👼 Command succeeded!!'
+      title='👼 Command succeeded!!'
     else
-      message='👿 Command failed!!'
+      title='👿 Command failed!!'
     fi
 
-    message="$message\nTime: $exec_time seconds\nCommand: $command"
+    title+=" ($exec_time seconds)"
+    notifier_options+=" -title '$title'"
+    message="Command: $command"
 
     if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
-      growl_options="$growl_options -s"
+      notifier_options="$notifier_options -sender TERMINAL_NOTIFIER_STAY"
     fi
 
-    ssh main -t "echo '[$USER@$HOST] $message' | growlnotify $growl_options"
+    # `> /dev/null` for ignoring "Removing previously sent notification" message
+    ssh main -t "echo '[$USER@$HOST] $message' | /usr/local/bin/terminal-notifier $notifier_options" > /dev/null
 
     if [ $last_status = "0" ]; then
       message=$( echo -e $message | sed -e 's/\(Command succeeded!!\)/\\e[0;32m\1\\e[1;37m/' )
@@ -99,7 +103,7 @@ function __my_preexec_end_timetrack() {
 
     echo "\n* * *"
     echo $message
-    echo "Notified by \`growlnotify $growl_options\`"
+    echo "Notified by \`terminal-notifier $notifier_options\`"
     date
 
     unset __timetrack_start
