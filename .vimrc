@@ -1091,7 +1091,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   nnoremap <Leader><Leader>f :FzfFiles<Cr>
   nnoremap <Leader><Leader>v :<C-u>call <SID>FzfMyShortcuts("'Git ")<Cr>
-  nnoremap <Leader><Leader>b :FzfBuffers<Cr>
+  nnoremap <Leader><Leader>b :call <SID>FzfBuffers()<Cr>
   nnoremap <Leader><Leader>l :FzfLines<Cr>
   nnoremap <Leader><Leader>g :FzfGrep<Space>
   vnoremap <Leader><Leader>g "gy:FzfGrep<Space><C-r>"
@@ -1102,6 +1102,26 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   noremap  <Leader><Leader>s :<C-u>call <SID>FzfMyShortcuts("")<Cr>
   noremap  <Leader><Leader>a :<C-u>call <SID>FzfMyShortcuts("'Alignta ")<Cr>
   nnoremap <Leader><Leader>r :call <SID>SetupFzfRails()<Cr>:FzfRails<Space>
+
+  " Buffers  " {{{
+  " Sort buffers in dictionary order (Fzf's `:Buffers` doesn't sort them)
+  " See History configs
+  function! s:FzfBuffers() abort  " {{{
+    let options = #{
+      \   source:  s:FzfBuffersFiles(),
+      \   options: ["--header-lines", !empty(expand("%")), "--nth=2..", "--prompt", "Buffers> ", "--tabstop=5"],
+      \ }
+
+    call s:FzfHistoryRun("buffers-files", options)
+  endfunction  " }}}
+
+  function! s:FzfBuffersFiles() abort  " {{{
+    let current  = empty(expand("%")) ? [] : [printf("[%%]\t%s", fnamemodify(expand("%"), ":~:."))]
+    let buffers  = s:FzfHistoryBuffers()
+
+    return s:ListUtility().uniq_by(current + buffers, { item -> split(item, "\t")[1] })
+  endfunction  " }}}
+  " }}}
 
   " Grep  " {{{
   " Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)
@@ -1132,8 +1152,12 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       \   options: ["--header-lines", !empty(expand("%")), "--nth=2..", "--prompt", "History> ", "--tabstop=5"],
       \ }
 
+    call s:FzfHistoryRun("history-files", options)
+  endfunction  " }}}
+
+  function! s:FzfHistoryRun(name, options) abort  " {{{
     " https://github.com/junegunn/fzf/blob/0896036266dc951ac03c451f1097171a996eb412/plugin/fzf.vim#L341-L348
-    let wrapped = fzf#wrap("history-files", options)
+    let wrapped = fzf#wrap(a:name, a:options)
     let wrapped.original_sink = remove(wrapped, "sink*")
 
     function! wrapped.temp_sink(args) abort  " {{{
@@ -1546,7 +1570,6 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   let s:fzf_commands = [
     \   "FzfFiles",
     \   "FzfGFiles",
-    \   "FzfBuffers",
     \   "FzfLines",
     \   "FzfMarks",
     \   "FzfHelptags",
