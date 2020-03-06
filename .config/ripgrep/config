@@ -45,7 +45,7 @@
 --type-add=minjs:*.min.js
 --type-not=minjs
 
---type-add=railsignore:db/*_structure.sql
+--type-add=railsignore:development_structure.sql
 --type-not=railsignore
 
 --type-add=macos:.DS_Store
