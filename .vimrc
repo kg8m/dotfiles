@@ -1192,7 +1192,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
   function! s:FzfHistoryOldfiles() abort  " {{{
-    let ignore_pattern = '\v\.git/COMMIT_EDITMSG$|\.git/addp-hunk-edit\.diff$'
+    let ignore_pattern = '\v\.git/(.*/)?COMMIT_EDITMSG$|\.git/addp-hunk-edit\.diff$'
     let filepaths      = filter(copy(v:oldfiles), { _, filepath -> filereadable(fnamemodify(filepath, ":p")) && filepath !~# ignore_pattern })
 
     return map(filepaths, { _, filepath -> printf("[h]\t%s", fnamemodify(filepath, ":~:.")) })
