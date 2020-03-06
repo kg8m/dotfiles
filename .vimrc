@@ -313,8 +313,19 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
   augroup my_vimrc  " {{{
-    autocmd FileType * let b:asyncomplete_refresh_pattern = s:CompletionRefreshPattern(&filetype)
+    autocmd FileType *                       call s:SetAsyncompleteRefreshPattern()
+    autocmd User     lsp_target_buffer_reset call s:SetAsyncompleteRefreshPattern()
   augroup END  " }}}
+
+  function! s:SetAsyncompleteRefreshPattern() abort  " {{{
+    if s:IsLSPTargetBuffer()
+      let b:asyncomplete_refresh_pattern = s:CompletionRefreshPattern(&filetype)
+    else
+      if has_key(b:, "asyncomplete_refresh_pattern")
+        unlet b:asyncomplete_refresh_pattern
+      endif
+    endif
+  endfunction  " }}}
 
   " Hide messages like "Pattern not found" or "Match 1 of <N>"
   set shortmess+=c
@@ -633,6 +644,8 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
     autocmd FileType                      * call s:ReswitchLSPGlobalConfigs()
     autocmd BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
 
+    autocmd FileType * call s:ResetLSPTargetBuffer()
+
     autocmd User lsp_definition_failed execute "tjump " . expand("<cword>")
   augroup END  " }}}
 
@@ -658,6 +671,27 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
       let b:lsp_highlight_references_enabled = (&filetype != "sass")
     endif
     let g:lsp_highlight_references_enabled = b:lsp_highlight_references_enabled
+  endfunction  " }}}
+
+  function! s:IsLSPTargetBuffer() abort  " {{{
+    if !has_key(b:, "lsp_target_buffer")
+      let b:lsp_target_buffer = v:false
+      for filetype in get(s:, "lsp_filetypes", [])
+        if &filetype == filetype
+          let b:lsp_target_buffer = v:true
+          break
+        endif
+      endfor
+    endif
+
+    return b:lsp_target_buffer
+  endfunction  " }}}
+
+  function! s:ResetLSPTargetBuffer() abort  " {{{
+    if has_key(b:, "lsp_target_buffer")
+      unlet b:lsp_target_buffer
+      doautocmd User lsp_target_buffer_reset
+    endif
   endfunction  " }}}
 
   function! s:LSPSchemasJson() abort  " {{{
@@ -1686,10 +1720,6 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \   colorscheme: "kg8m",
     \ }
 
-  augroup my_vimrc  " {{{
-    autocmd FileType * if has_key(b:, "lsp_target_buffer") | unlet b:lsp_target_buffer | endif
-  augroup END  " }}}
-
   function! Lightline_Filepath() abort  " {{{
     let filepath        = s:Lightline_Filepath()
     let readonly_symbol = s:Lightline_ReadonlySymbol()
@@ -1727,17 +1757,7 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! Lightline_LSPStatus() abort  " {{{
-    if !has_key(b:, "lsp_target_buffer")
-      let b:lsp_target_buffer = v:false
-      for filetype in get(s:, "lsp_filetypes", [])
-        if &filetype == filetype
-          let b:lsp_target_buffer = v:true
-          break
-        endif
-      endfor
-    endif
-
-    if b:lsp_target_buffer
+    if s:IsLSPTargetBuffer()
       if has_key(b:, "lsp_buffer_enabled")
         return "LSP: OK"
       else
