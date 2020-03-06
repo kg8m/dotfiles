@@ -2,10 +2,8 @@ if which direnv > /dev/null 2>&1; then
   function setup_my_direnv {
     eval "$( direnv hook zsh )"
 
-    if [[ -f .envrc ]]; then
-      # https://github.com/direnv/direnv/blob/a4632773637ee1a6b08fa81043cacd24ea941489/shell_zsh.go#L12
-      eval "$( direnv export zsh )"
-    fi
+    # https://github.com/direnv/direnv/blob/a4632773637ee1a6b08fa81043cacd24ea941489/shell_zsh.go#L12
+    eval "$( direnv export zsh )"
 
     unset -f setup_my_direnv
   }
