@@ -2219,6 +2219,9 @@ if s:RegisterPlugin("xolox/vim-session", #{ if: !IsGitCommit() && !IsGitHunkEdit
 
   set sessionoptions=buffers,folds
 
+  " Prevent vim-session's `tabpage_filter()` from removing inactive buffers
+  set sessionoptions+=tabpages
+
   augroup my_vimrc  " {{{
     autocmd BufWritePost * silent call s:SaveSession()
   augroup END  " }}}
