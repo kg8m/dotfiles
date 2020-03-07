@@ -1327,7 +1327,8 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
 
   function! s:FzfMyShortcutsHandler(item) abort  " {{{
-    execute substitute(a:item, '\v.*--\s+`(.+)`$', '\1', "")
+    " Don't call `execute substitute(...)` because it causes problem if the command is Fzf's
+    call feedkeys(":" . substitute(a:item, '\v.*--\s+`(.+)`$', '\1', "") . "\<Cr>")
   endfunction  " }}}
 
   function! s:SetupFzfMyShortcuts() abort  " {{{
