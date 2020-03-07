@@ -945,7 +945,7 @@ function! s:CompletionRefreshPattern(filetype) abort  " {{{
       \   html: '\v(/|\k+)$',
       \   json: '\v("\k*|\[|\k+)$',
       \   less: css_pattern,
-      \   ruby: '\v([@:]\k*|\k+)$',
+      \   ruby: '\v(\@?\@\k*|(:)@<!:\k*|\k+)$',
       \   sass: css_pattern,
       \   scss: css_pattern,
       \   sh:  '\v([a-zA-Z0-9_-]+|\k+)$',
