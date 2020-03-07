@@ -2790,9 +2790,10 @@ if !IsGitCommit() && !IsGitHunkEdit()  " {{{
   set fillchars=vert:\|
 
   augroup my_vimrc  " {{{
-    autocmd FileType neosnippet setlocal foldmethod=marker
-    autocmd FileType vim        setlocal foldmethod=marker
     autocmd FileType haml       setlocal foldmethod=indent
+    autocmd FileType neosnippet setlocal foldmethod=marker
+    autocmd FileType sh,zsh     setlocal foldmethod=syntax
+    autocmd FileType vim        setlocal foldmethod=marker
     autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 
     " http://d.hatena.ne.jp/gnarl/20120308/1331180615
