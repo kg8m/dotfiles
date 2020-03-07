@@ -312,21 +312,6 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_completeopt = v:false
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
-  augroup my_vimrc  " {{{
-    autocmd FileType *                       call s:SetAsyncompleteRefreshPattern()
-    autocmd User     lsp_target_buffer_reset call s:SetAsyncompleteRefreshPattern()
-  augroup END  " }}}
-
-  function! s:SetAsyncompleteRefreshPattern() abort  " {{{
-    if s:IsLSPTargetBuffer()
-      let b:asyncomplete_refresh_pattern = s:CompletionRefreshPattern(&filetype)
-    else
-      if has_key(b:, "asyncomplete_refresh_pattern")
-        unlet b:asyncomplete_refresh_pattern
-      endif
-    endif
-  endfunction  " }}}
-
   " Hide messages like "Pattern not found" or "Match 1 of <N>"
   set shortmess+=c
 
@@ -650,6 +635,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   augroup END  " }}}
 
   function! s:OnLSPBufferEnabled() abort  " {{{
+    let b:asyncomplete_refresh_pattern = s:CompletionRefreshPattern(&filetype)
     setlocal omnifunc=lsp#complete
     nmap <buffer> g] <Plug>(lsp-definition)
 
