@@ -2931,7 +2931,7 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
         let replace_command  = "mv -f " . temp_file . " " . tags_file
         let teardown_command = "rm -f " . lock_file
 
-        let ctags_options = "--tag-relative=yes --recurse=yes --sort=yes -f " . temp_file
+        let ctags_options = "--fields=n --tag-relative=yes --recurse=yes --sort=yes -f " . temp_file
 
         if a:directory != "."
           let ctags_options .= " --exclude=test --exclude=spec --languages=ruby"
