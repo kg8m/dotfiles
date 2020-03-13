@@ -1132,6 +1132,17 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   noremap  <Leader><Leader>a :<C-u>call <SID>FzfMyShortcuts("'Alignta ")<Cr>
   nnoremap <Leader><Leader>r :call <SID>SetupFzfRails()<Cr>:FzfRails<Space>
 
+  augroup my_vimrc  " {{{
+    autocmd FileType fzf call s:SetupFzfWindow()
+  augroup END  " }}}
+
+  function! s:SetupFzfWindow() abort  " {{{
+    " Temporarily increase window height
+    set winheight=999
+    set winheight=1
+    redraw
+  endfunction  " }}}
+
   " Buffers  " {{{
   " Sort buffers in dictionary order (Fzf's `:Buffers` doesn't sort them)
   " See History configs
