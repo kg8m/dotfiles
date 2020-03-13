@@ -640,7 +640,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
 
     autocmd FileType * call s:ResetLSPTargetBuffer()
 
-    autocmd User lsp_definition_failed execute "tjump " . expand("<cword>")
+    autocmd User lsp_definition_failed FzfTjump
   augroup END  " }}}
 
   function! s:OnLSPBufferEnabled() abort  " {{{
@@ -1118,6 +1118,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " See dwm.vim
   let g:fzf_action = #{ ctrl-o: "DWMOpen" }
 
+  " See also vim-fzf-tjump's mappings
   nnoremap <Leader><Leader>f :FzfFiles<Cr>
   nnoremap <Leader><Leader>v :<C-u>call <SID>FzfMyShortcuts("'Git ")<Cr>
   nnoremap <Leader><Leader>b :call <SID>FzfBuffers()<Cr>
@@ -1634,6 +1635,23 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     call s:ConfigPlugin(#{
        \   lazy:   v:true,
        \   on_cmd: "Qfreplace",
+       \ })
+  endif  " }}}
+
+  if s:RegisterPlugin("kg8m/vim-fzf-tjump")  " {{{
+    let g:fzf_tjump_path_to_preview_bin = s:PluginInfo("fzf.vim").path . "/bin/preview.sh"
+
+    nnoremap <Leader><Leader>t :FzfTjump<Space>
+    vnoremap <Leader><Leader>t "gy:FzfTjump<Space><C-r>"
+
+    map g] <Plug>(fzf-tjump)
+
+    call s:ConfigPlugin(#{
+       \   lazy:    v:true,
+       \   on_cmd:  "FzfTjump",
+       \   on_func: "fzf#tjump",
+       \   on_map:  [["nv", "<Plug>(fzf-tjump)"]],
+       \   depends: "fzf.vim",
        \ })
   endif  " }}}
 endif  " }}}
@@ -2960,10 +2978,8 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
   endfunction  " }}}
 endif  " }}}
 
-" See also vim-lsp settings
-" g<C-]>: Jump to a tag by `:tjump`
-" <C-o>:  Jump back
-noremap  g] g<C-]>
+" See also vim-lsp and vim-fzf-tjump settings
+" <C-o>: Jump back
 nnoremap g[ <C-o>
 " }}}
 
