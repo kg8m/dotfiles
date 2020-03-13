@@ -1397,6 +1397,8 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Alignta] ')'",        "'<,'>Alignta 0 )"],
         \   ["[Alignta] ']'",        "'<,'>Alignta 0 ]"],
         \   ["[Alignta] '}'",        "'<,'>Alignta }"],
+        \   ["[Alignta] '  #=> '",   "'<,'>Alignta 21 #=>"],
+        \   ["[Alignta] '  //=> '",  "'<,'>Alignta 21 //=>"],
         \
         \   ["[Autoformat] Format Source Codes", "Autoformat"],
         \
