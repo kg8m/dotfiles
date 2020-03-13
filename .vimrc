@@ -299,6 +299,15 @@ endif
 let &runtimepath .= "," . s:plugin_manager_path
 
 call s:SetupPluginStart()
+
+augroup my_vimrc  " {{{
+  autocmd VimEnter * call s:CallPluginHooks()
+augroup END  " }}}
+
+function! s:CallPluginHooks() abort  " {{{
+  call dein#call_hook("source")
+  call dein#call_hook("post_source")
+endfunction  " }}}
 " }}}
 
 " Plugins list and settings  " {{{
