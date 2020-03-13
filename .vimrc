@@ -1143,9 +1143,8 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     redraw
   endfunction  " }}}
 
-  " Buffers  " {{{
-  " Sort buffers in dictionary order (Fzf's `:Buffers` doesn't sort them)
-  " See History configs
+  " Buffers: Sort buffers in dictionary order (Fzf's `:Buffers` doesn't sort them)  " {{{
+  " Also see History configs
   function! s:FzfBuffers() abort  " {{{
     let options = #{
       \   source:  s:FzfBuffersFiles(),
@@ -1163,8 +1162,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
   " }}}
 
-  " Grep  " {{{
-  " Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)
+  " Grep: Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)  " {{{
   " https://github.com/junegunn/fzf.vim/blob/dc4c4c22715c060a2babd5a5187004bdecbcdea7/plugin/fzf.vim#L52
   command! -bang -nargs=* FzfGrep call fzf#vim#grep("rg " . s:FzfGrepOptions() . " " . shellescape(<q-args>), v:true, fzf#vim#with_preview({}), <bang>0)
 
@@ -1181,8 +1179,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
   " }}}
 
-  " History  " {{{
-  " Ignore some files, e.g., `.git/COMMIT_EDITMSG`, `.git/addp-hunk-edit.diff`, and so on (Fzf's `:History` doesn't ignore them)
+  " History: Ignore some files, e.g., `.git/COMMIT_EDITMSG`, `.git/addp-hunk-edit.diff`, and so on (Fzf's `:History` doesn't ignore them)  " {{{
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/plugin/fzf.vim#L64
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/plugin/fzf.vim#L73
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L520-L525
@@ -1304,7 +1301,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " Yank History  " {{{
   " https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
-  " See yankround.vim
+  " Also see yankround.vim
   function! s:FzfYankHistory() abort  " {{{
     let options = #{
       \   source:  s:YankList(),
