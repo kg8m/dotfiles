@@ -1227,7 +1227,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     let bufnrs        = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") != "qf" && len(bufname(bufnr)) })
     let sorted_bufnrs = sort(bufnrs, { lhs, rhs -> bufname(lhs) < bufname(rhs) ? -1 : 1 })
 
-    return map(sorted_bufnrs, { _, bufnr -> printf("[%d]\t%s", bufnr, bufname(bufnr)) })
+    return map(sorted_bufnrs, { _, bufnr -> printf("[%d]\t%s", bufnr, fnamemodify(bufname(bufnr), ":~:.")) })
   endfunction  " }}}
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
