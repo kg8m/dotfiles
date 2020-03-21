@@ -711,7 +711,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   " yarn add bash-language-server  " {{{
   call s:RegisterLSP(#{
      \   name: "bash-language-server",
-     \   cmd: { server_info -> ["bash-language-server start"] },
+     \   cmd: { server_info -> ["bash-language-server", "start"] },
      \   whitelist: ["sh", "zsh"],
      \ })
   " }}}
@@ -719,7 +719,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   " yarn add vscode-css-languageserver-bin  " {{{
   call s:RegisterLSP(#{
      \   name: "css-languageserver",
-     \   cmd: { server_info -> ["css-languageserver --stdio"] },
+     \   cmd: { server_info -> ["css-languageserver", "--stdio"] },
      \   whitelist: ["css", "less", "sass", "scss"],
      \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("css") } },
      \   workspace_config: #{
@@ -757,7 +757,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   " go get golang.org/x/tools/gopls  " {{{
   call s:RegisterLSP(#{
      \   name: "gopls",
-     \   cmd: { server_info -> ["gopls -mode stdio"] },
+     \   cmd: { server_info -> ["gopls", "-mode", "stdio"] },
      \   initialization_options: #{
      \     completeUnimported: v:true,
      \     completionDocumentation: v:true,
@@ -774,7 +774,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   " yarn add vscode-html-languageserver-bin  " {{{
   call s:RegisterLSP(#{
      \   name: "html-languageserver",
-     \   cmd: { server_info -> ["html-languageserver --stdio"] },
+     \   cmd: { server_info -> ["html-languageserver", "--stdio"] },
      \   initialization_options: #{ embeddedLanguages: #{ css: v:true, javascript: v:true } },
      \   whitelist: ["html"],
      \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("html") } },
@@ -784,7 +784,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   " yarn add vscode-json-languageserver-bin  " {{{
   call s:RegisterLSP(#{
      \   name: "json-languageserver",
-     \   cmd: { server_info -> ["json-languageserver --stdio"] },
+     \   cmd: { server_info -> ["json-languageserver", "--stdio"] },
      \   whitelist: ["json"],
      \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("json") } },
      \   workspace_config: { -> #{
@@ -799,7 +799,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   " gem install solargraph  " {{{
   call s:RegisterLSP(#{
      \   name: "solargraph",
-     \   cmd: { server_info -> ["solargraph stdio"] },
+     \   cmd: { server_info -> ["solargraph", "stdio"] },
      \   initialization_options: #{ diagnostics: "true" },
      \   whitelist: ["ruby"],
      \ })
@@ -816,7 +816,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   " yarn add typescript-language-server typescript  " {{{
   call s:RegisterLSP(#{
      \   name: "typescript-language-server",
-     \   cmd: { server_info -> ["typescript-language-server --stdio"] },
+     \   cmd: { server_info -> ["typescript-language-server", "--stdio"] },
      \   initialization_options: #{ diagnostics: "true" },
      \   whitelist: ["typescript", "javascript", "typescriptreact", "javascriptreact", "typescript.tsx", "javascript.jsx"],
      \ })
@@ -825,7 +825,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   " yarn add vim-language-server  " {{{
   call s:RegisterLSP(#{
      \   name: "vim-language-server",
-     \   cmd: { server_info -> ["vim-language-server --stdio"] },
+     \   cmd: { server_info -> ["vim-language-server", "--stdio"] },
      \   initialization_options: { -> #{ vimruntime: $VIMRUNTIME, runtimepath: &runtimepath } },
      \   root_uri: { server_info -> lsp#utils#path_to_uri($HOME) },
      \   whitelist: ["vim"],
@@ -878,7 +878,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   " yarn add yaml-language-server  " {{{
   call s:RegisterLSP(#{
      \   name: "yaml-language-server",
-     \   cmd: { server_info -> ["yaml-language-server --stdio"] },
+     \   cmd: { server_info -> ["yaml-language-server", "--stdio"] },
      \   whitelist: ["eruby.yaml", "yaml"],
      \   workspace_config: #{
      \     yaml: #{
