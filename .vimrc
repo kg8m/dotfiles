@@ -1749,10 +1749,10 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \   left: [
     \     ["mode", "paste"],
     \     ["bufnum"],
-    \     ["filename_warning", "filename"],
+    \     ["warning_filepath"], ["normal_filepath"],
     \     ["separator"],
     \     ["filetype"],
-    \     ["fileencoding_warning", "fileencoding"],
+    \     ["warning_fileencoding"], ["normal_fileencoding"],
     \     ["fileformat"],
     \     ["separator"],
     \     ["lineinfo_with_percent"],
@@ -1770,30 +1770,29 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \     lineinfo_with_percent: "%l/%L(%p%%) : %v",
     \   },
     \   component_function: #{
-    \     filename:   "Lightline_Filepath",
-    \     lsp_status: "Lightline_LSPStatus",
+    \     normal_filepath:     "Lightline_NormalFilepath",
+    \     normal_fileencoding: "Lightline_NormalFileencoding",
+    \     lsp_status:          "Lightline_LSPStatus",
     \   },
     \   component_expand: #{
-    \     filename_warning:     "Lightline_FilenameWarning",
-    \     fileencoding_warning: "Lightline_FileencodingWarning",
+    \     warning_filepath:     "Lightline_WarningFilepath",
+    \     warning_fileencoding: "Lightline_WarningFileencoding",
     \   },
     \   component_type: #{
-    \     filename_warning:     "warning",
-    \     fileencoding_warning: "warning",
+    \     warning_filepath:     "warning",
+    \     warning_fileencoding: "warning",
     \   },
     \   colorscheme: "kg8m",
     \ }
 
   function! Lightline_Filepath() abort  " {{{
-    let filepath        = s:Lightline_Filepath()
-    let modified_symbol = s:Lightline_ModifiedSymbol()
-
-    return filepath .
-         \ (empty(modified_symbol) ? "" : " " . modified_symbol)
+    return (s:Lightline_IsReadonly() ? "X " : "") .
+         \ s:Lightline_Filepath() .
+         \ (&modified ? " +" : (&modifiable ? "" : " -"))
   endfunction  " }}}
 
-  function! s:Lightline_ModifiedSymbol() abort  " {{{
-    return &filetype =~? 'help\|vimfiler' ? "" : &modified ? "+" : &modifiable ? "" : "-"
+  function! Lightline_Fileencoding() abort  " {{{
+    return &fileencoding
   endfunction  " }}}
 
   function! s:Lightline_Filepath() abort  " {{{
@@ -1814,14 +1813,34 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     endif
   endfunction  " }}}
 
-  function! Lightline_FilenameWarning() abort  " {{{
-    " Use `%{...}` because component-expansion result is shared with other windows/buffers
-    return "%{(&filetype !~? 'help\\|vimfiler' && &readonly) ? 'READONLY' : ''}"
+  function! s:Lightline_IsReadonly() abort  " {{{
+    return &filetype !~? 'help\|vimfiler' && &readonly
   endfunction  " }}}
 
-  function! Lightline_FileencodingWarning() abort  " {{{
+  function! Lightline_NormalFilepath() abort  " {{{
+    return Lightline_IsIrregularFilepath() ? "" : Lightline_Filepath()
+  endfunction  " }}}
+
+  function! Lightline_NormalFileencoding() abort  " {{{
+    return Lightline_IsIrregularFileencoding() ? "" : Lightline_Fileencoding()
+  endfunction  " }}}
+
+  function! Lightline_WarningFilepath() abort  " {{{
     " Use `%{...}` because component-expansion result is shared with other windows/buffers
-    return "%{(empty(&fileencoding) || &fileencoding == 'utf-8') ? '' : 'NON UTF-8'}"
+    return "%{Lightline_IsIrregularFilepath() ? Lightline_Filepath() : ''}"
+  endfunction  " }}}
+
+  function! Lightline_WarningFileencoding() abort  " {{{
+    " Use `%{...}` because component-expansion result is shared with other windows/buffers
+    return "%{Lightline_IsIrregularFileencoding() ? Lightline_Fileencoding() : ''}"
+  endfunction  " }}}
+
+  function! Lightline_IsIrregularFilepath() abort  " {{{
+    return s:Lightline_IsReadonly() || CurrentFilename() =~# '^sudo:'
+  endfunction  " }}}
+
+  function! Lightline_IsIrregularFileencoding() abort  " {{{
+    return !empty(&fileencoding) && &fileencoding != "utf-8"
   endfunction  " }}}
 
   function! Lightline_LSPStatus() abort  " {{{
