@@ -743,6 +743,17 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
+  " go get github.com/nametake/golangci-lint-langserver  " {{{
+  call s:RegisterLSP(#{
+     \   name: "golangci-lint-langserver",
+     \   cmd: { server_info -> ["golangci-lint-langserver"] },
+     \   initialization_options: #{
+     \     command: ["golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json"],
+     \   },
+     \   whitelist: ["go"],
+     \ })
+  " }}}
+
   " go get golang.org/x/tools/gopls  " {{{
   call s:RegisterLSP(#{
      \   name: "gopls",
@@ -794,10 +805,10 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " yarn add sql-language-server  " {{{
+  " go get github.com/lighttiger2505/sqls  " {{{
   call s:RegisterLSP(#{
-     \   name: "sql-language-server",
-     \   cmd: { server_info -> ["sql-language-server up --method stdio"] },
+     \   name: "sqls",
+     \   cmd: { server_info -> ["sqls"] },
      \   whitelist: ["sql"],
      \ })
   " }}}
