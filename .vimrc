@@ -1748,8 +1748,13 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   let s:lightline_elements = #{
     \   left: [
     \     ["mode", "paste"],
-    \     ["bufnum", "filename"],
-    \     ["filetype", "fileencoding", "fileformat"],
+    \     ["bufnum"],
+    \     ["filename_warning", "filename"],
+    \     ["separator"],
+    \     ["filetype"],
+    \     ["fileencoding_warning", "fileencoding"],
+    \     ["fileformat"],
+    \     ["separator"],
     \     ["lineinfo_with_percent"],
     \   ],
     \   right: [
@@ -1760,24 +1765,35 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     \   active: s:lightline_elements,
     \   inactive: s:lightline_elements,
     \   component: #{
+    \     separator: "|",
     \     bufnum: "#%n",
     \     lineinfo_with_percent: "%l/%L(%p%%) : %v",
     \   },
     \   component_function: #{
-    \     filename: "Lightline_Filepath",
+    \     filename:   "Lightline_Filepath",
     \     lsp_status: "Lightline_LSPStatus",
+    \   },
+    \   component_expand: #{
+    \     filename_warning:     "Lightline_FilenameWarning",
+    \     fileencoding_warning: "Lightline_FileencodingWarning",
+    \   },
+    \   component_type: #{
+    \     filename_warning:     "warning",
+    \     fileencoding_warning: "warning",
     \   },
     \   colorscheme: "kg8m",
     \ }
 
   function! Lightline_Filepath() abort  " {{{
     let filepath        = s:Lightline_Filepath()
-    let readonly_symbol = s:Lightline_ReadonlySymbol()
     let modified_symbol = s:Lightline_ModifiedSymbol()
 
-    return (readonly_symbol != "" ? readonly_symbol . " " : "") .
-         \ filepath .
-         \ (modified_symbol != "" ? " " . modified_symbol : "")
+    return filepath .
+         \ (empty(modified_symbol) ? "" : " " . modified_symbol)
+  endfunction  " }}}
+
+  function! s:Lightline_ModifiedSymbol() abort  " {{{
+    return &filetype =~? 'help\|vimfiler' ? "" : &modified ? "+" : &modifiable ? "" : "-"
   endfunction  " }}}
 
   function! s:Lightline_Filepath() abort  " {{{
@@ -1798,12 +1814,14 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
     endif
   endfunction  " }}}
 
-  function! s:Lightline_ReadonlySymbol() abort  " {{{
-    return &filetype !~? 'help\|vimfiler\|gundo' && &readonly ? "X" : ""
+  function! Lightline_FilenameWarning() abort  " {{{
+    " Use `%{...}` because component-expansion result is shared with other windows/buffers
+    return "%{(&filetype !~? 'help\\|vimfiler' && &readonly) ? 'READONLY' : ''}"
   endfunction  " }}}
 
-  function! s:Lightline_ModifiedSymbol() abort  " {{{
-    return &filetype =~? 'help\|vimfiler\|gundo' ? "" : &modified ? "+" : &modifiable ? "" : "-"
+  function! Lightline_FileencodingWarning() abort  " {{{
+    " Use `%{...}` because component-expansion result is shared with other windows/buffers
+    return "%{(empty(&fileencoding) || &fileencoding == 'utf-8') ? '' : 'NON UTF-8'}"
   endfunction  " }}}
 
   function! Lightline_LSPStatus() abort  " {{{
