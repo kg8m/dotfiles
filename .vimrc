@@ -2597,10 +2597,6 @@ call s:RegisterPlugin("stephpy/vim-yaml", #{ if: !IsGitCommit() && !IsGitHunkEdi
 call s:RegisterPlugin("pedrohdz/vim-yaml-folds", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
 
 if s:RegisterPlugin("othree/yajs.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
-  augroup my_vimrc  " {{{
-    autocmd FileType javascript setlocal foldmethod=syntax
-  augroup END  " }}}
-
   call s:ConfigPlugin(#{
      \   lazy:  v:true,
      \   on_ft: "javascript",
