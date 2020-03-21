@@ -1728,6 +1728,10 @@ if s:RegisterPlugin("Yggdroot/indentLine")  " {{{
     \   "unite",
     \   "vimfiler",
     \ ]
+  let g:indentLine_bufTypeExclude = [
+    \   "help",
+    \   "terminal",
+    \ ]
 endif  " }}}
 
 if s:RegisterPlugin("othree/javascript-libraries-syntax.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
