@@ -1,3 +1,14 @@
+" Profile  " {{{
+" 1. Enable following profile commands (`profile start ...`)
+" 2. Do something you are concerned with
+" 3. Disable and finish profiling by `:profile pause | noautocmd qall!`
+" 4. Check ~/tmp/vim-profile.log
+
+" profile start ~/tmp/vim-profile.log
+" profile func *
+" profile file *
+" }}}
+
 " ----------------------------------------------
 " Initialize  " {{{
 " Set initial variables/options  " {{{
