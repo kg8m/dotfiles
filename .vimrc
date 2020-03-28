@@ -1856,7 +1856,7 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! Lightline_IsIrregularFilepath() abort  " {{{
-    return s:Lightline_IsReadonly() || CurrentFilename() =~# '^sudo:'
+    return s:Lightline_IsReadonly() || CurrentAbsolutePath() =~# '^sudo:'
   endfunction  " }}}
 
   function! Lightline_IsIrregularFileencoding() abort  " {{{
