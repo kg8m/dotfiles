@@ -75,3 +75,8 @@ def __benchmark_with_export__(labels_and_procs)
   puts "reported to #{output_path}"
   report
 end
+
+local_path = File.expand_path("~/.pryrc.local")
+if File.exists?(local_path)
+  load local_path
+end
