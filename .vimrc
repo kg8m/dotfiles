@@ -521,6 +521,26 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
      \ })
 endif  " }}}
 
+if s:RegisterPlugin("high-moctane/asyncomplete-nextword.vim")  " {{{
+  augroup my_vimrc  " {{{
+    autocmd User asyncomplete_setup call s:SetupAsyncompleteNextword()
+  augroup END  " }}}
+
+  function! s:SetupAsyncompleteNextword() abort  " {{{
+    call asyncomplete#register_source(asyncomplete#sources#nextword#get_source_options(#{
+       \   name: "asyncomplete_source_nextword",
+       \   whitelist: ["*"],
+       \   args: ["-n", "10000"],
+       \   completor: function("asyncomplete#sources#nextword#completor"),
+       \ }))
+  endfunction  " }}}
+
+  call s:ConfigPlugin(#{
+     \   lazy:      v:true,
+     \   on_source: "asyncomplete.vim",
+     \ })
+endif  " }}}
+
 if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
   augroup my_vimrc  " {{{
     autocmd User asyncomplete_setup call s:SetupAsyncompleteTags()

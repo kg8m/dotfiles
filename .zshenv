@@ -12,6 +12,7 @@ export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.git_templates/bin:$PATH
 export PATH=$HOME/dotfiles/.zsh/bin:$PATH
 
+export NEXTWORD_DATA_PATH=$HOME/.local/share/nextword/nextword-data
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
 
 case "$-" in
