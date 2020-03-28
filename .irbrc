@@ -1,21 +1,37 @@
-class Object
-  def __benchmark__(labels_and_procs)
+def __benchmark__(*args)
+  if defined?(Rails)
+    original_log_level = Rails.logger.level
+    Rails.logger.level = Rails.logger.class::UNKNOWN
+  end
+
+  case args[0]
+  when Numeric
+    require "benchmark"
+
+    n = args[0]
+    labels_and_procs = args[1]
+
+    max_label_width = labels_and_procs.keys.map(&:to_s).map(&:length).max
+
+    Benchmark.bm(max_label_width + 1) do |x|
+      labels_and_procs.each do |label, _proc|
+        x.report("#{label}:"){ n.times(&_proc) }
+      end
+    end
+  when Hash
     require "benchmark/ips"
 
-    if defined?(Rails)
-      original_log_level = Rails.logger.level
-      Rails.logger.level = Rails.logger.class::UNKNOWN
-    end
+    labels_and_procs = args[0]
 
     Benchmark.ips do |x|
       labels_and_procs.each do |label, _proc|
         x.report("#{label}:"){ _proc.call }
       end
     end
-  ensure
-    if defined?(Rails)
-      Rails.logger.level = original_log_level
-    end
+  end
+ensure
+  if defined?(Rails)
+    Rails.logger.level = original_log_level
   end
 end
 
