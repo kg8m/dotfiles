@@ -105,29 +105,15 @@ add-by-select             = bulk-add
 add-with-intent-by-select = bulk-add-with-intent
 add-by-patch-by-select    = bulk-add-by-patch
 
-bulk-add = "!f() {\
-  git sh 'execute_with_echo git add -- $( git select-unstaged-files )';\
-  git sh 'execute_with_echo git status';\
-}; f"
-
-bulk-add-with-intent = "!f() {\
-  git sh 'execute_with_echo git add --intent-to-add -- $( git select-untracked-files )';\
-  git sh 'execute_with_echo git status';\
-}; f"
-
-bulk-add-by-patch = "!f() {\
-  git sh 'execute_with_echo git add --patch -- $( git select-unstaged-files )';\
-  git sh 'execute_with_echo git status';\
-}; f"
+bulk-add             = sh git:add:bulk
+bulk-add-with-intent = sh git:add:bulk:intent
+bulk-add-by-patch    = sh git:add:bulk:patch
 # }}}
 
 # clone  # {{{
 clone-with-submodules = clone --recursive
 
-shallow-clone = "!f() {\
-  arguments=\"$@\";\
-  git sh \"execute_with_echo git clone --single-branch --depth 1 ${arguments}\";\
-}; f"
+shallow-clone = "!args=\"$@\"; git sh \"git:clone:shallow $args\""
 # }}}
 
 # checkout  # {{{
@@ -135,64 +121,27 @@ co  = checkout
 cos = checkout-branch-by-select
 bco = bulk-checkout-files
 
-checkout-files-by-select = bulk-checkout-files
+checkout-branch-by-select = sh git:checkout:branch:select
+checkout-files-by-select  = bulk-checkout-files
 
-checkout-branch-by-select = "!f() {\
-  branch=$( git select-a-branch );\
-  [[ \"${branch}\" ]] && git sh \"execute_with_echo git checkout ${branch}\";\
-}; f"
-
-bulk-checkout-files = "!f() {\
-  files=$( git select-status-changed-files );\
-  command=\"git checkout -- $( echo ${files} )\";\
-  \
-  echo 'Selected files:';\
-  for file in ${files}; do\
-    echo \"  - ${file}\";\
-  done;\
-  \
-  git sh \"execute_with_confirm '${command}'\";\
-  git sh 'execute_with_echo git status';\
-}; f"
+bulk-checkout-files = sh git:checkout:files:bulk
 # }}}
 
 # pull/fetch/merge/rebase  # {{{
-up = !git update
+up = update
 f  = fetch
 
-update = "!f() {\
-  remote_branch=$( git rev-parse --abbrev-ref '@{upstream}' );\
-  \
-  git sh 'execute_with_echo git --no-pager show --no-patch';\
-  git sh 'execute_with_echo git fetch';\
-  \
-  if [ $( git rev-parse HEAD ) = $( git rev-parse '@{upstream}' ) ]; then\
-    echo 'Up to date.';\
-  else\
-    git sh \"execute_with_echo git --no-pager log --reverse HEAD.. ${remote_branch}\";\
-    git sh 'execute_with_echo git pull --stat --rebase';\
-  fi;\
-}; f"
-
-shallow-update = "!f() {\
-  git sh 'execute_with_echo git pull --rebase --depth 1';\
-}; f"
-
-update-master = "!f() {\
-  current_branch=$( git symbolic-ref --short HEAD );\
-  \
-  git sh \"\
-    execute_with_echo git checkout master && \
-    execute_with_echo git update && \
-    execute_with_echo git checkout ${current_branch}\
-  \";\
-}; f"
+update         = sh git:update:with_log
+shallow-update = sh git:update:shallow
+update-master  = sh git:update:shallow
 # }}}
 
 # branch  # {{{
-brs      = !git branches
+brs      = branches
 br       = branch
 branches = branch --all -vv
+
+create-branch-with-set-upstream = "!git sh \"git:branch:create:with_set_upstream '$1' '$2' '$3'\""
 
 delete-fully-merged-local-branch = branch --delete
 delete-local-branches            = bulk-delete-local-branches
@@ -201,68 +150,8 @@ delete-remote-branches           = bulk-delete-remote-branches
 branch-delete-locals  = bulk-delete-local-branches
 branch-delete-remotes = bulk-delete-remote-branches
 
-create-branch-with-set-upstream = "!f() {\
-  original_branch=$1;\
-  branch_name=$2;\
-  commit_messages=$3;\
-  \
-  command=\"git checkout -b ${branch_name} ${original_branch}\";\
-  command=${command}\" && git commit --allow-empty --message=\\\"${commit_messages}\\\"\";\
-  command=${command}\" && git push --set-upstream origin ${branch_name}\";\
-  command=${command}\"; git branches\";\
-  \
-  git sh \"execute_with_confirm '${command}'\";\
-}; f"
-
-bulk-delete-local-branches = "!f() {\
-  branches=$( git branch | egrep -v \"${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}\" | filter | sed -e 's/^[* ]*//' );\
-  command=\"git branch --delete --force $( echo ${branches} )\";\
-  \
-  echo 'Selected branches:';\
-  for branch in ${branches}; do\
-    echo \"  - ${branch}\";\
-  done;\
-  \
-  git sh \"execute_with_confirm '${command}'\";\
-  git sh 'execute_with_echo git branches';\
-}; f"
-
-bulk-delete-remote-branches = "!f() {\
-  branches=$( git branch --remote | egrep -v \"${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}\" | filter | awk '{ print $1 }' | sed -e 's/^origin\\///' );\
-  command=\"git push --delete origin $( echo ${branches} )\";\
-  \
-  echo 'Selected branches:';\
-  for branch in ${branches}; do\
-    echo \"  - ${branch}\";\
-  done;\
-  \
-  git sh \"execute_with_confirm '${command}'\";\
-  git sh 'execute_with_echo git branches';\
-}; f"
-
-select-a-branch = "!f() {\
-  prompt=${1:-'select a branch: '};\
-  branches=($( git branch --all | sed -e 's/^[* ] //' | sed -e 's/remotes\\/origin\\///' | egrep -v '\\->' | sort | uniq | filter --prompt \"${prompt}\" ));\
-  \
-  if [[ ! ${#branches[@]} -eq 1 ]]; then\
-    echo 'select only 1 branch.' >&2;\
-    exit 1;\
-  else\
-    echo ${branches};\
-  fi;\
-}; f"
-
-select-a-remote-branch = "!f() {\
-  prompt=${1:-'select a branch: '};\
-  branches=($( git branch --remote | awk '{print $1}' | filter --prompt \"${prompt}\" ));\
-  \
-  if [[ ! ${#branches[@]} -eq 1 ]]; then\
-    echo 'select only 1 branch.' >&2;\
-    exit 1;\
-  else\
-    echo ${branches};\
-  fi;\
-}; f"
+bulk-delete-local-branches  = sh git:branch:delete:bulk:local
+bulk-delete-remote-branches = sh git:branch:delete:bulk:remote
 # }}}
 
 # commit  # {{{
@@ -272,25 +161,14 @@ ca = commit --all
 
 # reset/revert  # {{{
 breset            = bulk-reset
-edit-commits      = "!f() { git rebase --interactive $@; }; f"
-reset-commits     = !git edit-commits
+edit-commits      = rebase --interactive
+reset-commits     = edit-commits
 reset-last-commit = reset --soft HEAD~
 undo-add          = reset --soft
 
 reset-by-select = bulk-reset
 
-bulk-reset = "!f() {\
-  files=$( git select-staged-files );\
-  command=\"git reset -- $( echo ${files} )\";\
-  \
-  echo 'Selected files:';\
-  for file in ${files}; do\
-    echo \"  - ${file}\";\
-  done;\
-  \
-  git sh \"execute_with_confirm '${command}'\";\
-  git sh 'execute_with_echo git status';\
-}; f"
+bulk-reset = sh git:reset:bulk
 # }}}
 
 # clean  # {{{
@@ -298,158 +176,73 @@ bclean = bulk-clean
 
 clean-by-select = bulk-clean
 
-bulk-clean = "!f() {\
-  files=$( git select-untracked-files );\
-  command=\"git clean --force -- $( echo ${files} )\";\
-  \
-  echo 'Selected files:';\
-  for file in ${files}; do\
-    echo \"  - ${file}\";\
-  done;\
-  \
-  git sh \"execute_with_confirm '${command}'\";\
-  git sh 'execute_with_echo git status';\
-}; f"
+bulk-clean = sh git:clean:bulk
 # }}}
 
 # log  # {{{
-lg    = !git graph
-graph = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%an %Creset%s\"
-la    = log --branches --tags --remotes
-lp    = log --stat --patch
+lg = log-graph
+la = log --branches --tags --remotes
+lp = log-with-patch
 
-lg-branches = !git log-branches --graph --pretty=format:\\\"%Cgreen%h %ci %Cblue[C] %cn [A] %an %Creset%s\\\"
-lp-branches = !git log-branches --stat --patch
+log-graph      = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%an %Creset%s\"
+log-with-patch = log --stat --patch
 
-log-branches = "!f() {\
-  branch1=$( git select-a-remote-branch 'select first branch:' ) || exit 1;\
-  branch2=$( git select-a-remote-branch 'select another branch:' ) || exit 1;\
-  \
-  command=\"git log $@ ${branch1}...${branch2}\";\
-  git sh \"execute_with_confirm '${command}'\";\
-}; f"
+lg-branches = sh 'git:log:compare:branch --graph --pretty=format:\\\"\"%Cgreen%h %ci %Cblue[C] %cn [A] %an %Creset%s\\\"\"'
+lp-branches = sh 'git:log:compare:branch --stat --patch'
 # }}}
 
 # diff  # {{{
-di = !git diff-without-space-changes
-dc = !git diff-without-space-changes --cached
-ds = !git diff-without-space-changes --staged
-dw = !git diff-without-space-changes --color-words
-dh = !git diff-without-space-changes HEAD
-dl = !git diff-local-without-space-changes
+di = diff-without-space-changes
+dc = diff-without-space-changes --cached
+ds = diff-without-space-changes --staged
+dw = diff-without-space-changes --color-words
+dh = diff-without-space-changes HEAD
+dl = diff-local-without-space-changes
 
 diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
-diff-local = diff --no-index
-diff-local-without-space-changes = !git diff-without-space-changes --no-index
 
-diff-stat-branches  = !git diff-branches --stat-width = 150
+diff-local                       = diff --no-index
+diff-local-without-space-changes = diff-without-space-changes --no-index
 
-diff-branches = "!f() {\
-  branch1=$( git select-a-remote-branch 'select first branch:' ) || exit 1;\
-  branch2=$( git select-a-remote-branch 'select another branch:' ) || exit 1;\
-  \
-  command=\"git diff-without-space-changes $@ ${branch1}...${branch2}\";\
-  git sh \"execute_with_confirm ${command}\";\
-}; f"
+diff-stat-branches = diff-branches --stat-width = 150
 
-diff-branch-from = "!f() {\
-  target=$1;\
-  \
-  if [[ ! \"${target}\" ]]; then\
-    echo 'Specify branch (e.g., \"master\")' >&2;\
-    exit 1;\
-  fi;\
-  \
-  current=$( git rev-parse --abbrev-ref '@{upstream}' );\
-  command=\"git diff-without-space-changes ${@:2:($#-1)} origin/${target}...${current}\";\
-  git sh \"execute_with_confirm '${command}'\";\
-}; f"
-
-changed-files-from = "!f() {\
-  target=$1;\
-  \
-  if [[ ! \"${target}\" ]]; then\
-    echo 'Specify branch (e.g., \"master\")' >&2;\
-    exit 1;\
-  fi;\
-  \
-  current=$( git rev-parse --abbrev-ref '@{upstream}' );\
-  command=\"git diff --name-only ${@:2:($#-1)} origin/${target}...${current}\";\
-  git sh \"execute_with_echo '${command}'\";\
-}; f"
+diff-branches      = "!args=\"$@\"; git sh \"git:diff:branch $args\""
+diff-branch-from   = "!args=\"$@\"; git sh \"git:diff:branch:from $args\""
+changed-files-from = "!args=\"$@\"; git sh \"git:diff:branch:from:nameonly $args\""
 # }}}
 
 # stash  # {{{
-stash-all-with-message = "!f() {\
-  command=\"git stash push --no-keep-index --include-untracked --message '$@'\";\
-  git sh \"execute_with_echo \\\"${command}\\\"\";\
-}; f"
+stash-all-with-message = "!args=\"$@\"; git sh \"git:dstash:all:with_message $args\""
 # }}}
 
 # show  # {{{
 show-without-diff = show -s
 # }}}
 
-# status  # {{{
-status-only-changed-by-select   = select-status-changed-files
-status-only-staged-by-select    = select-staged-files
-status-only-unstaged-by-select  = select-unstaged-files
-status-only-untracked-by-select = select-untracked-files
-
-select-status-changed-files = "!f() {\
-  git status --short | git filter-status-changed-files;\
-}; f"
-
-select-staged-files = "!f() {\
-  git status --short | egrep '^[^ ]' | git filter-status-changed-files;\
-}; f"
-
-select-unstaged-files = "!f() {\
-  git status --short | egrep '^.[^ ]' | git filter-status-changed-files;\
-}; f"
-
-select-untracked-files = "!f() {\
-  git status --short | egrep '^\\?\\?' | git filter-status-changed-files;\
-}; f"
-
-filter-status-changed-files = "!f() {\
-  prompt=${1:-'select files: '};\
-  filter --prompt \"${prompt}\" | awk '{ print $2 }';\
-}; f"
-# }}}
-
 # submodule  # {{{
 submodule-update-all = update-submodules
 submodule-remove     = remove-submodules
 
-update-submodules = !git sh 'execute_with_echo git submodule update --remote --rebase && execute_with_echo git status'
-remove-submodules = "!f() {\
-  for target in $@; do\
-    git sh \"execute_with_echo git submodule deinit $target\";\
-    git sh \"execute_with_echo git rm $target\";\
-    git sh \"execute_with_echo trash $target\";\
-  done;\
-}; f"
+update-submodules = sh git:submodule:update
+remove-submodules = sh git:submodule:remove:bulk
 # }}}
 
 # hook  # {{{
 hook-update-all = update-hooks
 
-update-hooks = !( rm -i .git/hooks/* || exit 0 ) && cp ~/.git_templates/hooks/* .git/hooks/ && ls -l .git/hooks/
+update-hooks = sh git:hook:update
 # }}}
 
 # utility  # {{{
-aliases = !git alias
-alias   = !git config --get-regexp '^alias\\.' | sed -e 's/alias\\.\\([^ ]*\\) \\(.*\\)/\\1\\\t => \\2/' | sort -k3
+aliases = alias
+alias   = sh git:alias:list
 
 info = remote show origin
 st   = status
 
-chmod = "!f() {\
-  git sh \"execute_with_echo git update-index --add --chmod=$@\";\
-}; f"
+chmod = "!git sh \"git:utility:chmod '$1'\""
 
-sh = "!f() { zsh -c \"source ~/.zsh/my_functions.zsh; $@\"; }; f"
+sh = "!zsh -c \"source ~/.config/git/aliases; $@\""
 # }}}
 
 [include]

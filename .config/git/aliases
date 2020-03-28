@@ -1,0 +1,282 @@
+#!/usr/bin/env zsh
+source ~/.zsh/my_functions.zsh
+
+function git:add:bulk {
+  local files=( $( git:status:filter:unstaged ) )
+
+  if [ "${#files[@]}" -ne 0 ]; then
+    execute_with_echo "git add -- ${files[*]}"
+    execute_with_echo "git status"
+  fi
+}
+
+function git:add:bulk:intent {
+  local files=( $( git:status:filter:untracked ) )
+
+  if [ "${#files[@]}" -ne 0 ]; then
+    execute_with_echo "git add --intent-to-add -- ${files[*]}"
+    execute_with_echo "git status"
+  fi
+}
+
+function git:add:bulk:patch {
+  local files=( $( git:status:filter:unstaged ) )
+
+  if [ "${#files[@]}" -ne 0 ]; then
+    execute_with_echo "git add --patch -- ${files[*]}"
+    execute_with_echo "git status"
+  fi
+}
+
+function git:checkout:branch:select {
+  local branch="$( git:branch:filter:one )"
+  [[ -n "$branch" ]] && execute_with_echo "git checkout $branch"
+}
+
+function git:checkout:files:bulk {
+  local files=( $( git:status:filter:unstaged ) )
+  execute_with_confirm "git checkout -- ${files[*]}"
+}
+
+function git:update:with_log {
+  local remote_branch="$( git rev-parse --abbrev-ref '@{upstream}' )"
+
+  execute_with_echo "git --no-pager show --no-patch"
+  execute_with_echo "git fetch"
+
+  if [ "$( git rev-parse HEAD )" = "$( git rev-parse '@{upstream}' )" ]; then
+    echo "Up to date."
+  else
+    execute_with_echo "git --no-pager log --reverse HEAD.. ${remote_branch}"
+    execute_with_echo "git pull --stat --rebase"
+  fi
+}
+
+function git:update:shallow {
+  execute_with_echo git pull --rebase --depth 1
+}
+
+function git:update:master {
+  local current_branch="$( git symbolic-ref --short HEAD )"
+
+  execute_with_echo "git checkout master"
+  execute_with_echo "git update"
+  execute_with_echo "git checkout ${current_branch}"
+}
+
+function git:branch:create:with_set_upstream {
+  local original_branch="$1"
+  local branch_name="$2"
+  local commit_message="$3"
+
+  local command
+  command+="git checkout -b ${branch_name} ${original_branch}"
+  command+=" && git commit --allow-empty --message=\"${commit_message}\""
+  command+=" && git push --set-upstream origin ${branch_name}"
+  command+="; git branches"
+
+  execute_with_confirm "${command}"
+}
+
+function git:branch:delete:bulk:local {
+  local branches=( $(
+    git branch |
+      egrep -v "${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
+      filter |
+      sed -e 's/^[* ]*//'
+  ) )
+
+  if [ "${#branches[@]}" -ne 0 ]; then
+    execute_with_confirm "git branch --delete --force ${branches[*]}"
+    execute_with_echo git branches
+  else
+    echo "No target branches."
+  fi
+}
+
+function git:branch:delete:bulk:remote {
+  local branches=( $(
+    git branch --remote |
+      egrep -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
+      filter |
+      awk '{ print $1 }' |
+      sed -e 's#^origin/##'
+  ) )
+
+  if [ "${#branches[@]}" -ne 0 ]; then
+    execute_with_confirm "git push --delete origin ${branches[*]}"
+    execute_with_echo git branches
+  else
+    echo "No target branches."
+  fi
+}
+
+function git:branch:filter:one {
+  local branches=( $( git:branch:all | filter --no-multi --prompt "select a branch: " ) )
+
+  if [[ ${#branches[@]} -ne 1 ]]; then
+    echo "Select only 1 branch." >&2; exit 1
+  else
+    echo "${branches[1]}"
+  fi
+}
+
+function git:branch:filter:remote:one {
+  local prompt=${1:-"Select a branch: "}
+  local branches=( $( git:branch:remote | filter --no-multi --prompt "${prompt}" ) )
+
+  if [[ ${#branches[@]} -ne 1 ]]; then
+    echo "Select only 1 branch." >&2; exit 1
+  else
+    echo "${branches[1]}"
+  fi
+}
+
+function git:branch:all {
+  local remotes=( $( git remote -v | awk '{ print $1 }' | sort --unique ) )
+  local remotes_pattern="$( IFS='|'; echo "${remotes[*]//|/\\|}" )"
+
+  git branch --all |
+    git:utility:sed -e 's/^[* ] //' |
+    git:utility:sed -e 's#remotes/\('"${remotes_pattern}"'\)/##' |
+    egrep -v '\->' |
+    sort -u
+}
+
+function git:branch:remote {
+  git branch --remote | awk '{ print $1 }'
+}
+
+function git:clone:shallow {
+  execute_with_echo "git clone --single-branch --depth 1 $@"
+}
+
+function git:reset:bulk {
+  local files=( $( git:status:filter:staged ) )
+
+  if [ "${#files[@]}" -ne 0 ]; then
+    execute_with_confirm "git reset -- ${files[*]}"
+    execute_with_echo "git status"
+  fi
+}
+
+function git:clean:bulk {
+  local files=( $( git:status:filter:untracked ) )
+
+  if [ "${#files[@]}" -ne 0 ]; then
+    execute_with_confirm "git clean --force -- ${files[*]}"
+    execute_with_echo "git status"
+  fi
+}
+
+function git:log:compare:branch {
+  local branch1=$( git:branch:filter:remote:one "select first branch: " )
+  local branch2=$( git:branch:filter:remote:one "select another branch: "  )
+
+  if [[ -n "$branch1" ]] && [[ -n "$branch2" ]]; then
+    execute_with_confirm "git log $@ ${branch1}...${branch2}"
+  else
+    echo "Select 2 branches to compare." >&2; exit 1
+  fi
+}
+
+function git:diff:branch {
+  local branch1=$( git:branch:filter:remote:one "select first branch: " )
+  local branch2=$( git:branch:filter:remote:one "select another branch: " )
+
+  if [[ -n "$branch1" ]] && [[ -n "$branch2" ]]; then
+    execute_with_confirm "git diff-without-space-changes $@ ${branch1}...${branch2}"
+  else
+    echo "Select 2 branches to compare." >&2; exit 1
+  fi
+}
+
+function git:diff:branch:from {
+  local target="$1"
+
+  if [[ -n "$target" ]]; then
+    local current="$( git rev-parse --abbrev-ref '@{upstream}' )"
+    local rest_args="${@:2:($#-1)}"
+    execute_with_confirm "git diff-without-space-changes ${rest_args} origin/${target}...${current}"
+  else
+    echo "Specify a branch name, e.g., \"master\"." >&2; exit 1
+  fi
+}
+
+function git:diff:branch:from:nameonly {
+  local target="$1"
+
+  if [[ -n "$target" ]]; then
+    local current="$( git rev-parse --abbrev-ref '@{upstream}' )"
+    local rest_args="${@:2:($#-1)}"
+    execute_with_confirm "git diff --name-only ${rest_args} origin/${target}...${current}"
+  else
+    echo "Specify a branch name, e.g., \"master\"." >&2; exit 1
+  fi
+}
+
+function stash:all:with_message {
+  execute_with_echo "git stash push --no-keep-index --include-untracked --message '$@'"
+}
+
+function git:status:filter:all {
+  git status --short | git:status:utility:filter
+}
+
+function git:status:filter:staged {
+  git status --short | egrep '^[^ ]' | git:status:utility:filter
+}
+
+function git:status:filter:unstaged {
+  git status --short | egrep '^.[^ ]' | git:status:utility:filter
+}
+
+function git:status:filter:untracked {
+  git status --short | egrep '^\?\?' | git:status:utility:filter
+}
+
+function git:status:utility:filter {
+  filter --prompt "Select files: " | awk '{ print $2 }'
+}
+
+function git:submodule:update {
+  execute_with_echo "git submodule update --remote --rebase"
+  execute_with_echo "git status"
+}
+
+function git:submodule:remove:bulk {
+  local targets=( $( git submodule | filter | awk '{ print $2 }' ) )
+
+  for target in "${targets[@]}"; do
+    execute_with_echo "git submodule deinit $target"
+    execute_with_echo "git rm $target"
+    execute_with_echo "trash $target"
+  done
+}
+
+function git:hook:update {
+  mkdir -p .git/hooks
+
+  local oldhooks=( $( find .git/hooks ) )
+
+  execute_with_confirm "rm -f ${oldhooks[*]}"
+  execute_with_echo "cp ~/.git_templates/hooks/* .git/hooks"
+  execute_with_echo "ls -l .git/hooks"
+}
+
+function git:alias:list {
+  git config --get-regexp '^alias\.' |
+    git:utility:sed -e 's/alias\.\([^ ]*\) \(.*\)/\1\t => \2/'
+}
+
+function git:utility:chmod {
+  execute_with_echo "git update-index --add --chmod=$1"
+}
+
+function git:utility:sed {
+  if which gsed > /dev/null 2>&1; then
+    gsed "$@"
+  else
+    sed "$@"
+  fi
+}
