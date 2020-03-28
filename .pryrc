@@ -1,4 +1,17 @@
-Pry.config.prompt = proc { ">> " }
+prompt_procs = [
+  proc { ">> " },
+  proc { "++ " },
+]
+
+if Pry::Prompt.respond_to?(:new)
+  begin
+    Pry.config.prompt = Pry::Prompt.new(:simple, "Simple Prompt", prompt_procs)
+  rescue ArgumentError
+    Pry.config.prompt = prompt_procs
+  end
+else
+  Pry.config.prompt = prompt_procs
+end
 
 # Log to STDOUT if in Rails
 case
