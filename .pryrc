@@ -36,3 +36,42 @@ begin
 rescue LoadError => e
   warn "WARN -- #{e.class.name}: #{e.message} (#{e.backtrace.detect(&/\.pryrc/.method(:===))})"
 end
+
+def __benchmark__(n = nil, **labels_and_procs)
+  if defined?(Rails)
+    original_log_level = Rails.logger.level
+    Rails.logger.level = Rails.logger.class::UNKNOWN
+  end
+
+  if n
+    require "benchmark"
+
+    max_label_width = labels_and_procs.keys.map(&:to_s).map(&:length).max
+
+    Benchmark.bm(max_label_width + 1) do |x|
+      labels_and_procs.each do |label, _proc|
+        x.report("#{label}:"){ n.times(&_proc) }
+      end
+    end
+  else
+    require "benchmark/ips"
+
+    Benchmark.ips do |x|
+      labels_and_procs.each do |label, _proc|
+        x.report("#{label}:"){ _proc.call }
+      end
+    end
+  end
+ensure
+  if defined?(Rails)
+    Rails.logger.level = original_log_level
+  end
+end
+
+def __benchmark_with_export__(labels_and_procs)
+  output_path = "/tmp/benchmark_ips_report.#{Time.now.strftime("%Y%m%d-%H%M%S")}.txt"
+  report = __benchmark__(labels_and_procs)
+  report.generate_json(output_path)
+  puts "reported to #{output_path}"
+  report
+end
