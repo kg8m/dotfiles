@@ -1205,7 +1205,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " Grep: Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)  " {{{
   " https://github.com/junegunn/fzf.vim/blob/dc4c4c22715c060a2babd5a5187004bdecbcdea7/plugin/fzf.vim#L52
-  command! -bang -nargs=* FzfGrep call fzf#vim#grep("rg " . s:FzfGrepOptions() . " " . shellescape(<q-args>), v:true, fzf#vim#with_preview({}), <bang>0)
+  command! -bang -nargs=* FzfGrep call fzf#vim#grep("rg " . s:FzfGrepOptions() . " " . shellescape(<q-args>), v:true, fzf#vim#with_preview("right:wrap"), <bang>0)
 
   function! s:FzfGrepOptions() abort  " {{{
     let base = "--column --line-number --no-heading --color=always"
