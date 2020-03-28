@@ -66,6 +66,7 @@ function! UpdatePlugins() abort  " {{{
     \   . '\ !^First,\\ rewinding\\ head\\ to\\ replay\\ your\\ work\\ on\\ top\\ of\\ it'
     \   . '\ !^Fast-forwarded\\ master\\ to'
     \   . '\ !^From\\ https://'
+    \   . '\ !Successfully\\ rebased\\ and\\ updated\\ refs/heads/master.'
 
   execute "Unite dein/log -buffer-name=update_plugins -input=" . initial_input
 
