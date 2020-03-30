@@ -353,13 +353,13 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   endfunction  " }}}
   let g:asyncomplete_preprocessor = [function("s:AsyncompleteSortedFilter")]
 
-  " Asynchronous refresh completion  " {{{
-  function! s:DefineRefreshCompletionAsyncMappings() abort  " {{{
-    inoremap <silent> <expr> <BS> "\<BS>" . <SID>RefreshCompletionAsync()
-    inoremap <silent> <expr> .    "."     . <SID>RefreshCompletionAsync()
+  " Refresh completion  " {{{
+  function! s:DefineRefreshCompletionMappings() abort  " {{{
+    inoremap <silent> <expr> <BS> "\<BS>" . <SID>RefreshCompletion()
+    inoremap <silent> <expr> .    "."     . <SID>RefreshCompletion()
   endfunction  " }}}
 
-  function! s:RefreshCompletionAsync() abort  " {{{
+  function! s:RefreshCompletion() abort  " {{{
     call s:ClearCompletionTimer()
     call s:StartCompletionTimer()
     return ""
@@ -384,7 +384,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   " }}}
 
   function! s:ConfigPluginOnPostSource_asyncomplete() abort  " {{{
-    call timer_start(0, { -> s:DefineRefreshCompletionAsyncMappings() })
+    call timer_start(0, { -> s:DefineRefreshCompletionMappings() })
 
     if get(b:, "asyncomplete_enable", v:true)
       call asyncomplete#enable_for_buffer()
