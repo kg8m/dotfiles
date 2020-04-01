@@ -336,22 +336,71 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
   " Hide messages like "Pattern not found" or "Match 1 of <N>"
   set shortmess+=c
 
-  " Inspired by machakann/asyncomplete-ezfilter.vim's asyncomplete#preprocessor#ezfilter#filter
-  " Fuzzy matcher is mattn's idea
-  " cf. LSP sources are named "asyncomplete_lsp_{original source name}"
-  " cf. asyncomplete sources except for LSPs are named "asyncomplete_source_xxx"
-  function! s:AsyncompleteSortedFilter(ctx, matches) abort  " {{{
-    let sorted_items  = []
-    let base_matcher  = escape(a:ctx.base, '~"\.^$[]*')
-    let fuzzy_matcher = "^" . join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
+  function! s:AsyncompletePrioritySortedFuzzyFilter(options, matches) abort  " {{{
+    let sorted_items = []
+    let startcols    = []
 
-    for [source_name, matches] in sort(items(a:matches), { a, b -> a[0] > b[0] ? 1 : -1 })
-      call extend(sorted_items, filter(matches.items, { index, item -> item.word =~? fuzzy_matcher }))
+    let base_matcher = matchstr(a:options.base, s:CompletionRefreshPattern(&filetype))
+
+    " Special thanks: mattn
+    let fuzzy_matcher = join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
+
+    let sorter_context = #{
+      \   matcher:  base_matcher,
+      \   priority: 0,
+      \   cache:    {},
+      \ }
+
+    for [source_name, source_matches] in items(a:matches)
+      if empty(base_matcher)
+        let sorted_items += source_matches.items
+      else
+        let original_length = len(sorted_items)
+
+        " Language server sources have no priority
+        let sorter_context.priority = get(asyncomplete#get_source_info(source_name), "priority", 0) + 2
+
+        for item in source_matches.items
+          if item.word =~? fuzzy_matcher
+            let item.priority = s:AsyncompleteItemPriority(item, sorter_context)
+            let sorted_items += [item]
+          endif
+        endfor
+
+        if len(sorted_items) != original_length
+          let startcols += [source_matches.startcol]
+        endif
+      endif
     endfor
 
-    call asyncomplete#preprocess_complete(a:ctx, sorted_items)
+    if !empty(base_matcher)
+      call sort(sorted_items, { lhs, rhs -> lhs.priority - rhs.priority })
+    endif
+
+    " https://github.com/prabirshrestha/asyncomplete.vim/blob/1f8d8ed26acd23d6bf8102509aca1fc99130087d/autoload/asyncomplete.vim#L474
+    let a:options["startcol"] = min(startcols)
+
+    call asyncomplete#preprocess_complete(a:options, sorted_items)
   endfunction  " }}}
-  let g:asyncomplete_preprocessor = [function("s:AsyncompleteSortedFilter")]
+
+  function! s:AsyncompleteItemPriority(item, context) abort  " {{{
+    let word = a:item.word
+
+    if !has_key(a:context.cache, word)
+      if word ==? a:context.matcher
+        let a:context.cache[word] = 2
+      elseif word =~? "^" . a:context.matcher
+        let a:context.cache[word] = 3
+      elseif word =~? a:context.matcher
+        let a:context.cache[word] = 5
+      else
+        let a:context.cache[word] = 8
+      endif
+    endif
+
+    return a:context.cache[word] * a:context.priority
+  endfunction  " }}}
+  let g:asyncomplete_preprocessor = [function("s:AsyncompletePrioritySortedFuzzyFilter")]
 
   " Refresh completion  " {{{
   function! s:DefineRefreshCompletionMappings() abort  " {{{
@@ -413,11 +462,12 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-buffer.vim")  " {{{
 
   function! s:SetupAsyncompleteBuffer() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options(#{
-       \   name: "asyncomplete_source_02_buffer",
+       \   name: "asyncomplete_source_buffer",
        \   whitelist: ["*"],
        \   completor: function("asyncomplete#sources#buffer#completor"),
        \   events: s:asyncomplete_buffer_events,
        \   on_event: function("s:AsyncompleteBufferOnEventAsync"),
+       \   priority: 2,
        \ }))
 
     call s:ActivateAsyncompleteBuffer()
@@ -494,6 +544,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-file.vim")  " {{{
        \   name: "asyncomplete_source_file",
        \   whitelist: ["*"],
        \   completor: function("asyncomplete#sources#file#completor"),
+       \   priority: 3,
        \ }))
   endfunction  " }}}
 
@@ -510,9 +561,10 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
 
   function! s:SetupAsyncompleteNeosnippet() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options(#{
-       \   name: "asyncomplete_source_01_neosnippet",
+       \   name: "asyncomplete_source_neosnippet",
        \   whitelist: ["*"],
        \   completor: function("asyncomplete#sources#neosnippet#completor"),
+       \   priority: 1,
        \ }))
   endfunction  " }}}
 
@@ -528,11 +580,13 @@ if s:RegisterPlugin("high-moctane/asyncomplete-nextword.vim")  " {{{
   augroup END  " }}}
 
   function! s:SetupAsyncompleteNextword() abort  " {{{
+    " Should specify filetypes? `whitelist: ["gitcommit", "markdown", "moin", "text"],`
     call asyncomplete#register_source(asyncomplete#sources#nextword#get_source_options(#{
        \   name: "asyncomplete_source_nextword",
        \   whitelist: ["*"],
        \   args: ["-n", "10000"],
        \   completor: function("asyncomplete#sources#nextword#completor"),
+       \   priority: 3,
        \ }))
   endfunction  " }}}
 
@@ -552,6 +606,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete-tags.vim")  " {{{
        \   name: "asyncomplete_source_tags",
        \   whitelist: ["*"],
        \   completor: function("asyncomplete#sources#tags#completor"),
+       \   priority: 3,
        \ }))
   endfunction  " }}}
 
