@@ -340,7 +340,8 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
     let sorted_items = []
     let startcols    = []
 
-    let base_matcher = matchstr(a:options.base, s:CompletionRefreshPattern(&filetype))
+    let match_pattern = s:CompletionRefreshPattern(get(b:, "lsp_buffer_enabled", v:false) ? &filetype : "_")
+    let base_matcher  = matchstr(a:options.base, match_pattern)
 
     " Special thanks: mattn
     let fuzzy_matcher = join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
@@ -736,7 +737,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
     nmap <buffer> g] <Plug>(lsp-definition)
 
     call s:SwitchLSPGlobalConfigs()
-    let b:lsp_buffer_enabled = 1
+    let b:lsp_buffer_enabled = v:true
   endfunction  " }}}
 
   function! s:ReswitchLSPGlobalConfigs() abort  " {{{
