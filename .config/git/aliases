@@ -254,16 +254,6 @@ function git:submodule:remove:bulk {
   done
 }
 
-function git:hook:update {
-  mkdir -p .git/hooks
-
-  local oldhooks=( $( find .git/hooks ) )
-
-  execute_with_confirm "rm -f ${oldhooks[*]}"
-  execute_with_echo "cp ~/.git_templates/hooks/* .git/hooks"
-  execute_with_echo "ls -l .git/hooks"
-}
-
 function git:alias:list {
   git config --get-regexp '^alias\.' |
     git:utility:sed -e 's/alias\.\([^ ]*\) \(.*\)/\1\t => \2/'

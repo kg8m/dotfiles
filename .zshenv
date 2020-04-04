@@ -9,8 +9,8 @@ function try_to_source {
 
 export PATH=/usr/local/bin:/usr/local/sbin:/sbin:$PATH
 export PATH=$HOME/bin:$PATH
-export PATH=$HOME/.git_templates/bin:$PATH
-export PATH=$HOME/dotfiles/.zsh/bin:$PATH
+export PATH=$HOME/.config/git/bin:$PATH
+export PATH=$HOME/.zsh/bin:$PATH
 
 export NEXTWORD_DATA_PATH=$HOME/.local/share/nextword/nextword-data
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config

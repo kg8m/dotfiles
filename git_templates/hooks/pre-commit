@@ -1,2 +1,0 @@
-#!/usr/bin/env sh
-source ~/.git_templates/bin/set_user_info_depending_on_repository_url

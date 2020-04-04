@@ -11,4 +11,4 @@ if [ "$PREVIOUS_HEAD" != "$Z40" -o "$BRANCH_SWITCH" != "1" ]; then
   exit
 fi
 
-source ~/.git_templates/bin/set_user_info_depending_on_repository_url
+source ~/.config/git/bin/set_user_info_depending_on_repository_url
