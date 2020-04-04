@@ -156,18 +156,18 @@ function extract() {
 }
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
 
-function my_grep_without_pager() {
+function my_grep() {
   rg $RIPGREP_EXTRA_OPTIONS $@
 }
 
-function my_grep_with_pager() {
-  # Enable colors, group by filepath, and show line numbers
-  my_grep_without_pager --pretty $@ | less
+function my_grep_with_filter() {
+  my_grep --column --line-number --no-heading --color=always "$@" |
+    fzf --preview-window="right:wrap" --preview="$VIM_PLUGINS/github.com/junegunn/fzf.vim/bin/preview.sh {1}"
 }
-alias gr="my_grep_with_pager"
+alias gr="my_grep_with_filter"
 
 function vigr() {
-  vi $( my_grep_without_pager --color never --files-with-matches $@ )
+  vi $( my_grep --color never --files-with-matches $@ )
 }
 
 function tig {
