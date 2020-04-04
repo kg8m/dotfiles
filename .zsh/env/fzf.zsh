@@ -7,6 +7,8 @@ function setup_my_fzf {
   binds+=",ctrl-l:forward-char"
   binds+=",ctrl-space:toggle+down"
   binds+=",tab:toggle-preview"
+  binds+=",ctrl-j:preview-down"
+  binds+=",ctrl-k:preview-up"
 
   local options=""
   options+=" --ansi"
