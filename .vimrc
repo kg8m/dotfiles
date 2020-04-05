@@ -388,14 +388,12 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
     let word = a:item.word
 
     if !has_key(a:context.cache, word)
-      if word ==? a:context.matcher
+      if word =~? "^" . a:context.matcher
         let a:context.cache[word] = 2
-      elseif word =~? "^" . a:context.matcher
-        let a:context.cache[word] = 3
       elseif word =~? a:context.matcher
-        let a:context.cache[word] = 5
+        let a:context.cache[word] = 3
       else
-        let a:context.cache[word] = 8
+        let a:context.cache[word] = 5
       endif
     endif
 
