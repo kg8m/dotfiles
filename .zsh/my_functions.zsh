@@ -161,7 +161,7 @@ function my_grep() {
 }
 
 function my_grep_with_filter() {
-  my_grep --column --line-number --no-heading --color=always "$@" |
+  my_grep --column --line-number --no-heading --color=always --with-filename "$@" |
     fzf --preview-window="right:wrap" --preview="$VIM_PLUGINS/github.com/junegunn/fzf.vim/bin/preview.sh {1}"
 }
 alias gr="my_grep_with_filter"
