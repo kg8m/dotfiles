@@ -21,7 +21,7 @@ export PROMPT_EOL_MARK=""
 HISTFILE=~/.zsh_histfile
 HISTSIZE=100000
 SAVEHIST=100000
-HISTORY_IGNORE="exit|rm *-f*"
+HISTORY_IGNORE="exit|rm *-f*|*secret*|*SECRET*|*token*|*TOKEN*"
 
 # https://mollifier.hatenablog.com/entry/20090728/p1
 zshaddhistory() {
