@@ -95,10 +95,11 @@ function git:branch:create:with_set_upstream {
 
 function git:branch:delete:bulk:local {
   local branches=( $(
-    git branch |
+    git branch --verbose |
       egrep -v "${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
       filter |
-      sed -e 's/^[* ]*//'
+      sed -e 's/^[* ]*//' |
+      awk '{ print $1 }'
   ) )
 
   if [ "${#branches[@]}" -ne 0 ]; then
@@ -111,7 +112,7 @@ function git:branch:delete:bulk:local {
 
 function git:branch:delete:bulk:remote {
   local branches=( $(
-    git branch --remote |
+    git branch --verbose --remote |
       egrep -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
       filter |
       awk '{ print $1 }' |
@@ -127,7 +128,8 @@ function git:branch:delete:bulk:remote {
 }
 
 function git:branch:filter:one {
-  local branches=( $( git:branch:all | filter --no-multi --prompt "select a branch: " ) )
+  local ignore_pattern="$1"
+  local branches=( $( git:branch:all | egrep -v "${ignore_pattern}" | filter --no-multi --nth 1 --prompt "select a branch: " | awk '{ print $1 }' ) )
 
   if [[ ${#branches[@]} -ne 1 ]]; then
     echo "Select only 1 branch." >&2; exit 1
@@ -148,14 +150,14 @@ function git:branch:filter:remote:one {
 }
 
 function git:branch:all {
-  local remotes=( $( git remote -v | awk '{ print $1 }' | sort --unique ) )
-  local remotes_pattern="$( IFS='|'; echo "${remotes[*]//|/\\|}" )"
+  local max_length="$( git branch --all --format '%(refname:strip=-1)' | git:utility:wc --max-line-length )"
+  local list_format="%(align:$(( max_length + 2 ))) %(refname:strip=-1) %(end) %(objectname:short) %(contents:subject)"
 
-  git branch --all |
-    git:utility:sed -e 's/^[* ] //' |
-    git:utility:sed -e 's#remotes/\('"${remotes_pattern}"'\)/##' |
-    egrep -v '\->' |
-    sort -u
+  git branch --all --format "${list_format}" |
+    git:utility:sed -e 's/^ \+//' |
+    egrep -v "^HEAD +" |
+    sort |
+    awk '!x[$1]++'
 }
 
 function git:branch:remote {
@@ -277,6 +279,14 @@ function git:utility:sed {
     gsed "$@"
   else
     sed "$@"
+  fi
+}
+
+function git:utility:wc {
+  if which gwc > /dev/null 2>&1; then
+    gwc "$@"
+  else
+    wc "$@"
   fi
 }
 
