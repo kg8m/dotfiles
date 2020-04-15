@@ -235,7 +235,7 @@ function git:status:filter:all {
 }
 
 function git:status:filter:staged {
-  git status --short | egrep '^[^ ]' | git:status:utility:filter
+  git status --short | egrep '^[^ ]|^ A' | git:status:utility:filter
 }
 
 function git:status:filter:unstaged {
