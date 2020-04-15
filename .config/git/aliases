@@ -5,8 +5,10 @@ function git:add:bulk {
   local files=( $( git:status:filter:unstaged ) )
 
   if [ "${#files[@]}" -ne 0 ]; then
-    execute_with_echo "git add -- ${files[*]}"
-    execute_with_echo "git status"
+    execute_with_echo    "git add --intent-to-add -- ${files[*]}"
+    execute_with_echo    "git diff -- ${files[*]}"
+    execute_with_confirm "git add -- ${files[*]}"
+    execute_with_echo    "git status"
   fi
 }
 
@@ -35,6 +37,7 @@ function git:checkout:branch:select {
 
 function git:checkout:files:bulk {
   local files=( $( git:status:filter:unstaged ) )
+  execute_with_echo    "git diff -R -- ${files[*]}"
   execute_with_confirm "git checkout -- ${files[*]}"
 }
 
@@ -155,8 +158,9 @@ function git:reset:bulk {
   local files=( $( git:status:filter:staged ) )
 
   if [ "${#files[@]}" -ne 0 ]; then
+    execute_with_echo    "git diff --staged -R"
     execute_with_confirm "git reset -- ${files[*]}"
-    execute_with_echo "git status"
+    execute_with_echo    "git status"
   fi
 }
 
@@ -164,8 +168,9 @@ function git:clean:bulk {
   local files=( $( git:status:filter:untracked ) )
 
   if [ "${#files[@]}" -ne 0 ]; then
+    git:utility:cat:files ${files[*]}
     execute_with_confirm "git clean --force -- ${files[*]}"
-    execute_with_echo "git status"
+    execute_with_echo    "git status"
   fi
 }
 
@@ -197,6 +202,7 @@ function git:diff:branch:from {
   if [[ -n "$target" ]]; then
     local current="$( git rev-parse --abbrev-ref '@{upstream}' )"
     local rest_args="${@:2:($#-1)}"
+
     execute_with_confirm "git diff-without-space-changes ${rest_args} origin/${target}...${current}"
   else
     echo "Specify a branch name, e.g., \"master\"." >&2; exit 1
@@ -209,6 +215,7 @@ function git:diff:branch:from:nameonly {
   if [[ -n "$target" ]]; then
     local current="$( git rev-parse --abbrev-ref '@{upstream}' )"
     local rest_args="${@:2:($#-1)}"
+
     execute_with_confirm "git diff --name-only ${rest_args} origin/${target}...${current}"
   else
     echo "Specify a branch name, e.g., \"master\"." >&2; exit 1
@@ -268,5 +275,20 @@ function git:utility:sed {
     gsed "$@"
   else
     sed "$@"
+  fi
+}
+
+function git:utility:cat:files {
+  local filepath
+  local filepaths=( $@ )
+
+  if which bat > /dev/null 2>&1; then
+    bat --wrap --color=always --style=full ${filepaths[*]}
+  else
+    for filepath in ${filepaths[@]}; do
+      echo "\n** File: ${filepath}\n"
+      cat "${filepath}"
+      echo
+    done
   fi
 }
