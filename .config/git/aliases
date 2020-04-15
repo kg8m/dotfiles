@@ -68,7 +68,7 @@ function git:update:with_log {
 }
 
 function git:update:shallow {
-  execute_with_echo git pull --rebase --depth 1
+  execute_with_echo "git pull --rebase --depth 1"
 }
 
 function git:update:master {
@@ -104,7 +104,7 @@ function git:branch:delete:bulk:local {
 
   if [ "${#branches[@]}" -ne 0 ]; then
     execute_with_confirm "git branch --delete --force ${branches[*]}"
-    execute_with_echo git branches
+    execute_with_echo    "git branches"
   else
     echo "No target branches."
   fi
@@ -121,7 +121,7 @@ function git:branch:delete:bulk:remote {
 
   if [ "${#branches[@]}" -ne 0 ]; then
     execute_with_confirm "git push --delete origin ${branches[*]}"
-    execute_with_echo git branches
+    execute_with_echo    "git branches"
   else
     echo "No target branches."
   fi
