@@ -150,11 +150,11 @@ function git:branch:filter:remote:one {
 }
 
 function git:branch:all {
-  local max_length="$( git branch --all --format '%(refname:strip=-1)' | git:utility:wc --max-line-length )"
+  local max_length="$( git branch --all --format '%(refname:strip=-1)' | git:proxy:wc --max-line-length )"
   local list_format="%(align:$(( max_length + 2 ))) %(refname:strip=-1) %(end) %(objectname:short) %(contents:subject)"
 
   git branch --all --format "${list_format}" |
-    git:utility:sed -e 's/^ \+//' |
+    git:proxy:sed -e 's/^ \+//' |
     egrep -v "^HEAD +" |
     sort |
     awk '!x[$1]++'
@@ -172,7 +172,7 @@ function git:clean:bulk {
   local files=( $( git:status:filter:untracked ) )
 
   if [ "${#files[@]}" -ne 0 ]; then
-    git:utility:cat:files ${files[*]}
+    git:proxy:cat:files ${files[*]}
     execute_with_confirm "git clean --force -- ${files[*]}"
     execute_with_echo    "git status"
   fi
@@ -267,14 +267,14 @@ function git:submodule:remove:bulk {
 
 function git:alias:list {
   git config --get-regexp '^alias\.' |
-    git:utility:sed -e 's/alias\.\([^ ]*\) \(.*\)/\1\t => \2/'
+    git:proxy:sed -e 's/alias\.\([^ ]*\) \(.*\)/\1\t => \2/'
 }
 
 function git:utility:chmod {
   execute_with_echo "git update-index --add --chmod=$1"
 }
 
-function git:utility:sed {
+function git:proxy:sed {
   if which gsed > /dev/null 2>&1; then
     gsed "$@"
   else
@@ -282,7 +282,7 @@ function git:utility:sed {
   fi
 }
 
-function git:utility:wc {
+function git:proxy:wc {
   if which gwc > /dev/null 2>&1; then
     gwc "$@"
   else
@@ -290,7 +290,7 @@ function git:utility:wc {
   fi
 }
 
-function git:utility:cat:files {
+function git:proxy:cat:files {
   local filepath
   local filepaths=( $@ )
 
