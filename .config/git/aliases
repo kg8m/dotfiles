@@ -30,15 +30,27 @@ function git:add:bulk:patch {
   fi
 }
 
-function git:checkout:branch:select {
-  local branch="$( git:branch:filter:one )"
-  [[ -n "$branch" ]] && execute_with_echo "git checkout $branch"
-}
-
-function git:checkout:files:bulk {
+function git:restore:bulk {
   local files=( $( git:status:filter:unstaged ) )
   execute_with_echo    "git diff -R -- ${files[*]}"
-  execute_with_confirm "git checkout -- ${files[*]}"
+  execute_with_confirm "git restore -- ${files[*]}"
+}
+
+function git:restore:bulk:staged {
+  local files=( $( git:status:filter:staged ) )
+
+  if [ "${#files[@]}" -ne 0 ]; then
+    execute_with_echo    "git diff --staged -R"
+    execute_with_confirm "git restore --staged -- ${files[*]}"
+    execute_with_echo    "git status"
+  fi
+}
+
+function git:switch:select {
+  local current="$( git branch --show-current )"
+  local branch="$( git:branch:filter:one "^${current} +" )"
+
+  [[ -n "$branch" ]] && execute_with_echo "git switch $branch"
 }
 
 function git:update:with_log {
@@ -62,9 +74,9 @@ function git:update:shallow {
 function git:update:master {
   local current_branch="$( git symbolic-ref --short HEAD )"
 
-  execute_with_echo "git checkout master"
+  execute_with_echo "git switch master"
   execute_with_echo "git update"
-  execute_with_echo "git checkout ${current_branch}"
+  execute_with_echo "git switch ${current_branch}"
 }
 
 function git:branch:create:with_set_upstream {
@@ -73,7 +85,7 @@ function git:branch:create:with_set_upstream {
   local commit_message="$3"
 
   local command
-  command+="git checkout -b ${branch_name} ${original_branch}"
+  command+="git switch --create ${branch_name} ${original_branch}"
   command+=" && git commit --allow-empty --message=\"${commit_message}\""
   command+=" && git push --set-upstream origin ${branch_name}"
   command+="; git branches"
@@ -152,16 +164,6 @@ function git:branch:remote {
 
 function git:clone:shallow {
   execute_with_echo "git clone --single-branch --depth 1 $@"
-}
-
-function git:reset:bulk {
-  local files=( $( git:status:filter:staged ) )
-
-  if [ "${#files[@]}" -ne 0 ]; then
-    execute_with_echo    "git diff --staged -R"
-    execute_with_confirm "git reset -- ${files[*]}"
-    execute_with_echo    "git status"
-  fi
 }
 
 function git:clean:bulk {

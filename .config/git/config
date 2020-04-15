@@ -107,21 +107,32 @@ bulk-add-with-intent = sh git:add:bulk:intent
 bulk-add-by-patch    = sh git:add:bulk:patch
 # }}}
 
+# restore  # {{{
+brestore        = bulk-restore
+brestore-staged = bulk-restore-staged
+
+restore-by-select        = bulk-restore
+restore-by-select-staged = bulk-restore-staged
+
+bulk-restore        = sh git:restore:bulk
+bulk-restore-staged = sh git:restore:bulk:staged
+# }}}
+
 # clone  # {{{
 clone-with-submodules = clone --recursive
 
 shallow-clone = "!args=\"$@\"; git sh \"git:clone:shallow $args\""
 # }}}
 
+# switch  # {{{
+sw  = switch
+sws = switch-by-select
+
+switch-by-select = sh git:switch:select
+# }}}
+
 # checkout  # {{{
-co  = checkout
-cos = checkout-branch-by-select
-bco = bulk-checkout-files
-
-checkout-branch-by-select = sh git:checkout:branch:select
-checkout-files-by-select  = bulk-checkout-files
-
-bulk-checkout-files = sh git:checkout:files:bulk
+co = checkout
 # }}}
 
 # pull/fetch/merge/rebase  # {{{
@@ -157,15 +168,10 @@ ca = commit --all
 # }}}
 
 # reset/revert  # {{{
-breset            = bulk-reset
 edit-commits      = rebase --interactive
 reset-commits     = edit-commits
 reset-last-commit = reset --soft HEAD~
 undo-add          = reset --soft
-
-reset-by-select = bulk-reset
-
-bulk-reset = sh git:reset:bulk
 # }}}
 
 # clean  # {{{
