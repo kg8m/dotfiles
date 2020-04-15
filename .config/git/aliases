@@ -259,9 +259,9 @@ function git:submodule:remove:bulk {
   local targets=( $( git submodule | filter | awk '{ print $2 }' ) )
 
   for target in "${targets[@]}"; do
-    execute_with_echo "git submodule deinit $target"
-    execute_with_echo "git rm $target"
-    execute_with_echo "trash $target"
+    execute_with_confirm "git submodule deinit $target"
+    execute_with_confirm "git rm $target"
+    execute_with_confirm "trash $target"
   done
 }
 
