@@ -2229,6 +2229,16 @@ endif  " }}}
 
 call s:RegisterPlugin("tpope/vim-haml", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
 
+if s:RegisterPlugin("machakann/vim-highlightedundo")  " {{{
+  nmap u     <Plug>(highlightedundo-undo)
+  nmap <C-r> <Plug>(highlightedundo-redo)
+
+  call s:ConfigPlugin(#{
+     \   lazy:   v:true,
+     \   on_map: [["n", "<Plug>(highlightedundo-"]],
+     \ })
+endif  " }}}
+
 " Text object for indentation: i
 call s:RegisterPlugin("michaeljsmith/vim-indent-object")
 
