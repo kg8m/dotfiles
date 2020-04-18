@@ -15,8 +15,3 @@ alias ll="ls -l --time-style=long-iso"
 alias rm="rm -i"
 alias sudo='sudo env PATH=$PATH'
 alias watch="watch --color"
-
-alias reload="source ~/.zshrc; echo \"~/.zshrc sourced.\""
-
-# Never use tmuxinator
-alias mux="attach_or_new_tmux"
