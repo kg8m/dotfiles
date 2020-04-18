@@ -98,10 +98,11 @@ function git:branch:create:with_set_upstream {
 }
 
 function git:branch:delete:bulk:local {
+  local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {1}" )
   local branches=( $(
     git branch --verbose |
       egrep -v "${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
-      filter |
+      filter ${filter_options[*]} |
       sed -e 's/^[* ]*//' |
       awk '{ print $1 }'
   ) )
@@ -115,10 +116,11 @@ function git:branch:delete:bulk:local {
 }
 
 function git:branch:delete:bulk:remote {
+  local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {1}" )
   local branches=( $(
     git branch --verbose --remote |
       egrep -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
-      filter |
+      filter ${filter_options[*]} |
       awk '{ print $1 }' |
       sed -e 's#^origin/##'
   ) )
@@ -133,10 +135,11 @@ function git:branch:delete:bulk:remote {
 
 function git:branch:filter:one {
   local ignore_pattern="$1"
-  local branches=( $( git:branch:all | egrep -v "${ignore_pattern}" | filter --no-multi --nth 1 --prompt "select a branch: " | awk '{ print $1 }' ) )
+  local filter_options=( --no-multi --nth=1 --prompt="select a branch: " --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {-1}" )
+  local branches=( $( git:branch:all | egrep -v "${ignore_pattern}" | filter ${filter_options[*]} | awk '{ print $1 }' ) )
 
   if [[ ${#branches[@]} -ne 1 ]]; then
-    echo "Select only 1 branch." >&2; exit 1
+    echo "Select a branch." >&2; exit 1
   else
     echo "${branches[1]}"
   fi
@@ -144,7 +147,8 @@ function git:branch:filter:one {
 
 function git:branch:filter:remote:one {
   local prompt=${1:-"Select a branch: "}
-  local branches=( $( git:branch:remote | filter --no-multi --prompt "${prompt}" ) )
+  local filter_options=( --no-multi --nth=1 --prompt="${prompt}" --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {1}" )
+  local branches=( $( git:branch:remote | filter ${filter_options[*]} | awk '{ print $1 }' ) )
 
   if [[ ${#branches[@]} -ne 1 ]]; then
     echo "Select only 1 branch." >&2; exit 1
@@ -155,7 +159,7 @@ function git:branch:filter:remote:one {
 
 function git:branch:all {
   local max_length="$( git branch --all --format '%(refname:strip=-1)' | git:proxy:wc --max-line-length )"
-  local list_format="%(align:$(( max_length + 2 ))) %(refname:strip=-1) %(end) %(objectname:short) %(contents:subject)"
+  local list_format="%(align:$(( max_length + 2 ))) %(refname:strip=-1) %(end) %(objectname:short) %(contents:subject)   --   %(refname:strip=1)"
 
   git branch --all --format "${list_format}" |
     git:proxy:sed -e 's/^ \+//' |
@@ -165,7 +169,7 @@ function git:branch:all {
 }
 
 function git:branch:remote {
-  git branch --remote | awk '{ print $1 }'
+  git branch --remote --verbose | egrep -v '^ *[^/]+/HEAD\b'
 }
 
 function git:clone:shallow {
