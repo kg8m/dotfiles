@@ -253,7 +253,7 @@ function git:status:filter:untracked {
 }
 
 function git:status:utility:filter {
-  filter --prompt "Select files: " | awk '{ print $2 }'
+  filter --prompt="Select files: " --preview-window="down:70%:wrap" --preview="git diff-or-cat {2}" | awk '{ print $2 }'
 }
 
 function git:submodule:update {
@@ -278,6 +278,19 @@ function git:alias:list {
 
 function git:utility:chmod {
   execute_with_echo "git update-index --add --chmod=$1"
+}
+
+function git:utility:diff_or_cat {
+  local filepath="$1"
+  local git_status="$( git status --short -- "$filepath" )"
+
+  if [[ "$git_status" =~ '^\?\?' ]]; then
+    git:proxy:cat:files "$filepath"
+  elif [[ "$git_status" =~ ^[A-Z] ]]; then
+    git diff-without-space-changes --color=always --staged "$filepath"
+  else
+    git diff-without-space-changes --color=always "$filepath"
+  fi
 }
 
 function git:proxy:sed {
