@@ -32,9 +32,12 @@ function git:add:bulk:patch {
 
 function git:restore:bulk {
   local files=( $( git:status:filter:unstaged ) )
-  execute_with_echo    "git diff -R -- ${files[*]}"
-  execute_with_confirm "git restore -- ${files[*]}"
-  execute_with_echo    "git status"
+
+  if [ "${#files[@]}" -ne 0 ]; then
+    execute_with_echo    "git diff -R -- ${files[*]}"
+    execute_with_confirm "git restore -- ${files[*]}"
+    execute_with_echo    "git status"
+  fi
 }
 
 function git:restore:bulk:staged {
