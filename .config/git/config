@@ -92,15 +92,11 @@ fetchJobs = 4
 
 [alias]
 # add  # {{{
-bad  = bulk-add
-badi = bulk-add-with-intent
-badp = bulk-add-by-patch
-
-bulk-intent-to-add = bulk-add-with-intent
-
 add-by-select             = bulk-add
 add-with-intent-by-select = bulk-add-with-intent
 add-by-patch-by-select    = bulk-add-by-patch
+
+bulk-intent-to-add = bulk-add-with-intent
 
 bulk-add             = sh git:add:bulk
 bulk-add-with-intent = sh git:add:bulk:intent
@@ -108,9 +104,6 @@ bulk-add-by-patch    = sh git:add:bulk:patch
 # }}}
 
 # restore  # {{{
-brestore        = bulk-restore
-brestore-staged = bulk-restore-staged
-
 restore-by-select        = bulk-restore
 restore-by-select-staged = bulk-restore-staged
 
@@ -175,8 +168,6 @@ undo-add          = reset --soft
 # }}}
 
 # clean  # {{{
-bclean = bulk-clean
-
 clean-by-select = bulk-clean
 
 bulk-clean = sh git:clean:bulk
