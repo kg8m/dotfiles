@@ -44,7 +44,7 @@ function git:restore:bulk:staged {
   local files=( $( git:status:filter:staged ) )
 
   if [ "${#files[@]}" -ne 0 ]; then
-    execute_with_echo    "git diff --staged -R"
+    execute_with_echo    "git diff --staged -R -- ${files[*]}"
     execute_with_confirm "git restore --staged -- ${files[*]}"
     execute_with_echo    "git status"
   fi
