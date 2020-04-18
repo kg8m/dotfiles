@@ -206,7 +206,7 @@ changed-files-from = "!args=\"$@\"; git sh \"git:diff:branch:from:nameonly $args
 # }}}
 
 # stash  # {{{
-stash-all-with-message = "!args=\"$@\"; git sh \"git:dstash:all:with_message $args\""
+stash-all-with-message = "!args=\"$@\"; git sh \"git:stash:all:with_message $args\""
 # }}}
 
 # show  # {{{
