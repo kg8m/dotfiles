@@ -1,13 +1,13 @@
 function execute_with_echo {
   echo -e "\\n\\e[0;36mExecute:\\e[1;37m \`$@\`\\n" >&2
-  eval $@
+  eval "$@"
 }
 
 function execute_commands_with_echo {
   local cmd
 
   for cmd in $@; do
-    execute_with_echo $cmd
+    execute_with_echo "$cmd"
   done
 }
 
@@ -17,7 +17,7 @@ function execute_with_confirm {
 
   if [[ ${response} =~ ^y ]]; then
     export __execute_with_confirm_executed="1"
-    eval $@
+    eval "$@"
   else
     export __execute_with_confirm_executed=""
     echo "Canceled."
@@ -35,7 +35,7 @@ function retriable_execute_with_confirm {
     read "response?Retry? [y/n]: "
 
     if [[ ${response} =~ ^y ]]; then
-      retriable_execute_with_confirm $@
+      retriable_execute_with_confirm "$@"
     fi
   fi
 }
@@ -44,15 +44,15 @@ function notify {
   local message=$( printf %q "[$USER@$HOST] ${@:-Command finished.}" )
 
   # `> /dev/null` for ignoring "Removing previously sent notification" message
-  ssh main -t "echo "$message" | /usr/local/bin/terminal-notifier -group \"NOTIFY_$message\" -sender TERMINAL_NOTIFIER_STAY" > /dev/null
+  ssh main -t "echo '$message' | /usr/local/bin/terminal-notifier -group \"NOTIFY_$message\" -sender TERMINAL_NOTIFIER_STAY" > /dev/null
 }
 
 function batch_move {
-  zmv -n $@ | less
+  zmv -n "$@" | less
   read 'response?Execute? [y/n]: '
 
   if [[ $response =~ ^y ]]; then
-    zmv $@
+    zmv "$@"
   else
     echo "Canceled."
   fi
@@ -66,16 +66,16 @@ function trash {
   local trash_path=${TRASH_PATH-/tmp}
 
   for source in $@; do
-    filename=$( basename $( echo $source ) )
+    filename=$( basename "$source" )
 
-    if [ -f $trash_path/$filename ] || [ -d $trash_path/$filename ]; then
+    if [ -f "$trash_path/$filename" ] || [ -d "$trash_path/$filename" ]; then
       sed_expr='s/^\(\.\?[^.]\+\)\(\.\?\)/\1 '$timestamp'\2/'
-      new_filename=$( echo $filename | sed -e $sed_expr )
+      new_filename=$( echo "$filename" | sed -e "$sed_expr" )
     else
-      new_filename=$filename
+      new_filename="$filename"
     fi
 
-    touch $source
+    touch "$source"
     execute_with_echo "mv -i '$source' '$trash_path/$new_filename'"
   done
 }
@@ -105,26 +105,24 @@ function attach_or_new_tmux {
     local session_name=$1
   fi
 
-  tmux has-session -t $session_name &> /dev/null
-
-  if [ $? != 0 ]; then
+  if ! tmux has-session -t "$session_name" > /dev/null 2>&1; then
     local response
-    read 'response?Create new session in directory `'$( pwd )'` with session name `'$session_name'`? [y/n]: '
+    read "response?Create new session in directory \`$( pwd )\` with session name \`$session_name\`? [y/n]:"
 
-    if [[ $response =~ ^y ]]; then
-      read 'response?Resotre tmux environment for `'$session_name'` session if available? [y/n]: '
+    if [[ "$response" =~ ^y ]]; then
+      read "response?Resotre tmux environment for \`$session_name\` session if available? [y/n]:"
 
-      if [[ ! $response =~ ^y ]]; then
+      if [[ ! "$response" =~ ^y ]]; then
         touch ~/tmux_no_auto_restore
       fi
 
-      if [ $session_name = 'default' ]; then
+      if [ "$session_name" = "default" ]; then
         tmux_setup_default
       else
-        tmux new-session -d -s $session_name
+        tmux new-session -d -s "$session_name"
 
         if (($# == 2)); then
-          tmux send-keys -t $session_name:1 "$2" Enter
+          tmux send-keys -t "$session_name":1 "$2" Enter
         fi
       fi
 
@@ -134,30 +132,30 @@ function attach_or_new_tmux {
     fi
   fi
 
-  tmux attach -t $session_name
+  tmux attach -t "$session_name"
 }
 
 # http://d.hatena.ne.jp/itchyny/20130227/1361933011
 function extract() {
   case $1 in
-    *.tar.gz|*.tgz) tar xzvf $1;;
-    *.tar.xz) tar Jxvf $1;;
-    *.zip) unzip $1;;
-    *.lzh) lha e $1;;
-    *.tar.bz2|*.tbz) tar xjvf $1;;
-    *.tar.Z) tar zxvf $1;;
-    *.gz) gzip -dc $1;;
-    *.bz2) bzip2 -dc $1;;
-    *.Z) uncompress $1;;
-    *.tar) tar xvf $1;;
-    *.arj) unarj $1;;
-    *.zst|*.zstd) unzstd $1;;
+    *.tar.gz|*.tgz) tar xzvf "$1";;
+    *.tar.xz) tar Jxvf "$1";;
+    *.zip) unzip "$1";;
+    *.lzh) lha e "$1";;
+    *.tar.bz2|*.tbz) tar xjvf "$1";;
+    *.tar.Z) tar zxvf "$1";;
+    *.gz) gzip -dc "$1";;
+    *.bz2) bzip2 -dc "$1";;
+    *.Z) uncompress "$1";;
+    *.tar) tar xvf "$1";;
+    *.arj) unarj "$1";;
+    *.zst|*.zstd) unzstd "$1";;
   esac
 }
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
 
 function my_grep() {
-  rg $RIPGREP_EXTRA_OPTIONS $@
+  rg $RIPGREP_EXTRA_OPTIONS "$@"
 }
 
 function my_grep_with_filter() {
@@ -168,7 +166,7 @@ function my_grep_with_filter() {
 alias gr="my_grep_with_filter"
 
 function vigr() {
-  vi $( my_grep --color never --files-with-matches $@ )
+  vi "$( my_grep --color never --files-with-matches "$@" )"
 }
 
 function tig {
