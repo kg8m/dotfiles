@@ -1,6 +1,6 @@
 TIMETRACK_IGNORE_PATTERN="^$"
 TIMETRACK_IGNORE_PATTERN+="|\b(ack|ag)\b"
-TIMETRACK_IGNORE_PATTERN+="|\bg(it)? (add|ca|checkout|ci|co\b|commit\b|d|l|mergetool|open-changed-files|revert|show)"
+TIMETRACK_IGNORE_PATTERN+="|\bgit? (add|bulk|ca|checkout|ci|co\b|commit\b|d|l|mergetool|open-changed-files|restore|revert|show|sw)"
 TIMETRACK_IGNORE_PATTERN+="|\bless\b|\bL$"
 TIMETRACK_IGNORE_PATTERN+="|\brails (c|db)"
 TIMETRACK_IGNORE_PATTERN+="|\b(viack|viag)\b"
