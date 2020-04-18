@@ -188,24 +188,22 @@ function git:clean:bulk {
 
 function git:log:compare:branch {
   local branch1=$( git:branch:filter:remote:one "select first branch: " )
-  local branch2=$( git:branch:filter:remote:one "select another branch: "  )
+  [ -n "$branch1" ] || exit 1
 
-  if [[ -n "$branch1" ]] && [[ -n "$branch2" ]]; then
-    execute_with_confirm "git log $@ ${branch1}...${branch2}"
-  else
-    echo "Select 2 branches to compare." >&2; exit 1
-  fi
+  local branch2=$( git:branch:filter:remote:one "select another branch: " )
+  [ -n "$branch2" ] || exit 1
+
+  execute_with_confirm "git log $@ ${branch1}...${branch2}"
 }
 
 function git:diff:branch {
   local branch1=$( git:branch:filter:remote:one "select first branch: " )
-  local branch2=$( git:branch:filter:remote:one "select another branch: " )
+  [ -n "$branch1" ] || exit 1
 
-  if [[ -n "$branch1" ]] && [[ -n "$branch2" ]]; then
-    execute_with_confirm "git diff-without-space-changes $@ ${branch1}...${branch2}"
-  else
-    echo "Select 2 branches to compare." >&2; exit 1
-  fi
+  local branch2=$( git:branch:filter:remote:one "select another branch: " )
+  [ -n "$branch2" ] || exit 1
+
+  execute_with_confirm "git diff-without-space-changes $@ ${branch1}...${branch2}"
 }
 
 function git:diff:branch:from {
