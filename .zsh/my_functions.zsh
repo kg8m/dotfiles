@@ -167,9 +167,13 @@ function my_grep() {
 }
 
 function my_grep_with_filter() {
-  my_grep --column --line-number --no-heading --color=always --with-filename "$@" |
-    fzf --preview-window="right:wrap" --preview="$VIM_PLUGINS/github.com/junegunn/fzf.vim/bin/preview.sh {1}" |
-    my_grep "$@"
+  local options=( "${(M)@:#-*}" )
+  local non_options=( "${@:#-*}" )
+  local search_word="${non_options[1]}"
+
+  my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2>/dev/null |
+    filter --preview-window="right:wrap" --preview="$VIM_PLUGINS/github.com/junegunn/fzf.vim/bin/preview.sh {1}" |
+    my_grep "$search_word" "${options[@]}" 2>/dev/null
 }
 alias gr="my_grep_with_filter"
 
