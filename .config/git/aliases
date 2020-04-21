@@ -159,7 +159,7 @@ function git:branch:filter:remote:one {
 
 function git:branch:all {
   local max_length="$( git branch --all --format '%(refname:strip=-1)' | git:proxy:wc --max-line-length )"
-  local list_format="%(align:$(( max_length + 2 ))) %(refname:strip=-1) %(end) %(objectname:short) %(contents:subject)   --   %(refname:strip=1)"
+  local list_format="$( printf "%%(align:%d) %%(refname:strip=-1) %%(end) %%(objectname:short) %%(contents:subject)   --   %%(refname:strip=1)" $(( max_length+2 )) )"
 
   git branch --all --format "${list_format}" |
     git:proxy:sed -e 's/^ \+//' |
@@ -317,7 +317,7 @@ function git:proxy:cat:files {
     bat --wrap --color=always --style=full ${filepaths[*]}
   else
     for filepath in ${filepaths[@]}; do
-      echo "\n** File: ${filepath}\n"
+      printf "\n** File: %s\n\n" "${filepath}"
       cat "${filepath}"
       echo
     done

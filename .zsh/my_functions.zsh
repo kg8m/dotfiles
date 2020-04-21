@@ -1,5 +1,5 @@
 function execute_with_echo {
-  echo -e "\\n\\e[0;36mExecute:\\e[1;37m \`$@\`\\n" >&2
+  printf "\n\e[0;36mExecute:\e[1;37m \`%s\`\n\n" "$@" >&2
   eval "$@"
 }
 
@@ -12,7 +12,7 @@ function execute_commands_with_echo {
 }
 
 function execute_with_confirm {
-  echo -e "\\n\\e[0;36mExecute:\\e[1;37m \`$@\`\\n"
+  printf "\n\e[0;36mExecute:\e[1;37m \`%s\`\n\n" "$@"
   read "response?Are you sure? [y/n]: "
 
   if [[ ${response} =~ ^y ]]; then
