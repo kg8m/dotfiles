@@ -76,7 +76,7 @@ function git:update:shallow {
 }
 
 function git:update:master {
-  local current_branch="$( git symbolic-ref --short HEAD )"
+  local current_branch="$( git branch --show-current )"
 
   execute_with_echo "git switch master"
   execute_with_echo "git update"
