@@ -180,8 +180,8 @@ function vigr() {
 function tig {
   case "$1" in
     bl*)
-      local args=${@:2:($#-1)}
-      execute_with_echo "command tig blame $args"
+      shift
+      execute_with_echo "command tig blame $@"
       ;;
     stash)
       execute_with_echo "command tig stash"

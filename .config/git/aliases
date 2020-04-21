@@ -211,9 +211,9 @@ function git:diff:branch:from {
 
   if [ -n "$target" ]; then
     local current="$( git rev-parse --abbrev-ref '@{upstream}' )"
-    local rest_args="${@:2:($#-1)}"
 
-    execute_with_confirm "git diff-without-space-changes ${rest_args} origin/${target}...${current}"
+    shift
+    execute_with_confirm "git diff-without-space-changes $@ origin/${target}...${current}"
   else
     echo "Specify a branch name, e.g., \"master\"." >&2; exit 1
   fi
@@ -224,9 +224,9 @@ function git:diff:branch:from:nameonly {
 
   if [ -n "$target" ]; then
     local current="$( git rev-parse --abbrev-ref '@{upstream}' )"
-    local rest_args="${@:2:($#-1)}"
 
-    execute_with_confirm "git diff --name-only ${rest_args} origin/${target}...${current}"
+    shift
+    execute_with_confirm "git diff --name-only $@ origin/${target}...${current}"
   else
     echo "Specify a branch name, e.g., \"master\"." >&2; exit 1
   fi
