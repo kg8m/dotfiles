@@ -6,7 +6,7 @@ function execute_with_echo {
 function execute_commands_with_echo {
   local cmd
 
-  for cmd in $@; do
+  for cmd in "$@"; do
     execute_with_echo "$cmd"
   done
 }
@@ -34,7 +34,7 @@ function retriable_execute_with_confirm {
     echo
     read "response?Retry? [y/n]: "
 
-    if [[ ${response} =~ ^y ]]; then
+    if [[ "$response" =~ ^y ]]; then
       retriable_execute_with_confirm "$@"
     fi
   fi
@@ -51,7 +51,7 @@ function batch_move {
   zmv -n "$@" | less
   read 'response?Execute? [y/n]: '
 
-  if [[ $response =~ ^y ]]; then
+  if [[ "$response" =~ ^y ]]; then
     zmv "$@"
   else
     echo "Canceled."
@@ -65,7 +65,7 @@ function trash {
   local timestamp=$( date +%H.%M.%S )
   local trash_path=${TRASH_PATH-/tmp}
 
-  for source in $@; do
+  for source in "$@"; do
     filename=$( basename "$source" )
 
     if [ -f "$trash_path/$filename" ] || [ -d "$trash_path/$filename" ]; then
@@ -145,7 +145,7 @@ function reload {
 
 # http://d.hatena.ne.jp/itchyny/20130227/1361933011
 function extract() {
-  case $1 in
+  case "$1" in
     *.tar.gz|*.tgz) tar xzvf "$1";;
     *.tar.xz) tar Jxvf "$1";;
     *.zip) unzip "$1";;
