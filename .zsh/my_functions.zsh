@@ -178,7 +178,7 @@ function my_grep_with_filter() {
 alias gr="my_grep_with_filter"
 
 function vigr() {
-  vi "$( my_grep --color never --files-with-matches "$@" )"
+  vi "$( my_grep_with_filter "$@" | egrep -o '^[^:]+' )"
 }
 
 function tig {
