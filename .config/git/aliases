@@ -2,9 +2,9 @@
 source ~/.zsh/my_functions.zsh
 
 function git:add:bulk {
-  local files=( $( git:status:filter:unstaged:with_untracked ) )
+  local files=( "${(@f)$( git:status:filter:unstaged:with_untracked )}" )
 
-  if [ "${#files[@]}" -ne 0 ]; then
+  if [ -n "${files[*]}" ]; then
     execute_with_echo    "git add --intent-to-add -- ${files[*]}"
     execute_with_echo    "git diff -- ${files[*]}"
     execute_with_confirm "git add -- ${files[*]}"
@@ -13,27 +13,27 @@ function git:add:bulk {
 }
 
 function git:add:bulk:intent {
-  local files=( $( git:status:filter:untracked ) )
+  local files=( "${(@f)$( git:status:filter:untracked )}" )
 
-  if [ "${#files[@]}" -ne 0 ]; then
+  if [ -n "${files[*]}" ]; then
     execute_with_echo "git add --intent-to-add -- ${files[*]}"
     execute_with_echo "git status"
   fi
 }
 
 function git:add:bulk:patch {
-  local files=( $( git:status:filter:unstaged:with_intended_to_add ) )
+  local files=( "${(@f)$( git:status:filter:unstaged:with_intended_to_add )}" )
 
-  if [ "${#files[@]}" -ne 0 ]; then
+  if [ -n "${files[*]}" ]; then
     execute_with_echo "git add --patch -- ${files[*]}"
     execute_with_echo "git status"
   fi
 }
 
 function git:restore:bulk {
-  local files=( $( git:status:filter:unstaged ) )
+  local files=( "${(@f)$( git:status:filter:unstaged )}" )
 
-  if [ "${#files[@]}" -ne 0 ]; then
+  if [ -n "${files[*]}" ]; then
     execute_with_echo    "git diff -R -- ${files[*]}"
     execute_with_confirm "git restore -- ${files[*]}"
     execute_with_echo    "git status"
@@ -41,9 +41,9 @@ function git:restore:bulk {
 }
 
 function git:restore:bulk:staged {
-  local files=( $( git:status:filter:staged ) )
+  local files=( "${(@f)$( git:status:filter:staged )}" )
 
-  if [ "${#files[@]}" -ne 0 ]; then
+  if [ -n "${files[*]}" ]; then
     execute_with_echo    "git diff --staged -R -- ${files[*]}"
     execute_with_confirm "git restore --staged -- ${files[*]}"
     execute_with_echo    "git status"
@@ -88,26 +88,26 @@ function git:branch:create:with_set_upstream {
   local branch_name="$2"
   local commit_message="$3"
 
-  local command
-  command+="git switch --create ${branch_name} ${original_branch}"
-  command+=" && git commit --allow-empty --message=\"${commit_message}\""
-  command+=" && git push --set-upstream origin ${branch_name}"
-  command+="; git branches"
+  local commands=(
+    "git switch --create ${branch_name} ${original_branch}"
+    "git commit --allow-empty --message=\"${commit_message}\""
+    "git push --set-upstream origin ${branch_name}"
+  )
 
-  execute_with_confirm "${command}"
+  execute_with_confirm "${(j: && :)commands}; git branches"
 }
 
 function git:branch:delete:bulk:local {
   local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {1}" )
-  local branches=( $(
+  local branches=( "${(@f)$(
     git branch --verbose |
       egrep -v "${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
-      filter ${filter_options[*]} |
+      filter "${filter_options[@]}" |
       sed -e 's/^[* ]*//' |
       awk '{ print $1 }'
-  ) )
+  )}" )
 
-  if [ "${#branches[@]}" -ne 0 ]; then
+  if [ -n "${branches[*]}" ]; then
     execute_with_confirm "git branch --delete --force ${branches[*]}"
     execute_with_echo    "git branches"
   else
@@ -117,15 +117,15 @@ function git:branch:delete:bulk:local {
 
 function git:branch:delete:bulk:remote {
   local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {1}" )
-  local branches=( $(
+  local branches=( "${(@f)$(
     git branch --verbose --remote |
       egrep -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
-      filter ${filter_options[*]} |
+      filter "${filter_options[@]}" |
       awk '{ print $1 }' |
       sed -e 's#^origin/##'
-  ) )
+  )}" )
 
-  if [ "${#branches[@]}" -ne 0 ]; then
+  if [ -n "${branches[*]}" ]; then
     execute_with_confirm "git push --delete origin ${branches[*]}"
     execute_with_echo    "git branches"
   else
@@ -136,9 +136,9 @@ function git:branch:delete:bulk:remote {
 function git:branch:filter:one {
   local ignore_pattern="$1"
   local filter_options=( --no-multi --nth=1 --prompt="select a branch: " --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {-1}" )
-  local branches=( $( git:branch:all | egrep -v "${ignore_pattern}" | filter ${filter_options[*]} | awk '{ print $1 }' ) )
+  local branches=( "${(@f)$( git:branch:all | egrep -v "${ignore_pattern}" | filter "${filter_options[@]}" | awk '{ print $1 }' )}" )
 
-  if [ ${#branches[@]} -ne 1 ]; then
+  if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
     echo "Select a branch." >&2; exit 1
   else
     echo "${branches[1]}"
@@ -148,9 +148,9 @@ function git:branch:filter:one {
 function git:branch:filter:remote:one {
   local prompt=${1:-"Select a branch: "}
   local filter_options=( --no-multi --nth=1 --prompt="${prompt}" --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {1}" )
-  local branches=( $( git:branch:remote | filter ${filter_options[*]} | awk '{ print $1 }' ) )
+  local branches=( "${(@f)$( git:branch:remote | filter "${filter_options[@]}" | awk '{ print $1 }' )}" )
 
-  if [ ${#branches[@]} -ne 1 ]; then
+  if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
     echo "Select only 1 branch." >&2; exit 1
   else
     echo "${branches[1]}"
@@ -177,10 +177,10 @@ function git:clone:shallow {
 }
 
 function git:clean:bulk {
-  local files=( $( git:status:filter:untracked ) )
+  local files=( "${(@f)$( git:status:filter:untracked )}" )
 
-  if [ "${#files[@]}" -ne 0 ]; then
-    git:proxy:cat:files ${files[*]}
+  if [ -n "${files[*]}" ]; then
+    git:proxy:cat:files "${files[@]}"
     execute_with_confirm "git clean --force -- ${files[*]}"
     execute_with_echo    "git status"
   fi
@@ -266,7 +266,7 @@ function git:submodule:update {
 }
 
 function git:submodule:remove:bulk {
-  local targets=( $( git submodule | filter | awk '{ print $2 }' ) )
+  local targets=( "${(@f)$( git submodule | filter | awk '{ print $2 }' )}" )
 
   for target in "${targets[@]}"; do
     execute_with_confirm "git submodule deinit $target"
@@ -318,12 +318,16 @@ function git:proxy:wc {
 
 function git:proxy:cat:files {
   local filepath
-  local filepaths=( $@ )
+  local filepaths=( "$@" )
+
+  if [ -z "${filepaths[*]}" ]; then
+    return 1
+  fi
 
   if which bat > /dev/null 2>&1; then
-    bat --wrap --color=always --style=full ${filepaths[*]}
+    bat --wrap --color=always --style=full "${filepaths[@]}"
   else
-    for filepath in ${filepaths[@]}; do
+    for filepath in "${filepaths[@]}"; do
       printf "\n** File: %s\n\n" "${filepath}"
       cat "${filepath}"
       echo
