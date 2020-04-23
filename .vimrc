@@ -2347,6 +2347,26 @@ if s:RegisterPlugin("kana/vim-operator-user")  " {{{
      \ })
 endif  " }}}
 
+if s:RegisterPlugin("kg8m/vim-parallel-auto-ctags", #{ if: OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+  let &tags .= "," . RubygemsPath() . "/../tags"
+
+  let g:parallel_auto_ctags#options      = ["--fields=n", "--tag-relative=yes", "--recurse=yes", "--sort=yes", "--exclude=.vim-sessions"]
+  let g:parallel_auto_ctags#entry_points = #{
+    \   pwd:  #{
+    \     path:    ".",
+    \     options: g:parallel_auto_ctags#options + ["--exclude=node_modules", "--exclude=vendor/bundle", "--languages=-rspec"],
+    \     events:  ["VimEnter", "BufWritePost"],
+    \     silent:  v:false,
+    \   },
+    \   gems: #{
+    \     path:    RubygemsPath() . "/..",
+    \     options: g:parallel_auto_ctags#options + ["--exclude=test", "--exclude=spec", "--languages=ruby"],
+    \     events:  ["VimEnter"],
+    \     silent:  v:false,
+    \   },
+    \ }
+endif  " }}}
+
 if s:RegisterPlugin("thinca/vim-prettyprint")  " {{{
   call s:ConfigPlugin(#{
      \   lazy:    v:true,
@@ -2702,31 +2722,6 @@ if s:RegisterPlugin("benmills/vimux", #{ if: OnTmux() && !IsGitCommit() && !IsGi
 endif  " }}}
 
 if s:RegisterPlugin("vim-jp/vital.vim")  " {{{
-  " https://github.com/vim-jp/vital.vim/blob/master/doc/vital/Async/Promise.txt
-  function! s:ReadStd(channel, part) abort  " {{{
-    let out = []
-    while ch_status(a:channel, #{ part: a:part }) =~# 'open\|buffered'
-      call add(out, ch_read(a:channel, #{ part: a:part }))
-    endwhile
-    return join(out, "\n")
-  endfunction  " }}}
-
-  function! s:SystemAsync(cmd) abort  " {{{
-    return s:Promise().new({ resolve, reject -> job_start(a:cmd, #{
-         \   drop:     "never",
-         \   close_cb: { ch -> "do nothing" },
-         \   exit_cb:  { ch, code -> code ? reject(s:ReadStd(ch, "err")) : resolve(s:ReadStd(ch, "out")) },
-         \ }) })
-  endfunction  " }}}
-
-  function! s:Promise() abort  " {{{
-    if !has_key(s:, "__Promise__")
-      let s:__Promise__ = vital#vital#import("Async.Promise")
-    endif
-
-    return s:__Promise__
-  endfunction  " }}}
-
   function! s:ListUtility() abort  " {{{
     if !has_key(s:, "__ListUtility__")
       let s:__ListUtility__ = vital#vital#import("Data.List")
@@ -3064,75 +3059,6 @@ set timeoutlen=3000
 " Support Japanese kakkos
 set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,〔:〕,“:”,‘:’
 
-" Ctags  " {{{
-if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
-  augroup my_vimrc  " {{{
-    autocmd VimEnter     * silent call s:CreateAllCtags()
-    autocmd BufWritePost * silent call s:CreateCtags(".")
-    autocmd VimLeavePre  * silent call s:CleanupCtags()
-  augroup END  " }}}
-
-  function! s:SetupTags() abort  " {{{
-    let &tags .= "," . RubygemsPath() . "/../tags"
-  endfunction  " }}}
-
-  function! s:CreateAllCtags() abort  " {{{
-    call s:SetupTags()
-
-    for directory in ["."] + [RubygemPsath() . "/.."]
-      call s:CreateCtagsAsync(directory)
-    endfor
-  endfunction  " }}}
-
-  function! s:CreateCtagsAsync(directory) abort  " {{{
-    call timer_start(300, { -> s:CreateCtags(a:directory) })
-  endfunction  " }}}
-
-  function! s:CreateCtags(directory) abort  " {{{
-    if isdirectory(a:directory)
-      let tags_file = a:directory . "/tags"
-      let lock_file = a:directory . "/tags.lock"
-      let temp_file = a:directory . "/tags.temp"
-
-      if !filereadable(lock_file)
-        let setup_command    = "touch " . lock_file
-        let replace_command  = "mv -f " . temp_file . " " . tags_file
-        let teardown_command = "rm -f " . lock_file
-
-        let ctags_options = "--fields=n --tag-relative=yes --recurse=yes --sort=yes -f " . temp_file
-
-        if a:directory != "."
-          let ctags_options .= " --exclude=test --exclude=spec --languages=ruby"
-        endif
-
-        let ctags_command = "ctags " . ctags_options . " " . a:directory
-
-        call s:SystemAsync(setup_command)
-               \.then({ -> s:SystemAsync(ctags_command) })
-               \.then({ -> s:SystemAsync(replace_command) })
-               \.then({ -> s:SystemAsync(teardown_command) })
-      endif
-    endif
-  endfunction  " }}}
-
-  function! s:CleanupCtags() abort  " {{{
-    for directory in ["."] + [RubygemPsath() . "/.."]
-      if filereadable(directory . "/tags.lock")
-        call delete(directory . "/tags.lock")
-      endif
-
-      if filereadable(directory . "/tags.temp")
-        call delete(directory . "/tags.temp")
-      endif
-    endfor
-  endfunction  " }}}
-endif  " }}}
-
-" See also vim-lsp and vim-fzf-tjump settings
-" <C-o>: Jump back
-nnoremap g[ <C-o>
-" }}}
-
 " Auto reload
 augroup my_vimrc  " {{{
   autocmd InsertEnter,InsertLeave,CursorHold,WinEnter,BufWinEnter * silent! checktime
@@ -3174,6 +3100,10 @@ command! -nargs=1 -complete=file Rename f <args> | call delete(expand("#")) | wr
 " Keymappings  " {{{
 nnoremap <Leader>v :vsplit<Cr>
 nnoremap <Leader>h :split<Cr>
+
+" See also settings of vim-lsp and vim-fzf-tjump
+" <C-o>: Jump back
+nnoremap g[ <C-o>
 
 vnoremap <Leader>y "yy:call RemoteCopy(@")<Cr>
 
