@@ -1257,7 +1257,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   function! s:FzfBuffers() abort  " {{{
     let options = #{
       \   source:  s:FzfBuffersFiles(),
-      \   options: ["--header-lines", !empty(expand("%")), "--nth=2..", "--prompt", "Buffers> ", "--tabstop=5"],
+      \   options: ["--header-lines", !empty(expand("%")), "--nth=2..", "--prompt", "Buffers> ", "--tabstop=6"],
       \ }
 
     call s:FzfHistoryRun("buffers-files", options)
@@ -1295,7 +1295,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   function! s:FzfHistory() abort  " {{{
     let options = #{
       \   source:  s:FzfHistoryFiles(),
-      \   options: ["--header-lines", !empty(expand("%")), "--nth=2..", "--prompt", "History> ", "--tabstop=5"],
+      \   options: ["--header-lines", !empty(expand("%")), "--nth=2..", "--prompt", "History> ", "--tabstop=6"],
       \ }
 
     call s:FzfHistoryRun("history-files", options)
