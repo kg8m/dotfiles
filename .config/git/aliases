@@ -233,7 +233,7 @@ function git:diff:branch:from:nameonly {
 }
 
 function git:stash:all:with_message {
-  execute_with_echo "git stash push --no-keep-index --include-untracked --message '$@'"
+  execute_with_confirm "git stash push --no-keep-index --include-untracked --message '$@'"
 }
 
 function git:status:filter:staged {
