@@ -232,7 +232,7 @@ function git:diff:branch:from:nameonly {
   fi
 }
 
-function stash:all:with_message {
+function git:stash:all:with_message {
   execute_with_echo "git stash push --no-keep-index --include-untracked --message '$@'"
 }
 
