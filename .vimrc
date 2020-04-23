@@ -219,20 +219,33 @@ function! IsGitHunkEdit() abort  " {{{
   return s:is_git_hunk_edit
 endfunction  " }}}
 
-function! RubyGemPaths() abort  " {{{
-  if has_key(s:, "ruby_gem_paths")
-    return s:ruby_gem_paths
+function! RubygemsPath() abort  " {{{
+  if has_key(s:, "rubygems_path")
+    return s:rubygems_path
   endif
 
-  if exists("$RUBY_GEM_PATHS")
-    let s:ruby_gem_paths = split($RUBY_GEM_PATHS, '\n')
+  if exists("$RUBYGEMS_PATH")
+    let s:rubygems_path = $RUBYGEMS_PATH
   else
     let command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
     let command = command_prefix . " -e 'print Gem.path.join(\"\\n\")'"
-    let s:ruby_gem_paths = split(system(command), '\n')
+    let dirpaths = split(system(command), '\n')
+
+    for dirpath in dirpaths
+      if isdirectory(dirpath)
+        let rubygems_path = dirpath . "/gems"
+        break
+      endif
+    endfor
+
+    if exists("rubygems_path")
+      let s:rubygems_path = rubygems_path
+    else
+      throw "Path to Ruby Gems not found. Candidates: " . string(dirpaths)
+    endif
   endif
 
-  return s:ruby_gem_paths
+  return s:rubygems_path
 endfunction  " }}}
 
 function! ExecuteInTerminal(command) abort  " {{{
@@ -1572,6 +1585,9 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       \   config: #{
       \     dir: "config",
       \   },
+      \   gems: #{
+      \     dir: RubygemsPath(),
+      \   },
       \   initializers: #{
       \     dir: "config/initializers",
       \   },
@@ -1607,12 +1623,6 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       \ }
 
     let s:fzf_rails_specs["db/migrates"] = #{ dir: "db/migrate" }
-
-    if len(RubyGemPaths()) > 1
-      let s:fzf_rails_specs["gems"] = #{ dir: "{" . join(RubyGemPaths(), ",") . "}/gems" }
-    elseif len(RubyGemPaths()) == 1
-      let s:fzf_rails_specs["gems"] = #{ dir: RubyGemPaths()[0] . "/gems" }
-    endif
 
     for app_dir in globpath("app", "*", 0, 1)
       if isdirectory(app_dir)
@@ -3063,17 +3073,13 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
   augroup END  " }}}
 
   function! s:SetupTags() abort  " {{{
-    for ruby_gem_path in RubyGemPaths()
-      if isdirectory(ruby_gem_path)
-        let &tags .= "," . ruby_gem_path . "/tags"
-      endif
-    endfor
+    let &tags .= "," . RubygemsPath() . "/../tags"
   endfunction  " }}}
 
   function! s:CreateAllCtags() abort  " {{{
     call s:SetupTags()
 
-    for directory in ["."] + RubyGemPaths()
+    for directory in ["."] + [RubygemPsath() . "/.."]
       call s:CreateCtagsAsync(directory)
     endfor
   endfunction  " }}}
@@ -3110,7 +3116,7 @@ if OnRailsDir() && !IsGitCommit() && !IsGitHunkEdit()  " {{{
   endfunction  " }}}
 
   function! s:CleanupCtags() abort  " {{{
-    for directory in ["."] + RubyGemPaths()
+    for directory in ["."] + [RubygemPsath() . "/.."]
       if filereadable(directory . "/tags.lock")
         call delete(directory . "/tags.lock")
       endif
