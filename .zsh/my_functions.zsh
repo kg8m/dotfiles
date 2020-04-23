@@ -178,7 +178,8 @@ function my_grep_with_filter() {
 alias gr="my_grep_with_filter"
 
 function vigr() {
-  vi "${(@f)$( my_grep_with_filter "$@" | egrep -o '^[^:]+' )}"
+  # Don't use literal `vim` because it sometimes refers to wrong Vim
+  "vim" "${(@f)$( my_grep_with_filter "$@" | egrep -o '^[^:]+' | sort -u )}"
 }
 
 function tig {
