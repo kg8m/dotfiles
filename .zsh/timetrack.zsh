@@ -1,5 +1,5 @@
 TIMETRACK_IGNORE_PATTERN="^$"
-TIMETRACK_IGNORE_PATTERN+="|\bgit? (add|bulk|ca|checkout|ci|co\b|commit\b|d|l|mergetool|open-changed-files|restore|revert|show|sw)"
+TIMETRACK_IGNORE_PATTERN+="|\bgit (add|bulk|ca|checkout|ci|co\b|commit\b|d|l|mergetool|open-changed-files|restore|revert|show|sw)"
 TIMETRACK_IGNORE_PATTERN+="|\bless\b|\bL$"
 TIMETRACK_IGNORE_PATTERN+="|\brails (c|db)"
 TIMETRACK_IGNORE_PATTERN+="|\b(vi)?(ack|ag)\b"
@@ -35,7 +35,7 @@ TIMETRACK_PATTERN+="|\byum\b"
 TIMETRACK_PATTERN+="|\bzcat\b"
 TIMETRACK_PATTERN+="|\bzip\b"
 TIMETRACK_PATTERN+="|\.z?sh$"
-TIMETRACK_PATTERN+="|^g(it)? "
+TIMETRACK_PATTERN+="|^git "
 
 export TIMETRACK_IGNORE_PATTERN
 export TIMETRACK_PATTERN
