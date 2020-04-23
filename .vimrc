@@ -1041,7 +1041,7 @@ endif  " }}}
 
 function! s:CompletionRefreshPattern(filetype) abort  " {{{
   if !has_key(s:, "completion_refresh_patterns")
-    let css_pattern = '\v([a-zA-Z0-9_-]+)$'
+    let css_pattern = '\v([#a-zA-Z0-9_-]+)$'
     let s:completion_refresh_patterns = #{
       \   _:    '\v(\k+)$',
       \   css:  css_pattern,
