@@ -181,6 +181,7 @@ function vigr() {
   # Don't use literal `vim` because it sometimes refers to wrong Vim
   "vim" "${(@f)$( my_grep_with_filter "$@" | egrep -o '^[^:]+' | sort -u )}"
 }
+alias vimgr=vigr
 
 function tig {
   case "$1" in
