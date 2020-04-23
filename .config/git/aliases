@@ -236,6 +236,10 @@ function git:stash:all:with_message {
   execute_with_confirm "git stash push --no-keep-index --include-untracked --message '$@'"
 }
 
+function git:status:filter:all {
+  git status --short | git:status:utility:filter
+}
+
 function git:status:filter:staged {
   git status --short | egrep '^[^ ?]|^ A' | git:status:utility:filter
 }
