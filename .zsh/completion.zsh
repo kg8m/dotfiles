@@ -21,5 +21,6 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # https://zdharma.org/zinit/wiki/Example-Minimal-Setup/
-zinit ice lucid wait"!0c" atload"_zsh_autosuggest_start"
+# Load before zsh-history-substring-search
+zinit ice lucid wait"!0b" atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
