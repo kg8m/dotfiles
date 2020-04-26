@@ -3101,6 +3101,7 @@ nnoremap g[ <C-o>
 " gF: Same as "gf", except if a number follows the file name, then the cursor is positioned on that line in the file.
 nnoremap gf gF
 
+" Copy selected to clipboard
 vnoremap <Leader>y "yy:call RemoteCopy(@")<Cr>
 
 " Open help for current word
