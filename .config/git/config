@@ -106,6 +106,8 @@ bulk-add-by-patch    = sh git:add:bulk:patch
 # }}}
 
 # restore  # {{{
+unstage = restore --staged
+
 restore-by-select        = bulk-restore
 restore-by-select-staged = bulk-restore-staged
 
