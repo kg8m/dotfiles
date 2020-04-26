@@ -57,6 +57,7 @@ compactionHeuristic = true
 colorMoved = dimmed_zebra
 colorMovedWS = ignore-all-space
 noprefix = true
+renames = true
 
 [fetch]
 prune = true
