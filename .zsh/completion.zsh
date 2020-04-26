@@ -24,3 +24,12 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 # Load before zsh-history-substring-search
 zinit ice lucid wait"!0b" atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
+
+function setup_my_fzf_tab {
+  # See also fzf's configs in .zsh/filter.zsh
+  export fzf_default_completion=fzf-tab-complete
+  unset -f setup_my_fzf_tab
+}
+# Load before zsh-autosuggestions
+zinit ice lucid wait"!0a" atload"setup_my_fzf_tab"
+zinit light Aloxaf/fzf-tab
