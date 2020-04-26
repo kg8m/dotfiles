@@ -13,9 +13,6 @@ setopt complete_in_word
 zinit ice lucid wait"!0c" blockf atpull"zinit creinstall -q ."
 zinit light zsh-users/zsh-completions
 
-zinit ice lucid wait"!0c"
-zinit light chitoku-k/fzf-zsh-completions
-
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=245,bold"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
