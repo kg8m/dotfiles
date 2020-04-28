@@ -41,10 +41,18 @@ function retriable_execute_with_confirm {
 }
 
 function notify {
-  local message=$( printf %q "[$USER@$HOST] ${@:-Command finished.}" )
+  local options=( "${(M)@:#-*}" )
+  local non_options=( "${@:#-*}" )
+  local message="[$USER@$HOST] ${non_options:-Command finished.}"
+
+  local notifier_options=( "-group \"NOTIFY_${message}\"" )
+
+  if (( ! ${options[(I)--nostay]} )); then
+    notifier_options+=( "-sender TERMINAL_NOTIFIER_STAY" )
+  fi
 
   # `> /dev/null` for ignoring "Removing previously sent notification" message
-  ssh main -t "echo '$message' | /usr/local/bin/terminal-notifier -group \"NOTIFY_$message\" -sender TERMINAL_NOTIFIER_STAY" > /dev/null
+  ssh main -t "echo '${message}' | /usr/local/bin/terminal-notifier ${notifier_options[@]}" > /dev/null
 }
 
 function batch_move {
