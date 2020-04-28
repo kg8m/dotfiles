@@ -1,7 +1,5 @@
-function setup_my_history_substring_search {
-  bindkey "^P" history-substring-search-up
-  bindkey "^N" history-substring-search-down
-  unset -f setup_my_history_substring_search
-}
-zinit ice lucid wait"!0c" atload"setup_my_history_substring_search"
-zinit light zsh-users/zsh-history-substring-search
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end
