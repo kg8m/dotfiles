@@ -30,13 +30,3 @@ function setup_my_fzf_tab {
 # Load before zsh-autosuggestions
 zinit ice lucid wait"!0a" atload"setup_my_fzf_tab"
 zinit light Aloxaf/fzf-tab
-
-function setup_my_zsh_users_completions_git {
-  if [ ! -f "${ZINIT[COMPLETIONS_DIR]}/_git" ]; then
-    zinit creinstall -q "${ZINIT[SNIPPETS_DIR]}/zsh-users-completions"
-  fi
-
-  unset -f setup_my_zsh_users_completions_git
-}
-zinit ice lucid wait"!0c" as"null" id-as"zsh-users-completions/_git" atload"setup_my_zsh_users_completions_git"
-zinit snippet https://github.com/zsh-users/zsh/raw/master/Completion/Unix/Command/_git
