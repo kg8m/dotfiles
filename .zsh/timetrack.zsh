@@ -87,8 +87,9 @@ function __my_preexec_end_timetrack() {
       notifier_options+=( -sender TERMINAL_NOTIFIER_STAY )
     fi
 
-    # `> /dev/null` for ignoring "Removing previously sent notification" message
-    ssh main -t "echo '[$USER@$HOST] $message' | /usr/local/bin/terminal-notifier ${notifier_options[@]}" > /dev/null
+    # `> /dev/null` for ignoring "Removing previously sent notification" message.
+    # Throwing stderr away for ignoring "Connection to * closed." message.
+    ssh main -t "echo '[$USER@$HOST] $message' | /usr/local/bin/terminal-notifier ${notifier_options[@]}" > /dev/null 2>&1
 
     if [ "$last_status" = "0" ]; then
       title="${title//${result}/\e[0;32m${result}\e[1;37m}"
