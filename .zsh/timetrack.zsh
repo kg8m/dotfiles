@@ -91,16 +91,17 @@ function __my_preexec_end_timetrack() {
     ssh main -t "echo '[$USER@$HOST] $message' | /usr/local/bin/terminal-notifier ${notifier_options[@]}" > /dev/null
 
     if [ "$last_status" = "0" ]; then
-      message="${message//Command succeeded!!/\e[0;32mCommand succeeded!!\e[1;37m}"
+      title="${title//Command succeeded!!/\e[0;32mCommand succeeded!!\e[1;37m}"
     else
-      message="${message//Command failed!!/\e[0;31mCommand failed!!\e[1;37m}"
+      title="${title//Command failed!!/\e[0;31mCommand failed!!\e[1;37m}"
     fi
 
     if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
-      message="${message//${exec_time} seconds/\e[1;33m${exec_time} seconds\e[1;37m}"
+      title="${title//${exec_time} seconds/\e[1;33m${exec_time} seconds\e[1;37m}"
     fi
 
     printf "\n* * *\n"
+    echo "$title"
     echo "$message"
     echo "Notified by \`terminal-notifier ${notifier_options[@]}\`"
     date
