@@ -61,7 +61,7 @@ function __my_preexec_end_timetrack() {
   local title
   local message
   local command="${__timetrack_command//'/'\\''}"
-  local notifier_options="-group \"TIMETRACK_${USER}@${HOST}_$( printf '%q' "$command" )\""
+  local notifier_options=( -group "TIMETRACK_${USER}@${HOST}_$( printf %q "$command" )" )
 
   export __timetrack_end="$( date +%s )"
 
@@ -80,15 +80,15 @@ function __my_preexec_end_timetrack() {
     fi
 
     title+=" ($exec_time seconds)"
-    notifier_options+=" -title '$title'"
+    notifier_options+=( -title "$( printf %q "$title" )" )
     message="Command: $command"
 
     if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
-      notifier_options="$notifier_options -sender TERMINAL_NOTIFIER_STAY"
+      notifier_options+=( -sender TERMINAL_NOTIFIER_STAY )
     fi
 
     # `> /dev/null` for ignoring "Removing previously sent notification" message
-    ssh main -t "echo '[$USER@$HOST] $message' | /usr/local/bin/terminal-notifier $notifier_options" > /dev/null
+    ssh main -t "echo '[$USER@$HOST] $message' | /usr/local/bin/terminal-notifier ${notifier_options[@]}" > /dev/null
 
     if [ "$last_status" = "0" ]; then
       message="${message//Command succeeded!!/\e[0;32mCommand succeeded!!\e[1;37m}"
@@ -102,7 +102,7 @@ function __my_preexec_end_timetrack() {
 
     printf "\n* * *\n"
     echo "$message"
-    echo "Notified by \`terminal-notifier $notifier_options\`"
+    echo "Notified by \`terminal-notifier ${notifier_options[@]}\`"
     date
 
     unset __timetrack_start
