@@ -18,8 +18,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # https://zdharma.org/zinit/wiki/Example-Minimal-Setup/
-# Load before zsh-history-substring-search
-zinit ice lucid wait"!0b" atload"_zsh_autosuggest_start"
+zinit ice lucid wait"!0c" atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
 function setup_my_fzf_tab {
@@ -28,5 +27,5 @@ function setup_my_fzf_tab {
   unset -f setup_my_fzf_tab
 }
 # Load before zsh-autosuggestions
-zinit ice lucid wait"!0a" atload"setup_my_fzf_tab"
+zinit ice lucid wait"!0b" atload"setup_my_fzf_tab"
 zinit light Aloxaf/fzf-tab
