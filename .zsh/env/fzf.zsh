@@ -1,29 +1,31 @@
 # See also `.zsh/filter.zsh`
 function setup_my_fzf {
-  local binds=""
-  binds+="ctrl-f:page-down"
-  binds+=",ctrl-b:page-up"
-  binds+=",ctrl-h:backward-char"
-  binds+=",ctrl-l:forward-char"
-  binds+=",ctrl-space:toggle+down"
-  binds+=",tab:toggle-preview"
-  binds+=",ctrl-j:preview-down"
-  binds+=",ctrl-k:preview-up"
+  local binds=(
+    "ctrl-f:page-down"
+    "ctrl-b:page-up"
+    "ctrl-h:backward-char"
+    "ctrl-l:forward-char"
+    "ctrl-space:toggle+down"
+    "tab:toggle-preview"
+    "ctrl-j:preview-down"
+    "ctrl-k:preview-up"
+  )
 
-  local options=""
-  options+=" --ansi"
-  options+=" --bind='$binds'"
-  options+=" --exit-0"
-  options+=" --info=inline"
-  options+=" --multi"
-  options+=" --no-sort"
-  options+=" --no-unicode"
-  options+=" --reverse"
-  options+=" --preview='echo {} | head -n3'"
-  options+=" --preview-window='down:3:hidden:wrap'"
-  options+=" --select-1"
+  local options=(
+    "--ansi"
+    "--bind='${(j:,:)binds}'"
+    "--exit-0"
+    "--info=inline"
+    "--multi"
+    "--no-sort"
+    "--no-unicode"
+    "--reverse"
+    "--preview='echo {} | head -n3'"
+    "--preview-window='down:3:hidden:wrap'"
+    "--select-1"
+  )
 
-  export FZF_DEFAULT_OPTS="$options"
+  export FZF_DEFAULT_OPTS="${options[*]}"
   export FZF_DEFAULT_COMMAND="source ~/.zsh/my_functions.zsh; my_grep --files"
 
   unset -f setup_my_fzf
