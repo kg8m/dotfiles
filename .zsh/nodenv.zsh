@@ -8,5 +8,5 @@ if [ -d ~/.nodenv ]; then
 
     unset -f setup_my_nodenv
   }
-  zinit ice lucid wait"!0a" atload"setup_my_nodenv"; zinit snippet ~/.zsh/dummy.zsh
+  zinit ice lucid wait"!0a" atload"setup_my_nodenv"; zinit snippet /dev/null
 fi

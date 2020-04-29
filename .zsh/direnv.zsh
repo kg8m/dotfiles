@@ -7,7 +7,7 @@ if which direnv > /dev/null 2>&1; then
 
     unset -f setup_my_direnv
   }
-  zinit ice lucid nocd wait"!0b" atload"setup_my_direnv"; zinit snippet ~/.zsh/dummy.zsh
+  zinit ice lucid nocd wait"!0b" atload"setup_my_direnv"; zinit snippet /dev/null
 else
   function error_for_envrc {
     if [[ -f .envrc ]]; then

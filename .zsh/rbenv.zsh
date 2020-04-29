@@ -35,7 +35,7 @@ if [ -d ~/.rbenv ] && which rbenv > /dev/null 2>&1; then
   }
 
   zinit ice lucid wait"!0a" atload"setup_my_rbenv"
-  zinit snippet ~/.zsh/dummy.zsh
+  zinit snippet /dev/null
 
   zinit ice lucid wait"!0c" as"null" atload"setup_my_rbenv_default_gems"
   zinit light rbenv/rbenv-default-gems
