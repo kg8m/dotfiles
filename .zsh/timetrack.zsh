@@ -57,9 +57,7 @@ function __my_preexec_start_timetrack() {
 
 function __my_preexec_end_timetrack() {
   local last_status=$?
-  local exec_time
-  local title
-  local message
+  local exec_time result title message
   local command="${__timetrack_command//'/'\\''}"
   local notifier_options=( -group "TIMETRACK_${USER}@${HOST}_$( printf %q "$command" )" )
 
@@ -74,9 +72,11 @@ function __my_preexec_end_timetrack() {
     exec_time=$(( __timetrack_end - __timetrack_start ))
 
     if [ "$last_status" = "0" ]; then
-      title='👼 Command succeeded!!'
+      result="Command succeeded!!"
+      title="👼 ${result}"
     else
-      title='👿 Command failed!!'
+      result="Command failed!!"
+      title="👿 ${result}"
     fi
 
     title+=" ($exec_time seconds)"
@@ -91,9 +91,9 @@ function __my_preexec_end_timetrack() {
     ssh main -t "echo '[$USER@$HOST] $message' | /usr/local/bin/terminal-notifier ${notifier_options[@]}" > /dev/null
 
     if [ "$last_status" = "0" ]; then
-      title="${title//Command succeeded!!/\e[0;32mCommand succeeded!!\e[1;37m}"
+      title="${title//${result}/\e[0;32m${result}\e[1;37m}"
     else
-      title="${title//Command failed!!/\e[0;31mCommand failed!!\e[1;37m}"
+      title="${title//${result}/\e[0;31m${result}\e[1;37m}"
     fi
 
     if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
