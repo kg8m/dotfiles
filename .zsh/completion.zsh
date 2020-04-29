@@ -21,11 +21,22 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 zinit ice lucid wait"!0c" atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
+function prepare_my_fzf_tab {
+  # Overwrite default FZF_TAB_OPTS
+  # https://github.com/Aloxaf/fzf-tab/blob/607a28b8950a152e3e799799c45c1110d10e680f/fzf-tab.zsh#L95-L104
+  # https://github.com/Aloxaf/fzf-tab/issues/31#issuecomment-583725757
+  FZF_TAB_OPTS=(
+    --expect="/"                  # For continuous completion
+    --nth=2,3 --delimiter='\x00'  # Don't search prefix
+    '--query=$query'              # $query will be expanded to query string at runtime.
+    '--header-lines=$#headers'    # $#headers will be expanded to lines of headers at runtime
+  )
+}
 function setup_my_fzf_tab {
   # See also fzf's configs in .zsh/filter.zsh
   export fzf_default_completion=fzf-tab-complete
   unset -f setup_my_fzf_tab
 }
 # Load before zsh-autosuggestions
-zinit ice lucid wait"!0b" atload"setup_my_fzf_tab"
+zinit ice lucid wait"!0b" atinit"prepare_my_fzf_tab" atload"setup_my_fzf_tab"
 zinit light Aloxaf/fzf-tab
