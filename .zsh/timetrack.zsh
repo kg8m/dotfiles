@@ -60,20 +60,20 @@ function __my_preexec_end_timetrack() {
   local exec_time
   local title
   local message
-  local command=$( echo $__timetrack_command | sed -e "s/'/'\\\\''/g" )
+  local command="${__timetrack_command//'/'\\''}"
   local notifier_options="-group \"TIMETRACK_${USER}@${HOST}_$( printf '%q' "$command" )\""
 
-  export __timetrack_end=`date +%s`
+  export __timetrack_end="$( date +%s )"
 
   if [ -z "$__timetrack_start" ] || [ -z "$__timetrack_threshold" ]; then
     return
   fi
 
   # Don't use `[ "$command" =~ $TIMETRACK_PATTERN ]` because it doesn't work on Mac
-  if [ "$( echo $command | egrep $TIMETRACK_PATTERN | egrep -v $TIMETRACK_IGNORE_PATTERN )" ]; then
+  if echo "$command" | egrep -v "$TIMETRACK_IGNORE_PATTERN" | egrep -q "$TIMETRACK_PATTERN"; then
     exec_time=$(( __timetrack_end - __timetrack_start ))
 
-    if [ $last_status = "0" ]; then
+    if [ "$last_status" = "0" ]; then
       title='👼 Command succeeded!!'
     else
       title='👿 Command failed!!'
@@ -90,18 +90,18 @@ function __my_preexec_end_timetrack() {
     # `> /dev/null` for ignoring "Removing previously sent notification" message
     ssh main -t "echo '[$USER@$HOST] $message' | /usr/local/bin/terminal-notifier $notifier_options" > /dev/null
 
-    if [ $last_status = "0" ]; then
-      message=$( echo -e $message | sed -e 's/\(Command succeeded!!\)/\\e[0;32m\1\\e[1;37m/' )
+    if [ "$last_status" = "0" ]; then
+      message="${message//Command succeeded!!/\e[0;32mCommand succeeded!!\e[1;37m}"
     else
-      message=$( echo -e $message | sed -e 's/\(Command failed!!\)/\\e[0;31m\1\\e[1;37m/' )
+      message="${message//Command failed!!/\e[0;31mCommand failed!!\e[1;37m}"
     fi
 
     if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
-      message=$( echo $message | sed -e "s/\($exec_time seconds\)/\\\\e[1;33m\1\\\\e[1;37m/" )
+      message="${message//${exec_time} seconds/\e[1;33m${exec_time} seconds\e[1;37m}"
     fi
 
-    echo "\n* * *"
-    echo $message
+    printf "\n* * *\n"
+    echo "$message"
     echo "Notified by \`terminal-notifier $notifier_options\`"
     date
 
