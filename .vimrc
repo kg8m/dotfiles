@@ -2814,6 +2814,17 @@ if s:RegisterPlugin("tomasr/molokai")  " {{{
     highlight Underlined    guifg=#AAAAAA                 gui=underline  cterm=underline
     highlight Visual                       guibg=#403D3D  gui=bold       cterm=bold
     highlight VisualNOS                    guibg=#403D3D  gui=bold       cterm=bold
+
+    if has("gui_running")
+      " `guibg=NONE` doesn't work in GUI Vim
+      highlight FoldColumn  guibg=#000000
+      highlight Folded      guibg=#000000
+      highlight Ignore      guibg=#000000
+      highlight Normal      guibg=#000000
+      highlight Pmenu       guibg=#000000
+      highlight Special     guibg=#000000
+      highlight Todo        guibg=#000000
+    endif
   endfunction  " }}}
 endif  " }}}
 " }}}
