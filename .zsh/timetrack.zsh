@@ -104,7 +104,6 @@ function __my_preexec_end_timetrack() {
     printf "\n* * *\n"
     echo "$title"
     echo "$message"
-    echo "Notified by \`terminal-notifier ${notifier_options[@]}\`"
     date
 
     unset __timetrack_start
