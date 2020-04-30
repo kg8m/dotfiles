@@ -53,6 +53,9 @@ augroup END  " }}}
 " ----------------------------------------------
 " Plugin management functions  " {{{
 function! UpdatePlugins() abort  " {{{
+  " Remove disused plugins
+  call timer_start(200, { -> map(dein#check_clean(), "delete(v:val, 'rf')") })
+
   call dein#update()
 
   let initial_input = '!Same\\ revision'
