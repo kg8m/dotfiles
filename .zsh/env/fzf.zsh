@@ -13,7 +13,7 @@ function setup_my_fzf {
 
   local options=(
     "--ansi"
-    "--bind='${(j:,:)binds}'"
+    "--bind=${(j:,:)binds}"
     "--exit-0"
     "--info=inline"
     "--multi"
@@ -25,6 +25,7 @@ function setup_my_fzf {
     "--select-1"
   )
 
+  export FZF_DEFAULT_OPTS_ARRAY=( "${options[@]}" )
   export FZF_DEFAULT_OPTS="${options[*]}"
   export FZF_DEFAULT_COMMAND="source ~/.zsh/my_functions.zsh; my_grep --files"
 

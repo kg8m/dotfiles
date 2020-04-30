@@ -22,6 +22,8 @@ zinit ice lucid wait"!0c" atload"_zsh_autosuggest_start"
 zinit light zsh-users/zsh-autosuggestions
 
 function prepare_my_fzf_tab {
+  source ~/.zsh/env/fzf.zsh
+
   # Overwrite default FZF_TAB_OPTS
   # https://github.com/Aloxaf/fzf-tab/blob/607a28b8950a152e3e799799c45c1110d10e680f/fzf-tab.zsh#L95-L104
   # https://github.com/Aloxaf/fzf-tab/issues/31#issuecomment-583725757
@@ -30,6 +32,7 @@ function prepare_my_fzf_tab {
     --nth=2,3 --delimiter='\x00'  # Don't search prefix
     '--query=$query'              # $query will be expanded to query string at runtime.
     '--header-lines=$#headers'    # $#headers will be expanded to lines of headers at runtime
+    "${FZF_DEFAULT_OPTS_ARRAY[(r)--bind=*]},tab:down,btab:up,change:top"
   )
 }
 function setup_my_fzf_tab {
