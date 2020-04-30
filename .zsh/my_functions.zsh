@@ -186,8 +186,14 @@ function my_grep_with_filter() {
 alias gr="my_grep_with_filter"
 
 function vigr() {
+  local filepaths="${(@f)$( my_grep_with_filter "$@" | egrep -o '^[^:]+' | sort -u )}"
+
+  if [ "${#filepaths[@]}" -eq 0 ]; then
+    return
+  fi
+
   # Don't use literal `vim` because it sometimes refers to wrong Vim
-  "vim" "${(@f)$( my_grep_with_filter "$@" | egrep -o '^[^:]+' | sort -u )}"
+  "vim" "${filepaths[@]}"
 }
 alias vimgr=vigr
 
