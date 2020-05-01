@@ -107,10 +107,10 @@ function tmux_setup_default {
 }
 
 function attach_or_new_tmux {
-  if (($# == 0)); then
-    local session_name=default
+  if [ -n "$1" ]; then
+    local session_name="$1"
   else
-    local session_name=$1
+    local session_name=default
   fi
 
   if ! tmux has-session -t "$session_name" > /dev/null 2>&1; then
@@ -118,23 +118,15 @@ function attach_or_new_tmux {
     read "response?Create new session in directory \`$( pwd )\` with session name \`$session_name\`? [y/n]:"
 
     if [[ "$response" =~ ^y ]]; then
-      read "response?Resotre tmux environment for \`$session_name\` session if available? [y/n]:"
-
-      if [[ ! "$response" =~ ^y ]]; then
-        touch ~/tmux_no_auto_restore
-      fi
-
       if [ "$session_name" = "default" ]; then
         tmux_setup_default
       else
         tmux new-session -d -s "$session_name"
 
-        if (($# == 2)); then
+        if [ -n "$2" ]; then
           tmux send-keys -t "$session_name":1 "$2" Enter
         fi
       fi
-
-      rm -f ~/tmux_no_auto_restore
     else
       echo 'Not created.'
     fi
