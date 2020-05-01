@@ -3105,7 +3105,8 @@ nnoremap <Leader>h :split<Cr>
 nnoremap g[ <C-o>
 
 " gF: Same as "gf", except if a number follows the file name, then the cursor is positioned on that line in the file.
-nnoremap gf gF
+" Don't use `nnoremap` because `gf` sometimes overwritten by plugins
+nmap gf gF
 
 " Copy selected to clipboard
 vnoremap <Leader>y "yy:call RemoteCopy(@")<Cr>
