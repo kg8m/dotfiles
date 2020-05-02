@@ -14,6 +14,7 @@ export PATH=$HOME/.zsh/bin:$PATH
 
 export NEXTWORD_DATA_PATH=$HOME/.local/share/nextword/nextword-data
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
+export VIM_PLUGINS=$HOME/.vim/plugins/repos
 
 case "$-" in
   *i*)  # Interactive shell
