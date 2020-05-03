@@ -163,7 +163,7 @@ endfunction  " }}}
 function! s:EnableLSPs() abort  " {{{
   for config in s:lsp_configs
     for key in ["config", "initialization_options", "workspace_config"]
-      if has_key(config, key) && type(config[key]) == v:t_func
+      if has_key(config, key) && type(config[key]) ==# v:t_func
         let config[key] = config[key]()
       endif
     endfor
@@ -209,7 +209,7 @@ function! IsGitCommit() abort  " {{{
     return s:is_git_commit
   endif
 
-  let s:is_git_commit = argc() == 1 && argv()[0] =~# '\.git/COMMIT_EDITMSG$'
+  let s:is_git_commit = argc() ==# 1 && argv()[0] =~# '\.git/COMMIT_EDITMSG$'
   return s:is_git_commit
 endfunction  " }}}
 
@@ -218,7 +218,7 @@ function! IsGitHunkEdit() abort  " {{{
     return s:is_git_hunk_edit
   endif
 
-  let s:is_git_hunk_edit = argc() == 1 && argv()[0] =~# '\.git/addp-hunk-edit\.diff$'
+  let s:is_git_hunk_edit = argc() ==# 1 && argv()[0] =~# '\.git/addp-hunk-edit\.diff$'
   return s:is_git_hunk_edit
 endfunction  " }}}
 
@@ -288,7 +288,7 @@ function! RemoteCopy(text) abort  " {{{
   if &columns > 50
     let text = substitute(text, '\v\n|\t', " ", "g")
     let truncated = trim(s:StringUtility().truncate(text, &columns - 30))
-    echomsg "Copied: " . truncated . (trim(text) == truncated ? "" : "...")
+    echomsg "Copied: " . truncated . (trim(text) ==# truncated ? "" : "...")
   else
     echomsg "Copied"
   endif
@@ -376,7 +376,7 @@ if s:RegisterPlugin("prabirshrestha/asyncomplete.vim")  " {{{
           endif
         endfor
 
-        if len(sorted_items) != original_length
+        if len(sorted_items) !=# original_length
           let startcols += [source_matches.startcol]
         endif
       endif
@@ -757,7 +757,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
   function! s:SwitchLSPGlobalConfigs() abort  " {{{
     " References for sass is broken
     if !has_key(b:, "lsp_highlight_references_enabled")
-      let b:lsp_highlight_references_enabled = (&filetype != "sass")
+      let b:lsp_highlight_references_enabled = (&filetype !=# "sass")
     endif
     let g:lsp_highlight_references_enabled = b:lsp_highlight_references_enabled
   endfunction  " }}}
@@ -766,7 +766,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
     if !has_key(b:, "lsp_target_buffer")
       let b:lsp_target_buffer = v:false
       for filetype in get(s:, "lsp_filetypes", [])
-        if &filetype == filetype
+        if &filetype ==# filetype
           let b:lsp_target_buffer = v:true
           break
         endif
@@ -1175,7 +1175,7 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
     if bufexists(a:filepath)
       let winnr = bufwinnr(a:filepath)
 
-      if winnr == -1
+      if winnr ==# -1
         call DWM_Stack(1)
         split
         execute "edit " . a:filepath
@@ -1185,7 +1185,7 @@ if s:RegisterPlugin("spolu/dwm.vim")  " {{{
         call DWM_AutoEnter()
       endif
     else
-      if bufname("%") != ""
+      if bufname("%") !=# ""
         call DWM_New()
       endif
 
@@ -1325,7 +1325,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L196-L198
   function! s:FzfHistoryBuffers() abort  " {{{
-    let bufnrs        = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") != "qf" && len(bufname(bufnr)) })
+    let bufnrs        = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") !=# "qf" && len(bufname(bufnr)) })
     let sorted_bufnrs = sort(bufnrs, { lhs, rhs -> bufname(lhs) < bufname(rhs) ? -1 : 1 })
 
     return map(sorted_bufnrs, { _, bufnr -> printf("[%d]\t%s", bufnr, fnamemodify(bufname(bufnr), ":~:.")) })
@@ -1390,7 +1390,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         let filepath    = bufname(position[0])
         let line_number = position[1]
 
-        if filepath == current_filepath && line_number == current_line_number
+        if filepath ==# current_filepath && line_number ==# current_line_number
           let detected_mark_key = mark_key
           break
         else
@@ -1524,7 +1524,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       for candidate in s:fzf_my_shortcuts_list
         let current_prefix = s:FzfMyShortcutsGroupName(candidate[0])
 
-        if !empty(new_list) && current_prefix != prev_prefix
+        if !empty(new_list) && current_prefix !=# prev_prefix
           call add(new_list, ["", ""])
         endif
 
@@ -1663,7 +1663,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       let s:fzf_rails_type_names = sort(keys(s:fzf_rails_specs))
     endif
 
-    if a:arglead == ""
+    if a:arglead ==# ""
       return s:fzf_rails_type_names
     else
       return filter(
@@ -1869,17 +1869,17 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! s:Lightline_Filepath() abort  " {{{
-    if &filetype == "vimfiler"
+    if &filetype ==# "vimfiler"
       return vimfiler#get_status_string()
     endif
 
-    if &filetype == "unite"
+    if &filetype ==# "unite"
       return unite#get_status_string()
     endif
 
     let filename = CurrentFilename()
 
-    if filename == ""
+    if filename ==# ""
       return "[No Name]"
     else
       return winwidth(0) >= 100 ? CurrentRelativePath() : filename
@@ -1913,7 +1913,7 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! Lightline_IsIrregularFileencoding() abort  " {{{
-    return !empty(&fileencoding) && &fileencoding != "utf-8"
+    return !empty(&fileencoding) && &fileencoding !=# "utf-8"
   endfunction  " }}}
 
   function! Lightline_LSPStatus() abort  " {{{
@@ -2685,7 +2685,7 @@ if s:RegisterPlugin("benmills/vimux", #{ if: OnTmux() && !IsGitCommit() && !IsGi
           let view = views[index]
 
           if match(view, "(active)") != -1
-            if index == len(views) - 1
+            if index ==# len(views) - 1
               return -1
             else
               return split(views[index + 1], ":")[0]
