@@ -893,6 +893,11 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   name: "sqls",
      \   cmd: { server_info -> ["sqls"] },
      \   whitelist: ["sql"],
+     \   workspace_config: { -> #{
+     \     sqls: #{
+     \       connections: get(g:, "sqls_connections", []),
+     \     },
+     \   } },
      \ })
   " }}}
 
