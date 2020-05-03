@@ -972,7 +972,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \       schemas: {},
      \       schemaStore: #{ enable: v:true },
      \       validate: v:true,
-     \    },
+     \     },
      \   },
      \ })
   " }}}
