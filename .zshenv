@@ -7,6 +7,11 @@ function try_to_source {
   [ -f "$filepath" ] && source "$filepath"
 }
 
+# https://wiki.archlinux.org/index.php/XDG_Base_Directory
+export XDG_CONFIG_HOME=$HOME/.config     # Where user-specific configurations should be written (analogous to `/etc`).
+export XDG_CACHE_HOME=$HOME/.cache       # Where user-specific non-essential (cached) data should be written (analogous to `/var/cache`).
+export XDG_DATA_HOME=$HOME/.local/share  # Where user-specific data files should be written (analogous to `/usr/share`).
+
 export PATH=/usr/local/bin:/usr/local/sbin:/sbin:$PATH
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.config/git/bin:$PATH
