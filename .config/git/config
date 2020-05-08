@@ -56,8 +56,10 @@ context = 10
 compactionHeuristic = true
 colorMoved = dimmed_zebra
 colorMovedWS = ignore-all-space
-noprefix = true
 renames = true
+
+# Disable because some tools to apply patches don't work
+noprefix = false
 
 [fetch]
 prune = true
