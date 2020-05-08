@@ -43,6 +43,13 @@ let g:mapleader = ","
 set fileformats=unix,dos,mac
 set ambiwidth=double
 scriptencoding utf-8
+
+" https://github.com/rhysd/dogfiles/blob/af9e4947a3d99ee47a53ab297c2e1442a30856b4/vimrc#L18-L22
+function! s:get_SID() abort
+  return matchstr(expand("<sfile>"), '<SNR>\d\+_\zeget_SID$')
+endfunction
+let s:SID = s:get_SID()
+delfunction s:get_SID
 " }}}
 
 " Reset my autocommands
@@ -1481,7 +1488,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Copy] relative filepath", "call RemoteCopy(CurrentRelativePath())"],
         \   ["[Copy] absolute filepath", "call RemoteCopy(CurrentAbsolutePath())"],
         \
-        \   ["[Git] Gina patch", "call <SID>GinaPatch(expand('%'))"],
+        \   ["[Git] Gina patch", "call " . s:SID . "GinaPatch(expand('%'))"],
         \
         \   ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
         \   ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
