@@ -1163,7 +1163,7 @@ if s:RegisterPlugin("tyru/caw.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit() })
   let g:caw_hatpos_skip_blank_line = v:true
 
   augroup my_vimrc  " {{{
-    autocmd FileType gemfile let b:caw_oneline_comment = "#"
+    autocmd FileType Gemfile let b:caw_oneline_comment = "#"
   augroup END  " }}}
 
   call s:ConfigPlugin(#{
