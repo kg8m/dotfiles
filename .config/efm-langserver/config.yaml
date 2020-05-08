@@ -23,7 +23,7 @@ tools:
     lint-stdin: true
     lint-formats:
       - "%f: %l: %m"
-      - "%f:%l: %m"
+      - "%f:%l %m"
 
   sh-shellcheck: &sh-shellcheck
     lint-command: "shellcheck --shell=bash --format=gcc --external-sources --enable=all -"
