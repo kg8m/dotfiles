@@ -749,6 +749,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
     let b:asyncomplete_refresh_pattern = s:CompletionRefreshPattern(&filetype)
     setlocal omnifunc=lsp#complete
     nmap <buffer> g] <Plug>(lsp-definition)
+    nmap <buffer> <S-h> <Plug>(lsp-hover)
 
     call s:SwitchLSPGlobalConfigs()
     let b:lsp_buffer_enabled = v:true
@@ -3123,10 +3124,6 @@ nmap gf gF
 
 " Copy selected to clipboard
 vnoremap <Leader>y "yy:call RemoteCopy(@")<Cr>
-
-" Open help for current word
-" See `:help K`
-noremap <S-h> <S-k>
 
 function! s:RemoveTrailingWhitespaces() abort  " {{{
   let position = getpos(".")
