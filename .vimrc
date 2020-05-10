@@ -1237,7 +1237,7 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " See also vim-fzf-tjump's mappings
   nnoremap <Leader><Leader>f :FzfFiles<Cr>
-  nnoremap <Leader><Leader>v :FzfGFiles?<Cr>
+  nnoremap <Leader><Leader>v :call <SID>FzfGitFiles()<Cr>
   nnoremap <Leader><Leader>b :call <SID>FzfBuffers()<Cr>
   nnoremap <Leader><Leader>l :FzfLines<Cr>
   nnoremap <Leader><Leader>g :FzfGrep<Space>
@@ -1261,12 +1261,30 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     redraw
   endfunction  " }}}
 
+  " Git Files: Show preview of dirty files (Fzf's `:GFiles?` doesn't show preview)  " {{{
+  function! s:FzfGitFiles() abort  " {{{
+    call fzf#vim#gitfiles("?", #{
+       \   options: [
+       \     "--preview", "git diff-or-cat {2}",
+       \     "--preview-window", "right:wrap",
+       \   ],
+       \ })
+  endfunction  " }}}
+  " }}}
+
   " Buffers: Sort buffers in dictionary order (Fzf's `:Buffers` doesn't sort them)  " {{{
   " Also see History configs
   function! s:FzfBuffers() abort  " {{{
     let options = #{
       \   source:  s:FzfBuffersFiles(),
-      \   options: ["--header-lines", !empty(expand("%")), "--nth=2..", "--prompt", "Buffers> ", "--tabstop=6"],
+      \   options: [
+      \     "--header-lines", !empty(expand("%")),
+      \     "--nth", "2..",
+      \     "--prompt", "Buffers> ",
+      \     "--tabstop", "6",
+      \     "--preview", "git cat {2}",
+      \     "--preview-window", "right:wrap",
+      \   ],
       \ }
 
     call s:FzfHistoryRun("buffers-files", options)
@@ -1304,7 +1322,14 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   function! s:FzfHistory() abort  " {{{
     let options = #{
       \   source:  s:FzfHistoryFiles(),
-      \   options: ["--header-lines", !empty(expand("%")), "--nth=2..", "--prompt", "History> ", "--tabstop=6"],
+      \   options: [
+      \     "--header-lines", !empty(expand("%")),
+      \     "--nth", "2..",
+      \     "--prompt", "History> ",
+      \     "--tabstop", "6",
+      \     "--preview", "git cat {2}",
+      \     "--preview-window", "right:wrap",
+      \   ],
       \ }
 
     call s:FzfHistoryRun("history-files", options)
@@ -1424,7 +1449,14 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     let options = #{
       \   source:  s:YankList(),
       \   sink:    function("s:YankHandler"),
-      \   options: ["--no-multi", "--nth=2..", "--prompt", "Yank> ", "--tabstop=1"],
+      \   options: [
+      \     "--no-multi",
+      \     "--nth", "2..",
+      \     "--prompt", "Yank> ",
+      \     "--tabstop", "1",
+      \     "--preview", s:YankPreviewCommand(),
+      \     "--preview-window", "down:5:wrap",
+      \   ],
       \ }
 
     call fzf#run(fzf#wrap("yank-history", options))
@@ -1710,7 +1742,11 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
     let options = {
       \   "source":  command,
-      \   "options": ["--prompt", "Rails/" . a:type . "> "],
+      \   "options": [
+      \     "--prompt", "Rails/" . a:type . "> ",
+      \     "--preview", "git cat {}",
+      \     "--preview-window", "right:wrap",
+      \   ],
       \ }
 
     call fzf#run(fzf#wrap("rails", options))
@@ -1719,7 +1755,6 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   let s:fzf_commands = [
     \   "FzfFiles",
-    \   "FzfGFiles",
     \   "FzfLines",
     \   "FzfMarks",
     \   "FzfHelptags",
@@ -2777,7 +2812,20 @@ if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
 
   function! s:FormatYankItem(index) abort  " {{{
     let [text, _]  = yankround#_get_cache_and_regtype(a:index)
+
+    " Avoid shell's syntax error in fzf's preview
+    let text = substitute(text, "\n", "\\\\n", "g")
+
     return printf("%3d\t%s", a:index, text)
+  endfunction  " }}}
+
+  function! s:YankPreviewCommand() abort  " {{{
+    let command  = "echo {}"
+    let command .= " | sed -e 's/^ *[0-9]\\{1,\\}\t//'"
+    let command .= " | sed -e 's/\\\\/\\\\\\\\/g'"
+    let command .= " | head -n5"
+
+    return command
   endfunction  " }}}
 
   function! s:YankHandler(yank_item) abort  " {{{

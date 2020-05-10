@@ -304,6 +304,10 @@ function git:utility:diff_or_cat {
   fi
 }
 
+function git:utility:cat {
+  git:proxy:cat:files "$@"
+}
+
 function git:proxy:sed {
   if which gsed > /dev/null 2>&1; then
     gsed "$@"
@@ -328,10 +332,20 @@ function git:proxy:cat:files {
     return 1
   fi
 
+  local realpaths=()
+
+  for filepath in "${filepaths[@]}"; do
+    if [ -f "$filepath" ]; then
+      realpaths+=( "$filepath" )
+    else
+      realpaths+=( ${~filepath} )
+    fi
+  done
+
   if which bat > /dev/null 2>&1; then
-    bat --wrap --color=always --style=full "${filepaths[@]}"
+    bat --wrap --color=always --style=full "${realpaths[@]}"
   else
-    for filepath in "${filepaths[@]}"; do
+    for filepath in "${realpaths[@]}"; do
       printf "\n** File: %s\n\n" "${filepath}"
       cat "${filepath}"
       echo

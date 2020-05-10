@@ -241,6 +241,7 @@ info = remote show origin
 
 chmod = "!git sh \"git:utility:chmod '$1'\""
 diff-or-cat = "!git sh \"git:utility:diff_or_cat '$1'\""
+cat = "!git sh \"git:utility:cat '$1'\""
 
 sh = "!zsh -c \"source ~/.config/git/aliases; $@\""
 # }}}
