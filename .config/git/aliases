@@ -297,10 +297,10 @@ function git:utility:diff_or_cat {
     git:proxy:cat:files "$filepath"
   # Staged files
   elif [[ "$git_status" =~ ^[A-Z] ]]; then
-    git diff-without-space-changes --color=always --staged "$filepath"
+    git diff-without-space-changes --color=always --staged -- "$filepath"
   # Others: unstaged tracked files
   else
-    git diff-without-space-changes --color=always "$filepath"
+    git diff-without-space-changes --color=always -- "$filepath"
   fi
 }
 
