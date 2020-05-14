@@ -15,6 +15,7 @@ export XDG_DATA_HOME=$HOME/.local/share  # Where user-specific data files should
 export PATH=/usr/local/bin:/usr/local/sbin:/sbin:$PATH
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.config/git/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.zsh/bin:$PATH
 
 export NEXTWORD_DATA_PATH=$HOME/.local/share/nextword/nextword-data
