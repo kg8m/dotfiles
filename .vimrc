@@ -2794,6 +2794,17 @@ if s:RegisterPlugin("othree/yajs.vim", #{ if: !IsGitCommit() && !IsGitHunkEdit()
      \ })
 endif  " }}}
 
+if s:RegisterPlugin("jonsmithers/vim-html-template-literals", #{ if: !IsGitCommit() && !IsGitHunkEdit() })  " {{{
+  let g:htl_css_templates = v:true
+  let g:htl_all_templates = v:true
+
+  call s:ConfigPlugin(#{
+     \   depends: "vim-javascript",
+     \ })
+
+  call s:RegisterPlugin("pangloss/vim-javascript")
+endif  " }}}
+
 if s:RegisterPlugin("LeafCage/yankround.vim")  " {{{
   let g:yankround_max_history = 500
 
