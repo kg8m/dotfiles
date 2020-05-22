@@ -112,9 +112,11 @@ unstage = restore --staged
 
 restore-by-select        = bulk-restore
 restore-by-select-staged = bulk-restore-staged
+unstage-by-select        = bulk-unstage
 
 bulk-restore        = sh git:restore:bulk
 bulk-restore-staged = sh git:restore:bulk:staged
+bulk-unstage        = sh git:restore:bulk:staged
 # }}}
 
 # clone  # {{{
