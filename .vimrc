@@ -1240,7 +1240,9 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>b :call <SID>FzfBuffers()<Cr>
   nnoremap <Leader><Leader>l :FzfLines<Cr>
   nnoremap <Leader><Leader>g :FzfGrep<Space>
+  nnoremap <Leader><Leader>G :FzfGrepForDir<Space>
   vnoremap <Leader><Leader>g "gy:FzfGrep<Space><C-r>"
+  vnoremap <Leader><Leader>G "gy:FzfGrepForDir<Space><C-r>"
   nnoremap <Leader><Leader>m :FzfMarks<Cr>
   nnoremap <Leader><Leader>h :call <SID>FzfHistory()<Cr>
   nnoremap <Leader><Leader>H :FzfHelptags<Cr>
@@ -1299,7 +1301,26 @@ if s:RegisterPlugin("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " Grep: Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)  " {{{
   " https://github.com/junegunn/fzf.vim/blob/dc4c4c22715c060a2babd5a5187004bdecbcdea7/plugin/fzf.vim#L52
-  command! -bang -nargs=* FzfGrep call fzf#vim#grep("rg " . s:FzfGrepOptions() . " " . shellescape(<q-args>), v:true, fzf#vim#with_preview("right:wrap"), <bang>0)
+  command! -nargs=+ -complete=tag FzfGrep       call s:FzfGrep(<q-args>, "")
+  command! -nargs=+ -complete=tag FzfGrepForDir call s:FzfGrep(<q-args>, s:InputDirpath())
+
+  function! s:FzfGrep(pattern, dirpath) abort  " {{{
+    let options = s:FzfGrepOptions()
+    let pattern = shellescape(a:pattern)
+    let dirpath = empty(a:dirpath) ? "" : shellescape(a:dirpath)
+
+    call fzf#vim#grep("rg " . options . " " . pattern . " " . dirpath, v:true, fzf#vim#with_preview("right:wrap"))
+  endfunction  " }}}
+
+  function! s:InputDirpath() abort  " {{{
+    let dirpath = input("Specify dirpath: ", "", "dir")
+
+    if empty(dirpath)
+      throw "Dirpath not specified."
+    else
+      return dirpath
+    endif
+  endfunction  " }}}
 
   function! s:FzfGrepOptions() abort  " {{{
     let base = "--column --line-number --no-heading --color=always"
