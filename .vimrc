@@ -827,7 +827,7 @@ if s:RegisterPlugin("kg8m/vim-lsp")  " {{{
      \   name: "efm-langserver",
      \   cmd: { server_info -> ["efm-langserver"] },
      \   whitelist: [
-     \     "eruby", "javascript", "json", "make", "markdown", "vim",
+     \     "eruby", "json", "make", "markdown", "vim",
      \     "eruby.yaml", "yaml",
      \     "sh", "zsh",
      \   ],

@@ -6,11 +6,6 @@ tools:
     lint-stdin: true
     lint-offset: 0
 
-  javascript-eslint: &javascript-eslint
-    lint-command: "eslint --format unix --stdin"
-    lint-ignore-exit-code: true
-    lint-stdin: true
-
   json-jq: &json-jq
     lint-command: "jq ."
 
@@ -50,9 +45,6 @@ languages:
 
   eruby.yaml:
     - <<: *yaml-yamllint
-
-  javascript:
-    - <<: *javascript-eslint
 
   json:
     - <<: *json-jq
