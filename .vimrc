@@ -1925,6 +1925,10 @@ if s:RegisterPlugin("itchyny/lightline.vim")  " {{{
       return unite#get_status_string()
     endif
 
+    if &filetype ==# "qf" && has_key(w:, "quickfix_title")
+      return w:quickfix_title
+    endif
+
     let filename = CurrentFilename()
 
     if filename ==# ""
