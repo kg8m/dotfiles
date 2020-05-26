@@ -49,6 +49,7 @@ whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 editor = vim
 excludesfile = ~/.gitignore
 hooksPath = ~/.config/git/hooks
+pager = git-pager
 
 [diff]
 algorithm = patience
@@ -65,15 +66,15 @@ noprefix = false
 prune = true
 
 [interactive]
-diffFilter = diff-highlight
+diffFilter = git-diff-filter
 
 [mergetool]
 keepBackup = false
 
 [pager]
-log  = diff-highlight | less --LINE-NUMBERS
-show = diff-highlight | less --LINE-NUMBERS
-diff = diff-highlight | less --LINE-NUMBERS
+log  = git-pager
+show = git-pager
+diff = git-pager
 
 [pull]
 rebase = true

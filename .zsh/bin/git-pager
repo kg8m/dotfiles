@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+if which delta > /dev/null 2>&1; then
+  delta --plus-color="#013c00" --minus-color="#480001" --theme='Monokai Extended Bright' "$@"
+else
+  diff-highlight "$@" | less --LINE-NUMBERS
+fi
