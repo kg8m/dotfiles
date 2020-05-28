@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
-if which delta > /dev/null 2>&1; then
-  delta --color-only --plus-color="#013c00" --minus-color="#480001" "$@"
-else
-  diff-highlight "$@"
-fi
+# Disable delta because it doesn't respect text moves in diff
+# if which delta > /dev/null 2>&1; then
+#   delta --color-only --plus-color="#013c00" --minus-color="#480001" "$@"
+# else
+#   diff-highlight "$@"
+# fi
+diff-highlight "$@"
