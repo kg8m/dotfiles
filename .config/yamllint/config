@@ -2,6 +2,7 @@
 extends: default
 
 rules:
+  colons: disable
   document-start: disable
   line-length:
     max: 120
