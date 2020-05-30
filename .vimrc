@@ -1794,6 +1794,13 @@ endif  " }}}
 
 call kg8m#plugin#register("vim-scripts/sudo.vim")
 
+if kg8m#plugin#register("iberianpig/tig-explorer.vim")  " {{{
+  call kg8m#plugin#configure(#{
+     \   lazy:   v:true,
+     \   on_cmd: ["Tig", "TigBlame", "TigStatus"],
+     \ })
+endif  " }}}
+
 if kg8m#plugin#register("leafgarland/typescript-vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:typescript_indent_disable = v:true
 endif  " }}}
