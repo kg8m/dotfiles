@@ -63,6 +63,7 @@ delfunction s:get_SID
 augroup my_vimrc  " {{{
   autocmd!
 augroup END  " }}}
+" }}}
 
 " ----------------------------------------------
 " Plugins  " {{{
