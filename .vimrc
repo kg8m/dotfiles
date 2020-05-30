@@ -1013,22 +1013,20 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       \   source:  s:FzfBuffersFiles(),
       \   options: [
       \     "--header-lines", !empty(expand("%")),
-      \     "--nth", "2..",
       \     "--prompt", "Buffers> ",
-      \     "--tabstop", "6",
-      \     "--preview", "git cat {2}",
+      \     "--preview", "git cat {}",
       \     "--preview-window", "right:wrap",
       \   ],
       \ }
 
-    call s:FzfHistoryRun("buffers-files", options)
+    call fzf#run(fzf#wrap("buffer-files", options))
   endfunction  " }}}
 
   function! s:FzfBuffersFiles() abort  " {{{
-    let current  = empty(expand("%")) ? [] : [printf("[%%]\t%s", fnamemodify(expand("%"), ":~:."))]
+    let current  = empty(expand("%")) ? [] : [fnamemodify(expand("%"), ":~:.")]
     let buffers  = s:FzfHistoryBuffers()
 
-    return kg8m#util#list_module().uniq_by(current + buffers, { item -> split(item, "\t")[1] })
+    return uniq(current + buffers)
   endfunction  " }}}
   " }}}
 
@@ -1077,42 +1075,22 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       \   source:  s:FzfHistoryFiles(),
       \   options: [
       \     "--header-lines", !empty(expand("%")),
-      \     "--nth", "2..",
       \     "--prompt", "History> ",
-      \     "--tabstop", "6",
-      \     "--preview", "git cat {2}",
+      \     "--preview", "git cat {}",
       \     "--preview-window", "right:wrap",
       \   ],
       \ }
 
-    call s:FzfHistoryRun("history-files", options)
-  endfunction  " }}}
-
-  function! s:FzfHistoryRun(name, options) abort  " {{{
-    " https://github.com/junegunn/fzf/blob/0896036266dc951ac03c451f1097171a996eb412/plugin/fzf.vim#L341-L348
-    let wrapped = fzf#wrap(a:name, a:options)
-    let wrapped.original_sink = remove(wrapped, "sink*")
-
-    function! wrapped.temp_sink(args) abort  " {{{
-      let key       = a:args[0]
-      let items     = a:args[1:]
-      let filepaths = map(copy(items), { _, item -> split(item, "\t")[1] })
-
-      return self.original_sink([key] + filepaths)
-    endfunction  " }}}
-
-    let wrapped["sink*"] = remove(wrapped, "temp_sink")
-
-    call fzf#run(wrapped)
+    call fzf#run(fzf#wrap("history-files", options))
   endfunction  " }}}
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L457-L463
   function! s:FzfHistoryFiles() abort  " {{{
-    let current  = empty(expand("%")) ? [] : [printf("[%%]\t%s", fnamemodify(expand("%"), ":~:."))]
+    let current  = empty(expand("%")) ? [] : [fnamemodify(expand("%"), ":~:.")]
     let buffers  = s:FzfHistoryBuffers()
     let oldfiles = s:FzfHistoryOldfiles()
 
-    return kg8m#util#list_module().uniq_by(current + buffers + oldfiles, { item -> split(item, "\t")[1] })
+    return uniq(current + buffers + oldfiles)
   endfunction  " }}}
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L196-L198
@@ -1120,7 +1098,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     let bufnrs        = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") !=# "qf" && len(bufname(bufnr)) })
     let sorted_bufnrs = sort(bufnrs, { lhs, rhs -> bufname(lhs) < bufname(rhs) ? -1 : 1 })
 
-    return map(sorted_bufnrs, { _, bufnr -> printf("[%d]\t%s", bufnr, fnamemodify(bufname(bufnr), ":~:.")) })
+    return map(sorted_bufnrs, { _, bufnr -> fnamemodify(bufname(bufnr), ":~:.") })
   endfunction  " }}}
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
@@ -1128,7 +1106,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     let ignore_pattern = '\v\.git/(.*/)?COMMIT_EDITMSG$|\.git/addp-hunk-edit\.diff$'
     let filepaths      = filter(copy(v:oldfiles), { _, filepath -> filereadable(fnamemodify(filepath, ":p")) && filepath !~# ignore_pattern })
 
-    return map(filepaths, { _, filepath -> printf("[h]\t%s", fnamemodify(filepath, ":~:.")) })
+    return map(filepaths, { _, filepath -> fnamemodify(filepath, ":~:.") })
   endfunction  " }}}
   " }}}
 
