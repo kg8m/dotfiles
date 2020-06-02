@@ -1236,7 +1236,8 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Reload with Encoding] euc-jp",      "edit ++encoding=euc-jp +set\\ noreadonly"],
         \   ["[Reload with Encoding] utf-8",       "edit ++encoding=utf-8 +set\\ noreadonly"],
         \
-        \   ["[Reload by Sudo]", "edit sudo:%"],
+        \   ["[Reload by Sudo]",     "edit suda://%"],
+        \   ["[Write/save by Sudo]", "write suda://%"],
         \
         \   ["[Set Encoding] latin1",      "set fileencoding=latin1"],
         \   ["[Set Encoding] cp932",       "set fileencoding=cp932"],
@@ -1693,7 +1694,8 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! Lightline_IsIrregularFilepath() abort  " {{{
-    return s:Lightline_IsReadonly() || kg8m#util#current_absolute_path() =~# '^sudo:'
+    " `sudo:` prefix for sudo.vim, which I used to use
+    return s:Lightline_IsReadonly() || kg8m#util#current_absolute_path() =~# '\v^(sudo:|suda://)'
   endfunction  " }}}
 
   function! Lightline_IsIrregularFileencoding() abort  " {{{
@@ -1792,7 +1794,7 @@ if kg8m#plugin#register("AndrewRadev/splitjoin.vim")  " {{{
      \ })
 endif  " }}}
 
-call kg8m#plugin#register("vim-scripts/sudo.vim")
+call kg8m#plugin#register("lambdalisue/suda.vim")
 
 if kg8m#plugin#register("iberianpig/tig-explorer.vim")  " {{{
   call kg8m#plugin#configure(#{
