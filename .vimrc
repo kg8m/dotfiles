@@ -2825,9 +2825,14 @@ set nostartofline
 
 " This defines what bases Vim will consider for numbers when using the `CTRL-A` and `CTRL-X` commands for adding to and
 " subtracting from a number respectively.
-"   octal: If included, numbers that start with a zero will be considered to be octal. Example: Using CTRL-A on "007"
-"          results in "010".
+"   octal:    If included, numbers that start with a zero will be considered to be octal. Example: Using CTRL-A on "007"
+"             results in "010".
+"   unsigned: If included, numbers are recognized as unsigned. Thus a leading dash or negative sign won't be considered
+"             as part of the number.
 set nrformats-=octal
+if v:versionlong >= 8020860
+  set nrformats+=unsigned
+endif
 
 " Smoothen screen drawing; wait procedures' completion
 set lazyredraw
