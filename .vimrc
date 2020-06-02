@@ -1103,8 +1103,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
   function! s:FzfHistoryOldfiles() abort  " {{{
-    let ignore_pattern = '\v\.git/(.*/)?COMMIT_EDITMSG$|\.git/addp-hunk-edit\.diff$'
-    let filepaths      = filter(copy(v:oldfiles), { _, filepath -> filereadable(fnamemodify(filepath, ":p")) && filepath !~# ignore_pattern })
+    let filepaths = filter(copy(mr#mru#list()), { _, filepath -> filereadable(fnamemodify(filepath, ":p")) })
 
     return map(filepaths, { _, filepath -> fnamemodify(filepath, ":~:.") })
   endfunction  " }}}
@@ -1725,6 +1724,10 @@ if kg8m#plugin#register("AndrewRadev/linediff.vim")  " {{{
 endif  " }}}
 
 call kg8m#plugin#register("kg8m/moin.vim", #{ if: !kg8m#util#is_git_tmp_edit() })
+
+if kg8m#plugin#register("lambdalisue/mr.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+  let g:mr#threshold = 10000
+endif  " }}}
 
 if kg8m#plugin#register("tyru/open-browser.vim")  " {{{
   map <Leader>o <Plug>(openbrowser-open)
@@ -2813,7 +2816,7 @@ nnoremap / /\v
 " < => Maximum number of lines saved for each register.
 " h => Disable the effect of 'hlsearch' when loading the viminfo file.
 " s => Maximum size of an item in Kbyte.
-set viminfo='100000,<100,h,s10
+set viminfo='100,<100,h,s10
 
 set restorescreen
 set mouse=
