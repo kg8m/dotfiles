@@ -2830,9 +2830,7 @@ set nostartofline
 "   unsigned: If included, numbers are recognized as unsigned. Thus a leading dash or negative sign won't be considered
 "             as part of the number.
 set nrformats-=octal
-if v:versionlong >= 8020860
-  set nrformats+=unsigned
-endif
+set nrformats+=unsigned
 
 " Smoothen screen drawing; wait procedures' completion
 set lazyredraw
