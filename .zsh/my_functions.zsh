@@ -163,7 +163,16 @@ function extract() {
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
 
 function my_grep() {
-  rg $RIPGREP_EXTRA_OPTIONS "$@"
+  local args
+
+  if [ -n "$RIPGREP_EXTRA_OPTIONS" ]; then
+    # Split $RIPGREP_EXTRA_OPTIONS by whitespaces
+    args=( "${=RIPGREP_EXTRA_OPTIONS}" "$@" )
+  else
+    args=( "$@" )
+  fi
+
+  rg "${args[@]}"
 }
 
 function my_grep_with_filter() {
