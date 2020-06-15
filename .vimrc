@@ -1857,8 +1857,9 @@ endif  " }}}
 if kg8m#plugin#register("h1mesuke/vim-alignta")  " {{{
   vnoremap <Leader>a :Alignta<Space>
 
+  " Don't load lazily because `Alignta` command doesn't work on load
   call kg8m#plugin#configure(#{
-     \   lazy:   v:true,
+     \   lazy:   v:false,
      \   on_cmd: "Alignta",
      \ })
 endif  " }}}
