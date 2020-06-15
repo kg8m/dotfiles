@@ -27,6 +27,7 @@ def __benchmark__(*args)
       labels_and_procs.each do |label, _proc|
         x.report("#{label}:"){ _proc.call }
       end
+      x.compare!
     end
   end
 ensure

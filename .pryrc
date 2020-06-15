@@ -73,6 +73,7 @@ def __benchmark__(n = nil, **labels_and_procs)
       labels_and_procs.each do |label, _proc|
         x.report("#{label}:"){ _proc.call }
       end
+      x.compare!
     end
   end
 ensure
