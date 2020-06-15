@@ -1272,6 +1272,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Alignta] '  // '",    "'<,'>Alignta 21 //"],
         \   ["[Alignta] '  #=> '",   "'<,'>Alignta 21 #=>"],
         \   ["[Alignta] '  //=> '",  "'<,'>Alignta 21 //=>"],
+        \   ["[Alignta] Trac Table", "'<,'>Alignta -r =\\?||=\\?\\|||"],
         \
         \   ["[Autoformat] Format Source Codes", "Autoformat"],
         \
