@@ -1023,8 +1023,8 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
 
   function! s:FzfBuffersFiles() abort  " {{{
-    let current  = empty(expand("%")) ? [] : [fnamemodify(expand("%"), ":~:.")]
-    let buffers  = s:FzfHistoryBuffers()
+    let current = empty(expand("%")) ? [] : [fnamemodify(expand("%"), ":~:.")]
+    let buffers = s:FzfHistoryBuffers()
 
     return kg8m#util#list_module().uniq(current + buffers)
   endfunction  " }}}
