@@ -1026,7 +1026,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     let current  = empty(expand("%")) ? [] : [fnamemodify(expand("%"), ":~:.")]
     let buffers  = s:FzfHistoryBuffers()
 
-    return uniq(current + buffers)
+    return kg8m#util#list_module().uniq(current + buffers)
   endfunction  " }}}
   " }}}
 
@@ -1090,7 +1090,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     let buffers  = s:FzfHistoryBuffers()
     let oldfiles = s:FzfHistoryOldfiles()
 
-    return uniq(current + buffers + oldfiles)
+    return kg8m#util#list_module().uniq(current + buffers + oldfiles)
   endfunction  " }}}
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L196-L198
