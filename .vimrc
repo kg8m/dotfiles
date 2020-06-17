@@ -1024,9 +1024,16 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   function! s:FzfBuffersFiles() abort  " {{{
     let current = empty(expand("%")) ? [] : [fnamemodify(expand("%"), ":~:.")]
-    let buffers = s:FzfHistoryBuffers()
+    let buffers = s:FzfBuffersList()
 
     return kg8m#util#list_module().uniq(current + buffers)
+  endfunction  " }}}
+
+  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L196-L198
+  function! s:FzfBuffersList() abort  " {{{
+    let bufnrs = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") !=# "qf" && len(bufname(bufnr)) })
+
+    return sort(map(bufnrs, { _, bufnr -> fnamemodify(bufname(bufnr), ":~:.") }))
   endfunction  " }}}
   " }}}
 
@@ -1087,20 +1094,13 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L457-L463
   function! s:FzfHistoryFiles() abort  " {{{
     let current  = empty(expand("%")) ? [] : [fnamemodify(expand("%"), ":~:.")]
-    let oldfiles = s:FzfHistoryOldfiles()
+    let oldfiles = s:FzfHistoryList()
 
     return kg8m#util#list_module().uniq(current + oldfiles)
   endfunction  " }}}
 
-  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L196-L198
-  function! s:FzfHistoryBuffers() abort  " {{{
-    let bufnrs = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") !=# "qf" && len(bufname(bufnr)) })
-
-    return sort(map(bufnrs, { _, bufnr -> fnamemodify(bufname(bufnr), ":~:.") }))
-  endfunction  " }}}
-
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
-  function! s:FzfHistoryOldfiles() abort  " {{{
+  function! s:FzfHistoryList() abort  " {{{
     let filepaths = filter(copy(mr#mru#list()), { _, filepath -> filereadable(fnamemodify(filepath, ":p")) })
 
     return map(filepaths, { _, filepath -> fnamemodify(filepath, ":~:.") })
