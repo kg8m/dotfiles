@@ -339,8 +339,15 @@ if kg8m#plugin#register("high-moctane/asyncomplete-nextword.vim")  " {{{
 
   call kg8m#plugin#configure(#{
      \   lazy:      v:true,
+     \   depends:   "async.vim",
      \   on_source: "asyncomplete.vim",
      \ })
+
+  if kg8m#plugin#register("prabirshrestha/async.vim")  " {{{
+    call kg8m#plugin#configure(#{
+       \   lazy: v:true,
+       \ })
+  endif  " }}}
 endif  " }}}
 
 if kg8m#plugin#register("prabirshrestha/asyncomplete-tags.vim")  " {{{
@@ -732,15 +739,9 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
   call kg8m#plugin#configure(#{
      \   lazy:    v:true,
      \   on_ft:   kg8m#plugin#lsp#get_filetypes(),
-     \   depends: ["asyncomplete.vim", "async.vim"],
+     \   depends: "asyncomplete.vim",
      \   hook_post_source: function("s:ConfigPluginOnPostSource_lsp"),
      \ })
-
-  if kg8m#plugin#register("prabirshrestha/async.vim")  " {{{
-    call kg8m#plugin#configure(#{
-       \   lazy: v:true,
-       \ })
-  endif  " }}}
 
   call kg8m#plugin#register("mattn/vim-lsp-settings", #{ if: v:false })
   call kg8m#plugin#register("tsuyoshicho/vim-efm-langserver-settings", #{ if: v:false })
