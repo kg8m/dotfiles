@@ -906,7 +906,15 @@ if kg8m#plugin#register("tyru/caw.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  
      \ })
 endif  " }}}
 
-call kg8m#plugin#register("Shougo/context_filetype.vim", #{ if: !kg8m#util#is_git_tmp_edit() })
+if kg8m#plugin#register("Shougo/context_filetype.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+  " For caw.vim and so on
+  let g:context_filetype#filetypes = #{
+    \   javascript: [
+    \     #{ start: '\<html`$', end: '^\s*`', filetype: 'html' },
+    \     #{ start: '\<css`$', end: '^\s*`', filetype: 'css' },
+    \   ],
+    \ }
+endif  " }}}
 
 if kg8m#plugin#register("spolu/dwm.vim")  " {{{
   nnoremap <C-w>n       :call DWM_New()<Cr>
