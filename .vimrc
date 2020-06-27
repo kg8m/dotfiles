@@ -1779,6 +1779,10 @@ endif  " }}}
 
 call kg8m#plugin#register("chrisbra/Recover.vim")
 
+if kg8m#plugin#register("lambdalisue/reword.vim")  " {{{
+  cnoreabbrev <expr> Reword reword#preview#seamless()
+endif  " }}}
+
 if kg8m#plugin#register("vim-scripts/sequence")  " {{{
   map <Leader>+ <Plug>SequenceV_Increment
   map <Leader>- <Plug>SequenceV_Decrement
