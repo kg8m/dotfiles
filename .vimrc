@@ -1602,6 +1602,20 @@ if kg8m#plugin#register("othree/javascript-libraries-syntax.vim", #{ if: !kg8m#u
     \ ], ",")
 endif  " }}}
 
+if kg8m#plugin#register("fuenor/JpFormat.vim")  " {{{
+  " Replace built-in `jq` operator
+  set formatexpr=jpfmt#formatexpr()
+
+  let JpFormatCursorMovedI = v:false
+  let JpAutoJoin = v:false
+  let JpAutoFormat = v:false
+
+  call kg8m#plugin#configure(#{
+     \   lazy:   v:true,
+     \   on_map: ["gq"],
+     \ })
+endif  " }}}
+
 if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
   " http://d.hatena.ne.jp/itchyny/20130828/1377653592
   set laststatus=2
@@ -2718,101 +2732,100 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=-1
 set noshiftround
-set textwidth=0
+set textwidth=120
 set expandtab
 set autoindent
 set smartindent
 set backspace=indent,eol,start
 set nofixeol
 
-if !kg8m#util#is_git_tmp_edit()  " {{{
-  augroup my_vimrc  " {{{
-    autocmd FileType neosnippet set noexpandtab
-    autocmd FileType text,markdown,moin setlocal cinkeys-=:
+augroup my_vimrc  " {{{
+  autocmd FileType neosnippet set noexpandtab
+  autocmd FileType text,markdown,moin setlocal cinkeys-=:
 
-    " Lazily set formatoptions to overwrite others
-    autocmd FileType * call timer_start(300, { -> s:SetupFormatoptions() })
+  " Lazily set formatoptions to overwrite others
+  autocmd FileType * call s:SetupFormatoptions()
+  autocmd FileType * call timer_start(300, { -> s:SetupFormatoptions() })
 
-    autocmd BufWritePre * if &filetype ==# "" || has_key(b:, "ftdetect") | unlet! b:ftdetect | filetype detect | endif
-  augroup END  " }}}
+  autocmd BufWritePre * if &filetype ==# "" || has_key(b:, "ftdetect") | unlet! b:ftdetect | filetype detect | endif
+augroup END  " }}}
 
-  function! s:SetupFormatoptions() abort  " {{{
-    " Formatoptions:
-    "   t: Auto-wrap text using textwidth.
-    "   c: Auto-wrap comments using textwidth, inserting the current comment leader automatically.
-    "   r: Automatically insert the current comment leader after hitting <Enter> in Insert mode.
-    "   o: Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
-    "   q: Allow formatting of comments with "gq".
-    "   a: Automatic formatting of paragraphs. Every time text is inserted or deleted the paragraph will be reformatted.
-    "   2: When formatting text, use the indent of the second line of a paragraph for the rest of the paragraph, instead
-    "      of the indent of the first line.
-    "   b: Like 'v', but only auto-wrap if you enter a blank at or before the wrap margin.
-    "   l: Long lines are not broken in insert mode: When a line was longer than textwidth when the insert command
-    "      started, Vim does not.
-    "   M: When joining lines, don't insert a space before or after a multi-byte character.  Overrules the 'B' flag.
-    "   j: Where it makes sense, remove a comment leader when joining lines.
-    "   ]: Respect textwidth rigorously. With this flag set, no line can be longer than textwidth, unless
-    "      line-break-prohibition rules make this impossible. Mainly for CJK scripts and works only if 'encoding' is
-    "      utf-8".
-    setlocal fo+=roq2lMj
-    setlocal fo-=t fo-=c fo-=a fo-=b  " `fo-=tcab` doesn't work
+function! s:SetupFormatoptions() abort  " {{{
+  " Formatoptions:
+  "   t: Auto-wrap text using textwidth.
+  "   c: Auto-wrap comments using textwidth, inserting the current comment leader automatically.
+  "   r: Automatically insert the current comment leader after hitting <Enter> in Insert mode.
+  "   o: Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
+  "   q: Allow formatting of comments with "gq".
+  "   a: Automatic formatting of paragraphs. Every time text is inserted or deleted the paragraph will be reformatted.
+  "   2: When formatting text, use the indent of the second line of a paragraph for the rest of the paragraph, instead
+  "      of the indent of the first line.
+  "   b: Like 'v', but only auto-wrap if you enter a blank at or before the wrap margin.
+  "   l: Long lines are not broken in insert mode: When a line was longer than textwidth when the insert command
+  "      started, Vim does not.
+  "   M: When joining lines, don't insert a space before or after a multi-byte character.  Overrules the 'B' flag.
+  "   j: Where it makes sense, remove a comment leader when joining lines.
+  "   ]: Respect textwidth rigorously. With this flag set, no line can be longer than textwidth, unless
+  "      line-break-prohibition rules make this impossible. Mainly for CJK scripts and works only if 'encoding' is
+  "      utf-8".
+  setlocal fo+=roq2lMj
+  setlocal fo-=t fo-=c fo-=a fo-=b  " `fo-=tcab` doesn't work
 
-    if &encoding ==# "utf-8"
-      setlocal fo+=]
-    endif
+  if &encoding ==# "utf-8"
+    setlocal fo+=]
+  endif
 
-    if &filetype =~# '\v^(text|markdown|moin)$'
-      setlocal fo-=r fo-=o
-    endif
-  endfunction  " }}}
+  if &filetype =~# '\v^(text|markdown|moin)$'
+    setlocal fo-=r fo-=o
+  endif
+endfunction  " }}}
 
-  " Folding  " {{{
-  " Frequently used keys:
-  "   zo: Open current fold
-  "   zc: Close current fold
-  "   zR: Open all folds
-  "   zM: Close all folds
-  "   zx: Recompute all folds
-  "   z[: Move to start of current fold
-  "   z]: Move to end of current fold
-  "   zj: Move to start of next fold
-  "   zk: Move to end of previous fold
-  noremap z[ [z
-  noremap z] ]z
+" Folding  " {{{
+" Frequently used keys:
+"   zo: Open current fold
+"   zc: Close current fold
+"   zR: Open all folds
+"   zM: Close all folds
+"   zx: Recompute all folds
+"   z[: Move to start of current fold
+"   z]: Move to end of current fold
+"   zj: Move to start of next fold
+"   zk: Move to end of previous fold
+noremap z[ [z
+noremap z] ]z
 
-  set foldmethod=marker
-  set foldopen=hor
-  set foldminlines=1
-  set foldcolumn=5
-  set fillchars=vert:\|
+set foldmethod=marker
+set foldopen=hor
+set foldminlines=1
+set foldcolumn=5
+set fillchars=vert:\|
 
-  augroup my_vimrc  " {{{
-    autocmd FileType haml       setlocal foldmethod=indent
-    autocmd FileType neosnippet setlocal foldmethod=marker
-    autocmd FileType sh,zsh     setlocal foldmethod=syntax
-    autocmd FileType vim        setlocal foldmethod=marker
-    autocmd FileType gitcommit,qfreplace setlocal nofoldenable
+augroup my_vimrc  " {{{
+  autocmd FileType haml       setlocal foldmethod=indent
+  autocmd FileType neosnippet setlocal foldmethod=marker
+  autocmd FileType sh,zsh     setlocal foldmethod=syntax
+  autocmd FileType vim        setlocal foldmethod=marker
+  autocmd FileType gitcommit,qfreplace setlocal nofoldenable
 
-    " http://d.hatena.ne.jp/gnarl/20120308/1331180615
-    autocmd InsertEnter * call s:SwitchToManualFolding()
-  augroup END  " }}}
+  " http://d.hatena.ne.jp/gnarl/20120308/1331180615
+  autocmd InsertEnter * call s:SwitchToManualFolding()
+augroup END  " }}}
 
-  function! s:SwitchToManualFolding() abort  " {{{
-    if !has_key(w:, "last_fdm")
-      let w:last_fdm = &foldmethod
-      setlocal foldmethod=manual
-    endif
-  endfunction  " }}}
+function! s:SwitchToManualFolding() abort  " {{{
+  if !has_key(w:, "last_fdm")
+    let w:last_fdm = &foldmethod
+    setlocal foldmethod=manual
+  endif
+endfunction  " }}}
 
-  " Call this before saving session
-  function! s:RestoreFoldmethod() abort  " {{{
-    if has_key(w:, "last_fdm")
-      let &foldmethod = w:last_fdm
-      unlet w:last_fdm
-    endif
-  endfunction  " }}}
-  " }}}
-endif  " }}}
+" Call this before saving session
+function! s:RestoreFoldmethod() abort  " {{{
+  if has_key(w:, "last_fdm")
+    let &foldmethod = w:last_fdm
+    unlet w:last_fdm
+  endif
+endfunction  " }}}
+" }}}
 " }}}
 
 " ----------------------------------------------
