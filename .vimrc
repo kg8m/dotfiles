@@ -210,7 +210,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-buffer.vim")  " {{{
   function! s:SetupAsyncompleteBuffer() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options(#{
        \   name: "asyncomplete_source_buffer",
-       \   whitelist: ["*"],
+       \   allowlist: ["*"],
        \   completor: function("asyncomplete#sources#buffer#completor"),
        \   events: s:asyncomplete_buffer_events,
        \   on_event: function("s:AsyncompleteBufferOnEventAsync"),
@@ -289,7 +289,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-file.vim")  " {{{
   function! s:SetupAsyncompleteFile() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#file#get_source_options(#{
        \   name: "asyncomplete_source_file",
-       \   whitelist: ["*"],
+       \   allowlist: ["*"],
        \   completor: function("asyncomplete#sources#file#completor"),
        \   priority: 3,
        \ }))
@@ -309,7 +309,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
   function! s:SetupAsyncompleteNeosnippet() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options(#{
        \   name: "asyncomplete_source_neosnippet",
-       \   whitelist: ["*"],
+       \   allowlist: ["*"],
        \   completor: function("asyncomplete#sources#neosnippet#completor"),
        \   priority: 1,
        \ }))
@@ -327,10 +327,10 @@ if kg8m#plugin#register("high-moctane/asyncomplete-nextword.vim")  " {{{
   augroup END  " }}}
 
   function! s:SetupAsyncompleteNextword() abort  " {{{
-    " Should specify filetypes? `whitelist: ["gitcommit", "markdown", "moin", "text"],`
+    " Should specify filetypes? `allowlist: ["gitcommit", "markdown", "moin", "text"],`
     call asyncomplete#register_source(asyncomplete#sources#nextword#get_source_options(#{
        \   name: "asyncomplete_source_nextword",
-       \   whitelist: ["*"],
+       \   allowlist: ["*"],
        \   args: ["-n", "10000"],
        \   completor: function("asyncomplete#sources#nextword#completor"),
        \   priority: 3,
@@ -351,7 +351,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-tags.vim")  " {{{
   function! s:SetupAsyncompleteTags() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options(#{
        \   name: "asyncomplete_source_tags",
-       \   whitelist: ["*"],
+       \   allowlist: ["*"],
        \   completor: function("asyncomplete#sources#tags#completor"),
        \   priority: 3,
        \ }))
@@ -536,7 +536,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
   call kg8m#plugin#lsp#register(#{
      \   name: "bash-language-server",
      \   cmd: { server_info -> ["bash-language-server", "start"] },
-     \   whitelist: ["sh", "zsh"],
+     \   allowlist: ["sh", "zsh"],
      \ })
   " }}}
 
@@ -544,7 +544,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
   call kg8m#plugin#lsp#register(#{
      \   name: "css-languageserver",
      \   cmd: { server_info -> ["css-languageserver", "--stdio"] },
-     \   whitelist: ["css", "less", "sass", "scss"],
+     \   allowlist: ["css", "less", "sass", "scss"],
      \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("css") } },
      \   workspace_config: #{
      \     css:  #{ lint: #{ validProperties: [] } },
@@ -559,7 +559,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
   call kg8m#plugin#lsp#register(#{
      \   name: "efm-langserver",
      \   cmd: { server_info -> ["efm-langserver"] },
-     \   whitelist: [
+     \   allowlist: [
      \     "eruby", "json", "make", "markdown", "vim",
      \     "eruby.yaml", "yaml",
      \     "sh", "zsh",
@@ -574,7 +574,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
      \   initialization_options: #{
      \     command: ["golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json"],
      \   },
-     \   whitelist: ["go"],
+     \   allowlist: ["go"],
      \ })
   " }}}
 
@@ -591,7 +591,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
      \     staticcheck: v:true,
      \     usePlaceholders: v:true,
      \   },
-     \   whitelist: ["go"],
+     \   allowlist: ["go"],
      \ })
   " }}}
 
@@ -600,7 +600,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
      \   name: "html-languageserver",
      \   cmd: { server_info -> ["html-languageserver", "--stdio"] },
      \   initialization_options: #{ embeddedLanguages: #{ css: v:true, javascript: v:true } },
-     \   whitelist: ["html"],
+     \   allowlist: ["html"],
      \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("html") } },
      \ })
   " }}}
@@ -609,7 +609,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
   call kg8m#plugin#lsp#register(#{
      \   name: "json-languageserver",
      \   cmd: { server_info -> ["json-languageserver", "--stdio"] },
-     \   whitelist: ["json"],
+     \   allowlist: ["json"],
      \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("json") } },
      \   workspace_config: { -> #{
      \     json: #{
@@ -625,7 +625,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
      \   name: "solargraph",
      \   cmd: { server_info -> ["solargraph", "stdio"] },
      \   initialization_options: #{ diagnostics: "true" },
-     \   whitelist: ["ruby"],
+     \   allowlist: ["ruby"],
      \ })
   " }}}
 
@@ -633,7 +633,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
   call kg8m#plugin#lsp#register(#{
      \   name: "sqls",
      \   cmd: { server_info -> ["sqls"] },
-     \   whitelist: ["sql"],
+     \   allowlist: ["sql"],
      \   workspace_config: { -> #{
      \     sqls: #{
      \       connections: get(g:, "sqls_connections", []),
@@ -647,7 +647,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
      \   name: "typescript-language-server",
      \   cmd: { server_info -> ["typescript-language-server", "--stdio"] },
      \   initialization_options: #{ diagnostics: "true" },
-     \   whitelist: ["typescript", "javascript", "typescriptreact", "javascriptreact", "typescript.tsx", "javascript.jsx"],
+     \   allowlist: ["typescript", "javascript", "typescriptreact", "javascriptreact", "typescript.tsx", "javascript.jsx"],
      \ })
   " }}}
 
@@ -657,7 +657,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
      \   cmd: { server_info -> ["vim-language-server", "--stdio"] },
      \   initialization_options: { -> #{ vimruntime: $VIMRUNTIME, runtimepath: &runtimepath } },
      \   root_uri: { server_info -> lsp#utils#path_to_uri($HOME) },
-     \   whitelist: ["vim"],
+     \   allowlist: ["vim"],
      \ })
   " }}}
 
@@ -699,7 +699,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
      \       typescript: #{ format: {} },
      \     },
      \   },
-     \   whitelist: ["vue"],
+     \   allowlist: ["vue"],
      \   executable_name: "vls",
      \ })
   " }}}
@@ -708,7 +708,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
   call kg8m#plugin#lsp#register(#{
      \   name: "yaml-language-server",
      \   cmd: { server_info -> ["yaml-language-server", "--stdio"] },
-     \   whitelist: ["eruby.yaml", "yaml"],
+     \   allowlist: ["eruby.yaml", "yaml"],
      \   workspace_config: #{
      \     yaml: #{
      \       completion: v:true,
