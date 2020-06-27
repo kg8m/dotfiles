@@ -210,7 +210,7 @@ function git:diff:branch:from {
   local target="$1"
 
   if [ -n "$target" ]; then
-    local current="$( git rev-parse --abbrev-ref '@{upstream}' )"
+    local current="$( git branch --show-current )"
 
     shift
     execute_with_confirm "git diff-without-space-changes $@ origin/${target}...${current}"
@@ -223,7 +223,7 @@ function git:diff:branch:from:nameonly {
   local target="$1"
 
   if [ -n "$target" ]; then
-    local current="$( git rev-parse --abbrev-ref '@{upstream}' )"
+    local current="$( git branch --show-current )"
 
     shift
     execute_with_confirm "git diff --name-only $@ origin/${target}...${current}"
