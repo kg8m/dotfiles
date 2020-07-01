@@ -962,12 +962,6 @@ if kg8m#plugin#register("spolu/dwm.vim")  " {{{
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("LeafCage/foldCC", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
-  let g:foldCCtext_enable_autofdc_adjuster = v:true
-  let g:foldCCtext_maxchars = 120
-  set foldtext=FoldCCtext()
-endif  " }}}
-
 if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   let g:fzf_command_prefix = "Fzf"
   let g:fzf_buffers_jump   = v:true
@@ -1792,6 +1786,7 @@ if kg8m#plugin#register("mechatroner/rainbow_csv", #{ if: !kg8m#util#is_git_tmp_
      \ })
 endif  " }}}
 
+call kg8m#plugin#register("lambdalisue/readablefold.vim", #{ if: !kg8m#util#is_git_tmp_edit() })
 call kg8m#plugin#register("chrisbra/Recover.vim")
 
 if kg8m#plugin#register("lambdalisue/reword.vim")  " {{{
