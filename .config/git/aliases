@@ -98,7 +98,7 @@ function git:branch:create:with_set_upstream {
 }
 
 function git:branch:delete:bulk:local {
-  local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {1}" )
+  local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap" --preview="git sh \"git:utility:preview:log {1}\"" )
   local branches=( "${(@f)$(
     git branch --verbose |
       egrep -v "${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
@@ -116,7 +116,7 @@ function git:branch:delete:bulk:local {
 }
 
 function git:branch:delete:bulk:remote {
-  local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {1}" )
+  local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap" --preview="git sh \"git:utility:preview:log {1}\"" )
   local branches=( "${(@f)$(
     git branch --verbose --remote |
       egrep -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
@@ -135,7 +135,7 @@ function git:branch:delete:bulk:remote {
 
 function git:branch:filter:one {
   local ignore_pattern="$1"
-  local filter_options=( --no-multi --nth=1 --prompt="select a branch: " --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {-1}" )
+  local filter_options=( --no-multi --nth=1 --prompt="select a branch: " --preview-window="down:50%:wrap" --preview="git sh \"git:utility:preview:log {1}\"" )
   local branches=( "${(@f)$( git:branch:all | egrep -v "${ignore_pattern}" | filter "${filter_options[@]}" | awk '{ print $1 }' )}" )
 
   if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
@@ -147,7 +147,7 @@ function git:branch:filter:one {
 
 function git:branch:filter:remote:one {
   local prompt=${1:-"Select a branch: "}
-  local filter_options=( --no-multi --nth=1 --prompt="${prompt}" --preview-window="down:50%:wrap" --preview="git log --max-count=100 --color=always {1}" )
+  local filter_options=( --no-multi --nth=1 --prompt="${prompt}" --preview-window="down:50%:wrap" --preview="git sh \"git:utility:preview:log {1}\"" )
   local branches=( "${(@f)$( git:branch:remote | filter "${filter_options[@]}" | awk '{ print $1 }' )}" )
 
   if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
@@ -159,7 +159,7 @@ function git:branch:filter:remote:one {
 
 function git:branch:all {
   local SEP="💩"
-  local list_format="%(refname:short)${SEP}%(objectname:short)${SEP}%(contents:subject)${SEP}--${SEP}%(refname:short)"
+  local list_format="%(refname:short)${SEP}%(objectname:short)${SEP}%(contents:subject)"
 
   git branch --all --format "${list_format}" |
     git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" |
@@ -308,6 +308,16 @@ function git:utility:diff_or_cat {
 
 function git:utility:cat {
   git:proxy:cat:files "$@"
+}
+
+function git:utility:preview:log {
+  local branch="$1"
+
+  if ! git branch --contains "$branch" > /dev/null 2>&1; then
+    branch="origin/$branch"
+  fi
+
+  git log --max-count=100 --color=always "$branch"
 }
 
 function git:proxy:sed {
