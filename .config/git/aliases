@@ -158,12 +158,14 @@ function git:branch:filter:remote:one {
 }
 
 function git:branch:all {
-  local max_length="$( git branch --all --format '%(refname:strip=-1)' | git:proxy:wc --max-line-length )"
-  local list_format="$( printf "%%(align:%d) %%(refname:strip=-1) %%(end) %%(objectname:short) %%(contents:subject)   --   %%(refname:strip=1)" $(( max_length+2 )) )"
+  local SEP="💩"
+  local list_format="%(refname:short)${SEP}%(objectname:short)${SEP}%(contents:subject)${SEP}--${SEP}%(refname:short)"
 
   git branch --all --format "${list_format}" |
-    git:proxy:sed -e 's/^ \+//' |
-    egrep -v "^HEAD +" |
+    git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" |
+    git:proxy:sed -e 's/^origin\///' |
+    egrep -v "^HEAD${SEP}" |
+    column -t -s "$SEP" |
     sort |
     awk '!x[$1]++'
 }
