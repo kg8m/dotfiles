@@ -13,6 +13,9 @@ setopt complete_in_word
 zinit ice lucid wait"!0c" blockf atpull"zinit creinstall -q \$( pwd )"
 zinit light zsh-users/zsh-completions
 
+zinit ice lucid wait"!0c" as"completion"
+zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
+
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=245,bold"
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
