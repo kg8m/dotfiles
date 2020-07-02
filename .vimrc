@@ -461,11 +461,12 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
-  let g:lsp_diagnostics_enabled      = v:true
-  let g:lsp_diagnostics_echo_cursor  = v:false
-  let g:lsp_diagnostics_float_cursor = v:true
-  let g:lsp_signs_enabled            = v:true
-  let g:lsp_fold_enabled             = v:false
+  let g:lsp_diagnostics_enabled          = v:true
+  let g:lsp_diagnostics_echo_cursor      = v:false
+  let g:lsp_diagnostics_float_cursor     = v:true
+  let g:lsp_signs_enabled                = v:true
+  let g:lsp_highlight_references_enabled = v:true
+  let g:lsp_fold_enabled                 = v:false
 
   let g:lsp_async_completion = v:true
 
@@ -475,9 +476,6 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
   augroup my_vimrc  " {{{
     autocmd User lsp_setup          call kg8m#plugin#lsp#enable()
     autocmd User lsp_buffer_enabled call s:OnLSPBufferEnabled()
-
-    autocmd FileType                      * call s:ReswitchLSPGlobalConfigs()
-    autocmd BufEnter,BufWinEnter,WinEnter * call s:SwitchLSPGlobalConfigs()
 
     autocmd FileType * call s:ResetLSPTargetBuffer()
 
@@ -490,24 +488,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
     nmap <buffer> g] <Plug>(lsp-definition)
     nmap <buffer> <S-h> <Plug>(lsp-hover)
 
-    call s:SwitchLSPGlobalConfigs()
     let b:lsp_buffer_enabled = v:true
-  endfunction  " }}}
-
-  function! s:ReswitchLSPGlobalConfigs() abort  " {{{
-    if has_key(b:, "lsp_highlight_references_enabled")
-      unlet b:lsp_highlight_references_enabled
-    endif
-
-    call s:SwitchLSPGlobalConfigs()
-  endfunction  " }}}
-
-  function! s:SwitchLSPGlobalConfigs() abort  " {{{
-    " References for sass is broken
-    if !has_key(b:, "lsp_highlight_references_enabled")
-      let b:lsp_highlight_references_enabled = (&filetype !=# "sass")
-    endif
-    let g:lsp_highlight_references_enabled = b:lsp_highlight_references_enabled
   endfunction  " }}}
 
   function! s:IsLSPTargetBuffer() abort  " {{{
@@ -551,12 +532,11 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
   call kg8m#plugin#lsp#register(#{
      \   name: "css-languageserver",
      \   cmd: { server_info -> ["css-languageserver", "--stdio"] },
-     \   allowlist: ["css", "less", "sass", "scss"],
+     \   allowlist: ["css", "less", "scss"],
      \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("css") } },
      \   workspace_config: #{
      \     css:  #{ lint: #{ validProperties: [] } },
      \     less: #{ lint: #{ validProperties: [] } },
-     \     sass: #{ lint: #{ validProperties: [] } },
      \     scss: #{ lint: #{ validProperties: [] } },
      \   },
      \ })
