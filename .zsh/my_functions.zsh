@@ -187,7 +187,7 @@ function my_grep_with_filter() {
 alias gr="my_grep_with_filter"
 
 function vigr() {
-  local filepaths="${(@f)$( my_grep_with_filter "$@" | egrep -o '^[^:]+' | sort -u )}"
+  local filepaths=( "${(@f)$( my_grep_with_filter "$@" | egrep -o '^[^:]+' | sort -u )}" )
 
   if [ "${#filepaths[@]}" -eq 0 ]; then
     return
