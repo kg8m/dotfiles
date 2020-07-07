@@ -2042,13 +2042,6 @@ if kg8m#plugin#register("elzr/vim-json", #{ if: !kg8m#util#is_git_tmp_edit() }) 
   let g:vim_json_syntax_conceal = v:false
 endif  " }}}
 
-if kg8m#plugin#register("mattn/vim-maketable")  " {{{
-  call kg8m#plugin#configure(#{
-     \   lazy:   v:true,
-     \   on_cmd: ["MakeTable", "UnmakeTable"],
-     \ })
-endif  " }}}
-
 if kg8m#plugin#register("rcmdnk/vim-markdown", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:vim_markdown_override_foldtext         = v:false
   let g:vim_markdown_no_default_key_mappings   = v:true
