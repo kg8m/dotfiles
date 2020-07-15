@@ -20,6 +20,11 @@ tools:
       - "%f: %l: %m"
       - "%f:%l %m"
 
+  markdown-textlint: &markdown-textlint
+    lint-command: "textlint --format unix --stdin"
+    lint-formats:
+      - "%f:%l:%n: %m"
+
   sh-shellcheck: &sh-shellcheck
     lint-command: "shellcheck --shell=bash --format=gcc --external-sources --enable=all -"
     lint-stdin: true
@@ -54,6 +59,7 @@ languages:
 
   markdown:
     - <<: *markdown-markdownlint
+    - <<: *markdown-textlint
 
   sh:
     - <<: *sh-shellcheck
