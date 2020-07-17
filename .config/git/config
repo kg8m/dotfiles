@@ -231,9 +231,11 @@ status-with-filter = sh git:status:filter:all
 # submodule  # {{{
 submodule-update-all = update-submodules
 submodule-remove     = remove-submodules
+submodule-deinit     = deinit-submodules
 
 update-submodules = sh git:submodule:update
 remove-submodules = sh git:submodule:remove:bulk
+deinit-submodules = sh git:submodule:deinit:bulk
 # }}}
 
 # utility  # {{{

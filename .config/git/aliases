@@ -281,6 +281,17 @@ function git:submodule:remove:bulk {
   done
 }
 
+function git:submodule:deinit:bulk {
+  local targets=( "${(@f)$( git submodule | filter | awk '{ print $2 }' )}" )
+
+  for target in "${targets[@]}"; do
+    execute_with_confirm "git submodule deinit -f $target"
+    execute_with_confirm "rm -r ./git/modules/$target"
+    execute_with_confirm "trash $target/*"
+    execute_with_confirm "trash $target/.*"
+  done
+}
+
 function git:alias:list {
   git config --get-regexp '^alias\.' |
     git:proxy:sed -e 's/alias\.\([^ ]*\) \(.*\)/\1\t => \2/'
