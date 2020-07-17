@@ -176,10 +176,36 @@ function my_grep() {
 }
 
 function my_grep_with_filter() {
-  local options=( "${(M)@:#-*}" )
-  local non_options=( "${@:#-*}" )
-  local search_word="${non_options[1]}"
+  local options=()
+  local non_options=()
+  local is_waiting_option_value=false
 
+  for arg in "$@"; do
+    if [[ "$arg" =~ ^-- ]]; then
+      is_waiting_option_value=false
+      options=( "${options[@]}" "$arg" )
+
+      if [[ ! "$arg" =~ = ]]; then
+        is_waiting_option_value=true
+      fi
+    elif [[ "$arg" =~ ^- ]]; then
+      is_waiting_option_value=false
+      options=( "${options[@]}" "$arg" )
+
+      if [[ "$arg" =~ ^-.$ ]]; then
+        is_waiting_option_value=true
+      fi
+    else
+      if "$is_waiting_option_value"; then
+        is_waiting_option_value=false
+        options=( "${options[@]}" "$arg" )
+      else
+        non_options=( "${non_options[@]}" "$arg" )
+      fi
+    fi
+  done
+
+  local search_word="${non_options[1]}"
   my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2>/dev/null |
     filter --preview-window="right:wrap" --preview="$FZF_VIM_PATH/bin/preview.sh {1}" |
     my_grep "$search_word" "${options[@]}" 2>/dev/null
