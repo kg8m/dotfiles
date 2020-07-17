@@ -1957,6 +1957,20 @@ if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
      \ })
 endif  " }}}
 
+if kg8m#plugin#register("lambdalisue/vim-findent")  " {{{
+  let g:findent#enable_messages = v:false
+  let g:findent#enable_warnings = v:false
+
+  augroup my_vimrc  " {{{
+    autocmd FileType * Findent
+  augroup END  " }}}
+
+  call kg8m#plugin#configure(#{
+     \   lazy:   v:true,
+     \   on_cmd: "Findent",
+     \ })
+endif  " }}}
+
 call kg8m#plugin#register("thinca/vim-ft-diff_fold", #{ if: !kg8m#util#is_git_tmp_edit() })
 call kg8m#plugin#register("thinca/vim-ft-help_fold")
 call kg8m#plugin#register("muz/vim-gemfile", #{ if: !kg8m#util#is_git_tmp_edit() })
