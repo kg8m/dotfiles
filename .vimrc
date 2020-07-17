@@ -1040,6 +1040,8 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
     if empty(dirpath)
       throw "Dirpath not specified."
+    elseif !isdirectory(dirpath)
+      throw "Dirpath doesn't exist."
     else
       return dirpath
     endif
