@@ -205,7 +205,7 @@ function my_grep_with_filter() {
     fi
   done
 
-  local search_word="${non_options[1]}"
+  local query="${non_options[1]}"
   local results=( "${(@f)$(
     my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2>/dev/null |
       filter --preview-window="right:wrap" --preview="$FZF_VIM_PATH/bin/preview.sh {1}"
@@ -216,7 +216,7 @@ function my_grep_with_filter() {
   fi
 
   local response
-  echo "${(j:\n:)results[@]}" | my_grep "$search_word" "${options[@]}" 2>/dev/null
+  echo "${(j:\n:)results[@]}" | my_grep "$query" "${options[@]}" 2>/dev/null
   echo
   read "response?Open found files? [y/n]: "
 
