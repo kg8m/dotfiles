@@ -1026,11 +1026,13 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   command! -nargs=+ -complete=tag FzfGrepForDir call s:FzfGrep(<q-args>, s:InputDirpath())
 
   function! s:FzfGrep(pattern, dirpath) abort  " {{{
-    let options = s:FzfGrepOptions()
-    let pattern = shellescape(a:pattern)
-    let dirpath = empty(a:dirpath) ? "" : shellescape(a:dirpath)
+    let pattern      = shellescape(a:pattern)
+    let dirpath      = empty(a:dirpath) ? "" : shellescape(a:dirpath)
+    let grep_args    = pattern . " " . dirpath
+    let grep_options = s:FzfGrepOptions()
+    let fzf_options  = fzf#vim#with_preview(#{ options: ["--header", "Grep: " . grep_args] }, "right:wrap")
 
-    call fzf#vim#grep("rg " . options . " " . pattern . " " . dirpath, v:true, fzf#vim#with_preview("right:wrap"))
+    call fzf#vim#grep("rg " . grep_options . " " . grep_args, v:true, fzf_options)
   endfunction  " }}}
 
   function! s:InputDirpath() abort  " {{{
