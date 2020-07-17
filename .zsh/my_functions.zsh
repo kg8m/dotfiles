@@ -206,23 +206,28 @@ function my_grep_with_filter() {
   done
 
   local search_word="${non_options[1]}"
-  my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2>/dev/null |
-    filter --preview-window="right:wrap" --preview="$FZF_VIM_PATH/bin/preview.sh {1}" |
-    my_grep "$search_word" "${options[@]}" 2>/dev/null
-}
-alias gr="my_grep_with_filter"
+  local results=( "${(@f)$(
+    my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2>/dev/null |
+      filter --preview-window="right:wrap" --preview="$FZF_VIM_PATH/bin/preview.sh {1}"
+  )}" )
 
-function vigr() {
-  local filepaths=( "${(@f)$( my_grep_with_filter "$@" | egrep -o '^[^:]+' | sort -u )}" )
-
-  if [ "${#filepaths[@]}" -eq 0 ]; then
+  if [ -z "${results[*]}" ]; then
     return
   fi
 
-  # Don't use literal `vim` because it sometimes refers to wrong Vim
-  "vim" "${filepaths[@]}"
+  local response
+  echo "${(j:\n:)results[@]}" | my_grep "$search_word" "${options[@]}" 2>/dev/null
+  echo
+  read "response?Open found files? [y/n]: "
+
+  if [[ "$response" =~ ^y ]]; then
+    local filepaths=( "${(@f)$( echo "${(j:\n:)results[@]}" | egrep ':[0-9]+:[0-9]+:' | egrep -o '^[^:]+' | sort -u )}" )
+
+    # Don't use literal `vim` because it sometimes refers to wrong Vim
+    "vim" "${filepaths[@]}"
+  fi
 }
-alias vimgr=vigr
+alias gr="my_grep_with_filter"
 
 function tig {
   case "$1" in
