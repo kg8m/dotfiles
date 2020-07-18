@@ -224,7 +224,7 @@ function my_grep_with_filter() {
     local filepaths=( "${(@f)$( echo "${(j:\n:)results[@]}" | egrep ':[0-9]+:[0-9]+:' | egrep -o '^[^:]+' | sort -u )}" )
 
     # Don't use literal `vim` because it sometimes refers to wrong Vim
-    "vim" "${filepaths[@]}"
+    eval "vim ${filepaths[@]}"
   fi
 }
 alias gr="my_grep_with_filter"
