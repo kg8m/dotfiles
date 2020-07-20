@@ -1,5 +1,6 @@
 {
   "fenced-code-language": false,
+  "first-line-h1": false,
   "header-style": { "style": "setext_with_atx" },
   "line-length": false,
   "list-marker-space": false,
