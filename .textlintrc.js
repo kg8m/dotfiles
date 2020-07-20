@@ -10,6 +10,13 @@ module.exports = {
         allow: ["か", "にも"],
       },
       "no-exclamation-question-mark": false,
+      "sentence-length": {
+        max: 100,
+        exclusionPatterns: [
+          "/\\(.*\\)/",
+          "/\\bhttps?:\\/\\/[^\\s)>]+/",
+        ],
+      },
     },
     "textlint-rule-preset-jtf-style": {
       "3.1.1.全角文字と半角文字の間": false,
