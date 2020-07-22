@@ -1,6 +1,10 @@
 version: 2
 
 tools:
+  checkmake: &checkmake
+    lint-command: "checkmake"
+    lint-stdin: true
+
   erb: &erb
     lint-command: "erb -x -T - | ruby -c"
     lint-stdin: true
@@ -9,23 +13,12 @@ tools:
   jq: &jq
     lint-command: "jq ."
 
-  checkmake: &checkmake
-    lint-command: "checkmake"
-    lint-stdin: true
-
   markdownlint: &markdownlint
     lint-command: "markdownlint --stdin"
     lint-stdin: true
     lint-formats:
       - "%f: %l: %m"
       - "%f:%l %m"
-
-  textlint: &textlint
-    lint-command: "textlint --format compact --stdin --stdin-filename ${INPUT}"
-    lint-stdin: true
-    lint-formats:
-      - "%f: line %l\\, col %n\\, %trror - %m"
-      - "%f: line %l\\, col %n\\, %tarning - %m"
 
   shellcheck: &shellcheck
     lint-command: "shellcheck --shell=bash --format=gcc --external-sources --enable=all -"
@@ -34,6 +27,13 @@ tools:
       - "%f:%l:%c: %trror: %m"
       - "%f:%l:%c: %tarning: %m"
       - "%f:%l:%c: %tote: %m"
+
+  textlint: &textlint
+    lint-command: "textlint --format compact --stdin --stdin-filename ${INPUT}"
+    lint-stdin: true
+    lint-formats:
+      - "%f: line %l\\, col %n\\, %trror - %m"
+      - "%f: line %l\\, col %n\\, %tarning - %m"
 
   vint: &vint
     lint-command: "vint -"
