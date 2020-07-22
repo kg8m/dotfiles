@@ -1,13 +1,8 @@
-const TextLintNodeType = require("textlint").TextLintNodeType;
-
 module.exports = {
   filters: {
     comments: true,
     "node-types": {
-      nodeTypes: [
-        TextLintNodeType.BlockQuote,
-        TextLintNodeType.CodeBlock,
-      ],
+      nodeTypes: ["BlockQuote", "CodeBlock"],
     },
   },
   rules: {
