@@ -1704,14 +1704,33 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
   function! Lightline_LSPStatus() abort  " {{{
     if s:IsLSPTargetBuffer()
       if has_key(b:, "lsp_buffer_enabled")
-        return "LSP: OK"
+        return "[LSP] " . s:Lightline_LSPStatusEnabledLabel()
       else
-        return "LSP: -"
+        return "[LSP] Loading..."
       endif
     else
       return ""
     endif
   endfunction  " }}}
+
+  function! s:Lightline_LSPStatusEnabledLabel() abort  " {{{
+    return "Active"
+  endfunction  " }}}
+
+  if kg8m#plugin#register("tsuyoshicho/lightline-lsp")  " {{{
+    let g:lightline#lsp#indicator_errors   = "E:"
+    let g:lightline#lsp#indicator_warnings = "W:"
+
+    " Overwrite to use lightline-lsp
+    function! s:Lightline_LSPStatusEnabledLabel() abort  " {{{
+      let errors   = lightline#lsp#error()
+      let errors   = empty(errors) ? g:lightline#lsp#indicator_errors . "0" : errors
+      let warnings = lightline#lsp#warning()
+      let warnings = empty(warnings) ? g:lightline#lsp#indicator_warnings . "0" : warnings
+
+      return errors . " " . warnings
+    endfunction  " }}}
+  endif  " }}}
 endif  " }}}
 
 if kg8m#plugin#register("AndrewRadev/linediff.vim")  " {{{
