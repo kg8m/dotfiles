@@ -1,31 +1,31 @@
 version: 2
 
 tools:
-  eruby-erb: &eruby-erb
+  erb: &erb
     lint-command: "erb -x -T - | ruby -c"
     lint-stdin: true
     lint-offset: 0
 
-  json-jq: &json-jq
+  jq: &jq
     lint-command: "jq ."
 
-  make-checkmake: &make-checkmake
+  checkmake: &checkmake
     lint-command: "checkmake"
     lint-stdin: true
 
-  markdown-markdownlint: &markdown-markdownlint
+  markdownlint: &markdownlint
     lint-command: "markdownlint --stdin"
     lint-stdin: true
     lint-formats:
       - "%f: %l: %m"
       - "%f:%l %m"
 
-  markdown-textlint: &markdown-textlint
+  textlint: &textlint
     lint-command: "textlint --format unix --stdin"
     lint-formats:
       - "%f:%l:%n: %m"
 
-  sh-shellcheck: &sh-shellcheck
+  shellcheck: &shellcheck
     lint-command: "shellcheck --shell=bash --format=gcc --external-sources --enable=all -"
     lint-stdin: true
     lint-formats:
@@ -33,11 +33,11 @@ tools:
       - "%f:%l:%c: %tarning: %m"
       - "%f:%l:%c: %tote: %m"
 
-  vim-vint: &vim-vint
+  vint: &vint
     lint-command: "vint -"
     lint-stdin: true
 
-  yaml-yamllint: &yaml-yamllint
+  yamllint: &yamllint
     lint-command: "yamllint --format parsable --strict -"
     lint-stdin: true
     lint-formats:
@@ -46,29 +46,29 @@ tools:
 
 languages:
   eruby:
-    - <<: *eruby-erb
+    - <<: *erb
 
   eruby.yaml:
-    - <<: *yaml-yamllint
+    - <<: *yamllint
 
   json:
-    - <<: *json-jq
+    - <<: *jq
 
   make:
-    - <<: *make-checkmake
+    - <<: *checkmake
 
   markdown:
-    - <<: *markdown-markdownlint
-    - <<: *markdown-textlint
+    - <<: *markdownlint
+    - <<: *textlint
 
   sh:
-    - <<: *sh-shellcheck
+    - <<: *shellcheck
 
   vim:
-    - <<: *vim-vint
+    - <<: *vint
 
   yaml:
-    - <<: *yaml-yamllint
+    - <<: *yamllint
 
   zsh:
-    - <<: *sh-shellcheck
+    - <<: *shellcheck
