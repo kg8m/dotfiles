@@ -26,7 +26,6 @@ module.exports = {
       "sentence-length": {
         max: 100,
         exclusionPatterns: [
-          "/\\(.*\\)/",
           "/\\bhttps?:\\/\\/[^\\s)>]+/",
         ],
       },
