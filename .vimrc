@@ -2991,6 +2991,7 @@ vnoremap <Leader>w :call <SID>RemoveTrailingWhitespaces()<Cr>
 inoremap <C-w> <Esc><C-w>
 inoremap <Nul> <C-Space>
 tnoremap <Nul> <C-Space>
+noremap <F1> <Nop>
 
 " Increment/Decrement
 nmap + <C-a>
