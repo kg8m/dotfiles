@@ -2997,7 +2997,14 @@ noremap <F1> <Nop>
 nmap + <C-a>
 nmap - <C-x>
 
-" Exchange pasting with adjusting indentations or not
+" Swap <C-n>/<C-p> and <Up>/<Down> in commandline mode
+" Original <Up>/<Down> respect inputted prefix
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <Up>   <C-p>
+cnoremap <Down> <C-n>
+
+" Swap pasting with adjusting indentations or not
 " Disable exchanging because sometimes indentation is bad
 " nnoremap p ]p
 " nnoremap <S-p> ]<S-p>
