@@ -570,6 +570,9 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
      \   name: "gopls",
      \   cmd: { server_info -> ["gopls", "-mode", "stdio"] },
      \   initialization_options: #{
+     \     analyses: #{
+     \       fillstruct: v:true,
+     \     },
      \     completeUnimported: v:true,
      \     completionDocumentation: v:true,
      \     deepCompletion: v:true,
