@@ -20,7 +20,7 @@ module.exports = {
       "ja-no-weak-phrase": false,
       "ja-no-mixed-period": false,
       "no-doubled-joshi": {
-        allow: ["か", "にも"],
+        allow: ["か", "にも", "も"],
       },
       "no-exclamation-question-mark": false,
       "sentence-length": {
