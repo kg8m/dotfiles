@@ -17,6 +17,7 @@ module.exports = {
 
     "prefer-tari-tari": true,
     "preset-ja-technical-writing": {
+      "arabic-kanji-numbers": false,
       "ja-no-weak-phrase": false,
       "ja-no-mixed-period": false,
       "no-doubled-joshi": {
@@ -31,6 +32,7 @@ module.exports = {
       },
     },
     "preset-jtf-style": {
+      "1.1.1.本文": false,
       "3.1.1.全角文字と半角文字の間": false,
       "3.1.2.全角文字どうし": false,
       "3.3.かっこ類と隣接する文字の間のスペースの有無": false,

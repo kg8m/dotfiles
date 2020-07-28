@@ -29,7 +29,7 @@ tools:
       - "%f:%l:%c: %tote: %m"
 
   textlint: &textlint
-    lint-command: "textlint --format compact --stdin --stdin-filename ${INPUT}"
+    lint-command: "textlint --format compact --stdin"
     lint-stdin: true
     lint-formats:
       - "%f: line %l\\, col %n\\, %trror - %m"
