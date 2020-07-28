@@ -1961,17 +1961,17 @@ endif  " }}}
 call kg8m#plugin#register("hail2u/vim-css3-syntax", #{ if: !kg8m#util#is_git_tmp_edit() })
 
 if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
-  nmap <Leader>f <Plug>(easymotion-overwin-f2)
-  xmap <Leader>f <Plug>(easymotion-bd-f2)
-  omap <Leader>f <Plug>(easymotion-bd-f2)
+  nmap <expr> <Leader>f <SID>EasyMotionWithoutMigemo("easymotion-overwin-f2")
+  xmap <expr> <Leader>f <SID>EasyMotionWithoutMigemo("easymotion-bd-f2")
+  omap <expr> <Leader>f <SID>EasyMotionWithoutMigemo("easymotion-bd-f2")
 
   " Replace default `f`
-  nmap f <Plug>(easymotion-fl)
-  xmap f <Plug>(easymotion-fl)
-  omap f <Plug>(easymotion-fl)
-  nmap F <Plug>(easymotion-Fl)
-  xmap F <Plug>(easymotion-Fl)
-  omap F <Plug>(easymotion-Fl)
+  nmap <expr> f <SID>EasyMotionWithMigemo("easymotion-fl")
+  xmap <expr> f <SID>EasyMotionWithMigemo("easymotion-fl")
+  omap <expr> f <SID>EasyMotionWithMigemo("easymotion-fl")
+  nmap <expr> F <SID>EasyMotionWithMigemo("easymotion-Fl")
+  xmap <expr> F <SID>EasyMotionWithMigemo("easymotion-Fl")
+  omap <expr> F <SID>EasyMotionWithMigemo("easymotion-Fl")
 
   " http://haya14busa.com/vim-lazymotion-on-speed/
   let g:EasyMotion_do_mapping       = v:false
@@ -1980,9 +1980,18 @@ if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
   let g:EasyMotion_smartcase        = v:true
   let g:EasyMotion_use_upper        = v:true
   let g:EasyMotion_keys             = "FKLASDHGUIONMREWCVTYBX,.;J"
-  let g:EasyMotion_use_migemo       = v:true
   let g:EasyMotion_enter_jump_first = v:true
   let g:EasyMotion_skipfoldedline   = v:false
+
+  function! s:EasyMotionWithMigemo(map) abort  " {{{
+    let g:EasyMotion_use_migemo = v:true
+    return "\<Plug>(" . a:map . ")"
+  endfunction  " }}}
+
+  function! s:EasyMotionWithoutMigemo(map) abort  " {{{
+    let g:EasyMotion_use_migemo = v:false
+    return "\<Plug>(" . a:map . ")"
+  endfunction  " }}}
 
   call kg8m#plugin#configure(#{
      \   lazy:   v:true,
