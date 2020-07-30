@@ -1730,17 +1730,23 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   if kg8m#plugin#register("tsuyoshicho/lightline-lsp")  " {{{
-    let g:lightline#lsp#indicator_error   = "E:"
-    let g:lightline#lsp#indicator_warning = "W:"
+    let g:lightline#lsp#indicator_error       = "E:"
+    let g:lightline#lsp#indicator_warning     = "W:"
+    let g:lightline#lsp#indicator_information = "I:"
+    let g:lightline#lsp#indicator_hint        = "H:"
 
     " Overwrite to use lightline-lsp
     function! s:Lightline_LSPStatusEnabledLabel() abort  " {{{
-      let error   = lightline#lsp#error()
-      let error   = empty(error) ? g:lightline#lsp#indicator_error . "0" : error
-      let warning = lightline#lsp#warning()
-      let warning = empty(warning) ? g:lightline#lsp#indicator_warning . "0" : warning
+      let error       = lightline#lsp#error()
+      let error       = empty(error) ? g:lightline#lsp#indicator_error . "0" : error
+      let warning     = lightline#lsp#warning()
+      let warning     = empty(warning) ? g:lightline#lsp#indicator_warning . "0" : warning
+      let information = lightline#lsp#information()
+      let information = empty(information) ? g:lightline#lsp#indicator_information . "0" : information
+      let hint        = lightline#lsp#hint()
+      let hint        = empty(hint) ? g:lightline#lsp#indicator_hint . "0" : hint
 
-      return error . " " . warning
+      return join([error, warning, information, hint], " ")
     endfunction  " }}}
   endif  " }}}
 endif  " }}}
