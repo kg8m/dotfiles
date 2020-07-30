@@ -263,7 +263,7 @@ function git:status:filter:untracked {
 }
 
 function git:status:utility:filter {
-  filter --prompt="Select files: " --preview-window="down:70%:wrap" --preview="git diff-or-cat {2}" | awk '{ print $2 }'
+  filter --prompt="Select files: " --preview-window="down:70%:wrap" --preview="git diff-or-cat '{2..}'" | git:proxy:sed -e 's/^..\s//'
 }
 
 function git:submodule:update {
