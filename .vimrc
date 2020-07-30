@@ -2783,7 +2783,7 @@ set shiftwidth=2
 set softtabstop=-1
 set noshiftround
 set textwidth=120
-set colorcolumn=120
+set colorcolumn=+1
 set expandtab
 set autoindent
 set smartindent
