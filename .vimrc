@@ -841,6 +841,8 @@ if kg8m#plugin#register("dense-analysis/ale", #{ if: !kg8m#util#is_git_tmp_edit(
     autocmd FileType go                    let b:ale_fix_on_save = v:true
     autocmd FileType javascript,typescript let b:ale_fix_on_save = !!$VIM_FIX_ON_SAVE_JS
     autocmd FileType ruby                  let b:ale_fix_on_save = !!$VIM_FIX_ON_SAVE_RUBY
+
+    autocmd FileType markdown let b:ale_enabled = v:false
   augroup END  " }}}
 
   let g:ale_go_golangci_lint_package = v:true
