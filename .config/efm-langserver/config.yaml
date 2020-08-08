@@ -30,7 +30,7 @@ tools:
       - "%f:%l:%c: %tote: %m"
 
   textlint: &textlint
-    lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh ${INPUT}"
+    lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
       - "%f: line %l\\, col %n\\, %trror - %m"

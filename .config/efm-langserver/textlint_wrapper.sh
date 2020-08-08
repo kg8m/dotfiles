@@ -5,7 +5,7 @@ err_temp_filepath="/tmp/textlint_wrapper_$( date +'%Y%m%d-%H%M%S' ).${RANDOM}.lo
 out="$( textlint --format json --stdin --stdin-filename "$target_filepath" 2>"$err_temp_filepath" )"
 err="$( cat "$err_temp_filepath" )"
 
-rm -fr "$err_temp_filepath"
+rm -f "$err_temp_filepath"
 
 if [ -n "$out" ]; then
   format="$(
