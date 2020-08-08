@@ -1638,6 +1638,7 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
     \     ["fileformat"],
     \     ["separator"],
     \     ["lineinfo_with_percent"],
+    \     ["search_count"],
     \   ],
     \   right: [
     \     ["lsp_status"],
@@ -1659,6 +1660,7 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
     \   component_expand: #{
     \     warning_filepath:     "Lightline_WarningFilepath",
     \     warning_fileencoding: "Lightline_WarningFileencoding",
+    \     search_count:         "Lightline_SearchCount",
     \   },
     \   component_type: #{
     \     warning_filepath:     "warning",
@@ -1728,6 +1730,26 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
 
   function! Lightline_IsIrregularFileencoding() abort  " {{{
     return !empty(&fileencoding) && &fileencoding !=# "utf-8"
+  endfunction  " }}}
+
+  function! Lightline_SearchCount() abort  " {{{
+    " Use `%{...}` because component-expansion result is shared with other windows/buffers
+    return "%{v:hlsearch ? Lightline_SearchCountIfSearching() : ''}"
+  endfunction  " }}}
+
+  function! Lightline_SearchCountIfSearching() abort  " {{{
+    let counts = searchcount()
+
+    " 0: search was fully completed
+    if counts.incomplete ==# 0
+      let current = counts.current
+      let total   = counts.total
+    else
+      let current = counts.current <# counts.maxcount ? counts.current : "?"
+      let total   = string(counts.maxcount) . "+"
+    endif
+
+    return "[" . current . "/" . total . "]"
   endfunction  " }}}
 
   function! Lightline_LSPStatus() abort  " {{{
