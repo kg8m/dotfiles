@@ -18,6 +18,8 @@ export PATH=$HOME/.config/git/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.zsh/bin:$PATH
 
+export COLORTERM=truecolor
+
 export BAT_THEME="Monokai Extended"
 export NEXTWORD_DATA_PATH=$HOME/.local/share/nextword/nextword-data
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config

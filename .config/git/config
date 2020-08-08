@@ -32,6 +32,10 @@ frag = magenta bold
 old  = cyan
 new  = red
 
+# For delta
+oldMoved = white "#1a0000"
+newMoved = white "#001700"
+
 [color "interactive"]
 prompt = 236 yellow bold
 
@@ -55,7 +59,10 @@ pager = git-pager
 algorithm = patience
 context = 10
 compactionHeuristic = true
-colorMoved = dimmed_zebra
+
+# For delta; Use `dimmed_zebra` without delta
+colorMoved = zebra
+
 colorMovedWS = ignore-all-space
 renames = true
 
@@ -202,7 +209,7 @@ dw = diff-without-space-changes --color-words
 dh = diff-without-space-changes HEAD
 dl = diff-local-without-space-changes
 
-diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change
+diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --color-moved-ws=allow-indentation-change
 
 diff-local                       = diff --no-index
 diff-local-without-space-changes = diff-without-space-changes --no-index
