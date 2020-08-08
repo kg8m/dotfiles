@@ -1,6 +1,16 @@
 module.exports = {
   filters: {
     comments: true,
+    allowlist: {
+      allow: [
+        "叶",
+        "嬉",
+        "揃",
+        "溜",
+        "澤",
+        "絢",
+      ],
+    },
     "node-types": {
       nodeTypes: ["BlockQuote", "CodeBlock"],
     },
@@ -27,7 +37,9 @@ module.exports = {
       "sentence-length": {
         max: 100,
         exclusionPatterns: [
-          "/\\bhttps?:\\/\\/[^\\s)>]+/",
+          "/\\bhttps?:\\/\\/[^\\s)>]+/",  // URL
+          "/\\b[a-z\\d]{40}\\b/",         // commit hash
+          "/`.+`/",                       // Code
         ],
       },
     },
