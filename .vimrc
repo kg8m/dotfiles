@@ -81,7 +81,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
     let sorted_items = []
     let startcols    = []
 
-    let match_pattern = s:CompletionRefreshPattern(get(b:, "lsp_buffer_enabled", v:false) ? &filetype : "_")
+    let match_pattern = s:CompletionRefreshPattern(s:IsLSPBufferEnabled() ? &filetype : "_")
     let base_matcher  = matchstr(a:options.base, match_pattern)
 
     " Special thanks: mattn
@@ -481,7 +481,31 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
     nmap <buffer> g] <Plug>(lsp-definition)
     nmap <buffer> <S-h> <Plug>(lsp-hover)
 
+    " cf. s:IsLSPBufferEnabled()
     let b:lsp_buffer_enabled = v:true
+  endfunction  " }}}
+
+  " cf. s:OnLSPBufferEnabled()
+  function! s:IsLSPBufferEnabled() abort  " {{{
+    if has_key(b:, "lsp_buffer_enabled")
+      return v:true
+    else
+      try
+        " `lsp_buffer_enabled` user-autocommand for inactive buffers is fired on `BufEnter` event
+        " https://github.com/prabirshrestha/vim-lsp/blob/04cef02eed7fe861f5fdbf066da1b8b7e270b8a2/autoload/lsp.vim#L357-L358
+        let group   = "_lsp_fire_buffer_enabled"
+        let command = printf("autocmd %s BufEnter <buffer=%d>", group, bufnr())
+
+        if execute(command) =~# group
+          let b:lsp_buffer_enabled = v:true
+          return v:true
+        else
+          return v:false
+        endif
+      catch
+        return v:false
+      endtry
+    endif
   endfunction  " }}}
 
   function! s:IsLSPTargetBuffer() abort  " {{{
@@ -1708,8 +1732,8 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
 
   function! Lightline_LSPStatus() abort  " {{{
     if s:IsLSPTargetBuffer()
-      if has_key(b:, "lsp_buffer_enabled")
-        return "[LSP] " . s:Lightline_LSPStatusEnabledLabel()
+      if s:IsLSPBufferEnabled()
+        return s:Lightline_LSPStatusBufferEnabled()
       else
         return "[LSP] Loading..."
       endif
@@ -1718,8 +1742,8 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
     endif
   endfunction  " }}}
 
-  function! s:Lightline_LSPStatusEnabledLabel() abort  " {{{
-    return "Active"
+  function! s:Lightline_LSPStatusBufferEnabled() abort  " {{{
+    return "[LSP] Active"
   endfunction  " }}}
 
   if kg8m#plugin#register("tsuyoshicho/lightline-lsp")  " {{{
@@ -1728,18 +1752,51 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
     let g:lightline#lsp#indicator_information = "I:"
     let g:lightline#lsp#indicator_hint        = "H:"
 
-    " Overwrite to use lightline-lsp
-    function! s:Lightline_LSPStatusEnabledLabel() abort  " {{{
-      let error       = lightline#lsp#error()
-      let error       = empty(error) ? g:lightline#lsp#indicator_error . "0" : error
-      let warning     = lightline#lsp#warning()
-      let warning     = empty(warning) ? g:lightline#lsp#indicator_warning . "0" : warning
-      let information = lightline#lsp#information()
-      let information = empty(information) ? g:lightline#lsp#indicator_information . "0" : information
-      let hint        = lightline#lsp#hint()
-      let hint        = empty(hint) ? g:lightline#lsp#indicator_hint . "0" : hint
+    " Overwrite
+    let s:lightline_elements.right += [
+      \   ["lsp_status_for_attention"],
+      \ ]
+    call extend(g:lightline.component_expand, #{
+       \   lsp_status_for_attention: "Lightline_LSPStatusForAttention",
+       \ })
+    call extend(g:lightline.component_type, #{
+       \   lsp_status_for_attention: "warning",
+       \ })
 
-      return join([error, warning, information, hint], " ")
+    " Overwrite
+    function! s:Lightline_LSPStatusBufferEnabled() abort  " {{{
+      let stats = s:Lightline_LSPStatusStats()
+      return stats.is_attendable ? "" : stats.counts
+    endfunction  " }}}
+
+    function! Lightline_LSPStatusForAttention() abort  " {{{
+      " Use `%{...}` because component-expansion result is shared with other windows/buffers
+      return "%{Lightline_LSPStatusForAttentionDetail()}"
+    endfunction  " }}}
+
+    function! Lightline_LSPStatusForAttentionDetail() abort  " {{{
+      if !s:IsLSPTargetBuffer() || !s:IsLSPBufferEnabled()
+        return ""
+      endif
+
+      let stats = s:Lightline_LSPStatusStats()
+      return stats.is_attendable ? stats.counts : ""
+    endfunction  " }}}
+
+    function! s:Lightline_LSPStatusStats() abort  " {{{
+      let error       = lightline#lsp#error()
+      let warning     = lightline#lsp#warning()
+      let information = lightline#lsp#information()
+      let hint        = lightline#lsp#hint()
+
+      let is_attendable = !(empty(error) && empty(warning) && empty(information) && empty(hint))
+
+      let error       = empty(error)       ? g:lightline#lsp#indicator_error       . "0" : error
+      let warning     = empty(warning)     ? g:lightline#lsp#indicator_warning     . "0" : warning
+      let information = empty(information) ? g:lightline#lsp#indicator_information . "0" : information
+      let hint        = empty(hint)        ? g:lightline#lsp#indicator_hint        . "0" : hint
+
+      return #{ counts: join([error, warning, information, hint], " "), is_attendable: is_attendable }
     endfunction  " }}}
   endif  " }}}
 endif  " }}}
