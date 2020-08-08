@@ -3036,22 +3036,19 @@ cnoremap <Down> <C-n>
 " nnoremap ]<S-p> <S-p>
 
 " Moving in INSERT mode
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
 inoremap <C-k> <Up>
-inoremap <C-l> <Right>
+inoremap <C-f> <Right>
+inoremap <C-j> <Down>
+inoremap <C-b> <Left>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
 
-cnoremap <C-h> <Left>
-cnoremap <C-j> <Down>
 cnoremap <C-k> <Up>
-cnoremap <C-l> <Right>
+cnoremap <C-f> <Right>
+cnoremap <C-j> <Down>
+cnoremap <C-b> <Left>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-
-inoremap <C-f> <PageDown>
-inoremap <C-b> <PageUp>
 
 " Insert a checkbox `[ ]` on markdown
 augroup my_vimrc  " {{{

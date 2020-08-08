@@ -42,6 +42,8 @@ setopt share_history         # Share history
 bindkey -v
 
 # emacs like keybinds for INSERT mode
+bindkey "^F" forward-char
+bindkey "^B" backward-char
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
 
