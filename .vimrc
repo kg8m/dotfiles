@@ -2864,6 +2864,7 @@ set nofixeol
 
 augroup my_vimrc  " {{{
   autocmd FileType neosnippet set noexpandtab
+  autocmd FileType markdown,moin set colorcolumn=
   autocmd FileType text,markdown,moin setlocal cinkeys-=:
 
   " Lazily set formatoptions to overwrite others
