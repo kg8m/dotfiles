@@ -10,6 +10,15 @@ tools:
     lint-stdin: true
     lint-offset: 0
 
+  eslint: &eslint
+    lint-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}'"
+    lint-stdin: true
+    lint-formats:
+      - "%f: line %l\\, col %n\\, %trror - %m"
+      - "%f: line %l\\, col %n\\, %tarning - %m"
+    format-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}' --fix"
+    format-stdin: true
+
   jq: &jq
     lint-command: "jq ."
 
@@ -53,6 +62,9 @@ languages:
 
   eruby.yaml:
     - <<: *yamllint
+
+  javascript:
+    - <<: *eslint
 
   json:
     - <<: *jq

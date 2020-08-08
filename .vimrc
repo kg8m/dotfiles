@@ -547,7 +547,7 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
      \   name: "efm-langserver",
      \   cmd: { server_info -> ["efm-langserver"] },
      \   allowlist: [
-     \     "eruby", "json", "make", "markdown", "vim",
+     \     "eruby", "javascript", "json", "make", "markdown", "vim",
      \     "eruby.yaml", "yaml",
      \     "sh", "zsh",
      \   ],
@@ -825,7 +825,7 @@ if kg8m#plugin#register("dense-analysis/ale", #{ if: !kg8m#util#is_git_tmp_edit(
   " go get golang.org/x/tools/cmd/goimports
   let g:ale_linters = #{
     \   go:         ["golangci-lint", "govet"],
-    \   javascript: ["eslint"],
+    \   javascript: [],
     \   ruby:       ["ruby", "rubocop"],
     \   typescript: ["eslint"],
     \   vim:        ["vint"],
