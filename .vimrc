@@ -1051,7 +1051,14 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     let dirpath      = empty(a:dirpath) ? "" : shellescape(a:dirpath)
     let grep_args    = pattern . " " . dirpath
     let grep_options = s:FzfGrepOptions()
-    let fzf_options  = fzf#vim#with_preview(#{ options: ["--header", "Grep: " . grep_args] }, "right:wrap")
+    let fzf_options  = #{
+      \   options: [
+      \     "--header", "Grep: " . grep_args,
+      \     "--delimiter", ":",
+      \     "--preview-window", "right:wrap:+{2}-15",
+      \     "--preview", kg8m#plugin#get_info("fzf.vim").path . "/bin/preview.sh {}",
+      \   ],
+      \ }
 
     call fzf#vim#grep("rg " . grep_options . " " . grep_args, v:true, fzf_options)
   endfunction  " }}}
