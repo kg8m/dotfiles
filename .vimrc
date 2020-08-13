@@ -67,6 +67,20 @@ call kg8m#plugin#init_manager(s:plugins_path)
 " Plugins list and settings  " {{{
 call kg8m#plugin#register(s:my_utility_path)
 
+function! s:MapCrForInsertMode() abort  " {{{
+  imap <expr><Cr> <SID>CrForInsertMode()
+endfunction  " }}}
+
+function! s:CrForInsertMode() abort  " {{{
+  if vsnip#available(1)
+    return "\<Plug>(vsnip_expand_or_jump)"
+  elseif neosnippet#expandable_or_jumpable()
+    return "\<Plug>(neosnippet_expand_or_jump)"
+  else
+    return pumvisible() ? asyncomplete#close_popup() : lexima#expand("<Cr>", "i")
+  endif
+endfunction  " }}}
+
 " Completion, LSP  " {{{
 if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = v:true
@@ -811,17 +825,8 @@ function! s:DefineCompletionMappings() abort  " {{{
 
   inoremap <expr><Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  imap     <expr><Cr>    <SID>CrForInsertMode()
 
-  function! s:CrForInsertMode() abort  " {{{
-    if vsnip#available(1)
-      return "\<Plug>(vsnip_expand_or_jump)"
-    elseif neosnippet#expandable_or_jumpable()
-      return "\<Plug>(neosnippet_expand_or_jump)"
-    else
-      return pumvisible() ? asyncomplete#close_popup() : "\<Cr>"
-    endif
-  endfunction  " }}}
+  call s:MapCrForInsertMode()
 endfunction  " }}}
 " }}}
 
@@ -1628,6 +1633,23 @@ if kg8m#plugin#register("fuenor/JpFormat.vim")  " {{{
   call kg8m#plugin#configure(#{
      \   lazy:   v:true,
      \   on_map: ["gq"],
+     \ })
+endif  " }}}
+
+if kg8m#plugin#register("cohama/lexima.vim")  " {{{
+  let g:lexima_ctrlh_as_backspace = v:true
+
+  function! s:ConfigPluginOnPostSource_lexima() abort  " {{{
+    " `<Space>` when `[|]` then `[ ] |`
+    call lexima#add_rule(#{ char: "<Space>", at: '\[\%#]', input: "<Space><Right><Space>", filetype: "markdown" })
+
+    call timer_start(100, { -> s:MapCrForInsertMode() })
+  endfunction  " }}}
+
+  call kg8m#plugin#configure(#{
+     \   lazy: v:true,
+     \   on_i: v:true,
+     \   hook_post_source: function("s:ConfigPluginOnPostSource_lexima"),
      \ })
 endif  " }}}
 
@@ -3129,11 +3151,6 @@ cnoremap <C-j> <Down>
 cnoremap <C-b> <Left>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-
-" Insert a checkbox `[ ]` on markdown
-augroup my_vimrc  " {{{
-  autocmd FileType markdown inoremap <buffer> <C-]> [<Space>]<Space>
-augroup END  " }}}
 " }}}
 
 " ----------------------------------------------
