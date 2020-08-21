@@ -1,14 +1,10 @@
 #!/usr/bin/env zsh
 if which delta > /dev/null 2>&1; then
   delta \
-    --line-numbers \
     --file-style "yellow auto bold ul" \
     --file-decoration-style "none" \
     --hunk-header-style "syntax #333333" \
     --hunk-header-decoration-style "none" \
-    --line-numbers-minus-style "red auto" \
-    --line-numbers-zero-style "#999999 auto" \
-    --line-numbers-plus-style "green auto" \
     "$@" ||
     ( diff-highlight "$@" | less --LINE-NUMBERS )
 else

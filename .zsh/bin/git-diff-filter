@@ -1,12 +1,8 @@
 #!/usr/bin/env zsh
 if which delta > /dev/null 2>&1; then
   delta \
-    --line-numbers \
     --keep-plus-minus-markers \
     --color-only \
-    --line-numbers-minus-style "red auto" \
-    --line-numbers-zero-style "#999999 auto" \
-    --line-numbers-plus-style "green auto" \
     "$@" ||
     diff-highlight "$@"
 else
