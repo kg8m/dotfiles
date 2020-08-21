@@ -3181,9 +3181,9 @@ cnoremap <Down> <C-n>
 
 " Moving in INSERT mode
 inoremap <C-k> <Up>
-inoremap <C-f> <Right>
+inoremap <expr> <C-f> pumvisible() && !empty(v:completed_item) ? "\<PageDown>" : "\<Right>"
 inoremap <C-j> <Down>
-inoremap <C-b> <Left>
+inoremap <expr> <C-b> pumvisible() && !empty(v:completed_item) ? "\<PageUp>" : "\<Left>"
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
 
