@@ -67,20 +67,6 @@ call kg8m#plugin#init_manager(s:plugins_path)
 " Plugins list and settings  " {{{
 call kg8m#plugin#register(s:my_utility_path)
 
-function! s:MapCrForInsertMode() abort  " {{{
-  imap <expr><Cr> <SID>CrForInsertMode()
-endfunction  " }}}
-
-function! s:CrForInsertMode() abort  " {{{
-  if vsnip#available(1)
-    return "\<Plug>(vsnip_expand_or_jump)"
-  elseif neosnippet#expandable_or_jumpable()
-    return "\<Plug>(neosnippet_expand_or_jump)"
-  else
-    return pumvisible() ? asyncomplete#close_popup() : lexima#expand("<Cr>", "i")
-  endif
-endfunction  " }}}
-
 " Completion, LSP  " {{{
 if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = v:true
@@ -158,8 +144,8 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
 
   " Refresh completion  " {{{
   function! s:DefineRefreshCompletionMappings() abort  " {{{
-    inoremap <silent> <expr> <BS> "\<BS>" . <SID>RefreshCompletion()
-    inoremap <silent> <expr> .    "."     . <SID>RefreshCompletion()
+    call s:DefineBSMappingToRefreshCompletion()
+    inoremap <silent> <expr> . "." . <SID>RefreshCompletion()
   endfunction  " }}}
 
   function! s:RefreshCompletion() abort  " {{{
@@ -814,19 +800,6 @@ function! s:CompletionRefreshPattern(filetype) abort  " {{{
   endif
 
   return get(s:completion_refresh_patterns, a:filetype, s:completion_refresh_patterns["_"])
-endfunction  " }}}
-
-function! s:DefineCompletionMappings() abort  " {{{
-  if has_key(s:, "completion_mappings_defined")
-    return
-  endif
-
-  let s:completion_mappings_defined = v:true
-
-  inoremap <expr><Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-  call s:MapCrForInsertMode()
 endfunction  " }}}
 " }}}
 
@@ -1643,7 +1616,8 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     " `<Space>` when `[|]` then `[ ] |`
     call lexima#add_rule(#{ char: "<Space>", at: '\[\%#]', input: "<Space><Right><Space>", filetype: "markdown" })
 
-    call timer_start(100, { -> s:MapCrForInsertMode() })
+    call timer_start(100, { -> s:DefineCrMappingForInsertMode() })
+    call timer_start(100, { -> s:DefineBSMappingForInsertMode() })
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{
@@ -3092,6 +3066,41 @@ command! -nargs=1 -complete=file Rename f <args> | call delete(expand("#")) | wr
 
 " ----------------------------------------------
 " Keymappings  " {{{
+" Mapping Functions  " {{{
+function! s:DefineCrMappingForInsertMode() abort  " {{{
+  imap <silent><expr> <Cr> <SID>CrForInsertMode()
+endfunction  " }}}
+
+function! s:DefineBSMappingForInsertMode() abort  " {{{
+  inoremap <silent><expr> <BS> <SID>BSForInsertMode()
+endfunction  " }}}
+
+function! s:DefineBSMappingToRefreshCompletion() abort  " {{{
+  call s:DefineBSMappingForInsertMode()
+endfunction  " }}}
+
+function! s:DefineCompletionMappings() abort  " {{{
+  inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+  call s:DefineCrMappingForInsertMode()
+endfunction  " }}}
+
+function! s:CrForInsertMode() abort  " {{{
+  if vsnip#available(1)
+    return "\<Plug>(vsnip_expand_or_jump)"
+  elseif neosnippet#expandable_or_jumpable()
+    return "\<Plug>(neosnippet_expand_or_jump)"
+  else
+    return pumvisible() ? asyncomplete#close_popup() : lexima#expand("<Cr>", "i")
+  endif
+endfunction  " }}}
+
+function! s:BSForInsertMode() abort  " {{{
+  return lexima#expand("<BS>", "i") . <SID>RefreshCompletion()
+endfunction  " }}}
+" }}}
+
 nnoremap <Leader>v :vsplit<Cr>
 nnoremap <Leader>h :split<Cr>
 
