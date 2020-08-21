@@ -168,6 +168,11 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
 
   function! s:ForceRefreshCompletion(timer) abort  " {{{
     call asyncomplete#_force_refresh()
+
+    if !empty(&omnifunc)
+      call feedkeys("\<C-x>\<C-o>", "i")
+    endif
+
     call s:ClearCompletionTimer()
   endfunction  " }}}
   " }}}
