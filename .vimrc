@@ -633,10 +633,30 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
   " }}}
 
   " gem install solargraph  " {{{
+  " initialization_options: https://github.com/castwide/vscode-solargraph/blob/master/package.json
+  let g:solargraph_options = get(g:, "solargraph_options", {})
   call kg8m#plugin#lsp#register(#{
      \   name: "solargraph",
-     \   cmd: { server_info -> ["solargraph", "stdio"] },
-     \   initialization_options: #{ diagnostics: "true" },
+     \   cmd: { server_info -> (
+     \     get(g:solargraph_options, "useBundler", v:false) ? ["bundle", "exec"] : []
+     \   ) + ["solargraph", "stdio"] },
+     \   initialization_options: { -> extend(
+     \     #{
+     \       autoformat: v:false,
+     \       checkGemVersion: v:true,
+     \       completion: v:true,
+     \       definitions: v:true,
+     \       diagnostics: v:true,
+     \       formatting: v:false,
+     \       hover: v:true,
+     \       logLevel: "info",
+     \       references: v:true,
+     \       rename: v:true,
+     \       symbols: v:true,
+     \       useBundler: v:false,
+     \     },
+     \     g:solargraph_options,
+     \   ) },
      \   allowlist: ["ruby"],
      \ })
   " }}}
