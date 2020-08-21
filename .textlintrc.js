@@ -3,16 +3,22 @@ module.exports = {
     comments: true,
     allowlist: {
       allow: [
+        "々",
+        "叩",
         "叶",
         "嬉",
         "揃",
+        "播",
         "溜",
         "澤",
+        "稟",
+        "紐",
         "絢",
+        "鵜",
       ],
     },
     "node-types": {
-      nodeTypes: ["BlockQuote", "CodeBlock"],
+      nodeTypes: ["BlockQuote", "Code", "CodeBlock"],
     },
   },
   rules: {
@@ -32,6 +38,7 @@ module.exports = {
       "ja-no-mixed-period": false,
       "no-doubled-joshi": {
         allow: ["か", "にも", "も"],
+        commaCharacters: ["、", "，", "」"],
       },
       "no-exclamation-question-mark": false,
       "sentence-length": {
@@ -39,7 +46,6 @@ module.exports = {
         exclusionPatterns: [
           "/\\bhttps?:\\/\\/[^\\s)>]+/",  // URL
           "/\\b[a-z\\d]{40}\\b/",         // commit hash
-          "/`.+`/",                       // Code
         ],
       },
     },
