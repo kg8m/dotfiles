@@ -1618,8 +1618,36 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
   let g:lexima_ctrlh_as_backspace = v:true
 
   function! s:ConfigPluginOnPostSource_lexima() abort  " {{{
-    " `<Space>` when `[|]` then `[ ] |`
+    " `<Space>` when
+    "
+    "   [|]
+    "
+    " then
+    "
+    "   [ ] |
     call lexima#add_rule(#{ char: "<Space>", at: '\[\%#]', input: "<Space><Right><Space>", filetype: "markdown" })
+
+    " `<Cr>` when
+    "
+    "   ```|```
+    "
+    " then
+    "
+    "   ```
+    "   |
+    "   ```
+    call lexima#add_rule(#{ char: "<Cr>", at: '```\%#```', input: "<Cr><Cr><Up>", filetype: "markdown" })
+
+    " `<Cr>` when
+    "
+    "   ```foo|```
+    "
+    " then
+    "
+    "   ```foo
+    "   |
+    "   ```
+    call lexima#add_rule(#{ char: "<Cr>", at: '```[a-z]\+\%#```', input: "<Cr><Cr><Up>", filetype: "markdown" })
 
     call timer_start(100, { -> s:DefineCrMappingForInsertMode() })
     call timer_start(100, { -> s:DefineBSMappingForInsertMode() })
