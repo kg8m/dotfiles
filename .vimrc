@@ -458,7 +458,7 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
+if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   let g:lsp_diagnostics_enabled          = v:true
   let g:lsp_diagnostics_echo_cursor      = v:false
   let g:lsp_diagnostics_float_cursor     = v:true
@@ -473,12 +473,24 @@ if kg8m#plugin#register("kg8m/vim-lsp")  " {{{
 
   augroup my_vimrc  " {{{
     autocmd User lsp_setup          call kg8m#plugin#lsp#enable()
+    autocmd User lsp_setup          call s:SubscribeLSPStream()
     autocmd User lsp_buffer_enabled call s:OnLSPBufferEnabled()
 
     autocmd FileType * call s:ResetLSPTargetBuffer()
-
-    autocmd User lsp_definition_failed FzfTjump
   augroup END  " }}}
+
+  function! s:SubscribeLSPStream() abort  " {{{
+    call lsp#callbag#pipe(
+       \   lsp#stream(),
+       \   lsp#callbag#filter({ x -> s:IsLSPDefinitionFailedStream(x) }),
+       \   lsp#callbag#subscribe(#{ next: { -> fzf#tjump() } }),
+       \ )
+  endfunction  " }}}
+
+  function! s:IsLSPDefinitionFailedStream(x) abort  " {{{
+    return has_key(a:x, "request") && get(a:x.request, "method", "") ==# "textDocument/definition" &&
+         \ has_key(a:x, "response") && empty(get(a:x.response, "result", []))
+  endfunction  " }}}
 
   function! s:OnLSPBufferEnabled() abort  " {{{
     let b:asyncomplete_refresh_pattern = s:CompletionRefreshPattern(&filetype)
