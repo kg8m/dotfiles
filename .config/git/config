@@ -65,10 +65,7 @@ line-numbers-plus-style = "green auto"
 algorithm = patience
 context = 10
 compactionHeuristic = true
-
-# For delta; Use `dimmed_zebra` without delta
-colorMoved = zebra
-
+colorMoved = plain
 colorMovedWS = ignore-all-space
 renames = true
 
