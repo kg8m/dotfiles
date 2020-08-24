@@ -2745,7 +2745,7 @@ endif  " }}}
 
 if kg8m#plugin#register("jonsmithers/vim-html-template-literals", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:htl_css_templates = v:true
-  let g:htl_all_templates = v:true
+  let g:htl_all_templates = v:false
 
   call kg8m#plugin#configure(#{
      \   depends: "vim-javascript",
@@ -2929,6 +2929,9 @@ set autoindent
 set smartindent
 set backspace=indent,eol,start
 set nofixeol
+
+let g:html_indent_script1 = "inc"
+let g:html_indent_style1  = "inc"
 
 augroup my_vimrc  " {{{
   autocmd FileType neosnippet set noexpandtab
