@@ -2067,6 +2067,11 @@ if kg8m#plugin#register("haya14busa/vim-asterisk")  " {{{
   map #  <Plug>(asterisk-z#)
   map g* <Plug>(asterisk-gz*)
   map g# <Plug>(asterisk-gz#)
+
+  call kg8m#plugin#configure(#{
+     \   lazy:   v:true,
+     \   on_map: [["nv", "<Plug>(asterisk-"]],
+     \ })
 endif  " }}}
 
 if kg8m#plugin#register("Chiel92/vim-autoformat", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
