@@ -2248,6 +2248,7 @@ endif  " }}}
 call kg8m#plugin#register("michaeljsmith/vim-indent-object")
 
 if kg8m#plugin#register("osyo-manga/vim-jplus")  " {{{
+  " Remove line-connectors with `J`
   nmap J <Plug>(jplus)
   vmap J <Plug>(jplus)
 
