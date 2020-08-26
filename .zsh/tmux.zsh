@@ -49,27 +49,29 @@ function tmux_execute_in_all_panes {
 }
 
 function setup_my_tmux_plugin {
-  [ -d ~/.tmux ]              || ln -s ~/dotfiles/.tmux ~/.tmux
-  [ -d ~/.tmux/plugins/"$1" ] || ln -s "$( pwd )" ~/.tmux/plugins/"$1"
+  local plugin_name="$( basename "$1" )"
 
-  __setup_done_tmux_plugins__+="$1"
+  [ -d ~/.tmux ]                        || ln -s ~/dotfiles/.tmux ~/.tmux
+  [ -d ~/.tmux/plugins/"$plugin_name" ] || ln -s "$( pwd )" ~/.tmux/plugins/"$plugin_name"
 
-  if echo "$__setup_done_tmux_plugins__" | egrep tpm | egrep resurrect | egrep continuum | egrep -q scroll-copy-mode; then
-    unset __setup_done_tmux_plugins__
+  __setup_done_my_tmux_plugins__+=( "$plugin_name" )
+
+  if [ "${#__setup_done_my_tmux_plugins__[@]}" = "${#__my_tmux_plugins__[@]}" ]; then
+    unset __setup_done_my_tmux_plugins__
+    unset __my_tmux_plugins__
     unset -f setup_my_tmux_plugin
   fi
 }
 
-export __setup_done_tmux_plugins__=""
+export __setup_done_my_tmux_plugins__=()
+export __my_tmux_plugins__=(
+  tmux-plugins/tpm
+  tmux-plugins/tmux-resurrect
+  tmux-plugins/tmux-continuum
+  nhdaly/tmux-scroll-copy-mode
+)
 
-zinit ice lucid wait"!0c" as"null" atload"setup_my_tmux_plugin tpm"
-zinit light tmux-plugins/tpm
-
-zinit ice lucid wait"!0c" as"null" atload"setup_my_tmux_plugin tmux-resurrect"
-zinit light tmux-plugins/tmux-resurrect
-
-zinit ice lucid wait"!0c" as"null" atload"setup_my_tmux_plugin tmux-continuum"
-zinit light tmux-plugins/tmux-continuum
-
-zinit ice lucid wait"!0c" as"null" atload"setup_my_tmux_plugin tmux-scroll-copy-mode"
-zinit light nhdaly/tmux-scroll-copy-mode
+for plugin in "${__my_tmux_plugins__[@]}"; do
+  zinit ice lucid wait"!0c" as"null" atload"setup_my_tmux_plugin $plugin"
+  zinit light "$plugin"
+done
