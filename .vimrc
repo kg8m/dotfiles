@@ -2234,7 +2234,8 @@ endif  " }}}
 
 call kg8m#plugin#register("tpope/vim-haml", #{ if: !kg8m#util#is_git_tmp_edit() })
 
-if kg8m#plugin#register("machakann/vim-highlightedundo")  " {{{
+" Disable because it is sometimes too heavy
+if kg8m#plugin#register("machakann/vim-highlightedundo", #{ if: v:false })  " {{{
   nmap u     <Plug>(highlightedundo-undo)
   nmap <C-r> <Plug>(highlightedundo-redo)
 
