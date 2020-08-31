@@ -207,7 +207,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-buffer.vim")  " {{{
 
   function! s:SetupAsyncompleteBuffer() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options(#{
-       \   name: "asyncomplete_source_buffer",
+       \   name: "buffer",
        \   allowlist: ["*"],
        \   completor: function("asyncomplete#sources#buffer#completor"),
        \   events: s:asyncomplete_buffer_events,
@@ -286,7 +286,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-file.vim")  " {{{
 
   function! s:SetupAsyncompleteFile() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#file#get_source_options(#{
-       \   name: "asyncomplete_source_file",
+       \   name: "file",
        \   allowlist: ["*"],
        \   completor: function("asyncomplete#sources#file#completor"),
        \   priority: 3,
@@ -306,7 +306,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
 
   function! s:SetupAsyncompleteNeosnippet() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options(#{
-       \   name: "asyncomplete_source_neosnippet",
+       \   name: "neosnippet",
        \   allowlist: ["*"],
        \   completor: function("asyncomplete#sources#neosnippet#completor"),
        \   priority: 1,
@@ -327,7 +327,7 @@ if kg8m#plugin#register("high-moctane/asyncomplete-nextword.vim")  " {{{
   function! s:SetupAsyncompleteNextword() abort  " {{{
     " Should specify filetypes? `allowlist: ["gitcommit", "markdown", "moin", "text"],`
     call asyncomplete#register_source(asyncomplete#sources#nextword#get_source_options(#{
-       \   name: "asyncomplete_source_nextword",
+       \   name: "nextword",
        \   allowlist: ["*"],
        \   args: ["-n", "10000"],
        \   completor: function("asyncomplete#sources#nextword#completor"),
@@ -355,7 +355,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-tags.vim")  " {{{
 
   function! s:SetupAsyncompleteTags() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options(#{
-       \   name: "asyncomplete_source_tags",
+       \   name: "tags",
        \   allowlist: ["*"],
        \   completor: function("asyncomplete#sources#tags#completor"),
        \   priority: 3,
