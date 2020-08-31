@@ -348,6 +348,26 @@ if kg8m#plugin#register("high-moctane/asyncomplete-nextword.vim")  " {{{
   endif  " }}}
 endif  " }}}
 
+if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", #{ build: "./install.sh" })  " {{{
+  augroup my_vimrc  " {{{
+    autocmd User asyncomplete_setup call s:SetupAsyncompleteTabnine()
+  augroup END  " }}}
+
+  function! s:SetupAsyncompleteTabnine() abort  " {{{
+    call asyncomplete#register_source(asyncomplete#sources#tabnine#get_source_options(#{
+       \   name: "tabnine",
+       \   allowlist: ["*"],
+       \   completor: function("asyncomplete#sources#tabnine#completor"),
+       \   priority: 1,
+       \ }))
+  endfunction  " }}}
+
+  call kg8m#plugin#configure(#{
+     \   lazy:      v:true,
+     \   on_source: "asyncomplete.vim",
+     \ })
+endif  " }}}
+
 if kg8m#plugin#register("prabirshrestha/asyncomplete-tags.vim")  " {{{
   augroup my_vimrc  " {{{
     autocmd User asyncomplete_setup call s:SetupAsyncompleteTags()
