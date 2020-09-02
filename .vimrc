@@ -2229,17 +2229,6 @@ endif  " }}}
 
 call kg8m#plugin#register("tpope/vim-haml", #{ if: !kg8m#util#is_git_tmp_edit() })
 
-" Disable because it is sometimes too heavy
-if kg8m#plugin#register("machakann/vim-highlightedundo", #{ if: v:false })  " {{{
-  nmap u     <Plug>(highlightedundo-undo)
-  nmap <C-r> <Plug>(highlightedundo-redo)
-
-  call kg8m#plugin#configure(#{
-     \   lazy:   v:true,
-     \   on_map: [["n", "<Plug>(highlightedundo-"]],
-     \ })
-endif  " }}}
-
 " Text object for indentation: i
 call kg8m#plugin#register("michaeljsmith/vim-indent-object")
 
