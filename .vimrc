@@ -2126,6 +2126,9 @@ if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
   nmap <expr> <Leader>f <SID>EasyMotionWithoutMigemo("easymotion-overwin-f2")
   xmap <expr> <Leader>f <SID>EasyMotionWithoutMigemo("easymotion-bd-f2")
   omap <expr> <Leader>f <SID>EasyMotionWithoutMigemo("easymotion-bd-f2")
+  nmap <expr> <Leader>F <SID>EasyMotionWithMigemo("easymotion-overwin-f2")
+  xmap <expr> <Leader>F <SID>EasyMotionWithMigemo("easymotion-bd-f2")
+  omap <expr> <Leader>F <SID>EasyMotionWithMigemo("easymotion-bd-f2")
 
   " Replace default `f`
   nmap <expr> f <SID>EasyMotionWithMigemo("easymotion-fl")
