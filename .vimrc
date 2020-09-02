@@ -68,25 +68,26 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
   set shortmess+=c
 
   function! s:AsyncompletePrioritySortedFuzzyFilter(options, matches) abort  " {{{
-    let sorted_items = []
-    let startcols    = []
-
-    let match_pattern = s:CompletionRefreshPattern(s:IsLSPBufferEnabled() ? &filetype : "_")
+    let match_pattern = s:CompletionRefreshPattern(s:IsLSPTargetBuffer() && s:IsLSPBufferEnabled() ? &filetype : "_")
     let base_matcher  = matchstr(a:options.base, match_pattern)
 
-    " Special thanks: mattn
-    let fuzzy_matcher = join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
+    if empty(base_matcher)
+      let sorted_items = flatten(map(values(a:matches), "v:val.items"))
+      let startcols    = flatten(map(values(a:matches), "v:val.startcol"))
+    else
+      let sorted_items = []
+      let startcols    = []
 
-    let sorter_context = #{
-      \   matcher:  base_matcher,
-      \   priority: 0,
-      \   cache:    {},
-      \ }
+      " Special thanks: mattn
+      let fuzzy_matcher = join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
 
-    for [source_name, source_matches] in items(a:matches)
-      if empty(base_matcher)
-        let sorted_items += source_matches.items
-      else
+      let sorter_context = #{
+        \   matcher:  base_matcher,
+        \   priority: 0,
+        \   cache:    {},
+        \ }
+
+      for [source_name, source_matches] in items(a:matches)
         let original_length = len(sorted_items)
 
         " Language server sources have no priority
@@ -102,10 +103,8 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
         if len(sorted_items) !=# original_length
           let startcols += [source_matches.startcol]
         endif
-      endif
-    endfor
+      endfor
 
-    if !empty(base_matcher)
       call sort(sorted_items, { lhs, rhs -> lhs.priority - rhs.priority })
     endif
 
