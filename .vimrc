@@ -714,7 +714,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \   name: "vim-language-server",
      \   cmd: { server_info -> ["vim-language-server", "--stdio"] },
      \   initialization_options: { -> #{ vimruntime: $VIMRUNTIME, runtimepath: &runtimepath } },
-     \   root_uri: { server_info -> lsp#utils#path_to_uri($HOME) },
+     \   root_uri: { server_info -> lsp#utils#path_to_uri(expand("~")) },
      \   allowlist: ["vim"],
      \ })
   " }}}
@@ -3092,7 +3092,7 @@ set nobackup
 
 " Double slash:    fullpath like `%home%admin%.vimrc.swp`
 " Sinble/no slash: only filename like `.vimrc.swp`
-let s:swapdir = $HOME . "/tmp/.vimswap//"
+let s:swapdir = expand("~/tmp/.vimswap//")
 if !isdirectory(s:swapdir)
   call mkdir(s:swapdir, "p")
 endif
@@ -3102,7 +3102,7 @@ let &directory = s:swapdir
 set hidden
 set undofile
 
-let s:undodir = $HOME . "/tmp/.vimundo"
+let s:undodir = expand("~/tmp/.vimundo")
 if !isdirectory(s:undodir)
   call mkdir(s:undodir, "p")
 endif
@@ -3298,7 +3298,8 @@ endif
 
 " ----------------------------------------------
 " External sources  " {{{
-if filereadable($HOME . "/.vimrc.local")
-  source $HOME/.vimrc.local
+let s:local_vimrc_path = expand("~/.vimrc.local")
+if filereadable(s:local_vimrc_path)
+  execute "source " . s:local_vimrc_path
 endif
 " }}}
