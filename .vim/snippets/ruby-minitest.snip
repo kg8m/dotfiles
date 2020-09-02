@@ -1,0 +1,67 @@
+snippet def_test
+alias   deft
+abbr    def test_{testcase}\n ...\n end
+options head
+	def test_${1:#:testcase}
+		${0}
+	end
+
+snippet assert
+abbr    assert ...
+options head
+	assert ${0}
+
+snippet assert_equal
+abbr    assert_equal {expected}, {actual}
+options head
+	assert_equal ${1:#:expected}, ${2:#:actual}
+
+snippet assert_not_equal
+abbr    assert_not_equal {unexpected}, {actual}
+options head
+	assert_not_equal ${1:#:unexpected}, ${2:#:actual}
+
+snippet assert_nil
+abbr    assert_nil ...
+options head
+	assert_nil ${0}
+
+snippet assert_not_nil
+abbr    assert_not_nil ...
+options head
+	assert_not_nil ${0}
+
+snippet assert_match
+abbr    assert_match {expected_pattern}, {actual_string}
+options head
+	assert_match ${1:#:expected_pattern}, ${2:#:actual_string}
+
+snippet assert_no_match
+abbr    assert_no_match {unexpected_pattern}, {actual_string}
+options head
+	assert_no_match ${1:#:unexpected_pattern}, ${2:#:actual_string}
+
+snippet assert_operator
+abbr    assert_operator {operand1}, :{operator}, {operand2}
+options head
+	assert_operator ${1:#:operand1}, :${2:#:operator}, ${3:#:operand2}
+
+snippet assert_predicate
+abbr    assert_predicate {object}, :{predicate}
+options head
+	assert_predicate ${1:#:object}, :${2:#:predicate}
+
+snippet assert_not_predicate
+abbr    assert_not_predicate {object}, :{predicate}
+options head
+	assert_not_predicate ${1:#:object}, :${2:#:predicate}
+
+snippet assert_respond_to
+abbr    assert_respond_to {object}, :{method}
+options head
+	assert_respond_to ${1:#:object}, :${2:#:method}
+
+snippet assert_not_respond_to
+abbr    assert_not_respond_to {object}, :{method}
+options head
+	assert_not_respond_to ${1:#:object}, :${2:#:method}

@@ -12,15 +12,7 @@
 " ----------------------------------------------
 " Initialize  " {{{
 " Set initial variables/options  " {{{
-let s:vim_root_path   = expand($HOME . "/.vim")
-let s:plugins_path    = expand(s:vim_root_path . "/plugins")
-let s:my_utility_path = expand(s:plugins_path . "/repos/github.com/kg8m/.vim")
-
-if !isdirectory(s:my_utility_path)
-  echo "Downloading my utility repository..."
-  call system("git clone https://github.com/kg8m/.vim " . s:my_utility_path)
-endif
-
+let s:my_utility_path = expand("~/dotfiles/.vim")
 let &runtimepath .= "," . s:my_utility_path
 
 let g:no_vimrc_example          = v:true
@@ -61,12 +53,10 @@ augroup END  " }}}
 " ----------------------------------------------
 " Plugins  " {{{
 " Initialize plugin manager  " {{{
-call kg8m#plugin#init_manager(s:plugins_path)
+call kg8m#plugin#init_manager()
 " }}}
 
 " Plugins list and settings  " {{{
-call kg8m#plugin#register(s:my_utility_path)
-
 " Completion, LSP  " {{{
 if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
   let g:asyncomplete_auto_popup = v:true
@@ -400,7 +390,7 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
     call s:DefineCompletionMappings()
 
     let g:neosnippet#snippets_directory = [
-      \   kg8m#plugin#get_info(".vim").path . "/snippets",
+      \   s:my_utility_path . "/snippets",
       \ ]
     let g:neosnippet#disable_runtime_snippets = #{
       \   _: v:true,
@@ -411,7 +401,7 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
     augroup END  " }}}
 
     function! s:SetupNeosnippetContextual() abort  " {{{
-      let dir = kg8m#plugin#get_info(".vim").path . "/snippets/"
+      let dir = s:my_utility_path . "/snippets/"
       let g:neosnippet_contextual#contexts = get(g:, "neosnippet_contextual#contexts", {})
 
       if !has_key(g:neosnippet_contextual#contexts, "ruby")
@@ -472,7 +462,6 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
      \   on_ft:     ["snippet", "neosnippet"],
      \   on_func:   "neosnippet#",
      \   on_source: "asyncomplete.vim",
-     \   depends:   ".vim",
      \   hook_source:      function("s:ConfigPluginOnSource_neosnippet"),
      \   hook_post_source: function("s:ConfigPluginOnPostSource_neosnippet"),
      \ })

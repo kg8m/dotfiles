@@ -1,0 +1,178 @@
+snippet subject
+abbr    subject { ... }
+options head
+	subject { ${0} }
+
+snippet let
+abbr    let(...) { ... }
+options head
+	let(:${1:#:name}) { ${0} }
+
+snippet let!
+abbr    let!(...) { ... }
+options head
+	let!(:${1:#:name}) { ${0} }
+
+snippet it
+abbr    it "{description}" do\n ...\n end
+options head
+	it "${1:#:description}" do
+		${0}
+	end
+
+snippet it_should
+alias   itshould
+abbr    it { should ... }
+options head
+	it { should ${0} }
+
+snippet it_should_not
+alias   itshould_not
+abbr    it { should_not ... }
+options head
+	it { should_not ${0} }
+
+snippet it_is_expected_to
+abbr    it { is_expected.to ... }
+options head
+	it { is_expected.to ${0} }
+
+snippet it_is_expected_not_to
+abbr    it { is_expected.not_to ... }
+options head
+	it { is_expected.not_to ${0} }
+
+snippet xit
+abbr    xit description
+options head
+	xit description
+
+snippet specify
+abbr    specify "{description}" do\n ...\n end
+options head
+	specify "${1:#:description}" do
+		${0}
+	end
+
+snippet specify_should
+alias   specifyshould
+abbr    specify { should ... }
+options head
+	specify { ${0} }
+
+snippet expect_to
+abbr    expect(...).to ...
+options head
+	expect(${1:#:subject}).to ${0}
+
+snippet expect_block_to
+abbr    expect { ... }.to ...
+options head
+	expect { ${1:#:subject} }.to ${0}
+
+snippet describe
+abbr    describe ... do\n ...\n end
+options head
+	describe ${1:`substitute(substitute(vim_snippets#Filename(), '_spec$', '', ''), '\(_\|^\)\(.\)', '\u\2', 'g')`} do
+		${0}
+	end
+
+snippet context
+abbr    context "{context}" do\n ...\n end
+options head
+	context "${1:#:context}" do
+		${0}
+	end
+
+snippet before
+abbr    before do\n ...\n end
+options head
+	before do
+		${0}
+	end
+
+snippet before_each
+abbr    before :each do\n ...\n end
+options head
+	before :each do
+		${0}
+	end
+
+snippet before_all
+abbr    before :all do\n ...\n end
+options head
+	before :all do
+		${0}
+	end
+
+snippet after
+abbr    after do\n ...\n end
+options head
+	after do
+		${0}
+	end
+
+snippet after_each
+abbr    after :each do\n ...\n end
+options head
+	after :each do
+		${0}
+	end
+
+snippet after_all
+abbr    after :all do\n ...\n end
+options head
+	after :all do
+		${0}
+	end
+
+snippet pending
+abbr    pending "..." do\n ...\n end
+options head
+	pending "${1}" do
+		${0}
+	end
+
+snippet shared_examples
+abbr    shared_examples ...
+options head
+	shared_examples "${1:#:shared examples name}" do
+		${0}
+	end
+
+snippet shared_examples_for
+abbr    shared_examples_for ...
+options head
+	shared_examples_for "${1:#:shared examples name}" do
+		${0}
+	end
+
+snippet it_behaves_like
+abbr    it_behaves_like ...
+options head
+	it_behaves_like "${0:#:shared examples name}"
+
+snippet it_should_behave_like
+abbr    it_should_behave_like ...
+options head
+	it_should_behave_like "${0:#:shared examples name}"
+
+snippet change_by
+abbr    change({receiver}, :{method}).by({difference})
+options word
+	change(${1:#:receiver}, :${2:#:method}).by(${3:#:difference})
+
+snippet change_from_to
+abbr    change({receiver}, :{method}).from({from}).to({to})
+options word
+	change(${1:#:receiver}, :${2:#:method}).from(${3:#:from}).to(${4:#:to})
+
+snippet change_by_block
+abbr    change { {subject} }.by({difference})
+options word
+	change { ${1:#:subject} }.by(${2:#:difference})
+
+snippet change_from_to_block
+abbr    change { {subject} }.from({from}).to({to})
+options word
+	change { ${1:#:subject} }.from(${2:#:from}).to(${3:#:to})

@@ -1,0 +1,64 @@
+# Ruby  {{{
+snippet ruby_each
+alias   each
+abbr    - {enumerable}.each do |{var}|\n ...
+options head
+	- ${1:#:enumerable}.each do |${2:#:var}|
+		${0}
+
+snippet ruby_if
+alias   if
+abbr    - if {condition}\n ...
+options head
+	- if ${1:#:condition}
+		${0}
+
+snippet ruby_if_else
+alias   if_else
+alias   ife
+abbr    - if {condition}\n ...\n - else ...
+options head
+	- if ${1:#:condition}
+		${0}
+	- else
+
+snippet ruby_else
+alias   else
+abbr    - else\n ...
+options head
+	- else
+		${0}
+
+snippet ruby_pry
+alias   pry
+abbr    - require "pry"; binding.pry
+options head
+	- require "pry"; binding.pry
+# }}}
+
+# Rails  {{{
+snippet rails_render_partial
+alias   render_partial
+abbr    = render partial: "{path}"
+options head
+	= render partial: "${1:#:path}"
+
+snippet rails_render_partial_with_locals
+alias   render_partial_with_locals
+abbr    = render partial: "{path}", locals: { ... }
+options head
+	= render partial: "${1:#:path}", locals: { ${2} }
+
+snippet rails_render_partial_collection
+alias   render_partial_collection
+abbr    = render partial: "{path}"
+options head
+	= render partial: "${1:#:path}", collection: ${2}
+
+snippet rails_content_for
+alias   content_for
+abbr    - content_for :{name} do\n ...
+options head
+	- content_for :${1:head} do
+		${0}
+# }}}

@@ -1,0 +1,404 @@
+snippet ActiveRecord
+abbr    ActiveRecord
+options word
+	ActiveRecord
+
+snippet ActiveRecord::Base
+alias   ActiveRecord_Base
+abbr    ActiveRecord::Base
+options word
+	ActiveRecord::Base
+
+snippet ActiveRecord::Relation
+alias   ActiveRecord_Relation
+abbr    ActiveRecord::Relation
+options word
+	ActiveRecord::Relation
+
+snippet ActiveRecord::RecordNotFound
+alias   ActiveRecord_RecordNotFound
+abbr    ActiveRecord::RecordNotFound
+options word
+	ActiveRecord::RecordNotFound
+
+snippet ActiveRecord::RecordInvalid
+alias   ActiveRecord_RecordInvalid
+abbr    ActiveRecord::RecordInvalid
+options word
+	ActiveRecord::RecordInvalid
+
+snippet ActiveRecord::Rollback
+alias   ActiveRecord_Rollback
+abbr    ActiveRecord::Rollback
+options word
+	ActiveRecord::Rollback
+
+snippet belongs_to
+abbr    belongs_to :{association_name}
+options word
+	belongs_to :${1:#:association_name}
+
+snippet has_one
+abbr    has_one :{association_name}
+options word
+	has_one :${1:#:association_name}
+
+snippet has_many
+abbr    has_many :{association_name}
+options word
+	has_many :${1:#:association_name}
+
+snippet has_and_belongs_to_many
+alias   habtm
+abbr    has_and_belongs_to_many :{association_name}
+options word
+	has_and_belongs_to_many :${1:#:association_name}
+
+snippet relation_select
+alias   select_relation
+abbr    select(...)
+options word
+	select(${0})
+
+snippet relation_joins
+alias   joins_relation
+abbr    joins(...)
+options word
+	joins(${0})
+
+snippet relation_includes
+alias   includes_relation
+abbr    includes(...)
+options word
+	includes(${0})
+
+snippet relation_references
+alias   references_relation
+abbr    references(...)
+options word
+	references(${0})
+
+snippet relation_eager_load
+alias   eager_load_relation
+abbr    eager_load(...)
+options word
+	eager_load(${0})
+
+snippet relation_preload
+alias   preload_relation
+abbr    preload(...)
+options word
+	preload(${0})
+
+snippet relation_where
+alias   where_relation
+abbr    where(...)
+options word
+	where(${0})
+
+snippet relation_rewhere
+alias   rewhere_relation
+abbr    rewhere(...)
+options word
+	rewhere(${0})
+
+snippet relation_where_not
+alias   where_not_relation
+alias   not_relation
+abbr    where.not(...)
+options word
+	where.not(${0})
+
+snippet relation_having
+alias   having_relation
+abbr    having(...)
+options word
+	having(${0})
+
+snippet relation_group
+alias   group_relation
+abbr    group(...)
+options word
+	group(${0})
+
+snippet relation_order
+alias   order_relation
+abbr    order(...)
+options word
+	order(${0})
+
+snippet relation_reorder
+alias   reorder_relation
+abbr    reorder(...)
+options word
+	reorder(${0})
+
+snippet relation_reverse_order
+alias   reverse_order_relation
+abbr    reverse_order
+options word
+	reverse_order
+
+snippet relation_limit
+alias   limit_relation
+abbr    limit(...)
+options word
+	limit(${0})
+
+snippet relation_offset
+alias   offset_relation
+abbr    offset(...)
+options word
+	offset(${0})
+
+snippet accepts_nested_attributes_for
+alias   nested_attributes_for
+abbr    accepts_nested_attributes_for ...
+options head
+	accepts_nested_attributes_for :${0}
+
+snippet human_name
+alias   model_name_human
+abbr    model_name.human
+options word
+	model_name.human
+
+snippet human_attribute_name
+abbr    human_attribute_name(:{attribute_name})
+options word
+	human_attribute_name(:${1:#:attribute_name})
+
+snippet preload_association
+abbr    ActiveRecord::Associations::Preloader.new.preload {records}, {associations}
+options head
+	ActiveRecord::Associations::Preloader.new.preload ${1:#:records}, ${2:#:associations}
+
+snippet preload_association_with_scope
+abbr    ActiveRecord::Associations::Preloader.new.preload {records}, {associations}, {preload_scope}
+options head
+	ActiveRecord::Associations::Preloader.new.preload ${1:#:records}, ${2:#:associations}, ${3:#:preload_scope}
+
+snippet scope
+abbr    scope :{name}, -> { ... }
+options word
+	scope :${1:#:name}, -> { ${0} }
+
+snippet scope_with_argument
+abbr    scope :{name}, -> (...) { ... }
+options word
+	scope :${1:#:name}, -> (${2:#:argument}) { ${0} }
+
+snippet named_scope
+abbr    named_scope :{name}, lambda { ... }
+options word
+	scope :${1:#:name}, lambda { ${0} }
+
+snippet named_scope_with_argument
+abbr    named_scope :{name}, lambda {|arg| ... }
+options word
+	scope :${1:#:name}, lambda {|${2:#:argument}| ${0} }
+
+snippet validates_acceptance_of
+abbr    validates_acceptance_of :{attribute}
+options word
+	validates_acceptance_of :${1:#:attribute}
+
+snippet validates_confirmation_of
+abbr    validates_confirmation_of :{attribute}
+options word
+	validates_confirmation_of :${1:#:attribute}
+
+snippet validates_exclusion_of
+abbr    validates_exclusion_of :{attribute}
+options word
+	validates_exclusion_of :${1:#:attribute}
+
+snippet validates_format_of
+abbr    validates_format_of :{attribute}, with: {pattern}
+options word
+	validates_format_of :${1:#:attribute}, with: ${2:#:pattern}
+
+snippet validates_inclusion_of
+abbr    validates_inclusion_of :{attribute}
+options word
+	validates_inclusion_of :${1:#:attribute}
+
+snippet validates_length_of
+abbr    validates_length_of :{attribute}
+options word
+	validates_length_of :${1:#:attribute}
+
+snippet validates_numericality_of
+abbr    validates_numericality_of :{attribute}
+options word
+	validates_numericality_of :${1:#:attribute}
+
+snippet validates_presence_of
+abbr    validates_presence_of :{attribute}
+options word
+	validates_presence_of :${1:#:attribute}
+
+snippet validates_uniqueness_of
+abbr    validates_uniqueness_of :{attribute}
+options word
+	validates_uniqueness_of :${1:#:attribute}
+
+snippet validates_acceptance_sexy
+abbr    validates :{attribute}, acceptance: true
+options word
+	validates :${1:#:attribute}, acceptance: true
+
+snippet validates_confirmation_sexy
+abbr    validates :{attribute}, confirmation: true
+options word
+	validates :${1:#:attribute}, confirmation: true
+
+snippet validates_exclusion_sexy
+abbr    validates :{attribute}, exclusion: { ... }
+options word
+	validates :${1:#:attribute}, exclusion: { ${0} }
+
+snippet validates_format_sexy
+abbr    validates :{attribute}, format: { with: {pattern} }
+options word
+	validates :${1:#:attribute}, format: { with: ${2:#:pattern} }
+
+snippet validates_inclusion_sexy
+abbr    validates :{attribute}, inclusion: { ... }
+options word
+	validates :${1:#:attribute}, inclusion: { ${0} }
+
+snippet validates_length_sexy
+abbr    validates :{attribute}, length: { ... }
+options word
+	validates :${1:#:attribute}, length: { ${0} }
+
+snippet validates_numericality_sexy
+abbr    validates :{attribute}, numericality: true
+options word
+	validates :${1:#:attribute}, numericality: true
+
+snippet validates_presence_sexy
+abbr    validates :{attribute}, presence: true
+options word
+	validates :${1:#:attribute}, presence: true
+
+snippet validates_uniqueness_sexy
+abbr    validates :{attribute}, uniqueness: true
+options word
+	validates :${1:#:attribute}, uniqueness: true
+
+snippet before_validation
+abbr    before_validation :{method}
+options word
+	before_validation :${1:#:method}
+
+snippet after_validation
+abbr    after_validation :{method}
+options word
+	after_validation :${1:#:method}
+
+snippet before_save
+abbr    before_save :{method}
+options word
+	before_save :${1:#:method}
+
+snippet around_save
+abbr    around_save :{method}
+options word
+	around_save :${1:#:method}
+
+snippet before_create
+abbr    before_create :{method}
+options word
+	before_create :${1:#:method}
+
+snippet around_create
+abbr    around_create :{method}
+options word
+	around_create :${1:#:method}
+
+snippet before_update
+abbr    before_update :{method}
+options word
+	before_update :${1:#:method}
+
+snippet around_update
+abbr    around_update :{method}
+options word
+	around_update :${1:#:method}
+
+snippet before_destroy
+abbr    before_destroy :{method}
+options word
+	before_destroy :${1:#:method}
+
+snippet around_destroy
+abbr    around_destroy :{method}
+options word
+	around_destroy :${1:#:method}
+
+snippet after_create
+abbr    after_create :{method}
+options word
+	after_create :${1:#:method}
+
+snippet after_update
+abbr    after_update :{method}
+options word
+	after_update :${1:#:method}
+
+snippet after_destroy
+abbr    after_destroy :{method}
+options word
+	after_destroy :${1:#:method}
+
+snippet after_save
+abbr    after_save :{method}
+options word
+	after_save :${1:#:method}
+
+snippet after_commit
+abbr    after_commit :{method}
+options word
+	after_commit :${1:#:method}
+
+snippet after_create_commit
+abbr    after_create_commit :{method}
+options word
+	after_create_commit :${1:#:method}
+
+snippet after_update_commit
+abbr    after_update_commit :{method}
+options word
+	after_update_commit :${1:#:method}
+
+snippet after_save_commit
+abbr    after_save_commit :{method}
+options word
+	after_save_commit :${1:#:method}
+
+snippet after_destroy_commit
+abbr    after_destroy_commit :{method}
+options word
+	after_destroy_commit :${1:#:method}
+
+snippet after_rollback
+abbr    after_rollback :{method}
+options word
+	after_rollback :${1:#:method}
+
+snippet after_initialize
+abbr    after_initialize :{method}
+options word
+	after_initialize :${1:#:method}
+
+snippet after_find
+abbr    after_find :{method}
+options word
+	after_find :${1:#:method}
+
+snippet after_touch
+abbr    after_touch :{method}
+options word
+	after_touch :${1:#:method}

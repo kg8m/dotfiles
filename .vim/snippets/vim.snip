@@ -1,0 +1,89 @@
+snippet folding_marker
+abbr    " {{{\n ...\n ...  " }}}
+options word
+	" {{{
+		${0}
+	" }}}
+
+snippet function
+abbr    function! {function_name}() abort\n ...\n endfunction
+options head
+	function! ${1:#:function_name}() abort  " {{{
+		${0}
+	endfunction  " }}}
+
+snippet augroup
+abbr    augroup ...\n ...\n augroup END
+options head
+	augroup ${1:#:GroupName}  " {{{
+		autocmd!
+		autocmd ${2:#:EventName} ${3:#:filetype} ${0}
+	augroup END  " }}}
+
+snippet augroup_my_vimrc
+abbr    augroup my_vimrc\n ...\n augroup END
+options head
+	augroup my_vimrc  " {{{
+		autocmd ${1:#:EventName} ${2:#:filetype} ${0}
+	augroup END  " }}}
+
+snippet autocmd
+abbr    autocmd {EventName} {filetype} ...
+options head
+	autocmd ${1:#:EventName} ${2:#:filetype} ${0}
+
+snippet if
+abbr    if ...\n ...\n endif
+options head
+	if ${1:#:condition}
+		${0}
+	endif
+
+snippet if_else
+alias   ife
+abbr    if ...\n else\n ...\n endif
+options head
+	if ${1:#:condition}
+		${0}
+	else
+	endif
+
+snippet else
+abbr    else\n ...\n endif
+options head
+	else
+		${0}
+	endif
+
+snippet if_else_if
+alias   ifeif
+abbr    if ...\n elseif\n ...\n else\n ...\n endif
+options head
+	if ${1:#:condition}
+		${0}
+	elseif 
+	else
+	endif
+
+snippet for
+abbr    for ... in ...\n ...\n endfor
+options head
+	for ${1} in ${2}
+		${0}
+	endfor
+
+snippet try_catch
+abbr    try\n ...\ncatch /.../\n ...\n endtry
+options head
+	try
+		${0}
+	catch /${1:.*}/
+	endtry
+
+snippet try_finally
+abbr    try\n ...\nfinally\n ...\n endtry
+options head
+	try
+		${0}
+	finally
+	endtry

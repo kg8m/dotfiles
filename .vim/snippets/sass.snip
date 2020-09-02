@@ -1,0 +1,22 @@
+snippet important
+abbr    important
+regexp  '![important]'
+options word
+	important
+
+snippet @import_path
+alias   import_path
+abbr    @import "{path}";
+options head
+	@import "${1:#:path}";
+
+snippet @import_url
+alias   import_url
+abbr    @import url({url})
+options head
+	@import url(${1:#:url})
+
+snippet border
+abbr    border: {line-width} {line-style} {color}
+options head
+	border: ${1:1px} ${2:solid} #${3:000}

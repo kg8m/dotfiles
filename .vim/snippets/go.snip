@@ -1,0 +1,303 @@
+snippet append
+abbr append(slice, value)
+	append(${1:#:slice}, ${0:#:value})
+
+snippet chan
+abbr chan Type
+	chan ${0:#:int}
+
+snippet case
+abbr case ...:
+	case ${1:#:value}:
+		${0}
+
+snippet const
+abbr const XXX Type = ...
+	const ${1:#:NAME} ${2:#:Type} = ${0}
+
+snippet consst_multiline
+abbr const (\n ... \n)
+	const (
+		${1:#:NAME} ${2:#:Type} = ${3:#:value}
+		${0}
+	)
+
+snippet defer
+abbr defer XXX()
+	defer ${1:#:func}(${2})
+
+snippet defer_recover
+abbr defer func() {\n if err := recover(); err != nil {\n ...\n }\n }()
+	defer func() {
+		if err := recover(); err != nil {
+			${0}
+		}
+	}()
+
+snippet import
+abbr import "XXX"
+	import "${1:#:package}"
+
+snippet import_multiline
+abbr import (\n ... \n)
+	import (
+		"${1:#:package}"
+	)
+
+snippet type
+abbr type TypeName type
+	type ${1:#:TypeName} ${0:#:type}
+
+snippet type_struct
+alias struct_type
+abbr type T struct {\n ...\n }
+	type ${1:#:Type} struct {
+		${0}
+	}
+
+snippet type_interface
+alias interface_type
+abbr type XXX interface {\n ...\n }
+	type ${1:#:Interface} interface {
+		${2:/* TODO: add methods */}
+	}
+
+snippet if
+abbr if ... { ... }
+	if ${1:#:condition} {
+		${0}
+	}
+
+snippet else
+abbr else { ... }
+	else {
+		${0}
+	}
+
+snippet if_else
+alias ife
+abbr if ... {\n ...\n } else {\n ...\n }
+	if ${1:#:condition} {
+		${0}
+	} else {
+	}
+
+snippet if_else_if
+alias ifeif
+abbr if ... {\n ...\n } else if ... {\n ...\n } else {\n ...\n }
+	if ${1:#:condition} {
+		${0}
+	} else if  {
+	}
+	} else {
+	}
+
+snippet iferror
+abbr if err := ...; err != nil {\n ...\n }
+	if err := ${1:#:condition}; err != nil {
+		${0}
+	}
+
+snippet iferror_nil
+abbr if err != nil {\n return err\n }
+	if err != nil {
+		return err
+	}${0}
+
+snippet iferror_nil_test
+abbr if err != nil {\n t.Fatal(err)\n }
+	if err != nil {
+		t.Fatal(err)
+	}
+
+snippet iferror_nil_log
+abbr if err != nil {\n log.Fatal(err)\n }
+	if err != nil {
+		log.Fatal(err)
+	}
+
+snippet json
+abbr \`json:key\`
+	\`json:"${1:#:keyName}"\`
+
+snippet yaml
+abbr \`yaml:key\`
+	\`yaml:"${1:#:keyName}"\`
+
+snippet for
+abbr for ... {\n ...\n }
+	for ${1} {
+		${0}
+	}
+
+snippet for_i
+abbr for i := 0; i < N; i++ {\n ...\n }
+	for ${1:i} := 0; $1 < ${2:#:N}; $1++ {
+		${0}
+	}
+
+snippet for_range
+abbr for k, v := range items {\n ...\n }
+	for ${2:k}, ${3:v} := range ${1} {
+		${0}
+	}
+
+snippet func
+abbr func Xxx(...) [yyy] {\n ...\n }
+	func ${1:#:function}(${2:#:args}) ${3:error }{
+		${0}
+	}
+
+snippet func_method
+alias method
+abbr func (x X) Yyy(...) [zzz] {\n ...\n }
+	func (${1:#:receiver}) ${2:#:method}(${3:#:args}) ${4:error }{
+		${0}
+	}
+
+snippet Printf
+abbr Printf(...)
+	Printf("${1:%s}", ${2:#:var})
+
+snippet Println
+abbr Println(...)
+	Println(${1})
+
+snippet Errorf
+abbr Errorf(...)
+	Errorf("${1}")
+
+snippet Sprintf
+abbr Sprintf(...)
+	Sprintf("${1:%s}", ${2:#:var})
+
+snippet fmt_printf
+abbr fmt.Printf(...)
+	fmt.Printf("${1:%s}", ${2:#:var})
+
+snippet fmt_println
+abbr fmt.Println(...)
+	fmt.Println(${1})
+
+snippet fmt_errorf
+abbr fmt.Errorf(...)
+	fmt.Errorf("${1}")
+
+snippet fmt_sprintf
+abbr fmt.Sprintf(...)
+	fmt.Sprintf("${1:%s}", ${2:#:var})
+
+snippet log_printf
+abbr log.Printf(...)
+	log.Printf("${1:%s}", ${2:#:var})
+
+snippet log_println
+abbr log.Println(...)
+	log.Println(${1})
+
+snippet map
+abbr map[Type]Type
+	map[${1:string}]${0:int}
+
+snippet main
+abbr package main\n\n func main() {\n ...\n }
+options head
+	package main
+	
+	func main() {
+		${0}
+	}
+
+snippet package
+abbr package ...
+	package ${1:main}
+
+snippet select
+abbr select {\n case <-chan:\n ...\n }
+	select {
+	case <-${1:chan}:
+		${0}
+	}
+
+snippet select_assign
+abbr select { case {value} := <-chan:\n ...\n }
+	select {
+	case ${1:#:value} := <-${2:chan}:
+		${0}
+	}
+
+snippet switch
+abbr switch x {\n case XXX:\n ...\n }
+	switch ${1:#:var} {
+	case ${2:#:value}:
+		${0}
+	}
+
+snippet Test
+abbr func TestXxx(t *testing.T) {\n ...\n }
+	func Test${1:#:Function}(t *testing.T) {
+		${0}
+	}
+
+snippet table_driven_test
+alias test_table_driven
+abbr var tests = ...\n for _, tt := range tests { t.Run(...){ ... } }
+	var tests = []struct {
+		name     string
+		expected string
+		given    string
+	}{
+		{"${2}", "${3}", "${4}",},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T){
+			actual := ${1:#:Function}(tt.given)
+			if actual != tt.expected {
+				t.Errorf("given(%s): expected %s, actual %s", tt.given, tt.expected, actual)
+			}
+		})
+	}
+
+snippet Example
+abbr func ExampleXxx() {\n ...\n // Output: xxx\n }
+	func Example${1:#:Method}() {
+		${0}
+		// Output: 
+	}
+
+snippet Benchmark
+abbr func BenchmarkXxx(b *testing.B) {\n ...\n }
+	func Benchmark${1:#:Method}(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			${0}
+		}
+	}
+
+snippet var
+abbr var x {Type}
+	var ${1:#:var} ${2:#:Type}
+
+snippet var_assign
+abbr var x {Type} = ...
+	var ${1:#:var} ${2:#:Type} = ${0:#:value}
+
+snippet var_multiline
+abbr var (\n x {Type} \n)
+	var (
+		${1:#:var} ${2:#:Type}
+	)
+
+snippet var_assign_multiline
+abbr var (\n x {Type} = ... \n)
+	var (
+		${1:#:var} ${2:#:Type} = ${0:#:value}
+	)
+
+snippet DeepEqual
+abbr if !reflect.DeepEqual(expected, actual) { ... )
+abbr equals: test two identifiers with DeepEqual
+	if !reflect.DeepEqual(${1:expected}, ${2:actual}) {
+		_, file, line, _ := runtime.Caller(0)
+		fmt.Printf("%s:%d:\n\n\texp: %#v\n\n\tgot: %#v\n\n", filepath.Base(file), line, $1, $2)
+		t.FailNow()
+	}

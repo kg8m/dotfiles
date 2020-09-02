@@ -1,0 +1,47 @@
+snippet before_action
+abbr    before_action :{method_name}
+options word
+	before_action :${1:#:method_name}
+
+snippet before_filter
+abbr    before_filter :{method_name}
+options word
+	before_filter :${1:#:method_name}
+
+snippet after_action
+abbr    after_action :{method_name}
+options word
+	after_action :${1:#:method_name}
+
+snippet after_filter
+abbr    after_filter :{method_name}
+options word
+	after_filter :${1:#:method_name}
+
+snippet around_action
+abbr    around_action :{method_name}
+options word
+	around_action :${1:#:method_name}
+
+snippet around_filter
+abbr    around_filter :{method_name}
+options word
+	around_filter :${1:#:method_name}
+
+snippet params_for_strong_parameters
+alias   params
+abbr    params.require(:{model_name}).permit({attributes})
+options head
+	params.require(:${1:#:model_name}).permit(:${2:#:attribute})
+
+snippet respond_to_format
+abbr    respond_to do |format|\n format.{format} { ... }\n end
+options head
+	respond_to do |format|
+		format.${1:js} { ${0} }
+	end
+
+snippet format
+abbr    format.{format} { ... }
+options head
+	format.${1:json} { ${0} }

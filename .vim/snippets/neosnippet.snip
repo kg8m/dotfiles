@@ -1,0 +1,31 @@
+snippet snippet
+abbr    snippet\n abbr ...\n options head/word\n ...
+options head
+	snippet ${1:#:snippet_name}
+	abbr    $3
+	options ${2:head/word}
+		${3}
+
+snippet snippet_alias
+abbr    snippet\n alias ...\n ...
+options head
+	snippet ${1:#:snippet_name}
+	alias   ${2:#:alias_name}
+	abbr    $4
+	options ${3:head/word}
+		${4}
+
+snippet snippet_regexp
+abbr    snippet\n regxp ...\n ...
+options head
+	snippet ${1:#:snippet_name}
+	abbr    $6
+	regexp  '${2:#:prefix}[${3:#:snippet_name}]${4:*}'
+	options ${5:head/word}
+		${6}
+
+snippet extends
+abbr    extends {module_name}
+options head
+	extends ${1:#:module_name}
+	

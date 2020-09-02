@@ -1,0 +1,63 @@
+snippet if
+abbr    if ...; then\n ...\n fi
+	if ${1:#:condition}; then
+		${0}
+	fi
+
+snippet if_else
+alias   ife
+abbr    if ...; then\n ...\n else\n ...\n fi
+	if ${1:#:condition}; then
+		${0}
+	else
+	fi
+
+snippet else
+abbr    else\n ...\n fi
+	else
+		${0}
+	fi
+
+snippet if_else_if
+alias   ifeif
+abbr    if ...; then\n ...\n elif ...\n ...\n else\n ...\n fi
+	if ${1:#:condition}; then
+		${0}
+	elif 
+	else
+	fi
+
+snippet for_in
+abbr    for {item} in {list}; do\n ...\n done
+	for ${1:#:item} in ${2:#:list}; do
+		${0}
+	done
+
+snippet while
+abbr    while {condition}; do\n ...\n done
+	while ${1:#:condition}; do
+		${0}
+	done
+
+snippet case
+abbr    case {word} in\n ... {pattern})\n ...;;\n esac
+	case ${1:#:word} in
+		${2:#:pattern})
+			${0};;
+	esac
+
+snippet function
+abbr    function {function_name} {\n ...\n }
+	function ${1:#:function_name} {
+		${0}
+	}
+
+snippet function_name_only
+abbr    {function_name}() {\n ...\n }
+	${1:#:function_name}() {
+		${0}
+	}
+
+snippet export
+abbr    export {name}={value}
+	export ${1:#:name}=${2:#:value}

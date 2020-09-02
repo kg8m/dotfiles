@@ -1,0 +1,403 @@
+# Character Reference  {{{
+snippet amp
+abbr    &amp; (&)
+regexp  '\&[amp]*'
+options word
+	amp;
+
+snippet nbsp
+abbr    &nbsp; ( )
+regexp  '\&[nbsp]*'
+options word
+	nbsp;
+
+snippet quot
+abbr    &quot; (")
+regexp  '\&[quot]*'
+options word
+	quot;
+
+snippet &"
+abbr    &quot; (")
+options word
+	&quot;
+
+snippet apos
+abbr    &apos; (')
+regexp  '\&[apos]*'
+options word
+	apos;
+
+snippet &'
+abbr    &apos; (')
+options word
+	&apos;
+
+snippet gt
+abbr    &gt; (>)
+regexp  '\&[gt]*'
+options word
+	gt;
+
+snippet &>
+abbr    &gt; (>)
+options word
+	&gt;
+
+snippet lt
+abbr    &lt; (<)
+regexp  '\&[lt]*'
+options word
+	lt;
+
+snippet &<
+abbr    &lt; (<)
+options word
+	&lt;
+# }}}
+
+# Base  {{{
+snippet comment
+alias   <!--
+abbr    <!-- {comment} -->
+options word
+	<!-- ${0} -->
+
+snippet doctype_HTML5
+abbr    <!DOCTYPE HTML>
+options head
+	<!DOCTYPE HTML>
+
+snippet br
+abbr    <br />
+options word
+	<br />
+
+snippet div
+abbr    <div>\n ...\n </div>
+options word
+regexp  '<[div]*'
+	div>
+		${0}
+	</div>
+
+snippet div_with_attributes
+abbr    <div ...>\n ...\n </div>
+options word
+regexp  '<[div_with_attributes]*'
+	div ${1:#:attributes}>
+		${0}
+	</div>
+
+snippet span
+abbr    <span>...</span>
+options word
+regexp  '<[span]*'
+	span>${0}</span>
+
+snippet span_with_attributes
+abbr    <span ...>...</span>
+options word
+regexp  '<[span_with_attributes]*'
+	span ${1:#:attributes}>${0}</span>
+
+snippet p
+abbr    <p>\n ...\n </p>
+options word
+regexp  '<[p]*'
+	p>
+		${0}
+	</p>
+
+snippet p_with_attributes
+abbr    <p ...>\n ...\n </p>
+options word
+regexp  '<[p_with_attributes]*'
+	p ${1:#:attributes}>
+		${0}
+	</p>
+
+snippet cite
+abbr    <cite>...</cite>
+options word
+regexp  '<[cite]*'
+	cite>${0}</cite>
+
+snippet code
+abbr    <code>...</code>
+options word
+regexp  '<[code]*'
+	code>${0}</code>
+
+snippet q
+abbr    <q>...</q>
+options word
+regexp  '<[q]*'
+	q>${0}</q>
+
+snippet strong
+abbr    <strong>...</strong>
+options word
+regexp  '<[strong]*'
+	strong>${0}</strong>
+# }}}
+
+# Details, Summary  {{{
+snippet details_summary
+alias   summary_details
+abbr    <details><summary>...</summary> ... </details>
+options word
+	<details>
+		<summary>
+			<strong>${1:#:summary}</strong>
+		</summary>
+		
+		${2:#:details}
+	</details>
+# }}}
+
+# Headers  {{{
+snippet h1
+abbr    <h1>...</h1>
+options word
+regexp  '<[h1]*'
+	h1>${0}</h1>
+
+snippet h1_with_attributes
+abbr    <h1 ...>...</h1>
+options word
+regexp  '<[h1_with_attributes]*'
+	h1 ${1:#:attributes}>${0}</h1>
+
+snippet h2
+abbr    <h2>...</h2>
+options word
+regexp  '<[h2]*'
+	h2>${0}</h2>
+
+snippet h2_with_attributes
+abbr    <h2 ...>...</h2>
+options word
+regexp  '<[h2_with_attributes]*'
+	h2 ${1:#:attributes}>${0}</h2>
+
+snippet h3
+abbr    <h3>...</h3>
+options word
+regexp  '<[h3]*'
+	h3>${0}</h3>
+
+snippet h3_with_attributes
+abbr    <h3 ...>...</h3>
+options word
+regexp  '<[h3_with_attributes]*'
+	h3 ${1:#:attributes}>${0}</h3>
+
+snippet h4
+abbr    <h4>...</h4>
+options word
+regexp  '<[h4]*'
+	h4>${0}</h4>
+
+snippet h4_with_attributes
+abbr    <h4 ...>...</h4>
+options word
+regexp  '<[h4_with_attributes]*'
+	h4 ${1:#:attributes}>${0}</h4>
+
+snippet h5
+abbr    <h5>...</h5>
+options word
+regexp  '<[h5]*'
+	h5>${0}</h5>
+
+snippet h5_with_attributes
+abbr    <h5 ...>...</h5>
+options word
+regexp  '<[h5_with_attributes]*'
+	h5 ${1:#:attributes}>${0}</h5>
+
+snippet h6
+abbr    <h6>...</h6>
+options word
+regexp  '<[h6]*'
+	h6>${0}</h6>
+
+snippet h6_with_attributes
+abbr    <h6 ...>...</h6>
+options word
+regexp  '<[h6_with_attributes]*'
+	h6 ${1:#:attributes}>${0}</h6>
+# }}}
+
+# Script  {{{
+snippet script
+abbr    <script>\n ...\n </script>
+options word
+regexp  '<[script]*'
+	script>
+		${0}
+	</script>
+
+snippet script_charset
+abbr    <script charset="utf-8">\n ...\n </script>
+options word
+regexp  '<[script_charset]*'
+	script charset="utf-8">
+		${0}
+	</script>
+
+snippet script_src
+abbr    <script src="{source}"></script>
+options word
+regexp  '<[script_src]*'
+	script src="${1:#:source}"></script>
+# }}}
+
+# List  {{{
+snippet ul
+abbr    <ul>\n ...\n </ul>
+options word
+regexp  '<[ul]*'
+	ul>
+		${0}
+	</ul>
+
+snippet ul_with_attributes
+abbr    <ul ...>\n ...\n </ul>
+options word
+regexp  '<[ul_with_attributes]*'
+	ul ${1:#:attributes}>
+		${0}
+	</ul>
+
+snippet ol
+abbr    <ol>\n ...\n </ol>
+options word
+regexp  '<[ol]*'
+	ol>
+		${0}
+	</ol>
+
+snippet ol_with_attributes
+abbr    <ol ...>\n ...\n </ol>
+options word
+regexp  '<[ol_with_attributes]*'
+	ol ${1:#:attributes}>
+		${0}
+	</ol>
+
+snippet li
+abbr    <li>\n ...\n </li>
+options word
+regexp  '<[li]*'
+	li>${0}</li>
+
+snippet li_with_attributes
+abbr    <li ...>\n ...\n </li>
+options word
+regexp  '<[li_with_attributes]*'
+	li ${1:#:attributes}>${0}</li>
+
+snippet dl
+abbr    <dl>\n ...\n </dl>
+options word
+regexp  '<[dl]*'
+	dl>
+		${0}
+	</dl>
+
+snippet dl_with_attributes
+abbr    <dl ...>\n ...\n </dl>
+options word
+regexp  '<[dl_with_attributes]*'
+	dl ${1:#:attributes}>
+		${0}
+	</dl>
+
+snippet dt
+abbr    <dt>\n ...\n </dt>
+options word
+regexp  '<[dt]*'
+	dt>${0}</dt>
+
+snippet dd
+abbr    <dd>\n ...\n </dd>
+options word
+regexp  '<[dd]*'
+	dd>${0}</dd>
+# }}}
+
+# Table  {{{
+snippet table
+abbr    <table>\n ...\n </table>
+options word
+regexp  '<[table]*'
+	table>
+		${0}
+	</table>
+
+snippet table_with_attributes
+abbr    <table ...>\n ...\n </table>
+options word
+regexp  '<[table_with_attributes]*'
+	table ${1:#:attributes}>
+		${0}
+	</table>
+
+snippet tr
+abbr    <tr>\n ...\n </tr>
+options word
+regexp  '<[tr]*'
+	tr>
+		${0}
+	</tr>
+
+snippet tr_with_attributes
+abbr    <tr ...>\n ...\n </tr>
+options word
+regexp  '<[tr_with_attributes]*'
+	tr ${1:#:attributes}>
+		${0}
+	</tr>
+
+snippet th
+abbr    <th>\n ...\n </th>
+options word
+regexp  '<[th]*'
+	th>
+		${0}
+	</th>
+
+snippet th_with_attributes
+abbr    <th ...>\n ...\n </th>
+options word
+regexp  '<[th_with_attributes]*'
+	th ${1:#:attributes}>
+		${0}
+	</th>
+
+snippet td
+abbr    <td>\n ...\n </td>
+options word
+regexp  '<[td]*'
+	td>
+		${0}
+	</td>
+
+snippet td_with_attributes
+abbr    <td ...>\n ...\n </td>
+options word
+regexp  '<[td_with_attributes]*'
+	td ${1:#:attributes}>
+		${0}
+	</td>
+# }}}
+
+# Form  {{{
+snippet label
+abbr    <label>...</label>
+options word
+regexp  '<[label]*'
+	label>${0}</label>
+# }}}

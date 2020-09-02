@@ -1,0 +1,155 @@
+# Function  {{{
+snippet function
+abbr    function {function_name}() {\n ...\n }
+options word
+	function ${1:#:function_name}(${2:#:args}) {
+		${0}
+	}
+# }}}
+
+# If  {{{
+snippet if
+abbr    if (...) {\n ...\n }
+options head
+	if (${1:#:condition}) {
+		${0}
+	}
+
+snippet if_else
+alias   ife
+abbr    if (...) {\n ...\n }\n else {\n ...\n }
+options head
+	if (${1:#:condition}) {
+		${0}
+	}
+	else {
+	}
+
+snippet else
+abbr    else {\n ...\n }
+options head
+	else {
+		${0}
+	}
+
+snippet if_else_if
+alias   ifeif
+abbr    if (...) {\n ...\n }\n else if (...) {\n ...\n }\n else {\n ...\n }
+options head
+	if (${1:#:condition}) {
+		${0}
+	}
+	else if () {
+	}
+	else {
+	}
+# }}}
+
+# For Loop  {{{
+snippet for
+abbr    for (i = 0; i < 10; i++) { ... }
+options head
+	for (${1:i} = ${2:0}; ${1}${3: < 10}; ${1}++) {
+		${0}
+	}
+
+snippet for_of
+abbr    for (const item of array) { ... }
+options head
+	for (const ${1:item} of ${2:array}) {
+		${0}
+	}
+
+snippet for_in
+abbr    for (const prop in object) { ... }
+options head
+	for (const ${1:prop} in ${2:object}) {
+		${0}
+	}
+# }}}
+
+# Enumerable  {{{
+snippet array_reduce
+alias   reduce
+abbr    reduce((accumulator, currentValue) => ..., initialValue)
+options word
+	reduce((${2:#:accumulator}, ${3:#:currentValue}) => ${0}, ${1:#:initialValue})
+# }}}
+
+# Try-Catch  {{{
+snippet try_catch
+alias   try
+abbr    try {\n ...\n }\n catch (error) {\n ... }
+options head
+	try {
+		${0}
+	}
+	catch (error) {
+	}
+
+snippet try_catch_finally
+abbr    try {\n ...\n }\n catch (error) {\n ... }\n finally {\n ... }
+options head
+	try {
+		${0}
+	}
+	catch (error) {
+	}
+	finally {
+	}
+
+snippet try_finally
+abbr    try {\n ...\n }\n finally {\n ... }
+options head
+	try {
+		${0}
+	}
+	finally {
+	}
+# }}}
+
+# Timer  {{{
+snippet setTimeout
+abbr    setTimeout(() => {\n ...\n }, {timeout})
+options word
+	setTimeout(() => {
+	  ${0}
+	}, ${1:#:timeout})
+
+snippet setInterval
+abbr    setInterval(() => {\n ...\n }, {interval})
+options word
+	setInterval(() => {
+	  ${0}
+	}, ${1:#:interval})
+# }}}
+
+# Query Selector  {{{
+snippet querySelector
+abbr    querySelector({selector})
+options word
+	querySelector(${1:#:selector})
+
+snippet querySelectorAll
+abbr    querySelectorAll({selector})
+options word
+	querySelectorAll(${1:#:selector})
+# }}}
+
+# Event Listener  {{{
+snippet addEventListener
+abbr    addEventListener({event}, {listenerFunction})
+options word
+	addEventListener("${1:#:event}", ${2:#:listenerFunction})
+
+snippet addEventListener_DOMContentLoaded
+abbr    addEventListener("DOMContentLoaded", {listenerFunction})
+regexp  'document\.[addEventListener]*'
+options word
+	addEventListener("DOMContentLoaded", ${1:#:listenerFunction})
+
+snippet removeEventListener
+abbr    removeEventListener({event}, () => {\n ...\n }
+options word
+	removeEventListener("${1:#:event}", ${2:#:listenerFunction})
+# }}}

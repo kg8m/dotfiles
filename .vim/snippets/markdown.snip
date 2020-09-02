@@ -1,0 +1,50 @@
+extends html
+
+snippet italic
+alias   *
+abbr    *{italic_text}*
+options word
+	*${0:#:italic_text}*
+
+snippet bold
+alias   **
+abbr    **{bold_text}**
+options word
+	**${0:#:bold_text}**
+
+snippet bold_italic
+alias   ***
+abbr    ***{bold_italic_text}***
+options word
+	***${0:#:bold_italic_text}***
+
+snippet h1
+alias   =====
+abbr    ==================================================
+options head
+	`repeat("=", 50)`
+	
+	${0}
+
+snippet h2
+alias   -----
+abbr    --------------------------------------------------
+options head
+	`repeat("-", 50)`
+	
+	${0}
+
+snippet details_summary_for_markdown
+alias   summary_details_for_markdown
+abbr    <details><summary>...<br /><br /></summary> ... </details>
+options word
+	<details>
+	<summary>
+	<strong>${1:#:summary}</strong>
+	</summary>
+	
+	<br />
+	
+	${2:#:details}
+	
+	</details>

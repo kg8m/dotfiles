@@ -1,0 +1,561 @@
+# typo  {{{
+snippet edn
+abbr    => end?
+options head
+	end
+# }}}
+
+# debug  {{{
+snippet byebug
+abbr    require "byebug"; byebug
+options head
+	require "byebug"; byebug
+
+snippet debugger
+abbr    debugger
+options head
+	debugger
+
+snippet pry
+abbr    require "pry"; binding.pry
+options head
+	require "pry"; binding.pry
+# }}}
+
+# eval  {{{
+snippet eval
+abbr    eval(string)
+options word
+	eval(<<~RUBY, __FILE__, __LINE__ + 1)
+		${0}
+	RUBY
+
+snippet class_eval
+abbr    class_eval(string)
+options word
+	class_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+		${0}
+	RUBY
+
+snippet module_eval
+abbr    module_eval(string)
+options word
+	module_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+		${0}
+	RUBY
+
+snippet instance_eval
+abbr    instance_eval(string)
+options word
+	instance_eval(<<~RUBY, __FILE__, __LINE__ + 1)
+		${0}
+	RUBY
+# }}}
+
+# class, module  {{{
+snippet class
+abbr    class ...\n end
+options head
+	class ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
+		${0}
+	end
+
+snippet class_inherit
+abbr    class ... < {ParentClass}\n end
+options head
+	class ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`} < ${2}
+		${0}
+	end
+
+snippet class_exception
+abbr    class ... < StandardError\n ...\n end
+options head
+	class ${1:#:class_name} < StandardError
+		def initialize(message)
+			super(${0})
+		end
+	end
+
+snippet module
+abbr    module ...\n end
+options head
+	module ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
+		${0}
+	end
+
+snippet class_inline
+abbr    class ...; ...; end
+options head
+	class ${1:#:class_name}; ${0}; end
+
+snippet class_exception_inline
+abbr    class ... < StandardError; end
+options head
+	class ${0:#:class_name} < StandardError; end
+
+snippet module_inline
+abbr    module ...; ...; end
+options head
+	module ${1:#:module_name}; ${0}; end
+# }}}
+
+# def  {{{
+snippet def
+abbr    def ...\n end
+options head
+	def ${1:#:method_name}
+		${0}
+	end
+
+snippet def_rescue
+abbr    def ... rescue ... end
+options head
+	def ${1:#:method_name}
+		${0}
+	rescue ${2:StandardError} => e
+	end
+# }}}
+
+# lambda, proc  {{{
+snippet lambda
+abbr    lambda { ... }
+options word
+	lambda { ${0} }
+
+snippet lambdav
+abbr    lambda {|var| ... }
+options word
+	lambda {|${1:#:var}| ${0} }
+
+snippet ->
+abbr    -> { ... }
+options word
+	-> { ${0} }
+
+snippet ->a
+alias   ->v
+abbr    ->(args) { ... }
+options word
+	->(${1:#:args}) { ${0} }
+
+snippet proc
+abbr    proc { ... }
+options word
+	proc { ${0} }
+
+snippet procv
+abbr    proc {|var| ... }
+options word
+	proc {|${1:#:var}| ${0} }
+
+snippet proc_new
+abbr    Proc.new { ... }
+options word
+	Proc.new { ${0} }
+
+snippet proc_newv
+abbr    Proc.new {|var| ... }
+options word
+	Proc.new {|${1:#:var}| ${0} }
+# }}}
+
+# do ... end  {{{
+snippet do
+abbr    do ...\n end
+options word
+	do
+		${0}
+	end
+
+snippet do_var
+alias   dov
+abbr    do |var|\n ...\n end
+options word
+	do |${1:#:var}|
+		${0}
+	end
+# }}}
+
+# if, unless, case  {{{
+snippet if
+abbr    if ...\n end
+options head
+	if ${1:#:condition}
+		${0}
+	end
+
+snippet if_else
+alias   ife
+abbr    if ...\n else\n ...\n end
+options head
+	if ${1:#:condition}
+		${0}
+	else
+	end
+
+snippet else
+abbr    else\n ...\n end
+options head
+	else
+		${0}
+	end
+
+snippet unless
+abbr    unless ...\n ...\n end
+options head
+	unless ${1:#:condition}
+		${0}
+	end
+
+snippet case
+abbr    case\n when ...\n end
+options head
+	case
+	when ${1:#:condition}
+		${0}
+	end
+
+snippet case_object
+abbr    case {object}\n when ...\n end
+options head
+	case ${1:#:object}
+	when ${2:#:condition}
+		${0}
+	end
+# }}}
+
+# while, until  {{{
+snippet while
+abbr    while ...\n ...\n end
+options head
+	while ${1:#:condition}
+		${0}
+	end
+
+snippet until
+abbr    until ...\n ...\n end
+options head
+	until ${1:#:condition}
+		${0}
+	end
+# }}}
+
+# utilities  {{{
+snippet shebang
+alias   #!
+abbr    #!/usr/bin/env ruby
+options head
+	#!/usr/bin/env ruby
+
+snippet frozen_string_literal
+abbr    frozen_string_literal: true
+regexp  '# [frozen_string_literal]*'
+options word
+	frozen_string_literal: true
+
+snippet require
+options head
+	require "${0}"
+
+snippet require_relative
+options head
+	require_relative "${0}"
+
+snippet attr_reader
+abbr    attr_reader ...
+options head
+	attr_reader :${0}
+
+snippet attr_writer
+abbr    attr_writer ...
+options head
+	attr_writer :${0}
+
+snippet attr_accessor
+abbr    attr_accessor ...
+options head
+	attr_accessor :${0}
+
+snippet def_delegator
+abbr    def_delegator {object}, :{method}
+options head
+	def_delegator :${1:#:object}, :${0:#:method}
+
+snippet def_delegator_new_name
+abbr    def_delegator {object}, :{old_method}, :{new_method}
+options head
+	def_delegator :${1:#:object}, :${2:#:old_method}, :${0:#:new_method}
+
+snippet def_delegators
+abbr    def_delegators {object}, :{method1}, {method2}, ...
+options head
+	def_delegators :${1:#:object}, :${0:#:method}
+
+snippet alias
+abbr    alias new_name old_name
+options head
+	alias ${1:#:new_name} ${0:#:old_name}
+
+snippet alias_symbol
+abbr    alias :new_name :old_name
+options head
+	alias :${1:#:new_name} :${0:#:old_name}
+
+snippet method_missing
+abbr    method_missing(method, *args, &block) ...
+regexp  'def [method_missing]*'
+options word
+	method_missing(method, *args, &block)
+		if method.to_s =~ ${1:#:regexp}
+			${0}
+		else
+			super
+		end
+	end
+
+snippet method_missing_match_predication
+abbr    method_missing(method, *args, &block) ... if method.match?(...) ...
+regexp  'def [method_missing_match_predication]*'
+options word
+	method_missing(method, *args, &block)
+		if method.to_s.match?(${1:#:regexp})
+			${0}
+		else
+			super
+		end
+	end
+
+snippet instance_variable_get
+abbr    instance_variable_get(:@instance_var_name)
+options word
+	instance_variable_get(:@${0})
+
+snippet instance_variable_set
+abbr    instance_variable_set(:@instance_var_name)
+options word
+	instance_variable_set(:@${0})
+
+snippet instance_variable_defined?
+abbr    instance_variable_defined?(:@instance_var_name)
+options word
+	instance_variable_defined?(:@${0})
+
+snippet tap
+abbr    tap {|object|\n ...\n }
+options word
+	tap {|${1:object}|
+		${0}
+	}
+
+snippet tap_inline
+abbr    tap {|object| ... }
+options word
+	tap {|${1:object}| ${0} }
+
+snippet Hash_new
+abbr    Hash.new{|h, k| h[k] = ... }
+options word
+	Hash.new {|${1:h}, ${2:k}| $1[$2] = ${0} }
+
+snippet NotImplementedError
+abbr    NotImplementedError
+options word
+	NotImplementedError
+
+snippet begin_rescue
+options head
+	begin
+		${0}
+	rescue ${1:StandardError} => e
+	end
+
+snippet optparse
+alias   require_optparse
+abbr    require "optparse"\n ...\n opts.banner ...
+options word
+	require "optparse"
+
+	options = { ${0:default: "args"} }
+
+	ARGV.options do |opts|
+		opts.banner = "Usage: #{File.basename($PROGRAM_NAME)}"
+	end
+
+snippet opts_on
+abbr    opts.on(...)
+options head
+	opts.on("-${1:#:short-option-name}", "--${2:#:long-option-name}", ${3:String}, "${4:#:description}") do |value|
+		${0}
+	end
+# }}}
+
+# each  {{{
+snippet each
+abbr    each {|var| ... }
+options word
+	each {|${1:#:var}| ${0} }
+
+snippet each_do
+abbr    each do |var|\n ...\n end
+options word
+	each do |${1:#:var}|
+		${0}
+	end
+
+snippet each_byte
+abbr    each_byte {|var| ... }
+options word
+	each_byte {|${1:#:var}| ${0} }
+
+snippet each_char
+abbr    each_char {|var| ... }
+options word
+	each_char {|${1:#:var}| ${0} }
+
+snippet each_index
+abbr    each_index {|var| ... }
+options word
+	each_index {|${1:#:var}| ${0} }
+
+snippet each_key
+abbr    each_key {|var| ... }
+options word
+	each_key {|${1:#:var}| ${0} }
+
+snippet each_value
+abbr    each_value {|var| ... }
+options word
+	each_value {|${1:#:var}| ${0} }
+
+snippet each_line
+abbr    each_line {|var| ... }
+options word
+	each_line {|${1:#:var}| ${0} }
+
+snippet each_pair
+abbr    each_pair {|var| ... }
+options word
+	each_pair {|${1:#:var}| ${0} }
+
+snippet each_slice
+abbr    each_slice {|var| ... }
+options word
+	each_slice {|${1:#:var}| ${0} }
+
+snippet each_with_index
+abbr    each_with_index {|var, i| ... }
+options word
+	each_with_index {|${1:#:var}, ${2:i}| ${0} }
+
+snippet each_with_index_do
+abbr    each_with_index do |var, i|\n ...\n end
+options word
+	each_with_index do |${1:#:var}, ${2:i}|
+		${0}
+	end
+
+snippet each_with_object
+abbr    each_with_object(init) {|var, memo|\n ...\n }
+options word
+	each_with_object(${1:#:initial_value}) {|${2:#:var}, ${3:memo}|
+		${0}
+	}
+
+snippet inject
+abbr    inject(init) {|memo, var|\n ...\n }
+options word
+	inject(${1:#:initial_value}) {|${2:memo}, ${3:#:var}|
+		${0}
+	}
+
+snippet all?
+abbr    all? {|var| ... }
+options word
+	all? {|${1:#:var}| ${0} }
+
+snippet any?
+abbr    any? {|var| ... }
+options word
+	any? {|${1:#:var}| ${0} }
+
+snippet one?
+abbr    one? {|var| ... }
+options word
+	one? {|${1:#:var}| ${0} }
+
+snippet none?
+abbr    none? {|var| ... }
+options word
+	none? {|${1:#:var}| ${0} }
+
+snippet map
+abbr    map {|var| ... }
+options word
+	map {|${1:#:var}| ${0} }
+
+snippet map!
+abbr    map! {|var| ... }
+options word
+	map! {|${1:#:var}| ${0} }
+
+snippet detect
+abbr    detect {|var| ... }
+options word
+	detect {|${1:#:var}| ${0} }
+
+snippet select
+abbr    select {|var| ... }
+options word
+	select {|${1:#:var}| ${0} }
+
+snippet select!
+abbr    select! {|var| ... }
+options word
+	select {|${1:#:var}| ${0} }
+
+snippet reject
+abbr    reject {|var| ... }
+options word
+	reject {|${1:#:var}| ${0} }
+
+snippet reject!
+abbr    reject! {|var| ... }
+options word
+	reject! {|${1:#:var}| ${0} }
+
+snippet sort
+abbr    sort {|a, b| ... }
+options word
+	sort {|a, b| ${0} }
+
+snippet sort_by
+abbr    sort_by {|var| ... }
+options word
+	sort_by {|${1:#:var}| ${0} }
+
+snippet group_by
+abbr    group_by {|var| ... }
+options word
+	group_by {|${1:#:var}| ${0} }
+
+snippet partition
+abbr    partition {|var| ... }
+options word
+	partition {|${1:#:var}| ${0} }
+# }}}
+
+# File, Dir  {{{
+snippet fileopen
+abbr    File.open(filepath, mode) do |f|\n ...\n end
+options head
+	File.open(${1:#:filepath}, "${2:#:mode}") do |f|
+		${0}
+	end
+
+snippet glob
+abbr    Dir.glob("**/*") do |filepath|\n ...\n end
+options head
+	Dir.glob(${1:"**/*"}) do |filepath|
+		${0}
+	end
+# }}}

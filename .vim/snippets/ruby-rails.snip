@@ -1,0 +1,86 @@
+snippet delegate
+abbr    delegate :{method1}, {method2}, ..., to: {object}
+options head
+	delegate :${1:#:method}, to: :${0:#:object}
+
+snippet delegate_private
+abbr    delegate :{method1}, {method2}, ..., to: {object}, private: true
+options head
+	delegate :${1:#:method}, to: :${0:#:object}, private: true
+
+snippet delegate_prefix
+abbr    delegate :{method1}, :{method2}, ..., to: :{object}, prefix: :{prefix}
+options head
+	delegate :${1:#:method1}, to: :${2:#:object}, prefix: :${3:#:prefix}
+
+snippet delegate_allow_nil
+abbr    delegate :{method1}, :{method2}, ..., to: :{object}, allow_nil: {allow_nil}
+options head
+	delegate :${1:#:method1}, to: :${2:#:object}, allow_nil: ${3:true}
+
+snippet alias_method_chain
+abbr    alias_method_chain :{method_name}, :{feature}
+options word
+	alias_method_chain :${1:#:method_name}, :${2:#:feature}
+
+snippet index_by
+abbr    index_by {|{var}| ... }
+options word
+	index_by {|${1:#:var}| ${0} }
+
+snippet extend_ActiveSupport::Concern
+alias   concern_extend
+abbr    extend ActiveSupport::Concern\n included do\n ... class_methods do\n ...
+options head
+	extend ActiveSupport::Concern
+
+	included do
+		${0}
+	end
+
+	class_methods do
+	end
+
+snippet ActiveSupport::Concern
+alias   ActiveSupport_Concern
+alias   concern
+abbr    ActiveSupport::Concern
+options word
+	ActiveSupport::Concern
+
+snippet ActiveSupport::OrderedHash
+alias   OrderedHash
+abbr    ActiveSupport::OrderedHash[...]
+options word
+	ActiveSupport::OrderedHash[${0}]
+
+snippet ActiveSupport::HashWithIndifferentAccess
+alias   HashWithIndifferentAccess
+abbr    ActiveSupport::HashWithIndifferentAccess
+options word
+	ActiveSupport::HashWithIndifferentAccess
+
+snippet I18n_translate
+abbr    I18n.t "{key}"
+options word
+	I18n.t "${1:#:key}"
+
+snippet I18n_translate_activerecord_model
+abbr    I18n.t "activerecord.models.{model_name}"
+options word
+	I18n.t "activerecord.models.${1:#:model_name}"
+
+snippet I18n_translate_activerecord_attribute
+abbr    I18n.t "activerecord.attributes.{model_name}.{attribute_name}"
+options word
+	I18n.t "activerecord.attributes.${1:#:model_name}.${2:#:attribute_name}"
+
+snippet translate_activerecord_model
+abbr    t "activerecord.models.{model_name}"
+options word
+	t "activerecord.models.${1:#:model_name}"
+
+snippet translate_activerecord_attribute
+abbr    t "activerecord.attributes.{model_name}.{attribute_name}"
+options word
+	t "activerecord.attributes.${1:#:model_name}.${2:#:attribute_name}"

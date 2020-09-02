@@ -1,0 +1,55 @@
+extends javascript
+
+snippet interface
+abbr    interface {Name} {
+options head
+	interface ${1:#:Name} {
+		${0}
+	}
+
+snippet declare_const
+abbr    declare const {Name}: {\n ...\n }
+options head
+	declare const ${1:#:Name}: {
+		${0}
+	}
+
+snippet declare_var
+abbr    declare var {name}: ...
+options head
+	declare var ${1:#:name}: ${0}
+
+snippet declare_function
+abbr    declare function {name}(): {\n ...\n }
+options head
+	declare function ${1:#:name}(): {
+		${0}
+	}
+
+snippet declare_class
+abbr    declare class {Name} {\n ...\n }
+options head
+	declare class ${1:#:Name} {
+		${0}
+	}
+
+snippet declare_namespace
+abbr    declare namespace {Name} {\n ...\n }
+options head
+	declare namespace ${1:#:Name} {
+		${0}
+	}
+
+snippet declare_module
+abbr    declare module "{module}": {\n ...\n }
+options head
+	declare module "${1:#:module}": {
+		${0}
+	}
+
+snippet declare_global
+abbr    declare global {\n ...\n }
+options head
+	declare global {
+		${0}
+	}

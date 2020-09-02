@@ -1,0 +1,66 @@
+extends css
+
+snippet @mixin
+alias   mixin
+abbr    @mixin {name}(args) {\n ...\n }
+options head
+	@mixin ${1:#:name}(${2:#:args}) {
+		${0}
+	}
+
+snippet @include
+alias   include
+abbr    @include {name}({args});
+options head
+	@include ${1:#:name}(${2:#:args});
+
+snippet @extend
+alias   exnted
+abbr    @extend {name}
+options head
+	@extend ${1:#:name};
+
+snippet @function
+alias   function
+abbr    @function {name}({args}) {\n ...\n }
+options head
+	@function ${1:#:name}(${2:#:args}) {
+		${0}
+	}
+
+snippet @if
+alias   if
+abbr    @if ... {\n ...\n }
+options head
+	@if ${1:#:condition} {
+		${0}
+	}
+
+snippet @if_else
+alias   if_else
+alias   ife
+abbr    @if ... {\n ...\n } @else {\n ...\n }
+options head
+	@if ${1:#:condition} {
+		${0}
+	} @else {
+	}
+
+snippet @else
+alias   else
+abbr    @else {\n ...\n }
+options head
+	} @else {
+		${0}
+	}
+
+snippet @if_else_if
+alias   if_else_if
+alias   ifeif
+abbr    @if ... {\n ...\n } @else @if ... {\n ...\n } @else {\n ...\n }
+options head
+	@if ${1:#:condition} {
+		${0}
+	@else if  {
+	} @else {
+	}

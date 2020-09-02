@@ -1,0 +1,143 @@
+# UPPER CASE  {{{
+snippet EXPLAIN
+abbr    EXPLAIN ...
+options head
+	EXPLAIN ${0}
+
+snippet SELECT_FROM
+abbr    SELECT * FROM ...
+options head
+	SELECT * FROM ${1:#:table_name}
+
+snippet CROSS_JOIN
+abbr    CROSS JOIN {table_name} ON ...
+options word
+	CROSS JOIN ${1:#:table_name} ON ${0}
+
+snippet INNER_JOIN
+abbr    INNER JOIN {table_name} ON ...
+options word
+	INNER JOIN ${1:#:table_name} ON ${0}
+
+snippet LEFT_JOIN
+abbr    LEFT JOIN {table_name} ON ...
+options word
+	LEFT JOIN ${1:#:table_name} ON ${0}
+
+snippet LEFT_OUTER_JOIN
+abbr    LEFT OUTER JOIN {table_name} ON ...
+options word
+	LEFT OUTER JOIN ${1:#:table_name} ON ${0}
+
+snippet RIGHT_JOIN
+abbr    RIGHT JOIN {table_name} ON ...
+options word
+	RIGHT JOIN ${1:#:table_name} ON ${0}
+
+snippet GROUP_BY
+abbr    GROUP BY ...
+options word
+	GROUP BY ${0}
+
+snippet HAVING
+abbr    HAVING ...
+options word
+	HAVING ${0}
+
+snippet ORDER_BY
+abbr    ORDER BY ...
+options word
+	ORDER BY ${0}
+
+snippet LIMIT
+abbr    LIMIT ...
+options word
+	LIMIT ${0}
+
+snippet OFFSET
+abbr    OFFSET ...
+options word
+	OFFSET ${0}
+
+snippet COALESCE
+abbr    COALESCE({expr}, {expr})
+options word
+	COALESCE(${1}, ${2})
+# }}}
+
+# lower case  {{{
+snippet explain
+abbr    explain ...
+options head
+	explain ${0}
+
+snippet select_from
+abbr    select * from ...
+options head
+	select * from ${1:#:table_name}
+
+snippet cross_join
+abbr    cross join {table_name} on ...
+options word
+	cross join ${1:#:table_name} on ${0}
+
+snippet inner_join
+abbr    inner join {table_name} on ...
+options word
+	inner join ${1:#:table_name} on ${0}
+
+snippet left_join
+abbr    left join {table_name} on ...
+options word
+	left join ${1:#:table_name} on ${0}
+
+snippet left_outer_join
+abbr    left outer join {table_name} on ...
+options word
+	left outer join ${1:#:table_name} on ${0}
+
+snippet right_join
+abbr    right join {table_name} on ...
+options word
+	right join ${1:#:table_name} on ${0}
+
+snippet WHERE
+abbr    WHERE ...
+options word
+	WHERE ${0}
+
+snippet where
+abbr    where ...
+options word
+	where ${0}
+
+snippet group_by
+abbr    group by ...
+options word
+	group by ${0}
+
+snippet having
+abbr    having ...
+options word
+	having ${0}
+
+snippet order_by
+abbr    order by ...
+options word
+	order by ${0}
+
+snippet limit
+abbr    limit ...
+options word
+	limit ${0}
+
+snippet offset
+abbr    offset ...
+options word
+	offset ${0}
+
+snippet coalesce
+abbr    coalesce({expr}, {expr})
+options word
+	coalesce(${1}, ${2})
+# }}}
