@@ -228,7 +228,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-buffer.vim")  " {{{
 
   " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
   function! s:AsyncompleteBufferOnEvent(timer) abort  " {{{
-    if !has_key(s:, "asyncomplete_buffer_sid")
+    if !has_key(s:, "AsyncompleteBufferRefreshKeywords")
       call s:SetupAsyncompleteBufferRefreshKeywords()
     endif
 
