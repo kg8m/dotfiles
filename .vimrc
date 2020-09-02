@@ -425,11 +425,6 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
       endif
 
       function! s:SourceContextualSnippets() abort  " {{{
-        if has_key(b:, "neosnippet_contextual_sourced")
-          return
-        endif
-
-        let b:neosnippet_contextual_sourced = v:true
         let contexts = get(g:neosnippet_contextual#contexts, &filetype, [])
         let filepath = kg8m#util#current_relative_path()
 
