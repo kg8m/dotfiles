@@ -2897,7 +2897,7 @@ colorscheme molokai
 " https://qiita.com/Bakudankun/items/649aa6d8b9eccc1712b5
 augroup my_vimrc  " {{{
   autocmd ColorScheme * highlight NormalNC ctermbg=234 guibg=#3B3A32
-  autocmd WinEnter,BufWiNEnter * set wincolor=
+  autocmd WinEnter,BufWinEnter * set wincolor=
   autocmd WinLeave,BufWiNLeave * set wincolor=NormalNC
 augroup END  " }}}
 
