@@ -34,7 +34,7 @@ let g:loaded_netrwFileHandlers  = v:true
 let g:skip_loading_mswin        = v:true
 let g:did_install_syntax_menu   = v:true
 
-" MacVim's features, e.g., Command+v, are broken if setting this
+" MacVim's features, e.g., `Command` + `v` to paste, are broken if setting this
 " let g:did_install_default_menus = v:true
 
 let g:mapleader = ","
@@ -183,6 +183,8 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("prabirshrestha/asyncomplete-buffer.vim")  " {{{
+  " Call asyncomplete-buffer.vim's function to refresh keywords (`s:refresh_keywords`) on some events not only
+  " `BufWinEnter` in order to include keywords added after `BufWinEnter` in completion candidates
   " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
   let s:asyncomplete_buffer_events = [
     \   "BufWinEnter",
@@ -564,6 +566,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
 
   " Register LSPs  " {{{
   " yarn add bash-language-server  " {{{
+  " Syntax errors sometimes occur when editing zsh file
   call kg8m#plugin#lsp#register(#{
      \   name: "bash-language-server",
      \   cmd: { server_info -> ["bash-language-server", "start"] },
@@ -572,6 +575,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   " }}}
 
   " yarn add vscode-css-languageserver-bin  " {{{
+  " css-languageserver doesn't work when editing .sass file
   call kg8m#plugin#lsp#register(#{
      \   name: "css-languageserver",
      \   cmd: { server_info -> ["css-languageserver", "--stdio"] },
@@ -586,6 +590,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   " }}}
 
   " go get github.com/mattn/efm-langserver  " {{{
+  " cf. .config/efm-langserver/config.yaml
   call kg8m#plugin#lsp#register(#{
      \   name: "efm-langserver",
      \   cmd: { server_info -> ["efm-langserver"] },
@@ -758,6 +763,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   " }}}
 
   " yarn add yaml-language-server  " {{{
+  " Syntax errors sometimes occur when editing eruby.yaml file
   call kg8m#plugin#lsp#register(#{
      \   name: "yaml-language-server",
      \   cmd: { server_info -> ["yaml-language-server", "--stdio"] },
