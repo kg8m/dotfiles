@@ -1010,7 +1010,6 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>H :FzfHelptags<Cr>
   nnoremap <Leader><Leader>y :call <SID>FzfYankHistory()<Cr>
   noremap  <Leader><Leader>s :<C-u>call <SID>FzfMyShortcuts("")<Cr>
-  noremap  <Leader><Leader>a :<C-u>call <SID>FzfMyShortcuts("'Alignta ")<Cr>
   nnoremap <Leader><Leader>r :call <SID>SetupFzfRails()<Cr>:FzfRails<Space>
 
   augroup my_vimrc  " {{{
@@ -1303,21 +1302,6 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
         \   ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
         \
-        \   ["[Alignta] '=>'",       "'<,'>Alignta =>"],
-        \   ["[Alignta] /\\S/",      "'<,'>Alignta \\S\\+"],
-        \   ["[Alignta] /\\S/ once", "'<,'>Alignta \\S\\+/1"],
-        \   ["[Alignta] '='",        "'<,'>Alignta =>\\="],
-        \   ["[Alignta] ':hoge'",    "'<,'>Alignta 10 :"],
-        \   ["[Alignta] 'hoge:'",    "'<,'>Alignta 00 [a-zA-Z0-9_\"']\\\\+:\\\\s"],
-        \   ["[Alignta] '|'",        "'<,'>Alignta |"],
-        \   ["[Alignta] ')'",        "'<,'>Alignta 0 )"],
-        \   ["[Alignta] ']'",        "'<,'>Alignta 0 ]"],
-        \   ["[Alignta] '}'",        "'<,'>Alignta }"],
-        \   ["[Alignta] '  # '",     "'<,'>Alignta 21 #"],
-        \   ["[Alignta] '  // '",    "'<,'>Alignta 21 //"],
-        \   ["[Alignta] '  #=> '",   "'<,'>Alignta 21 #=>"],
-        \   ["[Alignta] '  //=> '",  "'<,'>Alignta 21 //=>"],
-        \   ["[Alignta] Trac Table", "'<,'>Alignta -r =\\?||=\\?\\|||"],
         \
         \   ["[Autoformat] Format Source Codes", "Autoformat"],
         \
@@ -2044,16 +2028,6 @@ if kg8m#plugin#register("Shougo/unite.vim")  " {{{
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("h1mesuke/vim-alignta")  " {{{
-  vnoremap <Leader>a :Alignta<Space>
-
-  " Don't load lazily because `Alignta` command doesn't work on load
-  call kg8m#plugin#configure(#{
-     \   lazy:   v:false,
-     \   on_cmd: "Alignta",
-     \ })
-endif  " }}}
-
 if kg8m#plugin#register("FooSoft/vim-argwrap")  " {{{
   nnoremap <Leader>a :ArgWrap<Cr>
 
@@ -2121,6 +2095,15 @@ if kg8m#plugin#register("t9md/vim-choosewin")  " {{{
 endif  " }}}
 
 call kg8m#plugin#register("hail2u/vim-css3-syntax", #{ if: !kg8m#util#is_git_tmp_edit() })
+
+if kg8m#plugin#register("junegunn/vim-easy-align")  " {{{
+  vnoremap <Leader>a :EasyAlign<Space>
+
+  call kg8m#plugin#configure(#{
+     \   lazy:   v:true,
+     \   on_cmd: "EasyAlign",
+     \ })
+endif  " }}}
 
 if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
   nmap <expr> <Leader>f <SID>EasyMotionWithoutMigemo("easymotion-overwin-f2")
