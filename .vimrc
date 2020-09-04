@@ -3098,8 +3098,18 @@ set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,
 
 " Auto reload
 augroup my_vimrc  " {{{
-  autocmd InsertEnter,InsertLeave,CursorHold,WinEnter,BufWinEnter * silent! checktime
+  autocmd VimEnter * call timer_start(1000, { -> s:Checktime() })
 augroup END  " }}}
+
+function! s:Checktime() abort  " {{{
+  if has_key(s:, "checktime_timer")
+    call timer_stop(s:checktime_timer)
+    unlet s:checktime_timer
+  endif
+
+  checktime
+  let s:checktime_timer = timer_start(1000, { -> s:Checktime() })
+endfunction  " }}}
 
 set whichwrap=b,s,h,l,<,>,[,],~
 set maxmempattern=5000
