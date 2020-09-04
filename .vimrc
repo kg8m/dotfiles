@@ -2276,6 +2276,16 @@ endif  " }}}
 
 if kg8m#plugin#register("andymass/vim-matchup")  " {{{
   let g:matchup_matchparen_status_offscreen = v:false
+
+  augroup my_vimrc  " {{{
+    autocmd ColorScheme * call s:OverwriteMatchupColors()
+  augroup END  " }}}
+
+  function! s:OverwriteMatchupColors() abort  " {{{
+    " Original `highlight default link MatchParenCur MatchParen` is too confusing because current parenthesis looks as
+    " same as matched one.
+    highlight default link MatchParenCur Cursor
+  endfunction  " }}}
 endif  " }}}
 
 if kg8m#plugin#register("kana/vim-operator-replace")  " {{{
