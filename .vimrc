@@ -2929,7 +2929,7 @@ set expandtab
 set autoindent
 set smartindent
 set backspace=indent,eol,start
-set nofixeol
+set fixendofline
 
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1  = "inc"
