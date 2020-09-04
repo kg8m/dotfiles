@@ -51,8 +51,8 @@ function tmux_execute_in_all_panes {
 function setup_my_tmux_plugin {
   local plugin_name="$( basename "$1" )"
 
-  [ -d ~/.tmux ]                        || ln -s ~/dotfiles/.tmux ~/.tmux
-  [ -d ~/.tmux/plugins/"$plugin_name" ] || ln -s "$( pwd )" ~/.tmux/plugins/"$plugin_name"
+  [ -d ~/.config/tmux ]                        || ln -s ~/dotfiles/.tmux ~/.config/tmux
+  [ -d ~/.config/tmux/plugins/"$plugin_name" ] || ln -s "$( pwd )" ~/.config/tmux/plugins/"$plugin_name"
 
   __setup_done_my_tmux_plugins__+=( "$plugin_name" )
 

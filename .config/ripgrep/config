@@ -27,7 +27,6 @@
 --glob=!.git/
 --glob=!.hg/
 --glob=!.svn/
---glob=!.tmux/resurrect/
 --glob=!.vim-sessions/
 --glob=!cache/
 --glob=!log/
