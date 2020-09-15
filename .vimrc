@@ -1923,7 +1923,7 @@ call kg8m#plugin#register("lambdalisue/readablefold.vim", #{ if: !kg8m#util#is_g
 call kg8m#plugin#register("chrisbra/Recover.vim")
 
 if kg8m#plugin#register("lambdalisue/reword.vim")  " {{{
-  cnoreabbrev <expr> Reword reword#preview#seamless()
+  cnoreabbrev <expr> Reword reword#live#start()
 endif  " }}}
 
 if kg8m#plugin#register("vim-scripts/sequence")  " {{{
