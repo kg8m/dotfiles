@@ -2537,7 +2537,7 @@ if kg8m#plugin#register("mhinz/vim-startify", #{ if: !kg8m#util#is_git_tmp_edit(
 endif  " }}}
 
 if kg8m#plugin#register("kopischke/vim-stay", #{ if: !kg8m#util#is_git_commit() })  " {{{
-  set viewoptions=cursor,folds
+  set viewoptions=cursor
 endif  " }}}
 
 call kg8m#plugin#register("tpope/vim-surround")
@@ -2984,6 +2984,7 @@ augroup my_vimrc  " {{{
   autocmd FileType sh,zsh     setlocal foldmethod=syntax
   autocmd FileType vim        setlocal foldmethod=marker
   autocmd FileType gitcommit,qfreplace setlocal nofoldenable
+  autocmd BufEnter addp-hunk-edit.diff setlocal nofoldenable
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
   autocmd InsertEnter * call s:SwitchToManualFolding()
