@@ -1575,27 +1575,6 @@ if kg8m#plugin#register("lambdalisue/gina.vim", #{ if: !kg8m#util#is_git_tmp_edi
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("sk1418/HowMuch")  " {{{
-  let g:HowMuch_scale = 5
-
-  function! s:DefineHowMuchMappings() abort  " {{{
-    vmap <Leader>?  <Plug>AutoCalcReplace
-    vmap <Leader>?s <Plug>AutoCalcReplaceWithSum
-  endfunction  " }}}
-  call s:DefineHowMuchMappings()
-
-  function! s:ConfigPluginOnPostSource_HowMuch() abort  " {{{
-    " Overwrite default mappings
-    call s:DefineHowMuchMappings()
-  endfunction  " }}}
-
-  call kg8m#plugin#configure(#{
-     \   lazy:   v:true,
-     \   on_map: [["v", "<Plug>AutoCalc"]],
-     \   hook_post_source: function("s:ConfigPluginOnPostSource_HowMuch"),
-     \ })
-endif  " }}}
-
 if kg8m#plugin#register("Yggdroot/indentLine")  " {{{
   set concealcursor=nvic
   set conceallevel=2
