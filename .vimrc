@@ -2153,8 +2153,7 @@ if kg8m#plugin#register("tpope/vim-git")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-" Use LSP for completion and going to definition
-" Use ale for linting/formatting codes
+" Use LSP or ale for completion, linting/formatting codes, and jumping to definition
 " Use vim-go's highlightings, foldings, and commands/functions
 if kg8m#plugin#register("fatih/vim-go")  " {{{
   let g:go_code_completion_enabled = v:false
@@ -2849,9 +2848,9 @@ endif
 set termguicolors
 let g:terminal_ansi_colors = [
  "\   Black,     Dark Red,     Dark GreeN, Brown,
- "\   Dark Blue, Dark Magenta, Dark CYan,  Light GrEy,
- "\   Dark Grey, REd,          Green,      YellOw,
- "\   Blue,      MAgenta,      Cyan,       White,
+ "\   Dark Blue, Dark Magenta, Dark Cyan,  Light GrEy,
+ "\   Dark Grey, Red,          Green,      YellOw,
+ "\   Blue,      Magenta,      Cyan,       White,
   \   "#000000", "#EE7900",    "#BAED00",  "#EBCE00",
   \   "#00BEF3", "#BAA0F0",    "#66AED7",  "#EAEAEA",
   \   "#333333", "#FF8200",    "#C1F600",  "#FFE000",
@@ -3204,7 +3203,7 @@ cnoremap <Up>   <C-p>
 cnoremap <Down> <C-n>
 
 " Swap pasting with adjusting indentations or not
-" Disable exchanging because sometimes indentation is bad
+" Disable exchanging because indentation is sometimes bad
 " nnoremap p ]p
 " nnoremap <S-p> ]<S-p>
 " nnoremap ]p p
