@@ -2,20 +2,7 @@ module.exports = {
   filters: {
     comments: true,
     allowlist: {
-      allow: [
-        "々",
-        "叩",
-        "叶",
-        "嬉",
-        "揃",
-        "播",
-        "溜",
-        "澤",
-        "稟",
-        "紐",
-        "絢",
-        "鵜",
-      ],
+      allow: [],
     },
     "node-types": {
       nodeTypes: ["BlockQuote", "Code", "CodeBlock"],
@@ -26,7 +13,9 @@ module.exports = {
     "@textlint-ja/textlint-rule-no-insert-dropping-sa": true,
     "date-weekday-mismatch": { lang: "ja-JP" },
     "ja-hiragana-keishikimeishi": true,
-    "joyo-kanji": true,
+
+    // Disable because too many proper nouns, e.g., people's names, are treated as error
+    "joyo-kanji": false,
 
     // Disable because there are too many false positives
     "no-hoso-kinshi-yogo": false,
