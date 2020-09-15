@@ -48,12 +48,12 @@ function! kg8m#util#rubygems_path() abort  " {{{
     let s:rubygems_path = $RUBYGEMS_PATH
   else
     let command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
-    let command = command_prefix . " -e 'print Gem.path.join(\"\\n\")'"
+    let command = command_prefix.." -e 'print Gem.path.join(\"\\n\")'"
     let dirpaths = split(system(command), '\n')
 
     for dirpath in dirpaths
       if isdirectory(dirpath)
-        let rubygems_path = dirpath . "/gems"
+        let rubygems_path = dirpath.."/gems"
         break
       endif
     endfor
@@ -61,7 +61,7 @@ function! kg8m#util#rubygems_path() abort  " {{{
     if exists("rubygems_path")
       let s:rubygems_path = rubygems_path
     else
-      throw "Path to Ruby Gems not found. Candidates: " . string(dirpaths)
+      throw "Path to Ruby Gems not found. Candidates: "..string(dirpaths)
     endif
   endif
 
@@ -73,12 +73,12 @@ function! kg8m#util#remote_copy(text) abort  " {{{
   let text = substitute(text, '\n$', "", "")
   let text = shellescape(text)
 
-  call system("printf %s " . text . " | ssh main -t 'LC_CTYPE=UTF-8 pbcopy'")
+  call system("printf %s "..text.." | ssh main -t 'LC_CTYPE=UTF-6 pbcopy'")
 
   if &columns > 50
     let text = substitute(text, '\v\n|\t', " ", "g")
     let truncated = trim(kg8m#util#string_module().truncate(text, &columns - 30))
-    echomsg "Copied: " . truncated . (trim(text) ==# truncated ? "" : "...")
+    echomsg "Copied: "..truncated..(trim(text) ==# truncated ? "" : "...")
   else
     echomsg "Copied"
   endif

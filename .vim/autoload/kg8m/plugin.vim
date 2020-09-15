@@ -1,13 +1,13 @@
 function! kg8m#plugin#init_manager() abort  " {{{
   let plugins_path = expand("~/.vim/plugins")
-  let manager_path = expand(plugins_path . "/repos/github.com/Shougo/dein.vim")
+  let manager_path = expand(plugins_path.."/repos/github.com/Shougo/dein.vim")
 
   if !isdirectory(manager_path)
     echo "Installing plugin manager..."
-    call system("git clone https://github.com/Shougo/dein.vim " . manager_path)
+    call system("git clone https://github.com/Shougo/dein.vim "..manager_path)
   endif
 
-  let &runtimepath .= "," . manager_path
+  let &runtimepath .= ","..manager_path
   let result = dein#begin(plugins_path)
 
   augroup kg8m-plugin  " {{{
@@ -92,21 +92,22 @@ function! kg8m#plugin#check_and_update() abort  " {{{
 endfunction  " }}}
 
 function! kg8m#plugin#show_update_log() abort  " {{{
-  let initial_input = '!Same\\ revision'
-    \   . '\ !Current\\ branch\\ master\\ is\\ up\\ to\\ date.'
-    \   . '\ !^$'
-    \   . '\ !(*/*)\\ [+'
-    \   . '\ !(*/*)\\ [-'
-    \   . '\ !Created\\ autostash'
-    \   . '\ !Applied\\ autostash'
-    \   . '\ !HEAD\\ is\\ now'
-    \   . '\ !\\ *->\\ origin/'
-    \   . '\ !^First,\\ rewinding\\ head\\ to\\ replay\\ your\\ work\\ on\\ top\\ of\\ it'
-    \   . '\ !^Fast-forwarded\\ master\\ to'
-    \   . '\ !^(.*/.*)\\ From\\ '
-    \   . '\ !Successfully\\ rebased\\ and\\ updated\\ refs/heads/master.'
+  let initial_input =
+    \   '!Same\\ revision'
+    \   ..'\ !Current\\ branch\\ master\\ is\\ up\\ to\\ date.'
+    \   ..'\ !^$'
+    \   ..'\ !(*/*)\\ [+'
+    \   ..'\ !(*/*)\\ [-'
+    \   ..'\ !Created\\ autostash'
+    \   ..'\ !Applied\\ autostash'
+    \   ..'\ !HEAD\\ is\\ now'
+    \   ..'\ !\\ *->\\ origin/'
+    \   ..'\ !^First,\\ rewinding\\ head\\ to\\ replay\\ your\\ work\\ on\\ top\\ of\\ it'
+    \   ..'\ !^Fast-forwarded\\ master\\ to'
+    \   ..'\ !^(.*/.*)\\ From\\ '
+    \   ..'\ !Successfully\\ rebased\\ and\\ updated\\ refs/heads/master.'
 
-  execute "Unite dein/log -buffer-name=update_plugins -input=" . initial_input
+  execute "Unite dein/log -buffer-name=update_plugins -input="..initial_input
 
   " Press `n` key to search "Updated"
   let @/ = "Updated"

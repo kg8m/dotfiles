@@ -14,9 +14,9 @@ function! JavaScriptFold(lnum)
   let l:line = getline(a:lnum)
 
   if l:line =~ s:fold_start
-    return ">" . s:IndentLevel(a:lnum)
+    return ">"..s:IndentLevel(a:lnum)
   elseif l:line =~ s:fold_end
-    return "<" . s:IndentLevel(a:lnum)
+    return "<"..s:IndentLevel(a:lnum)
   else
     return "="
   endif
