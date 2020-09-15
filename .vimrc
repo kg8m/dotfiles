@@ -72,14 +72,14 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
     let base_matcher  = matchstr(a:options.base, match_pattern)
 
     if empty(base_matcher)
-      let sorted_items = flatten(map(values(a:matches), "v:val.items"))
-      let startcols    = flatten(map(values(a:matches), "v:val.startcol"))
+      let sorted_items = a:matches->values()->map("v:val.items")->flatten()
+      let startcols    = a:matches->values()->map("v:val.startcol")->flatten()
     else
       let sorted_items = []
       let startcols    = []
 
       " Special thanks: mattn
-      let fuzzy_matcher = join(map(split(base_matcher, '\zs'), "printf('[\\x%02x].*', char2nr(v:val))"), '')
+      let fuzzy_matcher = base_matcher->split('\zs')->map("printf('[\\x%02x].*', char2nr(v:val))")->join("")
 
       let sorter_context = #{
         \   matcher:  base_matcher,
@@ -552,7 +552,9 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
 
   function! s:LSPSchemasJson() abort  " {{{
     if !has_key(s:, "lsp_schemas_json")
-      let s:lsp_schemas_json = json_decode(join(readfile(kg8m#plugin#get_info("vim-lsp-settings").path.."/data/catalog.json"), "\n"))["schemas"]
+      let filepath = kg8m#plugin#get_info("vim-lsp-settings").path.."/data/catalog.json"
+      let json     = filepath->readfile()->join("\n")->json_decode()
+      let s:lsp_schemas_json = json.schemas
     endif
 
     return s:lsp_schemas_json
@@ -1051,7 +1053,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
 
   function! s:FzfBuffersFiles() abort  " {{{
-    let current = empty(expand("%")) ? [] : [fnamemodify(expand("%"), s:FzfHistoryFilepathFormat())]
+    let current = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:FzfHistoryFilepathFormat())]
     let buffers = s:FzfBuffersList()
 
     return kg8m#util#list_module().uniq(current + buffers)
@@ -1060,7 +1062,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L196-L198
   function! s:FzfBuffersList() abort  " {{{
     let bufnrs = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") !=# "qf" && len(bufname(bufnr)) })
-    return sort(map(bufnrs, { _, bufnr -> fnamemodify(bufname(bufnr), s:FzfHistoryFilepathFormat()) }))
+    return bufnrs->map({ _, bufnr -> bufnr->bufname()->fnamemodify(s:FzfHistoryFilepathFormat()) })->sort()
   endfunction  " }}}
   " }}}
 
@@ -1131,7 +1133,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L457-L463
   function! s:FzfHistoryFiles() abort  " {{{
-    let current  = empty(expand("%")) ? [] : [fnamemodify(expand("%"), s:FzfHistoryFilepathFormat())]
+    let current  = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:FzfHistoryFilepathFormat())]
     let buffers  = s:FzfBuffersList()
     let oldfiles = s:FzfHistoryList()
 
@@ -1140,8 +1142,8 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
   function! s:FzfHistoryList() abort  " {{{
-    let filepaths = filter(copy(mr#mru#list()), { _, filepath -> filereadable(fnamemodify(filepath, ":p")) })
-    return map(filepaths, { _, filepath -> fnamemodify(filepath, s:FzfHistoryFilepathFormat()) })
+    let filepaths = mr#mru#list()->copy()->filter({ _, filepath -> filepath->fnamemodify(":p")->filereadable() })
+    return filepaths->map({ _, filepath -> filepath->fnamemodify(s:FzfHistoryFilepathFormat()) })
   endfunction  " }}}
 
   function! s:FzfHistoryFilepathFormat() abort  " {{{
@@ -1313,12 +1315,11 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     endfunction  " }}}
 
     function! s:FzfMyShortcutsCountMaxWordLength() abort  " {{{
-      let s:fzf_my_shortcuts_max_word_length = max(
-        \   map(
-        \     copy(s:fzf_my_shortcuts_list),
-        \     { _, item -> strlen(item[0]) }
-        \   )
-        \ )
+      let s:fzf_my_shortcuts_max_word_length =
+        \   s:fzf_my_shortcuts_list
+        \     ->copy()
+        \     ->map({ _, item -> item[0]->strlen() })
+        \     ->max()
     endfunction  " }}}
 
     function! s:FzfMyShortcutsMakeGroups() abort  " {{{
@@ -1344,10 +1345,9 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     endfunction  " }}}
 
     function! s:FzfMyShortcutsFormatList() abort  " {{{
-      let s:fzf_my_shortcuts_list = map(
-        \   s:fzf_my_shortcuts_list,
-        \   function("s:FzfMyShortcutsFormatItem")
-        \ )
+      let s:fzf_my_shortcuts_list =
+        \   s:fzf_my_shortcuts_list
+        \     ->map(function("s:FzfMyShortcutsFormatItem"))
     endfunction  " }}}
 
     function! s:FzfMyShortcutsFormatItem(_, item) abort  " {{{
@@ -2456,9 +2456,12 @@ if kg8m#plugin#register("xolox/vim-session", #{ if: !kg8m#util#is_git_tmp_edit()
   endfunction  " }}}
 
   function! s:SessionName() abort  " {{{
-    let name = @%
-    let name = substitute(name, "/", "+=", "g")
-    let name = substitute(name, '^\.', "_", "")
+    let name =
+      \   "%"
+      \     ->expand()
+      \     ->fnamemodify(":p")
+      \     ->substitute("/", "+=", "g")
+      \     ->substitute('^\.', "_", "")
 
     return name
   endfunction  " }}}

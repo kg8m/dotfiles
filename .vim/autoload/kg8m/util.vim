@@ -69,9 +69,10 @@ function! kg8m#util#rubygems_path() abort  " {{{
 endfunction  " }}}
 
 function! kg8m#util#remote_copy(text) abort  " {{{
-  let text = a:text
-  let text = substitute(text, '\n$', "", "")
-  let text = shellescape(text)
+  let text =
+    \   a:text
+    \     ->substitute('\n$', "", "")
+    \     ->shellescape()
 
   call system("printf %s "..text.." | ssh main -t 'LC_CTYPE=UTF-6 pbcopy'")
 
@@ -107,9 +108,9 @@ function! kg8m#util#current_filename() abort  " {{{
 endfunction  " }}}
 
 function! kg8m#util#current_relative_path() abort  " {{{
-  return fnamemodify(expand("%"), ":~:.")
+  return expand("%")->fnamemodify(":~:.")
 endfunction  " }}}
 
 function! kg8m#util#current_absolute_path() abort  " {{{
-  return fnamemodify(expand("%"), ":~")
+  return expand("%")->fnamemodify(":~")
 endfunction  " }}}
