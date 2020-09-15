@@ -489,7 +489,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
     call lsp#callbag#pipe(
        \   lsp#stream(),
        \   lsp#callbag#filter({ x -> s:IsLSPDefinitionFailedStream(x) }),
-       \   lsp#callbag#subscribe(#{ next: { -> fzf#tjump() } }),
+       \   lsp#callbag#subscribe(#{ next: { -> fzf_tjump#jump() } }),
        \ )
   endfunction  " }}}
 
@@ -1556,7 +1556,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     call kg8m#plugin#configure(#{
        \   lazy:    v:true,
        \   on_cmd:  "FzfTjump",
-       \   on_func: "fzf#tjump",
+       \   on_func: ["fzf_tjump#"],
        \   on_map:  [["nv", "<Plug>(fzf-tjump)"]],
        \   depends: "fzf.vim",
        \ })
