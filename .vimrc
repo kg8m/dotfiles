@@ -2354,10 +2354,9 @@ if kg8m#plugin#register("kg8m/vim-parallel-auto-ctags", #{ if: kg8m#util#on_rail
 endif  " }}}
 
 if kg8m#plugin#register("thinca/vim-prettyprint")  " {{{
+  " Don't load lazily because dein.vim's `on_cmd: "PP"` doesn't work
   call kg8m#plugin#configure(#{
-     \   lazy:    v:true,
-     \   on_cmd:  ["PrettyPrint", "PP"],
-     \   on_func: ["PrettyPrint", "PP"],
+     \   lazy: v:false,
      \ })
 endif  " }}}
 
