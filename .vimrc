@@ -14,6 +14,7 @@
 " Set initial variables/options  " {{{
 let s:my_utility_path = expand("~/dotfiles/.vim")
 let &runtimepath .= ","..s:my_utility_path
+let &runtimepath .= ","..s:my_utility_path.."/after"
 
 let g:no_vimrc_example          = v:true
 let g:no_gvimrc_example         = v:true
