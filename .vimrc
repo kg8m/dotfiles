@@ -1560,9 +1560,13 @@ endif  " }}}
 if kg8m#plugin#register("lambdalisue/gina.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   function! s:GinaPatch(filepath) abort  " {{{
     let original_diffopt = &diffopt
-    set diffopt+=vertical
-    execute "Gina patch "..a:filepath
-    let &diffopt = original_diffopt
+
+    try
+      set diffopt+=vertical
+      execute "Gina patch "..a:filepath
+    finally
+      let &diffopt = original_diffopt
+    endtry
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{
@@ -3106,8 +3110,11 @@ function! s:Checktime() abort  " {{{
     unlet s:checktime_timer
   endif
 
-  checktime
-  let s:checktime_timer = timer_start(1000, { -> s:Checktime() })
+  try
+    checktime
+  finally
+    let s:checktime_timer = timer_start(1000, { -> s:Checktime() })
+  endtry
 endfunction  " }}}
 
 set whichwrap=b,s,h,l,<,>,[,],~
