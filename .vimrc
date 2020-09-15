@@ -2464,81 +2464,76 @@ endif  " }}}
 
 " See vim-session's settings
 if kg8m#plugin#register("mhinz/vim-startify", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
-  function! s:ConfigPluginOnSource_vim_startify() abort  " {{{
-    let g:startify_session_dir         = g:session_directory
-    let g:startify_session_persistence = v:false
-    let g:startify_session_sort        = v:true
+  let g:startify_session_dir         = g:session_directory
+  let g:startify_session_persistence = v:false
+  let g:startify_session_sort        = v:true
 
-    let g:startify_enable_special = v:true
-    let g:startify_change_to_dir  = v:false
-    let g:startify_relative_path  = v:true
-    let g:startify_list_order     = [
-      \   ["My commands:"],
-      \   "commands",
-      \   ["My bookmarks:"],
-      \   "bookmarks",
-      \   ["My sessions:"],
-      \   "sessions",
-      \   ["Recently opened files:"],
-      \   "files",
-      \   ["Recently modified files in the current directory:"],
-      \   "dir",
-      \ ]
-    let g:startify_commands = [
-      \   #{ p: "call kg8m#plugin#update_all()" },
-      \ ]
-    " https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
-    let g:startify_custom_header  = [
-      \   "                      .",
-      \   "      ##############..... ##############",
-      \   "      ##############......##############",
-      \   "        ##########..........##########",
-      \   "        ##########........##########",
-      \   "        ##########.......##########",
-      \   "        ##########.....##########..",
-      \   "        ##########....##########.....",
-      \   "      ..##########..##########.........",
-      \   "    ....##########.#########.............",
-      \   "      ..################JJJ............",
-      \   "        ################.............",
-      \   "        ##############.JJJ.JJJJJJJJJJ",
-      \   "        ############...JJ...JJ..JJ  JJ",
-      \   "        ##########....JJ...JJ..JJ  JJ",
-      \   "        ########......JJJ..JJJ JJJ JJJ",
-      \   "        ######    .........",
-      \   "                    .....",
-      \   "                      .",
-      \   "",
-      \   "",
-      \   "  Vim version: "..v:versionlong,
-      \   "",
-      \ ]
+  let g:startify_enable_special = v:true
+  let g:startify_change_to_dir  = v:false
+  let g:startify_relative_path  = v:true
+  let g:startify_list_order     = [
+    \   ["My commands:"],
+    \   "commands",
+    \   ["My bookmarks:"],
+    \   "bookmarks",
+    \   ["My sessions:"],
+    \   "sessions",
+    \   ["Recently opened files:"],
+    \   "files",
+    \   ["Recently modified files in the current directory:"],
+    \   "dir",
+    \ ]
+  let g:startify_commands = [
+    \   #{ p: "call kg8m#plugin#update_all()" },
+    \ ]
+  " https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
+  let g:startify_custom_header  = [
+    \   "                      .",
+    \   "      ##############..... ##############",
+    \   "      ##############......##############",
+    \   "        ##########..........##########",
+    \   "        ##########........##########",
+    \   "        ##########.......##########",
+    \   "        ##########.....##########..",
+    \   "        ##########....##########.....",
+    \   "      ..##########..##########.........",
+    \   "    ....##########.#########.............",
+    \   "      ..################JJJ............",
+    \   "        ################.............",
+    \   "        ##############.JJJ.JJJJJJJJJJ",
+    \   "        ############...JJ...JJ..JJ  JJ",
+    \   "        ##########....JJ...JJ..JJ  JJ",
+    \   "        ########......JJJ..JJJ JJJ JJJ",
+    \   "        ######    .........",
+    \   "                    .....",
+    \   "                      .",
+    \   "",
+    \   "",
+    \   "  Vim version: "..v:versionlong,
+    \   "",
+    \ ]
 
+  let g:startify_custom_header = g:startify_custom_header + [
+    \   "  LSPs: ",
+    \ ]
+  for lsp in kg8m#plugin#lsp#get_registered()
     let g:startify_custom_header = g:startify_custom_header + [
-      \   "  LSPs: ",
+      \   "  "..(lsp.available ? "👼 " : "👿 ")..lsp.name,
       \ ]
-    for lsp in kg8m#plugin#lsp#get_registered()
-      let g:startify_custom_header = g:startify_custom_header + [
-        \   "  "..(lsp.available ? "👼 " : "👿 ")..lsp.name,
-        \ ]
-    endfor
+  endfor
 
-    let g:startify_custom_header = g:startify_custom_header + [""]
-  endfunction  " }}}
+  let g:startify_custom_header = g:startify_custom_header + [""]
 
-  function! s:ConfigPluginOnPostSource_vim_startify() abort  " {{{
+  augroup my_vimrc  " {{{
+    autocmd ColorScheme * call s:OverwriteStartifyColors()
+  augroup END  " }}}
+
+  function! s:OverwriteStartifyColors() abort  " {{{
     highlight StartifyFile   guifg=#FFFFFF
     highlight StartifyHeader guifg=#FFFFFF
     highlight StartifyPath   guifg=#777777
     highlight StartifySlash  guifg=#777777
   endfunction  " }}}
-
-  call kg8m#plugin#configure(#{
-     \   lazy:     v:true,
-     \   on_event: "VimEnter",
-     \   hook_source:      function("s:ConfigPluginOnSource_vim_startify"),
-     \   hook_post_source: function("s:ConfigPluginOnPostSource_vim_startify"),
-     \ })
 endif  " }}}
 
 if kg8m#plugin#register("kopischke/vim-stay", #{ if: !kg8m#util#is_git_commit() })  " {{{
