@@ -3091,6 +3091,11 @@ function! s:Checktime() abort  " {{{
   endif
 
   try
+    " `checktime` is not available in Command Line mode
+    if !getcmdwintype()->empty()
+      return
+    endif
+
     checktime
   finally
     let s:checktime_timer = timer_start(1000, { -> s:Checktime() })
