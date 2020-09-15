@@ -167,7 +167,7 @@ function git:branch:all {
     egrep -v "^HEAD${SEP}" |
     egrep "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
     column -t -s "$SEP" |
-    awk '!x[$1]++'
+    awk '!x[$1]++'          # Remove duplicated branches
 }
 
 function git:branch:remote {
