@@ -166,7 +166,6 @@ function git:branch:all {
     git:proxy:sed -e 's/^origin\///' |
     egrep -v "^HEAD${SEP}" |
     column -t -s "$SEP" |
-    sort |
     awk '!x[$1]++'
 }
 
