@@ -3162,7 +3162,11 @@ function! s:CrForInsertMode() abort  " {{{
   elseif neosnippet#expandable_or_jumpable()
     return "\<Plug>(neosnippet_expand_or_jump)"
   else
-    return pumvisible() ? asyncomplete#close_popup() : lexima#expand("<Cr>", "i")
+    if pumvisible()
+      return empty(v:completed_item) ? asyncomplete#cancel_popup() : asyncomplete#close_popup()
+    else
+      return lexima#expand("<Cr>", "i")
+    endif
   endif
 endfunction  " }}}
 
@@ -3218,11 +3222,13 @@ cnoremap <Down> <C-n>
 
 " Moving in INSERT mode
 inoremap <C-k> <Up>
-inoremap <expr> <C-f> pumvisible() && !empty(v:completed_item) ? "\<PageDown>" : "\<Right>"
+inoremap <C-f> <Right>
 inoremap <C-j> <Down>
-inoremap <expr> <C-b> pumvisible() && !empty(v:completed_item) ? "\<PageUp>" : "\<Left>"
+inoremap <C-b> <Left>
 inoremap <C-a> <Home>
-inoremap <C-e> <End>
+
+" asyncomplete.vim's `asyncomplete#cancel_popup()` uses `<C-e>`
+inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : "\<End>"
 
 cnoremap <C-k> <Up>
 cnoremap <C-f> <Right>
