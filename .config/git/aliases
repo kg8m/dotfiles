@@ -165,6 +165,7 @@ function git:branch:all {
     git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" |
     git:proxy:sed -e 's/^origin\///' |
     egrep -v "^HEAD${SEP}" |
+    egrep "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
     column -t -s "$SEP" |
     awk '!x[$1]++'
 }
