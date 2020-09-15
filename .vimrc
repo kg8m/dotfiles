@@ -2361,10 +2361,6 @@ if kg8m#plugin#register("thinca/vim-prettyprint")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("tpope/vim-rails", #{ if: kg8m#util#on_rails_dir() && !kg8m#util#is_git_tmp_edit() })  " {{{
-  call kg8m#plugin#configure(#{
-     \   lazy: v:false,
-     \ })
-
   " http://fg-180.katamayu.net/archives/2006/09/02/125150
   let g:rails_level = 4
 
@@ -2384,6 +2380,10 @@ if kg8m#plugin#register("tpope/vim-rails", #{ if: kg8m#util#on_rails_dir() && !k
   let g:rails_path_additions += [
     \   "spec/support",
     \ ]
+
+  call kg8m#plugin#configure(#{
+     \   lazy: v:false,
+     \ })
 endif  " }}}
 
 call kg8m#plugin#register("tpope/vim-repeat")
