@@ -106,6 +106,8 @@ function! kg8m#plugin#show_update_log() abort  " {{{
     \   ..'\ !^Fast-forwarded\\ master\\ to'
     \   ..'\ !^(.*/.*)\\ From\\ '
     \   ..'\ !Successfully\\ rebased\\ and\\ updated\\ refs/heads/master.'
+    \   ..'\ !*\\ [new\\ tag]'
+    \   ..'\ !already\\ exists,\\ disabling\\ multiplexing'
 
   execute "Unite dein/log -buffer-name=update_plugins -input="..initial_input
 
