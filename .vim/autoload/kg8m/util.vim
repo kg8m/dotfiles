@@ -74,7 +74,7 @@ function! kg8m#util#remote_copy(text) abort  " {{{
     \     ->substitute('\n$', "", "")
     \     ->shellescape()
 
-  call system("printf %s "..text.." | ssh main -t 'LC_CTYPE=UTF-6 pbcopy'")
+  call system("printf %s "..text.." | ssh main -t 'LC_CTYPE=UTF-8 pbcopy'")
 
   if &columns > 50
     let text = substitute(text, '\v\n|\t', " ", "g")
