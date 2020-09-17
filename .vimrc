@@ -262,7 +262,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-buffer.vim")  " {{{
   function! s:ActivateAsyncompleteBuffer() abort  " {{{
     " Trigger one of the s:asyncomplete_buffer_events
     " Don't use `TextChangedI` or `TextChangedP` because they cause asyncomplete.vim's error about previous_position
-    doautocmd TextChanged
+    doautocmd <nomodeline> TextChanged
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{

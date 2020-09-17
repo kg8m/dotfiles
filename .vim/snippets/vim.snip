@@ -32,6 +32,11 @@ abbr    autocmd {EventName} {filetype} ...
 options head
 	autocmd ${1:#:EventName} ${2:#:filetype} ${0}
 
+snippet doautocmd
+abbr    doautocmd <nomodeline> {EventName}  " Use `<nomodeline>` for non-buffer-loading events
+options head
+	doautocmd <nomodeline> ${1:#:EventName}
+
 snippet if
 abbr    if ...\n ...\n endif
 options head
