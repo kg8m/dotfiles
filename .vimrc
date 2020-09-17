@@ -2130,9 +2130,17 @@ if kg8m#plugin#register("lambdalisue/vim-findent")  " {{{
   let g:findent#enable_messages = v:false
   let g:findent#enable_warnings = v:false
 
+  set expandtab
+  let s:original_expandtab = &expandtab
+
   augroup my_vimrc  " {{{
     autocmd FileType * Findent
+    autocmd FileType gitcommit call timer_start(300, { -> s:RestoreFindent() })
   augroup END  " }}}
+
+  function! s:RestoreFindent() abort  " {{{
+    let &expandtab = s:original_expandtab
+  endfunction  " }}}
 
   call kg8m#plugin#configure(#{
      \   lazy:   v:true,
@@ -2901,13 +2909,13 @@ augroup END  " }}}
 
 " ----------------------------------------------
 " Spaces, Indents  " {{{
+" `expandtab` is set in configurations for vim-findent
 set tabstop=2
 set shiftwidth=2
 set softtabstop=-1
 set noshiftround
 set textwidth=120
 set colorcolumn=+1
-set expandtab
 set autoindent
 set smartindent
 set backspace=indent,eol,start
@@ -2953,7 +2961,7 @@ function! s:SetupFormatoptions() abort  " {{{
     setlocal fo+=]
   endif
 
-  if &filetype =~# '\v^(text|markdown|moin)$'
+  if &filetype =~# '\v^(gitcommit|markdown|moin|text)$'
     setlocal fo-=r fo-=o
   endif
 endfunction  " }}}
