@@ -1,6 +1,7 @@
 # See also `.zsh/filter.zsh`
 function setup_my_fzf {
   local binds=(
+    "change:top"
     "ctrl-f:page-down"
     "ctrl-b:page-up"
     "ctrl-h:backward-char"
