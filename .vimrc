@@ -2632,8 +2632,8 @@ if kg8m#plugin#register("Shougo/vimfiler", #{ if: !kg8m#util#is_git_tmp_edit() }
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{
-     \   lazy:    v:true,
-     \   on_func: "VimFilerBufferDir",
+     \   lazy:   v:true,
+     \   on_cmd: "VimFilerBufferDir",
      \   hook_source: function("s:ConfigPluginOnSource_vimfiler"),
      \ })
 
