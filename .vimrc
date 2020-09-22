@@ -3164,10 +3164,10 @@ function! s:DefineCompletionMappings() abort  " {{{
 endfunction  " }}}
 
 function! s:CrForInsertMode() abort  " {{{
-  if vsnip#available(1)
-    return "\<Plug>(vsnip_expand_or_jump)"
-  elseif neosnippet#expandable_or_jumpable()
+  if neosnippet#expandable_or_jumpable()
     return "\<Plug>(neosnippet_expand_or_jump)"
+  elseif vsnip#available(1)
+    return "\<Plug>(vsnip_expand_or_jump)"
   else
     if pumvisible()
       " `asyncomplete#close_popup` and `asyncomplete#cancel_popup` don't work sometimes
