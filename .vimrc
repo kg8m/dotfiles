@@ -811,20 +811,6 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   call kg8m#plugin#register("tsuyoshicho/vim-efm-langserver-settings", #{ if: v:false })
 endif  " }}}
 
-if kg8m#plugin#register("thomasfaingnaert/vim-lsp-snippets")  " {{{
-  call kg8m#plugin#configure(#{
-     \   lazy:      v:true,
-     \   on_source: "vim-lsp",
-     \ })
-
-  if kg8m#plugin#register("thomasfaingnaert/vim-lsp-neosnippet")  " {{{
-    call kg8m#plugin#configure(#{
-       \   lazy:      v:true,
-       \   on_source: "vim-lsp-snippets",
-       \ })
-  endif  " }}}
-endif  " }}}
-
 if kg8m#plugin#register("hrsh7th/vim-vsnip")  " {{{
   function! s:ConfigPluginOnSource_vim_vsnip() abort  " {{{
     call s:DefineCompletionMappings()
@@ -1972,13 +1958,6 @@ if kg8m#plugin#register("AndrewRadev/splitjoin.vim")  " {{{
 endif  " }}}
 
 call kg8m#plugin#register("lambdalisue/suda.vim")
-
-if kg8m#plugin#register("iberianpig/tig-explorer.vim")  " {{{
-  call kg8m#plugin#configure(#{
-     \   lazy:   v:true,
-     \   on_cmd: ["Tig", "TigBlame", "TigStatus"],
-     \ })
-endif  " }}}
 
 if kg8m#plugin#register("leafgarland/typescript-vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:typescript_indent_disable = v:true
