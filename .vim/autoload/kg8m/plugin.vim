@@ -53,8 +53,12 @@ function! kg8m#plugin#configure(arg, options = {}) abort  " {{{
   return dein#config(a:arg, a:options)
 endfunction  " }}}
 
-function! kg8m#plugin#get_info(plugin_name) abort  " {{{
-  return dein#get(a:plugin_name)
+function! kg8m#plugin#get_info(...) abort  " {{{
+  if empty(a:000)
+    return dein#get()
+  else
+    return dein#get(get(a:000, 0))
+  endif
 endfunction  " }}}
 
 function! kg8m#plugin#installable_exists(...) abort  " {{{

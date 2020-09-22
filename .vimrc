@@ -704,10 +704,31 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   call kg8m#plugin#lsp#register(#{
      \   name: "vim-language-server",
      \   cmd: { server_info -> ["vim-language-server", "--stdio"] },
-     \   initialization_options: { -> #{ vimruntime: $VIMRUNTIME, runtimepath: &runtimepath } },
+     \   initialization_options: { -> #{
+     \     iskeyword: &iskeyword,
+     \     vimruntime: $VIMRUNTIME,
+     \     runtimepath: s:LSPVimAllRuntimepath(),
+     \     diagnostic: #{ enable: v:true },
+     \     indexes: #{
+     \       runtimepath: v:true,
+     \       gap: 100,
+     \       count: 3,
+     \     },
+     \     suggest: #{
+     \       fromVimruntime: v:true,
+     \       fromRuntimepath: v:true,
+     \     },
+     \   } },
      \   root_uri: { server_info -> lsp#utils#path_to_uri(expand("~")) },
      \   allowlist: ["vim"],
      \ })
+
+  function! s:LSPVimAllRuntimepath() abort  " {{{
+    let current = &runtimepath->split(",")
+    let plugins = kg8m#plugin#get_info()->values()->map("v:val.rtp")->filter("!v:val->empty()")
+
+    return kg8m#util#list_module().uniq(current + plugins)->join(",")
+  endfunction  " }}}
   " }}}
 
   " yarn add vue-language-server  " {{{
