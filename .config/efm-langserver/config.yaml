@@ -79,8 +79,9 @@ languages:
   sh:
     - <<: *shellcheck
 
-  vim:
-    - <<: *vint
+  # Disable because modern syntaxes are not supported
+  # vim:
+  #   - <<: *vint
 
   yaml:
     - <<: *yamllint

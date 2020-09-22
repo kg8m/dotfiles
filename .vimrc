@@ -887,7 +887,7 @@ if kg8m#plugin#register("dense-analysis/ale", #{ if: !kg8m#util#is_git_tmp_edit(
     \   javascript: [],
     \   ruby:       ["ruby", "rubocop"],
     \   typescript: ["eslint"],
-    \   vim:        ["vint"],
+    \   vim:        [],
     \ }
   let g:ale_fixers = #{
     \   go:         ["goimports"],
