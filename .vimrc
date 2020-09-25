@@ -998,7 +998,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   nnoremap <Leader><Leader>f :FzfFiles<Cr>
   nnoremap <Leader><Leader>v :call <SID>FzfGitFiles()<Cr>
   nnoremap <Leader><Leader>b :call <SID>FzfBuffers()<Cr>
-  nnoremap <Leader><Leader>l :FzfLines<Cr>
+  nnoremap <Leader><Leader>l :FzfBLines<Cr>
   nnoremap <Leader><Leader>g :FzfGrep<Space>
   nnoremap <Leader><Leader>G :FzfGrepForDir<Space>
   vnoremap <Leader><Leader>g "gy:FzfGrep<Space><C-r>"
