@@ -2253,7 +2253,6 @@ if kg8m#plugin#register("andymass/vim-matchup")  " {{{
   let g:matchup_transmute_enabled = v:true
   let g:matchup_matchparen_status_offscreen = v:false
   let g:matchup_matchparen_deferred = v:true
-  let g:matchup_matchparen_deferred_fade_time = 500
   let g:matchup_matchpref = #{
     \   html: #{ tagnameonly: v:true },
     \ }
