@@ -2269,6 +2269,12 @@ if kg8m#plugin#register("andymass/vim-matchup")  " {{{
   endfunction  " }}}
 endif  " }}}
 
+if kg8m#plugin#register("mattn/vim-molder")  " {{{
+  let g:molder_show_hidden = v:true
+
+  nmap <Leader>e :edit %:h<Cr>
+endif  " }}}
+
 if kg8m#plugin#register("kana/vim-operator-replace")  " {{{
   map r <Plug>(operator-replace)
 
