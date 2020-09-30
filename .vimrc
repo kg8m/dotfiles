@@ -1137,7 +1137,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
   function! s:FzfHistoryList() abort  " {{{
-    let filepaths = mr#mru#list()->copy()->filter({ _, filepath -> filepath->fnamemodify(":p")->filereadable() })
+    let filepaths = mr#mru#list()->copy()->filter({ _, filepath -> filepath->filereadable() })
     return filepaths->map({ _, filepath -> filepath->fnamemodify(s:FzfHistoryFilepathFormat()) })
   endfunction  " }}}
 
