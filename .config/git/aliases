@@ -162,8 +162,7 @@ function git:branch:all {
   local list_format="%(refname:short)${SEP}%(objectname:short)${SEP}%(contents:subject)"
 
   git branch --all --format "${list_format}" |
-    git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" |
-    git:proxy:sed -e 's/^origin\///' |
+    git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" -e 's/^origin\///' |
     egrep -v "^HEAD${SEP}" |
     egrep "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
     column -t -s "$SEP" |

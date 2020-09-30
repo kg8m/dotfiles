@@ -2764,8 +2764,7 @@ if kg8m#plugin#register("LeafCage/yankround.vim")  " {{{
 
   function! s:YankPreviewCommand() abort  " {{{
     let command  = "echo {}"
-    let command .= " | sed -e 's/^ *[0-9]\\{1,\\}\t//'"
-    let command .= " | sed -e 's/\\\\/\\\\\\\\/g'"
+    let command .= " | sed -e 's/^ *[0-9]\\{1,\\}\t//' -e 's/\\\\/\\\\\\\\/g'"
     let command .= " | head -n5"
 
     return command
