@@ -3137,8 +3137,9 @@ function! s:CrForInsertMode() abort  " {{{
     return "\<Plug>(vsnip_expand_or_jump)"
   else
     if pumvisible()
-      " `asyncomplete#close_popup` and `asyncomplete#cancel_popup` don't work sometimes
-      return "\<Left>\<Right>"
+      " `asyncomplete#close_popup` doesn't work when no completion item is selected.
+      "  To close popup, use `<Left><Right>` instead.
+      return empty(v:completed_item) ? "\<Left>\<Right>\<Cr>" : asyncomplete#close_popup()
     else
       return lexima#expand("<Cr>", "i")
     endif
