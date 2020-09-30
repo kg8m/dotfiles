@@ -1588,7 +1588,6 @@ if kg8m#plugin#register("Yggdroot/indentLine")  " {{{
     \   "diff",
     \   "startify",
     \   "unite",
-    \   "vimfiler",
     \ ]
   let g:indentLine_bufTypeExclude = [
     \   "help",
@@ -1720,10 +1719,6 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! s:Lightline_Filepath() abort  " {{{
-    if &filetype ==# "vimfiler"
-      return vimfiler#get_status_string()
-    endif
-
     if &filetype ==# "unite"
       return unite#get_status_string()
     endif
@@ -1742,7 +1737,7 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   function! s:Lightline_IsReadonly() abort  " {{{
-    return &filetype !~? 'help\|vimfiler' && &readonly
+    return &filetype !=# "help" && &readonly
   endfunction  " }}}
 
   function! Lightline_NormalFilepath() abort  " {{{
@@ -2611,32 +2606,6 @@ if kg8m#plugin#register("thinca/vim-zenspace")  " {{{
   augroup my_vimrc  " {{{
     autocmd ColorScheme * highlight ZenSpace term=underline cterm=underline gui=underline ctermbg=DarkGray guibg=DarkGray ctermfg=DarkGray guifg=DarkGray
   augroup END  " }}}
-endif  " }}}
-
-if kg8m#plugin#register("Shougo/vimfiler", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
-  let g:vimfiler_ignore_pattern = ['^\.git$', '^\.DS_Store$']
-
-  nnoremap <Leader>e :VimFilerBufferDir -force-quit<Cr>
-
-  function! s:ConfigPluginOnSource_vimfiler() abort  " {{{
-    call vimfiler#custom#profile("default", "context", #{
-       \   safe: v:false,
-       \   split_action: "dwm_open",
-       \ })
-  endfunction  " }}}
-
-  call kg8m#plugin#configure(#{
-     \   lazy:   v:true,
-     \   on_cmd: "VimFilerBufferDir",
-     \   hook_source: function("s:ConfigPluginOnSource_vimfiler"),
-     \ })
-
-  if kg8m#plugin#register("kg8m/unite-dwm")  " {{{
-    call kg8m#plugin#configure(#{
-       \   lazy:  v:true,
-       \   on_ft: "vimfiler",
-       \ })
-  endif  " }}}
 endif  " }}}
 
 if kg8m#plugin#register("Shougo/vimproc")  " {{{
