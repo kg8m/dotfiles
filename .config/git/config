@@ -154,7 +154,7 @@ f  = fetch
 
 update         = sh git:update:with_log
 shallow-update = sh git:update:shallow
-update-master  = sh git:update:shallow
+update-master  = sh git:update:master
 # }}}
 
 # branch  # {{{
