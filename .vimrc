@@ -2601,7 +2601,6 @@ if kg8m#plugin#register("kana/vim-textobj-user")  " {{{
      \ })
 endif  " }}}
 
-call kg8m#plugin#register("tmux-plugins/vim-tmux", #{ if: !kg8m#util#is_git_tmp_edit() })
 call kg8m#plugin#register("cespare/vim-toml", #{ if: !kg8m#util#is_git_tmp_edit() })
 call kg8m#plugin#register("posva/vim-vue", #{ if: !kg8m#util#is_git_tmp_edit() })
 
