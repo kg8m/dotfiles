@@ -2276,6 +2276,12 @@ if kg8m#plugin#register("mattn/vim-molder")  " {{{
   let g:molder_show_hidden = v:true
 
   nmap <Leader>e :edit %:h<Cr>
+
+  augroup my_vimrc  " {{{
+    " Cancel molder
+    autocmd FileType molder nnoremap <buffer> q     <C-o>
+    autocmd FileType molder nnoremap <buffer> <C-c> <C-o>
+  augroup END  " }}}
 endif  " }}}
 
 if kg8m#plugin#register("kana/vim-operator-replace")  " {{{
