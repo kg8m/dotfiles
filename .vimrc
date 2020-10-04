@@ -1620,7 +1620,27 @@ endif  " }}}
 if kg8m#plugin#register("cohama/lexima.vim")  " {{{
   let g:lexima_ctrlh_as_backspace = v:true
 
-  function! s:ConfigPluginOnPostSource_lexima() abort  " {{{
+  function! s:AddLeximaRulesForEruby() abort  " {{{
+    " `<Space>` when
+    "
+    "   <%|
+    "
+    " then
+    "
+    "   <% | %>
+    call lexima#add_rule(#{ char: "<Space>", at: '<%\%#', input: "<Space><Space>%><Left><Left><Left>", filetype: "eruby" })
+
+    " `<Space>` when
+    "
+    "   <%=|
+    "
+    " then
+    "
+    "   <%= | %>
+    call lexima#add_rule(#{ char: "<Space>", at: '<%=\%#', input: "<Space><Space>%><Left><Left><Left>", filetype: "eruby" })
+  endfunction  " }}}
+
+  function! s:AddLeximaRulesForMarkdown() abort  " {{{
     " `<Space>` when
     "
     "   [|]
@@ -1651,6 +1671,11 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     "   |
     "   ```
     call lexima#add_rule(#{ char: "<Cr>", at: '```[a-z]\+\%#```', input: "<Cr><Cr><Up>", filetype: "markdown" })
+  endfunction  " }}}
+
+  function! s:ConfigPluginOnPostSource_lexima() abort  " {{{
+    call s:AddLeximaRulesForEruby()
+    call s:AddLeximaRulesForMarkdown()
 
     call timer_start(100, { -> s:DefineCrMappingForInsertMode() })
     call timer_start(100, { -> s:DefineBSMappingForInsertMode() })
@@ -2294,49 +2319,6 @@ if kg8m#plugin#register("kana/vim-operator-replace")  " {{{
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("rhysd/vim-operator-surround")  " {{{
-  nmap <silent><Leader>sa <Plug>(operator-surround-append)aw
-  vmap <silent><Leader>sa <Plug>(operator-surround-append)
-  map  <silent><Leader>sd <Plug>(operator-surround-delete)a
-  map  <silent><Leader>sr <Plug>(operator-surround-replace)a
-
-  function! s:ConfigPluginOnSource_vim_operator_surround() abort  " {{{
-    let g:operator#surround#blocks = #{ -: [] }
-
-    " Some pairs don't work as `keys` if they require IME's `henkan`
-    " But they works as `block`
-    let configs = [
-      \   #{ block: ["[ ", " ]"], keys: [" [", " ]"] },
-      \   #{ block: ["( ", " )"], keys: ["("] },
-      \   #{ block: ["{ ", " }"], keys: ["{"] },
-      \   #{ block: ["[ ", " ]"], keys: ["["] },
-      \   #{ block: ["（", "）"] },
-      \   #{ block: ["［", "］"] },
-      \   #{ block: ["「", "」"] },
-      \   #{ block: ["『", "』"] },
-      \   #{ block: ["〈", "〉"] },
-      \   #{ block: ["《", "》"] },
-      \   #{ block: ["【", "】"] },
-      \   #{ block: ["“", "”"] },
-      \   #{ block: ["‘", "’"] },
-      \ ]
-
-    for config in configs
-      let keys = has_key(config, "keys") ? config.keys : config.block
-      call add(g:operator#surround#blocks["-"], #{
-        \   block: config.block, motionwise: ["char", "line", "block"], keys: keys
-        \ })
-    endfor
-  endfunction  " }}}
-
-  call kg8m#plugin#configure(#{
-     \   lazy:    v:true,
-     \   depends: ["vim-operator-user"],
-     \   on_map:  [["nv", "<Plug>(operator-surround-"]],
-     \   hook_source: function("s:ConfigPluginOnSource_vim_operator_surround"),
-     \ })
-endif  " }}}
-
 if kg8m#plugin#register("kana/vim-operator-user")  " {{{
   call kg8m#plugin#configure(#{
      \   lazy:    v:true,
@@ -2425,6 +2407,48 @@ if kg8m#plugin#register("joker1007/vim-ruby-heredoc-syntax", #{ if: !kg8m#util#i
   call kg8m#plugin#configure(#{
      \   lazy:  v:true,
      \   on_ft: "ruby",
+     \ })
+endif  " }}}
+
+if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
+  let g:sandwich_no_default_key_mappings = v:true
+
+  vmap <Leader>sa <Plug>(operator-sandwich-add)
+  nmap <Leader>sd <Plug>(operator-sandwich-delete)<Plug>(textobj-sandwich-query-a)
+  nmap <Leader>sr <Plug>(operator-sandwich-replace)<Plug>(textobj-sandwich-query-a)
+
+  nmap . <Plug>(operator-sandwich-dot)
+
+  function! s:ConfigPluginOnSource_vim_operator_sandwich() abort  " {{{
+    let common_options         = #{ nesting: v:true, match_syntax: v:true }
+    let common_add_options     = extend(#{ kind: ["add", "replace"], action: ["add"] }, common_options)
+    let common_delete_options  = extend(#{ kind: ["delete", "replace", "textobj"], action: ["delete"], regex: v:true }, common_options)
+    let common_zenkaku_options = extend(#{ kind: ["add", "delete", "replace", "textobj"], action: ["add", "delete"] }, common_options)
+    let g:sandwich#recipes =
+      \   deepcopy(g:sandwich#default_recipes) +
+      \   [
+      \      extend(#{ buns: ["( ", " )"], input: ["("] }, common_add_options),
+      \      extend(#{ buns: ["[ ", " ]"], input: ["["] }, common_add_options),
+      \      extend(#{ buns: ["{ ", " }"], input: ["{"] }, common_add_options),
+      \      extend(#{ buns: ['(\s*', '\s*)'], input: ["("] }, common_delete_options),
+      \      extend(#{ buns: ['[\s*', '\s*]'], input: ["["] }, common_delete_options),
+      \      extend(#{ buns: ['{\s*', '\s*}'], input: ["{"] }, common_delete_options),
+      \      extend(#{ buns: ["（", "）"], input: ["（", "）"] }, common_zenkaku_options),
+      \      extend(#{ buns: ["［", "］"], input: ["［", "］"] }, common_zenkaku_options),
+      \      extend(#{ buns: ["「", "」"], input: ["「", "」"] }, common_zenkaku_options),
+      \      extend(#{ buns: ["『", "』"], input: ["『", "』"] }, common_zenkaku_options),
+      \      extend(#{ buns: ["〈", "〉"], input: ["〈", "〉"] }, common_zenkaku_options),
+      \      extend(#{ buns: ["《", "》"], input: ["《", "》"] }, common_zenkaku_options),
+      \      extend(#{ buns: ["【", "】"], input: ["【", "】"] }, common_zenkaku_options),
+      \      extend(#{ buns: ["“", "”"], input: ["“", "”"] }, common_zenkaku_options),
+      \      extend(#{ buns: ["‘", "’"], input: ["‘", "’"] }, common_zenkaku_options),
+      \   ]
+  endfunction  " }}}
+
+  call kg8m#plugin#configure(#{
+     \   lazy: v:true,
+     \   on_map:  [["nv", "<Plug>(operator-sandwich-"]],
+     \   hook_source: function("s:ConfigPluginOnSource_vim_operator_sandwich"),
      \ })
 endif  " }}}
 
@@ -2550,8 +2574,6 @@ endif  " }}}
 if kg8m#plugin#register("kopischke/vim-stay", #{ if: !kg8m#util#is_git_commit() })  " {{{
   set viewoptions=cursor
 endif  " }}}
-
-call kg8m#plugin#register("tpope/vim-surround")
 
 if kg8m#plugin#register("janko/vim-test", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   nnoremap <Leader>T :write<Cr>:TestFile<Cr>
