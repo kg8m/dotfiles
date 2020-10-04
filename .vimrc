@@ -3102,6 +3102,10 @@ function! s:Checktime() abort  " {{{
     endif
 
     checktime
+  " Sometimes `checktime` raise an error
+  "   - e.g., E565: "Not allowed to change text or change window" when using vim-sandwich
+  catch
+    " Do nothing
   finally
     let s:checktime_timer = timer_start(1000, { -> s:Checktime() })
   endtry
