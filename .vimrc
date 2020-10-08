@@ -1026,7 +1026,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     call fzf#vim#gitfiles("?", #{
        \   options: [
        \     "--preview", "git diff-or-cat {2}",
-       \     "--preview-window", "right:wrap",
+       \     "--preview-window", "right:50%:wrap",
        \   ],
        \ })
   endfunction  " }}}
@@ -1041,7 +1041,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       \     "--header-lines", !empty(expand("%")),
       \     "--prompt", "Buffers> ",
       \     "--preview", "git cat {}",
-      \     "--preview-window", "right:wrap",
+      \     "--preview-window", "right:50%:wrap",
       \   ],
       \ }
 
@@ -1076,7 +1076,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       \   options: [
       \     "--header", "Grep: "..grep_args,
       \     "--delimiter", ":",
-      \     "--preview-window", "right:wrap:+{2}-15",
+      \     "--preview-window", "right:50%:wrap:+{2}-/2",
       \     "--preview", kg8m#plugin#get_info("fzf.vim").path.."/bin/preview.sh {}",
       \   ],
       \ }
@@ -1120,7 +1120,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       \     "--header-lines", !empty(expand("%")),
       \     "--prompt", "History> ",
       \     "--preview", "git cat {}",
-      \     "--preview-window", "right:wrap",
+      \     "--preview-window", "right:50%:wrap",
       \   ],
       \ }
 
@@ -1502,7 +1502,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       \   "options": [
       \     "--prompt", "Rails/"..a:type.."> ",
       \     "--preview", "git cat {}",
-      \     "--preview-window", "right:wrap",
+      \     "--preview-window", "right:50%:wrap",
       \   ],
       \ }
 
