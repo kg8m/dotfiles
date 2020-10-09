@@ -1713,6 +1713,39 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
 
   let g:lexima_ctrlh_as_backspace = v:true
 
+  function! s:lexima.add_rules_for_default() abort  " {{{
+    for pair in kg8m#util#japanese_matchpairs()
+      " `「` when
+      "
+      "   |
+      "
+      " then
+      "
+      "   「|」
+      call lexima#add_rule(#{ char: pair[0], input_after: pair[1] })
+
+      " `」` when
+      "
+      "   |」
+      "
+      " then
+      "
+      "   」|
+      call lexima#add_rule(#{ char: pair[1], at: '\%#'..pair[1], leave: 1 })
+
+      " `<BS>` when
+      "
+      "   「|」
+      "
+      " then
+      "
+      "   |
+      "
+      " Use `"<BS><Del>"` instead of `delete: 1` option because the option doesn't work
+      call lexima#add_rule(#{ char: "<BS>", at: join(pair, '\%#'), input: "<BS><Del>" })
+    endfor
+  endfunction  " }}}
+
   function! s:lexima.add_rules_for_eruby() abort  " {{{
     " `<Space>` when
     "
@@ -1731,6 +1764,35 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     "
     "   <%= | %>
     call lexima#add_rule(#{ char: "<Space>", at: '<%=\%#', input: "<Space><Space>%><Left><Left><Left>", filetype: "eruby" })
+  endfunction  " }}}
+
+  function! s:lexima.add_rules_for_html() abort  " {{{
+    " `<` when
+    "
+    "   |
+    "
+    " then
+    "
+    "   <|>
+    call lexima#add_rule(#{ char: "<", input_after: ">", filetype: "html" })
+
+    " `>` when
+    "
+    "   |>
+    "
+    " then
+    "
+    "   >|
+    call lexima#add_rule(#{ char: ">", at: '\%#>', leave: 1, filetype: "html" })
+
+    " `<BS>` when
+    "
+    "   <|>
+    "
+    " then
+    "
+    "   |
+    call lexima#add_rule(#{ char: "<BS>", at: '<\%#>', delete: 1, filetype: "html" })
   endfunction  " }}}
 
   function! s:lexima.add_rules_for_markdown() abort  " {{{
@@ -1767,7 +1829,9 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
   endfunction  " }}}
 
   function! s:lexima.on_post_source() abort  " {{{
+    call s:lexima.add_rules_for_default()
     call s:lexima.add_rules_for_eruby()
+    call s:lexima.add_rules_for_html()
     call s:lexima.add_rules_for_markdown()
 
     call timer_start(100, { -> s:kg8m.define_cr_mapping_for_insert_mode() })
