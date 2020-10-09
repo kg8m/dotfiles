@@ -1025,6 +1025,8 @@ if kg8m#plugin#register("spolu/dwm.vim")  " {{{
      \ })
 endif  " }}}
 
+call kg8m#plugin#register("editorconfig/editorconfig-vim", #{ if: !kg8m#util#is_git_tmp_edit() && filereadable(".editorconfig") })
+
 if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   let s:fzf = {}
   function! s:fzf() abort  " {{{
