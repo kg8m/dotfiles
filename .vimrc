@@ -692,7 +692,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   " initialization_options: https://github.com/castwide/vscode-solargraph/blob/master/package.json
   call kg8m#plugin#lsp#register(#{
      \   name: "solargraph",
-     \   cmd: { server_info -> (filereadable("Gemfile") ? ["bundle", "exec"] : []) + ["solargraph", "stdio"] },
+     \   cmd: { server_info -> ["solargraph", "stdio"] },
      \   initialization_options: { -> #{
      \     autoformat: v:false,
      \     checkGemVersion: v:true,
@@ -705,7 +705,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \     references: v:true,
      \     rename: v:true,
      \     symbols: v:true,
-     \     useBundler: filereadable("Gemfile"),
+     \     useBundler: filereadable("Gemfile.lock"),
      \   } },
      \   allowlist: ["ruby"],
      \ })
