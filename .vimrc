@@ -2520,16 +2520,10 @@ if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
       \      extend(#{ buns: ['(\s*', '\s*)'], input: ["("] }, common_delete_options),
       \      extend(#{ buns: ['[\s*', '\s*]'], input: ["["] }, common_delete_options),
       \      extend(#{ buns: ['{\s*', '\s*}'], input: ["{"] }, common_delete_options),
-      \      extend(#{ buns: ["（", "）"], input: ["（", "）"] }, common_zenkaku_options),
-      \      extend(#{ buns: ["［", "］"], input: ["［", "］"] }, common_zenkaku_options),
-      \      extend(#{ buns: ["「", "」"], input: ["「", "」"] }, common_zenkaku_options),
-      \      extend(#{ buns: ["『", "』"], input: ["『", "』"] }, common_zenkaku_options),
-      \      extend(#{ buns: ["〈", "〉"], input: ["〈", "〉"] }, common_zenkaku_options),
-      \      extend(#{ buns: ["《", "》"], input: ["《", "》"] }, common_zenkaku_options),
-      \      extend(#{ buns: ["【", "】"], input: ["【", "】"] }, common_zenkaku_options),
-      \      extend(#{ buns: ["“", "”"], input: ["“", "”"] }, common_zenkaku_options),
-      \      extend(#{ buns: ["‘", "’"], input: ["‘", "’"] }, common_zenkaku_options),
-      \   ]
+      \   ] + (
+      \     kg8m#util#japanese_matchpairs()
+      \       ->map({ _, pair -> extend(#{ buns: pair, input: pair }, common_zenkaku_options) })
+      \   )
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{
@@ -3181,7 +3175,7 @@ set wildmode=list:longest,full
 set timeoutlen=3000
 
 " Support Japanese kakkos
-set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,〔:〕,“:”,‘:’
+let &matchpairs .= ","..(kg8m#util#japanese_matchpairs()->map({ _, pair -> pair->join(":") })->join(","))
 
 " Auto reload
 augroup my_vimrc  " {{{

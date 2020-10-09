@@ -114,3 +114,19 @@ endfunction  " }}}
 function! kg8m#util#current_absolute_path() abort  " {{{
   return expand("%")->fnamemodify(":~")
 endfunction  " }}}
+
+function! kg8m#util#japanese_matchpairs() abort  " {{{
+  return [
+       \   ["（", "）"],
+       \   ["「", "」"],
+       \   ["『", "』"],
+       \   ["｛", "｝"],
+       \   ["［", "］"],
+       \   ["〈", "〉"],
+       \   ["《", "》"],
+       \   ["【", "】"],
+       \   ["〔", "〕"],
+       \   ["“", "”"],
+       \   ["‘", "’"],
+       \ ]
+endfunction  " }}}
