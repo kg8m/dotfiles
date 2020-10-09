@@ -169,6 +169,18 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
   endfunction  " }}}
   " }}}
 
+  function! s:asyncomplete.set_refresh_pattern() abort  " {{{
+    if !has_key(b:, "asyncomplete_refresh_pattern")
+      let b:asyncomplete_refresh_pattern = s:kg8m.completion_refresh_pattern(&filetype)
+    endif
+  endfunction  " }}}
+
+  function! s:asyncomplete.on_source() abort  " {{{
+    augroup my_vimrc  " {{{
+      autocmd BufWinEnter,FileType * call s:asyncomplete.set_refresh_pattern()
+    augroup END  " }}}
+  endfunction  " }}}
+
   function! s:asyncomplete.on_post_source() abort  " {{{
     call timer_start(0, { -> s:asyncomplete.define_refresh_completion_mappings() })
 
@@ -180,6 +192,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
   call kg8m#plugin#configure(#{
      \   lazy: v:true,
      \   on_i: v:true,
+     \   hook_source:      s:asyncomplete.on_source,
      \   hook_post_source: s:asyncomplete.on_post_source,
      \ })
 endif  " }}}
@@ -517,7 +530,6 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   endfunction  " }}}
 
   function! s:lsp.on_lsp_buffer_enabled() abort  " {{{
-    let b:asyncomplete_refresh_pattern = s:kg8m.completion_refresh_pattern(&filetype)
     setlocal omnifunc=lsp#complete
     nmap <buffer> g] <Plug>(lsp-definition)
     nmap <buffer> <S-h> <Plug>(lsp-hover)
