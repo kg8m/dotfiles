@@ -2286,7 +2286,6 @@ if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
   xmap <expr> F <SID>easymotion().with_migemo("easymotion-Fl")
   omap <expr> F <SID>easymotion().with_migemo("easymotion-Fl")
 
-  " http://haya14busa.com/vim-lazymotion-on-speed/
   let g:EasyMotion_do_mapping       = v:false
   let g:EasyMotion_do_shade         = v:false
   let g:EasyMotion_startofline      = v:false
@@ -2294,7 +2293,6 @@ if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
   let g:EasyMotion_use_upper        = v:true
   let g:EasyMotion_keys             = "FKLASDHGUIONMREWCVTYBX,.;J"
   let g:EasyMotion_enter_jump_first = v:true
-  let g:EasyMotion_skipfoldedline   = v:false
 
   function! s:easymotion.with_migemo(map) abort  " {{{
     let g:EasyMotion_use_migemo = v:true
