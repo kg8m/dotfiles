@@ -2531,6 +2531,19 @@ if kg8m#plugin#register("thinca/vim-prettyprint")  " {{{
      \ })
 endif  " }}}
 
+if kg8m#plugin#register("lambdalisue/vim-protocol")  " {{{
+  " Disable netrw.vim
+  let g:loaded_netrw             = v:true
+  let g:loaded_netrwPlugin       = v:true
+  let g:loaded_netrwSettings     = v:true
+  let g:loaded_netrwFileHandlers = v:true
+
+  call kg8m#plugin#configure(#{
+     \   lazy:    v:true,
+     \   on_path: '^https\?://',
+     \ })
+endif  " }}}
+
 if kg8m#plugin#register("tpope/vim-rails", #{ if: kg8m#util#on_rails_dir() && !kg8m#util#is_git_tmp_edit() })  " {{{
   " http://fg-180.katamayu.net/archives/2006/09/02/125150
   let g:rails_level = 4
