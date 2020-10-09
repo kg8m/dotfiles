@@ -91,6 +91,12 @@ function! kg8m#plugin#remove_disused() abort  " {{{
 endfunction  " }}}
 
 function! kg8m#plugin#check_and_update() abort  " {{{
+  " Load all plugins before update because dein.vim doesn't make helptags for non-loaded plugins
+  for plugin in kg8m#plugin#disabled_plugins()
+    call kg8m#plugin#register(plugin.repo)
+    call kg8m#plugin#source(plugin.name)
+  endfor
+
   let force_update = v:true
   call dein#check_update(force_update)
 endfunction  " }}}
@@ -119,6 +125,14 @@ function! kg8m#plugin#show_update_log() abort  " {{{
   let @/ = "Updated"
 endfunction  " }}}
 
+function! kg8m#plugin#source(plugin_name) abort  " {{{
+  return dein#source(a:plugin_name)
+endfunction  " }}}
+
 function! kg8m#plugin#is_sourced(plugin_name) abort  " {{{
   return dein#is_sourced(a:plugin_name)
+endfunction  " }}}
+
+function! kg8m#plugin#disabled_plugins() abort  " {{{
+  return kg8m#plugin#get_info()->values()->filter("v:val.rtp->empty()")
 endfunction  " }}}
