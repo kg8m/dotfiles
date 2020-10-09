@@ -1068,6 +1068,14 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     redraw
   endfunction  " }}}
 
+  function! s:fzf.filepath_format() abort  " {{{
+    if !has_key(s:, "fzf_filepath_format")
+      let s:fzf_filepath_format = getcwd() ==# expand("~") ? ":~" : ":~:."
+    endif
+
+    return s:fzf_filepath_format
+  endfunction  " }}}
+
   " Git Files: Show preview of dirty files (Fzf's `:GFiles?` doesn't show preview)  " {{{
   let s:fzf.git_files = {}
 
@@ -1100,7 +1108,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
 
   function! s:fzf.buffers.candidates() abort  " {{{
-    let current = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:fzf.history.filepath_format())]
+    let current = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:fzf.filepath_format())]
     let buffers = s:fzf.buffers.list()
 
     return kg8m#util#list_module().uniq(current + buffers)
@@ -1109,7 +1117,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L196-L198
   function! s:fzf.buffers.list() abort  " {{{
     let bufnrs = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") !=# "qf" && len(bufname(bufnr)) })
-    return bufnrs->map({ _, bufnr -> bufnr->bufname()->fnamemodify(s:fzf.history.filepath_format()) })->sort()
+    return bufnrs->map({ _, bufnr -> bufnr->bufname()->fnamemodify(s:fzf.filepath_format()) })->sort()
   endfunction  " }}}
   " }}}
 
@@ -1184,7 +1192,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L457-L463
   function! s:fzf.history.candidates() abort  " {{{
-    let current  = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:fzf.history.filepath_format())]
+    let current  = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:fzf.filepath_format())]
     let oldfiles = s:fzf.history.list()
 
     return kg8m#util#list_module().uniq(current + oldfiles)
@@ -1193,15 +1201,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
   function! s:fzf.history.list() abort  " {{{
     let filepaths = mr#mru#list()->copy()->filter({ _, filepath -> filepath->filereadable() })
-    return filepaths->map({ _, filepath -> filepath->fnamemodify(s:fzf.history.filepath_format()) })
-  endfunction  " }}}
-
-  function! s:fzf.history.filepath_format() abort  " {{{
-    if !has_key(s:, "fzf_history_filepath_format")
-      let s:fzf_history_filepath_format = getcwd() ==# expand("~") ? ":~" : ":~:."
-    endif
-
-    return s:fzf_history_filepath_format
+    return filepaths->map({ _, filepath -> filepath->fnamemodify(s:fzf.filepath_format()) })
   endfunction  " }}}
   " }}}
 
