@@ -1754,16 +1754,24 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     " then
     "
     "   <% | %>
-    call lexima#add_rule(#{ char: "<Space>", at: '<%\%#', input: "<Space><Space>%><Left><Left><Left>", filetype: "eruby" })
+    call lexima#add_rule(#{ char: "<Space>", at: '<%\%#', input_after: "<Space>%>", filetype: "eruby" })
 
     " `<Space>` when
     "
     "   <%=|
     "
+    " or
+    "
+    "   <%=j|
+    "
     " then
     "
     "   <%= | %>
-    call lexima#add_rule(#{ char: "<Space>", at: '<%=\%#', input: "<Space><Space>%><Left><Left><Left>", filetype: "eruby" })
+    "
+    " or
+    "
+    "   <%=j | %>
+    call lexima#add_rule(#{ char: "<Space>", at: '<%=\S*\%#', input_after: "<Space>%>", filetype: "eruby" })
   endfunction  " }}}
 
   function! s:lexima.add_rules_for_html() abort  " {{{
