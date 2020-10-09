@@ -1972,7 +1972,7 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
       let total   = counts.total
     else
       let current = counts.current <# counts.maxcount ? counts.current : "?"
-      let total   = string(counts.maxcount).."+"
+      let total   = counts.maxcount.."+"
     endif
 
     return "["..current.."/"..total.."]"
