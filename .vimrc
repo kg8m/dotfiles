@@ -2545,9 +2545,6 @@ if kg8m#plugin#register("lambdalisue/vim-protocol")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("tpope/vim-rails", #{ if: kg8m#util#on_rails_dir() && !kg8m#util#is_git_tmp_edit() })  " {{{
-  " http://fg-180.katamayu.net/archives/2006/09/02/125150
-  let g:rails_level = 4
-
   if !has_key(g:, "rails_projections")
     let g:rails_projections = {}
   endif
