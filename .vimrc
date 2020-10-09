@@ -1862,7 +1862,6 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
   let s:lightline_elements = #{
     \   left: [
     \     ["mode", "paste"],
-    \     ["bufnum"],
     \     ["warning_filepath"], ["normal_filepath"],
     \     ["separator"],
     \     ["filetype"],
@@ -1881,7 +1880,6 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
     \   inactive: s:lightline_elements,
     \   component: #{
     \     separator: "|",
-    \     bufnum: "#%n",
     \     lineinfo_with_percent: "%l/%L(%p%%) : %v",
     \   },
     \   component_function: #{
