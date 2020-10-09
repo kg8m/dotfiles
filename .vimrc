@@ -1364,7 +1364,9 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Copy] relative filepath", "call kg8m#util#remote_copy(kg8m#util#current_relative_path())"],
         \   ["[Copy] absolute filepath", "call kg8m#util#remote_copy(kg8m#util#current_absolute_path())"],
         \
-        \   ["[Git] Gina patch", "call "..expand("<SID>").."gina().patch(expand('%'))"],
+        \   ["[Git] Gina patch",                                 "call "..expand("<SID>").."gina().patch(expand('%'))"],
+        \   ["[Git] Apply the patch/hunk to the another side",   "'<,'>diffput"],
+        \   ["[Git] Apply the patch/hunk from the another side", "'<,'>diffget"],
         \
         \   ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
         \   ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
@@ -1644,7 +1646,7 @@ if kg8m#plugin#register("lambdalisue/gina.vim", #{ if: !kg8m#util#is_git_tmp_edi
 
     try
       set diffopt+=vertical
-      execute "Gina patch "..a:filepath
+      execute "Gina patch --oneside "..a:filepath
     finally
       let &diffopt = original_diffopt
     endtry
