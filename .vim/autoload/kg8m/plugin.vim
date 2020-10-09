@@ -133,6 +133,13 @@ function! kg8m#plugin#is_sourced(plugin_name) abort  " {{{
   return dein#is_sourced(a:plugin_name)
 endfunction  " }}}
 
+function! kg8m#plugin#all_runtimepath() abort  " {{{
+  let current = &runtimepath->split(",")
+  let plugins = kg8m#plugin#get_info()->values()->filter("!v:val.rtp->empty()")->map("v:val.rtp")
+
+  return kg8m#util#list_module().uniq(current + plugins)->join(",")
+endfunction  " }}}
+
 function! kg8m#plugin#disabled_plugins() abort  " {{{
   return kg8m#plugin#get_info()->values()->filter("v:val.rtp->empty()")
 endfunction  " }}}
