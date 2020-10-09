@@ -1122,7 +1122,6 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " }}}
 
   " Grep: Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)  " {{{
-  " https://github.com/junegunn/fzf.vim/blob/dc4c4c22715c060a2babd5a5187004bdecbcdea7/plugin/fzf.vim#L52
   let s:fzf.grep = {}
 
   command! -nargs=+ -complete=tag FzfGrep       call s:fzf.grep.run(<q-args>, "")
@@ -1171,9 +1170,6 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " }}}
 
   " History: Ignore some files, e.g., `.git/COMMIT_EDITMSG`, `.git/addp-hunk-edit.diff`, and so on (Fzf's `:History` doesn't ignore them)  " {{{
-  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/plugin/fzf.vim#L64
-  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/plugin/fzf.vim#L73
-  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L520-L525
   let s:fzf.history = {}
 
   function! s:fzf.history.run() abort  " {{{
@@ -1190,7 +1186,6 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     call fzf#run(fzf#wrap("history-files", options))
   endfunction  " }}}
 
-  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L457-L463
   function! s:fzf.history.candidates() abort  " {{{
     let current  = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:fzf.filepath_format())]
     let oldfiles = s:fzf.history.list()
@@ -1198,7 +1193,6 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     return kg8m#util#list_module().uniq(current + oldfiles)
   endfunction  " }}}
 
-  " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
   function! s:fzf.history.list() abort  " {{{
     let filepaths = mr#mru#list()->copy()->filter({ _, filepath -> filepath->filereadable() })
     return filepaths->map({ _, filepath -> filepath->fnamemodify(s:fzf.filepath_format()) })
