@@ -2484,6 +2484,9 @@ if kg8m#plugin#register("mattn/vim-molder")  " {{{
   augroup END  " }}}
 endif  " }}}
 
+" Don't allow the cursor to move to indentation area
+call kg8m#plugin#register("thinca/vim-nind", #{ if: !kg8m#util#is_git_tmp_edit() })
+
 if kg8m#plugin#register("kana/vim-operator-replace")  " {{{
   map r <Plug>(operator-replace)
 
