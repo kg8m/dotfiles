@@ -1563,7 +1563,9 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   function! s:fzf.rails.run(type) abort  " {{{
     let type_spec = s:fzf_rails_specs[a:type]
 
-    if has("mac")
+    if executable("gfind")
+      let command = "gfind "..type_spec.dir.." -regextype posix-egrep"
+    elseif has("mac")
       let command = "find -E "..type_spec.dir
     else
       let command = "find "..type_spec.dir.." -regextype posix-egrep"
