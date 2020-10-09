@@ -43,6 +43,12 @@ let g:mapleader = ","
 set fileformats=unix,dos,mac
 set ambiwidth=double
 scriptencoding utf-8
+
+let g:kg8m = {}
+let s:kg8m = {}
+function! s:kg8m() abort  " {{{
+  return s:kg8m
+endfunction  " }}}
 " }}}
 
 " Reset my autocommands
@@ -60,6 +66,8 @@ call kg8m#plugin#init_manager()
 " Plugins list and settings  " {{{
 " Completion, LSP  " {{{
 if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
+  let s:asyncomplete = {}
+
   let g:asyncomplete_auto_popup = v:true
   let g:asyncomplete_popup_delay = 50
   let g:asyncomplete_auto_completeopt = v:false
@@ -68,8 +76,8 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
   " Hide messages like "Pattern not found" or "Match 1 of <N>"
   set shortmess+=c
 
-  function! s:AsyncompletePrioritySortedFuzzyFilter(options, matches) abort  " {{{
-    let match_pattern = s:CompletionRefreshPattern(s:IsLSPTargetBuffer() && s:IsLSPBufferEnabled() ? &filetype : "_")
+  function! s:asyncomplete.priority_sorted_fuzzy_filter(options, matches) abort  " {{{
+    let match_pattern = s:kg8m.completion_refresh_pattern(s:lsp.is_target_buffer() && s:lsp.is_buffer_enabled() ? &filetype : "_")
     let base_matcher  = matchstr(a:options.base, match_pattern)
 
     if empty(base_matcher)
@@ -96,7 +104,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
 
         for item in source_matches.items
           if item.word =~? fuzzy_matcher
-            let item.priority = s:AsyncompleteItemPriority(item, sorter_context)
+            let item.priority = s:asyncomplete.item_priority(item, sorter_context)
             let sorted_items += [item]
           endif
         endfor
@@ -115,7 +123,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
     call asyncomplete#preprocess_complete(a:options, sorted_items)
   endfunction  " }}}
 
-  function! s:AsyncompleteItemPriority(item, context) abort  " {{{
+  function! s:asyncomplete.item_priority(item, context) abort  " {{{
     let word = a:item.word
 
     if !has_key(a:context.cache, word)
@@ -130,39 +138,39 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
 
     return a:context.cache[word] * a:context.priority
   endfunction  " }}}
-  let g:asyncomplete_preprocessor = [function("s:AsyncompletePrioritySortedFuzzyFilter")]
+  let g:asyncomplete_preprocessor = [s:asyncomplete.priority_sorted_fuzzy_filter]
 
   " Refresh completion  " {{{
-  function! s:DefineRefreshCompletionMappings() abort  " {{{
-    call s:DefineBSMappingToRefreshCompletion()
+  function! s:asyncomplete.define_refresh_completion_mappings() abort  " {{{
+    call s:kg8m.define_bs_mapping_to_refresh_completion()
   endfunction  " }}}
 
-  function! s:RefreshCompletion() abort  " {{{
-    call s:ClearCompletionTimer()
-    call s:StartCompletionTimer()
+  function! s:asyncomplete.refresh_completion() abort  " {{{
+    call s:asyncomplete.clear_completion_timer()
+    call s:asyncomplete.start_completion_timer()
     return ""
   endfunction  " }}}
 
-  function! s:StartCompletionTimer() abort  " {{{
+  function! s:asyncomplete.start_completion_timer() abort  " {{{
     " OPTIMIZE: Use function instead of lambda for performance
-    let s:completion_refresh_timer = timer_start(200, function("s:ForceRefreshCompletion"))
+    let s:completion_refresh_timer = timer_start(200, s:asyncomplete.force_refresh_completion)
   endfunction  " }}}
 
-  function! s:ClearCompletionTimer() abort  " {{{
+  function! s:asyncomplete.clear_completion_timer() abort  " {{{
     if has_key(s:, "completion_refresh_timer")
       call timer_stop(s:completion_refresh_timer)
       unlet s:completion_refresh_timer
     endif
   endfunction  " }}}
 
-  function! s:ForceRefreshCompletion(timer) abort  " {{{
+  function! s:asyncomplete.force_refresh_completion(timer) abort  " {{{
     call asyncomplete#_force_refresh()
-    call s:ClearCompletionTimer()
+    call s:asyncomplete.clear_completion_timer()
   endfunction  " }}}
   " }}}
 
-  function! s:ConfigPluginOnPostSource_asyncomplete() abort  " {{{
-    call timer_start(0, { -> s:DefineRefreshCompletionMappings() })
+  function! s:asyncomplete.on_post_source() abort  " {{{
+    call timer_start(0, { -> s:asyncomplete.define_refresh_completion_mappings() })
 
     if get(b:, "asyncomplete_enable", v:true)
       call asyncomplete#enable_for_buffer()
@@ -172,11 +180,13 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
   call kg8m#plugin#configure(#{
      \   lazy: v:true,
      \   on_i: v:true,
-     \   hook_post_source: function("s:ConfigPluginOnPostSource_asyncomplete"),
+     \   hook_post_source: s:asyncomplete.on_post_source,
      \ })
 endif  " }}}
 
 if kg8m#plugin#register("prabirshrestha/asyncomplete-buffer.vim")  " {{{
+  let s:asyncomplete_buffer = {}
+
   " Call asyncomplete-buffer.vim's function to refresh keywords (`s:refresh_keywords`) on some events not only
   " `BufWinEnter` in order to include keywords added after `BufWinEnter` in completion candidates
   " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
@@ -188,50 +198,50 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-buffer.vim")  " {{{
     \ ]
 
   augroup my_vimrc  " {{{
-    autocmd User asyncomplete_setup call timer_start(0, { -> s:SetupAsyncompleteBuffer() })
+    autocmd User asyncomplete_setup call timer_start(0, { -> s:asyncomplete_buffer.setup() })
   augroup END  " }}}
 
-  function! s:SetupAsyncompleteBuffer() abort  " {{{
+  function! s:asyncomplete_buffer.setup() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options(#{
        \   name: "buffer",
        \   allowlist: ["*"],
        \   completor: function("asyncomplete#sources#buffer#completor"),
        \   events: s:asyncomplete_buffer_events,
-       \   on_event: function("s:AsyncompleteBufferOnEventAsync"),
+       \   on_event: s:asyncomplete_buffer.on_event_async,
        \   priority: 2,
        \ }))
 
-    call s:ActivateAsyncompleteBuffer()
+    call s:asyncomplete_buffer.activate()
   endfunction  " }}}
 
-  function! s:AsyncompleteBufferOnEventAsync(...) abort  " {{{
-    call s:AsyncompleteBufferOnEventClearTimer()
-    call s:AsyncompleteBufferOnEventStartTimer()
+  function! s:asyncomplete_buffer.on_event_async(...) abort  " {{{
+    call s:asyncomplete_buffer.on_event_clear_timer()
+    call s:asyncomplete_buffer.on_event_start_timer()
   endfunction  " }}}
 
-  function! s:AsyncompleteBufferOnEventStartTimer() abort  " {{{
+  function! s:asyncomplete_buffer.on_event_start_timer() abort  " {{{
     " OPTIMIZE: Use function instead of lambda for performance
-    let s:asyncomplete_buffer_on_event_timer = timer_start(200, function("s:AsyncompleteBufferOnEvent"))
+    let s:asyncomplete_buffer.on_event_timer = timer_start(200, s:asyncomplete_buffer.on_event)
   endfunction  " }}}
 
-  function! s:AsyncompleteBufferOnEventClearTimer() abort  " {{{
-    if has_key(s:, "asyncomplete_buffer_on_event_timer")
-      call timer_stop(s:asyncomplete_buffer_on_event_timer)
-      unlet s:asyncomplete_buffer_on_event_timer
+  function! s:asyncomplete_buffer.on_event_clear_timer() abort  " {{{
+    if has_key(s:asyncomplete_buffer, "on_event_timer")
+      call timer_stop(s:asyncomplete_buffer.on_event_timer)
+      unlet s:asyncomplete_buffer.on_event_timer
     endif
   endfunction  " }}}
 
   " https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
-  function! s:AsyncompleteBufferOnEvent(timer) abort  " {{{
-    if !has_key(s:, "AsyncompleteBufferRefreshKeywords")
-      call s:SetupAsyncompleteBufferRefreshKeywords()
+  function! s:asyncomplete_buffer.on_event(timer) abort  " {{{
+    if !has_key(s:asyncomplete_buffer, "refresh_keywords")
+      call s:asyncomplete_buffer.setup_refresh_keywords()
     endif
 
-    call s:AsyncompleteBufferRefreshKeywords()
-    call s:AsyncompleteBufferOnEventClearTimer()
+    call s:asyncomplete_buffer.refresh_keywords()
+    call s:asyncomplete_buffer.on_event_clear_timer()
   endfunction  " }}}
 
-  function! s:SetupAsyncompleteBufferRefreshKeywords() abort  " {{{
+  function! s:asyncomplete_buffer.setup_refresh_keywords() abort  " {{{
     for scriptname in split(execute("scriptnames"), '\n')
       if scriptname =~# 'asyncomplete-buffer\.vim/autoload/asyncomplete/sources/buffer\.vim'
         let s:asyncomplete_buffer_sid = matchstr(scriptname, '\v^ *(\d+)')
@@ -240,20 +250,20 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-buffer.vim")  " {{{
     endfor
 
     if has_key(s:, "asyncomplete_buffer_sid")
-      let s:AsyncompleteBufferRefreshKeywords = function("<SNR>"..s:asyncomplete_buffer_sid.."_refresh_keywords")
+      let s:asyncomplete_buffer.refresh_keywords = function("<SNR>"..s:asyncomplete_buffer_sid.."_refresh_keywords")
     else
-      if has_key(s:, "AsyncompleteBufferRefreshKeywords")
+      if has_key(s:asyncomplete_buffer, "refresh_keywords")
         return
       endif
 
-      function! s:AsyncompleteBufferCannotRefreshKeywords() abort
+      function! s:asyncomplete_buffer.cannot_refresh_keywords() abort
         call kg8m#util#echo_error_msg("Cannot refresh keywords because asyncomplete-buffer.vim's SID can't be detected.")
       endfunction
-      let s:AsyncompleteBufferRefreshKeywords = function("AsyncompleteBufferCannotRefreshKeywords")
+      let s:asyncomplete_buffer.refresh_keywords = s:asyncomplete_buffer.cannot_refresh_keywords
     endif
   endfunction  " }}}
 
-  function! s:ActivateAsyncompleteBuffer() abort  " {{{
+  function! s:asyncomplete_buffer.activate() abort  " {{{
     " Trigger one of the s:asyncomplete_buffer_events
     " Don't use `TextChangedI` or `TextChangedP` because they cause asyncomplete.vim's error about previous_position
     doautocmd <nomodeline> TextChanged
@@ -266,11 +276,13 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-buffer.vim")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("prabirshrestha/asyncomplete-file.vim")  " {{{
+  let s:asyncomplete_file = {}
+
   augroup my_vimrc  " {{{
-    autocmd User asyncomplete_setup call s:SetupAsyncompleteFile()
+    autocmd User asyncomplete_setup call s:asyncomplete_file.setup()
   augroup END  " }}}
 
-  function! s:SetupAsyncompleteFile() abort  " {{{
+  function! s:asyncomplete_file.setup() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#file#get_source_options(#{
        \   name: "file",
        \   allowlist: ["*"],
@@ -286,11 +298,13 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-file.vim")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
+  let s:asyncomplete_neosnippet = {}
+
   augroup my_vimrc  " {{{
-    autocmd User asyncomplete_setup call s:SetupAsyncompleteNeosnippet()
+    autocmd User asyncomplete_setup call s:asyncomplete_neosnippet.setup()
   augroup END  " }}}
 
-  function! s:SetupAsyncompleteNeosnippet() abort  " {{{
+  function! s:asyncomplete_neosnippet.setup() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#neosnippet#get_source_options(#{
        \   name: "neosnippet",
        \   allowlist: ["*"],
@@ -306,11 +320,13 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-neosnippet.vim")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("high-moctane/asyncomplete-nextword.vim")  " {{{
+  let s:asyncomplete_nextword = {}
+
   augroup my_vimrc  " {{{
-    autocmd User asyncomplete_setup call s:SetupAsyncompleteNextword()
+    autocmd User asyncomplete_setup call s:asyncomplete_nextword.setup()
   augroup END  " }}}
 
-  function! s:SetupAsyncompleteNextword() abort  " {{{
+  function! s:asyncomplete_nextword.setup() abort  " {{{
     " Should specify filetypes? `allowlist: ["gitcommit", "markdown", "moin", "text"],`
     call asyncomplete#register_source(asyncomplete#sources#nextword#get_source_options(#{
        \   name: "nextword",
@@ -335,11 +351,13 @@ if kg8m#plugin#register("high-moctane/asyncomplete-nextword.vim")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", #{ build: "./install.sh" })  " {{{
+  let s:asyncomplete_tabnine = {}
+
   augroup my_vimrc  " {{{
-    autocmd User asyncomplete_setup call s:SetupAsyncompleteTabnine()
+    autocmd User asyncomplete_setup call s:asyncomplete_tabnine.setup()
   augroup END  " }}}
 
-  function! s:SetupAsyncompleteTabnine() abort  " {{{
+  function! s:asyncomplete_tabnine.setup() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#tabnine#get_source_options(#{
        \   name: "tabnine",
        \   allowlist: ["*"],
@@ -355,11 +373,13 @@ if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", #{ build: "./install
 endif  " }}}
 
 if kg8m#plugin#register("prabirshrestha/asyncomplete-tags.vim")  " {{{
+  let s:asyncomplete_tags = {}
+
   augroup my_vimrc  " {{{
-    autocmd User asyncomplete_setup call s:SetupAsyncompleteTags()
+    autocmd User asyncomplete_setup call s:asyncomplete_tags.setup()
   augroup END  " }}}
 
-  function! s:SetupAsyncompleteTags() abort  " {{{
+  function! s:asyncomplete_tags.setup() abort  " {{{
     call asyncomplete#register_source(asyncomplete#sources#tags#get_source_options(#{
        \   name: "tags",
        \   allowlist: ["*"],
@@ -382,8 +402,10 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-lsp.vim")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("Shougo/neosnippet")  " {{{
-  function! s:ConfigPluginOnSource_neosnippet() abort  " {{{
-    call s:DefineCompletionMappings()
+  let s:neosnippet = {}
+
+  function! s:neosnippet.on_source() abort  " {{{
+    call s:kg8m.define_completion_mappings()
 
     let g:neosnippet#snippets_directory = [
       \   s:my_utility_path.."/snippets",
@@ -396,7 +418,7 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
       autocmd InsertLeave * NeoSnippetClearMarkers
     augroup END  " }}}
 
-    function! s:SetupNeosnippetContextual() abort  " {{{
+    function! s:neosnippet.setup_contextual() abort  " {{{
       let dir = s:my_utility_path.."/snippets/"
       let g:neosnippet_contextual#contexts = get(g:, "neosnippet_contextual#contexts", {})
 
@@ -419,7 +441,7 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
           \ ]
       endif
 
-      function! s:SourceContextualSnippets() abort  " {{{
+      function! s:neosnippet.source_contextual_snippets() abort  " {{{
         let contexts = get(g:neosnippet_contextual#contexts, &filetype, [])
         let filepath = kg8m#util#current_relative_path()
 
@@ -437,14 +459,14 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
       endfunction  " }}}
 
       augroup my_vimrc  " {{{
-        execute "autocmd FileType "..join(keys(g:neosnippet_contextual#contexts), ",").." call timer_start(50, { -> s:SourceContextualSnippets() })"
+        execute "autocmd FileType "..join(keys(g:neosnippet_contextual#contexts), ",").." call timer_start(50, { -> s:neosnippet.source_contextual_snippets() })"
       augroup END  " }}}
     endfunction  " }}}
-    call s:SetupNeosnippetContextual()
+    call s:neosnippet.setup_contextual()
   endfunction  " }}}
 
-  function! s:ConfigPluginOnPostSource_neosnippet() abort  " {{{
-    call timer_start(0, { -> s:SourceContextualSnippets() })
+  function! s:neosnippet.on_post_source() abort  " {{{
+    call timer_start(0, { -> s:neosnippet.source_contextual_snippets() })
   endfunction  " }}}
 
   " `on_ft` for Syntaxes
@@ -453,12 +475,14 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
      \   on_ft:     ["snippet", "neosnippet"],
      \   on_func:   "neosnippet#",
      \   on_source: "asyncomplete.vim",
-     \   hook_source:      function("s:ConfigPluginOnSource_neosnippet"),
-     \   hook_post_source: function("s:ConfigPluginOnPostSource_neosnippet"),
+     \   hook_source:      s:neosnippet.on_source,
+     \   hook_post_source: s:neosnippet.on_post_source,
      \ })
 endif  " }}}
 
 if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
+  let s:lsp = {}
+
   let g:lsp_diagnostics_enabled          = v:true
   let g:lsp_diagnostics_echo_cursor      = v:false
   let g:lsp_diagnostics_float_cursor     = v:true
@@ -473,37 +497,37 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
 
   augroup my_vimrc  " {{{
     autocmd User lsp_setup          call kg8m#plugin#lsp#enable()
-    autocmd User lsp_setup          call s:SubscribeLSPStream()
-    autocmd User lsp_buffer_enabled call s:OnLSPBufferEnabled()
+    autocmd User lsp_setup          call s:lsp.subscribe_stream()
+    autocmd User lsp_buffer_enabled call s:lsp.on_lsp_buffer_enabled()
 
-    autocmd FileType * call s:ResetLSPTargetBuffer()
+    autocmd FileType * call s:lsp.reset_target_buffer()
   augroup END  " }}}
 
-  function! s:SubscribeLSPStream() abort  " {{{
+  function! s:lsp.subscribe_stream() abort  " {{{
     call lsp#callbag#pipe(
        \   lsp#stream(),
-       \   lsp#callbag#filter({ x -> s:IsLSPDefinitionFailedStream(x) }),
+       \   lsp#callbag#filter({ x -> s:lsp.is_definition_failed_stream(x) }),
        \   lsp#callbag#subscribe(#{ next: { -> fzf_tjump#jump() } }),
        \ )
   endfunction  " }}}
 
-  function! s:IsLSPDefinitionFailedStream(x) abort  " {{{
+  function! s:lsp.is_definition_failed_stream(x) abort  " {{{
     return has_key(a:x, "request") && get(a:x.request, "method", "") ==# "textDocument/definition" &&
          \ has_key(a:x, "response") && empty(get(a:x.response, "result", []))
   endfunction  " }}}
 
-  function! s:OnLSPBufferEnabled() abort  " {{{
-    let b:asyncomplete_refresh_pattern = s:CompletionRefreshPattern(&filetype)
+  function! s:lsp.on_lsp_buffer_enabled() abort  " {{{
+    let b:asyncomplete_refresh_pattern = s:kg8m.completion_refresh_pattern(&filetype)
     setlocal omnifunc=lsp#complete
     nmap <buffer> g] <Plug>(lsp-definition)
     nmap <buffer> <S-h> <Plug>(lsp-hover)
 
-    " cf. s:IsLSPBufferEnabled()
+    " cf. s:lsp.is_buffer_enabled()
     let b:lsp_buffer_enabled = v:true
   endfunction  " }}}
 
-  " cf. s:OnLSPBufferEnabled()
-  function! s:IsLSPBufferEnabled() abort  " {{{
+  " cf. s:lsp.on_lsp_buffer_enabled()
+  function! s:lsp.is_buffer_enabled() abort  " {{{
     if has_key(b:, "lsp_buffer_enabled")
       return v:true
     else
@@ -525,7 +549,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
     endif
   endfunction  " }}}
 
-  function! s:IsLSPTargetBuffer() abort  " {{{
+  function! s:lsp.is_target_buffer() abort  " {{{
     if !has_key(b:, "lsp_target_buffer")
       let b:lsp_target_buffer = v:false
       for filetype in kg8m#plugin#lsp#get_filetypes()
@@ -539,13 +563,13 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
     return b:lsp_target_buffer
   endfunction  " }}}
 
-  function! s:ResetLSPTargetBuffer() abort  " {{{
+  function! s:lsp.reset_target_buffer() abort  " {{{
     if has_key(b:, "lsp_target_buffer")
       unlet b:lsp_target_buffer
     endif
   endfunction  " }}}
 
-  function! s:LSPSchemasJson() abort  " {{{
+  function! s:lsp.schemas_json() abort  " {{{
     if !has_key(s:, "lsp_schemas_json")
       let filepath = kg8m#plugin#get_info("vim-lsp-settings").path.."/data/catalog.json"
       let json     = filepath->readfile()->join("\n")->json_decode()
@@ -571,7 +595,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \   name: "css-languageserver",
      \   cmd: { server_info -> ["css-languageserver", "--stdio"] },
      \   allowlist: ["css", "less", "scss"],
-     \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("css") } },
+     \   config: { -> #{ refresh_pattern: s:kg8m.completion_refresh_pattern("css") } },
      \   workspace_config: #{
      \     css:  #{ lint: #{ validProperties: [] } },
      \     less: #{ lint: #{ validProperties: [] } },
@@ -630,7 +654,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \   cmd: { server_info -> ["html-languageserver", "--stdio"] },
      \   initialization_options: #{ embeddedLanguages: #{ css: v:true, javascript: v:true } },
      \   allowlist: ["html"],
-     \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("html") } },
+     \   config: { -> #{ refresh_pattern: s:kg8m.completion_refresh_pattern("html") } },
      \ })
   " }}}
 
@@ -639,11 +663,11 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \   name: "json-languageserver",
      \   cmd: { server_info -> ["json-languageserver", "--stdio"] },
      \   allowlist: ["json"],
-     \   config: { -> #{ refresh_pattern: s:CompletionRefreshPattern("json") } },
+     \   config: { -> #{ refresh_pattern: s:kg8m.completion_refresh_pattern("json") } },
      \   workspace_config: { -> #{
      \     json: #{
      \       format: #{ enable: v:true },
-     \       schemas: s:LSPSchemasJson(),
+     \       schemas: s:lsp.schemas_json(),
      \    },
      \   } },
      \ })
@@ -701,7 +725,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \   initialization_options: { -> #{
      \     iskeyword: &iskeyword,
      \     vimruntime: $VIMRUNTIME,
-     \     runtimepath: s:LSPVimAllRuntimepath(),
+     \     runtimepath: s:lsp.all_runtimepath(),
      \     diagnostic: #{ enable: v:true },
      \     indexes: #{
      \       runtimepath: v:true,
@@ -717,7 +741,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \   allowlist: ["vim"],
      \ })
 
-  function! s:LSPVimAllRuntimepath() abort  " {{{
+  function! s:lsp.all_runtimepath() abort  " {{{
     let current = &runtimepath->split(",")
     let plugins = kg8m#plugin#get_info()->values()->map("v:val.rtp")->filter("!v:val->empty()")
 
@@ -789,7 +813,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   " }}}
   " }}}
 
-  function! s:ConfigPluginOnPostSource_lsp() abort  " {{{
+  function! s:lsp.on_post_source() abort  " {{{
     " https://github.com/prabirshrestha/vim-lsp/blob/e2a052acce38bd0ae25e57fff734a14a9e2c9ef7/plugin/lsp.vim#L52
     call lsp#enable()
   endfunction  " }}}
@@ -798,7 +822,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \   lazy:    v:true,
      \   on_ft:   kg8m#plugin#lsp#get_filetypes(),
      \   depends: "asyncomplete.vim",
-     \   hook_post_source: function("s:ConfigPluginOnPostSource_lsp"),
+     \   hook_post_source: s:lsp.on_post_source,
      \ })
 
   call kg8m#plugin#register("mattn/vim-lsp-settings", #{ if: v:false })
@@ -806,15 +830,17 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("hrsh7th/vim-vsnip")  " {{{
-  function! s:ConfigPluginOnSource_vim_vsnip() abort  " {{{
-    call s:DefineCompletionMappings()
+  let s:vsnip = {}
+
+  function! s:vsnip.on_source() abort  " {{{
+    call s:kg8m.define_completion_mappings()
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{
      \   lazy:      v:true,
      \   on_func:   "vsnip#",
      \   on_source: "vim-lsp",
-     \   hook_source: function("s:ConfigPluginOnSource_vim_vsnip"),
+     \   hook_source: s:vsnip.on_source,
      \ })
 
   if kg8m#plugin#register("hrsh7th/vim-vsnip-integ")  " {{{
@@ -825,7 +851,7 @@ if kg8m#plugin#register("hrsh7th/vim-vsnip")  " {{{
   endif  " }}}
 endif  " }}}
 
-function! s:CompletionRefreshPattern(filetype) abort  " {{{
+function! s:kg8m.completion_refresh_pattern(filetype) abort  " {{{
   if !has_key(s:, "completion_refresh_patterns")
     let css_pattern = '\v([.#a-zA-Z0-9_-]+)$'
     let s:completion_refresh_patterns = #{
@@ -942,15 +968,17 @@ if kg8m#plugin#register("Shougo/context_filetype.vim", #{ if: !kg8m#util#is_git_
 endif  " }}}
 
 if kg8m#plugin#register("spolu/dwm.vim")  " {{{
+  let s:dwm = {}
+
   nnoremap <C-w>n       :call DWM_New()<Cr>
   nnoremap <C-w><Space> :call DWM_AutoEnter()<Cr>
 
   let g:dwm_map_keys = v:false
 
   " For fzf.vim
-  command! -nargs=1 -complete=file DWMOpen call <SID>DWMOpen(<q-args>)
+  command! -nargs=1 -complete=file DWMOpen call s:dwm.open(<q-args>)
 
-  function! s:DWMOpen(filepath) abort  " {{{
+  function! s:dwm.open(filepath) abort  " {{{
     if bufexists(a:filepath)
       let winnr = bufwinnr(a:filepath)
 
@@ -972,7 +1000,7 @@ if kg8m#plugin#register("spolu/dwm.vim")  " {{{
     endif
   endfunction  " }}}
 
-  function! s:ConfigPluginOnPostSource_dwm() abort  " {{{
+  function! s:dwm.on_post_source() abort  " {{{
     " Disable DWM's default behavior on buffer loaded
     augroup dwm
       autocmd!
@@ -982,11 +1010,16 @@ if kg8m#plugin#register("spolu/dwm.vim")  " {{{
   call kg8m#plugin#configure(#{
      \   lazy:    v:true,
      \   on_func: ["DWM_New", "DWM_AutoEnter", "DWM_Stack"],
-     \   hook_post_source: function("s:ConfigPluginOnPostSource_dwm"),
+     \   hook_post_source: s:dwm.on_post_source,
      \ })
 endif  " }}}
 
 if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
+  let s:fzf = {}
+  function! s:fzf() abort  " {{{
+    return s:fzf
+  endfunction  " }}}
+
   let g:fzf_command_prefix = "Fzf"
   let g:fzf_buffers_jump   = v:true
   let g:fzf_layout         = #{ up: "~90%" }
@@ -996,25 +1029,26 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " See also vim-fzf-tjump's mappings
   nnoremap <Leader><Leader>f :FzfFiles<Cr>
-  nnoremap <Leader><Leader>v :call <SID>FzfGitFiles()<Cr>
-  nnoremap <Leader><Leader>b :call <SID>FzfBuffers()<Cr>
+  nnoremap <Leader><Leader>v :call <SID>fzf().git_files.run()<Cr>
+  nnoremap <Leader><Leader>b :call <SID>fzf().buffers.run()<Cr>
   nnoremap <Leader><Leader>l :FzfBLines<Cr>
   nnoremap <Leader><Leader>g :FzfGrep<Space>
   nnoremap <Leader><Leader>G :FzfGrepForDir<Space>
   vnoremap <Leader><Leader>g "gy:FzfGrep<Space><C-r>"
   vnoremap <Leader><Leader>G "gy:FzfGrepForDir<Space><C-r>"
   nnoremap <Leader><Leader>m :FzfMarks<Cr>
-  nnoremap <Leader><Leader>h :call <SID>FzfHistory()<Cr>
+  nnoremap <Leader><Leader>h :call <SID>fzf().history.run()<Cr>
   nnoremap <Leader><Leader>H :FzfHelptags<Cr>
-  nnoremap <Leader><Leader>y :call <SID>FzfYankHistory()<Cr>
-  noremap  <Leader><Leader>s :<C-u>call <SID>FzfMyShortcuts("")<Cr>
-  nnoremap <Leader><Leader>r :call <SID>SetupFzfRails()<Cr>:FzfRails<Space>
+  nnoremap <Leader><Leader>y :call <SID>fzf().yank_history.run()<Cr>
+  noremap  <Leader><Leader>s :<C-u>call <SID>fzf().my_shortcuts.run("")<Cr>
+  noremap  <Leader><Leader>a :<C-u>call <SID>fzf().my_shortcuts.run("'EasyAlign ")<Cr>
+  nnoremap <Leader><Leader>r :call <SID>fzf().rails.setup()<Cr>:FzfRails<Space>
 
   augroup my_vimrc  " {{{
-    autocmd FileType fzf call s:SetupFzfWindow()
+    autocmd FileType fzf call s:fzf.setup_window()
   augroup END  " }}}
 
-  function! s:SetupFzfWindow() abort  " {{{
+  function! s:fzf.setup_window() abort  " {{{
     " Temporarily increase window height
     set winheight=999
     set winheight=1
@@ -1022,7 +1056,9 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
 
   " Git Files: Show preview of dirty files (Fzf's `:GFiles?` doesn't show preview)  " {{{
-  function! s:FzfGitFiles() abort  " {{{
+  let s:fzf.git_files = {}
+
+  function! s:fzf.git_files.run() abort  " {{{
     call fzf#vim#gitfiles("?", #{
        \   options: [
        \     "--preview", "git diff-or-cat {2}",
@@ -1034,9 +1070,11 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   " Buffers: Sort buffers in dictionary order (Fzf's `:Buffers` doesn't sort them)  " {{{
   " Also see History configs
-  function! s:FzfBuffers() abort  " {{{
+  let s:fzf.buffers = {}
+
+  function! s:fzf.buffers.run() abort  " {{{
     let options = #{
-      \   source:  s:FzfBuffersFiles(),
+      \   source:  s:fzf.buffers.candidates(),
       \   options: [
       \     "--header-lines", !empty(expand("%")),
       \     "--prompt", "Buffers> ",
@@ -1048,30 +1086,32 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     call fzf#run(fzf#wrap("buffer-files", options))
   endfunction  " }}}
 
-  function! s:FzfBuffersFiles() abort  " {{{
-    let current = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:FzfHistoryFilepathFormat())]
-    let buffers = s:FzfBuffersList()
+  function! s:fzf.buffers.candidates() abort  " {{{
+    let current = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:fzf.history.filepath_format())]
+    let buffers = s:fzf.buffers.list()
 
     return kg8m#util#list_module().uniq(current + buffers)
   endfunction  " }}}
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L196-L198
-  function! s:FzfBuffersList() abort  " {{{
+  function! s:fzf.buffers.list() abort  " {{{
     let bufnrs = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") !=# "qf" && len(bufname(bufnr)) })
-    return bufnrs->map({ _, bufnr -> bufnr->bufname()->fnamemodify(s:FzfHistoryFilepathFormat()) })->sort()
+    return bufnrs->map({ _, bufnr -> bufnr->bufname()->fnamemodify(s:fzf.history.filepath_format()) })->sort()
   endfunction  " }}}
   " }}}
 
   " Grep: Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)  " {{{
   " https://github.com/junegunn/fzf.vim/blob/dc4c4c22715c060a2babd5a5187004bdecbcdea7/plugin/fzf.vim#L52
-  command! -nargs=+ -complete=tag FzfGrep       call s:FzfGrep(<q-args>, "")
-  command! -nargs=+ -complete=tag FzfGrepForDir call s:FzfGrep(<q-args>, s:InputDirpath())
+  let s:fzf.grep = {}
 
-  function! s:FzfGrep(pattern, dirpath) abort  " {{{
+  command! -nargs=+ -complete=tag FzfGrep       call s:fzf.grep.run(<q-args>, "")
+  command! -nargs=+ -complete=tag FzfGrepForDir call s:fzf.grep.run(<q-args>, s:kg8m.input_dirpath())
+
+  function! s:fzf.grep.run(pattern, dirpath) abort  " {{{
     let pattern      = shellescape(a:pattern)
     let dirpath      = empty(a:dirpath) ? "" : shellescape(a:dirpath)
     let grep_args    = pattern.." "..dirpath
-    let grep_options = s:FzfGrepOptions()
+    let grep_options = s:fzf.grep.options()
     let fzf_options  = #{
       \   options: [
       \     "--header", "Grep: "..grep_args,
@@ -1084,7 +1124,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     call fzf#vim#grep("rg "..grep_options.." "..grep_args, v:true, fzf_options)
   endfunction  " }}}
 
-  function! s:InputDirpath() abort  " {{{
+  function! s:kg8m.input_dirpath() abort  " {{{
     let dirpath = input("Specify dirpath: ", "", "dir")
 
     if empty(dirpath)
@@ -1096,7 +1136,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     endif
   endfunction  " }}}
 
-  function! s:FzfGrepOptions() abort  " {{{
+  function! s:fzf.grep.options() abort  " {{{
     let base = "--column --line-number --no-heading --color=always"
 
     if empty($RIPGREP_EXTRA_OPTIONS)
@@ -1113,9 +1153,11 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/plugin/fzf.vim#L64
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/plugin/fzf.vim#L73
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L520-L525
-  function! s:FzfHistory() abort  " {{{
+  let s:fzf.history = {}
+
+  function! s:fzf.history.run() abort  " {{{
     let options = #{
-      \   source:  s:FzfHistoryFiles(),
+      \   source:  s:fzf.history.candidates(),
       \   options: [
       \     "--header-lines", !empty(expand("%")),
       \     "--prompt", "History> ",
@@ -1128,20 +1170,20 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L457-L463
-  function! s:FzfHistoryFiles() abort  " {{{
-    let current  = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:FzfHistoryFilepathFormat())]
-    let oldfiles = s:FzfHistoryList()
+  function! s:fzf.history.candidates() abort  " {{{
+    let current  = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:fzf.history.filepath_format())]
+    let oldfiles = s:fzf.history.list()
 
     return kg8m#util#list_module().uniq(current + oldfiles)
   endfunction  " }}}
 
   " https://github.com/junegunn/fzf.vim/blob/ee08c8f9497a4de74c9df18bc294fbe5930f6e4d/autoload/fzf/vim.vim#L461
-  function! s:FzfHistoryList() abort  " {{{
+  function! s:fzf.history.list() abort  " {{{
     let filepaths = mr#mru#list()->copy()->filter({ _, filepath -> filepath->filereadable() })
-    return filepaths->map({ _, filepath -> filepath->fnamemodify(s:FzfHistoryFilepathFormat()) })
+    return filepaths->map({ _, filepath -> filepath->fnamemodify(s:fzf.history.filepath_format()) })
   endfunction  " }}}
 
-  function! s:FzfHistoryFilepathFormat() abort  " {{{
+  function! s:fzf.history.filepath_format() abort  " {{{
     if !has_key(s:, "fzf_history_filepath_format")
       let s:fzf_history_filepath_format = getcwd() ==# expand("~") ? ":~" : ":~:."
     endif
@@ -1151,10 +1193,12 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " }}}
 
   " Marks  " {{{
-  nnoremap <silent> m :call <SID>IncrementalMark()<Cr>
+  let s:fzf.marks = {}
+
+  nnoremap <silent> m :call <SID>fzf().marks.increment()<Cr>
 
   " http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
-  function! s:SetupIncrementalMark() abort  " {{{
+  function! s:fzf.marks.setup() abort  " {{{
     if has_key(s:, "incremental_mark_keys")
       return
     endif
@@ -1168,10 +1212,10 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     execute "delmarks "..join(s:incremental_mark_keys, "")
   endfunction  " }}}
 
-  function! s:IncrementalMark() abort  " {{{
-    call s:SetupIncrementalMark()
+  function! s:fzf.marks.increment() abort  " {{{
+    call s:fzf.marks.setup()
 
-    let incremental_mark_key = s:IncrementalMarkDetectKey()
+    let incremental_mark_key = s:fzf.marks.detect_key()
 
     if incremental_mark_key =~# s:incremental_mark_keys_pattern
       echo "Already marked to "..incremental_mark_key
@@ -1188,7 +1232,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     echo "Marked to "..s:incremental_mark_keys[s:incremental_mark_index]
   endfunction  " }}}
 
-  function! s:IncrementalMarkDetectKey() abort  " {{{
+  function! s:fzf.marks.detect_key() abort  " {{{
     let detected_mark_key   = 0
     let current_filepath    = expand("%")
     let current_line_number = line(".")
@@ -1216,52 +1260,70 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   " Yank History  " {{{
   " https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
   " Also see yankround.vim
-  function! s:FzfYankHistory() abort  " {{{
+  let s:fzf.yank_history = {}
+
+  function! s:fzf.yank_history.run() abort  " {{{
+    call s:fzf.yank_history.setup()
+
     let options = #{
-      \   source:  s:YankList(),
-      \   sink:    function("s:YankHandler"),
+      \   source:  s:fzf.yank_history.candidates(),
+      \   sink:    s:fzf.yank_history.handler,
       \   options: [
       \     "--no-multi",
       \     "--nth", "2..",
       \     "--prompt", "Yank> ",
       \     "--tabstop", "1",
-      \     "--preview", s:YankPreviewCommand(),
+      \     "--preview", s:yankround.preview_command(),
       \     "--preview-window", "down:5:wrap",
       \   ],
       \ }
 
     call fzf#run(fzf#wrap("yank-history", options))
   endfunction  " }}}
+
+  function! s:fzf.yank_history.setup() abort  " {{{
+    if has_key(s:fzf.yank_history, "handler")
+      return
+    endif
+
+    let s:fzf.yank_history.handler = s:yankround.handler
+  endfunction  " }}}
+
+  function! s:fzf.yank_history.candidates() abort  " {{{
+    return s:yankround.list()
+  endfunction  " }}}
   " }}}
 
   " My Shortcuts  " {{{
-  function! s:FzfMyShortcuts(query) abort  " {{{
+  let s:fzf.my_shortcuts = {}
+
+  function! s:fzf.my_shortcuts.run(query) abort  " {{{
     let options = {
-      \   "source":  s:FzfMyShortcutsList(),
-      \   "sink":    function("s:FzfMyShortcutsHandler"),
+      \   "source":  s:fzf.my_shortcuts.candidates(),
+      \   "sink":    s:fzf.my_shortcuts.handler,
       \   "options": ["--no-multi", "--prompt", "Shortcuts> ", "--query", a:query],
       \ }
 
     call fzf#run(fzf#wrap("my-shortcuts", options))
   endfunction  " }}}
 
-  function! s:FzfMyShortcutsList() abort  " {{{
-    call s:SetupFzfMyShortcuts()
+  function! s:fzf.my_shortcuts.candidates() abort  " {{{
+    call s:fzf.my_shortcuts.setup()
     return s:fzf_my_shortcuts_list
   endfunction  " }}}
 
-  function! s:FzfMyShortcutsHandler(item) abort  " {{{
+  function! s:fzf.my_shortcuts.handler(item) abort  " {{{
     " Don't call `execute substitute(...)` because it causes problem if the command is Fzf's
     let command = substitute(a:item, '\v.*--\s+`(.+)`$', '\1', "")
     call feedkeys(":"..command.."\<Cr>")
   endfunction  " }}}
 
-  function! s:SetupFzfMyShortcuts() abort  " {{{
+  function! s:fzf.my_shortcuts.setup() abort  " {{{
     if has_key(s:, "fzf_my_shortcuts_list")
       return
     endif
 
-    function! s:FzfMyShortcutsDefineRawList() abort  " {{{
+    function! s:fzf.my_shortcuts.define_raw_list() abort  " {{{
       " Hankaku/Zenkaku: http://nanasi.jp/articles/vim/hz_ja_vim.html
       let s:fzf_my_shortcuts_list = [
         \   ["[Hankaku/Zenkaku] All to Hankaku",           "'<,'>Hankaku"],
@@ -1295,7 +1357,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Copy] relative filepath", "call kg8m#util#remote_copy(kg8m#util#current_relative_path())"],
         \   ["[Copy] absolute filepath", "call kg8m#util#remote_copy(kg8m#util#current_absolute_path())"],
         \
-        \   ["[Git] Gina patch", "call "..expand("<SID>").."GinaPatch(expand('%'))"],
+        \   ["[Git] Gina patch", "call "..expand("<SID>").."gina().patch(expand('%'))"],
         \
         \   ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
         \   ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
@@ -1309,7 +1371,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \ ]
     endfunction  " }}}
 
-    function! s:FzfMyShortcutsCountMaxWordLength() abort  " {{{
+    function! s:fzf.my_shortcuts.count_max_word_length() abort  " {{{
       let s:fzf_my_shortcuts_max_word_length =
         \   s:fzf_my_shortcuts_list
         \     ->copy()
@@ -1317,8 +1379,8 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \     ->max()
     endfunction  " }}}
 
-    function! s:FzfMyShortcutsMakeGroups() abort  " {{{
-      function! s:FzfMyShortcutsGroupName(item) abort  " {{{
+    function! s:fzf.my_shortcuts.make_groups() abort  " {{{
+      function! s:fzf.my_shortcuts_group_name(item) abort  " {{{
         return matchstr(a:item, '\v^\[[^]]+\]')
       endfunction  " }}}
 
@@ -1326,7 +1388,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       let new_list    = []
 
       for candidate in s:fzf_my_shortcuts_list
-        let current_prefix = s:FzfMyShortcutsGroupName(candidate[0])
+        let current_prefix = s:fzf.my_shortcuts_group_name(candidate[0])
 
         if !empty(new_list) && current_prefix !=# prev_prefix
           call add(new_list, ["", ""])
@@ -1339,35 +1401,37 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       let s:fzf_my_shortcuts_list = new_list
     endfunction  " }}}
 
-    function! s:FzfMyShortcutsFormatList() abort  " {{{
+    function! s:fzf.my_shortcuts.format_list() abort  " {{{
       let s:fzf_my_shortcuts_list =
         \   s:fzf_my_shortcuts_list
-        \     ->map(function("s:FzfMyShortcutsFormatItem"))
+        \     ->map(s:fzf.my_shortcuts_format_item)
     endfunction  " }}}
 
-    function! s:FzfMyShortcutsFormatItem(_, item) abort  " {{{
+    function! s:fzf.my_shortcuts_format_item(_, item) abort  " {{{
       let [description, command] = a:item
 
       if empty(description)
         return ""
       else
-        return description..s:FzfMyShortcutsWordPadding(description).."  --  `"..command.."`"
+        return description..s:fzf.my_shortcuts_word_padding(description).."  --  `"..command.."`"
       endif
     endfunction  " }}}
 
-    function! s:FzfMyShortcutsWordPadding(item) abort  " {{{
+    function! s:fzf.my_shortcuts_word_padding(item) abort  " {{{
       return repeat(" ", s:fzf_my_shortcuts_max_word_length - strlen(a:item))
     endfunction  " }}}
 
-    call s:FzfMyShortcutsDefineRawList()
-    call s:FzfMyShortcutsCountMaxWordLength()
-    call s:FzfMyShortcutsMakeGroups()
-    call s:FzfMyShortcutsFormatList()
+    call s:fzf.my_shortcuts.define_raw_list()
+    call s:fzf.my_shortcuts.count_max_word_length()
+    call s:fzf.my_shortcuts.make_groups()
+    call s:fzf.my_shortcuts.format_list()
   endfunction  " }}}
   " }}}
 
   " Rails  " {{{
-  function! s:SetupFzfRails() abort  " {{{
+  let s:fzf.rails = {}
+
+  function! s:fzf.rails.setup() abort  " {{{
     let s:fzf_rails_specs = #{
       \   assets: #{
       \     dir:      "{app/assets,app/javascripts,public}",
@@ -1457,13 +1521,18 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
       endfor
     endif
 
-    command! -nargs=1 -complete=customlist,s:FzfRailsTypeNames FzfRails call <SID>FzfRails(<q-args>)
+    command! -nargs=1 -complete=customlist,s:fzf_rails_type_names FzfRails call <SID>fzf().rails.run(<q-args>)
     nnoremap <Leader><Leader>r :FzfRails<Space>
   endfunction  " }}}
 
-  function! s:FzfRailsTypeNames(arglead, cmdline, curpos) abort  " {{{
+  " Proxy because `command`'s `-complete` doesn't accept `s:fzf.rails.type_names`
+  function! s:fzf_rails_type_names(arglead, cmdline, curpos) abort  " {{{
+    return s:fzf.rails.type_names(a:arglead, a:cmdline, a:curpos)
+  endfunction  " }}}
+
+  function! s:fzf.rails.type_names(arglead, cmdline, curpos) abort  " {{{
     if !has_key(s:, "fzf_rails_type_names")
-      let s:fzf_rails_type_names = sort(keys(s:fzf_rails_specs))
+      let s:fzf_rails_type_names = s:fzf_rails_specs->keys()->sort()
     endif
 
     if a:arglead ==# ""
@@ -1476,7 +1545,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
     endif
   endfunction  " }}}
 
-  function! s:FzfRails(type) abort  " {{{
+  function! s:fzf.rails.run(type) abort  " {{{
     let type_spec = s:fzf_rails_specs[a:type]
 
     if has("mac")
@@ -1558,7 +1627,12 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("lambdalisue/gina.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
-  function! s:GinaPatch(filepath) abort  " {{{
+  let s:gina = {}
+  function! s:gina() abort  " {{{
+    return s:gina
+  endfunction  " }}}
+
+  function! s:gina.patch(filepath) abort  " {{{
     let original_diffopt = &diffopt
 
     try
@@ -1618,9 +1692,11 @@ if kg8m#plugin#register("fuenor/JpFormat.vim")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("cohama/lexima.vim")  " {{{
+  let s:lexima = {}
+
   let g:lexima_ctrlh_as_backspace = v:true
 
-  function! s:AddLeximaRulesForEruby() abort  " {{{
+  function! s:lexima.add_rules_for_eruby() abort  " {{{
     " `<Space>` when
     "
     "   <%|
@@ -1640,7 +1716,7 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     call lexima#add_rule(#{ char: "<Space>", at: '<%=\%#', input: "<Space><Space>%><Left><Left><Left>", filetype: "eruby" })
   endfunction  " }}}
 
-  function! s:AddLeximaRulesForMarkdown() abort  " {{{
+  function! s:lexima.add_rules_for_markdown() abort  " {{{
     " `<Space>` when
     "
     "   [|]
@@ -1673,22 +1749,25 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     call lexima#add_rule(#{ char: "<Cr>", at: '```[a-z]\+\%#```', input: "<Cr><Cr><Up>", filetype: "markdown" })
   endfunction  " }}}
 
-  function! s:ConfigPluginOnPostSource_lexima() abort  " {{{
-    call s:AddLeximaRulesForEruby()
-    call s:AddLeximaRulesForMarkdown()
+  function! s:lexima.on_post_source() abort  " {{{
+    call s:lexima.add_rules_for_eruby()
+    call s:lexima.add_rules_for_markdown()
 
-    call timer_start(100, { -> s:DefineCrMappingForInsertMode() })
-    call timer_start(100, { -> s:DefineBSMappingForInsertMode() })
+    call timer_start(100, { -> s:kg8m.define_cr_mapping_for_insert_mode() })
+    call timer_start(100, { -> s:kg8m.define_bs_mapping_for_insert_mode() })
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{
      \   lazy: v:true,
      \   on_i: v:true,
-     \   hook_post_source: function("s:ConfigPluginOnPostSource_lexima"),
+     \   hook_post_source: s:lexima.on_post_source,
      \ })
 endif  " }}}
 
 if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
+  let s:lightline = {}
+  let g:kg8m.lightline = {}
+
   " http://d.hatena.ne.jp/itchyny/20130828/1377653592
   set laststatus=2
   let s:lightline_elements = #{
@@ -1717,14 +1796,14 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
     \     lineinfo_with_percent: "%l/%L(%p%%) : %v",
     \   },
     \   component_function: #{
-    \     normal_filepath:     "Lightline_NormalFilepath",
-    \     normal_fileencoding: "Lightline_NormalFileencoding",
-    \     lsp_status:          "Lightline_LSPStatus",
+    \     normal_filepath:     "g:kg8m.lightline.normal_filepath",
+    \     normal_fileencoding: "g:kg8m.lightline.normal_fileencoding",
+    \     lsp_status:          "g:kg8m.lightline.lsp_status",
     \   },
     \   component_expand: #{
-    \     warning_filepath:     "Lightline_WarningFilepath",
-    \     warning_fileencoding: "Lightline_WarningFileencoding",
-    \     search_count:         "Lightline_SearchCount",
+    \     warning_filepath:     "g:kg8m.lightline.warning_filepath",
+    \     warning_fileencoding: "g:kg8m.lightline.warning_fileencoding",
+    \     search_count:         "g:kg8m.lightline.search_count",
     \   },
     \   component_type: #{
     \     warning_filepath:     "warning",
@@ -1733,17 +1812,17 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
     \   colorscheme: "kg8m",
     \ }
 
-  function! Lightline_Filepath() abort  " {{{
-    return (s:Lightline_IsReadonly() ? "X " : "")
-         \   ..s:Lightline_Filepath()
+  function! g:kg8m.lightline.filepath() abort  " {{{
+    return (s:lightline.is_readonly() ? "X " : "")
+         \   ..s:lightline.filepath()
          \   ..(&modified ? " +" : (&modifiable ? "" : " -"))
   endfunction  " }}}
 
-  function! Lightline_Fileencoding() abort  " {{{
+  function! g:kg8m.lightline.fileencoding() abort  " {{{
     return &fileencoding
   endfunction  " }}}
 
-  function! s:Lightline_Filepath() abort  " {{{
+  function! s:lightline.filepath() abort  " {{{
     if &filetype ==# "unite"
       return unite#get_status_string()
     endif
@@ -1761,43 +1840,43 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
     endif
   endfunction  " }}}
 
-  function! s:Lightline_IsReadonly() abort  " {{{
+  function! s:lightline.is_readonly() abort  " {{{
     return &filetype !=# "help" && &readonly
   endfunction  " }}}
 
-  function! Lightline_NormalFilepath() abort  " {{{
-    return Lightline_IsIrregularFilepath() ? "" : Lightline_Filepath()
+  function! g:kg8m.lightline.normal_filepath() abort  " {{{
+    return g:kg8m.lightline.is_irregular_filepath() ? "" : g:kg8m.lightline.filepath()
   endfunction  " }}}
 
-  function! Lightline_NormalFileencoding() abort  " {{{
-    return Lightline_IsIrregularFileencoding() ? "" : Lightline_Fileencoding()
+  function! g:kg8m.lightline.normal_fileencoding() abort  " {{{
+    return g:kg8m.lightline.is_irregular_fileencoding() ? "" : g:kg8m.lightline.fileencoding()
   endfunction  " }}}
 
-  function! Lightline_WarningFilepath() abort  " {{{
+  function! g:kg8m.lightline.warning_filepath() abort  " {{{
     " Use `%{...}` because component-expansion result is shared with other windows/buffers
-    return "%{Lightline_IsIrregularFilepath() ? Lightline_Filepath() : ''}"
+    return "%{g:kg8m.lightline.is_irregular_filepath() ? g:kg8m.lightline.filepath() : ''}"
   endfunction  " }}}
 
-  function! Lightline_WarningFileencoding() abort  " {{{
+  function! g:kg8m.lightline.warning_fileencoding() abort  " {{{
     " Use `%{...}` because component-expansion result is shared with other windows/buffers
-    return "%{Lightline_IsIrregularFileencoding() ? Lightline_Fileencoding() : ''}"
+    return "%{g:kg8m.lightline.is_irregular_fileencoding() ? g:kg8m.lightline.fileencoding() : ''}"
   endfunction  " }}}
 
-  function! Lightline_IsIrregularFilepath() abort  " {{{
+  function! g:kg8m.lightline.is_irregular_filepath() abort  " {{{
     " `sudo:` prefix for sudo.vim, which I used to use
-    return s:Lightline_IsReadonly() || kg8m#util#current_absolute_path() =~# '\v^(sudo:|suda://)'
+    return s:lightline.is_readonly() || kg8m#util#current_absolute_path() =~# '\v^(sudo:|suda://)'
   endfunction  " }}}
 
-  function! Lightline_IsIrregularFileencoding() abort  " {{{
+  function! g:kg8m.lightline.is_irregular_fileencoding() abort  " {{{
     return !empty(&fileencoding) && &fileencoding !=# "utf-8"
   endfunction  " }}}
 
-  function! Lightline_SearchCount() abort  " {{{
+  function! g:kg8m.lightline.search_count() abort  " {{{
     " Use `%{...}` because component-expansion result is shared with other windows/buffers
-    return "%{v:hlsearch ? Lightline_SearchCountIfSearching() : ''}"
+    return "%{v:hlsearch ? g:kg8m.lightline.search_count_if_searching() : ''}"
   endfunction  " }}}
 
-  function! Lightline_SearchCountIfSearching() abort  " {{{
+  function! g:kg8m.lightline.search_count_if_searching() abort  " {{{
     let counts = searchcount()
 
     " 0: search was fully completed
@@ -1812,10 +1891,10 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
     return "["..current.."/"..total.."]"
   endfunction  " }}}
 
-  function! Lightline_LSPStatus() abort  " {{{
-    if s:IsLSPTargetBuffer()
-      if s:IsLSPBufferEnabled()
-        return s:Lightline_LSPStatusBufferEnabled()
+  function! g:kg8m.lightline.lsp_status() abort  " {{{
+    if s:lsp.is_target_buffer()
+      if s:lsp.is_buffer_enabled()
+        return s:lightline.lsp_status_buffer_enabled()
       else
         return "[LSP] Loading..."
       endif
@@ -1824,7 +1903,7 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
     endif
   endfunction  " }}}
 
-  function! s:Lightline_LSPStatusBufferEnabled() abort  " {{{
+  function! s:lightline.lsp_status_buffer_enabled() abort  " {{{
     return "[LSP] Active"
   endfunction  " }}}
 
@@ -1839,33 +1918,33 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
       \   ["lsp_status_for_attention"],
       \ ]
     call extend(g:lightline.component_expand, #{
-       \   lsp_status_for_attention: "Lightline_LSPStatusForAttention",
+       \   lsp_status_for_attention: "g:kg8m.lightline.lsp_status_for_attention",
        \ })
     call extend(g:lightline.component_type, #{
        \   lsp_status_for_attention: "warning",
        \ })
 
     " Overwrite
-    function! s:Lightline_LSPStatusBufferEnabled() abort  " {{{
-      let stats = s:Lightline_LSPStatusStats()
+    function! s:lightline.lsp_status_buffer_enabled() abort  " {{{
+      let stats = s:lightline.lsp_status_stats()
       return stats.is_attendable ? "" : stats.counts
     endfunction  " }}}
 
-    function! Lightline_LSPStatusForAttention() abort  " {{{
+    function! g:kg8m.lightline.lsp_status_for_attention() abort  " {{{
       " Use `%{...}` because component-expansion result is shared with other windows/buffers
-      return "%{Lightline_LSPStatusForAttentionDetail()}"
+      return "%{g:kg8m.lightline.lsp_status_for_attention_detail()}"
     endfunction  " }}}
 
-    function! Lightline_LSPStatusForAttentionDetail() abort  " {{{
-      if !s:IsLSPTargetBuffer() || !s:IsLSPBufferEnabled()
+    function! g:kg8m.lightline.lsp_status_for_attention_detail() abort  " {{{
+      if !s:lsp.is_target_buffer() || !s:lsp.is_buffer_enabled()
         return ""
       endif
 
-      let stats = s:Lightline_LSPStatusStats()
+      let stats = s:lightline.lsp_status_stats()
       return stats.is_attendable ? stats.counts : ""
     endfunction  " }}}
 
-    function! s:Lightline_LSPStatusStats() abort  " {{{
+    function! s:lightline.lsp_status_stats() abort  " {{{
       let error       = lightline#lsp#error()
       let warning     = lightline#lsp#warning()
       let information = lightline#lsp#information()
@@ -1992,22 +2071,24 @@ if kg8m#plugin#register("mbbill/undotree")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("Shougo/unite.vim")  " {{{
+  let s:unite = {}
+
   let g:unite_winheight = "100%"
 
   augroup my_vimrc  " {{{
-    autocmd FileType unite call s:ConfigForUniteBuffer()
+    autocmd FileType unite call s:unite.config_for_unite_buffer()
   augroup END  " }}}
 
-  function! s:ConfigForUniteBuffer() abort  " {{{
-    call s:EnableHighlightingCursorline()
-    call s:DisableUniteDefaultMappings()
+  function! s:unite.config_for_unite_buffer() abort  " {{{
+    call s:unite.enable_highlighting_cursorline()
+    call s:unite.disable_default_mappings()
   endfunction  " }}}
 
-  function! s:EnableHighlightingCursorline() abort  " {{{
+  function! s:unite.enable_highlighting_cursorline() abort  " {{{
     setlocal cursorlineopt=both
   endfunction  " }}}
 
-  function! s:DisableUniteDefaultMappings() abort  " {{{
+  function! s:unite.disable_default_mappings() abort  " {{{
     if mapcheck("<S-n>", "n")
       nunmap <buffer> <S-n>
     endif
@@ -2098,20 +2179,25 @@ if kg8m#plugin#register("junegunn/vim-easy-align")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
-  nmap <expr> <Leader>f <SID>EasyMotionWithoutMigemo("easymotion-overwin-f2")
-  xmap <expr> <Leader>f <SID>EasyMotionWithoutMigemo("easymotion-bd-f2")
-  omap <expr> <Leader>f <SID>EasyMotionWithoutMigemo("easymotion-bd-f2")
-  nmap <expr> <Leader>F <SID>EasyMotionWithMigemo("easymotion-overwin-f2")
-  xmap <expr> <Leader>F <SID>EasyMotionWithMigemo("easymotion-bd-f2")
-  omap <expr> <Leader>F <SID>EasyMotionWithMigemo("easymotion-bd-f2")
+  let s:easymotion = {}
+  function! s:easymotion() abort  " {{{
+    return s:easymotion
+  endfunction  " }}}
+
+  nmap <expr> <Leader>f <SID>easymotion().without_migemo("easymotion-overwin-f2")
+  xmap <expr> <Leader>f <SID>easymotion().without_migemo("easymotion-bd-f2")
+  omap <expr> <Leader>f <SID>easymotion().without_migemo("easymotion-bd-f2")
+  nmap <expr> <Leader>F <SID>easymotion().with_migemo("easymotion-overwin-f2")
+  xmap <expr> <Leader>F <SID>easymotion().with_migemo("easymotion-bd-f2")
+  omap <expr> <Leader>F <SID>easymotion().with_migemo("easymotion-bd-f2")
 
   " Replace default `f`
-  nmap <expr> f <SID>EasyMotionWithMigemo("easymotion-fl")
-  xmap <expr> f <SID>EasyMotionWithMigemo("easymotion-fl")
-  omap <expr> f <SID>EasyMotionWithMigemo("easymotion-fl")
-  nmap <expr> F <SID>EasyMotionWithMigemo("easymotion-Fl")
-  xmap <expr> F <SID>EasyMotionWithMigemo("easymotion-Fl")
-  omap <expr> F <SID>EasyMotionWithMigemo("easymotion-Fl")
+  nmap <expr> f <SID>easymotion().with_migemo("easymotion-fl")
+  xmap <expr> f <SID>easymotion().with_migemo("easymotion-fl")
+  omap <expr> f <SID>easymotion().with_migemo("easymotion-fl")
+  nmap <expr> F <SID>easymotion().with_migemo("easymotion-Fl")
+  xmap <expr> F <SID>easymotion().with_migemo("easymotion-Fl")
+  omap <expr> F <SID>easymotion().with_migemo("easymotion-Fl")
 
   " http://haya14busa.com/vim-lazymotion-on-speed/
   let g:EasyMotion_do_mapping       = v:false
@@ -2123,12 +2209,12 @@ if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
   let g:EasyMotion_enter_jump_first = v:true
   let g:EasyMotion_skipfoldedline   = v:false
 
-  function! s:EasyMotionWithMigemo(map) abort  " {{{
+  function! s:easymotion.with_migemo(map) abort  " {{{
     let g:EasyMotion_use_migemo = v:true
     return "\<Plug>("..a:map..")"
   endfunction  " }}}
 
-  function! s:EasyMotionWithoutMigemo(map) abort  " {{{
+  function! s:easymotion.without_migemo(map) abort  " {{{
     let g:EasyMotion_use_migemo = v:false
     return "\<Plug>("..a:map..")"
   endfunction  " }}}
@@ -2140,6 +2226,8 @@ if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("lambdalisue/vim-findent")  " {{{
+  let s:findent = {}
+
   let g:findent#enable_messages = v:false
   let g:findent#enable_warnings = v:false
 
@@ -2148,10 +2236,10 @@ if kg8m#plugin#register("lambdalisue/vim-findent")  " {{{
 
   augroup my_vimrc  " {{{
     autocmd FileType * Findent
-    autocmd FileType gitcommit call timer_start(300, { -> s:RestoreFindent() })
+    autocmd FileType gitcommit call timer_start(300, { -> s:findent.restore() })
   augroup END  " }}}
 
-  function! s:RestoreFindent() abort  " {{{
+  function! s:findent.restore() abort  " {{{
     let &expandtab = s:original_expandtab
   endfunction  " }}}
 
@@ -2177,6 +2265,8 @@ endif  " }}}
 " Use LSP or ale for completion, linting/formatting codes, and jumping to definition
 " Use vim-go's highlightings, foldings, and commands/functions
 if kg8m#plugin#register("fatih/vim-go")  " {{{
+  let s:go = {}
+
   let g:go_code_completion_enabled = v:false
   let g:go_fmt_autosave            = v:false
   let g:go_doc_keywordprg_enabled  = v:false
@@ -2202,20 +2292,20 @@ if kg8m#plugin#register("fatih/vim-go")  " {{{
   let g:go_highlight_variable_assignments      = v:true
 
   augroup my_vimrc  " {{{
-    autocmd FileType go call s:SetupVimGo()
+    autocmd FileType go call s:go.setup()
   augroup END  " }}}
 
-  function! s:SetupVimGo() abort  " {{{
+  function! s:go.setup() abort  " {{{
     setlocal foldmethod=syntax
-    call s:SetupGoMappings()
+    call s:go.setup_mappings()
   endfunction  " }}}
 
   if kg8m#util#on_tmux()  " {{{
-    function! s:SetupGoMappings() abort  " {{{
+    function! s:go.setup_mappings() abort  " {{{
       nnoremap <buffer> <leader>r :write<Cr>:call VimuxRunCommand("go run -race <C-r>%")<Cr>
     endfunction  " }}}
   else
-    function! s:SetupGoMappings() abort  " {{{
+    function! s:go.setup_mappings() abort  " {{{
       nnoremap <buffer> <leader>r :write<Cr>:GoRun -race %<Cr>
     endfunction  " }}}
   endif  " }}}
@@ -2274,6 +2364,8 @@ if kg8m#plugin#register("rcmdnk/vim-markdown", #{ if: !kg8m#util#is_git_tmp_edit
 endif  " }}}
 
 if kg8m#plugin#register("andymass/vim-matchup")  " {{{
+  let s:matchup = {}
+
   let g:matchup_no_version_check = v:true
   let g:matchup_transmute_enabled = v:true
   let g:matchup_matchparen_status_offscreen = v:false
@@ -2287,10 +2379,10 @@ if kg8m#plugin#register("andymass/vim-matchup")  " {{{
     \ }
 
   augroup my_vimrc  " {{{
-    autocmd ColorScheme * call s:OverwriteMatchupColors()
+    autocmd ColorScheme * call s:matchup.overwrite_colors()
   augroup END  " }}}
 
-  function! s:OverwriteMatchupColors() abort  " {{{
+  function! s:matchup.overwrite_colors() abort  " {{{
     " Original `highlight default link MatchParenCur MatchParen` is too confusing because current parenthesis looks as
     " same as matched one.
     highlight default link MatchParenCur Cursor
@@ -2411,6 +2503,8 @@ if kg8m#plugin#register("joker1007/vim-ruby-heredoc-syntax", #{ if: !kg8m#util#i
 endif  " }}}
 
 if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
+  let s:sandwich = {}
+
   let g:sandwich_no_default_key_mappings = v:true
 
   vmap <Leader>sa <Plug>(operator-sandwich-add)
@@ -2419,7 +2513,7 @@ if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
 
   nmap . <Plug>(operator-sandwich-dot)
 
-  function! s:ConfigPluginOnSource_vim_operator_sandwich() abort  " {{{
+  function! s:sandwich.on_source() abort  " {{{
     let common_options         = #{ nesting: v:true, match_syntax: v:true }
     let common_add_options     = extend(#{ kind: ["add", "replace"], action: ["add"] }, common_options)
     let common_delete_options  = extend(#{ kind: ["delete", "replace", "textobj"], action: ["delete"], regex: v:true }, common_options)
@@ -2448,12 +2542,14 @@ if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
   call kg8m#plugin#configure(#{
      \   lazy: v:true,
      \   on_map:  [["nv", "<Plug>(operator-sandwich-"]],
-     \   hook_source: function("s:ConfigPluginOnSource_vim_operator_sandwich"),
+     \   hook_source: s:sandwich.on_source,
      \ })
 endif  " }}}
 
 " See also vim-startify's settings
 if kg8m#plugin#register("xolox/vim-session", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+  let s:session = {}
+
   let g:session_directory         = getcwd().."/.vim-sessions"
   let g:session_autoload          = "no"
   let g:session_autosave          = "no"
@@ -2465,15 +2561,15 @@ if kg8m#plugin#register("xolox/vim-session", #{ if: !kg8m#util#is_git_tmp_edit()
   set sessionoptions+=tabpages
 
   augroup my_vimrc  " {{{
-    autocmd BufWritePost * silent call s:SaveSession()
+    autocmd BufWritePost * silent call s:session.save()
   augroup END  " }}}
 
-  function! s:SaveSession() abort  " {{{
-    call s:RestoreFoldmethod()
-    execute "SaveSession "..s:SessionName()
+  function! s:session.save() abort  " {{{
+    call s:kg8m.restore_foldmethod()
+    execute "SaveSession "..s:session.name()
   endfunction  " }}}
 
-  function! s:SessionName() abort  " {{{
+  function! s:session.name() abort  " {{{
     let name =
       \   "%"
       \     ->expand()
@@ -2499,6 +2595,8 @@ endif  " }}}
 
 " See vim-session's settings
 if kg8m#plugin#register("mhinz/vim-startify", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+  let s:startify = {}
+
   let g:startify_session_dir         = g:session_directory
   let g:startify_session_persistence = v:false
   let g:startify_session_sort        = v:true
@@ -2560,10 +2658,10 @@ if kg8m#plugin#register("mhinz/vim-startify", #{ if: !kg8m#util#is_git_tmp_edit(
   let g:startify_custom_header = g:startify_custom_header + [""]
 
   augroup my_vimrc  " {{{
-    autocmd ColorScheme * call s:OverwriteStartifyColors()
+    autocmd ColorScheme * call s:startify.overwrite_colors()
   augroup END  " }}}
 
-  function! s:OverwriteStartifyColors() abort  " {{{
+  function! s:startify.overwrite_colors() abort  " {{{
     highlight StartifyFile   guifg=#FFFFFF
     highlight StartifyHeader guifg=#FFFFFF
     highlight StartifyPath   guifg=#777777
@@ -2576,17 +2674,19 @@ if kg8m#plugin#register("kopischke/vim-stay", #{ if: !kg8m#util#is_git_commit() 
 endif  " }}}
 
 if kg8m#plugin#register("janko/vim-test", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+  let s:test = {}
+
   nnoremap <Leader>T :write<Cr>:TestFile<Cr>
   nnoremap <Leader>t :write<Cr>:TestNearest<Cr>
 
   if kg8m#util#on_tmux()
-    function! MyVimTestVimuxStrategy(command) abort  " {{{
+    function! s:test.my_vimux_strategy(command) abort  " {{{
       " Just execute the command without echo it
       call VimuxRunCommand(a:command)
     endfunction  " }}}
 
     let g:test#custom_strategies = get(g:, "test#custom_strategies", {})
-    let g:test#custom_strategies.vimux = function("MyVimTestVimuxStrategy")
+    let g:test#custom_strategies.vimux = s:test.my_vimux_strategy
     let g:test#strategy = "vimux"
   endif
 
@@ -2653,7 +2753,9 @@ if kg8m#plugin#register("Shougo/vimproc")  " {{{
 endif  " }}}
 
 if kg8m#plugin#register("benmills/vimux", #{ if: kg8m#util#on_tmux() && !kg8m#util#is_git_tmp_edit() })  " {{{
-  function! s:ConfigPluginOnSource_vimux() abort  " {{{
+  let s:vimux = {}
+
+  function! s:vimux.on_source() abort  " {{{
     let g:VimuxHeight     = 30
     let g:VimuxUseNearest = v:true
 
@@ -2662,7 +2764,7 @@ if kg8m#plugin#register("benmills/vimux", #{ if: kg8m#util#on_tmux() && !kg8m#ut
     augroup END  " }}}
   endfunction  " }}}
 
-  function! s:ConfigPluginOnPostSource_vimux() abort  " {{{
+  function! s:vimux.on_post_source() abort  " {{{
     " Overwrite function: Always use current pane's next one
     "   Original function:
     "     function! _VimuxNearestIndex()
@@ -2705,8 +2807,8 @@ if kg8m#plugin#register("benmills/vimux", #{ if: kg8m#util#on_tmux() && !kg8m#ut
      \   lazy:    v:true,
      \   on_cmd:  "VimuxCloseRunner",
      \   on_func: "VimuxRunCommand",
-     \   hook_source:      function("s:ConfigPluginOnSource_vimux"),
-     \   hook_post_source: function("s:ConfigPluginOnPostSource_vimux"),
+     \   hook_source:      s:vimux.on_source,
+     \   hook_post_source: s:vimux.on_post_source,
      \ })
 endif  " }}}
 
@@ -2744,6 +2846,8 @@ if kg8m#plugin#register("jonsmithers/vim-html-template-literals", #{ if: !kg8m#u
 endif  " }}}
 
 if kg8m#plugin#register("LeafCage/yankround.vim")  " {{{
+  let s:yankround = {}
+
   let g:yankround_max_history = 500
 
   nmap p     <Plug>(yankround-p)
@@ -2754,11 +2858,11 @@ if kg8m#plugin#register("LeafCage/yankround.vim")  " {{{
 
   " https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
   " For fzf.vim
-  function! s:YankList() abort  " {{{
-    return map(copy(g:_yankround_cache), { index, _ -> s:FormatYankItem(index) })
+  function! s:yankround.list() abort  " {{{
+    return map(copy(g:_yankround_cache), { index, _ -> s:yankround.format_item(index) })
   endfunction  " }}}
 
-  function! s:FormatYankItem(index) abort  " {{{
+  function! s:yankround.format_item(index) abort  " {{{
     let [text, _]  = yankround#_get_cache_and_regtype(a:index)
 
     " Avoid shell's syntax error in fzf's preview
@@ -2767,7 +2871,7 @@ if kg8m#plugin#register("LeafCage/yankround.vim")  " {{{
     return printf("%3d\t%s", a:index, text)
   endfunction  " }}}
 
-  function! s:YankPreviewCommand() abort  " {{{
+  function! s:yankround.preview_command() abort  " {{{
     let command  = "echo {}"
     let command .= " | sed -e 's/^ *[0-9]\\{1,\\}\t//' -e 's/\\\\/\\\\\\\\/g'"
     let command .= " | head -n5"
@@ -2775,7 +2879,7 @@ if kg8m#plugin#register("LeafCage/yankround.vim")  " {{{
     return command
   endfunction  " }}}
 
-  function! s:YankHandler(yank_item) abort  " {{{
+  function! s:yankround.handler(yank_item) abort  " {{{
     let old_reg = [getreg('"'), getregtype('"')]
     let index = matchlist(a:yank_item, '\v^\s*(\d+)\t')[1]
     let [text, regtype] = yankround#_get_cache_and_regtype(index)
@@ -2791,13 +2895,15 @@ endif  " }}}
 
 " Colorschemes
 if kg8m#plugin#register("tomasr/molokai")  " {{{
+  let s:molokai = {}
+
   let g:molokai_original = v:true
 
   augroup my_vimrc  " {{{
-    autocmd ColorScheme molokai call s:OverwriteMolokai()
+    autocmd ColorScheme molokai call s:molokai.overwrite()
   augroup END  " }}}
 
-  function! s:OverwriteMolokai() abort  " {{{
+  function! s:molokai.overwrite() abort  " {{{
     highlight Comment       guifg=#AAAAAA
     highlight CursorColumn                 guibg=#1F1E19
     highlight CursorLine                   guibg=#1F1E19
@@ -2927,13 +3033,13 @@ augroup my_vimrc  " {{{
   autocmd FileType text,markdown,moin setlocal cinkeys-=:
 
   " Lazily set formatoptions to overwrite others
-  autocmd FileType * call s:SetupFormatoptions()
-  autocmd FileType * call timer_start(300, { -> s:SetupFormatoptions() })
+  autocmd FileType * call s:kg8m.setup_formatoptions()
+  autocmd FileType * call timer_start(300, { -> s:kg8m.setup_formatoptions() })
 
   autocmd BufWritePre * if &filetype ==# "" || has_key(b:, "ftdetect") | unlet! b:ftdetect | filetype detect | endif
 augroup END  " }}}
 
-function! s:SetupFormatoptions() abort  " {{{
+function! s:kg8m.setup_formatoptions() abort  " {{{
   " Formatoptions:
   "   t: Auto-wrap text using textwidth.
   "   c: Auto-wrap comments using textwidth, inserting the current comment leader automatically.
@@ -2992,10 +3098,10 @@ augroup my_vimrc  " {{{
   autocmd BufEnter addp-hunk-edit.diff setlocal nofoldenable
 
   " http://d.hatena.ne.jp/gnarl/20120308/1331180615
-  autocmd InsertEnter * call s:SwitchToManualFolding()
+  autocmd InsertEnter * call s:kg8m.switch_to_manual_folding()
 augroup END  " }}}
 
-function! s:SwitchToManualFolding() abort  " {{{
+function! s:kg8m.switch_to_manual_folding() abort  " {{{
   if !has_key(w:, "last_fdm")
     let w:last_fdm = &foldmethod
     setlocal foldmethod=manual
@@ -3003,7 +3109,7 @@ function! s:SwitchToManualFolding() abort  " {{{
 endfunction  " }}}
 
 " Call this before saving session
-function! s:RestoreFoldmethod() abort  " {{{
+function! s:kg8m.restore_foldmethod() abort  " {{{
   if has_key(w:, "last_fdm")
     let &foldmethod = w:last_fdm
     unlet w:last_fdm
@@ -3086,10 +3192,10 @@ set matchpairs+=（:）,「:」,『:』,｛:｝,［:］,〈:〉,《:》,【:】,
 
 " Auto reload
 augroup my_vimrc  " {{{
-  autocmd VimEnter * call timer_start(1000, { -> s:Checktime() })
+  autocmd VimEnter * call timer_start(1000, { -> s:kg8m.checktime() })
 augroup END  " }}}
 
-function! s:Checktime() abort  " {{{
+function! s:kg8m.checktime() abort  " {{{
   if has_key(s:, "checktime_timer")
     call timer_stop(s:checktime_timer)
     unlet s:checktime_timer
@@ -3107,7 +3213,7 @@ function! s:Checktime() abort  " {{{
   catch
     " Do nothing
   finally
-    let s:checktime_timer = timer_start(1000, { -> s:Checktime() })
+    let s:checktime_timer = timer_start(1000, { -> s:kg8m.checktime() })
   endtry
 endfunction  " }}}
 
@@ -3117,10 +3223,10 @@ set maxmempattern=5000
 if !kg8m#util#is_git_tmp_edit()  " {{{
   " http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
   augroup my_vimrc  " {{{
-    autocmd BufWriteCmd *[,*] call s:WriteCheckTypo(expand("<afile>"))
+    autocmd BufWriteCmd *[,*] call s:kg8m.write_check_typo(expand("<afile>"))
   augroup END  " }}}
 
-  function! s:WriteCheckTypo(file) abort  " {{{
+  function! s:kg8m.write_check_typo(file) abort  " {{{
     let writecmd = "write"..(v:cmdbang ? "!" : "").." "..a:file
 
     if a:file =~? "[qfreplace]"
@@ -3146,26 +3252,26 @@ command! -nargs=1 -complete=file Rename f <args> | call delete(expand("#")) | wr
 " ----------------------------------------------
 " Keymappings  " {{{
 " Mapping Functions  " {{{
-function! s:DefineCrMappingForInsertMode() abort  " {{{
-  imap <silent><expr> <Cr> <SID>CrForInsertMode()
+function! s:kg8m.define_cr_mapping_for_insert_mode() abort  " {{{
+  imap <silent><expr> <Cr> <SID>kg8m().cr_for_insert_mode()
 endfunction  " }}}
 
-function! s:DefineBSMappingForInsertMode() abort  " {{{
-  inoremap <silent><expr> <BS> <SID>BSForInsertMode()
+function! s:kg8m.define_bs_mapping_for_insert_mode() abort  " {{{
+  inoremap <silent><expr> <BS> <SID>kg8m().bs_for_insert_mode()
 endfunction  " }}}
 
-function! s:DefineBSMappingToRefreshCompletion() abort  " {{{
-  call s:DefineBSMappingForInsertMode()
+function! s:kg8m.define_bs_mapping_to_refresh_completion() abort  " {{{
+  call s:kg8m.define_bs_mapping_for_insert_mode()
 endfunction  " }}}
 
-function! s:DefineCompletionMappings() abort  " {{{
+function! s:kg8m.define_completion_mappings() abort  " {{{
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-  call s:DefineCrMappingForInsertMode()
+  call s:kg8m.define_cr_mapping_for_insert_mode()
 endfunction  " }}}
 
-function! s:CrForInsertMode() abort  " {{{
+function! s:kg8m.cr_for_insert_mode() abort  " {{{
   if neosnippet#expandable_or_jumpable()
     return "\<Plug>(neosnippet_expand_or_jump)"
   elseif vsnip#available(1)
@@ -3181,8 +3287,8 @@ function! s:CrForInsertMode() abort  " {{{
   endif
 endfunction  " }}}
 
-function! s:BSForInsertMode() abort  " {{{
-  return lexima#expand("<BS>", "i")..<SID>RefreshCompletion()
+function! s:kg8m.bs_for_insert_mode() abort  " {{{
+  return lexima#expand("<BS>", "i")..s:asyncomplete.refresh_completion()
 endfunction  " }}}
 " }}}
 
@@ -3200,12 +3306,12 @@ nmap gf gF
 " Copy selected to clipboard
 vnoremap <Leader>y "yy:call kg8m#util#remote_copy(@")<Cr>
 
-function! s:RemoveTrailingWhitespaces() abort  " {{{
+function! s:kg8m.remove_trailing_whitespaces() abort  " {{{
   let position = getpos(".")
   keeppatterns '<,'>s/\s\+$//ge
   call setpos(".", position)
 endfunction  " }}}
-vnoremap <Leader>w :call <SID>RemoveTrailingWhitespaces()<Cr>
+vnoremap <Leader>w :call <SID>kg8m().remove_trailing_whitespaces()<Cr>
 
 " Prevent unconscious operation (<Nul> == <C-Space>)
 inoremap <C-w> <Esc><C-w>
@@ -3270,9 +3376,9 @@ if has("gui_running")
   endif
 
   augroup my_vimrc  " {{{
-    autocmd VimLeavePre * call s:SaveWindowSize()
+    autocmd VimLeavePre * call s:kg8m.save_window_size()
 
-    function! s:SaveWindowSize() abort  " {{{
+    function! s:kg8m.save_window_size() abort  " {{{
       let options = [
         \   "set columns="..&columns,
         \   "set lines="..&lines,
