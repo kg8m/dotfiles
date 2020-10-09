@@ -493,6 +493,9 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
      \ })
 endif  " }}}
 
+" Use ale for formatting because vim-lsp randomly selects only 1 language server to execute format. I want to do
+" formatting by efm-langserver instead of typescript-language-server but vim-lsp often selects
+" typescript-language-server when executing `LspDocumentFormat` or `LspDocumentFormatSync`.
 if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   let s:lsp = {}
 
@@ -878,6 +881,9 @@ function! s:kg8m.completion_refresh_pattern(filetype) abort  " {{{
 endfunction  " }}}
 " }}}
 
+" Use ale for formatting because vim-lsp randomly selects only 1 language server to execute format. I want to do
+" formatting by efm-langserver instead of typescript-language-server but vim-lsp often selects
+" typescript-language-server when executing `LspDocumentFormat` or `LspDocumentFormatSync`.
 if kg8m#plugin#register("dense-analysis/ale", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:airline#extensions#ale#enabled = v:false
   let g:ale_completion_enabled         = v:false
