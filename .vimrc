@@ -375,7 +375,7 @@ if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", #{ build: "./install
        \   name: "tabnine",
        \   allowlist: ["*"],
        \   completor: function("asyncomplete#sources#tabnine#completor"),
-       \   priority: 1,
+       \   priority: 0,
        \ }))
   endfunction  " }}}
 
