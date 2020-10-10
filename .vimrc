@@ -81,14 +81,11 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
     let base_matcher  = matchstr(a:options.base, match_pattern)
 
     if empty(base_matcher)
-      let sorted_items = a:matches->values()->map("v:val.items")->flatten()
-      let startcols    = a:matches->values()->map("v:val.startcol")->flatten()
+      let items     = a:matches->values()->map("v:val.items")->flatten()
+      let startcols = a:matches->values()->map("v:val.startcol")->flatten()
     else
-      let sorted_items = []
-      let startcols    = []
-
-      " Special thanks: mattn
-      let fuzzy_matcher = base_matcher->split('\zs')->map("printf('[\\x%02x].*', char2nr(v:val))")->join("")
+      let items     = []
+      let startcols = []
 
       let sorter_context = #{
         \   matcher:  base_matcher,
@@ -97,30 +94,33 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
         \ }
 
       for [source_name, source_matches] in items(a:matches)
-        let original_length = len(sorted_items)
+        let original_length = len(items)
 
         " Language server sources have no priority
         let sorter_context.priority = get(asyncomplete#get_source_info(source_name), "priority", 0) + 2
 
-        for item in source_matches.items
-          if item.word =~? fuzzy_matcher
-            let item.priority = s:asyncomplete.item_priority(item, sorter_context)
-            let sorted_items += [item]
-          endif
-        endfor
+        let items += matchfuzzy(
+          \   source_matches.items, sorter_context.matcher,
+          \   #{ text_cb: { item -> s:asyncomplete.matchfuzzy_text_cb(item, sorter_context) } }
+          \ )
 
-        if len(sorted_items) !=# original_length
+        if len(items) !=# original_length
           let startcols += [source_matches.startcol]
         endif
       endfor
 
-      call sort(sorted_items, { lhs, rhs -> lhs.priority - rhs.priority })
+      call sort(items, { lhs, rhs -> lhs.priority - rhs.priority })
     endif
 
     " https://github.com/prabirshrestha/asyncomplete.vim/blob/1f8d8ed26acd23d6bf8102509aca1fc99130087d/autoload/asyncomplete.vim#L474
     let a:options["startcol"] = min(startcols)
 
-    call asyncomplete#preprocess_complete(a:options, sorted_items)
+    call asyncomplete#preprocess_complete(a:options, items)
+  endfunction  " }}}
+
+  function! s:asyncomplete.matchfuzzy_text_cb(item, sorter_context) abort  " {{{
+    let a:item.priority = s:asyncomplete.item_priority(a:item, a:sorter_context)
+    return a:item.word
   endfunction  " }}}
 
   function! s:asyncomplete.item_priority(item, context) abort  " {{{
