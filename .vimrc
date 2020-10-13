@@ -2595,7 +2595,7 @@ if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
 
   nmap . <Plug>(operator-sandwich-dot)
 
-  function! s:sandwich.on_source() abort  " {{{
+  function! s:sandwich.on_post_source() abort  " {{{
     let common_options         = #{ nesting: v:true, match_syntax: v:true }
     let common_add_options     = extend(#{ kind: ["add", "replace"], action: ["add"] }, common_options)
     let common_delete_options  = extend(#{ kind: ["delete", "replace", "textobj"], action: ["delete"], regex: v:true }, common_options)
@@ -2618,7 +2618,7 @@ if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
   call kg8m#plugin#configure(#{
      \   lazy: v:true,
      \   on_map:  [["nv", "<Plug>(operator-sandwich-"]],
-     \   hook_source: s:sandwich.on_source,
+     \   hook_source: s:sandwich.on_post_source,
      \ })
 endif  " }}}
 
