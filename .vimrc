@@ -2034,7 +2034,7 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
       let information = lightline#lsp#information()
       let hint        = lightline#lsp#hint()
 
-      let is_attendable = !(empty(error) && empty(warning) && empty(information) && empty(hint))
+      let is_attendable = !(empty(error) && empty(warning))
 
       let error       = empty(error)       ? g:lightline#lsp#indicator_error      .."0" : error
       let warning     = empty(warning)     ? g:lightline#lsp#indicator_warning    .."0" : warning
