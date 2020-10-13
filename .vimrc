@@ -80,13 +80,10 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
     let match_pattern = s:kg8m.completion_refresh_pattern(s:lsp.is_target_buffer() && s:lsp.is_buffer_enabled() ? &filetype : "_")
     let base_matcher  = matchstr(a:options.base, match_pattern)
 
-    if empty(base_matcher)
-      let items     = a:matches->values()->map("v:val.items")->flatten()
-      let startcols = a:matches->values()->map("v:val.startcol")->flatten()
-    else
-      let items     = []
-      let startcols = []
+    let items     = []
+    let startcols = []
 
+    if !empty(base_matcher)
       let sorter_context = #{
         \   matcher:  base_matcher,
         \   priority: 0,
@@ -3377,9 +3374,7 @@ function! s:kg8m.cr_for_insert_mode() abort  " {{{
     return "\<Plug>(vsnip_expand_or_jump)"
   else
     if pumvisible()
-      " `asyncomplete#close_popup` doesn't work when no completion item is selected.
-      "  To close popup, use `<Left><Right>` instead.
-      return empty(v:completed_item) ? "\<Left>\<Right>\<Cr>" : asyncomplete#close_popup()
+      return asyncomplete#close_popup()
     else
       return lexima#expand("<Cr>", "i")
     endif
