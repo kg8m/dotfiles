@@ -5,10 +5,13 @@ function execute_with_echo {
 
 function execute_commands_with_echo {
   local cmd
+  local result=0
 
   for cmd in "$@"; do
-    execute_with_echo "$cmd"
+    execute_with_echo "$cmd" || result=$?
   done
+
+  return "$result"
 }
 
 function execute_with_confirm {
