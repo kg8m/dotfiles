@@ -1839,8 +1839,8 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     call s:lexima.add_rules_for_html()
     call s:lexima.add_rules_for_markdown()
 
-    call timer_start(100, { -> s:kg8m.define_cr_mapping_for_insert_mode() })
-    call timer_start(100, { -> s:kg8m.define_bs_mapping_for_insert_mode() })
+    call s:kg8m.define_cr_mapping_for_insert_mode()
+    call s:kg8m.define_bs_mapping_for_insert_mode()
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{
