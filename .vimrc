@@ -3296,6 +3296,13 @@ endfunction  " }}}
 set whichwrap=b,s,h,l,<,>,[,],~
 set maxmempattern=5000
 
+" A comma separated list of these words:
+"   - block:   Allow virtual editing in Visual block mode.
+"   - insert:  Allow virtual editing in Insert mode.
+"   - all:     Allow virtual editing in all modes.
+"   - onemore: Allow the cursor to move just past the end of the line.
+set virtualedit=block
+
 if !kg8m#util#is_git_tmp_edit()  " {{{
   " http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
   augroup my_vimrc  " {{{
