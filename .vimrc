@@ -1368,12 +1368,12 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
         \   ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
         \   ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
         \
-        \   ["[EasyAlign] '='",          "'<,'>EasyAlign ="],
-        \   ["[EasyAlign] '=>'",         "'<,'>EasyAlign =>"],
-        \   ["[EasyAlign] ' '",          "'<,'>EasyAlign \\"],
-        \   ["[EasyAlign] ' ' repeated", "'<,'>EasyAlign *\\"],
-        \   ["[EasyAlign] 'hoge:'",      "'<,'>EasyAlign :"],
-        \   ["[EasyAlign] '|' repeated", "'<,'>EasyAlign *|"],
+        \   ["[EasyAlign] '='",                  "'<,'>EasyAlign ="],
+        \   ["[EasyAlign] '=>'",                 "'<,'>EasyAlign =>"],
+        \   ["[EasyAlign] ' '",                  "'<,'>EasyAlign \\"],
+        \   ["[EasyAlign] ' ' repeated",         "'<,'>EasyAlign *\\"],
+        \   ["[EasyAlign] 'hoge:'",              "'<,'>EasyAlign :"],
+        \   ["[EasyAlign] '|' repeated (table)", "'<,'>EasyAlign *|"],
         \
         \   ["[Autoformat] Format Source Codes", "Autoformat"],
         \
