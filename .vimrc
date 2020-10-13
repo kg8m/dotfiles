@@ -2268,38 +2268,21 @@ if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
     return s:easymotion
   endfunction  " }}}
 
-  nmap <expr> <Leader>f <SID>easymotion().without_migemo("easymotion-overwin-f2")
-  xmap <expr> <Leader>f <SID>easymotion().without_migemo("easymotion-bd-f2")
-  omap <expr> <Leader>f <SID>easymotion().without_migemo("easymotion-bd-f2")
-  nmap <expr> <Leader>F <SID>easymotion().with_migemo("easymotion-overwin-f2")
-  xmap <expr> <Leader>F <SID>easymotion().with_migemo("easymotion-bd-f2")
-  omap <expr> <Leader>F <SID>easymotion().with_migemo("easymotion-bd-f2")
+  map <Leader>f <Plug>(easymotion-bd-fn)
 
-  " Replace default `f`
-  nmap <expr> f <SID>easymotion().with_migemo("easymotion-fl")
-  xmap <expr> f <SID>easymotion().with_migemo("easymotion-fl")
-  omap <expr> f <SID>easymotion().with_migemo("easymotion-fl")
-  nmap <expr> F <SID>easymotion().with_migemo("easymotion-Fl")
-  xmap <expr> F <SID>easymotion().with_migemo("easymotion-Fl")
-  omap <expr> F <SID>easymotion().with_migemo("easymotion-Fl")
+  " Replace default `f` and `F`
+  map f <Plug>(easymotion-fl)
+  map F <Plug>(easymotion-Fl)
 
-  let g:EasyMotion_do_mapping       = v:false
-  let g:EasyMotion_do_shade         = v:false
-  let g:EasyMotion_startofline      = v:false
-  let g:EasyMotion_smartcase        = v:true
-  let g:EasyMotion_use_upper        = v:true
-  let g:EasyMotion_keys             = "FKLASDHGUIONMREWCVTYBX,.;J"
-  let g:EasyMotion_enter_jump_first = v:true
-
-  function! s:easymotion.with_migemo(map) abort  " {{{
-    let g:EasyMotion_use_migemo = v:true
-    return "\<Plug>("..a:map..")"
-  endfunction  " }}}
-
-  function! s:easymotion.without_migemo(map) abort  " {{{
-    let g:EasyMotion_use_migemo = v:false
-    return "\<Plug>("..a:map..")"
-  endfunction  " }}}
+  let g:EasyMotion_keys               = "FKLASDHGUIONMREWCVTYBX,.;J"
+  let g:EasyMotion_startofline        = v:false
+  let g:EasyMotion_do_shade           = v:false
+  let g:EasyMotion_do_mapping         = v:false
+  let g:EasyMotion_smartcase          = v:true
+  let g:EasyMotion_use_migemo         = v:true
+  let g:EasyMotion_use_upper          = v:true
+  let g:EasyMotion_enter_jump_first   = v:true
+  let g:EasyMotion_add_search_history = v:false
 
   call kg8m#plugin#configure(#{
      \   lazy:   v:true,
