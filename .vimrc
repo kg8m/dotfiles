@@ -2746,7 +2746,7 @@ if kg8m#plugin#register("mhinz/vim-startify", #{ if: !kg8m#util#is_git_tmp_edit(
 endif  " }}}
 
 if kg8m#plugin#register("kopischke/vim-stay", #{ if: !kg8m#util#is_git_commit() })  " {{{
-  set viewoptions=cursor
+  set viewoptions=cursor,folds
 endif  " }}}
 
 if kg8m#plugin#register("janko/vim-test", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
