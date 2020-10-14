@@ -2607,7 +2607,7 @@ if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
       \      extend(#{ buns: ["[ ", " ]"], input: ["["] }, common_add_options),
       \      extend(#{ buns: ["{ ", " }"], input: ["{"] }, common_add_options),
       \      extend(#{ buns: ['(\s*', '\s*)'], input: ["("] }, common_delete_options),
-      \      extend(#{ buns: ['[\s*', '\s*]'], input: ["["] }, common_delete_options),
+      \      extend(#{ buns: ['\[\s*', '\s*\]'], input: ["["] }, common_delete_options),
       \      extend(#{ buns: ['{\s*', '\s*}'], input: ["{"] }, common_delete_options),
       \   ] + (
       \     kg8m#util#japanese_matchpairs()
