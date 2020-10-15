@@ -45,7 +45,7 @@ options head
 	}
 # }}}
 
-# For Loop  {{{
+# Loop  {{{
 snippet for
 abbr    for (i = 0; i < 10; i++) { ... }
 options head
@@ -64,6 +64,13 @@ snippet for_in
 abbr    for (const prop in object) { ... }
 options head
 	for (const ${1:prop} in ${2:object}) {
+		${0}
+	}
+
+snippet while
+abbr    while (...) { ... }
+options head
+	while (${1:#:condition}) {
 		${0}
 	}
 # }}}
