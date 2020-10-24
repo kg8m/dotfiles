@@ -364,7 +364,7 @@ if kg8m#plugin#register("high-moctane/asyncomplete-nextword.vim")  " {{{
   endif  " }}}
 endif  " }}}
 
-if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", #{ build: "./install.sh" })  " {{{
+if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", #{ if: !kg8m#util#is_git_tmp_edit(), build: "./install.sh" })  " {{{
   let s:asyncomplete_tabnine = {}
 
   augroup my_vimrc  " {{{
@@ -408,7 +408,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-tags.vim")  " {{{
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("prabirshrestha/asyncomplete-lsp.vim")  " {{{
+if kg8m#plugin#register("prabirshrestha/asyncomplete-lsp.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   call kg8m#plugin#configure(#{
      \   lazy:      v:true,
      \   on_source: "asyncomplete.vim",
@@ -2158,7 +2158,7 @@ if kg8m#plugin#register("mbbill/undotree")  " {{{
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("Shougo/unite.vim")  " {{{
+if kg8m#plugin#register("Shougo/unite.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let s:unite = {}
 
   let g:unite_winheight = "100%"
@@ -2331,7 +2331,7 @@ endif  " }}}
 
 " Use LSP or ale for completion, linting/formatting codes, and jumping to definition
 " Use vim-go's highlightings, foldings, and commands/functions
-if kg8m#plugin#register("fatih/vim-go")  " {{{
+if kg8m#plugin#register("fatih/vim-go", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let s:go = {}
 
   let g:go_code_completion_enabled = v:false
