@@ -106,7 +106,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
         endif
       endfor
 
-      call sort(items, { lhs, rhs -> lhs.priority - rhs.priority })
+      call sort(items, s:asyncomplete.sorter)
     endif
 
     " https://github.com/prabirshrestha/asyncomplete.vim/blob/1f8d8ed26acd23d6bf8102509aca1fc99130087d/autoload/asyncomplete.vim#L474
@@ -134,6 +134,10 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
     endif
 
     return a:context.cache[word] * a:context.priority
+  endfunction  " }}}
+
+  function! s:asyncomplete.sorter(lhs, rhs) abort  " {{{
+    return a:lhs.priority - a:rhs.priority
   endfunction  " }}}
   let g:asyncomplete_preprocessor = [s:asyncomplete.priority_sorted_fuzzy_filter]
 
@@ -1191,8 +1195,8 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   endfunction  " }}}
 
   function! s:fzf.history.list() abort  " {{{
-    let filepaths = mr#mru#list()->copy()->filter({ _, filepath -> filepath->filereadable() })
-    return filepaths->map({ _, filepath -> filepath->fnamemodify(s:fzf.filepath_format()) })
+    let filepaths = mr#mru#list()->copy()->filter("v:val->filereadable()")
+    return filepaths->map("v:val->fnamemodify(s:fzf.filepath_format())")
   endfunction  " }}}
   " }}}
 
