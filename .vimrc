@@ -1996,57 +1996,67 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
   endfunction  " }}}
 
   if kg8m#plugin#register("tsuyoshicho/lightline-lsp")  " {{{
-    let g:lightline#lsp#indicator_error       = "E:"
-    let g:lightline#lsp#indicator_warning     = "W:"
-    let g:lightline#lsp#indicator_information = "I:"
-    let g:lightline#lsp#indicator_hint        = "H:"
+    let s:lightline_lsp = {}
 
-    " Overwrite
-    let s:lightline_elements.right += [
-      \   ["lsp_status_for_attention"],
-      \ ]
-    call extend(g:lightline.component_expand, #{
-       \   lsp_status_for_attention: "g:kg8m.lightline.lsp_status_for_attention",
+    function! s:lightline_lsp.on_source() abort  " {{{
+      let g:lightline#lsp#indicator_error       = "E:"
+      let g:lightline#lsp#indicator_warning     = "W:"
+      let g:lightline#lsp#indicator_information = "I:"
+      let g:lightline#lsp#indicator_hint        = "H:"
+
+      " Overwrite
+      let s:lightline_elements.right += [
+        \   ["lsp_status_for_attention"],
+        \ ]
+      call extend(g:lightline.component_expand, #{
+         \   lsp_status_for_attention: "g:kg8m.lightline.lsp_status_for_attention",
+         \ })
+      call extend(g:lightline.component_type, #{
+         \   lsp_status_for_attention: "warning",
+         \ })
+
+      " Overwrite
+      function! s:lightline.lsp_status_buffer_enabled() abort  " {{{
+        let stats = s:lightline.lsp_status_stats()
+        return stats.is_attendable ? "" : stats.counts
+      endfunction  " }}}
+
+      function! g:kg8m.lightline.lsp_status_for_attention() abort  " {{{
+        " Use `%{...}` because component-expansion result is shared with other windows/buffers
+        return "%{g:kg8m.lightline.lsp_status_for_attention_detail()}"
+      endfunction  " }}}
+
+      function! g:kg8m.lightline.lsp_status_for_attention_detail() abort  " {{{
+        if !s:lsp.is_target_buffer() || !s:lsp.is_buffer_enabled()
+          return ""
+        endif
+
+        let stats = s:lightline.lsp_status_stats()
+        return stats.is_attendable ? stats.counts : ""
+      endfunction  " }}}
+
+      function! s:lightline.lsp_status_stats() abort  " {{{
+        let error       = lightline#lsp#error()
+        let warning     = lightline#lsp#warning()
+        let information = lightline#lsp#information()
+        let hint        = lightline#lsp#hint()
+
+        let is_attendable = !(empty(error) && empty(warning))
+
+        let error       = empty(error)       ? g:lightline#lsp#indicator_error      .."0" : error
+        let warning     = empty(warning)     ? g:lightline#lsp#indicator_warning    .."0" : warning
+        let information = empty(information) ? g:lightline#lsp#indicator_information.."0" : information
+        let hint        = empty(hint)        ? g:lightline#lsp#indicator_hint       .."0" : hint
+
+        return #{ counts: join([error, warning, information, hint], " "), is_attendable: is_attendable }
+      endfunction  " }}}
+    endfunction  " }}}
+
+    call kg8m#plugin#configure(#{
+       \   lazy:      v:true,
+       \   on_source: "vim-lsp",
+       \   hook_source: s:lightline_lsp.on_source,
        \ })
-    call extend(g:lightline.component_type, #{
-       \   lsp_status_for_attention: "warning",
-       \ })
-
-    " Overwrite
-    function! s:lightline.lsp_status_buffer_enabled() abort  " {{{
-      let stats = s:lightline.lsp_status_stats()
-      return stats.is_attendable ? "" : stats.counts
-    endfunction  " }}}
-
-    function! g:kg8m.lightline.lsp_status_for_attention() abort  " {{{
-      " Use `%{...}` because component-expansion result is shared with other windows/buffers
-      return "%{g:kg8m.lightline.lsp_status_for_attention_detail()}"
-    endfunction  " }}}
-
-    function! g:kg8m.lightline.lsp_status_for_attention_detail() abort  " {{{
-      if !s:lsp.is_target_buffer() || !s:lsp.is_buffer_enabled()
-        return ""
-      endif
-
-      let stats = s:lightline.lsp_status_stats()
-      return stats.is_attendable ? stats.counts : ""
-    endfunction  " }}}
-
-    function! s:lightline.lsp_status_stats() abort  " {{{
-      let error       = lightline#lsp#error()
-      let warning     = lightline#lsp#warning()
-      let information = lightline#lsp#information()
-      let hint        = lightline#lsp#hint()
-
-      let is_attendable = !(empty(error) && empty(warning))
-
-      let error       = empty(error)       ? g:lightline#lsp#indicator_error      .."0" : error
-      let warning     = empty(warning)     ? g:lightline#lsp#indicator_warning    .."0" : warning
-      let information = empty(information) ? g:lightline#lsp#indicator_information.."0" : information
-      let hint        = empty(hint)        ? g:lightline#lsp#indicator_hint       .."0" : hint
-
-      return #{ counts: join([error, warning, information, hint], " "), is_attendable: is_attendable }
-    endfunction  " }}}
   endif  " }}}
 endif  " }}}
 
