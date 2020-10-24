@@ -22,7 +22,7 @@ function setup_my_fzf {
     "--no-unicode"
     "--reverse"
     "--preview='echo {} | head -n3'"
-    "--preview-window='down:3:wrap'"
+    "--preview-window='down:3:wrap:hidden'"
     "--select-1"
   )
 
