@@ -3295,7 +3295,7 @@ function! s:kg8m.checktime() abort  " {{{
     checktime
   " Sometimes `checktime` raise an error
   "   - e.g., E565: "Not allowed to change text or change window" when using vim-sandwich
-  catch
+  catch /^Vim\%((\a\+)\)\=:E565:/
     " Do nothing
   finally
     let s:checktime_timer = timer_start(1000, { -> s:kg8m.checktime() })
