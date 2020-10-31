@@ -1198,9 +1198,10 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
 
   function! s:fzf.history.candidates() abort  " {{{
     let current  = "%"->expand()->empty() ? [] : ["%"->expand()->fnamemodify(s:fzf.filepath_format())]
+    let buffers  = s:fzf.buffers.list()  " for renamed files by `:Rename`, opened files by `vim foo bar baz`, and so on
     let oldfiles = s:fzf.history.list()
 
-    return kg8m#util#list_module().uniq(current + oldfiles)
+    return kg8m#util#list_module().uniq(current + buffers + oldfiles)
   endfunction  " }}}
 
   function! s:fzf.history.list() abort  " {{{
