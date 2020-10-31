@@ -6,10 +6,6 @@ if [ "$2" = "--fix" ]; then
   fix_enabled="1"
 fi
 
-if [ "$3" = "--debug" ]; then
-  debug="1"
-fi
-
 if [ -n "$fix_enabled" ] && [ -z "$VIM_FIX_ON_SAVE_JS" ]; then
   exit 0
 fi
