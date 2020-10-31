@@ -2689,6 +2689,7 @@ if kg8m#plugin#register("mhinz/vim-startify", #{ if: !kg8m#util#is_git_tmp_edit(
   let s:startify = {}
 
   let g:startify_session_dir         = g:session_directory
+  let g:startify_session_number      = 10
   let g:startify_session_persistence = v:false
   let g:startify_session_sort        = v:true
 
