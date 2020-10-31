@@ -970,12 +970,17 @@ if kg8m#plugin#register("tyru/caw.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  
 endif  " }}}
 
 if kg8m#plugin#register("Shougo/context_filetype.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+  let s:context_filetype = {}
+  let s:context_filetype.filetypes = {}
+  let s:context_filetype.filetypes.for_js = [
+    \   #{ start: '\<html`$', end: '^\s*`', filetype: 'html' },
+    \   #{ start: '\<css`$', end: '^\s*`', filetype: 'css' },
+    \ ]
+
   " For caw.vim and so on
   let g:context_filetype#filetypes = #{
-    \   javascript: [
-    \     #{ start: '\<html`$', end: '^\s*`', filetype: 'html' },
-    \     #{ start: '\<css`$', end: '^\s*`', filetype: 'css' },
-    \   ],
+    \   javascript: s:context_filetype.filetypes.for_js,
+    \   typescript: s:context_filetype.filetypes.for_js,
     \ }
 endif  " }}}
 
