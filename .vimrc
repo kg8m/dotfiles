@@ -69,7 +69,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
   let s:asyncomplete = {}
 
   let g:asyncomplete_auto_popup = v:true
-  let g:asyncomplete_popup_delay = 50
+  let g:asyncomplete_popup_delay = 10
   let g:asyncomplete_auto_completeopt = v:false
   let g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
