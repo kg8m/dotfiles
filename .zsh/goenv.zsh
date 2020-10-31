@@ -3,7 +3,11 @@ function setup_my_goenv {
   export GOENV_ROOT="$( pwd )"
   export PATH=$GOENV_ROOT/bin:$PATH
 
-  eval "$( goenv init - )"
+  if ! [ -f "$KGYM_ZSH_CACHE_DIR/goenv_init" ]; then
+    goenv init - > "$KGYM_ZSH_CACHE_DIR/goenv_init"
+    zcompile "$KGYM_ZSH_CACHE_DIR/goenv_init"
+  fi
+  source "$KGYM_ZSH_CACHE_DIR/goenv_init"
 
   if [ "$GOROOT" ] && [ "$GOPATH" ]; then
     # Disable because this obstructs $GOENV_ROOT/shims

@@ -25,6 +25,8 @@ export NEXTWORD_DATA_PATH=$HOME/.local/share/nextword/nextword-data
 export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
 export VIM_PLUGINS=$HOME/.vim/plugins/repos
 
+export KGYM_ZSH_CACHE_DIR=$XDG_CACHE_HOME/zsh
+
 case "$-" in
   *i*)  # Interactive shell
     ;;

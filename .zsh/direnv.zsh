@@ -1,9 +1,17 @@
 if which direnv > /dev/null 2>&1; then
   function setup_my_direnv {
-    eval "$( direnv hook zsh )"
+    if ! [ -f "$KGYM_ZSH_CACHE_DIR/direnv_hook" ]; then
+      direnv hook zsh > "$KGYM_ZSH_CACHE_DIR/direnv_hook"
+      zcompile "$KGYM_ZSH_CACHE_DIR/direnv_hook"
+    fi
+    source "$KGYM_ZSH_CACHE_DIR/direnv_hook"
 
-    # https://github.com/direnv/direnv/blob/a4632773637ee1a6b08fa81043cacd24ea941489/shell_zsh.go#L12
-    eval "$( direnv export zsh )"
+    if ! [ -f "$KGYM_ZSH_CACHE_DIR/direnv_export" ]; then
+      # https://github.com/direnv/direnv/blob/a4632773637ee1a6b08fa81043cacd24ea941489/shell_zsh.go#L12
+      direnv export zsh > "$KGYM_ZSH_CACHE_DIR/direnv_export"
+      zcompile "$KGYM_ZSH_CACHE_DIR/direnv_export"
+    fi
+    source "$KGYM_ZSH_CACHE_DIR/direnv_export"
 
     unset -f setup_my_direnv
   }

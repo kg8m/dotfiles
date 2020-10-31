@@ -1,6 +1,10 @@
 if [ -d ~/.rbenv ] && which rbenv > /dev/null 2>&1; then
   function setup_my_rbenv {
-    eval "$( rbenv init - )"
+    if ! [ -f "$KGYM_ZSH_CACHE_DIR/rbenv_init" ]; then
+      rbenv init - > "$KGYM_ZSH_CACHE_DIR/rbenv_init"
+      zcompile "$KGYM_ZSH_CACHE_DIR/rbenv_init"
+    fi
+    source "$KGYM_ZSH_CACHE_DIR/rbenv_init"
     unset -f setup_my_rbenv
   }
 

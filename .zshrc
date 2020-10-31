@@ -81,6 +81,8 @@ autoload -Uz zmv
 
 autoload -U add-zsh-hook
 
+mkdir -p "$KGYM_ZSH_CACHE_DIR"
+
 source ~/.zsh/my_aliases.zsh
 source ~/.zsh/my_functions.zsh
 source ~/.zsh/timetrack.zsh
@@ -108,7 +110,5 @@ source ~/.zsh/rubocop.zsh
 source ~/.zsh/syntax-highlighting.zsh
 source ~/.zsh/tmux.zsh
 
-try_to_source ~/.zshrc.local
-
-autoload -U compinit
-compinit
+zinit ice lucid wait"!0a" atload"try_to_source ~/.zshrc.local; zicompinit"
+zinit snippet /dev/null

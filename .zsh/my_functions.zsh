@@ -251,6 +251,9 @@ function tig {
 }
 
 function update_zsh_plugins {
+  trash "$KGYM_ZSH_CACHE_DIR"
+  mkdir -p "$KGYM_ZSH_CACHE_DIR"
+
   execute_with_echo "zinit self-update"
   notify --nostay "Executing \`zinit delete --clean\`, so allow to continue"
   execute_with_echo "zinit delete --clean"
