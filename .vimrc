@@ -2696,17 +2696,12 @@ if kg8m#plugin#register("mhinz/vim-startify", #{ if: !kg8m#util#is_git_tmp_edit(
   let g:startify_enable_special = v:true
   let g:startify_change_to_dir  = v:false
   let g:startify_relative_path  = v:true
-  let g:startify_list_order     = [
-    \   ["My commands:"],
-    \   "commands",
-    \   ["My bookmarks:"],
-    \   "bookmarks",
-    \   ["My sessions:"],
-    \   "sessions",
-    \   ["Recently opened files:"],
-    \   "files",
-    \   ["Recently modified files in the current directory:"],
-    \   "dir",
+  let g:startify_lists          = [
+    \   #{ type: "commands",  header: ["My commands:"] },
+    \   #{ type: "bookmarks", header: ["My bookmarks:"] },
+    \   #{ type: "sessions",  header: ["My sessions:"] },
+    \   #{ type: "files",     header: ["Recently opened files:"] },
+    \   #{ type: "dir",       header: ["Recently modified files in the current directory:"] },
     \ ]
   let g:startify_commands = [
     \   #{ p: "call kg8m#plugin#update_all()" },
