@@ -6,12 +6,9 @@ if which direnv > /dev/null 2>&1; then
     fi
     source "$KGYM_ZSH_CACHE_DIR/direnv_hook"
 
-    if ! [ -f "$KGYM_ZSH_CACHE_DIR/direnv_export" ]; then
-      # https://github.com/direnv/direnv/blob/a4632773637ee1a6b08fa81043cacd24ea941489/shell_zsh.go#L12
-      direnv export zsh > "$KGYM_ZSH_CACHE_DIR/direnv_export"
-      zcompile "$KGYM_ZSH_CACHE_DIR/direnv_export"
-    fi
-    source "$KGYM_ZSH_CACHE_DIR/direnv_export"
+    # Don't cache the result of `direnv export zsh` because it varies depending on each directory's `.envrc`
+    # https://github.com/direnv/direnv/blob/a4632773637ee1a6b08fa81043cacd24ea941489/shell_zsh.go#L12
+    eval "$( direnv export zsh )"
 
     unset -f setup_my_direnv
   }
