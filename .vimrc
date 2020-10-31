@@ -2457,7 +2457,8 @@ if kg8m#plugin#register("andymass/vim-matchup")  " {{{
   let g:matchup_matchparen_deferred_fade_time = 500
 
   let g:matchup_matchpref = #{
-    \   html: #{ tagnameonly: v:true },
+    \   html:  #{ tagnameonly: v:true },
+    \   eruby: #{ tagnameonly: v:true },
     \ }
 
   augroup my_vimrc  " {{{
