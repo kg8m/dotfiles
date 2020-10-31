@@ -331,7 +331,7 @@ function git:utility:preview:log {
 }
 
 function git:proxy:sed {
-  if which gsed > /dev/null 2>&1; then
+  if command -v gsed > /dev/null 2>&1; then
     gsed "$@"
   else
     sed "$@"
@@ -339,7 +339,7 @@ function git:proxy:sed {
 }
 
 function git:proxy:wc {
-  if which gwc > /dev/null 2>&1; then
+  if command -v gwc > /dev/null 2>&1; then
     gwc "$@"
   else
     wc "$@"
@@ -364,7 +364,7 @@ function git:proxy:cat:files {
     fi
   done
 
-  if which bat > /dev/null 2>&1; then
+  if command -v bat > /dev/null 2>&1; then
     bat --wrap --color=always --style=full "${realpaths[@]}"
   else
     for filepath in "${realpaths[@]}"; do

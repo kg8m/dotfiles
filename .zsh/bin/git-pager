@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-if which delta > /dev/null 2>&1; then
+if command -v delta > /dev/null 2>&1; then
   delta \
     --file-style "yellow auto bold ul" \
     --file-decoration-style "none" \

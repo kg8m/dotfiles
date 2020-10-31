@@ -6,11 +6,11 @@ function setup_my_anyframe {
   anyframe-init
 
   # `filter` is `.zsh/bin/filter`
-  if which fzf > /dev/null 2>&1; then
+  if command -v fzf > /dev/null 2>&1; then
     source ~/.zsh/env/fzf.zsh
     zstyle ":anyframe:selector:" use fzf
     zstyle ":anyframe:selector:fzf:" command filter
-  elif which peco > /dev/null 2>&1; then
+  elif command -v peco > /dev/null 2>&1; then
     zstyle ":anyframe:selector:" use peco
     zstyle ":anyframe:selector:peco:" command filter
   else

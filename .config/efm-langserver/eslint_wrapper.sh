@@ -26,7 +26,7 @@ if [ ! "$( is_target_file "$target_filepath" )" = "1" ]; then
   exit 0
 fi
 
-if which eslint_d > /dev/null 2>&1; then
+if command -v eslint_d > /dev/null 2>&1; then
   executable=eslint_d
 else
   executable=eslint

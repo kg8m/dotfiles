@@ -16,8 +16,5 @@ disable=SC2196
 # Prefer mapfile or read -a to split command output (or quote to avoid splitting).
 disable=SC2207
 
-# which is non-standard. Use builtin 'command -v' instead.
-disable=SC2230
-
 # Prefer putting braces around variable references even when not strictly required.
 disable=SC2250
