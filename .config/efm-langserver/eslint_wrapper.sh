@@ -63,7 +63,7 @@ if [ -n "$out" ]; then
       printf '"%s: line " + %s + ", col " + %s + ", " + %s + " - [eslint][" + %s + "] " + %s' \
         "$target_filepath" \
         '(.line | tostring)' \
-        '(.column | tostring)' \
+        '(if .column == null then "1" else .column | tostring end)' \
         '(if .severity == 1 then "Warning" else "Error" end)' \
         '.ruleId' \
         '(.message | gsub("\n"; " "))'
