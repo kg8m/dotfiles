@@ -2781,6 +2781,10 @@ endif  " }}}
 
 if kg8m#plugin#register("kopischke/vim-stay", #{ if: !kg8m#util#is_git_commit() })  " {{{
   set viewoptions=cursor,folds
+
+  augroup my_vimrc  " {{{
+    autocmd User BufStaySavePre call s:kg8m.restore_foldmethod()
+  augroup END  " }}}
 endif  " }}}
 
 if kg8m#plugin#register("janko/vim-test", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
