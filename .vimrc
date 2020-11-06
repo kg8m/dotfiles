@@ -1706,16 +1706,39 @@ if kg8m#plugin#register("othree/javascript-libraries-syntax.vim", #{ if: !kg8m#u
 endif  " }}}
 
 if kg8m#plugin#register("fuenor/JpFormat.vim")  " {{{
-  " Replace built-in `jq` operator
-  set formatexpr=jpfmt#formatexpr()
+  let s:jpformat = {}
 
-  let JpFormatCursorMovedI = v:false
-  let JpAutoJoin = v:false
-  let JpAutoFormat = v:false
+  function! s:jpformat.on_source() abort  " {{{
+    let s:jpformat.formatexpr = "jpfmt#formatexpr()"
+
+    function! s:jpformat.set_formatexpr() abort  " {{{
+      if has_key(b:, "jpformat_formatexpr_set")
+        return
+      endif
+
+      if &formatexpr !=# s:jpformat.formatexpr
+        " Replace built-in `jq` operator
+        let &formatexpr = s:jpformat.formatexpr
+      endif
+
+      let b:jpformat_formatexpr_set = v:true
+    endfunction  " }}}
+    call s:jpformat.set_formatexpr()
+
+    let JpFormatCursorMovedI = v:false
+    let JpAutoJoin = v:false
+    let JpAutoFormat = v:false
+
+    augroup my_vimrc  " {{{
+      " Overwrite formatexpr
+      autocmd OptionSet formatexpr call timer_start(200, { -> s:jpformat.set_formatexpr() })
+    augroup END  " }}}
+  endfunction  " }}}
 
   call kg8m#plugin#configure(#{
      \   lazy:   v:true,
      \   on_map: ["gq"],
+     \   hook_source: s:jpformat.on_source,
      \ })
 endif  " }}}
 
