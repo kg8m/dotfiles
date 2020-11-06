@@ -626,8 +626,9 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \   name: "efm-langserver",
      \   cmd: { server_info -> ["efm-langserver"] },
      \   allowlist: [
-     \     "eruby", "javascript", "json", "make", "markdown", "vim",
+     \     "eruby", "json", "make", "markdown", "vim",
      \     "eruby.yaml", "yaml",
+     \     "javascript", "typescript",
      \     "sh", "zsh",
      \   ],
      \ })
@@ -904,7 +905,7 @@ if kg8m#plugin#register("dense-analysis/ale", #{ if: !kg8m#util#is_git_tmp_edit(
     \   go:         ["golangci-lint", "govet"],
     \   javascript: [],
     \   ruby:       ["ruby", "rubocop"],
-    \   typescript: ["eslint"],
+    \   typescript: [],
     \   vim:        [],
     \ }
   let g:ale_fixers = #{

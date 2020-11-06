@@ -79,6 +79,9 @@ languages:
   sh:
     - <<: *shellcheck
 
+  typescript:
+    - <<: *eslint
+
   # Disable because modern syntaxes are not supported
   # vim:
   #   - <<: *vint
