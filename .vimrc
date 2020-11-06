@@ -3368,6 +3368,10 @@ endif  " }}}
 " Commands  " {{{
 " http://vim-users.jp/2009/05/hack17/
 command! -nargs=1 -complete=file Rename f <args> | call delete(expand("#")) | write
+
+" Show counts (h v_g_CTRL-G)
+command! -nargs=0 -range Stats call feedkeys("g\<C-g>")
+command! -nargs=0 -range Counts Stats
 " }}}
 
 " ----------------------------------------------
