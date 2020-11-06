@@ -730,8 +730,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   call kg8m#plugin#lsp#register(#{
      \   name: "typescript-language-server",
      \   cmd: { server_info -> ["typescript-language-server", "--stdio"] },
-     \   initialization_options: #{ diagnostics: "true" },
-     \   allowlist: ["typescript", "javascript", "typescriptreact", "javascriptreact", "typescript.tsx", "javascript.jsx"],
+     \   allowlist: ["typescript", "javascript"],
      \ })
   " }}}
 
