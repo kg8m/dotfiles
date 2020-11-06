@@ -218,16 +218,20 @@ function my_grep_with_filter() {
     return
   fi
 
-  local response
   echo "${(j:\n:)results[@]}" | my_grep "$query" "${options[@]}" 2>/dev/null
-  echo
-  read "response?Open found files? [y/n]: "
 
-  if [[ "$response" =~ ^y ]]; then
-    local filepaths=( "${(@f)$( echo "${(j:\n:)results[@]}" | egrep ':[0-9]+:[0-9]+:' | egrep -o '^[^:]+' | sort -u )}" )
+  # Check whether the output is on a terminal
+  if [ -t 1 ]; then
+    local response
+    echo
+    read "response?Open found files? [y/n]: "
 
-    # Don't use literal `vim` because it sometimes refers to wrong Vim
-    eval "vim ${filepaths[@]}"
+    if [[ "$response" =~ ^y ]]; then
+      local filepaths=( "${(@f)$( echo "${(j:\n:)results[@]}" | egrep ':[0-9]+:[0-9]+:' | egrep -o '^[^:]+' | sort -u )}" )
+
+      # Don't use literal `vim` because it sometimes refers to wrong Vim
+      eval "vim ${filepaths[@]}"
+    fi
   fi
 }
 alias gr="my_grep_with_filter"
