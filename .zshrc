@@ -83,9 +83,6 @@ autoload -U add-zsh-hook
 
 mkdir -p "$KGYM_ZSH_CACHE_DIR"
 
-source ~/.zsh/my_aliases.zsh
-source ~/.zsh/my_functions.zsh
-
 # zdharma/zinit  {{{
 [ -d ~/.zinit/bin ] || git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
 source ~/.zinit/bin/zinit.zsh
@@ -102,6 +99,8 @@ source ~/.zsh/filter.zsh
 source ~/.zsh/git.zsh
 source ~/.zsh/goenv.zsh
 source ~/.zsh/history-search.zsh
+source ~/.zsh/my_aliases.zsh
+source ~/.zsh/my_functions.zsh
 source ~/.zsh/nodenv.zsh
 source ~/.zsh/prompt.zsh
 source ~/.zsh/rbenv.zsh
