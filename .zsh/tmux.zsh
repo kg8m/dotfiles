@@ -22,6 +22,6 @@ export __my_tmux_plugins__=(
 )
 
 for plugin in "${__my_tmux_plugins__[@]}"; do
-  zinit ice lucid wait"!0c" as"null" atload"setup_my_tmux_plugin $plugin"
+  zinit ice lucid wait"0c" as"null" atload"setup_my_tmux_plugin $plugin"
   zinit light "$plugin"
 done

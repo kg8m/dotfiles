@@ -13,4 +13,4 @@ function setup_my_enhancd {
   alias cd="cd_with_mkdir"
   unset -f setup_my_enhancd
 }
-zinit ice lucid wait"!0c" atload"setup_my_enhancd"; zinit light b4b4r07/enhancd
+zinit ice lucid wait"0c" atload"setup_my_enhancd"; zinit light b4b4r07/enhancd

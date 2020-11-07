@@ -38,15 +38,15 @@ if [ -d ~/.rbenv ] && command -v rbenv > /dev/null 2>&1; then
     unset -f setup_my_ruby_build
   }
 
-  zinit ice lucid wait"!0a" atload"setup_my_rbenv"
+  zinit ice lucid wait"0a" atload"setup_my_rbenv"
   zinit snippet /dev/null
 
-  zinit ice lucid wait"!0c" as"null" atload"setup_my_rbenv_default_gems"
+  zinit ice lucid wait"0c" as"null" atload"setup_my_rbenv_default_gems"
   zinit light rbenv/rbenv-default-gems
 
-  zinit ice lucid wait"!0c" as"null" atload"setup_my_rbenv_each"
+  zinit ice lucid wait"0c" as"null" atload"setup_my_rbenv_each"
   zinit light rbenv/rbenv-each
 
-  zinit ice lucid wait"!0c" as"null" atload"setup_my_ruby_build"
+  zinit ice lucid wait"0c" as"null" atload"setup_my_ruby_build"
   zinit light rbenv/ruby-build
 fi
