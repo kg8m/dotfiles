@@ -109,7 +109,7 @@ source ~/.zsh/syntax-highlighting.zsh
 source ~/.zsh/timetrack.zsh
 source ~/.zsh/tmux.zsh
 
-zinit ice lucid wait"0a" atload"try_to_source ~/.zshrc.local"
+try_to_source ~/.zshrc.local
 
 zinit ice lucid nocd wait"!0c" atload"zicompinit; echo"
 zinit snippet /dev/null
