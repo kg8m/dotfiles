@@ -28,4 +28,5 @@ ZSH_THEME_GIT_PROMPT_STASHED="%F{cyan}*"
 ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}#"
 ZSH_GIT_PROMPT_SHOW_STASH=1
 
-zinit ice lucid pick"git-prompt.zsh"; zinit light woefe/git-prompt.zsh
+zinit ice lucid pick"git-prompt.zsh"
+zinit light woefe/git-prompt.zsh

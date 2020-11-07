@@ -14,4 +14,5 @@ function setup_my_nodenv {
   unset -f setup_my_nodenv
 }
 
-zinit ice lucid nocd wait"0a" atload"setup_my_nodenv"; zinit snippet /dev/null
+zinit ice lucid nocd wait"0a" atload"setup_my_nodenv"
+zinit snippet /dev/null
