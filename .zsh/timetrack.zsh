@@ -42,77 +42,84 @@ export TIMETRACK_IGNORE_PATTERN
 export TIMETRACK_PATTERN
 
 # inspired by http://qiita.com/hayamiz/items/d64730b61b7918fbb970
-autoload -U add-zsh-hook 2>/dev/null || return
+function setup_my_timetrack {
+  autoload -U add-zsh-hook 2>/dev/null || return
 
-# seconds
-__timetrack_threshold=30
+  # seconds
+  __timetrack_threshold=30
 
-export __timetrack_threshold
+  export __timetrack_threshold
 
-function __my_preexec_start_timetrack() {
-  local command=$1
+  function __my_preexec_start_timetrack() {
+    local command=$1
 
-  export __timetrack_start=$( date +%s )
-  export __timetrack_command="$command"
+    export __timetrack_start=$( date +%s )
+    export __timetrack_command="$command"
+  }
+
+  function __my_preexec_end_timetrack() {
+    local last_status=$?
+    local exec_time result title message
+    local command="${__timetrack_command//'/'\\''}"
+    local notifier_options=( -group "TIMETRACK_${USER}@${HOST}_$( printf %q "$command" )" )
+
+    export __timetrack_end="$( date +%s )"
+
+    if [ -z "$__timetrack_start" ] || [ -z "$__timetrack_threshold" ]; then
+      return
+    fi
+
+    # Don't use `[ "$command" =~ $TIMETRACK_PATTERN ]` because it doesn't work on Mac
+    if echo "$command" | egrep -v "$TIMETRACK_IGNORE_PATTERN" | egrep -q "$TIMETRACK_PATTERN"; then
+      exec_time=$(( __timetrack_end - __timetrack_start ))
+
+      if [ "$last_status" = "0" ]; then
+        result="Command succeeded!!"
+        title="👼 ${result}"
+      else
+        result="Command failed!!"
+        title="👿 ${result}"
+      fi
+
+      title+=" ($exec_time seconds)"
+      notifier_options+=( -title "$( printf %q "$title" )" )
+      message="Command: $command"
+
+      if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
+        notifier_options+=( -sender TERMINAL_NOTIFIER_STAY )
+      fi
+
+      # `> /dev/null` for ignoring "Removing previously sent notification" message.
+      # Throwing stderr away for ignoring "Connection to * closed." message.
+      ssh main -t "echo '[$( whoami )@$( hostname )] $message' | /usr/local/bin/terminal-notifier ${notifier_options[@]}" > /dev/null 2>&1
+
+      if [ "$last_status" = "0" ]; then
+        title="${title//${result}/\e[0;32m${result}\e[1;37m}"
+      else
+        title="${title//${result}/\e[0;31m${result}\e[1;37m}"
+      fi
+
+      if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
+        title="${title//${exec_time} seconds/\e[1;33m${exec_time} seconds\e[1;37m}"
+      fi
+
+      printf "\n* * *\n"
+      echo "$title"
+      echo "$message"
+      date
+
+      unset __timetrack_start
+      unset __timetrack_command
+
+      return
+    fi
+  }
+
+  add-zsh-hook preexec __my_preexec_start_timetrack
+  add-zsh-hook precmd __my_preexec_end_timetrack
+
+  unset -f setup_my_timetrack
 }
 
-function __my_preexec_end_timetrack() {
-  local last_status=$?
-  local exec_time result title message
-  local command="${__timetrack_command//'/'\\''}"
-  local notifier_options=( -group "TIMETRACK_${USER}@${HOST}_$( printf %q "$command" )" )
-
-  export __timetrack_end="$( date +%s )"
-
-  if [ -z "$__timetrack_start" ] || [ -z "$__timetrack_threshold" ]; then
-    return
-  fi
-
-  # Don't use `[ "$command" =~ $TIMETRACK_PATTERN ]` because it doesn't work on Mac
-  if echo "$command" | egrep -v "$TIMETRACK_IGNORE_PATTERN" | egrep -q "$TIMETRACK_PATTERN"; then
-    exec_time=$(( __timetrack_end - __timetrack_start ))
-
-    if [ "$last_status" = "0" ]; then
-      result="Command succeeded!!"
-      title="👼 ${result}"
-    else
-      result="Command failed!!"
-      title="👿 ${result}"
-    fi
-
-    title+=" ($exec_time seconds)"
-    notifier_options+=( -title "$( printf %q "$title" )" )
-    message="Command: $command"
-
-    if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
-      notifier_options+=( -sender TERMINAL_NOTIFIER_STAY )
-    fi
-
-    # `> /dev/null` for ignoring "Removing previously sent notification" message.
-    # Throwing stderr away for ignoring "Connection to * closed." message.
-    ssh main -t "echo '[$( whoami )@$( hostname )] $message' | /usr/local/bin/terminal-notifier ${notifier_options[@]}" > /dev/null 2>&1
-
-    if [ "$last_status" = "0" ]; then
-      title="${title//${result}/\e[0;32m${result}\e[1;37m}"
-    else
-      title="${title//${result}/\e[0;31m${result}\e[1;37m}"
-    fi
-
-    if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
-      title="${title//${exec_time} seconds/\e[1;33m${exec_time} seconds\e[1;37m}"
-    fi
-
-    printf "\n* * *\n"
-    echo "$title"
-    echo "$message"
-    date
-
-    unset __timetrack_start
-    unset __timetrack_command
-
-    return
-  fi
-}
-
-add-zsh-hook preexec __my_preexec_start_timetrack
-add-zsh-hook precmd __my_preexec_end_timetrack
+zinit ice lucid nocd wait"0c" atload"setup_my_timetrack"
+zinit snippet /dev/null

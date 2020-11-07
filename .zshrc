@@ -85,7 +85,6 @@ mkdir -p "$KGYM_ZSH_CACHE_DIR"
 
 source ~/.zsh/my_aliases.zsh
 source ~/.zsh/my_functions.zsh
-source ~/.zsh/timetrack.zsh
 
 # zdharma/zinit  {{{
 [ -d ~/.zinit/bin ] || git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
@@ -108,6 +107,7 @@ source ~/.zsh/prompt.zsh
 source ~/.zsh/rbenv.zsh
 source ~/.zsh/rubocop.zsh
 source ~/.zsh/syntax-highlighting.zsh
+source ~/.zsh/timetrack.zsh
 source ~/.zsh/tmux.zsh
 
 zinit ice lucid wait"0a" atload"try_to_source ~/.zshrc.local"
