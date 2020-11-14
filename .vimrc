@@ -2638,6 +2638,7 @@ if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
   let s:sandwich = {}
 
   let g:sandwich_no_default_key_mappings = v:true
+  let g:operator_sandwich_no_default_key_mappings = v:true
 
   vmap <Leader>sa <Plug>(operator-sandwich-add)
   nmap <Leader>sd <Plug>(operator-sandwich-delete)<Plug>(textobj-sandwich-query-a)
