@@ -7,10 +7,10 @@ target_filepath="$1"
 err_temp_filepath="$(mktemp -t eslint_wrapper)"
 
 if [ "$2" = "--fix" ]; then
-  fix_enabled="1"
+  is_fixing="1"
 fi
 
-if [ -n "$fix_enabled" ] && [ -z "$VIM_FIX_ON_SAVE_JS" ]; then
+if [ -n "$is_fixing" ] && [ -z "$VIM_FIX_ON_SAVE_JS" ]; then
   exit 1
 fi
 
@@ -38,7 +38,7 @@ fi
 
 options=(--format json --stdin --stdin-filename "$target_filepath")
 
-if [ -n "$fix_enabled" ]; then
+if [ -n "$is_fixing" ]; then
   if [ "$executable" = "eslint_d" ]; then
     options+=(--fix-to-stdout)
   else
@@ -54,7 +54,7 @@ err="$(cat "$err_temp_filepath")"
 rm -f "$err_temp_filepath"
 
 if [ -n "$out" ]; then
-  if [ -n "$fix_enabled" ]; then
+  if [ -n "$is_fixing" ]; then
     if [ "$executable" = "eslint_d" ]; then
       echo "$out"
     else
