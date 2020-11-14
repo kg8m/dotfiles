@@ -2419,18 +2419,13 @@ if kg8m#plugin#register("fatih/vim-go", #{ if: !kg8m#util#is_git_tmp_edit() })  
 
   function! s:go.setup() abort  " {{{
     setlocal foldmethod=syntax
-    call s:go.setup_mappings()
-  endfunction  " }}}
 
-  if kg8m#util#on_tmux()  " {{{
-    function! s:go.setup_mappings() abort  " {{{
+    if kg8m#util#on_tmux()  " {{{
       nnoremap <buffer> <leader>r :write<Cr>:call VimuxRunCommand("go run -race <C-r>%")<Cr>
-    endfunction  " }}}
-  else
-    function! s:go.setup_mappings() abort  " {{{
+    else
       nnoremap <buffer> <leader>r :write<Cr>:GoRun -race %<Cr>
-    endfunction  " }}}
-  endif  " }}}
+    endif  " }}}
+  endfunction  " }}}
 
   call kg8m#plugin#configure(#{
      \   lazy:  v:true,
