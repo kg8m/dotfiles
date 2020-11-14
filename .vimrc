@@ -926,24 +926,7 @@ function! s:kg8m.completion_refresh_pattern(filetype) abort  " {{{
 endfunction  " }}}
 " }}}
 
-if kg8m#plugin#register("dense-analysis/ale", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
-  let g:airline#extensions#ale#enabled = v:false
-  let g:ale_completion_enabled         = v:false
-  let g:ale_disable_lsp                = v:true
-  let g:ale_echo_msg_format            = "[%linter%][%severity%] %code: %%s"
-  let g:ale_fix_on_save                = v:false
-  let g:ale_lint_on_enter              = v:true
-  let g:ale_lint_on_filetype_changed   = v:true
-  let g:ale_lint_on_insert_leave       = v:false
-  let g:ale_lint_on_save               = v:true
-  let g:ale_lint_on_text_changed       = v:false
-  let g:ale_open_list                  = v:false
-
-  augroup my_vimrc  " {{{
-    autocmd FileType go,javascript,markdown,ruby,typescript,vim let b:ale_enabled = v:false
-  augroup END  " }}}
-endif  " }}}
-
+call kg8m#plugin#register("dense-analysis/ale", #{ if: v:false })
 call kg8m#plugin#register("pearofducks/ansible-vim", #{ if: !kg8m#util#is_git_tmp_edit() })
 
 " Show diff in Git's interactive rebase
