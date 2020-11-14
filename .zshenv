@@ -1,6 +1,7 @@
 function try_to_source {
   if [ ! $# = 1 ]; then
-    echo "Specify only 1 filepath to source" >&2; return 1
+    echo "Specify only 1 filepath to source" >&2
+    return 1
   fi
 
   local filepath="$1"

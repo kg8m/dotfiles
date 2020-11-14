@@ -10,7 +10,7 @@ function setup_my_rbenv {
 
     function setup_my_rbenv_default_gems {
       if [ ! -d ~/.rbenv/plugins/rbenv-default-gems ]; then
-        ln -s "$( pwd )" ~/.rbenv/plugins/rbenv-default-gems
+        ln -s "$(pwd)" ~/.rbenv/plugins/rbenv-default-gems
       fi
 
       if [ ! -f ~/.rbenv/default-gems ]; then
@@ -22,7 +22,7 @@ function setup_my_rbenv {
 
     function setup_my_rbenv_each {
       if [ ! -d ~/.rbenv/plugins/rbenv-each ]; then
-        ln -s "$( pwd )" ~/.rbenv/plugins/rbenv-each
+        ln -s "$(pwd)" ~/.rbenv/plugins/rbenv-each
       fi
 
       unset -f setup_my_rbenv_each
@@ -30,7 +30,7 @@ function setup_my_rbenv {
 
     function setup_my_ruby_build {
       if [ ! -d ~/.rbenv/plugins/ruby-build ]; then
-        ln -s "$( pwd )" ~/.rbenv/plugins/ruby-build
+        ln -s "$(pwd)" ~/.rbenv/plugins/ruby-build
       fi
 
       unset -f setup_my_ruby_build

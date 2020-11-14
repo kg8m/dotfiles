@@ -6,7 +6,7 @@ if command -v delta > /dev/null 2>&1; then
     --hunk-header-style "syntax #333333" \
     --hunk-header-decoration-style "none" \
     "$@" ||
-    ( diff-highlight "$@" | less --LINE-NUMBERS )
+    (diff-highlight "$@" | less --LINE-NUMBERS)
 else
   diff-highlight "$@" | less --LINE-NUMBERS
 fi

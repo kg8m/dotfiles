@@ -1,11 +1,11 @@
 function setup_my_tmux_plugins {
   function setup_my_tmux_plugin {
-    local plugin_name="$( basename "$1" )"
+    local plugin_name="$(basename "$1")"
 
     [ -d ~/.config/tmux ]                        || ln -s ~/dotfiles/.tmux ~/.config/tmux
-    [ -d ~/.config/tmux/plugins/"$plugin_name" ] || ln -s "$( pwd )" ~/.config/tmux/plugins/"$plugin_name"
+    [ -d ~/.config/tmux/plugins/"$plugin_name" ] || ln -s "$(pwd)" ~/.config/tmux/plugins/"$plugin_name"
 
-    __setup_done_my_tmux_plugins__+=( "$plugin_name" )
+    __setup_done_my_tmux_plugins__+=("$plugin_name")
 
     if [ "${#__setup_done_my_tmux_plugins__[@]}" = "${#__my_tmux_plugins__[@]}" ]; then
       unset __setup_done_my_tmux_plugins__

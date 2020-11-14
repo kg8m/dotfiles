@@ -10,7 +10,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 setopt complete_in_word
 
 # https://zdharma.org/zinit/wiki/Example-Minimal-Setup/
-zinit ice lucid wait"0c" blockf atpull"zinit creinstall -q \$( pwd )"
+zinit ice lucid wait"0c" blockf atpull"zinit creinstall -q \$(pwd)"
 zinit light zsh-users/zsh-completions
 
 zinit ice lucid wait"0c" as"completion"

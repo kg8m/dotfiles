@@ -14,7 +14,8 @@ function setup_my_anyframe {
     zstyle ":anyframe:selector:" use peco
     zstyle ":anyframe:selector:peco:" command filter
   else
-    echo "Any filter is not found." >&2; return 1
+    echo "Any filter is not found." >&2
+    return 1
   fi
 
   bindkey "^R" anyframe-widget-put-history

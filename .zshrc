@@ -1,7 +1,7 @@
 # http://news.mynavi.jp/column/zsh/024/
 export LANG=ja_JP.UTF-8
 case ${UID} in
-0)
+  0)
     LANG=C
     ;;
 esac
@@ -87,7 +87,7 @@ mkdir -p "$KGYM_ZSH_CACHE_DIR"
 [ -d ~/.zinit/bin ] || git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
 source ~/.zinit/bin/zinit.zsh
 autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+((${+_comps})) && _comps[zinit]=_zinit
 # }}}
 
 source ~/.zsh/cd-bookmark.zsh

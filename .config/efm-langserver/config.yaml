@@ -1,5 +1,13 @@
 version: 2
 
+commands:
+  - title: reload config
+    command: ":reload-config"
+
+  # cf. tools.shfmt
+  - title: shfmt
+    command: "shfmt -i 2 -ci -sr -kp -w '${INPUT}'"
+
 tools:
   checkmake: &checkmake
     lint-command: "checkmake"
@@ -37,6 +45,11 @@ tools:
       - "%f:%l:%c: %trror: %m"
       - "%f:%l:%c: %tarning: %m"
       - "%f:%l:%c: %tote: %m"
+
+  # cf. commands.shfmt
+  shfmt: &shfmt
+    format-command: "shfmt -i 2 -ci -sr -kp -filename '${INPUT}'"
+    format-stdin: true
 
   textlint: &textlint
     lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}'"
@@ -78,6 +91,7 @@ languages:
 
   sh:
     - <<: *shellcheck
+    - <<: *shfmt
 
   typescript:
     - <<: *eslint
@@ -91,3 +105,5 @@ languages:
 
   zsh:
     - <<: *shellcheck
+    # Disable because shfmt sometimes fails to parse or freezes. Use `shfmt` code action instead if needed.
+    # - <<: *shfmt

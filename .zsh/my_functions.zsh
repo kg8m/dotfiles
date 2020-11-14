@@ -44,14 +44,14 @@ function retriable_execute_with_confirm {
 }
 
 function notify {
-  local options=( "${(M)@:#-*}" )
-  local non_options=( "${@:#-*}" )
-  local message="[$( whoami )@$( hostname )] ${non_options:-Command finished.}"
+  local options=("${(M)@:#-*}")
+  local non_options=("${@:#-*}")
+  local message="[$(whoami)@$(hostname)] ${non_options:-Command finished.}"
 
-  local notifier_options=( "-group \"NOTIFY_${message}\"" )
+  local notifier_options=("-group \"NOTIFY_${message}\"")
 
-  if (( ! ${options[(I)--nostay]} )); then
-    notifier_options+=( "-sender TERMINAL_NOTIFIER_STAY" )
+  if ((! ${options[(I)--nostay]})); then
+    notifier_options+=("-sender TERMINAL_NOTIFIER_STAY")
   fi
 
   # `> /dev/null` for ignoring "Removing previously sent notification" message
@@ -73,15 +73,15 @@ alias bmv="batch_move"
 function trash {
   local filename
   local new_filename
-  local timestamp=$( date +%H.%M.%S )
+  local timestamp=$(date +%H.%M.%S)
   local trash_path=${TRASH_PATH-/tmp}
 
   for source in "$@"; do
-    filename=$( basename "$source" )
+    filename=$(basename "$source")
 
     if [ -f "$trash_path/$filename" ] || [ -d "$trash_path/$filename" ]; then
       sed_expr='s/^\(\.\?[^.]\+\)\(\.\?\)/\1 '$timestamp'\2/'
-      new_filename=$( echo "$filename" | sed -e "$sed_expr" )
+      new_filename=$(echo "$filename" | sed -e "$sed_expr")
     else
       new_filename="$filename"
     fi
@@ -118,7 +118,7 @@ function attach_or_new_tmux {
 
   if ! tmux has-session -t "$session_name" > /dev/null 2>&1; then
     local response
-    read "response?Create new session in directory \`$( pwd )\` with session name \`$session_name\`? [y/n]:"
+    read "response?Create new session in directory \`$(pwd)\` with session name \`$session_name\`? [y/n]:"
 
     if [[ "$response" =~ ^y ]]; then
       if [ "$session_name" = "default" ]; then
@@ -149,18 +149,18 @@ function reload {
 # http://d.hatena.ne.jp/itchyny/20130227/1361933011
 function extract() {
   case "$1" in
-    *.tar.gz|*.tgz) tar xzvf "$1";;
-    *.tar.xz) tar Jxvf "$1";;
-    *.zip) unzip "$1";;
-    *.lzh) lha e "$1";;
-    *.tar.bz2|*.tbz) tar xjvf "$1";;
-    *.tar.Z) tar zxvf "$1";;
-    *.gz) gzip -dc "$1";;
-    *.bz2) bzip2 -dc "$1";;
-    *.Z) uncompress "$1";;
-    *.tar) tar xvf "$1";;
-    *.arj) unarj "$1";;
-    *.zst|*.zstd) unzstd "$1";;
+    *.tar.gz | *.tgz) tar xzvf "$1" ;;
+    *.tar.xz) tar Jxvf "$1" ;;
+    *.zip) unzip "$1" ;;
+    *.lzh) lha e "$1" ;;
+    *.tar.bz2 | *.tbz) tar xjvf "$1" ;;
+    *.tar.Z) tar zxvf "$1" ;;
+    *.gz) gzip -dc "$1" ;;
+    *.bz2) bzip2 -dc "$1" ;;
+    *.Z) uncompress "$1" ;;
+    *.tar) tar xvf "$1" ;;
+    *.arj) unarj "$1" ;;
+    *.zst | *.zstd) unzstd "$1" ;;
   esac
 }
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
@@ -170,9 +170,9 @@ function my_grep() {
 
   if [ -n "$RIPGREP_EXTRA_OPTIONS" ]; then
     # Split $RIPGREP_EXTRA_OPTIONS by whitespaces
-    args=( "${=RIPGREP_EXTRA_OPTIONS}" "$@" )
+    args=("${=RIPGREP_EXTRA_OPTIONS}" "$@")
   else
-    args=( "$@" )
+    args=("$@")
   fi
 
   rg "${args[@]}"
@@ -186,14 +186,14 @@ function my_grep_with_filter() {
   for arg in "$@"; do
     if [[ "$arg" =~ ^-- ]]; then
       is_waiting_option_value=false
-      options=( "${options[@]}" "$arg" )
+      options=("${options[@]}" "$arg")
 
       if [[ ! "$arg" =~ = ]]; then
         is_waiting_option_value=true
       fi
     elif [[ "$arg" =~ ^- ]]; then
       is_waiting_option_value=false
-      options=( "${options[@]}" "$arg" )
+      options=("${options[@]}" "$arg")
 
       if [[ "$arg" =~ ^-.$ ]]; then
         is_waiting_option_value=true
@@ -201,24 +201,24 @@ function my_grep_with_filter() {
     else
       if "$is_waiting_option_value"; then
         is_waiting_option_value=false
-        options=( "${options[@]}" "$arg" )
+        options=("${options[@]}" "$arg")
       else
-        non_options=( "${non_options[@]}" "$arg" )
+        non_options=("${non_options[@]}" "$arg")
       fi
     fi
   done
 
   local query="${non_options[1]}"
-  local results=( "${(@f)$(
-    my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2>/dev/null |
+  local results=("${(@f)$(
+    my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2> /dev/null |
       filter --header="Grep: '$query'" --delimiter=":" --preview-window="right:50%:wrap:nohidden:+{2}-/2" --preview="$FZF_VIM_PATH/bin/preview.sh {}"
-  )}" )
+  )}")
 
   if [ -z "${results[*]}" ]; then
     return
   fi
 
-  echo "${(j:\n:)results[@]}" | my_grep "$query" "${options[@]}" 2>/dev/null
+  echo "${(j:\n:)results[@]}" | my_grep "$query" "${options[@]}" 2> /dev/null
 
   # Check whether the output is on a terminal
   if [ -t 1 ]; then
@@ -227,7 +227,7 @@ function my_grep_with_filter() {
     read "response?Open found files? [y/n]: "
 
     if [[ "$response" =~ ^y ]]; then
-      local filepaths=( "${(@f)$( echo "${(j:\n:)results[@]}" | egrep ':[0-9]+:[0-9]+:' | egrep -o '^[^:]+' | sort -u )}" )
+      local filepaths=("${(@f)$(echo "${(j:\n:)results[@]}" | egrep ':[0-9]+:[0-9]+:' | egrep -o '^[^:]+' | sort -u)}")
 
       # Don't use literal `vim` because it sometimes refers to wrong Vim
       eval "vim ${filepaths[@]}"
@@ -264,7 +264,7 @@ function update_zsh_plugins {
   execute_with_echo "zinit cclear"
   execute_with_echo "find ${ZINIT[SNIPPETS_DIR]} -type d -empty -delete"
 
-  local current_dir=$( pwd )
+  local current_dir=$(pwd)
 
   # Clean up the directory because enhancd makes it dirty when loaded
   execute_with_echo "cd $__ENHANCD_DIR__"

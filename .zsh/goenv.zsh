@@ -1,6 +1,6 @@
 # See also `.zsh/env/go.zsh`
 function setup_my_goenv {
-  export GOENV_ROOT="$( pwd )"
+  export GOENV_ROOT="$(pwd)"
   export PATH=$GOENV_ROOT/bin:$PATH
 
   if ! [ -f "$KGYM_ZSH_CACHE_DIR/goenv_init" ]; then
