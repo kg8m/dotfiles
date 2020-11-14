@@ -1162,7 +1162,7 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: !kg8m#util#is_git_tmp_edit() 
   endfunction  " }}}
 
   function! s:kg8m.input_dirpath() abort  " {{{
-    let dirpath = input("Specify dirpath: ", "", "dir")
+    let dirpath = input("Specify dirpath: ", "", "dir")->expand()
 
     if empty(dirpath)
       throw "Dirpath not specified."
