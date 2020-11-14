@@ -3419,7 +3419,7 @@ function! s:kg8m.cr_for_insert_mode() abort  " {{{
   if neosnippet#expandable_or_jumpable()
     return "\<Plug>(neosnippet_expand_or_jump)"
   elseif vsnip#available(1)
-    return "\<Plug>(vsnip_expand_or_jump)"
+    return "\<Plug>(vsnip-expand-or-jump)"
   else
     if pumvisible()
       return asyncomplete#close_popup()
