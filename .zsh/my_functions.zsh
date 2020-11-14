@@ -18,7 +18,7 @@ function execute_with_confirm {
   local response
 
   printf "\n\e[0;36mExecute:\e[1;37m \`%s\`\n\n" "$*"
-  read "response?Are you sure? [y/n]: "
+  read -r "response?Are you sure? [y/n]: "
 
   if [[ ${response} =~ ^y ]]; then
     export __execute_with_confirm_executed="1"
@@ -39,7 +39,7 @@ function retriable_execute_with_confirm {
     echo
     [[ $result = 0 ]] && echo "👼 Succeeded." || echo "👿 Failed."
     echo
-    read "response?Retry? [y/n]: "
+    read -r "response?Retry? [y/n]: "
 
     if [[ "$response" =~ ^y ]]; then
       retriable_execute_with_confirm "$@"
@@ -66,7 +66,7 @@ function batch_move {
   local response
 
   zmv -n "$@" | less
-  read 'response?Execute? [y/n]: '
+  read -r 'response?Execute? [y/n]: '
 
   if [[ "$response" =~ ^y ]]; then
     zmv "$@"
@@ -124,7 +124,7 @@ function attach_or_new_tmux {
 
   if ! tmux has-session -t "$session_name" > /dev/null 2>&1; then
     local response
-    read "response?Create new session in directory \`$(pwd)\` with session name \`$session_name\`? [y/n]:"
+    read -r "response?Create new session in directory \`$(pwd)\` with session name \`$session_name\`? [y/n]:"
 
     if [[ "$response" =~ ^y ]]; then
       if [ "$session_name" = "default" ]; then
@@ -231,7 +231,7 @@ function my_grep_with_filter() {
     local response
 
     echo
-    read "response?Open found files? [y/n]: "
+    read -r "response?Open found files? [y/n]: "
 
     if [[ "$response" =~ ^y ]]; then
       local filepaths=("${(@f)$(echo "${(j:\n:)results[@]}" | egrep ':[0-9]+:[0-9]+:' | egrep -o '^[^:]+' | sort -u)}")

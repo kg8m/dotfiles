@@ -1,5 +1,5 @@
 function cd_with_mkdir() {
-  if [[ ! "$@" =~ "^$|^-$" ]] && [ ! -d "$@" ]; then
+  if [[ ! "$*" =~ ^$\|^-$ ]] && [ ! -d "$*" ]; then
     echo "$@ not exists"
     execute_with_confirm "mkdir -p \"$@\""
   fi
