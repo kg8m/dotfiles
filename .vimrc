@@ -1841,35 +1841,6 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     call lexima#add_rule(#{ char: "<Space>", at: '<%=\S*\%#.*%>', leave: 1, filetype: "eruby" })
   endfunction  " }}}
 
-  function! s:lexima.add_rules_for_html() abort  " {{{
-    " `<` when
-    "
-    "   |
-    "
-    " then
-    "
-    "   <|>
-    call lexima#add_rule(#{ char: "<", input_after: ">", filetype: "html" })
-
-    " `>` when
-    "
-    "   |>
-    "
-    " then
-    "
-    "   >|
-    call lexima#add_rule(#{ char: ">", at: '\%#>', leave: 1, filetype: "html" })
-
-    " `<BS>` when
-    "
-    "   <|>
-    "
-    " then
-    "
-    "   |
-    call lexima#add_rule(#{ char: "<BS>", at: '<\%#>', delete: 1, filetype: "html" })
-  endfunction  " }}}
-
   function! s:lexima.add_rules_for_markdown() abort  " {{{
     " `<Space>` when
     "
@@ -1906,7 +1877,6 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
   function! s:lexima.on_post_source() abort  " {{{
     call s:lexima.add_rules_for_default()
     call s:lexima.add_rules_for_eruby()
-    call s:lexima.add_rules_for_html()
     call s:lexima.add_rules_for_markdown()
 
     call s:kg8m.define_cr_mapping_for_insert_mode()
