@@ -21,7 +21,7 @@ abbr    if ...; then\n ...\n elif ...\n ...\n else\n ...\n fi
 	else
 	fi
 
-snippet for_in
+snippet for
 abbr    for {item} in {list}; do\n ...\n done
 	for ${1:#:item} in ${2:#:list}; do
 		${0}
