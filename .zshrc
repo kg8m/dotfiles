@@ -111,5 +111,5 @@ source ~/.zsh/tmux.zsh
 
 try_to_source ~/.zshrc.local
 
-zinit ice lucid nocd wait"!0c" atload"zicompinit; echo"
+zinit ice lucid nocd wait"!0c" compinit atload"echo"
 zinit snippet /dev/null
