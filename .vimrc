@@ -1799,6 +1799,15 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
 
     " `<Space>` when
     "
+    "   <%|... %>
+    "
+    " then
+    "
+    "   <% |... %>
+    call lexima#add_rule(#{ char: "<Space>", at: '<%\%#.*%>', leave: 1, filetype: "eruby" })
+
+    " `<Space>` when
+    "
     "   <%=|
     "
     " or
@@ -1813,6 +1822,23 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     "
     "   <%=j | %>
     call lexima#add_rule(#{ char: "<Space>", at: '<%=\S*\%#', input_after: "<Space>%>", filetype: "eruby" })
+
+    " `<Space>` when
+    "
+    "   <%=|... %>
+    "
+    " or
+    "
+    "   <%=j|... %>
+    "
+    " then
+    "
+    "   <%= |... %>
+    "
+    " or
+    "
+    "   <%=j ... %>
+    call lexima#add_rule(#{ char: "<Space>", at: '<%=\S*\%#.*%>', leave: 1, filetype: "eruby" })
   endfunction  " }}}
 
   function! s:lexima.add_rules_for_html() abort  " {{{
