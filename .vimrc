@@ -3032,6 +3032,7 @@ if kg8m#plugin#register("tomasr/molokai")  " {{{
 
   function! s:molokai.overwrite() abort  " {{{
     highlight Comment       guifg=#AAAAAA
+    highlight ColorColumn                  guibg=#1F1E19
     highlight CursorColumn                 guibg=#1F1E19
     highlight CursorLine                   guibg=#1F1E19
     highlight DiffChange    guifg=#CCCCCC  guibg=#4C4745
@@ -3195,6 +3196,38 @@ function! s:kg8m.setup_formatoptions() abort  " {{{
   if &filetype =~# '\v^(gitcommit|markdown|moin|text)$'
     setlocal fo-=r fo-=o
   endif
+endfunction  " }}}
+
+augroup my_vimrc  " {{{
+  autocmd WinEnter,BufEnter,SessionLoadPost * call s:kg8m.dim_inactive_windows()
+  autocmd VimResized                        * call s:kg8m.dim_inactive_windows(#{ force: v:true })
+augroup END  " }}}
+
+function! s:kg8m.dim_inactive_windows(options = {}) abort  " {{{
+  let current_winnr = winnr()
+  let last_winnr    = winnr("$")
+
+  if last_winnr > 1
+    let color_columns = range(1, &columns)->join(",")
+  endif
+
+  for winnr in range(1, last_winnr)
+    if winnr ==# current_winnr
+      if has_key(w:, "original_colorcolumn")
+        let &colorcolumn = w:original_colorcolumn
+        unlet w:original_colorcolumn
+      endif
+    else
+      if getwinvar(winnr, "original_colorcolumn", v:null) ==# v:null
+        call setwinvar(winnr, "original_colorcolumn", getwinvar(winnr, "&colorcolumn"))
+        call setwinvar(winnr, "&colorcolumn", color_columns)
+      else
+        if get(a:options, "force", v:false)
+          call setwinvar(winnr, "&colorcolumn", color_columns)
+        endif
+      endif
+    endif
+  endfor
 endfunction  " }}}
 
 " Folding  " {{{
