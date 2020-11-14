@@ -1874,10 +1874,24 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     call lexima#add_rule(#{ char: "<Cr>", at: '```[a-z]\+\%#```', input_after: "<Cr>", filetype: "markdown" })
   endfunction  " }}}
 
+  function! s:lexima.add_rules_for_vim() abort  " {{{
+    " `"` when
+    "
+    "   ...|
+    "
+    " then
+    "
+    "   ..."|"
+    "
+    " NOTE: Always write comments at the beginning of line (indentation is allowed)
+    call lexima#add_rule(#{ char: '"', at: '\S.*\%#', input_after: '"', filetype: "vim" })
+  endfunction  " }}}
+
   function! s:lexima.on_post_source() abort  " {{{
     call s:lexima.add_rules_for_default()
     call s:lexima.add_rules_for_eruby()
     call s:lexima.add_rules_for_markdown()
+    call s:lexima.add_rules_for_vim()
 
     call s:kg8m.define_cr_mapping_for_insert_mode()
     call s:kg8m.define_bs_mapping_for_insert_mode()
