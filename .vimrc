@@ -658,6 +658,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \     less: #{ lint: #{ validProperties: [] } },
      \     scss: #{ lint: #{ validProperties: [] } },
      \   },
+     \   executable_name: "vscode-css-language-server",
      \ })
   " }}}
 
