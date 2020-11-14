@@ -12,3 +12,7 @@ require_paths:
   - test
   - test/lib
   - test/support
+reporters:
+  # Use other language server for rubocop
+  # - rubocop
+  - require_not_found
