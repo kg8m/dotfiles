@@ -16,6 +16,12 @@ function! kg8m#javascript#fold(lnum) abort  " {{{
   endif
 endfunction  " }}}
 
+function! kg8m#javascript#restart_eslint_d() abort  " {{{
+  if executable("eslint_d")
+    call job_start(["eslint_d", "restart"])
+  endif
+endfunction  " }}}
+
 function! s:IndentLevel(lnum)
   return indent(a:lnum) / &shiftwidth + 1
 endfunction
