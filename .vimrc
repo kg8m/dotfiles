@@ -494,9 +494,6 @@ if kg8m#plugin#register("Shougo/neosnippet")  " {{{
      \ })
 endif  " }}}
 
-" Use ale for formatting because vim-lsp randomly selects only 1 language server to execute format. I want to do
-" formatting by efm-langserver instead of typescript-language-server but vim-lsp often selects
-" typescript-language-server when executing `LspDocumentFormat` or `LspDocumentFormatSync`.
 if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   let s:lsp = {}
 
@@ -534,9 +531,24 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   endfunction  " }}}
 
   function! s:lsp.on_lsp_buffer_enabled() abort  " {{{
+    if get(b:, "lsp_buffer_enabled", v:false)
+      return
+    endif
+
+    if !s:lsp.are_all_servers_running()
+      return
+    endif
+
     setlocal omnifunc=lsp#complete
     nmap <buffer> g] <Plug>(lsp-definition)
     nmap <buffer> <S-h> <Plug>(lsp-hover)
+
+    call s:lsp.overwrite_capabilities()
+
+    augroup my_vimrc  " {{{
+      autocmd InsertLeave <buffer> call timer_start(100, { -> s:lsp.document_format(#{ sync: v:false }) })
+      autocmd BufWritePre <buffer> call s:lsp.document_format(#{ sync: v:true })
+    augroup END  " }}}
 
     " cf. s:lsp.is_buffer_enabled()
     let b:lsp_buffer_enabled = v:true
@@ -547,22 +559,18 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
     if has_key(b:, "lsp_buffer_enabled")
       return v:true
     else
-      try
-        " `lsp_buffer_enabled` user-autocommand for inactive buffers is fired on `BufEnter` event
-        " https://github.com/prabirshrestha/vim-lsp/blob/04cef02eed7fe861f5fdbf066da1b8b7e270b8a2/autoload/lsp.vim#L357-L358
-        let group   = "_lsp_fire_buffer_enabled"
-        let command = printf("autocmd %s BufEnter <buffer=%d>", group, bufnr())
-
-        if execute(command) =~# group
-          let b:lsp_buffer_enabled = v:true
-          return v:true
-        else
-          return v:false
-        endif
-      catch
-        return v:false
-      endtry
+      return s:lsp.are_all_servers_running()
     endif
+  endfunction  " }}}
+
+  function! s:lsp.are_all_servers_running() abort  " {{{
+    for server_name in lsp#get_allowed_servers()
+      if lsp#get_server_status(server_name) !=# "running"
+        return v:false
+      endif
+    endfor
+
+    return v:true
   endfunction  " }}}
 
   function! s:lsp.is_target_buffer() abort  " {{{
@@ -582,6 +590,39 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   function! s:lsp.reset_target_buffer() abort  " {{{
     if has_key(b:, "lsp_target_buffer")
       unlet b:lsp_target_buffer
+    endif
+  endfunction  " }}}
+
+  " Disable some language servers' document formatting because vim-lsp randomly selects only 1 language server to do
+  " formatting from language servers which have capability of document formatting. I want to do formatting by
+  " efm-langserver but vim-lsp sometimes doesn't select it. efm-langserver is always selected if it is the only 1
+  " language server which has capability of document formatting.
+  function! s:lsp.overwrite_capabilities() abort  " {{{
+    if &filetype !~# '\v^(go|javascript|ruby|typescript)$'
+      return
+    endif
+
+    if !s:lsp.are_all_servers_running()
+      call kg8m#util#echo_error_msg("Cannot to overwrite language servers' capabilities because some of them are not running")
+      return
+    endif
+
+    for server_name in lsp#get_allowed_servers()->filter({ -> v:val !=# "efm-langserver" })
+      let capabilities = lsp#get_server_capabilities(server_name)
+
+      if has_key(capabilities, "documentFormattingProvider")
+        let capabilities.documentFormattingProvider = v:false
+      endif
+    endfor
+  endfunction  " }}}
+
+  function! s:lsp.document_format(options = {}) abort  " {{{
+    if get(a:options, "sync", v:true)
+      silent LspDocumentFormatSync
+    else
+      if &modified && mode() ==# "n"
+        silent LspDocumentFormat
+      endif
     endif
   endfunction  " }}}
 
@@ -626,7 +667,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \   name: "efm-langserver",
      \   cmd: { server_info -> ["efm-langserver"] },
      \   allowlist: [
-     \     "eruby", "json", "make", "markdown", "vim",
+     \     "eruby", "go", "json", "make", "markdown", "ruby", "vim",
      \     "eruby.yaml", "yaml",
      \     "javascript", "typescript",
      \     "sh", "zsh",
@@ -882,9 +923,6 @@ function! s:kg8m.completion_refresh_pattern(filetype) abort  " {{{
 endfunction  " }}}
 " }}}
 
-" Use ale for formatting because vim-lsp randomly selects only 1 language server to execute format. I want to do
-" formatting by efm-langserver instead of typescript-language-server but vim-lsp often selects
-" typescript-language-server when executing `LspDocumentFormat` or `LspDocumentFormatSync`.
 if kg8m#plugin#register("dense-analysis/ale", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:airline#extensions#ale#enabled = v:false
   let g:ale_completion_enabled         = v:false
@@ -898,43 +936,9 @@ if kg8m#plugin#register("dense-analysis/ale", #{ if: !kg8m#util#is_git_tmp_edit(
   let g:ale_lint_on_text_changed       = v:false
   let g:ale_open_list                  = v:false
 
-  " go get github.com/golangci/golangci-lint/cmd/golangci-lint
-  " go get golang.org/x/tools/cmd/goimports
-  let g:ale_linters = #{
-    \   go:         ["golangci-lint", "govet"],
-    \   javascript: [],
-    \   ruby:       ["ruby", "rubocop"],
-    \   typescript: [],
-    \   vim:        [],
-    \ }
-  let g:ale_fixers = #{
-    \   go:         ["goimports"],
-    \   javascript: ["eslint"],
-    \   ruby:       ["rubocop"],
-    \   typescript: ["eslint"],
-    \ }
-
   augroup my_vimrc  " {{{
-    autocmd FileType go                    let b:ale_fix_on_save = v:true
-    autocmd FileType javascript,typescript let b:ale_fix_on_save = !!$VIM_FIX_ON_SAVE_JS
-    autocmd FileType ruby                  let b:ale_fix_on_save = !!$VIM_FIX_ON_SAVE_RUBY
-
-    autocmd FileType markdown let b:ale_enabled = v:false
+    autocmd FileType go,javascript,markdown,ruby,typescript,vim let b:ale_enabled = v:false
   augroup END  " }}}
-
-  let g:ale_go_golangci_lint_package = v:true
-
-  " yarn add eslint_d
-  if executable("eslint_d")
-    let g:ale_javascript_eslint_use_global = v:true
-    let g:ale_javascript_eslint_executable = "eslint_d"
-  endif
-
-  " gem install rubocop-daemon
-  " And add rubocop-daemon-wrapper to $PATH
-  if executable("rubocop-daemon") && executable("rubocop-daemon-wrapper")
-    let g:ale_ruby_rubocop_executable = "rubocop-daemon-wrapper"
-  endif
 endif  " }}}
 
 call kg8m#plugin#register("pearofducks/ansible-vim", #{ if: !kg8m#util#is_git_tmp_edit() })
@@ -2367,8 +2371,8 @@ if kg8m#plugin#register("tpope/vim-git")  " {{{
   augroup END  " }}}
 endif  " }}}
 
-" Use LSP or ale for completion, linting/formatting codes, and jumping to definition
-" Use vim-go's highlightings, foldings, and commands/functions
+" Use LSP for completion, linting/formatting codes, and jumping to definition.
+" Use vim-go's highlightings, foldings, and commands.
 if kg8m#plugin#register("fatih/vim-go", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let s:go = {}
 
