@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 target_filepath="$1"
-err_temp_filepath="/tmp/textlint_wrapper_$(date +'%Y%m%d-%H%M%S').${RANDOM}.log"
+err_temp_filepath="$(mktemp -t textlint_wrapper)"
 
 out="$(textlint --format json --stdin --stdin-filename "$target_filepath" 2> "$err_temp_filepath")"
 err="$(cat "$err_temp_filepath")"

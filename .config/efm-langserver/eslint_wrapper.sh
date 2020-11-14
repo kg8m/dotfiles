@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 target_filepath="$1"
-err_temp_filepath="/tmp/textlint_wrapper_$(date +'%Y%m%d-%H%M%S').${RANDOM}.log"
+err_temp_filepath="$(mktemp -t eslint_wrapper)"
 
 if [ "$2" = "--fix" ]; then
   fix_enabled="1"
