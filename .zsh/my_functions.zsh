@@ -15,6 +15,8 @@ function execute_commands_with_echo {
 }
 
 function execute_with_confirm {
+  local response
+
   printf "\n\e[0;36mExecute:\e[1;37m \`%s\`\n\n" "$*"
   read "response?Are you sure? [y/n]: "
 
@@ -32,6 +34,8 @@ function retriable_execute_with_confirm {
   local result=$?
 
   if [[ "$__execute_with_confirm_executed" = "1" ]]; then
+    local response
+
     echo
     [[ $result = 0 ]] && echo "👼 Succeeded." || echo "👿 Failed."
     echo
@@ -59,6 +63,8 @@ function notify {
 }
 
 function batch_move {
+  local response
+
   zmv -n "$@" | less
   read 'response?Execute? [y/n]: '
 
@@ -223,6 +229,7 @@ function my_grep_with_filter() {
   # Check whether the output is on a terminal
   if [ -t 1 ]; then
     local response
+
     echo
     read "response?Open found files? [y/n]: "
 
