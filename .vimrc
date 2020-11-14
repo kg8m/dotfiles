@@ -3120,6 +3120,7 @@ set list
 set listchars=tab:>\ ,eol:\ ,trail:_
 set completeopt=menu,menuone,popup,noinsert,noselect
 set pumheight=20
+set signcolumn=number
 
 set cursorline
 set cursorlineopt=number
