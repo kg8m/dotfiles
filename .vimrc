@@ -509,6 +509,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   let g:lsp_signs_enabled                = v:true
   let g:lsp_highlight_references_enabled = v:true
   let g:lsp_fold_enabled                 = v:false
+  let g:lsp_semantic_enabled             = v:true
 
   let g:lsp_async_completion = v:true
 
