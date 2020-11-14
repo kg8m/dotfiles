@@ -1860,7 +1860,7 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     "   ```
     "   |
     "   ```
-    call lexima#add_rule(#{ char: "<Cr>", at: '```\%#```', input: "<Cr><Cr><Up>", filetype: "markdown" })
+    call lexima#add_rule(#{ char: "<Cr>", at: '```\%#```', input_after: "<Cr>", filetype: "markdown" })
 
     " `<Cr>` when
     "
@@ -1871,7 +1871,7 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     "   ```foo
     "   |
     "   ```
-    call lexima#add_rule(#{ char: "<Cr>", at: '```[a-z]\+\%#```', input: "<Cr><Cr><Up>", filetype: "markdown" })
+    call lexima#add_rule(#{ char: "<Cr>", at: '```[a-z]\+\%#```', input_after: "<Cr>", filetype: "markdown" })
   endfunction  " }}}
 
   function! s:lexima.on_post_source() abort  " {{{
