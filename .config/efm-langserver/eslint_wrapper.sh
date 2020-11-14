@@ -36,13 +36,13 @@ options=(--format json --stdin --stdin-filename "$target_filepath")
 
 if [ -n "$fix_enabled" ]; then
   if [ "$executable" = "eslint_d" ]; then
-    options=("${options[@]}" --fix-to-stdout)
+    options+=(--fix-to-stdout)
   else
-    options=("${options[@]}" --fix-dry-run)
+    options+=(--fix-dry-run)
   fi
 fi
 
-options=("${options[@]}" "$(eslint_wrapper_options "$target_filepath")")
+options+=("$(eslint_wrapper_options "$target_filepath")")
 
 out="$("$executable" "${options[@]}" 2> "$err_temp_filepath")"
 err="$(cat "$err_temp_filepath")"

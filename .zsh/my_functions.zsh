@@ -186,14 +186,14 @@ function my_grep_with_filter() {
   for arg in "$@"; do
     if [[ "$arg" =~ ^-- ]]; then
       is_waiting_option_value=false
-      options=("${options[@]}" "$arg")
+      options+=("$arg")
 
       if [[ ! "$arg" =~ = ]]; then
         is_waiting_option_value=true
       fi
     elif [[ "$arg" =~ ^- ]]; then
       is_waiting_option_value=false
-      options=("${options[@]}" "$arg")
+      options+=("$arg")
 
       if [[ "$arg" =~ ^-.$ ]]; then
         is_waiting_option_value=true
@@ -201,9 +201,9 @@ function my_grep_with_filter() {
     else
       if "$is_waiting_option_value"; then
         is_waiting_option_value=false
-        options=("${options[@]}" "$arg")
+        options+=("$arg")
       else
-        non_options=("${non_options[@]}" "$arg")
+        non_options+=("$arg")
       fi
     fi
   done
