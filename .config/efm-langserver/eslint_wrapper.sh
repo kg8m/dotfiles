@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+if ! command -v eslint > /dev/null 2>&1; then
+  exit 1
+fi
+
 target_filepath="$1"
 err_temp_filepath="$(mktemp -t eslint_wrapper)"
 
@@ -7,7 +11,7 @@ if [ "$2" = "--fix" ]; then
 fi
 
 if [ -n "$fix_enabled" ] && [ -z "$VIM_FIX_ON_SAVE_JS" ]; then
-  exit 0
+  exit 1
 fi
 
 function is_target_file {
@@ -23,7 +27,7 @@ if [ -f .eslint_wrapper_extends.sh ]; then
 fi
 
 if [ ! "$(is_target_file "$target_filepath")" = "1" ]; then
-  exit 0
+  exit 1
 fi
 
 if command -v eslint_d > /dev/null 2>&1; then
