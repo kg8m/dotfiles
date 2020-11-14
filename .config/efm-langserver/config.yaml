@@ -22,8 +22,8 @@ tools:
     lint-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
-      - "%f: line %l\\, col %n\\, %trror - %m"
-      - "%f: line %l\\, col %n\\, %tarning - %m"
+      - "%l:%n:%trror: %m"
+      - "%l:%n:%tarning: %m"
     format-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}' --fix"
     format-stdin: true
 
@@ -55,8 +55,8 @@ tools:
     lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
-      - "%f: line %l\\, col %n\\, %trror - %m"
-      - "%f: line %l\\, col %n\\, %tarning - %m"
+      - "%l:%n:%trror: %m"
+      - "%l:%n:%tarning: %m"
 
   vint: &vint
     lint-command: "vint -"

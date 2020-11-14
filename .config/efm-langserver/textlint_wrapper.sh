@@ -9,8 +9,7 @@ rm -f "$err_temp_filepath"
 
 if [ -n "$out" ]; then
   format="$(
-    printf '"%s: line " + %s + ", col " + %s + ", " + %s + " - [textlint][" + %s + "] " + %s' \
-      "$target_filepath" \
+    printf '%s + ":" + %s + ":" + %s + ": [textlint][" + %s + "] " + %s' \
       '(.line | tostring)' \
       '(.column | tostring)' \
       '(if .severity == 1 then "Warning" else "Error" end)' \
@@ -29,6 +28,6 @@ if [ -n "$err" ]; then
   fi
 
   detail="$(echo "$detail" | tr '\n' ' ')"
-  printf "%s: line %s, col %s, %s - [textlint] %s\n" "$target_filepath" "1" "1" "Error" "$detail"
+  printf "%s:%s:%s: [textlint] %s\n" "1" "1" "Error" "$detail"
   exit 1
 fi

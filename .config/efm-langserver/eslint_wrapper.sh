@@ -60,8 +60,7 @@ if [ -n "$out" ]; then
     exit 0
   else
     format="$(
-      printf '"%s: line " + %s + ", col " + %s + ", " + %s + " - [eslint][" + %s + "] " + %s' \
-        "$target_filepath" \
+      printf '%s + ":" + %s + ":" + %s + ": [eslint][" + %s + "] " + %s' \
         '(.line | tostring)' \
         '(if .column == null then "1" else .column | tostring end)' \
         '(if .severity == 1 then "Warning" else "Error" end)' \
@@ -81,6 +80,6 @@ if [ -n "$err" ]; then
   fi
 
   detail="$(echo "$detail" | tr '\n' ' ')"
-  printf "%s: line %s, col %s, %s - [eslint] %s\n" "$target_filepath" "1" "1" "Error" "$detail"
+  printf "%s:%s:%s: [eslint] %s\n" "1" "1" "Error" "$detail"
   exit 1
 fi
