@@ -12,12 +12,6 @@ abbr    if ...; then\n ...\n else\n ...\n fi
 	else
 	fi
 
-snippet else
-abbr    else\n ...\n fi
-	else
-		${0}
-	fi
-
 snippet if_else_if
 alias   ifeif
 abbr    if ...; then\n ...\n elif ...\n ...\n else\n ...\n fi
@@ -51,13 +45,3 @@ abbr    function {function_name} {\n ...\n }
 	function ${1:#:function_name} {
 		${0}
 	}
-
-snippet function_name_only
-abbr    {function_name}() {\n ...\n }
-	${1:#:function_name}() {
-		${0}
-	}
-
-snippet export
-abbr    export {name}={value}
-	export ${1:#:name}=${2:#:value}
