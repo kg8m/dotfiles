@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 target_filepath="$1"
-err_temp_filepath="/tmp/textlint_wrapper_$( date +'%Y%m%d-%H%M%S' ).${RANDOM}.log"
+err_temp_filepath="/tmp/textlint_wrapper_$(date +'%Y%m%d-%H%M%S').${RANDOM}.log"
 
 if [ "$2" = "--fix" ]; then
   fix_enabled="1"
@@ -22,7 +22,7 @@ if [ -f .eslint_wrapper_extends.sh ]; then
   source .eslint_wrapper_extends.sh
 fi
 
-if [ ! "$( is_target_file "$target_filepath" )" = "1" ]; then
+if [ ! "$(is_target_file "$target_filepath")" = "1" ]; then
   exit 0
 fi
 
@@ -32,20 +32,20 @@ else
   executable=eslint
 fi
 
-options=( --format json --stdin --stdin-filename "$target_filepath" )
+options=(--format json --stdin --stdin-filename "$target_filepath")
 
 if [ -n "$fix_enabled" ]; then
   if [ "$executable" = "eslint_d" ]; then
-    options=( "${options[@]}" --fix-to-stdout )
+    options=("${options[@]}" --fix-to-stdout)
   else
-    options=( "${options[@]}" --fix-dry-run )
+    options=("${options[@]}" --fix-dry-run)
   fi
 fi
 
-options=( "${options[@]}" "$( eslint_wrapper_options "$target_filepath" )" )
+options=("${options[@]}" "$(eslint_wrapper_options "$target_filepath")")
 
-out="$( "$executable" "${options[@]}" 2>"$err_temp_filepath" )"
-err="$( cat "$err_temp_filepath" )"
+out="$("$executable" "${options[@]}" 2> "$err_temp_filepath")"
+err="$(cat "$err_temp_filepath")"
 
 rm -f "$err_temp_filepath"
 
@@ -74,13 +74,13 @@ if [ -n "$out" ]; then
 fi
 
 if [ -n "$err" ]; then
-  detail="$( echo "$err" | egrep -v '^Oops!|^ESLint:|^[ ]|^$' )"
+  detail="$(echo "$err" | egrep -v '^Oops!|^ESLint:|^[ ]|^$')"
 
   if [ -z "$detail" ]; then
     detail="$err"
   fi
 
-  detail="$( echo "$detail" | tr '\n' ' ' )"
+  detail="$(echo "$detail" | tr '\n' ' ')"
   printf "%s: line %s, col %s, %s - [eslint] %s\n" "$target_filepath" "1" "1" "Error" "$detail"
   exit 1
 fi
