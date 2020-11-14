@@ -1,5 +1,6 @@
 benchmark-ips
 bundler
+erb_lint
 pry
 pry-byebug
 pry-doc

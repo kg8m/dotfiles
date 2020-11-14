@@ -21,6 +21,11 @@ tools:
     lint-formats:
       - "%l:%m"
 
+  erb-lint: &erb-lint
+    lint-command: "erblint --config $HOME/.erb-lint.yml --format compact '${INPUT}'"
+    lint-formats:
+      - "%f:%l:%n %m"
+
   eslint: &eslint
     lint-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}'"
     lint-stdin: true
@@ -90,6 +95,8 @@ tools:
 languages:
   eruby:
     - <<: *erb
+    # Disable because `invalid option: --format` error occurs
+    # - <<: *erb-lint
 
   eruby.yaml:
     - <<: *yamllint
