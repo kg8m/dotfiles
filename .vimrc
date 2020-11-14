@@ -3292,7 +3292,7 @@ set ttyfast
 set nobackup
 
 " Double slash:    fullpath like `%home%admin%.vimrc.swp`
-" Sinble/no slash: only filename like `.vimrc.swp`
+" Single/no slash: only filename like `.vimrc.swp`
 let s:swapdir = expand("~/tmp/.vimswap//")
 if !isdirectory(s:swapdir)
   call mkdir(s:swapdir, "p")
