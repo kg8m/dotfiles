@@ -124,12 +124,18 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete.vim")  " {{{
     let word = a:item.word
 
     if !has_key(a:context.cache, word)
-      if word =~? "^"..a:context.matcher
+      let target = matchstr(word, '\v\w+.*')
+
+      if target =~# "^"..a:context.matcher
         let a:context.cache[word] = 2
-      elseif word =~? a:context.matcher
+      elseif target =~? "^"..a:context.matcher
         let a:context.cache[word] = 3
-      else
+      elseif target =~# a:context.matcher
         let a:context.cache[word] = 5
+      elseif target =~? a:context.matcher
+        let a:context.cache[word] = 8
+      else
+        let a:context.cache[word] = 13
       endif
     endif
 
