@@ -34,9 +34,6 @@ tools:
     format-command: "goimports '${INPUT}'"
     format-stdin: true
 
-  jq: &jq
-    lint-command: "jq ."
-
   markdownlint: &markdownlint
     lint-command: "markdownlint --stdin"
     lint-stdin: true
@@ -102,9 +99,6 @@ languages:
 
   javascript:
     - <<: *eslint
-
-  json:
-    - <<: *jq
 
   make:
     - <<: *checkmake
