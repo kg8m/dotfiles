@@ -991,7 +991,7 @@ if kg8m#plugin#register("Shougo/context_filetype.vim", #{ if: !kg8m#util#is_git_
     \ }
 endif  " }}}
 
-if kg8m#plugin#register("spolu/dwm.vim")  " {{{
+if kg8m#plugin#register("spolu/dwm.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let s:dwm = {}
 
   nnoremap <C-w>n       :call DWM_New()<Cr>
@@ -1040,7 +1040,7 @@ endif  " }}}
 
 call kg8m#plugin#register("editorconfig/editorconfig-vim", #{ if: !kg8m#util#is_git_tmp_edit() && filereadable(".editorconfig") })
 
-if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
+if kg8m#plugin#register("junegunn/fzf.vim", #{ if: !kg8m#util#is_git_tmp_edit() && executable("fzf") })  " {{{
   let s:fzf = {}
   function! s:fzf() abort  " {{{
     return s:fzf
@@ -1684,7 +1684,7 @@ if kg8m#plugin#register("lambdalisue/gina.vim", #{ if: !kg8m#util#is_git_tmp_edi
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("Yggdroot/indentLine")  " {{{
+if kg8m#plugin#register("Yggdroot/indentLine", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   set concealcursor=nvic
   set conceallevel=2
 
@@ -2152,7 +2152,7 @@ if kg8m#plugin#register("mechatroner/rainbow_csv", #{ if: !kg8m#util#is_git_tmp_
 endif  " }}}
 
 call kg8m#plugin#register("lambdalisue/readablefold.vim", #{ if: !kg8m#util#is_git_tmp_edit() })
-call kg8m#plugin#register("chrisbra/Recover.vim")
+call kg8m#plugin#register("chrisbra/Recover.vim", #{ if: !kg8m#util#is_git_tmp_edit() })
 
 if kg8m#plugin#register("lambdalisue/reword.vim")  " {{{
   cnoreabbrev <expr> Reword reword#live#start()
@@ -2168,7 +2168,7 @@ if kg8m#plugin#register("vim-scripts/sequence")  " {{{
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("AndrewRadev/splitjoin.vim")  " {{{
+if kg8m#plugin#register("AndrewRadev/splitjoin.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   nnoremap <Leader>J :SplitjoinJoin<Cr>
   nnoremap <Leader>S :SplitjoinSplit<Cr>
 
@@ -2234,7 +2234,7 @@ if kg8m#plugin#register("Shougo/unite.vim", #{ if: !kg8m#util#is_git_tmp_edit() 
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("FooSoft/vim-argwrap")  " {{{
+if kg8m#plugin#register("FooSoft/vim-argwrap", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   nnoremap <Leader>a :ArgWrap<Cr>
 
   let g:argwrap_padded_braces = "{"
@@ -2285,7 +2285,7 @@ if kg8m#plugin#register("jkramer/vim-checkbox", #{ if: !kg8m#util#is_git_tmp_edi
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("t9md/vim-choosewin")  " {{{
+if kg8m#plugin#register("t9md/vim-choosewin", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   nmap <C-w>f <Plug>(choosewin)
 
   let g:choosewin_overlay_enable          = v:false
@@ -2302,7 +2302,7 @@ endif  " }}}
 
 call kg8m#plugin#register("hail2u/vim-css3-syntax", #{ if: !kg8m#util#is_git_tmp_edit() })
 
-if kg8m#plugin#register("junegunn/vim-easy-align")  " {{{
+if kg8m#plugin#register("junegunn/vim-easy-align", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   vnoremap <Leader>a :EasyAlign<Space>
 
   call kg8m#plugin#configure(#{
@@ -2366,7 +2366,7 @@ call kg8m#plugin#register("thinca/vim-ft-help_fold")
 call kg8m#plugin#register("muz/vim-gemfile", #{ if: !kg8m#util#is_git_tmp_edit() })
 call kg8m#plugin#register("kana/vim-gf-user")
 
-if kg8m#plugin#register("tpope/vim-git")  " {{{
+if kg8m#plugin#register("tpope/vim-git", #{ if: kg8m#util#is_git_commit() })  " {{{
   let g:gitcommit_cleanup = "scissors"
 
   augroup my_vimrc  " {{{
@@ -2502,7 +2502,7 @@ if kg8m#plugin#register("andymass/vim-matchup")  " {{{
   endfunction  " }}}
 endif  " }}}
 
-if kg8m#plugin#register("mattn/vim-molder")  " {{{
+if kg8m#plugin#register("mattn/vim-molder", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:molder_show_hidden = v:true
 
   nmap <Leader>e :edit %:h<Cr>
@@ -2551,14 +2551,14 @@ if kg8m#plugin#register("kg8m/vim-parallel-auto-ctags", #{ if: kg8m#util#on_rail
     \ }
 endif  " }}}
 
-if kg8m#plugin#register("thinca/vim-prettyprint")  " {{{
+if kg8m#plugin#register("thinca/vim-prettyprint", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   " Don't load lazily because dein.vim's `on_cmd: "PP"` doesn't work
   call kg8m#plugin#configure(#{
      \   lazy: v:false,
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("lambdalisue/vim-protocol")  " {{{
+if kg8m#plugin#register("lambdalisue/vim-protocol", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   " Disable netrw.vim
   let g:loaded_netrw             = v:true
   let g:loaded_netrwPlugin       = v:true
@@ -2571,7 +2571,7 @@ if kg8m#plugin#register("lambdalisue/vim-protocol")  " {{{
      \ })
 endif  " }}}
 
-if kg8m#plugin#register("tpope/vim-rails", #{ if: kg8m#util#on_rails_dir() && !kg8m#util#is_git_tmp_edit() })  " {{{
+if kg8m#plugin#register("tpope/vim-rails", #{ if: !kg8m#util#is_git_tmp_edit() && kg8m#util#on_rails_dir() })  " {{{
   if !has_key(g:, "rails_projections")
     let g:rails_projections = {}
   endif
@@ -2936,7 +2936,7 @@ endif  " }}}
 " See `kg8m#util#xxx_module()`
 call kg8m#plugin#register("vim-jp/vital.vim")
 
-if kg8m#plugin#register("simeji/winresizer")  " {{{
+if kg8m#plugin#register("simeji/winresizer", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:winresizer_start_key = "<C-w><C-e>"
 
   call kg8m#plugin#configure(#{
