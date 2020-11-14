@@ -2145,7 +2145,6 @@ if kg8m#plugin#register("mechatroner/rainbow_csv", #{ if: !kg8m#util#is_git_tmp_
 endif  " }}}
 
 call kg8m#plugin#register("lambdalisue/readablefold.vim", #{ if: !kg8m#util#is_git_tmp_edit() })
-call kg8m#plugin#register("chrisbra/Recover.vim", #{ if: !kg8m#util#is_git_tmp_edit() })
 
 if kg8m#plugin#register("lambdalisue/reword.vim")  " {{{
   cnoreabbrev <expr> Reword reword#live#start()
