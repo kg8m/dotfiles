@@ -646,11 +646,11 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " yarn add vscode-css-languageserver-bin  " {{{
+  " yarn add vscode-langservers-extracted  " {{{
   " css-languageserver doesn't work when editing .sass file
   call kg8m#plugin#lsp#register(#{
-     \   name: "css-languageserver",
-     \   cmd: { server_info -> ["css-languageserver", "--stdio"] },
+     \   name: "css-language-server",
+     \   cmd: { server_info -> ["vscode-css-language-server", "--stdio"] },
      \   allowlist: ["css", "less", "scss"],
      \   config: { -> #{ refresh_pattern: s:kg8m.completion_refresh_pattern("css") } },
      \   workspace_config: #{
@@ -706,20 +706,21 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \ })
   " }}}
 
-  " yarn add vscode-html-languageserver-bin  " {{{
+  " yarn add vscode-langservers-extracted  " {{{
   call kg8m#plugin#lsp#register(#{
-     \   name: "html-languageserver",
-     \   cmd: { server_info -> ["html-languageserver", "--stdio"] },
+     \   name: "html-language-server",
+     \   cmd: { server_info -> ["vscode-html-language-server", "--stdio"] },
      \   initialization_options: #{ embeddedLanguages: #{ css: v:true, javascript: v:true } },
-     \   allowlist: ["html"],
+     \   allowlist: ["eruby", "html"],
      \   config: { -> #{ refresh_pattern: s:kg8m.completion_refresh_pattern("html") } },
+     \   executable_name: "vscode-html-language-server",
      \ })
   " }}}
 
-  " yarn add vscode-json-languageserver-bin  " {{{
+  " yarn add vscode-langservers-extracted  " {{{
   call kg8m#plugin#lsp#register(#{
-     \   name: "json-languageserver",
-     \   cmd: { server_info -> ["json-languageserver", "--stdio"] },
+     \   name: "json-language-server",
+     \   cmd: { server_info -> ["vscode-json-language-server", "--stdio"] },
      \   allowlist: ["json"],
      \   config: { -> #{ refresh_pattern: s:kg8m.completion_refresh_pattern("json") } },
      \   workspace_config: { -> #{
@@ -728,6 +729,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \       schemas: s:lsp.schemas_json(),
      \    },
      \   } },
+     \   executable_name: "vscode-json-language-server",
      \ })
   " }}}
 
