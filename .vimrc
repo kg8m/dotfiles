@@ -3203,7 +3203,7 @@ function! s:kg8m.dim_inactive_windows(options = {}) abort  " {{{
   for winnr in range(1, last_winnr)
     if winnr ==# current_winnr
       if has_key(w:, "original_colorcolumn")
-        let &colorcolumn = w:original_colorcolumn
+        let &l:colorcolumn = w:original_colorcolumn
         unlet w:original_colorcolumn
       endif
     else
