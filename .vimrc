@@ -3188,8 +3188,8 @@ function! s:kg8m.setup_formatoptions() abort  " {{{
 endfunction  " }}}
 
 augroup my_vimrc  " {{{
-  autocmd WinEnter,BufEnter,SessionLoadPost * call s:kg8m.dim_inactive_windows()
-  autocmd VimResized                        * call s:kg8m.dim_inactive_windows(#{ force: v:true })
+  autocmd WinEnter,SessionLoadPost * call s:kg8m.dim_inactive_windows()
+  autocmd VimResized               * call s:kg8m.dim_inactive_windows(#{ force: v:true })
 augroup END  " }}}
 
 function! s:kg8m.dim_inactive_windows(options = {}) abort  " {{{
