@@ -3075,15 +3075,16 @@ endif
 " ----------------------------------------------
 " General looks  " {{{
 set termguicolors
+
+" Black,     Dark Red,     Dark GreeN, Brown,
+" Dark Blue, Dark Magenta, Dark Cyan,  Light GrEy,
+" Dark Grey, Red,          Green,      YellOw,
+" Blue,      Magenta,      Cyan,       White,
 let g:terminal_ansi_colors = [
- "\   Black,     Dark Red,     Dark GreeN, Brown,
- "\   Dark Blue, Dark Magenta, Dark Cyan,  Light GrEy,
- "\   Dark Grey, Red,          Green,      YellOw,
- "\   Blue,      Magenta,      Cyan,       White,
-  \   "#000000", "#EE7900",    "#BAED00",  "#EBCE00",
-  \   "#00BEF3", "#BAA0F0",    "#66AED7",  "#EAEAEA",
-  \   "#333333", "#FF8200",    "#C1F600",  "#FFE000",
-  \   "#00C2F9", "#C6ABFF",    "#71C0ED",  "#FFFFFF",
+  \   "#000000", "#EE7900", "#BAED00", "#EBCE00",
+  \   "#00BEF3", "#BAA0F0", "#66AED7", "#EAEAEA",
+  \   "#333333", "#FF8200", "#C1F600", "#FFE000",
+  \   "#00C2F9", "#C6ABFF", "#71C0ED", "#FFFFFF",
   \ ]
 
 colorscheme molokai
