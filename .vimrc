@@ -547,6 +547,8 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
     endif
 
     setlocal omnifunc=lsp#complete
+    nmap <buffer> gd <Plug>(lsp-next-diagnostic)
+    nmap <buffer> ge <Plug>(lsp-next-error)
     nmap <buffer> g] <Plug>(lsp-definition)
     nmap <buffer> <S-h> <Plug>(lsp-hover)
 
