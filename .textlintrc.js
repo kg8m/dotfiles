@@ -2,7 +2,11 @@ module.exports = {
   filters: {
     comments: true,
     allowlist: {
-      allow: [],
+      allow: [
+        "嬢",
+        "子供",
+        "工夫",
+      ],
     },
     "node-types": {
       nodeTypes: ["BlockQuote", "Code", "CodeBlock"],
@@ -17,9 +21,7 @@ module.exports = {
     // Disable because too many proper nouns, e.g., people's names, are treated as error
     "joyo-kanji": false,
 
-    // Disable because there are too many false positives
-    "no-hoso-kinshi-yogo": false,
-
+    "no-hoso-kinshi-yogo": true,
     "prefer-tari-tari": true,
     "preset-ja-technical-writing": {
       "arabic-kanji-numbers": false,
