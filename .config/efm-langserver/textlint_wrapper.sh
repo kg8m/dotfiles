@@ -2,10 +2,11 @@
 target_filepath="$1"
 err_temp_filepath="$(mktemp)"
 
+# shellcheck disable=SC2064
+trap "rm -f $err_temp_filepath" EXIT
+
 out="$(textlint --format json --stdin --stdin-filename "$target_filepath" 2> "$err_temp_filepath")"
 err="$(cat "$err_temp_filepath")"
-
-rm -f "$err_temp_filepath"
 
 if [ -n "$out" ]; then
   format="$(

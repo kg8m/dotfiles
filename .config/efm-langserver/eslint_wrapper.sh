@@ -6,6 +6,9 @@ fi
 target_filepath="$1"
 err_temp_filepath="$(mktemp)"
 
+# shellcheck disable=SC2064
+trap "rm -f $err_temp_filepath" EXIT
+
 if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
@@ -50,8 +53,6 @@ options+=("$(eslint_wrapper_options "$target_filepath")")
 
 out="$("$executable" "${options[@]}" 2> "$err_temp_filepath")"
 err="$(cat "$err_temp_filepath")"
-
-rm -f "$err_temp_filepath"
 
 if [ -n "$out" ]; then
   if [ -n "$is_fixing" ]; then
