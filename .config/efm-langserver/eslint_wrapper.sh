@@ -4,7 +4,7 @@ if ! command -v eslint > /dev/null 2>&1; then
 fi
 
 target_filepath="$1"
-err_temp_filepath="$(mktemp -t eslint_wrapper)"
+err_temp_filepath="$(mktemp)"
 
 if [ "$2" = "--fix" ]; then
   is_fixing="1"
