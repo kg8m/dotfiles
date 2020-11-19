@@ -2884,41 +2884,25 @@ if kg8m#plugin#register("benmills/vimux", #{ if: kg8m#util#on_tmux() && !kg8m#ut
 
   function! s:vimux.on_post_source() abort  " {{{
     " Overwrite function: Always use current pane's next one
-    "   Original function:
-    "     function! _VimuxNearestIndex()
-    "       let views = split(_VimuxTmux("list-"._VimuxRunnerType()."s"), "\n")
-    "
-    "       for view in views
-    "         if match(view, "(active)") == -1
-    "           return split(view, ":")[0]
-    "         endif
-    "       endfor
-    "
-    "       return -1
-    "     endfunction
-    " Don't assign by `let func = << trim VIM`, that doesn't work
-    let func =<< trim VIM
-      function! _VimuxNearestIndex() abort
-        let views = split(_VimuxTmux("list-".._VimuxRunnerType().."s"), "\n")
-        let index = len(views) - 1
+    " https://github.com/benmills/vimux/blob/37f41195e6369ac602a08ec61364906600b771f1/plugin/vimux.vim#L173-L183
+    function! _VimuxNearestIndex() abort
+      let views = split(_VimuxTmux("list-".._VimuxRunnerType().."s"), "\n")
+      let index = len(views) - 1
 
-        while index >= 0
-          let view = views[index]
+      while index >= 0
+        let view = views[index]
 
-          if match(view, "(active)") != -1
-            if index ==# len(views) - 1
-              return -1
-            else
-              return split(views[index + 1], ":")[0]
-            endif
+        if match(view, "(active)") != -1
+          if index ==# len(views) - 1
+            return -1
+          else
+            return split(views[index + 1], ":")[0]
           endif
+        endif
 
-          let index = index - 1
-        endwhile
-      endfunction
-    VIM
-
-    execute join(func, "\n")
+        let index = index - 1
+      endwhile
+    endfunction
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{
