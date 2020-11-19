@@ -86,7 +86,7 @@ function trash {
     filename=$(basename "$source")
 
     if [ -f "$trash_path/$filename" ] || [ -d "$trash_path/$filename" ]; then
-      sed_expr='s/^\(\.\?[^.]\+\)\(\.\?\)/\1 '"$timestamp"'\2/'
+      sed_expr='s/^\(\.\?[^.]\+\)\(\.\?\)/\1 '"$timestamp.${RANDOM}"'\2/'
       new_filename=$(echo "$filename" | sed -e "$sed_expr")
     else
       new_filename="$filename"
