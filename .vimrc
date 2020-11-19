@@ -1841,7 +1841,7 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     " then
     "
     "   [ ] |
-    call lexima#add_rule(#{ char: "<Space>", at: '\[\%#]', input: "<Space><Right><Space>", filetype: "markdown" })
+    call lexima#add_rule(#{ char: "<Space>", at: '\[\%#]', input: "<Space><Right><Space>", filetype: ["gitcommit", "markdown"] })
 
     " `<Cr>` when
     "
@@ -1852,7 +1852,7 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     "   ```
     "   |
     "   ```
-    call lexima#add_rule(#{ char: "<Cr>", at: '```\%#```', input_after: "<Cr>", filetype: "markdown" })
+    call lexima#add_rule(#{ char: "<Cr>", at: '```\%#```', input_after: "<Cr>", filetype: ["gitcommit", "markdown"] })
 
     " `<Cr>` when
     "
@@ -1863,7 +1863,7 @@ if kg8m#plugin#register("cohama/lexima.vim")  " {{{
     "   ```foo
     "   |
     "   ```
-    call lexima#add_rule(#{ char: "<Cr>", at: '```[a-z]\+\%#```', input_after: "<Cr>", filetype: "markdown" })
+    call lexima#add_rule(#{ char: "<Cr>", at: '```[a-z]\+\%#```', input_after: "<Cr>", filetype: ["gitcommit", "markdown"] })
   endfunction  " }}}
 
   function! s:lexima.add_rules_for_vim() abort  " {{{
