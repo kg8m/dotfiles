@@ -1356,8 +1356,8 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: !kg8m#util#is_git_tmp_edit() 
         \   ["[Reload with Encoding] euc-jp",      "edit ++encoding=euc-jp +set\\ noreadonly"],
         \   ["[Reload with Encoding] utf-8",       "edit ++encoding=utf-8 +set\\ noreadonly"],
         \
-        \   ["[Reload by Sudo]",     "edit suda://%"],
-        \   ["[Write/save by Sudo]", "write suda://%"],
+        \   ["[Reload by Sudo]",     "SudaRead"],
+        \   ["[Write/save by Sudo]", "SudaWrite"],
         \
         \   ["[Set Encoding] latin1",      "set fileencoding=latin1"],
         \   ["[Set Encoding] cp932",       "set fileencoding=cp932"],
