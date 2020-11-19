@@ -266,12 +266,7 @@ function update_zsh_plugins {
   trash "${KGYM_ZSH_CACHE_DIR:-}"
   mkdir -p "$KGYM_ZSH_CACHE_DIR"
 
-  local zwc
-  for zwc in ~/.zshrc*.zwc; do
-    if [ -f "$zwc" ]; then
-      execute_with_echo "trash '$zwc'"
-    fi
-  done
+  execute_with_echo "compile_zshrcs:cleanup"
 
   execute_with_echo "zinit self-update"
   notify --nostay "Executing \`zinit delete --clean\`, so allow to continue"
@@ -296,12 +291,26 @@ function update_zsh_plugins {
   execute_with_echo "zinit creinstall -q ${ZINIT[BIN_DIR]}"
   execute_with_echo "zinit csearch"
 
-  local zshrc
-  for zshrc in ~/.zshrc*; do
-    if [ -f "$zshrc" ] && ! [[ "$zshrc" =~ \.zwc$ ]]; then
-      execute_with_echo "zcompile '$zshrc'"
-    fi
-  done
+  execute_with_echo "compile_zshrcs:run"
 
   execute_with_echo "exec zsh"
+}
+
+function compile_zshrcs:run {
+  local zshrc
+  for zshrc in ~/.zshrc* ~/.zsh/*.zsh; do
+    if [ -f "$zshrc" ] && ! [[ "$zshrc" =~ \.zwc$ ]]; then
+      zcompile "$zshrc"
+    fi
+  done
+}
+
+function compile_zshrcs:cleanup {
+  local zwc
+  for zwc in ~/.zshrc*.zwc ~/.zsh/*.zsh.zwc; do
+    if [ -f "$zwc" ]; then
+      trash "$zwc"
+    fi
+  done
+}
 }
