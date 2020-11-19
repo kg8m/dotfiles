@@ -92,6 +92,7 @@ autoload -Uz _zinit
 ((${+_comps})) && _comps[zinit]=_zinit
 # }}}
 
+source ~/.zsh/binary-released-plugins.zsh
 source ~/.zsh/cd-bookmark.zsh
 source ~/.zsh/colors.zsh
 source ~/.zsh/completion.zsh
