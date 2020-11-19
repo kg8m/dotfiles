@@ -277,14 +277,14 @@ function update_zsh_plugins {
   local current_dir=$(pwd)
 
   # Clean up the directory because enhancd makes it dirty when loaded
-  execute_with_echo "cd ${__ENHANCD_DIR__:-}"
+  execute_with_echo "cd ${ENHANCD_ROOT:-}"
   execute_with_echo "git restore ."
   execute_with_echo "cd $current_dir"
 
   execute_with_echo "zinit update --all --parallel --quiet"
 
   # Execute `init.sh` to delete files fo fish because they are treated as completions by zinit
-  execute_with_echo "cd ${__ENHANCD_DIR__:-}"
+  execute_with_echo "cd ${ENHANCD_ROOT:-}"
   execute_with_echo "source init.sh"
   execute_with_echo "cd $current_dir"
 
