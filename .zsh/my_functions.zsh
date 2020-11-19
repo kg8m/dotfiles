@@ -147,11 +147,6 @@ function attach_or_new_tmux {
 # Never use tmuxinator
 alias mux="attach_or_new_tmux"
 
-function reload {
-  source ~/.zshrc
-  echo ~/.zshrc sourced.
-}
-
 # http://d.hatena.ne.jp/itchyny/20130227/1361933011
 function extract() {
   case "$1" in
