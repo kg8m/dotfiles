@@ -308,4 +308,27 @@ function compile_zshrcs:cleanup {
     fi
   done
 }
+
+function uninstall_go_library {
+  local library="$1"
+  local libpaths=("${(@f)$(find ~/go "${GOENV_ROOT:-}" -maxdepth 5 -path "*${library}*")}")
+
+  if [ -z "${libpaths[*]}" ]; then
+    echo "No library files/directories found for ${library}."
+    return 1
+  fi
+
+  # shellcheck disable=SC2145
+  echo -e "${(j:\n:)libpaths[@]}\n"
+
+  local response
+  read -r "response?Remove found files/directories? [y/n]: "
+
+  if [[ "$response" =~ ^y ]]; then
+    echo "${(j:\n:)libpaths[@]}" | while read -r libpath; do
+      trash "$libpath"
+    done
+  else
+    echo "Canceled."
+  fi
 }
