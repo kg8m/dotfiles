@@ -137,7 +137,7 @@ function attach_or_new_tmux {
         fi
       fi
     else
-      echo 'Not created.'
+      echo "Session not created."
     fi
   fi
 
