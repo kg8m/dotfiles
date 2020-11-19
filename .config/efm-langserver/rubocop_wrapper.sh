@@ -13,7 +13,7 @@ if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
 
-if [ -n "$is_fixing" ] && [ -z "$VIM_FIX_ON_SAVE_RUBY" ]; then
+if [ -n "$is_fixing" ] && [ -z "${VIM_FIX_ON_SAVE_RUBY:-}" ]; then
   exit 1
 fi
 
@@ -47,7 +47,7 @@ else
         -e 's/^F:/E:/'
   )"
 
-  if echo "$out" | egrep -q '^[A-Z]:[0-9]+:[0-9]+:'; then
+  if echo "$out" | grep -E -q '^[A-Z]:[0-9]+:[0-9]+:'; then
     echo "$out"
     exit 1
   else

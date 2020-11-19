@@ -6,27 +6,27 @@ function setup_my_prompt {
   local git='$(gitprompt)'
   local mark="%F{white}%(!.#.%#)%f "
 
-  PROMPT="%B${user} ${current_dir}%b ${git}"$'\n'"${mark}"
-  PROMPT2="%F{green}%_>%f "
+  export PROMPT="%B${user} ${current_dir}%b ${git}"$'\n'"${mark}"
+  export PROMPT2="%F{green}%_>%f "
 
   unset -f setup_my_prompt
 }
 setup_my_prompt
 
-ZSH_THEME_GIT_PROMPT_PREFIX="["
-ZSH_THEME_GIT_PROMPT_SUFFIX="]"
-ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
-ZSH_THEME_GIT_PROMPT_DETACHED="%F{cyan}:"
-ZSH_THEME_GIT_PROMPT_BRANCH="%F{magenta}"
-ZSH_THEME_GIT_PROMPT_BEHIND="-"
-ZSH_THEME_GIT_PROMPT_AHEAD="+"
-ZSH_THEME_GIT_PROMPT_UNMERGED="%F{red}C"
-ZSH_THEME_GIT_PROMPT_STAGED="%F{blue}+"
-ZSH_THEME_GIT_PROMPT_UNSTAGED="%F{yellow}!"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="?"
-ZSH_THEME_GIT_PROMPT_STASHED="%F{cyan}*"
-ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}#"
-ZSH_GIT_PROMPT_SHOW_STASH=1
+export ZSH_THEME_GIT_PROMPT_PREFIX="["
+export ZSH_THEME_GIT_PROMPT_SUFFIX="]"
+export ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
+export ZSH_THEME_GIT_PROMPT_DETACHED="%F{cyan}:"
+export ZSH_THEME_GIT_PROMPT_BRANCH="%F{magenta}"
+export ZSH_THEME_GIT_PROMPT_BEHIND="-"
+export ZSH_THEME_GIT_PROMPT_AHEAD="+"
+export ZSH_THEME_GIT_PROMPT_UNMERGED="%F{red}C"
+export ZSH_THEME_GIT_PROMPT_STAGED="%F{blue}+"
+export ZSH_THEME_GIT_PROMPT_UNSTAGED="%F{yellow}!"
+export ZSH_THEME_GIT_PROMPT_UNTRACKED="?"
+export ZSH_THEME_GIT_PROMPT_STASHED="%F{cyan}*"
+export ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}#"
+export ZSH_GIT_PROMPT_SHOW_STASH=1
 
 zinit ice lucid pick"git-prompt.zsh"
 zinit light woefe/git-prompt.zsh

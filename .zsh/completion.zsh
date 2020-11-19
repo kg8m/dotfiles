@@ -16,9 +16,9 @@ zinit light zsh-users/zsh-completions
 zinit ice lucid wait"0c" as"completion"
 zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=245,bold"
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
-ZSH_AUTOSUGGEST_USE_ASYNC=1
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=245,bold"
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 # https://zdharma.org/zinit/wiki/Example-Minimal-Setup/
 zinit ice lucid wait"0c" atload"_zsh_autosuggest_start"

@@ -1,7 +1,7 @@
 function cd_with_mkdir() {
   if [[ ! "$*" =~ ^$\|^-$ ]] && [ ! -d "$*" ]; then
-    echo "$@ not exists"
-    execute_with_confirm "mkdir -p \"$@\""
+    echo "$* not exists"
+    execute_with_confirm "mkdir -p \"$*\""
   fi
 
   __enhancd::cd "$@"

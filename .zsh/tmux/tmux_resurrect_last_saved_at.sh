@@ -1,6 +1,6 @@
-ls -l ~/.tmux/resurrect/last |
+find ~/.tmux/resurrect/last -ls |
   awk '{print $NF}' |
-  egrep '[0-9]{4}-?[0-9]{2}-?[0-9]{2}T[0-9]{2}:?[0-9]{2}' -o |
+  grep -E '[0-9]{4}-?[0-9]{2}-?[0-9]{2}T[0-9]{2}:?[0-9]{2}' -o |
   sed \
     -e 's/T/ /' \
     -e 's/-/\//g' \

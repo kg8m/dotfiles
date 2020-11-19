@@ -13,7 +13,7 @@ if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
 
-if [ -n "$is_fixing" ] && [ -z "$VIM_FIX_ON_SAVE_JS" ]; then
+if [ -n "$is_fixing" ] && [ -z "${VIM_FIX_ON_SAVE_JS:-}" ]; then
   exit 1
 fi
 
@@ -26,6 +26,7 @@ function eslint_wrapper_options {
 }
 
 if [ -f .eslint_wrapper_extends.sh ]; then
+  # shellcheck disable=SC1091
   source .eslint_wrapper_extends.sh
 fi
 
@@ -78,7 +79,7 @@ if [ -n "$out" ]; then
 fi
 
 if [ -n "$err" ]; then
-  detail="$(echo "$err" | egrep -v '^Oops!|^ESLint:|^[ ]|^$')"
+  detail="$(echo "$err" | grep -E -v '^Oops!|^ESLint:|^[ ]|^$')"
 
   if [ -z "$detail" ]; then
     detail="$err"

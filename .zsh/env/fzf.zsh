@@ -1,5 +1,6 @@
 # See also `.zsh/filter.zsh`
 function setup_my_fzf {
+  # shellcheck disable=SC2034
   local binds=(
     "change:top"
     "ctrl-f:page-down"
@@ -29,7 +30,7 @@ function setup_my_fzf {
   export FZF_DEFAULT_OPTS="${options[*]}"
   export FZF_DEFAULT_COMMAND="source ~/.zsh/my_functions.zsh; my_grep --files"
 
-  export FZF_VIM_PATH="$VIM_PLUGINS/github.com/junegunn/fzf.vim"
+  export FZF_VIM_PATH="${VIM_PLUGINS:-}/github.com/junegunn/fzf.vim"
 
   unset -f setup_my_fzf
 }

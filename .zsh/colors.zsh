@@ -5,7 +5,7 @@ function setup_my_dircolors {
     local dircolors=dircolors
   fi
 
-  if ! [ -f "$KGYM_ZSH_CACHE_DIR/dircolors_ansi-universal" ]; then
+  if ! [ -f "${KGYM_ZSH_CACHE_DIR:-}/dircolors_ansi-universal" ]; then
     # My original colors:
     #   export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
     #   export LS_COLORS='di=01;36:ln=01;35:ex=01;32'

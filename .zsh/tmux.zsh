@@ -35,7 +35,7 @@ zinit snippet /dev/null
 
 case "$-" in
   *i*)  # Interactive shell
-    if [ -n "$TMUX" ]; then
+    if [ -n "${TMUX:-}" ]; then
       function tmux_save_pane_logs_automatically {
         local DIRPATH="$HOME/tmp/tmux-logs"
         local FILENAME="$(tmux run-shell "echo tmux-#{session_name}-#{window_index}-#{pane_index}.log")"

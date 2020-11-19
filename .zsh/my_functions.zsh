@@ -37,7 +37,7 @@ function retriable_execute_with_confirm {
     local response
 
     echo
-    [ $result = 0 ] && echo "👼 Succeeded." || echo "👿 Failed."
+    [ "$result" = "0" ] && echo "👼 Succeeded." || echo "👿 Failed."
     echo
     read -r "response?Retry? [y/n]: "
 
@@ -54,19 +54,19 @@ function notify {
 
   local notifier_options=("-group \"NOTIFY_${message}\"")
 
-  if ((! ${options[(I)--nostay]})); then
+  if [ "${options[(I)--nostay]}" = "0" ]; then
     notifier_options+=("-sender TERMINAL_NOTIFIER_STAY")
   fi
 
   # `> /dev/null` for ignoring "Removing previously sent notification" message
-  ssh main -t "echo '${message}' | /usr/local/bin/terminal-notifier ${notifier_options[@]}" > /dev/null
+  ssh main -t "echo '${message}' | /usr/local/bin/terminal-notifier ${notifier_options[*]}" > /dev/null
 }
 
 function batch_move {
   local response
 
   zmv -n "$@" | less
-  read -r 'response?Execute? [y/n]: '
+  read -r "response?Execute? [y/n]: "
 
   if [[ "$response" =~ ^y ]]; then
     zmv "$@"
@@ -80,13 +80,13 @@ function trash {
   local filename
   local new_filename
   local timestamp=$(date +%H.%M.%S)
-  local trash_path=${TRASH_PATH-/tmp}
+  local trash_path=${TRASH_PATH:-/tmp}
 
   for source in "$@"; do
     filename=$(basename "$source")
 
     if [ -f "$trash_path/$filename" ] || [ -d "$trash_path/$filename" ]; then
-      sed_expr='s/^\(\.\?[^.]\+\)\(\.\?\)/\1 '$timestamp'\2/'
+      sed_expr='s/^\(\.\?[^.]\+\)\(\.\?\)/\1 '"$timestamp"'\2/'
       new_filename=$(echo "$filename" | sed -e "$sed_expr")
     else
       new_filename="$filename"
@@ -169,12 +169,13 @@ function extract() {
     *.zst | *.zstd) unzstd "$1" ;;
   esac
 }
+# shellcheck disable=SC2139
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
 
 function my_grep() {
   local args
 
-  if [ -n "$RIPGREP_EXTRA_OPTIONS" ]; then
+  if [ -n "${RIPGREP_EXTRA_OPTIONS:-}" ]; then
     # Split $RIPGREP_EXTRA_OPTIONS by whitespaces
     args=("${=RIPGREP_EXTRA_OPTIONS}" "$@")
   else
@@ -234,10 +235,10 @@ function my_grep_with_filter() {
     read -r "response?Open found files? [y/n]: "
 
     if [[ "$response" =~ ^y ]]; then
-      local filepaths=("${(@f)$(echo "${(j:\n:)results[@]}" | egrep ':[0-9]+:[0-9]+:' | egrep -o '^[^:]+' | sort -u)}")
+      local filepaths=("${(@f)$(echo "${(j:\n:)results[@]}" | grep -E ':[0-9]+:[0-9]+:' | grep -E -o '^[^:]+' | sort -u)}")
 
       # Don't use literal `vim` because it sometimes refers to wrong Vim
-      eval "vim ${filepaths[@]}"
+      eval "vim ${filepaths[*]}"
     fi
   fi
 }
@@ -247,7 +248,7 @@ function tig {
   case "$1" in
     bl*)
       shift
-      execute_with_echo "command tig blame $@"
+      execute_with_echo "command tig blame $*"
       ;;
     stash)
       execute_with_echo "command tig stash"
@@ -256,13 +257,13 @@ function tig {
       execute_with_echo "command tig status"
       ;;
     *)
-      execute_with_echo "command tig $@"
+      execute_with_echo "command tig $*"
       ;;
   esac
 }
 
 function update_zsh_plugins {
-  trash "$KGYM_ZSH_CACHE_DIR"
+  trash "${KGYM_ZSH_CACHE_DIR:-}"
   mkdir -p "$KGYM_ZSH_CACHE_DIR"
 
   local zwc
@@ -276,23 +277,23 @@ function update_zsh_plugins {
   notify --nostay "Executing \`zinit delete --clean\`, so allow to continue"
   execute_with_echo "zinit delete --clean"
   execute_with_echo "zinit cclear"
-  execute_with_echo "find ${ZINIT[SNIPPETS_DIR]} -type d -empty -delete"
+  execute_with_echo "find ${ZINIT[SNIPPETS_DIR]:-} -type d -empty -delete"
 
   local current_dir=$(pwd)
 
   # Clean up the directory because enhancd makes it dirty when loaded
-  execute_with_echo "cd $__ENHANCD_DIR__"
+  execute_with_echo "cd ${__ENHANCD_DIR__:-}"
   execute_with_echo "git restore ."
   execute_with_echo "cd $current_dir"
 
   execute_with_echo "zinit update --all --parallel --quiet"
 
   # Execute `init.sh` to delete files fo fish because they are treated as completions by zinit
-  execute_with_echo "cd $__ENHANCD_DIR__"
+  execute_with_echo "cd ${__ENHANCD_DIR__:-}"
   execute_with_echo "source init.sh"
   execute_with_echo "cd $current_dir"
 
-  execute_with_echo "zinit creinstall -q $ZINIT[BIN_DIR]"
+  execute_with_echo "zinit creinstall -q ${ZINIT[BIN_DIR]}"
   execute_with_echo "zinit csearch"
 
   local zshrc

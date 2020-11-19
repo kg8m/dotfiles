@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 if [ -f .git_templates/hooks/prepare-commit-msg ]; then
+  # shellcheck disable=SC1091
   source .git_templates/hooks/prepare-commit-msg
 else
   exit 0

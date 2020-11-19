@@ -18,10 +18,10 @@ export GREP_COLOR='01;35'
 export PROMPT_EOL_MARK=""
 
 # History  {{{
-HISTFILE=~/.zsh_histfile
-HISTSIZE=100000
-SAVEHIST=100000
-HISTORY_IGNORE="exit|rm *-f*|*secret*|*SECRET*|*token*|*TOKEN*"
+export HISTFILE=~/.zsh_histfile
+export HISTSIZE=100000
+export SAVEHIST=100000
+export HISTORY_IGNORE="exit|rm *-f*|*secret*|*SECRET*|*token*|*TOKEN*"
 
 # https://mollifier.hatenablog.com/entry/20090728/p1
 zshaddhistory() {
@@ -81,12 +81,14 @@ autoload -Uz zmv
 
 autoload -U add-zsh-hook
 
-mkdir -p "$KGYM_ZSH_CACHE_DIR"
+mkdir -p "${KGYM_ZSH_CACHE_DIR:-}"
 
 # zdharma/zinit  {{{
 [ -d ~/.zinit/bin ] || git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
 source ~/.zinit/bin/zinit.zsh
 autoload -Uz _zinit
+
+# shellcheck disable=SC2034,SC2154
 ((${+_comps})) && _comps[zinit]=_zinit
 # }}}
 

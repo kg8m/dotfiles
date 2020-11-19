@@ -88,6 +88,7 @@ function git:branch:create:with_set_upstream {
   local branch_name="$2"
   local commit_message="$3"
 
+  # shellcheck disable=SC2034
   local commands=(
     "git switch --create ${branch_name} ${original_branch}"
     "git commit --allow-empty --message=\"${commit_message}\""
@@ -101,7 +102,7 @@ function git:branch:delete:bulk:local {
   local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"" )
   local branches=( "${(@f)$(
     git branch --verbose |
-      egrep -v "${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
+      grep -E -v "${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
       filter "${filter_options[@]}" |
       sed -e 's/^[* ]*//' |
       awk '{ print $1 }'
@@ -119,7 +120,7 @@ function git:branch:delete:bulk:remote {
   local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"" )
   local branches=( "${(@f)$(
     git branch --verbose --remote |
-      egrep -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
+      grep -E -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
       filter "${filter_options[@]}" |
       awk '{ print $1 }' |
       sed -e 's#^origin/##'
@@ -136,7 +137,7 @@ function git:branch:delete:bulk:remote {
 function git:branch:filter:one {
   local ignore_pattern="$1"
   local filter_options=( --no-multi --nth=1 --prompt="select a branch: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"" )
-  local branches=( "${(@f)$( git:branch:all | egrep -v "${ignore_pattern}" | filter "${filter_options[@]}" | awk '{ print $1 }' )}" )
+  local branches=( "${(@f)$( git:branch:all | grep -E -v "${ignore_pattern}" | filter "${filter_options[@]}" | awk '{ print $1 }' )}" )
 
   if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
     echo "Select a branch." >&2; exit 1
@@ -163,18 +164,18 @@ function git:branch:all {
 
   git branch --all --format "${list_format}" |
     git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" -e 's/^origin\///' |
-    egrep -v "^HEAD${SEP}" |
-    egrep "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
+    grep -E -v "^HEAD${SEP}" |
+    grep -E "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
     column -t -s "$SEP" |
     awk '!x[$1]++'          # Remove duplicated branches
 }
 
 function git:branch:remote {
-  git branch --remote --verbose | egrep -v '^ *[^/]+/HEAD\b'
+  git branch --remote --verbose | grep -E -v '^ *[^/]+/HEAD\b'
 }
 
 function git:clone:shallow {
-  execute_with_echo "git clone --single-branch --depth 1 $@"
+  execute_with_echo "git clone --single-branch --depth 1 $*"
 }
 
 function git:clean:bulk {
@@ -194,7 +195,7 @@ function git:log:compare:branch {
   local branch2=$( git:branch:filter:remote:one "select another branch: " )
   [ -n "$branch2" ] || exit 1
 
-  execute_with_confirm "git log $@ ${branch1}...${branch2}"
+  execute_with_confirm "git log $* ${branch1}...${branch2}"
 }
 
 function git:diff:branch {
@@ -204,7 +205,7 @@ function git:diff:branch {
   local branch2=$( git:branch:filter:remote:one "select another branch: " )
   [ -n "$branch2" ] || exit 1
 
-  execute_with_confirm "git diff-without-space-changes $@ ${branch1}...${branch2}"
+  execute_with_confirm "git diff-without-space-changes $* ${branch1}...${branch2}"
 }
 
 function git:diff:branch:from {
@@ -214,7 +215,7 @@ function git:diff:branch:from {
     local current="$( git branch --show-current )"
 
     shift
-    execute_with_confirm "git diff-without-space-changes $@ origin/${target}...${current}"
+    execute_with_confirm "git diff-without-space-changes $* origin/${target}...${current}"
   else
     echo "Specify a branch name, e.g., \"master\"." >&2; exit 1
   fi
@@ -227,14 +228,14 @@ function git:diff:branch:from:nameonly {
     local current="$( git branch --show-current )"
 
     shift
-    execute_with_confirm "git diff --name-only $@ origin/${target}...${current}"
+    execute_with_confirm "git diff --name-only $* origin/${target}...${current}"
   else
     echo "Specify a branch name, e.g., \"master\"." >&2; exit 1
   fi
 }
 
 function git:stash:all:with_message {
-  execute_with_confirm "git stash push --no-keep-index --include-untracked --message '$@'"
+  execute_with_confirm "git stash push --no-keep-index --include-untracked --message '$*'"
 }
 
 function git:status:filter:all {
@@ -242,23 +243,23 @@ function git:status:filter:all {
 }
 
 function git:status:filter:staged {
-  git status --short | egrep '^[^ ?]|^ A' | git:status:utility:filter
+  git status --short | grep -E '^[^ ?]|^ A' | git:status:utility:filter
 }
 
 function git:status:filter:unstaged {
-  git status --short | egrep '^[^?][^ A]' | git:status:utility:filter
+  git status --short | grep -E '^[^?][^ A]' | git:status:utility:filter
 }
 
 function git:status:filter:unstaged:with_intended_to_add {
-  git status --short | egrep '^[^?][^ ]' | git:status:utility:filter
+  git status --short | grep -E '^[^?][^ ]' | git:status:utility:filter
 }
 
 function git:status:filter:unstaged:with_untracked {
-  git status --short | egrep '^.[^ ]' | git:status:utility:filter
+  git status --short | grep -E '^.[^ ]' | git:status:utility:filter
 }
 
 function git:status:filter:untracked {
-  git status --short | egrep '^\?\?' | git:status:utility:filter
+  git status --short | grep -E '^\?\?' | git:status:utility:filter
 }
 
 function git:status:utility:filter {

@@ -3,7 +3,7 @@ function setup_my_nodenv {
     export PATH=~/.nodenv/bin:$PATH
 
     if command -v nodenv > /dev/null 2>&1; then
-      if ! [ -f "$KGYM_ZSH_CACHE_DIR/nodenv_init" ]; then
+      if ! [ -f "${KGYM_ZSH_CACHE_DIR:-}/nodenv_init" ]; then
         nodenv init - > "$KGYM_ZSH_CACHE_DIR/nodenv_init"
         zcompile "$KGYM_ZSH_CACHE_DIR/nodenv_init"
       fi

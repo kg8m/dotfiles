@@ -3,6 +3,7 @@ result=0
 source ~/.config/git/bin/set_user_info_depending_on_repository_url || result=$?
 
 if [ -f .git_templates/hooks/pre-commit ]; then
+  # shellcheck disable=SC1091
   source .git_templates/hooks/pre-commit || result=$?
 fi
 

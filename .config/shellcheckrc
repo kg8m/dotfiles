@@ -4,17 +4,11 @@ disable=SC1090
 # Expressions don't expand in single quotes, use double quotes for that.
 disable=SC2016
 
-# Argument mixes string and array. Use * or separate argument.
-disable=SC2145
-
 # Declare and assign separately to avoid masking return values.
 disable=SC2155
 
-# egrep is non-standard and deprecated. Use grep -E instead.
-disable=SC2196
-
-# Prefer mapfile or read -a to split command output (or quote to avoid splitting).
-disable=SC2207
+# Use 'cd ... || exit' or 'cd ... || return' in case cd fails.
+disable=SC2164
 
 # Consider adding a default *) case, even if it just exits with error.
 disable=SC2249
