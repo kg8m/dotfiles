@@ -1,5 +1,5 @@
 # See also `.zsh/filter.zsh`
-function setup_my_fzf {
+function setup_my_fzf_env {
   # shellcheck disable=SC2034
   local binds=(
     "change:top"
@@ -32,6 +32,6 @@ function setup_my_fzf {
 
   export FZF_VIM_PATH="${VIM_PLUGINS:-}/github.com/junegunn/fzf.vim"
 
-  unset -f setup_my_fzf
+  unset -f setup_my_fzf_env
 }
-setup_my_fzf
+setup_my_fzf_env
