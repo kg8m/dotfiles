@@ -50,7 +50,7 @@ function retriable_execute_with_confirm {
 function notify {
   local options=("${(M)@:#-*}")
   local non_options=("${@:#-*}")
-  local message="[$(whoami)@$(hostname)] ${non_options:-Command finished.}"
+  local message="[$(hostname)] ${non_options:-Command finished.}"
 
   local notifier_options=("-group \"NOTIFY_${message}\"")
 
