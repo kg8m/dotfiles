@@ -2732,6 +2732,7 @@ if kg8m#plugin#register("mhinz/vim-startify", #{ if: !kg8m#util#is_git_tmp_edit(
     \ ]
   let g:startify_commands = [
     \   #{ p: "call kg8m#plugin#update_all()" },
+    \   #{ P: "call kg8m#plugin#update_all(#{ bulk: v:false })" },
     \ ]
   " https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
   let g:startify_custom_header  = [

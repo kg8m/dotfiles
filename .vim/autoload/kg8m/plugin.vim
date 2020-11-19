@@ -77,11 +77,11 @@ function! kg8m#plugin#install(...) abort  " {{{
   endif
 endfunction  " }}}
 
-function! kg8m#plugin#update_all() abort  " {{{
+function! kg8m#plugin#update_all(options = {}) abort  " {{{
   call timer_start(200, { -> kg8m#plugin#remove_disused() })
 
   echo "Check and update plugins..."
-  silent call kg8m#plugin#check_and_update()
+  silent call kg8m#plugin#check_and_update(a:options)
 
   call timer_start(1000, { -> kg8m#plugin#show_update_log() })
 endfunction  " }}}
@@ -90,15 +90,19 @@ function! kg8m#plugin#remove_disused() abort  " {{{
   call map(dein#check_clean(), "delete(v:val, 'rf')")
 endfunction  " }}}
 
-function! kg8m#plugin#check_and_update() abort  " {{{
+function! kg8m#plugin#check_and_update(options = {}) abort  " {{{
   " Load all plugins before update because dein.vim doesn't make helptags for non-loaded plugins
   for plugin in kg8m#plugin#disabled_plugins()
     call kg8m#plugin#register(plugin.repo)
     call kg8m#plugin#source(plugin.name)
   endfor
 
-  let force_update = v:true
-  call dein#check_update(force_update)
+  if get(a:options, "bulk", v:true)
+    let force_update = v:true
+    call dein#check_update(force_update)
+  else
+    call dein#update()
+  endif
 endfunction  " }}}
 
 function! kg8m#plugin#show_update_log() abort  " {{{
