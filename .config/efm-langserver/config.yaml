@@ -81,6 +81,13 @@ tools:
     format-command: "shfmt -i 2 -ci -sr -kp -filename '${INPUT}'"
     format-stdin: true
 
+  stylelint: &stylelint
+    lint-command: "stylelint --stdin --stdin-filename /dummy.css --formatter unix --no-color"
+    lint-stdin: true
+    lint-format:
+      - "%f:%l:%n: %m [%trror]"
+      - "%f:%l:%n: %m [%tarning]"
+
   textlint: &textlint
     lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}'"
     lint-stdin: true
@@ -100,6 +107,9 @@ tools:
       - "%f:%l:%c: [%tarning] %m"
 
 languages:
+  css:
+    - <<: *stylelint
+
   eruby:
     - <<: *erb
     # Disable because `invalid option: --format` error occurs
