@@ -122,6 +122,10 @@ function! kg8m#plugin#show_update_log() abort  " {{{
     \   ..'\ !Successfully\\ rebased\\ and\\ updated\\ refs/heads/master.'
     \   ..'\ !*\\ [new\\ tag]'
     \   ..'\ !already\\ exists,\\ disabling\\ multiplexing'
+    \   ..'\ !refs/remotes/origin/HEAD\\ has\\ become\\ dangling'
+    \   ..'\ !origin/HEAD\\ set\\ to'
+    \   ..'\ !Your\\ configuration\\ specifies\\ to\\ merge\\ with\\ the\\ ref'
+    \   ..'\ !from\\ the\\ remote,\\ but\\ no\\ such\\ ref\\ was\\ fetched.'
 
   execute "Unite dein/log -buffer-name=update_plugins -input="..initial_input
 
