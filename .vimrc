@@ -677,7 +677,7 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
      \   name: "efm-langserver",
      \   cmd: { server_info -> ["efm-langserver"] },
      \   allowlist: [
-     \     "eruby", "go", "json", "make", "markdown", "ruby", "vim",
+     \     "eruby", "go", "html", "json", "make", "markdown", "ruby", "vim",
      \     "eruby.yaml", "yaml",
      \     "javascript", "typescript",
      \     "sh", "zsh",

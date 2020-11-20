@@ -47,6 +47,13 @@ tools:
       - "%f:%l %m"
       - "%f: %l: %m"
 
+  markuplint: &markuplint
+    lint-command: "$HOME/.config/efm-langserver/markuplint_wrapper.sh '${INPUT}'"
+    # Using stdin is supported according to markuplint's help, but it doesn't work
+    # lint-stdin: true
+    lint-formats:
+      - "%l:%n %m"
+
   rubocop: &rubocop
     lint-command: "$HOME/.config/efm-langserver/rubocop_wrapper.sh '${INPUT}'"
     lint-stdin: true
@@ -103,6 +110,9 @@ languages:
 
   go:
     - <<: *goimports
+
+  html:
+    - <<: *markuplint
 
   javascript:
     - <<: *eslint
