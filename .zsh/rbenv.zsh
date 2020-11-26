@@ -6,15 +6,15 @@ function setup_my_rbenv {
     fi
     source "$KGYM_ZSH_CACHE_DIR/rbenv_init"
 
-    [ -d ~/.rbenv/plugins ] || mkdir -p ~/.rbenv/plugins
-
     function setup_my_rbenv_default_gems {
-      if [ ! -d ~/.rbenv/plugins/rbenv-default-gems ]; then
-        ln -s "$PWD" ~/.rbenv/plugins/rbenv-default-gems
+      if [ ! -f ~/.rbenv/default-gems ]; then
+        mkdir -p ~/.rbenv
+        ln -s ~/dotfiles/.rbenv/default-gems ~/.rbenv/default-gems
       fi
 
-      if [ ! -f ~/.rbenv/default-gems ]; then
-        ln -s ~/dotfiles/.rbenv/default-gems ~/.rbenv/default-gems
+      if [ ! -d ~/.rbenv/plugins/rbenv-default-gems ]; then
+        mkdir -p ~/.rbenv/plugins
+        ln -s "$PWD" ~/.rbenv/plugins/rbenv-default-gems
       fi
 
       unset -f setup_my_rbenv_default_gems
@@ -22,6 +22,7 @@ function setup_my_rbenv {
 
     function setup_my_rbenv_each {
       if [ ! -d ~/.rbenv/plugins/rbenv-each ]; then
+        mkdir -p ~/.rbenv/plugins
         ln -s "$PWD" ~/.rbenv/plugins/rbenv-each
       fi
 
@@ -30,6 +31,7 @@ function setup_my_rbenv {
 
     function setup_my_ruby_build {
       if [ ! -d ~/.rbenv/plugins/ruby-build ]; then
+        mkdir -p ~/.rbenv/plugins
         ln -s "$PWD" ~/.rbenv/plugins/ruby-build
       fi
 
