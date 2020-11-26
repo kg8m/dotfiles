@@ -71,7 +71,7 @@ function __my_preexec_end_timetrack() {
     return
   fi
 
-  # Don't use `[ "$command" =~ $TIMETRACK_PATTERN ]` because it doesn't work on Mac
+  # Don't use `[[ "$command" =~ $TIMETRACK_PATTERN ]]` because it doesn't work on Mac
   if echo "$command" | grep -E -v "$TIMETRACK_IGNORE_PATTERN" | grep -E -q "$TIMETRACK_PATTERN"; then
     exec_time=$((__timetrack_end - __timetrack_start))
 
