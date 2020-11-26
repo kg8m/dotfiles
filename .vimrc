@@ -1081,8 +1081,8 @@ if kg8m#plugin#register("junegunn/fzf.vim", #{ if: !kg8m#util#is_git_tmp_edit() 
   nnoremap <Leader><Leader>h :call <SID>fzf().history.run()<Cr>
   nnoremap <Leader><Leader>H :FzfHelptags<Cr>
   nnoremap <Leader><Leader>y :call <SID>fzf().yank_history.run()<Cr>
-  noremap  <Leader><Leader>s :<C-u>call <SID>fzf().my_shortcuts.run("")<Cr>
-  noremap  <Leader><Leader>a :<C-u>call <SID>fzf().my_shortcuts.run("'EasyAlign ")<Cr>
+  noremap  <Leader><Leader>s <Cmd>call <SID>fzf().my_shortcuts.run("")<Cr>
+  noremap  <Leader><Leader>a <Cmd>call <SID>fzf().my_shortcuts.run("'EasyAlign ")<Cr>
   nnoremap <Leader><Leader>r :call <SID>fzf().rails.setup()<Cr>:FzfRails<Space>
 
   augroup my_vimrc  " {{{
