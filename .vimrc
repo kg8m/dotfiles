@@ -2445,6 +2445,9 @@ endif  " }}}
 
 call kg8m#plugin#register("tpope/vim-haml", #{ if: !kg8m#util#is_git_tmp_edit() })
 
+if kg8m#plugin#register("itchyny/vim-histexclude")  " {{{
+  let g:histexclude = { ":": '\v^[:[:space:]]*(\d+\s*$|w(rite)?!?$|wq!?$|q(uit)?!?$|qa(ll)?!?$)' }
+endif  " }}}
 
 " Text object for (Japanese) sentence: s
 if kg8m#plugin#register("deton/jasentence.vim")  " {{{
