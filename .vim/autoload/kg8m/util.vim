@@ -70,9 +70,9 @@ endfunction  " }}}
 
 function! kg8m#util#remote_copy(text) abort  " {{{
   let text =
-    \   a:text
-    \     ->substitute('\n$', "", "")
-    \     ->shellescape()
+  \   a:text
+  \     ->substitute('\n$', "", "")
+  \     ->shellescape()
 
   call system("printf %s "..text.." | ssh main -t 'LC_CTYPE=UTF-8 pbcopy'")
 
@@ -117,16 +117,16 @@ endfunction  " }}}
 
 function! kg8m#util#japanese_matchpairs() abort  " {{{
   return [
-       \   ["（", "）"],
-       \   ["「", "」"],
-       \   ["『", "』"],
-       \   ["｛", "｝"],
-       \   ["［", "］"],
-       \   ["〈", "〉"],
-       \   ["《", "》"],
-       \   ["【", "】"],
-       \   ["〔", "〕"],
-       \   ["“", "”"],
-       \   ["‘", "’"],
-       \ ]
+  \   ["（", "）"],
+  \   ["「", "」"],
+  \   ["『", "』"],
+  \   ["｛", "｝"],
+  \   ["［", "］"],
+  \   ["〈", "〉"],
+  \   ["《", "》"],
+  \   ["【", "】"],
+  \   ["〔", "〕"],
+  \   ["“", "”"],
+  \   ["‘", "’"],
+  \ ]
 endfunction  " }}}
