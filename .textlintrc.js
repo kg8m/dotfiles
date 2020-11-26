@@ -29,7 +29,7 @@ module.exports = {
       "ja-no-mixed-period": false,
       "no-doubled-joshi": {
         allow: ["か", "にも", "も"],
-        commaCharacters: ["、", "，", "「", "」", "（", "）", "/"],
+        commaCharacters: ["、", "，", "「", "」", "（", "）", "/", "→", "←"],
       },
       "no-exclamation-question-mark": false,
       "sentence-length": {
