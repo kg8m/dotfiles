@@ -1,4 +1,5 @@
 version: 2
+provide-definition: false
 
 commands:
   - title: reload config
