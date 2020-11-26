@@ -306,7 +306,7 @@ function compile_zshrcs:cleanup {
   local zwc
   for zwc in ~/.zshrc*.zwc ~/.zsh/*.zsh.zwc; do
     if [ -f "$zwc" ]; then
-      trash "$zwc"
+      rm -f "$zwc"
     fi
   done
 }
