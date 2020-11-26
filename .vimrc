@@ -549,10 +549,13 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
     setlocal omnifunc=lsp#complete
     nmap <buffer> gd <Plug>(lsp-next-diagnostic)
     nmap <buffer> ge <Plug>(lsp-next-error)
-    nmap <buffer> g] <Plug>(lsp-definition)
     nmap <buffer> <S-h> <Plug>(lsp-hover)
 
     call s:lsp.overwrite_capabilities()
+
+    if s:lsp.is_definition_supported()
+      nmap <buffer> g] <Plug>(lsp-definition)
+    endif
 
     augroup my_vimrc  " {{{
       autocmd InsertLeave <buffer> call timer_start(100, { -> s:lsp.document_format(#{ sync: v:false }) })
@@ -623,6 +626,23 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
         let capabilities.documentFormattingProvider = v:false
       endif
     endfor
+  endfunction  " }}}
+
+  function! s:lsp.is_definition_supported() abort  " {{{
+    if !s:lsp.are_all_servers_running()
+      call kg8m#util#echo_error_msg("Cannot to judge whether definition is supported or not because some of them are not running")
+      return
+    endif
+
+    for server_name in lsp#get_allowed_servers()
+      let capabilities = lsp#get_server_capabilities(server_name)
+
+      if get(capabilities, "definitionProvider", v:false)
+        return v:true
+      endif
+    endfor
+
+    return v:false
   endfunction  " }}}
 
   function! s:lsp.document_format(options = {}) abort  " {{{
