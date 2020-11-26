@@ -67,10 +67,15 @@ function setup_my_binary_released_plugins {
     execute_with_echo "ln -fs '$PWD/${binary}' '$HOME/bin/$(basename "$binary")'"
 
     case "$plugin" in
+      bat)
+        execute_with_echo "mv ./bat/autocomplete/{bat.zsh,_bat}"
+        ;;
       nextword)
         setup_my_nextword
         ;;
     esac
+
+    [ -n "$(find . -type f -name '_*')" ] && execute_with_echo "zinit creinstall '$PWD'"
   }
 
   function setup_my_nextword {
