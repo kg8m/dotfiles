@@ -2,11 +2,7 @@ module.exports = {
   filters: {
     comments: true,
     allowlist: {
-      allow: [
-        "嬢",
-        "子供",
-        "工夫",
-      ],
+      allow: [],
     },
     "node-types": {
       nodeTypes: ["BlockQuote", "Code", "CodeBlock"],
