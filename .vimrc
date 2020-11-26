@@ -3021,6 +3021,8 @@ if kg8m#plugin#register("LeafCage/yankround.vim")  " {{{
   endfunction  " }}}
 endif  " }}}
 
+call kg8m#plugin#register("zinit-zsh/zinit-vim-syntax")
+
 " Colorschemes
 if kg8m#plugin#register("tomasr/molokai")  " {{{
   let s:molokai = {}
