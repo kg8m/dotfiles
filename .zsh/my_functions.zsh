@@ -77,6 +77,7 @@ function batch_move {
 alias bmv="batch_move"
 
 function trash {
+  local source
   local filename
   local new_filename
   local timestamp=$(date +%H.%M.%S)
@@ -184,6 +185,7 @@ function my_grep_with_filter() {
   local options=()
   local non_options=()
   local is_waiting_option_value=false
+  local arg
 
   for arg in "$@"; do
     if [[ "$arg" =~ ^-- ]]; then

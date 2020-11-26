@@ -22,6 +22,7 @@ function setup_my_tmux_plugins {
     nhdaly/tmux-scroll-copy-mode
   )
 
+  local plugin
   for plugin in "${__my_tmux_plugins__[@]}"; do
     zinit ice lucid wait"0c" as"null" atload"setup_my_tmux_plugin $plugin"
     zinit light "$plugin"

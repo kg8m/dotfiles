@@ -96,6 +96,7 @@ function setup_my_binary_released_plugins {
     fi
   }
 
+  local repository
   for repository in "${repositories[@]}"; do
     case "$repository" in
       mvdan/sh)

@@ -273,6 +273,7 @@ function git:submodule:update {
 
 function git:submodule:remove:bulk {
   local targets=( "${(@f)$( git submodule | filter | awk '{ print $2 }' )}" )
+  local target
 
   for target in "${targets[@]}"; do
     execute_with_confirm "git submodule deinit $target"
@@ -283,6 +284,7 @@ function git:submodule:remove:bulk {
 
 function git:submodule:deinit:bulk {
   local targets=( "${(@f)$( git submodule | filter | awk '{ print $2 }' )}" )
+  local target
 
   for target in "${targets[@]}"; do
     execute_with_confirm "git submodule deinit -f $target"
