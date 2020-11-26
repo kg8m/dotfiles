@@ -2446,6 +2446,16 @@ endif  " }}}
 call kg8m#plugin#register("tpope/vim-haml", #{ if: !kg8m#util#is_git_tmp_edit() })
 
 
+" Text object for (Japanese) sentence: s
+if kg8m#plugin#register("deton/jasentence.vim")  " {{{
+  let g:jasentence_endpat = '[。．？！!?]\+'
+
+  call kg8m#plugin#configure(#{
+     \   lazy:   v:true,
+     \   on_map: [["nv", "("], ["nv", ")"], ["o", "s"]],
+     \ })
+endif  " }}}
+
 if kg8m#plugin#register("osyo-manga/vim-jplus")  " {{{
   " Remove line-connectors with `J`
   nmap J <Plug>(jplus)
