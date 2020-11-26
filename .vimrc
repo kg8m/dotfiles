@@ -2445,8 +2445,6 @@ endif  " }}}
 
 call kg8m#plugin#register("tpope/vim-haml", #{ if: !kg8m#util#is_git_tmp_edit() })
 
-" Text object for indentation: i
-call kg8m#plugin#register("michaeljsmith/vim-indent-object")
 
 if kg8m#plugin#register("osyo-manga/vim-jplus")  " {{{
   " Remove line-connectors with `J`
@@ -2644,15 +2642,23 @@ if kg8m#plugin#register("joker1007/vim-ruby-heredoc-syntax", #{ if: !kg8m#util#i
      \ })
 endif  " }}}
 
+" Text object for surrounded by a bracket-pair or same characters: S + {user input}
 if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
   let s:sandwich = {}
 
   let g:sandwich_no_default_key_mappings = v:true
   let g:operator_sandwich_no_default_key_mappings = v:true
+  let g:textobj_sandwich_no_default_key_mappings = v:true
 
   vmap <Leader>sa <Plug>(operator-sandwich-add)
   nmap <Leader>sd <Plug>(operator-sandwich-delete)<Plug>(textobj-sandwich-query-a)
   nmap <Leader>sr <Plug>(operator-sandwich-replace)<Plug>(textobj-sandwich-query-a)
+
+  " Textobjects to select a text surrounded by braket or same characters user input
+  xmap iS <Plug>(textobj-sandwich-query-i)
+  xmap aS <Plug>(textobj-sandwich-query-a)
+  omap iS <Plug>(textobj-sandwich-query-i)
+  omap aS <Plug>(textobj-sandwich-query-a)
 
   nmap . <Plug>(operator-sandwich-dot)
 
@@ -2677,8 +2683,8 @@ if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{
-     \   lazy: v:true,
-     \   on_map:  [["nv", "<Plug>(operator-sandwich-"]],
+     \   lazy:   v:true,
+     \   on_map: [["nv", "<Plug>(operator-sandwich-"], ["xo", "<Plug>(textobj-sandwich-"]],
      \   hook_source: s:sandwich.on_post_source,
      \ })
 endif  " }}}
@@ -2839,27 +2845,12 @@ if kg8m#plugin#register("janko/vim-test", #{ if: !kg8m#util#is_git_tmp_edit() })
      \ })
 endif  " }}}
 
-" Text object for quotations: q
-if kg8m#plugin#register("deris/vim-textobj-enclosedsyntax")  " {{{
-  call kg8m#plugin#configure(#{
-     \   lazy:    v:true,
-     \   on_ft:   ["ruby", "eruby"],
-     \   depends: "vim-textobj-user",
-     \ })
-endif  " }}}
+" Text object for indentation: i
+call kg8m#plugin#register("kana/vim-textobj-indent")
 
-" Text object fo last search pattern: /
+" Text object for last search pattern: /
 if kg8m#plugin#register("kana/vim-textobj-lastpat")  " {{{
   call kg8m#plugin#configure(#{
-     \   depends: "vim-textobj-user",
-     \ })
-endif  " }}}
-
-" Text object for Ruby blocks (not only `do-end` nor `{}`): r
-if kg8m#plugin#register("rhysd/vim-textobj-ruby")  " {{{
-  call kg8m#plugin#configure(#{
-     \   lazy:    v:true,
-     \   on_ft:   "ruby",
      \   depends: "vim-textobj-user",
      \ })
 endif  " }}}
