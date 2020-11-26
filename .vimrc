@@ -3122,7 +3122,7 @@ set wrap
 set display+=lastline
 set diffopt+=context:10
 set list
-set listchars=tab:>\ ,eol:\ ,trail:_
+set listchars=tab:>\ ,eol:\ ,trail:_,extends:>,precedes:<
 set completeopt=menu,menuone,popup,noinsert,noselect
 set pumheight=20
 set signcolumn=number
