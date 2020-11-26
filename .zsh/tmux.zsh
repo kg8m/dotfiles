@@ -3,7 +3,7 @@ function setup_my_tmux_plugins {
     local plugin_name="$(basename "$1")"
 
     [ -d ~/.config/tmux ]                        || ln -s ~/dotfiles/.tmux ~/.config/tmux
-    [ -d ~/.config/tmux/plugins/"$plugin_name" ] || ln -s "$(pwd)" ~/.config/tmux/plugins/"$plugin_name"
+    [ -d ~/.config/tmux/plugins/"$plugin_name" ] || ln -s "$PWD" ~/.config/tmux/plugins/"$plugin_name"
 
     __setup_done_my_tmux_plugins__+=("$plugin_name")
 

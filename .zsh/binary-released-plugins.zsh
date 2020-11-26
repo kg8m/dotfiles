@@ -64,7 +64,7 @@ function setup_my_binary_released_plugins {
     chmod +x "$binary"
 
     mkdir -p "$HOME/bin"
-    execute_with_echo "ln -fs '$(pwd)/${binary}' '$HOME/bin/$(basename "$binary")'"
+    execute_with_echo "ln -fs '$PWD/${binary}' '$HOME/bin/$(basename "$binary")'"
 
     case "$plugin" in
       nextword)
@@ -76,7 +76,7 @@ function setup_my_binary_released_plugins {
   function setup_my_nextword {
     if command -v nextword > /dev/null; then
       if ! [ -d "${NEXTWORD_DATA_PATH:-}" ]; then
-        local current_dir="$(pwd)"
+        local current_dir="$PWD"
         local parent_dir="$(dirname "$NEXTWORD_DATA_PATH")"
 
         mkdir -p "$parent_dir"

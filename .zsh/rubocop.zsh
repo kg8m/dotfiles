@@ -4,7 +4,7 @@ function setup_my_rubocop_daemon {
   local binary="bin/rubocop-daemon-wrapper"
 
   mkdir -p "$HOME/bin"
-  ln -fs "$(pwd)/${binary}" "$HOME/bin/$(basename "$binary")"
+  ln -fs "$PWD/${binary}" "$HOME/bin/$(basename "$binary")"
 }
 zinit ice lucid wait"0c" as"null" atclone"setup_my_rubocop_daemon" atpull"%atclone"
 zinit light fohte/rubocop-daemon

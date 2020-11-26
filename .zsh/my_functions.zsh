@@ -124,7 +124,7 @@ function attach_or_new_tmux {
 
   if ! tmux has-session -t "$session_name" > /dev/null 2>&1; then
     local response
-    read -r "response?Create new session in directory \`$(pwd)\` with session name \`$session_name\`? [y/n]:"
+    read -r "response?Create new session in directory \`$PWD\` with session name \`$session_name\`? [y/n]:"
 
     if [[ "$response" =~ ^y ]]; then
       if [ "$session_name" = "default" ]; then
@@ -269,7 +269,7 @@ function update_zsh_plugins {
   execute_with_echo "zinit cclear"
   execute_with_echo "find ${ZINIT[SNIPPETS_DIR]:-} -type d -empty -delete"
 
-  local current_dir=$(pwd)
+  local current_dir="$PWD"
 
   # Clean up the directory because enhancd makes it dirty when loaded
   execute_with_echo "cd ${ENHANCD_ROOT:-}"
@@ -283,7 +283,7 @@ function update_zsh_plugins {
   execute_with_echo "source init.sh"
   execute_with_echo "cd $current_dir"
 
-  execute_with_echo "zinit creinstall -q ${ZINIT[BIN_DIR]}"
+  execute_with_echo "zinit creinstall ${ZINIT[BIN_DIR]}"
   execute_with_echo "zinit csearch"
 
   execute_with_echo "compile_zshrcs:run"
