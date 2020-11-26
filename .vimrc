@@ -901,9 +901,8 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   endfunction  " }}}
 
   call kg8m#plugin#configure(#{
-     \   lazy:    v:true,
-     \   on_ft:   kg8m#plugin#lsp#get_filetypes(),
-     \   depends: "asyncomplete.vim",
+     \   lazy:  v:true,
+     \   on_ft: kg8m#plugin#lsp#get_filetypes(),
      \   hook_post_source: s:lsp.on_post_source,
      \ })
 
