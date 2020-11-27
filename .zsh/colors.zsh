@@ -1,5 +1,5 @@
 function setup_my_dircolors {
-  if command -v gdircolors > /dev/null 2>&1; then
+  if command -v gdircolors > /dev/null; then
     local dircolors=gdircolors
   else
     local dircolors=dircolors

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if ! command -v eslint > /dev/null 2>&1; then
+if ! command -v eslint > /dev/null; then
   exit 1
 fi
 
@@ -34,7 +34,7 @@ if [ ! "$(is_target_file "$target_filepath")" = "1" ]; then
   exit 1
 fi
 
-if command -v eslint_d > /dev/null 2>&1; then
+if command -v eslint_d > /dev/null; then
   executable=eslint_d
 else
   executable=eslint

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if ! command -v rubocop > /dev/null 2>&1; then
+if ! command -v rubocop > /dev/null; then
   exit 1
 fi
 
@@ -17,7 +17,7 @@ if [ -n "$is_fixing" ] && [ -z "${VIM_FIX_ON_SAVE_RUBY:-}" ]; then
   exit 1
 fi
 
-if command -v rubocop-daemon > /dev/null 2>&1 && command -v rubocop-daemon-wrapper > /dev/null 2>&1; then
+if command -v rubocop-daemon > /dev/null && command -v rubocop-daemon-wrapper > /dev/null; then
   executable="rubocop-daemon-wrapper"
 else
   executable="rubocop"
@@ -28,7 +28,7 @@ options=(--force-exclusion --format simple --no-color --stdin "$target_filepath"
 if [ -n "$is_fixing" ]; then
   "$executable" "${options[@]}" --auto-correct | awk '/^=+$/,eof' | awk 'NR > 1 { print }'
 else
-  if command -v gsed > /dev/null 2>&1; then
+  if command -v gsed > /dev/null; then
     sed="gsed"
   else
     sed="sed"
