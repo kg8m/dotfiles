@@ -1,7 +1,7 @@
 zinit ice lucid wait"0c" pick"shell/completion.zsh"
 zinit light junegunn/fzf
 
-function setup_my_anyframe {
+function plugin:setup:anyframe {
   autoload -Uz anyframe-init
   anyframe-init
 
@@ -19,7 +19,7 @@ function setup_my_anyframe {
   fi
 
   bindkey "^R" anyframe-widget-put-history
-  unset -f setup_my_anyframe
+  unset -f plugin:setup:anyframe
 }
-zinit ice lucid wait"0c" atload"setup_my_anyframe"
+zinit ice lucid wait"0c" atload"plugin:setup:anyframe"
 zinit light mollifier/anyframe

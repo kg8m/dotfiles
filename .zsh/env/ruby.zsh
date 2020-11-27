@@ -1,4 +1,4 @@
-function setup_my_ruby_path {
+function plugin:setup:env:ruby {
   # Depend on rbenv
   local _path="$HOME/.rbenv/shims"
 
@@ -6,6 +6,6 @@ function setup_my_ruby_path {
     export PATH="$PATH:$_path"
   fi
 
-  unset -f setup_my_ruby_path
+  unset -f plugin:setup:env:ruby
 }
-setup_my_ruby_path
+plugin:setup:env:ruby

@@ -1,4 +1,4 @@
-function setup_my_nodenv {
+function plugin:setup:nodenv {
   if [ -d ~/.nodenv ]; then
     export PATH=~/.nodenv/bin:$PATH
 
@@ -11,8 +11,8 @@ function setup_my_nodenv {
     fi
   fi
 
-  unset -f setup_my_nodenv
+  unset -f plugin:setup:nodenv
 }
 
-zinit ice lucid nocd wait"0a" atload"setup_my_nodenv"
+zinit ice lucid nocd wait"0a" atload"plugin:setup:nodenv"
 zinit snippet /dev/null

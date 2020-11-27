@@ -7,10 +7,10 @@ function cd_with_mkdir() {
   __enhancd::cd "$@"
 }
 
-function setup_my_enhancd {
+function plugin:setup:enhancd {
   export ENHANCD_FILTER=filter
   alias cd="cd_with_mkdir"
-  unset -f setup_my_enhancd
+  unset -f plugin:setup:enhancd
 }
-zinit ice lucid wait"0c" atload"setup_my_enhancd"
+zinit ice lucid wait"0c" atload"plugin:setup:enhancd"
 zinit light b4b4r07/enhancd

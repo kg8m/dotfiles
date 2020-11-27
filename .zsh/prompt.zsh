@@ -1,4 +1,4 @@
-function setup_my_prompt {
+function plugin:setup:prompt {
   autoload colors && colors
 
   local user="%F{green}%n@%m%f"
@@ -9,9 +9,9 @@ function setup_my_prompt {
   export PROMPT="%B${user} ${current_dir}%b ${git}"$'\n'"${mark}"
   export PROMPT2="%F{green}%_>%f "
 
-  unset -f setup_my_prompt
+  unset -f plugin:setup:prompt
 }
-setup_my_prompt
+plugin:setup:prompt
 
 export ZSH_THEME_GIT_PROMPT_PREFIX="["
 export ZSH_THEME_GIT_PROMPT_SUFFIX="]"

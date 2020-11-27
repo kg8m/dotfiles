@@ -1,4 +1,4 @@
-function setup_my_go_path {
+function plugin:setup:env:go {
   # Depend on goenv; see also `.zsh/goenv.zsh`
   local _path="$(find ~/go -maxdepth 1 -mindepth 1 -type d | sort --version-sort | tail -n1)"
 
@@ -6,6 +6,6 @@ function setup_my_go_path {
     export PATH="$PATH:$_path/bin"
   fi
 
-  unset -f setup_my_go_path
+  unset -f plugin:setup:env:go
 }
-setup_my_go_path
+plugin:setup:env:go

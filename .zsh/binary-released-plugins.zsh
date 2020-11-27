@@ -1,4 +1,4 @@
-function setup_my_binary_released_plugins {
+function plugin:setup:binary_releaseds {
   local repositories=(
     mattn/efm-langserver
     Songmu/ghch
@@ -26,7 +26,7 @@ function setup_my_binary_released_plugins {
 
   # Don't use zinit's options like `as"command" mv"${plugin}* -> ${plugin}" pick"${plugin}/${plugin}"` because it
   # makes the `$PATH` longer and longer. Make symbolic links in `$HOME/bin` instead.
-  function setup_my_binary_released_plugin {
+  function plugin:setup:binary_released {
     local plugin="$1"
 
     case "$plugin" in
@@ -71,14 +71,14 @@ function setup_my_binary_released_plugins {
         execute_with_echo "mv ./bat/autocomplete/{bat.zsh,_bat}"
         ;;
       nextword)
-        setup_my_nextword
+        plugin:setup:nextword
         ;;
     esac
 
     [ -n "$(find . -type f -name '_*')" ] && execute_with_echo "zinit creinstall '$PWD'"
   }
 
-  function setup_my_nextword {
+  function plugin:setup:nextword {
     if command -v nextword > /dev/null; then
       if ! [ -d "${NEXTWORD_DATA_PATH:-}" ]; then
         local current_dir="$PWD"
@@ -116,7 +116,7 @@ function setup_my_binary_released_plugins {
       from"gh-r"
       as"null"
       id-as"$(dirname "$repository")---${plugin}-bin"
-      atclone"setup_my_binary_released_plugin $plugin"
+      atclone"plugin:setup:binary_released $plugin"
       atpull"%atclone"
     )
 
@@ -134,7 +134,7 @@ function setup_my_binary_released_plugins {
     zinit light "$repository"
   done
 
-  unset -f setup_my_binary_released_plugins
+  unset -f plugin:setup:binary_releaseds
 }
-zinit ice lucid nocd wait"0a" atload"setup_my_binary_released_plugins"
+zinit ice lucid nocd wait"0a" atload"plugin:setup:binary_releaseds"
 zinit snippet /dev/null

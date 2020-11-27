@@ -1,5 +1,5 @@
 # See also `.zsh/env/go.zsh`
-function setup_my_goenv {
+function plugin:setup:goenv {
   export GOENV_ROOT="$PWD"
   export PATH=$GOENV_ROOT/bin:$PATH
 
@@ -16,7 +16,7 @@ function setup_my_goenv {
     export PATH=$PATH:$GOPATH/bin
   fi
 
-  unset -f setup_my_goenv
+  unset -f plugin:setup:goenv
 }
-zinit ice lucid wait"0a" as"null" atload"setup_my_goenv"
+zinit ice lucid wait"0a" as"null" atload"plugin:setup:goenv"
 zinit light syndbg/goenv

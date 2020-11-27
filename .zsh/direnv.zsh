@@ -1,4 +1,4 @@
-function setup_my_direnv {
+function plugin:setup:direnv {
   if command -v direnv > /dev/null; then
     if ! [ -f "${KGYM_ZSH_CACHE_DIR:-}/direnv_hook" ]; then
       direnv hook zsh > "$KGYM_ZSH_CACHE_DIR/direnv_hook"
@@ -18,7 +18,7 @@ function setup_my_direnv {
     add-zsh-hook chpwd error_for_envrc
   fi
 
-  unset -f setup_my_direnv
+  unset -f plugin:setup:direnv
 }
-zinit ice lucid nocd wait"0b" atload"setup_my_direnv"
+zinit ice lucid nocd wait"0b" atload"plugin:setup:direnv"
 zinit snippet /dev/null

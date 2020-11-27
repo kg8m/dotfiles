@@ -1,5 +1,5 @@
-function setup_my_tmux_plugins {
-  function setup_my_tmux_plugin {
+function plugin:setup:tmux_plugins {
+  function plugin:setup:tmux_plugin {
     local plugin_name="$(basename "$1")"
 
     [ -d ~/.config/tmux ]                        || ln -s ~/dotfiles/.tmux ~/.config/tmux
@@ -10,7 +10,7 @@ function setup_my_tmux_plugins {
     if [ "${#__setup_done_my_tmux_plugins__[@]}" = "${#__my_tmux_plugins__[@]}" ]; then
       unset __setup_done_my_tmux_plugins__
       unset __my_tmux_plugins__
-      unset -f setup_my_tmux_plugin
+      unset -f plugin:setup:tmux_plugin
     fi
   }
 
@@ -24,14 +24,14 @@ function setup_my_tmux_plugins {
 
   local plugin
   for plugin in "${__my_tmux_plugins__[@]}"; do
-    zinit ice lucid wait"0c" as"null" atload"setup_my_tmux_plugin $plugin"
+    zinit ice lucid as"null" atclone"plugin:setup:tmux_plugin $plugin"
     zinit light "$plugin"
   done
 
-  unset -f setup_my_tmux_plugins
+  unset -f plugin:setup:tmux_plugins
 }
 
-zinit ice lucid nocd wait"0c" atload"setup_my_tmux_plugins"
+zinit ice lucid nocd wait"0c" atload"plugin:setup:tmux_plugins"
 zinit snippet /dev/null
 
 case "$-" in
