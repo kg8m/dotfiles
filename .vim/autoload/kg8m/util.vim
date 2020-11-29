@@ -1,7 +1,5 @@
 function! kg8m#util#echo_error_msg(message) abort  " {{{
-  echohl ErrorMsg
-  echomsg a:message
-  echohl None
+  echoerr a:message
 endfunction  " }}}
 
 function! kg8m#util#on_tmux() abort  " {{{
