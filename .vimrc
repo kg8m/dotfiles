@@ -935,6 +935,8 @@ endif  " }}}
 function! s:kg8m.completion_refresh_pattern(filetype) abort  " {{{
   if !has_key(s:, "completion_refresh_patterns")
     let css_pattern = '\v([.#a-zA-Z0-9_-]+)$'
+    let sh_pattern  = '\v((\k|-)+)$'
+
     let s:completion_refresh_patterns = #{
     \   _:    '\v(\k+)$',
     \   css:  css_pattern,
@@ -944,9 +946,10 @@ function! s:kg8m.completion_refresh_pattern(filetype) abort  " {{{
     \   ruby: '\v(\@?\@\k*|(:)@<!:\k*|\k+)$',
     \   sass: css_pattern,
     \   scss: css_pattern,
-    \   sh:  '\v([a-zA-Z0-9_-]+|\k+)$',
-    \   sql: '\v( \zs\k*|[a-zA-Z0-9_-]+)$',
-    \   vue: '\v([a-zA-Z0-9_-]+|/|\k+)$',
+    \   sh:   sh_pattern,
+    \   sql:  '\v( \zs\k*|[a-zA-Z0-9_-]+)$',
+    \   vue:  '\v([a-zA-Z0-9_-]+|/|\k+)$',
+    \   zsh:  sh_pattern,
     \ }
   endif
 
