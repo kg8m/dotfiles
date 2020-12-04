@@ -35,24 +35,31 @@ endfunction  " }}}
 function kg8m#plugin#register(plugin_name, options = {}) abort  " {{{
   let enabled = v:true
 
-  if has_key(a:options, "if")
-    if !a:options["if"]
-      " Don't load but fetch the plugin
-      let a:options["rtp"] = ""
-      call remove(a:options, "if")
-      let enabled = v:false
+  if has_key(a:options, "merged")
+    if a:options.merged && has_key(a:options, "if")
+      call kg8m#util#echo_warn_msg("Don't use `merged: v:true` with `if` option because merged plugins are always loaded")
     endif
   else
-    " Sometimes dein doesn't add runtimepath if no options given
-    let a:options["if"] = v:true
+    let a:options.merged = !has_key(a:options, "if")
+  endif
+
+  if !get(a:options, "if", v:true)
+    " Don't load but fetch the plugin
+    let a:options.rtp = ""
+    call remove(a:options, "if")
+    let enabled = v:false
   endif
 
   call dein#add(a:plugin_name, a:options)
   return dein#tap(fnamemodify(a:plugin_name, ":t")) && enabled
 endfunction  " }}}
 
-function kg8m#plugin#configure(arg, options = {}) abort  " {{{
-  return dein#config(a:arg, a:options)
+function kg8m#plugin#configure(config) abort  " {{{
+  if get(a:config, "lazy", v:false)
+    let a:config.merged = v:false
+  endif
+
+  return dein#config(a:config)
 endfunction  " }}}
 
 function kg8m#plugin#unregister(names) abort  " {{{

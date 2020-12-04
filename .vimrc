@@ -906,8 +906,8 @@ if kg8m#plugin#register("prabirshrestha/vim-lsp")  " {{{
   \   hook_post_source: s:lsp.on_post_source,
   \ })
 
-  call kg8m#plugin#register("mattn/vim-lsp-settings", #{ if: v:false })
-  call kg8m#plugin#register("tsuyoshicho/vim-efm-langserver-settings", #{ if: v:false })
+  call kg8m#plugin#register("mattn/vim-lsp-settings", #{ if: v:false, merged: v:false })
+  call kg8m#plugin#register("tsuyoshicho/vim-efm-langserver-settings", #{ if: v:false, merged: v:false })
 endif  " }}}
 
 if kg8m#plugin#register("hrsh7th/vim-vsnip")  " {{{
@@ -957,7 +957,7 @@ function s:kg8m.completion_refresh_pattern(filetype) abort  " {{{
 endfunction  " }}}
 " }}}
 
-call kg8m#plugin#register("dense-analysis/ale", #{ if: v:false })
+call kg8m#plugin#register("dense-analysis/ale", #{ if: v:false, merged: v:false })
 call kg8m#plugin#register("pearofducks/ansible-vim")
 
 " Show diff in Git's interactive rebase
@@ -2952,7 +2952,8 @@ endif  " }}}
 call kg8m#plugin#register("stephpy/vim-yaml", #{ if: !kg8m#util#is_git_tmp_edit() })
 call kg8m#plugin#register("pedrohdz/vim-yaml-folds", #{ if: !kg8m#util#is_git_tmp_edit() })
 
-call kg8m#plugin#register("othree/yajs.vim")
+" Don't merge because some syntax files are duplicated.
+call kg8m#plugin#register("othree/yajs.vim", #{ merged: v:false })
 
 if kg8m#plugin#register("jonsmithers/vim-html-template-literals", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:htl_css_templates = v:true
