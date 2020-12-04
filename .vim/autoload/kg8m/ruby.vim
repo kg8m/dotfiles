@@ -1,5 +1,7 @@
-function kg8m#ruby#restart_rubocop_daemon() abort  " {{{
+vim9script
+
+def kg8m#ruby#restart_rubocop_daemon(): void  # {{{
   if executable("rubocop-daemon")
-    call job_start(["rubocop-daemon", "restart"])
+    job_start(["rubocop-daemon", "restart"])
   endif
-endfunction  " }}}
+enddef  # }}}

@@ -1,130 +1,135 @@
-function kg8m#util#echo_error_msg(message) abort  " {{{
-  echoerr a:message
-endfunction  " }}}
+vim9script
 
-function kg8m#util#on_tmux() abort  " {{{
-  return exists("$TMUX")
-endfunction  " }}}
+final cache = {}
 
-function kg8m#util#on_rails_dir() abort  " {{{
-  if has_key(s:, "on_rails_dir")
-    return s:on_rails_dir
+def kg8m#util#echo_error_msg(message: string): void  # {{{
+  echoerr message
+enddef  # }}}
+
+def kg8m#util#on_tmux(): bool  # {{{
+  return !!exists("$TMUX")
+enddef  # }}}
+
+def kg8m#util#on_rails_dir(): bool  # {{{
+  if has_key(cache, "on_rails_dir")
+    return cache.on_rails_dir
   endif
 
-  let s:on_rails_dir = isdirectory("./app") && filereadable("./config/environment.rb")
-  return s:on_rails_dir
-endfunction  " }}}
+  cache.on_rails_dir = isdirectory("./app") && filereadable("./config/environment.rb")
+  return cache.on_rails_dir
+enddef  # }}}
 
-function kg8m#util#is_git_tmp_edit() abort  " {{{
+def kg8m#util#is_git_tmp_edit(): bool  # {{{
   return kg8m#util#is_git_commit() || kg8m#util#is_git_hunk_edit()
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#util#is_git_commit() abort  " {{{
-  if has_key(s:, "is_git_commit")
-    return s:is_git_commit
+def kg8m#util#is_git_commit(): bool  # {{{
+  if has_key(cache, "is_git_commit")
+    return cache.is_git_commit
   endif
 
-  let s:is_git_commit = argc() ==# 1 && argv()[0] =~# '\.git/COMMIT_EDITMSG$'
-  return s:is_git_commit
-endfunction  " }}}
+  cache.is_git_commit = argc() ==# 1 && !!(argv()[0] =~# '\.git/COMMIT_EDITMSG$')
+  return cache.is_git_commit
+enddef  # }}}
 
-function kg8m#util#is_git_hunk_edit() abort  " {{{
-  if has_key(s:, "is_git_hunk_edit")
-    return s:is_git_hunk_edit
+def kg8m#util#is_git_hunk_edit(): bool  # {{{
+  if has_key(cache, "is_git_hunk_edit")
+    return cache.is_git_hunk_edit
   endif
 
-  let s:is_git_hunk_edit = argc() ==# 1 && argv()[0] =~# '\.git/addp-hunk-edit\.diff$'
-  return s:is_git_hunk_edit
-endfunction  " }}}
+  cache.is_git_hunk_edit = argc() ==# 1 && !!(argv()[0] =~# '\.git/addp-hunk-edit\.diff$')
+  return cache.is_git_hunk_edit
+enddef  # }}}
 
-function kg8m#util#rubygems_path() abort  " {{{
-  if has_key(s:, "rubygems_path")
-    return s:rubygems_path
+def kg8m#util#rubygems_path(): string  # {{{
+  if has_key(cache, "rubygems_path")
+    return cache.rubygems_path
   endif
 
   if exists("$RUBYGEMS_PATH")
-    let s:rubygems_path = $RUBYGEMS_PATH
+    cache.rubygems_path = $RUBYGEMS_PATH
   else
-    let command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
-    let command = command_prefix.." -e 'print Gem.path.join(\"\\n\")'"
-    let dirpaths = split(system(command), '\n')
+    const command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
+    const command = command_prefix .. " -e 'print Gem.path.join(\"\\n\")'"
+    const dirpaths = split(system(command), '\n')
+
+    var rubygems_path = ""
 
     for dirpath in dirpaths
       if isdirectory(dirpath)
-        let rubygems_path = dirpath.."/gems"
+        rubygems_path = dirpath .. "/gems"
         break
       endif
     endfor
 
-    if exists("rubygems_path")
-      let s:rubygems_path = rubygems_path
+    if rubygems_path !=# ""
+      cache.rubygems_path = rubygems_path
     else
-      throw "Path to Ruby Gems not found. Candidates: "..string(dirpaths)
+      throw "Path to Ruby Gems not found. Candidates: " .. string(dirpaths)
     endif
   endif
 
-  return s:rubygems_path
-endfunction  " }}}
+  return cache.rubygems_path
+enddef  # }}}
 
-function kg8m#util#remote_copy(text) abort  " {{{
-  let text =
-  \   a:text
-  \     ->substitute('\n$', "", "")
-  \     ->shellescape()
+def kg8m#util#remote_copy(original_text: string): void  # {{{
+  const text = original_text->substitute('\n$', "", "")->shellescape()
 
-  call system("printf %s "..text.." | ssh main -t 'LC_CTYPE=UTF-8 pbcopy'")
+  system("printf %s " .. text .. " | ssh main -t 'LC_CTYPE=UTF-8 pbcopy'")
 
   if &columns > 50
-    let text = substitute(text, '\v\n|\t', " ", "g")
-    let truncated = trim(kg8m#util#string_module().truncate(text, &columns - 30))
-    echomsg "Copied: "..truncated..(trim(text) ==# truncated ? "" : "...")
+    const less_space_text = substitute(text, '\v\n|\t', " ", "g")
+    const truncated_text  = trim(kg8m#util#string_module().truncate(less_space_text, &columns - 30))
+    echomsg "Copied: " .. truncated_text .. (trim(less_space_text) ==# truncated_text ? "" : "...")
   else
     echomsg "Copied"
   endif
-endfunction  " }}}
+enddef  # }}}
 
-" Depend on vital.vim
-function kg8m#util#string_module() abort  " {{{
-  if !has_key(s:, "string_module")
-    let s:string_module = vital#vital#import("Data.String")
+# Depend on vital.vim
+def kg8m#util#string_module(): dict<func>  # {{{
+  if has_key(cache, "string_module")
+    return cache.string_module
   endif
 
-  return s:string_module
-endfunction  " }}}
+  cache.string_module = vital#vital#import("Data.String")
+  return cache.string_module
+enddef  # }}}
 
-" Depend on vital.vim
-function kg8m#util#list_module() abort  " {{{
-  if !has_key(s:, "list_module")
-    let s:list_module = vital#vital#import("Data.List")
+# Depend on vital.vim
+def kg8m#util#list_module(): dict<func>  # {{{
+  if has_key(cache, "list_module")
+    return cache.list_module
   endif
 
-  return s:list_module
-endfunction  " }}}
+  cache.list_module = vital#vital#import("Data.List")
+  return cache.list_module
+enddef  # }}}
 
-function kg8m#util#current_filename() abort  " {{{
+def kg8m#util#current_filename(): string  # {{{
   return expand("%:t")
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#util#current_relative_path() abort  " {{{
+def kg8m#util#current_relative_path(): string  # {{{
   return expand("%")->fnamemodify(":~:.")
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#util#current_absolute_path() abort  " {{{
+def kg8m#util#current_absolute_path(): string  # {{{
   return expand("%")->fnamemodify(":~")
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#util#japanese_matchpairs() abort  " {{{
+def kg8m#util#japanese_matchpairs(): list<list<string>>  # {{{
   return [
-  \   ["（", "）"],
-  \   ["「", "」"],
-  \   ["『", "』"],
-  \   ["｛", "｝"],
-  \   ["［", "］"],
-  \   ["〈", "〉"],
-  \   ["《", "》"],
-  \   ["【", "】"],
-  \   ["〔", "〕"],
-  \   ["“", "”"],
-  \   ["‘", "’"],
-  \ ]
-endfunction  " }}}
+    ["（", "）"],
+    ["「", "」"],
+    ["『", "』"],
+    ["｛", "｝"],
+    ["［", "］"],
+    ["〈", "〉"],
+    ["《", "》"],
+    ["【", "】"],
+    ["〔", "〕"],
+    ["“", "”"],
+    ["‘", "’"],
+  ]
+enddef  # }}}
