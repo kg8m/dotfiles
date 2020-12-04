@@ -25,14 +25,14 @@ tools:
   erb-lint: &erb-lint
     lint-command: "erblint --config $HOME/.erb-lint.yml --format compact '${INPUT}'"
     lint-formats:
-      - "%f:%l:%n %m"
+      - "%f:%l:%c %m"
 
   eslint: &eslint
     lint-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
-      - "%l:%n:%trror: %m"
-      - "%l:%n:%tarning: %m"
+      - "%l:%:%trror: %m"
+      - "%l:%:%tarning: %m"
     format-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}' --fix"
     format-stdin: true
 
@@ -53,13 +53,13 @@ tools:
     # Using stdin is supported according to markuplint's help, but it doesn't work
     # lint-stdin: true
     lint-formats:
-      - "%l:%n %m"
+      - "%l:%c %m"
 
   rubocop: &rubocop
     lint-command: "$HOME/.config/efm-langserver/rubocop_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
-      - "%t:%l:%n: %m"
+      - "%t:%l:%c: %m"
     format-command: "$HOME/.config/efm-langserver/rubocop_wrapper.sh '${INPUT}' --fix"
     format-stdin: true
 
@@ -85,16 +85,16 @@ tools:
   stylelint: &stylelint
     lint-command: "stylelint --stdin --stdin-filename /dummy.css --formatter unix --no-color"
     lint-stdin: true
-    lint-format:
-      - "%f:%l:%n: %m [%trror]"
-      - "%f:%l:%n: %m [%tarning]"
+    lint-formats:
+      - "%f:%l:%c: %m [%trror]"
+      - "%f:%l:%c: %m [%tarning]"
 
   textlint: &textlint
     lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
-      - "%l:%n:%trror: %m"
-      - "%l:%n:%tarning: %m"
+      - "%l:%c:%trror: %m"
+      - "%l:%c:%tarning: %m"
 
   vint: &vint
     lint-command: "vint -"
