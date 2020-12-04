@@ -8,6 +8,12 @@ def kg8m#util#echo_error_msg(message: string): void  # {{{
   echohl None
 enddef  # }}}
 
+def kg8m#util#echo_warn_msg(message: string): void  # {{{
+  echohl WarningMsg
+  echomsg message
+  echohl None
+enddef  # }}}
+
 def kg8m#util#on_tmux(): bool  # {{{
   return !!exists("$TMUX")
 enddef  # }}}
