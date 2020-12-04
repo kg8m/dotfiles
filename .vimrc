@@ -1085,7 +1085,9 @@ if kg8m#plugin#register("spolu/dwm.vim", #{ if: !kg8m#util#is_git_tmp_edit() }) 
   \ })
 endif  " }}}
 
-call kg8m#plugin#register("editorconfig/editorconfig-vim", #{ if: !kg8m#util#is_git_tmp_edit() && filereadable(".editorconfig") })
+if kg8m#plugin#register("editorconfig/editorconfig-vim", #{ if: !kg8m#util#is_git_tmp_edit() && filereadable(".editorconfig") })  " {{{
+  let g:EditorConfig_preserve_formatoptions = v:true
+endif  " }}}
 
 if kg8m#plugin#register("junegunn/fzf.vim", #{ if: !kg8m#util#is_git_tmp_edit() && executable("fzf") })  " {{{
   let s:fzf = {}
