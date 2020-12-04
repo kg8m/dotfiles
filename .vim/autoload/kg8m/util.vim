@@ -3,7 +3,9 @@ vim9script
 final cache = {}
 
 def kg8m#util#echo_error_msg(message: string): void  # {{{
-  echoerr message
+  echohl ErrorMsg
+  echomsg message
+  echohl None
 enddef  # }}}
 
 def kg8m#util#on_tmux(): bool  # {{{
