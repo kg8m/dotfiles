@@ -24,7 +24,7 @@ let s:fold_start =
 let s:fold_end   = '\C^\s*\%(end\|}\|]\)\s*$'
 let s:finish_with_end = '\C\%(\<end\|}\|]\)\s*$'
 
-function! RubyFold(lnum)
+function RubyFold(lnum)
   let l:line = getline(a:lnum)
 
   if s:IsHeredocEnd(l:line)
@@ -46,14 +46,14 @@ function! RubyFold(lnum)
   endif
 endfunction
 
-function! s:IndentLevel(lnum)
+function s:IndentLevel(lnum)
   return indent(a:lnum) / &shiftwidth + 1
 endfunction
 
-function! s:IsPrevLineInHeredoc()
+function s:IsPrevLineInHeredoc()
   return exists('b:heredoc_key')
 endfunction
 
-function! s:IsHeredocEnd(line)
+function s:IsHeredocEnd(line)
   return s:IsPrevLineInHeredoc() && a:line =~ '\C^\s*'..b:heredoc_key..'\s*$'
 endfunction

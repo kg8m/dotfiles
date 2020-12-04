@@ -1,5 +1,5 @@
 " https://thinca.hatenablog.com/entry/20110903/1314982646
-function! s:setup_writing_help(...) abort  " {{{
+function s:setup_writing_help(...) abort  " {{{
   if &buftype !=# "help"
     setlocal list tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab textwidth=78
 

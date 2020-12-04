@@ -1,4 +1,4 @@
-function! OpenGitDiffWindows() abort
+function OpenGitDiffWindows() abort
   if exists("w:git_diff_opened") && w:git_diff_opened
     return
   endif

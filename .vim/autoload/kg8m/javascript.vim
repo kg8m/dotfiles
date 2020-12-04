@@ -4,7 +4,7 @@
 let s:fold_start = '\v(\{|\[)\s*$'
 let s:fold_end   = '\v^\s*(\}|\])'
 
-function! kg8m#javascript#fold(lnum) abort  " {{{
+function kg8m#javascript#fold(lnum) abort  " {{{
   let l:line = getline(a:lnum)
 
   if l:line =~ s:fold_start
@@ -16,12 +16,12 @@ function! kg8m#javascript#fold(lnum) abort  " {{{
   endif
 endfunction  " }}}
 
-function! kg8m#javascript#restart_eslint_d() abort  " {{{
+function kg8m#javascript#restart_eslint_d() abort  " {{{
   if executable("eslint_d")
     call job_start(["eslint_d", "restart"])
   endif
 endfunction  " }}}
 
-function! s:IndentLevel(lnum)
+function s:IndentLevel(lnum)
   return indent(a:lnum) / &shiftwidth + 1
 endfunction

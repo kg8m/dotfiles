@@ -1,4 +1,4 @@
-function! kg8m#plugin#init_manager() abort  " {{{
+function kg8m#plugin#init_manager() abort  " {{{
   let plugins_path = expand("~/.vim/plugins")
   let manager_path = expand(plugins_path.."/repos/github.com/Shougo/dein.vim")
 
@@ -21,16 +21,16 @@ function! kg8m#plugin#init_manager() abort  " {{{
   return result
 endfunction  " }}}
 
-function! kg8m#plugin#call_hooks() abort  " {{{
+function kg8m#plugin#call_hooks() abort  " {{{
   call dein#call_hook("source")
   call dein#call_hook("post_source")
 endfunction  " }}}
 
-function! kg8m#plugin#finish_setup() abort  " {{{
+function kg8m#plugin#finish_setup() abort  " {{{
   return dein#end()
 endfunction  " }}}
 
-function! kg8m#plugin#register(plugin_name, options = {}) abort  " {{{
+function kg8m#plugin#register(plugin_name, options = {}) abort  " {{{
   let enabled = v:true
 
   if has_key(a:options, "if")
@@ -49,11 +49,11 @@ function! kg8m#plugin#register(plugin_name, options = {}) abort  " {{{
   return dein#tap(fnamemodify(a:plugin_name, ":t")) && enabled
 endfunction  " }}}
 
-function! kg8m#plugin#configure(arg, options = {}) abort  " {{{
+function kg8m#plugin#configure(arg, options = {}) abort  " {{{
   return dein#config(a:arg, a:options)
 endfunction  " }}}
 
-function! kg8m#plugin#get_info(...) abort  " {{{
+function kg8m#plugin#get_info(...) abort  " {{{
   if empty(a:000)
     return dein#get()
   else
@@ -61,7 +61,7 @@ function! kg8m#plugin#get_info(...) abort  " {{{
   endif
 endfunction  " }}}
 
-function! kg8m#plugin#installable_exists(...) abort  " {{{
+function kg8m#plugin#installable_exists(...) abort  " {{{
   if empty(a:000)
     return dein#check_install()
   else
@@ -69,7 +69,7 @@ function! kg8m#plugin#installable_exists(...) abort  " {{{
   endif
 endfunction  " }}}
 
-function! kg8m#plugin#install(...) abort  " {{{
+function kg8m#plugin#install(...) abort  " {{{
   if empty(a:000)
     return dein#install()
   else
@@ -77,7 +77,7 @@ function! kg8m#plugin#install(...) abort  " {{{
   endif
 endfunction  " }}}
 
-function! kg8m#plugin#update_all(options = {}) abort  " {{{
+function kg8m#plugin#update_all(options = {}) abort  " {{{
   call timer_start(200, { -> kg8m#plugin#remove_disused() })
 
   echo "Check and update plugins..."
@@ -86,11 +86,11 @@ function! kg8m#plugin#update_all(options = {}) abort  " {{{
   call timer_start(1000, { -> kg8m#plugin#show_update_log() })
 endfunction  " }}}
 
-function! kg8m#plugin#remove_disused() abort  " {{{
+function kg8m#plugin#remove_disused() abort  " {{{
   call map(dein#check_clean(), "delete(v:val, 'rf')")
 endfunction  " }}}
 
-function! kg8m#plugin#check_and_update(options = {}) abort  " {{{
+function kg8m#plugin#check_and_update(options = {}) abort  " {{{
   " Load all plugins before update because dein.vim doesn't make helptags for non-loaded plugins
   for plugin in kg8m#plugin#disabled_plugins()
     call kg8m#plugin#register(plugin.repo)
@@ -105,7 +105,7 @@ function! kg8m#plugin#check_and_update(options = {}) abort  " {{{
   endif
 endfunction  " }}}
 
-function! kg8m#plugin#show_update_log() abort  " {{{
+function kg8m#plugin#show_update_log() abort  " {{{
   let initial_input =
   \   '!Same\\ revision'
   \   ..'\ !Current\\ branch\\ master\\ is\\ up\\ to\\ date.'
@@ -133,21 +133,21 @@ function! kg8m#plugin#show_update_log() abort  " {{{
   let @/ = "Updated"
 endfunction  " }}}
 
-function! kg8m#plugin#source(plugin_name) abort  " {{{
+function kg8m#plugin#source(plugin_name) abort  " {{{
   return dein#source(a:plugin_name)
 endfunction  " }}}
 
-function! kg8m#plugin#is_sourced(plugin_name) abort  " {{{
+function kg8m#plugin#is_sourced(plugin_name) abort  " {{{
   return dein#is_sourced(a:plugin_name)
 endfunction  " }}}
 
-function! kg8m#plugin#all_runtimepath() abort  " {{{
+function kg8m#plugin#all_runtimepath() abort  " {{{
   let current = &runtimepath->split(",")
   let plugins = kg8m#plugin#get_info()->values()->filter("!v:val.rtp->empty()")->map("v:val.rtp")
 
   return kg8m#util#list_module().uniq(current + plugins)->join(",")
 endfunction  " }}}
 
-function! kg8m#plugin#disabled_plugins() abort  " {{{
+function kg8m#plugin#disabled_plugins() abort  " {{{
   return kg8m#plugin#get_info()->values()->filter("v:val.rtp->empty()")
 endfunction  " }}}

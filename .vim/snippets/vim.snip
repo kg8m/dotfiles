@@ -6,9 +6,9 @@ options word
 	" }}}
 
 snippet function
-abbr    function! {function_name}() abort\n ...\n endfunction
+abbr    function {function_name}() abort\n ...\n endfunction
 options head
-	function! ${1:#:function_name}() abort  " {{{
+	function ${1:#:function_name}() abort  " {{{
 		${0}
 	endfunction  " }}}
 

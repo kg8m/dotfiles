@@ -1,12 +1,12 @@
-function! kg8m#util#echo_error_msg(message) abort  " {{{
+function kg8m#util#echo_error_msg(message) abort  " {{{
   echoerr a:message
 endfunction  " }}}
 
-function! kg8m#util#on_tmux() abort  " {{{
+function kg8m#util#on_tmux() abort  " {{{
   return exists("$TMUX")
 endfunction  " }}}
 
-function! kg8m#util#on_rails_dir() abort  " {{{
+function kg8m#util#on_rails_dir() abort  " {{{
   if has_key(s:, "on_rails_dir")
     return s:on_rails_dir
   endif
@@ -15,11 +15,11 @@ function! kg8m#util#on_rails_dir() abort  " {{{
   return s:on_rails_dir
 endfunction  " }}}
 
-function! kg8m#util#is_git_tmp_edit() abort  " {{{
+function kg8m#util#is_git_tmp_edit() abort  " {{{
   return kg8m#util#is_git_commit() || kg8m#util#is_git_hunk_edit()
 endfunction  " }}}
 
-function! kg8m#util#is_git_commit() abort  " {{{
+function kg8m#util#is_git_commit() abort  " {{{
   if has_key(s:, "is_git_commit")
     return s:is_git_commit
   endif
@@ -28,7 +28,7 @@ function! kg8m#util#is_git_commit() abort  " {{{
   return s:is_git_commit
 endfunction  " }}}
 
-function! kg8m#util#is_git_hunk_edit() abort  " {{{
+function kg8m#util#is_git_hunk_edit() abort  " {{{
   if has_key(s:, "is_git_hunk_edit")
     return s:is_git_hunk_edit
   endif
@@ -37,7 +37,7 @@ function! kg8m#util#is_git_hunk_edit() abort  " {{{
   return s:is_git_hunk_edit
 endfunction  " }}}
 
-function! kg8m#util#rubygems_path() abort  " {{{
+function kg8m#util#rubygems_path() abort  " {{{
   if has_key(s:, "rubygems_path")
     return s:rubygems_path
   endif
@@ -66,7 +66,7 @@ function! kg8m#util#rubygems_path() abort  " {{{
   return s:rubygems_path
 endfunction  " }}}
 
-function! kg8m#util#remote_copy(text) abort  " {{{
+function kg8m#util#remote_copy(text) abort  " {{{
   let text =
   \   a:text
   \     ->substitute('\n$', "", "")
@@ -84,7 +84,7 @@ function! kg8m#util#remote_copy(text) abort  " {{{
 endfunction  " }}}
 
 " Depend on vital.vim
-function! kg8m#util#string_module() abort  " {{{
+function kg8m#util#string_module() abort  " {{{
   if !has_key(s:, "string_module")
     let s:string_module = vital#vital#import("Data.String")
   endif
@@ -93,7 +93,7 @@ function! kg8m#util#string_module() abort  " {{{
 endfunction  " }}}
 
 " Depend on vital.vim
-function! kg8m#util#list_module() abort  " {{{
+function kg8m#util#list_module() abort  " {{{
   if !has_key(s:, "list_module")
     let s:list_module = vital#vital#import("Data.List")
   endif
@@ -101,19 +101,19 @@ function! kg8m#util#list_module() abort  " {{{
   return s:list_module
 endfunction  " }}}
 
-function! kg8m#util#current_filename() abort  " {{{
+function kg8m#util#current_filename() abort  " {{{
   return expand("%:t")
 endfunction  " }}}
 
-function! kg8m#util#current_relative_path() abort  " {{{
+function kg8m#util#current_relative_path() abort  " {{{
   return expand("%")->fnamemodify(":~:.")
 endfunction  " }}}
 
-function! kg8m#util#current_absolute_path() abort  " {{{
+function kg8m#util#current_absolute_path() abort  " {{{
   return expand("%")->fnamemodify(":~")
 endfunction  " }}}
 
-function! kg8m#util#japanese_matchpairs() abort  " {{{
+function kg8m#util#japanese_matchpairs() abort  " {{{
   return [
   \   ["（", "）"],
   \   ["「", "」"],
