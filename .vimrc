@@ -3184,9 +3184,10 @@ if stridx(&t_EI, s:vertical_bold_line_code) ==# -1
   let &t_EI .= s:vertical_bold_line_code
 endif
 
-" https://teratail.com/questions/24046
 augroup my_vimrc  " {{{
-  autocmd Syntax * if line("$") > 10000 | syntax sync minlines=10000 | endif
+  " Prevent syntax highlighting from being too slow
+  " cf. `:h :syn-sync-maxlines` / `:h :syn-sync-minlines`
+  autocmd Syntax * syntax sync minlines=100 maxlines=1000
 augroup END  " }}}
 " }}}
 
