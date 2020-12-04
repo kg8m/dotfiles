@@ -958,20 +958,35 @@ endfunction  " }}}
 " }}}
 
 call kg8m#plugin#register("dense-analysis/ale", #{ if: v:false })
-call kg8m#plugin#register("pearofducks/ansible-vim", #{ if: !kg8m#util#is_git_tmp_edit() })
+call kg8m#plugin#register("pearofducks/ansible-vim")
 
 " Show diff in Git's interactive rebase
 call kg8m#plugin#register("hotwatermorning/auto-git-diff", #{ if: !kg8m#util#is_git_tmp_edit() })
 
 if kg8m#plugin#register("vim-scripts/autodate.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
-  let g:autodate_format       = "%Y/%m/%d"
-  let g:autodate_lines        = 100
-  let g:autodate_keyword_pre  = '\c\%('..
-  \   '\%(Last \?\%(Change\|Modified\)\)\|'..
-  \   '\%(最終更新日\?\)\|'..
-  \   '\%(更新日\)'..
-  \ '\):'
-  let g:autodate_keyword_post = '\.$'
+  let s:autodate = {}
+
+  function s:autodate.on_source() abort  " {{{
+    let g:autodate_format       = "%Y/%m/%d"
+    let g:autodate_lines        = 100
+    let g:autodate_keyword_pre  = '\c\%('..
+    \   '\%(Last \?\%(Change\|Modified\)\)\|'..
+    \   '\%(最終更新日\?\)\|'..
+    \   '\%(更新日\)'..
+    \ '\):'
+    let g:autodate_keyword_post = '\.$'
+  endfunction  " }}}
+
+  function s:autodate.on_post_source() abort  " {{{
+    Autodate
+  endfunction  " }}}
+
+  call kg8m#plugin#configure(#{
+  \   lazy:     v:true,
+  \   on_event: "BufWritePre",
+  \   hook_source:      s:autodate.on_source,
+  \   hook_post_source: s:autodate.on_post_source,
+  \ })
 endif  " }}}
 
 if kg8m#plugin#register("tyru/caw.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
@@ -990,7 +1005,7 @@ if kg8m#plugin#register("tyru/caw.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  
   \ })
 endif  " }}}
 
-if kg8m#plugin#register("Shougo/context_filetype.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+if kg8m#plugin#register("Shougo/context_filetype.vim")  " {{{
   let s:context_filetype = {}
   let s:context_filetype.filetypes = {}
   let s:context_filetype.filetypes.for_js = [
@@ -2128,7 +2143,7 @@ if kg8m#plugin#register("AndrewRadev/linediff.vim")  " {{{
   \ })
 endif  " }}}
 
-call kg8m#plugin#register("kg8m/moin.vim", #{ if: !kg8m#util#is_git_tmp_edit() })
+call kg8m#plugin#register("kg8m/moin.vim")
 
 if kg8m#plugin#register("lambdalisue/mr.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:mr#threshold = 10000
@@ -2208,7 +2223,7 @@ endif  " }}}
 
 call kg8m#plugin#register("lambdalisue/suda.vim")
 
-if kg8m#plugin#register("leafgarland/typescript-vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+if kg8m#plugin#register("leafgarland/typescript-vim")  " {{{
   let g:typescript_indent_disable = v:true
 endif  " }}}
 
@@ -2290,12 +2305,7 @@ if kg8m#plugin#register("Chiel92/vim-autoformat", #{ if: !kg8m#util#is_git_tmp_e
   let g:formatdef_jsbeautify_javascript = '"js-beautify -f -s2 -"'
 endif  " }}}
 
-if kg8m#plugin#register("h1mesuke/vim-benchmark", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
-  call kg8m#plugin#configure(#{
-  \   lazy:    v:true,
-  \   on_func: "benchmark#",
-  \ })
-endif  " }}}
+call kg8m#plugin#register("h1mesuke/vim-benchmark")
 
 if kg8m#plugin#register("jkramer/vim-checkbox", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   augroup my_vimrc  " {{{
@@ -2362,7 +2372,7 @@ if kg8m#plugin#register("easymotion/vim-easymotion")  " {{{
   \ })
 endif  " }}}
 
-if kg8m#plugin#register("lambdalisue/vim-findent")  " {{{
+if kg8m#plugin#register("lambdalisue/vim-findent", #{ if: !kg8m#util#is_git_tmp_edit() && !filereadable(".editorconfig") })  " {{{
   let s:findent = {}
 
   let g:findent#enable_messages = v:false
@@ -2373,7 +2383,7 @@ if kg8m#plugin#register("lambdalisue/vim-findent")  " {{{
   augroup END  " }}}
 
   function s:findent.run() abort  " {{{
-    if &filetype !=# "gitcommit"
+    if &filetype !=# "startify"
       Findent
     endif
   endfunction  " }}}
@@ -2384,9 +2394,9 @@ if kg8m#plugin#register("lambdalisue/vim-findent")  " {{{
   \ })
 endif  " }}}
 
-call kg8m#plugin#register("thinca/vim-ft-diff_fold", #{ if: !kg8m#util#is_git_tmp_edit() })
+call kg8m#plugin#register("thinca/vim-ft-diff_fold")
 call kg8m#plugin#register("thinca/vim-ft-help_fold")
-call kg8m#plugin#register("muz/vim-gemfile", #{ if: !kg8m#util#is_git_tmp_edit() })
+call kg8m#plugin#register("muz/vim-gemfile")
 call kg8m#plugin#register("kana/vim-gf-user")
 
 if kg8m#plugin#register("tpope/vim-git", #{ if: kg8m#util#is_git_commit() })  " {{{
@@ -2446,7 +2456,7 @@ if kg8m#plugin#register("fatih/vim-go", #{ if: !kg8m#util#is_git_tmp_edit() })  
   \ })
 endif  " }}}
 
-call kg8m#plugin#register("tpope/vim-haml", #{ if: !kg8m#util#is_git_tmp_edit() })
+call kg8m#plugin#register("tpope/vim-haml")
 
 if kg8m#plugin#register("itchyny/vim-histexclude")  " {{{
   let g:histexclude = { ":": '\v^[:[:space:]]*(\d+\s*$|w(rite)?!?$|wq!?$|q(uit)?!?$|qa(ll)?!?$)' }
@@ -2473,7 +2483,7 @@ if kg8m#plugin#register("osyo-manga/vim-jplus")  " {{{
   \ })
 endif  " }}}
 
-if kg8m#plugin#register("elzr/vim-json", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+if kg8m#plugin#register("elzr/vim-json")  " {{{
   let g:vim_json_syntax_conceal = v:false
 endif  " }}}
 
@@ -2553,12 +2563,7 @@ if kg8m#plugin#register("kana/vim-operator-replace")  " {{{
   \ })
 endif  " }}}
 
-if kg8m#plugin#register("kana/vim-operator-user")  " {{{
-  call kg8m#plugin#configure(#{
-  \   lazy:    v:true,
-  \   on_func: "operator#user#define",
-  \ })
-endif  " }}}
+call kg8m#plugin#register("kana/vim-operator-user")
 
 if kg8m#plugin#register("kg8m/vim-parallel-auto-ctags", #{ if: kg8m#util#on_rails_dir() && !kg8m#util#is_git_tmp_edit() })  " {{{
   let &tags .= ","..kg8m#util#rubygems_path().."/../tags"
@@ -2628,7 +2633,7 @@ endif  " }}}
 
 call kg8m#plugin#register("tpope/vim-repeat")
 
-if kg8m#plugin#register("vim-ruby/vim-ruby", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+if kg8m#plugin#register("vim-ruby/vim-ruby")  " {{{
   augroup my_vimrc  " {{{
     " vim-ruby overwrites vim-gemfile's filetype detection
     autocmd BufEnter Gemfile set filetype=Gemfile
@@ -2638,11 +2643,6 @@ if kg8m#plugin#register("vim-ruby/vim-ruby", #{ if: !kg8m#util#is_git_tmp_edit()
   augroup END  " }}}
 
   let g:no_ruby_maps = v:true
-
-  call kg8m#plugin#configure(#{
-  \   lazy:  v:true,
-  \   on_ft: "ruby",
-  \ })
 endif  " }}}
 
 if kg8m#plugin#register("joker1007/vim-ruby-heredoc-syntax", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
@@ -2873,15 +2873,9 @@ if kg8m#plugin#register("kana/vim-textobj-lastpat")  " {{{
   \ })
 endif  " }}}
 
-if kg8m#plugin#register("kana/vim-textobj-user")  " {{{
-  call kg8m#plugin#configure(#{
-  \   lazy:    v:true,
-  \   on_func: "textobj#user",
-  \ })
-endif  " }}}
-
-call kg8m#plugin#register("cespare/vim-toml", #{ if: !kg8m#util#is_git_tmp_edit() })
-call kg8m#plugin#register("posva/vim-vue", #{ if: !kg8m#util#is_git_tmp_edit() })
+call kg8m#plugin#register("kana/vim-textobj-user")
+call kg8m#plugin#register("cespare/vim-toml")
+call kg8m#plugin#register("posva/vim-vue")
 
 if kg8m#plugin#register("thinca/vim-zenspace")  " {{{
   let g:zenspace#default_mode = "on"
@@ -2958,12 +2952,7 @@ endif  " }}}
 call kg8m#plugin#register("stephpy/vim-yaml", #{ if: !kg8m#util#is_git_tmp_edit() })
 call kg8m#plugin#register("pedrohdz/vim-yaml-folds", #{ if: !kg8m#util#is_git_tmp_edit() })
 
-if kg8m#plugin#register("othree/yajs.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
-  call kg8m#plugin#configure(#{
-  \   lazy:  v:true,
-  \   on_ft: "javascript",
-  \ })
-endif  " }}}
+call kg8m#plugin#register("othree/yajs.vim")
 
 if kg8m#plugin#register("jonsmithers/vim-html-template-literals", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:htl_css_templates = v:true
