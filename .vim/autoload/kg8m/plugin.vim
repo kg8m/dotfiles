@@ -1,3 +1,5 @@
+let s:is_update_log_shown = v:false
+
 function kg8m#plugin#init_manager() abort  " {{{
   let plugins_path = expand("~/.vim/plugins")
   let manager_path = expand(plugins_path.."/repos/github.com/Shougo/dein.vim")
@@ -78,16 +80,9 @@ function kg8m#plugin#install(...) abort  " {{{
 endfunction  " }}}
 
 function kg8m#plugin#update_all(options = {}) abort  " {{{
-  call timer_start(200, { -> kg8m#plugin#remove_disused() })
-
-  echo "Check and update plugins..."
-  silent call kg8m#plugin#check_and_update(a:options)
-
+  call timer_start(   0, { -> kg8m#plugin#check_and_update(a:options) } )
+  call timer_start( 200, { -> kg8m#plugin#remove_disused() })
   call timer_start(1000, { -> kg8m#plugin#show_update_log() })
-endfunction  " }}}
-
-function kg8m#plugin#remove_disused() abort  " {{{
-  call map(dein#check_clean(), "delete(v:val, 'rf')")
 endfunction  " }}}
 
 function kg8m#plugin#check_and_update(options = {}) abort  " {{{
@@ -103,6 +98,15 @@ function kg8m#plugin#check_and_update(options = {}) abort  " {{{
   else
     call dein#update()
   endif
+
+  call s:check_updating_finished()
+endfunction  " }}}
+
+function kg8m#plugin#remove_disused() abort  " {{{
+  for dirpath in dein#check_clean()
+    call kg8m#util#echo_error_msg("Remove "..dirpath)
+    call delete(dirpath, "rf")
+  endfor
 endfunction  " }}}
 
 function kg8m#plugin#show_update_log() abort  " {{{
@@ -131,6 +135,8 @@ function kg8m#plugin#show_update_log() abort  " {{{
 
   " Press `n` key to search "Updated"
   let @/ = "Updated"
+
+  let s:is_update_log_shown = v:true
 endfunction  " }}}
 
 function kg8m#plugin#source(plugin_name) abort  " {{{
@@ -150,4 +156,70 @@ endfunction  " }}}
 
 function kg8m#plugin#disabled_plugins() abort  " {{{
   return kg8m#plugin#get_info()->values()->filter("v:val.rtp->empty()")
+endfunction  " }}}
+
+function s:check_updating_finished(options = {}) abort  " {{{
+  let options = copy(a:options)
+
+  if !has_key(options, "start_time")
+    let options.start_time = localtime()
+  endif
+
+  if s:is_update_log_shown && execute("messages") =~# '\v\[dein\] Done:'
+    let should_stay = (localtime() - options.start_time) > 30
+    call s:notify_updating("Finished.", #{ stay: should_stay })
+  else
+    let progress      = dein#install#_get_progress()
+    let prev_progress = get(options, "prev_progress", v:null)
+    let retry_count   = get(options, "retry_count", 0)
+
+    " Clear echo messages because they are noisy if multi-line
+    redraw
+
+    " Respect dein.vim's original message
+    echo "[dein] "..progress
+
+    if progress ==# prev_progress
+      let retry_count += 1
+
+      if retry_count > 100
+        call s:notify_updating("Something is wrong.", #{ stay: v:true, level: "error" })
+        return
+      endif
+    else
+      let retry_count = 0
+    endif
+
+    let options.prev_progress = progress
+    let options.retry_count   = retry_count
+    call timer_start(300, { -> s:check_updating_finished(options) })
+  endif
+endfunction  " }}}
+
+function s:notify_updating(message, options = {}) abort  " {{{
+  let is_stay = get(a:options, "stay", v:false)
+  let level   = get(a:options, "level", "warn")
+
+  let hostname = system("hostname")->trim()
+  let title    = "Updating Vim plugins"
+
+  let notify_command = (
+  \   [
+  \     "/usr/local/bin/terminal-notifier",
+  \     "-title", title,
+  \     "-message", "\\["..hostname.."] "..a:message,
+  \     "-group", "UPDATING_VIM_PLUGINS_FINISHED_"..hostname,
+  \   ] + (
+  \     is_stay ? ["-sender", "TERMINAL_NOTIFIER_STAY"] : []
+  \   )
+  \ )->map("shellescape(v:val)")->join(" ")
+
+  call job_start(["ssh", "main", "-t", notify_command])
+
+  let message = title..": "..a:message
+  if level ==# "warn"
+    call kg8m#util#echo_warn_msg(message)
+  else
+    call kg8m#util#echo_error_msg(message)
+  endif
 endfunction  " }}}
