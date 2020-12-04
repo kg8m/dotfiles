@@ -1,4 +1,31 @@
-module.exports = {
+const path = require("path");
+const homePath = process.env["HOME"];
+const localConfigPath = path.join(homePath, ".textlintrc.local.js")
+
+const fs = require("fs");
+const localConfig = fs.existsSync(localConfigPath) ? require(localConfigPath) : {};
+
+// https://qiita.com/riversun/items/60307d58f9b2f461082a
+const deepmerge = (object1, object2) => {
+  const isObject = (object) => object && typeof object === "object" && !Array.isArray(object);
+  const resultObject = Object.assign({}, object1);
+
+  if (isObject(object1) && isObject(object2)) {
+    for (const [key, value2] of Object.entries(object2)) {
+      const value1 = object1[key];
+
+      if (isObject(value2) && object1.hasOwnProperty(key) && isObject(value1)) {
+        resultObject[key] = deepmerge(value1, value2);
+      } else {
+        Object.assign(resultObject, { [key]: value2 });
+      }
+    }
+  }
+
+  return resultObject;
+};
+
+const config = {
   filters: {
     comments: true,
     allowlist: {
@@ -53,3 +80,5 @@ module.exports = {
     },
   },
 };
+
+module.exports = deepmerge(config, localConfig);
