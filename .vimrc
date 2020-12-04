@@ -2686,7 +2686,7 @@ if kg8m#plugin#register("vim-ruby/vim-ruby")  " {{{
     autocmd BufEnter Gemfile set filetype=Gemfile
 
     " Prevent vim-matchup from being wrong for Ruby's modifier `if`/`unless`
-    autocmd FileType ruby if has_key(b:, "ruby_no_expensive") | unlet b:ruby_no_expensive | endif
+    autocmd FileType ruby unlet! b:ruby_no_expensive
   augroup END  " }}}
 
   let g:no_ruby_maps = v:true
