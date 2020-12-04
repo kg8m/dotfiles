@@ -2999,8 +2999,9 @@ endif  " }}}
 call kg8m#plugin#register("stephpy/vim-yaml", #{ if: !kg8m#util#is_git_tmp_edit() })
 call kg8m#plugin#register("pedrohdz/vim-yaml-folds", #{ if: !kg8m#util#is_git_tmp_edit() })
 
+" Disable because yajs.vim conflicts with vim-html-template-literals.
 " Don't merge because some syntax files are duplicated.
-call kg8m#plugin#register("othree/yajs.vim", #{ merged: v:false })
+call kg8m#plugin#register("othree/yajs.vim", #{ if: v:false, merged: v:false })
 
 if kg8m#plugin#register("jonsmithers/vim-html-template-literals", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   let g:htl_css_templates = v:true
