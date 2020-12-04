@@ -990,6 +990,8 @@ if kg8m#plugin#register("vim-scripts/autodate.vim", #{ if: !kg8m#util#is_git_tmp
 endif  " }}}
 
 if kg8m#plugin#register("tyru/caw.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+  let s:caw = {}
+
   map gc <Plug>(caw:hatpos:toggle)
 
   let g:caw_no_default_keymappings = v:true
@@ -997,11 +999,27 @@ if kg8m#plugin#register("tyru/caw.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  
 
   augroup my_vimrc  " {{{
     autocmd FileType Gemfile let b:caw_oneline_comment = "#"
+
+    " Delay to overwrite caw.vim's defualt
+    autocmd FileType vim call timer_start(100, { -> s:caw.setup_vim() })
   augroup END  " }}}
+
+  " Overwrite caw.vim's default: https://github.com/tyru/caw.vim/blob/41be34ca231c97d6be6c05e7ecb5b020f79cd37f/after/ftplugin/vim/caw.vim#L5-L9
+  function s:caw.setup_vim() abort  " {{{
+    let b:caw_hatpos_sp  = " "
+    let b:caw_zeropos_sp = " "
+  endfunction  " }}}
+
+  function s:caw.on_post_source() abort  " {{{
+    if &filetype ==# "vim"
+      call s:caw.setup_vim()
+    endif
+  endfunction  " }}}
 
   call kg8m#plugin#configure(#{
   \   lazy:   v:true,
   \   on_map: [["nv", "<Plug>(caw:"]],
+  \   hook_post_source: s:caw.on_post_source,
   \ })
 endif  " }}}
 
