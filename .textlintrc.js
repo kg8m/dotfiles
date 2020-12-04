@@ -50,11 +50,11 @@ const config = {
     },
     "preset-ja-technical-writing": {
       "arabic-kanji-numbers": false,
+      "ja-no-mixed-period": false,
       "ja-no-redundant-expression": {
         severity: "warning",
       },
       "ja-no-weak-phrase": false,
-      "ja-no-mixed-period": false,
       "no-double-negative-ja": {
         severity: "warning",
       },
