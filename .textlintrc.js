@@ -45,17 +45,27 @@ const config = {
     "joyo-kanji": false,
 
     "no-hoso-kinshi-yogo": true,
-    "prefer-tari-tari": true,
+    "prefer-tari-tari": {
+      severity: "warning",
+    },
     "preset-ja-technical-writing": {
       "arabic-kanji-numbers": false,
+      "ja-no-redundant-expression": {
+        severity: "warning",
+      },
       "ja-no-weak-phrase": false,
       "ja-no-mixed-period": false,
+      "no-double-negative-ja": {
+        severity: "warning",
+      },
       "no-doubled-joshi": {
+        severity: "warning",
         allow: ["か", "にも", "も"],
         commaCharacters: ["、", "，", "「", "」", "（", "）", "/", "→", "←"],
       },
       "no-exclamation-question-mark": false,
       "sentence-length": {
+        severity: "warning",
         max: 100,
         exclusionPatterns: [
           "/\\bhttps?:\\/\\/[^\\s)>]+/",  // URL
