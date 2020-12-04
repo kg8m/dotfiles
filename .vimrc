@@ -3175,8 +3175,14 @@ augroup my_vimrc  " {{{
 augroup END  " }}}
 
 " Cursor shapes
-let &t_SI = "\e[6 q"  " vertical line
-let &t_EI = "\e[2 q"  " vertical bold line
+let s:vertical_line_code      = "\e[6 q"
+let s:vertical_bold_line_code = "\e[2 q"
+if stridx(&t_SI, s:vertical_line_code) ==# -1
+  let &t_SI .= s:vertical_line_code
+endif
+if stridx(&t_EI, s:vertical_bold_line_code) ==# -1
+  let &t_EI .= s:vertical_bold_line_code
+endif
 
 " https://teratail.com/questions/24046
 augroup my_vimrc  " {{{
