@@ -279,9 +279,9 @@ function update_zsh_plugins {
 
   execute_with_echo "zinit update --all --parallel --quiet"
 
-  # Execute `init.sh` to delete files fo fish because they are treated as completions by zinit
+  # Remote `_*.fish` files because they are treated as completions by zinit
   execute_with_echo "cd ${ENHANCD_ROOT:-}"
-  execute_with_echo "source init.sh"
+  execute_with_echo "rm -f ./**/_*.fish"
   execute_with_echo "cd $current_dir"
 
   execute_with_echo "zinit creinstall ${ZINIT[BIN_DIR]}"
