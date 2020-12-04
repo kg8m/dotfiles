@@ -1973,8 +1973,8 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
   \     search_count:         "g:kg8m.lightline.search_count",
   \   },
   \   component_type: #{
-  \     warning_filepath:     "warning",
-  \     warning_fileencoding: "warning",
+  \     warning_filepath:     "error",
+  \     warning_fileencoding: "error",
   \   },
   \   colorscheme: "kg8m",
   \ }
@@ -2082,33 +2082,49 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
 
     " Overwrite
     let s:lightline_elements.right += [
-    \   ["lsp_status_for_attention"],
+    \   ["lsp_status_for_error"], ["lsp_status_for_warning"],
     \ ]
     call extend(g:lightline.component_expand, #{
-    \   lsp_status_for_attention: "g:kg8m.lightline.lsp_status_for_attention",
+    \   lsp_status_for_error:   "g:kg8m.lightline.lsp_status_for_error",
+    \   lsp_status_for_warning: "g:kg8m.lightline.lsp_status_for_warning",
     \ })
     call extend(g:lightline.component_type, #{
-    \   lsp_status_for_attention: "warning",
+    \   lsp_status_for_error:   "error",
+    \   lsp_status_for_warning: "warning",
     \ })
 
     " Overwrite
     function! s:lightline.lsp_status_buffer_enabled() abort  " {{{
       let stats = s:lightline.lsp_status_stats()
-      return stats.is_attendable ? "" : stats.counts
+      return (stats.is_error || stats.is_warning) ? "" : stats.counts
     endfunction  " }}}
 
-    function g:kg8m.lightline.lsp_status_for_attention() abort  " {{{
+    function g:kg8m.lightline.lsp_status_for_error() abort  " {{{
       " Use `%{...}` because component-expansion result is shared with other windows/buffers
-      return "%{g:kg8m.lightline.lsp_status_for_attention_detail()}"
+      return "%{g:kg8m.lightline.lsp_status_for_error_detail()}"
     endfunction  " }}}
 
-    function g:kg8m.lightline.lsp_status_for_attention_detail() abort  " {{{
+    function g:kg8m.lightline.lsp_status_for_error_detail() abort  " {{{
       if !s:lsp.is_target_buffer() || !s:lsp.is_buffer_enabled()
         return ""
       endif
 
       let stats = s:lightline.lsp_status_stats()
-      return stats.is_attendable ? stats.counts : ""
+      return stats.is_error ? stats.counts : ""
+    endfunction  " }}}
+
+    function g:kg8m.lightline.lsp_status_for_warning() abort  " {{{
+      " Use `%{...}` because component-expansion result is shared with other windows/buffers
+      return "%{g:kg8m.lightline.lsp_status_for_warning_detail()}"
+    endfunction  " }}}
+
+    function g:kg8m.lightline.lsp_status_for_warning_detail() abort  " {{{
+      if !s:lsp.is_target_buffer() || !s:lsp.is_buffer_enabled()
+        return ""
+      endif
+
+      let stats = s:lightline.lsp_status_stats()
+      return (!stats.is_error && stats.is_warning) ? stats.counts : ""
     endfunction  " }}}
 
     function s:lightline.lsp_status_stats() abort  " {{{
@@ -2117,14 +2133,19 @@ if kg8m#plugin#register("itchyny/lightline.vim")  " {{{
       let information = lightline#lsp#information()
       let hint        = lightline#lsp#hint()
 
-      let is_attendable = !(empty(error) && empty(warning))
+      let is_error   = !empty(error)
+      let is_warning = !empty(warning)
 
       let error       = empty(error)       ? g:lightline#lsp#indicator_error      .."0" : error
       let warning     = empty(warning)     ? g:lightline#lsp#indicator_warning    .."0" : warning
       let information = empty(information) ? g:lightline#lsp#indicator_information.."0" : information
       let hint        = empty(hint)        ? g:lightline#lsp#indicator_hint       .."0" : hint
 
-      return #{ counts: join([error, warning, information, hint], " "), is_attendable: is_attendable }
+      return #{
+      \   counts:     join([error, warning, information, hint], " "),
+      \   is_error:   is_error,
+      \   is_warning: is_warning,
+      \ }
     endfunction  " }}}
 
     " Don't load lazily because the `component_expand` doesn't work
