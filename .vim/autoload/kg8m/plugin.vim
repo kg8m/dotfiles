@@ -162,6 +162,11 @@ function kg8m#plugin#all_runtimepath() abort  " {{{
   return kg8m#util#list_module().uniq(current + plugins)->join(",")
 endfunction  " }}}
 
+function kg8m#plugin#recache_runtimepath() abort  " {{{
+  call kg8m#plugin#enable_disabled_plugins()
+  call dein#recache_runtimepath()
+endfunction  " }}}
+
 function kg8m#plugin#enable_disabled_plugins() abort  " {{{
   for plugin in kg8m#plugin#disabled_plugins()
     let options = copy(plugin.orig_opts)
