@@ -3366,7 +3366,7 @@ nnoremap / /\v
 " < => Maximum number of lines saved for each register.
 " h => Disable the effect of 'hlsearch' when loading the viminfo file.
 " s => Maximum size of an item in Kbyte.
-set viminfo='100,<100,h,s10
+set viminfo='20,<20,h,s10
 
 set restorescreen
 set mouse=
