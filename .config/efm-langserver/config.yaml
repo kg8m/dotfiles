@@ -31,8 +31,7 @@ tools:
     lint-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
-      - "%l:%:%trror: %m"
-      - "%l:%:%tarning: %m"
+      - "%l:%c:%t%*[a-z]: %m"
     format-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}' --fix"
     format-stdin: true
 
@@ -73,9 +72,7 @@ tools:
     lint-command: "shellcheck --shell=bash --format=gcc --external-sources --enable=all -"
     lint-stdin: true
     lint-formats:
-      - "%f:%l:%c: %trror: %m"
-      - "%f:%l:%c: %tarning: %m"
-      - "%f:%l:%c: %tote: %m"
+      - "%f:%l:%c: %t%*[a-z]: %m"
 
   # cf. commands.shfmt
   shfmt: &shfmt
@@ -86,15 +83,13 @@ tools:
     lint-command: "stylelint --stdin --stdin-filename /dummy.css --formatter unix --no-color"
     lint-stdin: true
     lint-formats:
-      - "%f:%l:%c: %m [%trror]"
-      - "%f:%l:%c: %m [%tarning]"
+      - "%f:%l:%c: %m [%t%*[a-z]]"
 
   textlint: &textlint
     lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
-      - "%l:%c:%trror: %m"
-      - "%l:%c:%tarning: %m"
+      - "%l:%c:%t%*[a-z]: %m"
 
   vint: &vint
     lint-command: "vint -"
@@ -104,8 +99,7 @@ tools:
     lint-command: "yamllint --format parsable --strict -"
     lint-stdin: true
     lint-formats:
-      - "%f:%l:%c: [%trror] %m"
-      - "%f:%l:%c: [%tarning] %m"
+      - "%f:%l:%c: [%t%*[a-z]] %m"
 
 languages:
   css:
