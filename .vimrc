@@ -3536,8 +3536,8 @@ nnoremap <Leader>v :vsplit<Cr>
 nnoremap <Leader>h :split<Cr>
 
 " See also settings of vim-lsp and vim-fzf-tjump
-" <C-o>: Jump back
-nnoremap g[ <C-o>
+" <C-t>: Jump back
+nnoremap g[ <C-t>
 
 " gF: Same as "gf", except if a number follows the file name, then the cursor is positioned on that line in the file.
 " Don't use `nnoremap` because `gf` sometimes overwritten by plugins
