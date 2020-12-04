@@ -55,6 +55,10 @@ function kg8m#plugin#configure(arg, options = {}) abort  " {{{
   return dein#config(a:arg, a:options)
 endfunction  " }}}
 
+function kg8m#plugin#unregister(names) abort  " {{{
+  return dein#disable(a:names)
+endfunction  " }}}
+
 function kg8m#plugin#get_info(...) abort  " {{{
   if empty(a:000)
     return dein#get()
@@ -86,11 +90,8 @@ function kg8m#plugin#update_all(options = {}) abort  " {{{
 endfunction  " }}}
 
 function kg8m#plugin#check_and_update(options = {}) abort  " {{{
-  " Load all plugins before update because dein.vim doesn't make helptags for non-loaded plugins
-  for plugin in kg8m#plugin#disabled_plugins()
-    call kg8m#plugin#register(plugin.repo)
-    call kg8m#plugin#source(plugin.name)
-  endfor
+  " Re-register disabled plugins before update because dein.vim doesn't make helptags for them
+  call kg8m#plugin#enable_disabled_plugins()
 
   if get(a:options, "bulk", v:true)
     let force_update = v:true
@@ -152,6 +153,16 @@ function kg8m#plugin#all_runtimepath() abort  " {{{
   let plugins = kg8m#plugin#get_info()->values()->filter("!v:val.rtp->empty()")->map("v:val.rtp")
 
   return kg8m#util#list_module().uniq(current + plugins)->join(",")
+endfunction  " }}}
+
+function kg8m#plugin#enable_disabled_plugins() abort  " {{{
+  for plugin in kg8m#plugin#disabled_plugins()
+    let options = copy(plugin.orig_opts)
+    call remove(options, "rtp")
+
+    call kg8m#plugin#unregister(plugin.name)
+    call kg8m#plugin#register(plugin.repo, options)
+  endfor
 endfunction  " }}}
 
 function kg8m#plugin#disabled_plugins() abort  " {{{
