@@ -1,5 +1,5 @@
 function plugin:setup:cdbookmark {
-  autoload -Uz cd-bookmark
+  autoload -U cd-bookmark
   alias cdb="cd-bookmark"
   unset -f plugin:setup:cdbookmark
 }

@@ -2,7 +2,7 @@ zinit ice lucid wait"0c" pick"shell/completion.zsh"
 zinit light junegunn/fzf
 
 function plugin:setup:anyframe {
-  autoload -Uz anyframe-init
+  autoload -U anyframe-init
   anyframe-init
 
   # `filter` is `.zsh/bin/filter`

@@ -77,7 +77,7 @@ setopt chase_links
 setopt ignore_eof
 
 # http://d.hatena.ne.jp/mollifier/20101227/p1
-autoload -Uz zmv
+autoload -U zmv
 
 autoload -U add-zsh-hook
 
@@ -86,7 +86,7 @@ mkdir -p "${KGYM_ZSH_CACHE_DIR:-}"
 # zdharma/zinit  {{{
 [ -d ~/.zinit/bin ] || git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
 source ~/.zinit/bin/zinit.zsh
-autoload -Uz _zinit
+autoload -U _zinit
 
 # shellcheck disable=SC2034,SC2154
 ((${+_comps})) && _comps[zinit]=_zinit
