@@ -1,5 +1,29 @@
 let s:is_update_log_shown = v:false
 
+function kg8m#plugin#disable_defaults() abort  " {{{
+  let g:no_vimrc_example          = v:true
+  let g:no_gvimrc_example         = v:true
+  let g:loaded_gzip               = v:true
+  let g:loaded_tar                = v:true
+  let g:loaded_tarPlugin          = v:true
+  let g:loaded_zip                = v:true
+  let g:loaded_zipPlugin          = v:true
+  let g:loaded_rrhelper           = v:true
+  let g:loaded_vimball            = v:true
+  let g:loaded_vimballPlugin      = v:true
+  let g:loaded_getscript          = v:true
+  let g:loaded_getscriptPlugin    = v:true
+  let g:loaded_netrw              = v:true
+  let g:loaded_netrwPlugin        = v:true
+  let g:loaded_netrwSettings      = v:true
+  let g:loaded_netrwFileHandlers  = v:true
+  let g:skip_loading_mswin        = v:true
+  let g:did_install_syntax_menu   = v:true
+
+  " MacVim's features, e.g., `Command` + `v` to paste, are broken if setting this
+  " let g:did_install_default_menus = v:true
+endfunction  " }}}
+
 function kg8m#plugin#init_manager() abort  " {{{
   let plugins_path = expand("~/.vim/plugins")
   let manager_path = expand(plugins_path.."/repos/github.com/Shougo/dein.vim")

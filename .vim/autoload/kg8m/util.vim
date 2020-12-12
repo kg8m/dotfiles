@@ -2,6 +2,14 @@ vim9script
 
 final cache = {}
 
+def kg8m#util#source_local_vimrc(): void  # {{{
+  const filepath = expand("~/.vimrc.local")
+
+  if filereadable(filepath)
+    execute "source " .. filepath
+  endif
+enddef  # }}}
+
 def kg8m#util#echo_error_msg(message: string): void  # {{{
   echohl ErrorMsg
   echomsg message
@@ -92,6 +100,12 @@ def kg8m#util#remote_copy(original_text: string): void  # {{{
   else
     echomsg "Copied"
   endif
+enddef  # }}}
+
+def kg8m#util#remove_trailing_whitespaces()  # {{{
+  const position = getpos(".")
+  keeppatterns '<,'>s/\s\+$//ge
+  setpos(".", position)
 enddef  # }}}
 
 # Depend on vital.vim
