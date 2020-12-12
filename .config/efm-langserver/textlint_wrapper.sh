@@ -5,7 +5,22 @@ err_temp_filepath="$(mktemp)"
 # shellcheck disable=SC2064
 trap "rm -f $err_temp_filepath" EXIT
 
-out="$(textlint --format json --stdin --stdin-filename "$target_filepath" 2> "$err_temp_filepath")"
+function format_target_filepath {
+  local original_target_filepath="$1"
+  echo "$original_target_filepath"
+}
+
+if [ -f "$HOME/.textlint_wrapper_extends.sh" ]; then
+  source "$HOME/.textlint_wrapper_extends.sh"
+fi
+
+options=(
+  --format json
+  --stdin
+  --stdin-filename "$(format_target_filepath "$target_filepath")"
+)
+
+out="$(textlint "${options[@]}" 2> "$err_temp_filepath")"
 err="$(cat "$err_temp_filepath")"
 
 if [ -n "$out" ]; then
