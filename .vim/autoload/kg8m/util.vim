@@ -137,11 +137,13 @@ def kg8m#util#current_filename(): string  # {{{
 enddef  # }}}
 
 def kg8m#util#current_relative_path(): string  # {{{
-  return expand("%")->fnamemodify(":~:.")
+  const raw_filepath = expand("%")
+  return empty(raw_filepath) ? "" : raw_filepath->fnamemodify(":~:.")
 enddef  # }}}
 
 def kg8m#util#current_absolute_path(): string  # {{{
-  return expand("%")->fnamemodify(":~")
+  const raw_filepath = expand("%")
+  return empty(raw_filepath) ? "" : raw_filepath->fnamemodify(":~")
 enddef  # }}}
 
 def kg8m#util#japanese_matchpairs(): list<list<string>>  # {{{
