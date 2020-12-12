@@ -32,8 +32,9 @@ if [ -n "$out" ]; then
       '.ruleId' \
       '(.message | gsub("\n"; " "))'
   )"
-  echo "$out" | jq --raw-output ".[0].messages[] | $format"
-  exit 1
+  result="$(echo "$out" | jq --raw-output ".[0].messages[] | $format")"
+  echo "$result"
+  [ -n "$result" ] && exit 1 || exit 0
 fi
 
 if [ -n "$err" ]; then
