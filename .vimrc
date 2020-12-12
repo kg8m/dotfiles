@@ -59,7 +59,7 @@ if kg8m#plugin#register("high-moctane/asyncomplete-nextword.vim")  " {{{
   call kg8m#plugin#asyncomplete#nextword#configure()
 endif  " }}}
 
-if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", #{ if: !kg8m#util#is_git_tmp_edit(), build: "./install.sh" })  " {{{
+if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", #{ build: "./install.sh" })  " {{{
   call kg8m#plugin#asyncomplete#tabnine#configure()
 endif  " }}}
 
@@ -67,7 +67,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-tags.vim")  " {{{
   call kg8m#plugin#asyncomplete#tags#configure()
 endif  " }}}
 
-if kg8m#plugin#register("prabirshrestha/asyncomplete-lsp.vim", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
+if kg8m#plugin#register("prabirshrestha/asyncomplete-lsp.vim")  " {{{
   call kg8m#plugin#asyncomplete#lsp#configure()
 endif  " }}}
 
@@ -110,7 +110,7 @@ if kg8m#plugin#register("editorconfig/editorconfig-vim", #{ if: !kg8m#util#is_gi
   let g:EditorConfig_preserve_formatoptions = v:true
 endif  " }}}
 
-if kg8m#plugin#register("junegunn/fzf.vim", #{ if: !kg8m#util#is_git_tmp_edit() && executable("fzf") })  " {{{
+if kg8m#plugin#register("junegunn/fzf.vim", #{ if: executable("fzf") })  " {{{
   call kg8m#plugin#fzf#configure()
 endif  " }}}
 
@@ -332,11 +332,7 @@ endif  " }}}
 call kg8m#plugin#register("kana/vim-textobj-indent")
 
 " Text object for last search pattern: /
-if kg8m#plugin#register("kana/vim-textobj-lastpat")  " {{{
-  call kg8m#plugin#configure(#{
-  \   depends: "vim-textobj-user",
-  \ })
-endif  " }}}
+call kg8m#plugin#register("kana/vim-textobj-lastpat")
 
 call kg8m#plugin#register("kana/vim-textobj-user")
 call kg8m#plugin#register("cespare/vim-toml")

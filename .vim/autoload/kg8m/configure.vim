@@ -137,7 +137,7 @@ function kg8m#configure#others() abort  " {{{
   set viminfo='20,<20,h,s10
 
   augroup my_vimrc  " {{{
-    autocmd BufWritePre * if &filetype ==# "" || has_key(b:, "ftdetect") | unlet! b:ftdetect | filetype detect | endif
+    autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
   augroup END  " }}}
 endfunction  " }}}
 
