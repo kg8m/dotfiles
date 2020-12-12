@@ -24,10 +24,19 @@ function s:candidates() abort  " {{{
   return kg8m#util#list_module().uniq(current + buffers + oldfiles)
 endfunction  " }}}
 
-" cf. ./buffers.vim
 function s:buffers() abort  " {{{
-  let bufnrs = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") !=# "qf" && len(bufname(bufnr)) })
-  return bufnrs->map({ _, bufnr -> bufnr->bufname()->fnamemodify(s:fzf.filepath_format()) })->sort()
+  return getbufinfo()
+  \   ->sort("s:buffers_sorter")
+  \   ->filter("!empty(v:val.name)")
+  \   ->map("v:val.name->fnamemodify(kg8m#plugin#fzf#filepath_format())")
+endfunction  " }}}
+
+function s:buffers_sorter(lhs, rhs) abort  " {{{
+  if a:lhs.lastused ==# a:rhs.lastused
+    return a:lhs.name <# a:rhs.name ? 1 : -1
+  else
+    return a:lhs.lastused <# a:rhs.lastused ? 1 : -1
+  endif
 endfunction  " }}}
 
 function s:oldfiles() abort  " {{{

@@ -21,6 +21,8 @@ function s:candidates() abort  " {{{
 endfunction  " }}}
 
 function s:list() abort  " {{{
-  let bufnrs = filter(range(1, bufnr("$")), { _, bufnr -> buflisted(bufnr) && getbufvar(bufnr, "&filetype") !=# "qf" && len(bufname(bufnr)) })
-  return bufnrs->map({ _, bufnr -> bufnr->bufname()->fnamemodify(kg8m#plugin#fzf#filepath_format()) })->sort()
+  return getbufinfo(#{ buflisted: v:true })
+  \   ->filter("!empty(v:val.name)")
+  \   ->map("v:val.name->fnamemodify(kg8m#plugin#fzf#filepath_format())")
+  \   ->sort()
 endfunction  " }}}
