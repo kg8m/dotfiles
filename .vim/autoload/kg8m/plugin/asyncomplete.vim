@@ -38,7 +38,7 @@ function s:priority_sorted_fuzzy_filter(options, matches) abort  " {{{
       endif
     endfor
 
-    call sort(items, function("s:sorter"))
+    call sort(items, "s:sorter")
   endif
 
   " https://github.com/prabirshrestha/asyncomplete.vim/blob/1f8d8ed26acd23d6bf8102509aca1fc99130087d/autoload/asyncomplete.vim#L474

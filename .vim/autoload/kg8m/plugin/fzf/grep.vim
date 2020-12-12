@@ -35,7 +35,7 @@ function s:options() abort  " {{{
     return base
   else
     let splitted = split($RIPGREP_EXTRA_OPTIONS, " ")
-    let escaped  = map(splitted, { _, option -> shellescape(option) })
+    let escaped  = map(splitted, "shellescape(v:val)")
     return base.." "..join(escaped, " ")
   endif
 endfunction  " }}}

@@ -90,8 +90,12 @@ function s:count_max_label_length() abort  " {{{
   let s:max_label_length =
   \   s:list
   \     ->copy()
-  \     ->map({ _, item -> item[0]->strlen() })
+  \     ->map("s:item_label_length(v:val[0])")
   \     ->max()
+endfunction  " }}}
+
+function s:item_label_length(item_label) abort  " {{{
+  return a:item_label->strlen()
 endfunction  " }}}
 
 function s:make_groups() abort  " {{{
@@ -117,10 +121,10 @@ function s:group_name(item) abort  " {{{
 endfunction  " }}}
 
 function s:format_list() abort  " {{{
-  let s:list = s:list->map(function("s:format_item(v:val)"))
+  let s:list = s:list->map("s:format_item(v:val)")
 endfunction  " }}}
 
-function s:format_item(_, item) abort  " {{{
+function s:format_item(item) abort  " {{{
   let [description, command] = a:item
 
   if empty(description)

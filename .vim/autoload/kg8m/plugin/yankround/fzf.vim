@@ -1,6 +1,6 @@
 " https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
 function kg8m#plugin#yankround#fzf#list() abort  " {{{
-  return map(copy(g:_yankround_cache), { index, _ -> s:yankround.format_item(index) })
+  return range(0, len(g:_yankround_cache) - 1)->map("s:format_list_item(v:val)")
 endfunction  " }}}
 
 function kg8m#plugin#yankround#fzf#preview_command() abort  " {{{

@@ -19,7 +19,7 @@ function kg8m#configure#cursor#match() abort  " {{{
   set matchtime=1
 
   " Support Japanese kakkos
-  let &matchpairs .= ","..(kg8m#util#japanese_matchpairs()->map({ _, pair -> pair->join(":") })->join(","))
+  let &matchpairs .= ","..(kg8m#util#japanese_matchpairs()->map("join(v:val, ':')")->join(","))
 endfunction  " }}}
 
 function kg8m#configure#cursor#highlight() abort  " {{{

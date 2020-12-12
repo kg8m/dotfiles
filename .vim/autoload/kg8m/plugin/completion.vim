@@ -49,7 +49,7 @@ function kg8m#plugin#completion#force_refresh(_timer_id) abort  " {{{
 endfunction  " }}}
 
 function s:start_refresh_timer() abort  " {{{
-  let s:refresh_timer = timer_start(200, function("kg8m#plugin#completion#force_refresh"))
+  let s:refresh_timer = timer_start(200, "kg8m#plugin#completion#force_refresh")
 endfunction  " }}}
 
 function s:stop_refresh_timer() abort  " {{{

@@ -311,7 +311,7 @@ endfunction  " }}}
 function s:subscribe_stream() abort  " {{{
   call lsp#callbag#pipe(
   \   lsp#stream(),
-  \   lsp#callbag#filter({ x -> s:is_definition_failed_stream(x) }),
+  \   lsp#callbag#filter(function("s:is_definition_failed_stream")),
   \   lsp#callbag#subscribe(#{ next: { -> fzf_tjump#jump() } }),
   \ )
 endfunction  " }}}
@@ -380,7 +380,7 @@ function s:overwrite_capabilities() abort  " {{{
     return
   endif
 
-  for server_name in lsp#get_allowed_servers()->filter({ -> v:val !=# "efm-langserver" })
+  for server_name in lsp#get_allowed_servers()->filter("v:val !=# 'efm-langserver'")
     let capabilities = lsp#get_server_capabilities(server_name)
 
     if has_key(capabilities, "documentFormattingProvider")

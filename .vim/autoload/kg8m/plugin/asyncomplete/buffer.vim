@@ -48,7 +48,7 @@ function s:on_event_async(...) abort  " {{{
 endfunction  " }}}
 
 function s:start_refresh_timer() abort  " {{{
-  let s:refresh_timer = timer_start(200, function("kg8m#plugin#asyncomplete#buffer#on_event"))
+  let s:refresh_timer = timer_start(200, "kg8m#plugin#asyncomplete#buffer#on_event")
 endfunction  " }}}
 
 function s:stop_refresh_timer() abort  " {{{
