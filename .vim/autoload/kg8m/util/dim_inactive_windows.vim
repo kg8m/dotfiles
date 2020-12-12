@@ -6,13 +6,17 @@ function kg8m#util#dim_inactive_windows#setup() abort  " {{{
   augroup END  " }}}
 endfunction  " }}}
 
+function kg8m#util#dim_inactive_windows#reset() abort  " {{{
+  bufdo call s:reset_buffer()
+endfunction  " }}}
+
 function s:apply(options = {}) abort  " {{{
   let current_winnr = winnr()
   let last_winnr    = winnr("$")
   let colorcolumns  = range(1, &columns)->join(",")
 
   if has_key(b:, "original_colorcolumn")
-    let &l:colorcolumn = b:original_colorcolumn
+    call s:reset_buffer()
   else
     let b:original_colorcolumn = &colorcolumn
   endif
@@ -32,4 +36,8 @@ function s:apply(options = {}) abort  " {{{
       endif
     endif
   endfor
+endfunction  " }}}
+
+function s:reset_buffer() abort  " {{{
+  let &l:colorcolumn = b:original_colorcolumn
 endfunction  " }}}
