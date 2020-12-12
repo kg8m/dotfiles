@@ -7,9 +7,23 @@ function execute_commands_with_echo {
   local cmd
   local result=0
 
-  for cmd in "$@"; do
+  if [ ! "${@[(I)-s]}" = "0" ] || [ ! "${@[(I)--separate]}" = "0" ]; then
+    local separate="1"
+  fi
+
+  for cmd in "${@:#-*}"; do
+    if [ "${separate}" = "1" ]; then
+      echo
+      horizontal_line
+    fi
+
     execute_with_echo "$cmd" || result=$?
   done
+
+  if [ "${separate}" = "1" ]; then
+    echo
+    horizontal_line
+  fi
 
   return "$result"
 }
@@ -45,6 +59,10 @@ function retriable_execute_with_confirm {
       retriable_execute_with_confirm "$@"
     fi
   fi
+}
+
+function horizontal_line {
+  echo "${(r:$COLUMNS::-:)}"
 }
 
 function notify {
