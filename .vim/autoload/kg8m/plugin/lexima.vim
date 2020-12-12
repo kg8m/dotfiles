@@ -146,7 +146,9 @@ function s:add_rules_for_vim() abort  " {{{
   "   ..."|
   "
   " NOTE: Always write comments at the beginning of line (indentation is allowed)
-  call lexima#add_rule(#{ char: '"', at: '\S.*\%#', input_after: '"', filetype: "vim" })
+  " Use `"<Right>"` instead of `leave: 1` option because the option doesn't work
+  call lexima#add_rule(#{ char: '"', at: '\S.*\%#\%([^"]\|$\)', input_after: '"', filetype: "vim" })
+  call lexima#add_rule(#{ char: '"', at: '\%#"', input: "<Right>", filetype: "vim" })
 endfunction  " }}}
 
 function s:on_post_source() abort  " {{{
