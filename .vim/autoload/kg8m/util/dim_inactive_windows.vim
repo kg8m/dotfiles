@@ -13,25 +13,17 @@ function s:apply(options = {}) abort  " {{{
 
   if has_key(b:, "original_colorcolumn")
     let &l:colorcolumn = b:original_colorcolumn
-    unlet b:original_colorcolumn
-
-    if has_key(w:, "original_colorcolumn")
-      unlet w:original_colorcolumn
-    endif
   else
-    if has_key(w:, "original_colorcolumn")
-      let &l:colorcolumn = w:original_colorcolumn
-      unlet w:original_colorcolumn
-    endif
+    let b:original_colorcolumn = &colorcolumn
   endif
 
   for winnr in range(1, last_winnr)
     if winnr !=# current_winnr
-      if getwinvar(winnr, "original_colorcolumn", v:null) ==# v:null
-        let original_colorcolumn = getwinvar(winnr, "&colorcolumn")
+      if getbufvar(winbufnr(winnr), "original_colorcolumn", v:null) ==# v:null
+        call setbufvar(winbufnr(winnr), "original_colorcolumn", getwinvar(winnr, "&colorcolumn"))
+      endif
 
-        call setbufvar(winbufnr(winnr), "original_colorcolumn", original_colorcolumn)
-        call setwinvar(winnr, "original_colorcolumn", original_colorcolumn)
+      if getwinvar(winnr, "original_colorcolumn", v:null) ==# v:null
         call setwinvar(winnr, "&colorcolumn", colorcolumns)
       else
         if get(a:options, "force", v:false)
