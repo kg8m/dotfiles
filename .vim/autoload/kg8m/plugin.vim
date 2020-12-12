@@ -155,7 +155,7 @@ function kg8m#plugin#show_update_log() abort  " {{{
   \   ..'\ !^First,\\ rewinding\\ head\\ to\\ replay\\ your\\ work\\ on\\ top\\ of\\ it'
   \   ..'\ !^Fast-forwarded\\ master\\ to'
   \   ..'\ !^(.*/.*)\\ From\\ '
-  \   ..'\ !Successfully\\ rebased\\ and\\ updated\\ refs/heads/master.'
+  \   ..'\ !Successfully\\ rebased\\ and\\ updated\\ refs/heads/'
   \   ..'\ !*\\ [new\\ tag]'
   \   ..'\ !already\\ exists,\\ disabling\\ multiplexing'
   \   ..'\ !refs/remotes/origin/HEAD\\ has\\ become\\ dangling'
