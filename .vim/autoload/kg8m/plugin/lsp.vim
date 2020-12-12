@@ -2,6 +2,10 @@ let s:registered = []
 let s:configs    = []
 let s:filetypes  = []
 
+let s:js_filetypes   = ["javascript", "typescript"]
+let s:sh_filetypes   = ["sh", "zsh"]
+let s:yaml_filetypes = ["eruby.yaml", "yaml", "yaml.ansible"]
+
 function kg8m#plugin#lsp#configure() abort  " {{{
   call s:register_servers()
   call uniq(sort(s:filetypes))
@@ -50,7 +54,7 @@ function s:register_servers() abort  " {{{
   call s:register(#{
   \   name: "bash-language-server",
   \   cmd: { server_info -> ["bash-language-server", "start"] },
-  \   allowlist: ["sh", "zsh"],
+  \   allowlist: s:sh_filetypes,
   \ })
   " }}}
 
@@ -77,9 +81,7 @@ function s:register_servers() abort  " {{{
   \   cmd: { server_info -> ["efm-langserver"] },
   \   allowlist: [
   \     "css", "eruby", "go", "html", "json", "make", "markdown", "ruby", "vim",
-  \     "eruby.yaml", "yaml",
-  \     "javascript", "typescript",
-  \     "sh", "zsh",
+  \   ] + s:js_filetypes + s:sh_filetypes + s:yaml_filetypes,
   \ })
   " }}}
 
@@ -181,7 +183,7 @@ function s:register_servers() abort  " {{{
   call s:register(#{
   \   name: "typescript-language-server",
   \   cmd: { server_info -> ["typescript-language-server", "--stdio"] },
-  \   allowlist: ["javascript", "typescript"],
+  \   allowlist: s:js_filetypes,
   \ })
   " }}}
 
@@ -257,7 +259,7 @@ function s:register_servers() abort  " {{{
   call s:register(#{
   \   name: "yaml-language-server",
   \   cmd: { server_info -> ["yaml-language-server", "--stdio"] },
-  \   allowlist: ["eruby.yaml", "yaml"],
+  \   allowlist: s:yaml_filetypes,
   \   workspace_config: #{
   \     yaml: #{
   \       completion: v:true,
