@@ -46,9 +46,8 @@ export TIMETRACK_PATTERN
 # inspired by http://qiita.com/hayamiz/items/d64730b61b7918fbb970
 # Don't load followings lazily because zsh doesn't track some commands, e.g., `exec zsh`
 
-autoload -U add-zsh-hook 2>/dev/null || return
+autoload -U add-zsh-hook
 
-# seconds
 __timetrack_threshold=30
 
 export __timetrack_threshold
