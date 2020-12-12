@@ -314,14 +314,8 @@ if kg8m#plugin#register("machakann/vim-sandwich")  " {{{
   call kg8m#plugin#sandwich#configure()
 endif  " }}}
 
-" See also vim-startify's settings
-if kg8m#plugin#register("xolox/vim-session", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
-  call kg8m#plugin#session#configure()
-endif  " }}}
-
 call kg8m#plugin#register("arzg/vim-sh")
 
-" See vim-session's settings
 if kg8m#plugin#register("mhinz/vim-startify", #{ if: !kg8m#util#is_git_tmp_edit() })  " {{{
   call kg8m#plugin#startify#configure()
 endif  " }}}

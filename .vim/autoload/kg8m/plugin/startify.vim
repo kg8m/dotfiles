@@ -1,8 +1,11 @@
 function kg8m#plugin#startify#configure() abort  " {{{
   if argc()
+    " `on_event: "BufWritePre"` for `s:save_session`: Load startify before writing buffer (on `BufWritePre`) and
+    " register autocmd for `BufWritePost`
     call kg8m#plugin#configure(#{
-    \   lazy:   v:true,
-    \   on_cmd: "Startify",
+    \   lazy:     v:true,
+    \   on_cmd:   "Startify",
+    \   on_event: "BufWritePre",
     \   hook_source:      function("s:on_source"),
     \   hook_post_source: function("s:on_post_source"),
     \ })
@@ -14,7 +17,8 @@ endfunction  " }}}
 function s:setup() abort  " {{{
   set sessionoptions=buffers,folds
 
-  let g:startify_session_dir         = g:session_directory
+  let g:startify_session_autoload    = v:false
+  let g:startify_session_dir         = getcwd().."/.vim-sessions"
   let g:startify_session_number      = 10
   let g:startify_session_persistence = v:false
   let g:startify_session_sort        = v:true
@@ -74,7 +78,8 @@ function s:setup() abort  " {{{
   let g:startify_custom_header += [""]
 
   augroup my_vimrc  " {{{
-    autocmd ColorScheme * call s:overwrite_colors()
+    autocmd ColorScheme  * call s:overwrite_colors()
+    autocmd BufWritePost * call s:save_session()
   augroup END  " }}}
 endfunction  " }}}
 
@@ -83,6 +88,19 @@ function s:overwrite_colors() abort  " {{{
   highlight StartifyHeader guifg=#FFFFFF
   highlight StartifyPath   guifg=#777777
   highlight StartifySlash  guifg=#777777
+endfunction  " }}}
+
+function s:save_session() abort  " {{{
+  call kg8m#configure#folding#manual#restore()
+  execute "silent SSave! "..s:session_name()
+endfunction  " }}}
+
+function s:session_name() abort  " {{{
+  return "%"
+  \   ->expand()
+  \   ->fnamemodify(":p")
+  \   ->substitute("/", "+=", "g")
+  \   ->substitute('^\.', "_", "")
 endfunction  " }}}
 
 function s:on_source() abort  " {{{
