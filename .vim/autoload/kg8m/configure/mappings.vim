@@ -44,7 +44,7 @@ function kg8m#configure#mappings#base() abort  " {{{
 endfunction  " }}}
 
 function kg8m#configure#mappings#search() abort  " {{{
-  nnoremap <Leader>/ :nohlsearch<Cr>
+  nnoremap <Leader>/ :nohlsearch<Cr>:call kg8m#util#notify_clear_search_highlight()<Cr>
   nnoremap / /\v
 endfunction  " }}}
 

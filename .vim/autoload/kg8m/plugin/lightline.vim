@@ -8,7 +8,6 @@ let s:elements = #{
 \     ["fileformat"],
 \     ["separator"],
 \     ["lineinfo_with_percent"],
-\     ["search_count"],
 \   ],
 \   right: [
 \     ["lsp_status"],
@@ -34,7 +33,6 @@ function kg8m#plugin#lightline#configure() abort  " {{{
   \   component_expand: #{
   \     warning_filepath:     "kg8m#plugin#lightline#warning_filepath",
   \     warning_fileencoding: "kg8m#plugin#lightline#warning_fileencoding",
-  \     search_count:         "kg8m#plugin#lightline#search_count",
   \   },
   \   component_type: #{
   \     warning_filepath:     "error",
@@ -90,26 +88,6 @@ endfunction  " }}}
 
 function kg8m#plugin#lightline#is_irregular_fileencoding() abort  " {{{
   return !empty(&fileencoding) && &fileencoding !=# "utf-8"
-endfunction  " }}}
-
-function kg8m#plugin#lightline#search_count() abort  " {{{
-  " Use `%{...}` because component-expansion result is shared with other windows/buffers
-  return "%{v:hlsearch ? kg8m#plugin#lightline#search_count_if_searching() : ''}"
-endfunction  " }}}
-
-function kg8m#plugin#lightline#search_count_if_searching() abort  " {{{
-  let counts = searchcount()
-
-  " 0: search was fully completed
-  if counts.incomplete ==# 0
-    let current = counts.current
-    let total   = counts.total
-  else
-    let current = counts.current <# counts.maxcount ? counts.current : "?"
-    let total   = counts.maxcount.."+"
-  endif
-
-  return "["..current.."/"..total.."]"
 endfunction  " }}}
 
 function kg8m#plugin#lightline#lsp_status() abort  " {{{

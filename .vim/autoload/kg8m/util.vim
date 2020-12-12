@@ -2,6 +2,10 @@ vim9script
 
 final cache = {}
 
+augroup my_vimrc  " {{{
+  autocmd User clear_search_highlight silent
+augroup END  " }}}
+
 def kg8m#util#source_local_vimrc(): void  # {{{
   const filepath = expand("~/.vimrc.local")
 
@@ -154,4 +158,8 @@ def kg8m#util#japanese_matchpairs(): list<list<string>>  # {{{
     ["“", "”"],
     ["‘", "’"],
   ]
+enddef  # }}}
+
+def kg8m#util#notify_clear_search_highlight(): void  # {{{
+  doautocmd <nomodeline> User clear_search_highlight
 enddef  # }}}

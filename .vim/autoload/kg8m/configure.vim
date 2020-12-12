@@ -74,9 +74,6 @@ function kg8m#configure#search() abort  " {{{
 
   set ignorecase
   set smartcase
-
-  " Show search count message when searching
-  " set shortmess-=S
 endfunction  " }}}
 
 function kg8m#configure#statusline() abort  " {{{

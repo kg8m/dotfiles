@@ -245,6 +245,10 @@ if kg8m#plugin#register("itchyny/vim-histexclude")  " {{{
   call kg8m#plugin#histexclude#configure()
 endif  " }}}
 
+if kg8m#plugin#register("obcat/vim-hitspop")  " {{{
+  call kg8m#plugin#hitspop#configure()
+endif  " }}}
+
 " Text object for (Japanese) sentence: s
 if kg8m#plugin#register("deton/jasentence.vim")  " {{{
   call kg8m#plugin#jasentence#configure()
