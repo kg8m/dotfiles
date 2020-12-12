@@ -13,9 +13,9 @@ options head
 	endfunction  " }}}
 
 snippet def
-abbr    def {function_name}({argument_name}: {argument_type}): {return_type}\n ...\n enddef
+abbr    def {function_name}(): {return_type}\n ...\n enddef
 options head
-	def ${1:#:function_name}(${2:#:argument_name}: ${3:#:argument_type}): ${4:#:return_type}  # {{{
+	def ${1:#:function_name}(): ${2:#:return_type}  # {{{
 		${0}
 	enddef  # }}}
 
