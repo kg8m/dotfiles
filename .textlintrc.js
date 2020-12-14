@@ -41,7 +41,7 @@ const config = {
     "date-weekday-mismatch": { lang: "ja-JP" },
     "ja-hiragana-keishikimeishi": true,
 
-    // Disable because too many proper nouns, e.g., people's names, are treated as error
+    // Disable because of false positive: too many proper nouns, e.g., people's names, are treated as error
     "joyo-kanji": false,
 
     "no-hoso-kinshi-yogo": true,
@@ -50,7 +50,10 @@ const config = {
     },
     "preset-ja-technical-writing": {
       "arabic-kanji-numbers": false,
+
+      // Disable because of false positive: some emojis even if `allowEmojiAtEnd` option enabled
       "ja-no-mixed-period": false,
+
       "ja-no-redundant-expression": {
         severity: "warning",
       },
