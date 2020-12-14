@@ -180,6 +180,10 @@ ci = commit
 ca = commit --all
 # }}}
 
+# push  # {{{
+  push-with-revision = "!revision=\"$1\"; git sh \"git:push:revision $revision\""
+# }}}
+
 # reset/revert  # {{{
 edit-commits      = rebase --interactive
 reset-commits     = edit-commits
