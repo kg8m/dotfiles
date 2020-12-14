@@ -2,7 +2,7 @@
 source ~/.zsh/my_functions.zsh
 
 function git:add:bulk {
-  local files=( "${(@f)$( git:status:filter:unstaged:with_untracked )}" )
+  local files=("${(@f)$(git:status:filter:unstaged:with_untracked)}")
 
   if [ -n "${files[*]}" ]; then
     execute_with_echo    "git add --intent-to-add -- ${files[*]}"
@@ -13,7 +13,7 @@ function git:add:bulk {
 }
 
 function git:add:bulk:intent {
-  local files=( "${(@f)$( git:status:filter:untracked )}" )
+  local files=("${(@f)$(git:status:filter:untracked)}")
 
   if [ -n "${files[*]}" ]; then
     execute_with_echo "git add --intent-to-add -- ${files[*]}"
@@ -22,7 +22,7 @@ function git:add:bulk:intent {
 }
 
 function git:add:bulk:patch {
-  local files=( "${(@f)$( git:status:filter:unstaged:with_intended_to_add )}" )
+  local files=("${(@f)$(git:status:filter:unstaged:with_intended_to_add)}")
 
   if [ -n "${files[*]}" ]; then
     execute_with_echo "git add --patch -- ${files[*]}"
@@ -31,7 +31,7 @@ function git:add:bulk:patch {
 }
 
 function git:restore:bulk {
-  local files=( "${(@f)$( git:status:filter:unstaged )}" )
+  local files=("${(@f)$(git:status:filter:unstaged)}")
 
   if [ -n "${files[*]}" ]; then
     execute_with_echo    "git diff -R -- ${files[*]}"
@@ -41,7 +41,7 @@ function git:restore:bulk {
 }
 
 function git:restore:bulk:staged {
-  local files=( "${(@f)$( git:status:filter:staged )}" )
+  local files=("${(@f)$(git:status:filter:staged)}")
 
   if [ -n "${files[*]}" ]; then
     execute_with_echo    "git diff --staged -R -- ${files[*]}"
@@ -51,19 +51,19 @@ function git:restore:bulk:staged {
 }
 
 function git:switch:select {
-  local current="$( git branch --show-current )"
-  local branch="$( git:branch:filter:one "^${current} +" )"
+  local current="$(git branch --show-current)"
+  local branch="$(git:branch:filter:one "^${current} +")"
 
   [ -n "$branch" ] && execute_with_echo "git switch $branch"
 }
 
 function git:update:with_log {
-  local remote_branch="$( git rev-parse --abbrev-ref '@{upstream}' )"
+  local remote_branch="$(git rev-parse --abbrev-ref '@{upstream}')"
 
   execute_with_echo "git --no-pager show --no-patch"
   execute_with_echo "git fetch"
 
-  if [ "$( git rev-parse HEAD )" = "$( git rev-parse '@{upstream}' )" ]; then
+  if [ "$(git rev-parse HEAD)" = "$(git rev-parse '@{upstream}')" ]; then
     echo "Up to date."
   else
     execute_with_echo "git --no-pager log --reverse HEAD.. ${remote_branch}"
@@ -76,7 +76,7 @@ function git:update:shallow {
 }
 
 function git:update:master {
-  local current_branch="$( git branch --show-current )"
+  local current_branch="$(git branch --show-current)"
 
   execute_with_echo "git switch master"
   execute_with_echo "git update"
@@ -99,14 +99,14 @@ function git:branch:create:with_set_upstream {
 }
 
 function git:branch:delete:bulk:local {
-  local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"" )
-  local branches=( "${(@f)$(
+  local filter_options=(--nth=1 --prompt="select branches: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"")
+  local branches=("${(@f)$(
     git branch --verbose |
       grep -E -v "${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
       filter "${filter_options[@]}" |
       sed -e 's/^[* ]*//' |
       awk '{ print $1 }'
-  )}" )
+  )}")
 
   if [ -n "${branches[*]}" ]; then
     execute_with_confirm "git branch --delete --force ${branches[*]}"
@@ -117,14 +117,14 @@ function git:branch:delete:bulk:local {
 }
 
 function git:branch:delete:bulk:remote {
-  local filter_options=( --nth=1 --prompt="select branches: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"" )
-  local branches=( "${(@f)$(
+  local filter_options=(--nth=1 --prompt="select branches: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"")
+  local branches=("${(@f)$(
     git branch --verbose --remote |
       grep -E -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
       filter "${filter_options[@]}" |
       awk '{ print $1 }' |
       sed -e 's#^origin/##'
-  )}" )
+  )}")
 
   if [ -n "${branches[*]}" ]; then
     execute_with_confirm "git push --delete origin ${branches[*]}"
@@ -136,8 +136,8 @@ function git:branch:delete:bulk:remote {
 
 function git:branch:filter:one {
   local ignore_pattern="$1"
-  local filter_options=( --no-multi --nth=1 --prompt="select a branch: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"" )
-  local branches=( "${(@f)$( git:branch:all | grep -E -v "${ignore_pattern}" | filter "${filter_options[@]}" | awk '{ print $1 }' )}" )
+  local filter_options=(--no-multi --nth=1 --prompt="select a branch: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"")
+  local branches=("${(@f)$(git:branch:all | grep -E -v "${ignore_pattern}" | filter "${filter_options[@]}" | awk '{ print $1 }')}")
 
   if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
     echo "Select a branch." >&2; exit 1
@@ -148,8 +148,8 @@ function git:branch:filter:one {
 
 function git:branch:filter:remote:one {
   local prompt=${1:-"Select a branch: "}
-  local filter_options=( --no-multi --nth=1 --prompt="${prompt}" --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"" )
-  local branches=( "${(@f)$( git:branch:remote | filter "${filter_options[@]}" | awk '{ print $1 }' )}" )
+  local filter_options=(--no-multi --nth=1 --prompt="${prompt}" --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"")
+  local branches=("${(@f)$(git:branch:remote | filter "${filter_options[@]}" | awk '{ print $1 }')}")
 
   if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
     echo "Select only 1 branch." >&2; exit 1
@@ -193,7 +193,7 @@ function git:push:revision {
 }
 
 function git:clean:bulk {
-  local files=( "${(@f)$( git:status:filter:untracked )}" )
+  local files=("${(@f)$(git:status:filter:untracked)}")
 
   if [ -n "${files[*]}" ]; then
     git:proxy:cat:files "${files[@]}"
@@ -203,20 +203,20 @@ function git:clean:bulk {
 }
 
 function git:log:compare:branch {
-  local branch1=$( git:branch:filter:remote:one "select first branch: " )
+  local branch1=$(git:branch:filter:remote:one "select first branch: ")
   [ -n "$branch1" ] || exit 1
 
-  local branch2=$( git:branch:filter:remote:one "select another branch: " )
+  local branch2=$(git:branch:filter:remote:one "select another branch: ")
   [ -n "$branch2" ] || exit 1
 
   execute_with_confirm "git log $* ${branch1}...${branch2}"
 }
 
 function git:diff:branch {
-  local branch1=$( git:branch:filter:remote:one "select first branch: " )
+  local branch1=$(git:branch:filter:remote:one "select first branch: ")
   [ -n "$branch1" ] || exit 1
 
-  local branch2=$( git:branch:filter:remote:one "select another branch: " )
+  local branch2=$(git:branch:filter:remote:one "select another branch: ")
   [ -n "$branch2" ] || exit 1
 
   execute_with_confirm "git diff-without-space-changes $* ${branch1}...${branch2}"
@@ -226,7 +226,7 @@ function git:diff:branch:from {
   local target="$1"
 
   if [ -n "$target" ]; then
-    local current="$( git branch --show-current )"
+    local current="$(git branch --show-current)"
 
     shift
     execute_with_confirm "git diff-without-space-changes $* origin/${target}...${current}"
@@ -239,7 +239,7 @@ function git:diff:branch:from:nameonly {
   local target="$1"
 
   if [ -n "$target" ]; then
-    local current="$( git branch --show-current )"
+    local current="$(git branch --show-current)"
 
     shift
     execute_with_confirm "git diff --name-only $* origin/${target}...${current}"
@@ -286,7 +286,7 @@ function git:submodule:update {
 }
 
 function git:submodule:remove:bulk {
-  local targets=( "${(@f)$( git submodule | filter | awk '{ print $2 }' )}" )
+  local targets=("${(@f)$(git submodule | filter | awk '{ print $2 }')}")
   local target
 
   for target in "${targets[@]}"; do
@@ -297,7 +297,7 @@ function git:submodule:remove:bulk {
 }
 
 function git:submodule:deinit:bulk {
-  local targets=( "${(@f)$( git submodule | filter | awk '{ print $2 }' )}" )
+  local targets=("${(@f)$(git submodule | filter | awk '{ print $2 }')}")
   local target
 
   for target in "${targets[@]}"; do
@@ -319,7 +319,7 @@ function git:utility:chmod {
 
 function git:utility:diff_or_cat {
   local filepath="$1"
-  local git_status="$( git status --short -- "$filepath" )"
+  local git_status="$(git status --short -- "$filepath")"
 
   # Untracked files
   if [[ "$git_status" =~ '^\?\?' ]]; then
@@ -365,7 +365,7 @@ function git:proxy:wc {
 
 function git:proxy:cat:files {
   local filepath
-  local filepaths=( "$@" )
+  local filepaths=("$@")
 
   if [ -z "${filepaths[*]}" ]; then
     return 1
@@ -374,7 +374,7 @@ function git:proxy:cat:files {
   local realpaths=()
 
   for filepath in "${filepaths[@]}"; do
-    realpaths+=( "${filepath/\~/$HOME}" )
+    realpaths+=("${filepath/\~/$HOME}")
   done
 
   if command -v bat > /dev/null; then
