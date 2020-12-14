@@ -240,7 +240,11 @@ function my_grep_with_filter() {
     return
   fi
 
-  echo "${(j:\n:)results[@]}" | my_grep "$query" "${options[@]}" 2> /dev/null
+  if [ "${options[*]}" =~ --files ]; then
+    echo "${(j:\n:)results[@]}" 2> /dev/null
+  else
+    echo "${(j:\n:)results[@]}" | my_grep "$query" "${options[@]}" 2> /dev/null
+  fi
 
   # Check whether the output is on a terminal
   if [ -t 1 ]; then
@@ -250,7 +254,11 @@ function my_grep_with_filter() {
     read -r "response?Open found files? [y/n]: "
 
     if [[ "$response" =~ ^y ]]; then
-      local filepaths=("${(@f)$(echo "${(j:\n:)results[@]}" | grep -E ':[0-9]+:[0-9]+:' | grep -E -o '^[^:]+' | sort -u)}")
+      if [[ "${options[*]}" =~ --files ]]; then
+        local filepaths=("${results[@]}")
+      else
+        local filepaths=("${(@f)$(echo "${(j:\n:)results[@]}" | grep -E ':[0-9]+:[0-9]+:' | grep -E -o '^[^:]+' | sort -u)}")
+      fi
 
       # Don't use literal `vim` because it sometimes refers to wrong Vim
       eval "vim ${filepaths[*]}"
