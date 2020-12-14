@@ -55,6 +55,10 @@ const config = {
         severity: "warning",
       },
       "ja-no-weak-phrase": false,
+
+      // Disable because of false positive: listing items are sometimes treated as error
+      "max-ten": false,
+
       "no-double-negative-ja": {
         severity: "warning",
       },
