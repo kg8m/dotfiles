@@ -1,2 +1,1 @@
-" Moin/trac
-autocmd BufRead,BufNewFile *.moin,*.trac,*.tracwiki setf moin | let b:ftdetect = 'moin'
+autocmd BufRead,BufNewFile *.moin,*.trac,*.tracwiki set filetype=moin
