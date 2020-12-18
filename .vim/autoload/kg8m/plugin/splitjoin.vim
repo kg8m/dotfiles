@@ -1,14 +1,16 @@
-function kg8m#plugin#splitjoin#configure() abort  " {{{
+vim9script
+
+def kg8m#plugin#splitjoin#configure(): void  # {{{
   nnoremap <Leader>J :SplitjoinJoin<Cr>
   nnoremap <Leader>S :SplitjoinSplit<Cr>
 
-  let g:splitjoin_split_mapping       = ""
-  let g:splitjoin_join_mapping        = ""
-  let g:splitjoin_ruby_trailing_comma = v:true
-  let g:splitjoin_ruby_hanging_args   = v:false
+  g:splitjoin_split_mapping       = ""
+  g:splitjoin_join_mapping        = ""
+  g:splitjoin_ruby_trailing_comma = v:true
+  g:splitjoin_ruby_hanging_args   = v:false
 
-  call kg8m#plugin#configure(#{
-  \   lazy:   v:true,
-  \   on_cmd: ["SplitjoinJoin", "SplitjoinSplit"],
-  \ })
-endfunction  " }}}
+  kg8m#plugin#configure({
+    lazy:   v:true,
+    on_cmd: ["SplitjoinJoin", "SplitjoinSplit"],
+  })
+enddef  # }}}

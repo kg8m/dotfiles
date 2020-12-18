@@ -1,28 +1,30 @@
-function kg8m#plugin#argwrap#configure() abort  " {{{
+vim9script
+
+def kg8m#plugin#argwrap#configure(): void  # {{{
   nnoremap <Leader>a :ArgWrap<Cr>
 
-  call kg8m#plugin#configure(#{
-  \   lazy:   v:true,
-  \   on_cmd: "ArgWrap",
-  \   hook_source: function("s:on_source"),
-  \ })
-endfunction  " }}}
+  kg8m#plugin#configure({
+    lazy:   v:true,
+    on_cmd: "ArgWrap",
+    hook_source: function("s:on_source"),
+  })
+enddef  # }}}
 
-function s:set_local_options() abort  " {{{
+def s:set_local_options(): void  # {{{
   if &filetype =~# '\v^(eruby|ruby)$'
-    let b:argwrap_tail_comma_braces = "[{"
+    b:argwrap_tail_comma_braces = "[{"
   elseif &filetype ==# "vim"
-    let b:argwrap_tail_comma_braces = "[{"
-    let b:argwrap_line_prefix = '\'
+    b:argwrap_tail_comma_braces = "[{"
+    b:argwrap_line_prefix = '\'
   endif
-endfunction  " }}}
+enddef  # }}}
 
-function s:on_source() abort  " {{{
-  let g:argwrap_padded_braces = "{"
+def s:on_source(): void  # {{{
+  g:argwrap_padded_braces = "{"
 
-  augroup my_vimrc  " {{{
-    autocmd FileType * call s:set_local_options()
-  augroup END  " }}}
+  augroup my_vimrc  # {{{
+    autocmd FileType * s:set_local_options()
+  augroup END  # }}}
 
-  call s:set_local_options()
-endfunction  " }}}
+  s:set_local_options()
+enddef  # }}}

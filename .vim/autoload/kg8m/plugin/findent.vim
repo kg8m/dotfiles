@@ -1,19 +1,21 @@
-function kg8m#plugin#findent#configure() abort  " {{{
-  let g:findent#enable_messages = v:false
-  let g:findent#enable_warnings = v:false
+vim9script
 
-  augroup my_vimrc  " {{{
-    autocmd FileType * call s:run()
-  augroup END  " }}}
+def kg8m#plugin#findent#configure(): void  # {{{
+  g:findent#enable_messages = v:false
+  g:findent#enable_warnings = v:false
 
-  call kg8m#plugin#configure(#{
-  \   lazy:   v:true,
-  \   on_cmd: "Findent",
-  \ })
-endfunction  " }}}
+  augroup my_vimrc  # {{{
+    autocmd FileType * s:run()
+  augroup END  # }}}
 
-function s:run() abort  " {{{
+  kg8m#plugin#configure({
+    lazy:   v:true,
+    on_cmd: "Findent",
+  })
+enddef  # }}}
+
+def s:run(): void  # {{{
   if &filetype !=# "startify"
     Findent
   endif
-endfunction  " }}}
+enddef  # }}}

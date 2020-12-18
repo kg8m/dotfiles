@@ -1,34 +1,37 @@
-function kg8m#plugin#jpformat#configure() abort  " {{{
-  call kg8m#plugin#configure(#{
-  \   lazy:   v:true,
-  \   on_map: ["gq"],
-  \   hook_source: function("s:on_source"),
-  \ })
-endfunction  " }}}
+vim9script
 
-function s:set_formatexpr() abort  " {{{
+const s:formatexpr = "jpfmt#formatexpr()"
+
+def kg8m#plugin#jpformat#configure(): void  # {{{
+  kg8m#plugin#configure({
+    lazy:   v:true,
+    on_map: ["gq"],
+    hook_source: function("s:on_source"),
+  })
+enddef  # }}}
+
+def s:set_formatexpr(): void  # {{{
   if has_key(b:, "jpformat_formatexpr_set")
     return
   endif
 
   if &l:formatexpr !=# s:formatexpr
-    " Replace built-in `jq` operator
-    let &l:formatexpr = s:formatexpr
+    # Replace built-in `jq` operator
+    &l:formatexpr = s:formatexpr
   endif
 
-  let b:jpformat_formatexpr_set = v:true
-endfunction  " }}}
+  b:jpformat_formatexpr_set = v:true
+enddef  # }}}
 
-function s:on_source() abort  " {{{
-  let s:formatexpr = "jpfmt#formatexpr()"
-  call s:set_formatexpr()
+def s:on_source(): void  # {{{
+  s:set_formatexpr()
 
-  let JpFormatCursorMovedI = v:false
-  let JpAutoJoin = v:false
-  let JpAutoFormat = v:false
+  const JpFormatCursorMovedI = v:false
+  const JpAutoJoin = v:false
+  const JpAutoFormat = v:false
 
-  augroup my_vimrc  " {{{
-    " Overwrite formatexpr
-    autocmd OptionSet formatexpr call timer_start(200, { -> s:set_formatexpr() })
-  augroup END  " }}}
-endfunction  " }}}
+  augroup my_vimrc  # {{{
+    # Overwrite formatexpr
+    autocmd OptionSet formatexpr timer_start(200, { -> s:set_formatexpr() })
+  augroup END  # }}}
+enddef  # }}}

@@ -1,36 +1,49 @@
-let s:true_black = [ '#000000', 0 ]
-let s:black      = [ '#121212', 233 ]
-let s:dark_gray  = [ '#1c1c1c', 234 ]
-let s:gray       = [ '#262626', 235 ]
-let s:light_gray = [ '#444444', 242 ]
-let s:white      = [ '#ffffff', 255 ]
-let s:sand       = [ '#e6db74', 144 ]
-let s:blue       = [ '#66d9ef', 81  ]
-let s:green      = [ '#a6e22e', 118 ]
-let s:orange     = [ '#fd971f', 208 ]
-let s:red        = [ '#f92672', 161 ]
+vim9script
 
-let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
-let s:p.normal.left     = [ [ s:black, s:sand ], [ s:white, s:light_gray ] ]
-let s:p.normal.middle   = [ [ s:white, s:light_gray ] ]
-let s:p.normal.right    = [ [ s:white, s:light_gray ] ]
-let s:p.normal.error    = [ [ s:white, s:red ] ]
-let s:p.normal.warning  = [ [ s:black, s:white ] ]
-let s:p.inactive.left   = [ [ s:black, s:sand ], [ s:white, s:light_gray ] ]
-let s:p.inactive.middle = [ [ s:white, s:light_gray ] ]
-let s:p.inactive.right  = [ [ s:white, s:light_gray ] ]
-let s:p.insert.left     = [ [ s:black, s:blue ], [ s:white, s:light_gray ] ]
-let s:p.insert.middle   = [ [ s:white, s:light_gray ] ]
-let s:p.insert.right    = [ [ s:white, s:light_gray ] ]
-let s:p.replace.left    = [ [ s:black, s:green ], [ s:white, s:light_gray ] ]
-let s:p.replace.middle  = [ [ s:white, s:light_gray ] ]
-let s:p.replace.right   = [ [ s:white, s:light_gray ] ]
-let s:p.visual.left     = [ [ s:black, s:orange ], [ s:white, s:light_gray ] ]
-let s:p.visual.middle   = [ [ s:white, s:light_gray ] ]
-let s:p.visual.right    = [ [ s:white, s:light_gray ] ]
-let s:p.tabline.left    = [ [ s:white, s:light_gray ] ]
-let s:p.tabline.tabsel  = [ [ s:black, s:sand ] ]
-let s:p.tabline.middle  = [ [ s:white, s:light_gray ] ]
-let s:p.tabline.right   = [ [ s:white, s:light_gray ] ]
+const s:true_black = [ "#000000",   0 ]
+const s:black      = [ "#121212", 233 ]
+const s:dark_gray  = [ "#1c1c1c", 234 ]
+const s:gray       = [ "#262626", 235 ]
+const s:light_gray = [ "#444444", 242 ]
+const s:white      = [ "#ffffff", 255 ]
+const s:sand       = [ "#e6db74", 144 ]
+const s:blue       = [ "#66d9ef",  81 ]
+const s:green      = [ "#a6e22e", 118 ]
+const s:orange     = [ "#fd971f", 208 ]
+const s:red        = [ "#f92672", 161 ]
 
-let g:lightline#colorscheme#kg8m#palette = lightline#colorscheme#flatten(s:p)
+g:lightline#colorscheme#kg8m#palette = lightline#colorscheme#flatten({
+  normal: {
+    left:    [ [ s:black, s:sand ], [ s:white, s:light_gray ] ],
+    middle:  [ [ s:white, s:light_gray ] ],
+    right:   [ [ s:white, s:light_gray ] ],
+    error:   [ [ s:white, s:red ] ],
+    warning: [ [ s:black, s:white ] ],
+  },
+  inactive: {
+    left:   [ [ s:black, s:sand ], [ s:white, s:light_gray ] ],
+    middle: [ [ s:white, s:light_gray ] ],
+    right:  [ [ s:white, s:light_gray ] ],
+  },
+  insert: {
+    left:   [ [ s:black, s:blue ], [ s:white, s:light_gray ] ],
+    middle: [ [ s:white, s:light_gray ] ],
+    right:  [ [ s:white, s:light_gray ] ],
+  },
+  replace: {
+    left:   [ [ s:black, s:green ], [ s:white, s:light_gray ] ],
+    middle: [ [ s:white, s:light_gray ] ],
+    right:  [ [ s:white, s:light_gray ] ],
+  },
+  visual: {
+    left:   [ [ s:black, s:orange ], [ s:white, s:light_gray ] ],
+    middle: [ [ s:white, s:light_gray ] ],
+    right:  [ [ s:white, s:light_gray ] ],
+  },
+  tabline: {
+    left:   [ [ s:white, s:light_gray ] ],
+    tabsel: [ [ s:black, s:sand ] ],
+    middle: [ [ s:white, s:light_gray ] ],
+    right:  [ [ s:white, s:light_gray ] ],
+  },
+})

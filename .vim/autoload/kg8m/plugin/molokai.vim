@@ -1,12 +1,14 @@
-function kg8m#plugin#molokai#configure() abort  " {{{
-  let g:molokai_original = v:true
+vim9script
 
-  augroup my_vimrc  " {{{
-    autocmd ColorScheme molokai call s:overwrite()
-  augroup END  " }}}
-endfunction  " }}}
+def kg8m#plugin#molokai#configure(): void  # {{{
+  g:molokai_original = v:true
 
-function s:overwrite() abort  " {{{
+  augroup my_vimrc  # {{{
+    autocmd ColorScheme molokai s:overwrite()
+  augroup END  # }}}
+enddef  # }}}
+
+def s:overwrite(): void  # {{{
   highlight Comment       guifg=#AAAAAA
   highlight ColorColumn                  guibg=#1F1E19
   highlight CursorColumn                 guibg=#1F1E19
@@ -30,7 +32,7 @@ function s:overwrite() abort  " {{{
   highlight VisualNOS                    guibg=#403D3D  gui=bold       cterm=bold
 
   if has("gui_running")
-    " `guibg=NONE` doesn't work in GUI Vim
+    # `guibg=NONE` doesn't work in GUI Vim
     highlight FoldColumn  guibg=#000000
     highlight Folded      guibg=#000000
     highlight Ignore      guibg=#000000
@@ -39,4 +41,4 @@ function s:overwrite() abort  " {{{
     highlight Special     guibg=#000000
     highlight Todo        guibg=#000000
   endif
-endfunction  " }}}
+enddef  # }}}

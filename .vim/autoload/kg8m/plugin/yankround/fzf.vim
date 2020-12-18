@@ -1,34 +1,36 @@
-" https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
-function kg8m#plugin#yankround#fzf#list() abort  " {{{
-  return range(0, len(g:_yankround_cache) - 1)->map("s:format_list_item(v:val)")
-endfunction  " }}}
+vim9script
 
-function kg8m#plugin#yankround#fzf#preview_command() abort  " {{{
-  let command  = "echo {}"
-  let command .= " | sed -e 's/^ *[0-9]\\{1,\\}\t//' -e 's/\\\\/\\\\\\\\/g'"
-  let command .= " | head -n5"
+# https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
+def kg8m#plugin#yankround#fzf#list(): list<string>  # {{{
+  return range(0, len(g:_yankround_cache) - 1)->map("s:format_list_item(v:val)")
+enddef  # }}}
+
+def kg8m#plugin#yankround#fzf#preview_command(): string  # {{{
+  const command = "echo {}"
+    .. " | sed -e 's/^ *[0-9]\\{1,\\}\t//' -e 's/\\\\/\\\\\\\\/g'"
+    .. " | head -n5"
 
   return command
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#plugin#yankround#fzf#handler(yank_item) abort  " {{{
-  let old_reg = [getreg('"'), getregtype('"')]
-  let index = matchlist(a:yank_item, '\v^\s*(\d+)\t')[1]
-  let [text, regtype] = yankround#_get_cache_and_regtype(index)
-  call setreg('"', text, regtype)
+def kg8m#plugin#yankround#fzf#handler(yank_item: string): void  # {{{
+  const old_reg = [getreg('"'), getregtype('"')]
+  const index = matchlist(yank_item, '\v^\s*(\d+)\t')[1]
+  [text, regtype] = yankround#_get_cache_and_regtype(index)
+  setreg('"', text, regtype)
 
   try
     execute 'normal! ""p'
   finally
-    call setreg('"', old_reg[0], old_reg[1])
+    setreg('"', old_reg[0], old_reg[1])
   endtry
-endfunction  " }}}
+enddef  # }}}
 
-function s:format_list_item(index) abort  " {{{
-  let [text, _]  = yankround#_get_cache_and_regtype(a:index)
+def s:format_list_item(index: number): string  # {{{
+  const text  = yankround#_get_cache_and_regtype(index)[0]
 
-  " Avoid shell's syntax error in fzf's preview
-  let text = substitute(text, "\n", "\\\\n", "g")
+  # Avoid shell's syntax error in fzf's preview
+  const sanitized_text = substitute(text, "\n", "\\\\n", "g")
 
-  return printf("%3d\t%s", a:index, text)
-endfunction  " }}}
+  return printf("%3d\t%s", index, sanitized_text)
+enddef  # }}}

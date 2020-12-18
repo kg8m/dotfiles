@@ -1,13 +1,15 @@
-function kg8m#plugin#undotree#configure() abort  " {{{
+vim9script
+
+def kg8m#plugin#undotree#configure(): void  # {{{
   nnoremap <Leader>u :UndotreeToggle<Cr>
 
-  let g:undotree_WindowLayout = 2
-  let g:undotree_SplitWidth = 50
-  let g:undotree_DiffpanelHeight = 30
-  let g:undotree_SetFocusWhenToggle = v:true
+  g:undotree_WindowLayout = 2
+  g:undotree_SplitWidth = 50
+  g:undotree_DiffpanelHeight = 30
+  g:undotree_SetFocusWhenToggle = v:true
 
-  call kg8m#plugin#configure(#{
-  \   lazy:   v:true,
-  \   on_cmd: "UndotreeToggle",
-  \ })
-endfunction  " }}}
+  kg8m#plugin#configure({
+    lazy:   v:true,
+    on_cmd: "UndotreeToggle",
+  })
+enddef  # }}}

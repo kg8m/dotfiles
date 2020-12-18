@@ -1,19 +1,20 @@
-function kg8m#plugin#vsnip#configure() abort  " {{{
-  call kg8m#plugin#configure(#{
-  \   lazy:      v:true,
-  \   on_func:   "vsnip#",
-  \   on_source: "asyncomplete.vim",
-  \   hook_source: function("s:on_source"),
-  \ })
+vim9script
 
-  if kg8m#plugin#register("hrsh7th/vim-vsnip-integ")  " {{{
-    call kg8m#plugin#configure(#{
-    \   lazy:      v:true,
-    \   on_source: "vim-vsnip",
-    \ })
-  endif  " }}}
-endfunction  " }}}
+def kg8m#plugin#vsnip#configure(): void  # {{{
+  kg8m#plugin#configure({
+    lazy: v:true,
+    on_i: v:true,
+    hook_source: function("s:on_source"),
+  })
 
-function s:on_source() abort  " {{{
-  call kg8m#plugin#completion#define_mappings()
-endfunction  " }}}
+  if kg8m#plugin#register("hrsh7th/vim-vsnip-integ")  # {{{
+    kg8m#plugin#configure({
+      lazy:      v:true,
+      on_source: "vim-vsnip",
+    })
+  endif  # }}}
+enddef  # }}}
+
+def s:on_source(): void  # {{{
+  kg8m#plugin#completion#define_mappings()
+enddef  # }}}

@@ -1,10 +1,12 @@
-function kg8m#plugin#rainbow_csv#configure() abort  " {{{
-  augroup my_vimrc  " {{{
-    autocmd BufNewFile,BufRead *.csv set filetype=csv
-  augroup END  " }}}
+vim9script
 
-  call kg8m#plugin#configure(#{
-  \   lazy:  v:true,
-  \   on_ft: "csv",
-  \ })
-endfunction  " }}}
+def kg8m#plugin#rainbow_csv#configure(): void  # {{{
+  augroup my_vimrc  # {{{
+    autocmd BufNewFile,BufRead *.csv set filetype=csv
+  augroup END  # }}}
+
+  kg8m#plugin#configure({
+    lazy:  v:true,
+    on_ft: "csv",
+  })
+enddef  # }}}

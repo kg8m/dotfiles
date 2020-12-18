@@ -1,12 +1,14 @@
-function kg8m#plugin#operator#camelize#configure() abort  " {{{
+vim9script
+
+def kg8m#plugin#operator#camelize#configure(): void  # {{{
   vmap <Leader>C <Plug>(operator-camelize)
   vmap <Leader>c <Plug>(operator-decamelize)
 
-  call kg8m#plugin#configure(#{
-  \   lazy:   v:true,
-  \   on_map: [
-  \     ["v", "<Plug>(operator-camelize)"],
-  \     ["v", "<Plug>(operator-decamelize)"]
-  \   ],
-  \ })
-endfunction  " }}}
+  kg8m#plugin#configure({
+    lazy:   v:true,
+    on_map: [
+      ["v", "<Plug>(operator-camelize)"],
+      ["v", "<Plug>(operator-decamelize)"]
+    ],
+  })
+enddef  # }}}

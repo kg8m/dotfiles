@@ -1,96 +1,101 @@
-let s:elements = #{
-\   left: [
-\     ["mode", "paste"],
-\     ["warning_filepath"], ["normal_filepath"],
-\     ["separator"],
-\     ["filetype"],
-\     ["warning_fileencoding"], ["normal_fileencoding"],
-\     ["fileformat"],
-\     ["separator"],
-\     ["lineinfo_with_percent"],
-\   ],
-\   right: [
-\     ["lsp_status"],
-\   ],
-\ }
+vim9script
 
-function kg8m#plugin#lightline#configure() abort  " {{{
-  " http://d.hatena.ne.jp/itchyny/20130828/1377653592
+# Use `final` instead of `const` because this will be overwritten by `kg8m#plugin#lightline#lsp#configure`
+final s:elements = {
+  left: [
+    ["mode", "paste"],
+    ["warning_filepath"], ["normal_filepath"],
+    ["separator"],
+    ["filetype"],
+    ["warning_fileencoding"], ["normal_fileencoding"],
+    ["fileformat"],
+    ["separator"],
+    ["lineinfo_with_percent"],
+  ],
+  right: [
+    ["lsp_status"],
+  ],
+}
+
+var s:lsp_status_buffer_enabled_function: func
+
+def kg8m#plugin#lightline#configure(): void  # {{{
+  # http://d.hatena.ne.jp/itchyny/20130828/1377653592
   set laststatus=2
 
-  let g:lightline = #{
-  \   active: s:elements,
-  \   inactive: s:elements,
-  \   component: #{
-  \     separator: "|",
-  \     lineinfo_with_percent: "%l/%L(%p%%) : %v",
-  \   },
-  \   component_function: #{
-  \     normal_filepath:     "kg8m#plugin#lightline#normal_filepath",
-  \     normal_fileencoding: "kg8m#plugin#lightline#normal_fileencoding",
-  \     lsp_status:          "kg8m#plugin#lightline#lsp_status",
-  \   },
-  \   component_expand: #{
-  \     warning_filepath:     "kg8m#plugin#lightline#warning_filepath",
-  \     warning_fileencoding: "kg8m#plugin#lightline#warning_fileencoding",
-  \   },
-  \   component_type: #{
-  \     warning_filepath:     "error",
-  \     warning_fileencoding: "error",
-  \   },
-  \   colorscheme: "kg8m",
-  \ }
+  g:lightline = {
+    active: s:elements,
+    inactive: s:elements,
+    component: {
+      separator: "|",
+      lineinfo_with_percent: "%l/%L(%p%%) : %v",
+    },
+    component_function: {
+      normal_filepath:     "kg8m#plugin#lightline#normal_filepath",
+      normal_fileencoding: "kg8m#plugin#lightline#normal_fileencoding",
+      lsp_status:          "kg8m#plugin#lightline#lsp_status",
+    },
+    component_expand: {
+      warning_filepath:     "kg8m#plugin#lightline#warning_filepath",
+      warning_fileencoding: "kg8m#plugin#lightline#warning_fileencoding",
+    },
+    component_type: {
+      warning_filepath:     "error",
+      warning_fileencoding: "error",
+    },
+    colorscheme: "kg8m",
+  }
 
-  if kg8m#plugin#register("tsuyoshicho/lightline-lsp")  " {{{
-    call kg8m#plugin#lightline#lsp#configure()
-    let s:lsp_status_buffer_enabled_function = function("kg8m#plugin#lightline#lsp#status")
+  if kg8m#plugin#register("tsuyoshicho/lightline-lsp")  # {{{
+    kg8m#plugin#lightline#lsp#configure()
+    s:lsp_status_buffer_enabled_function = function("kg8m#plugin#lightline#lsp#status")
   else
-    let s:lsp_status_buffer_enabled_function = function("s:lsp_status_buffer_enabled")
-  endif  " }}}
-endfunction  " }}}
+    s:lsp_status_buffer_enabled_function = function("s:lsp_status_buffer_enabled")
+  endif  # }}}
+enddef  # }}}
 
-function kg8m#plugin#lightline#elements() abort  " {{{
+def kg8m#plugin#lightline#elements(): dict<any>  # {{{
   return s:elements
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#plugin#lightline#filepath() abort  " {{{
+def kg8m#plugin#lightline#filepath(): string  # {{{
   return (s:is_readonly() ? "X " : "")
-  \   ..s:filepath()
-  \   ..(&modified ? " +" : (&modifiable ? "" : " -"))
-endfunction  " }}}
+    .. s:filepath()
+    .. (&modified ? " +" : (&modifiable ? "" : " -"))
+enddef  # }}}
 
-function kg8m#plugin#lightline#fileencoding() abort  " {{{
+def kg8m#plugin#lightline#fileencoding(): string  # {{{
   return &fileencoding
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#plugin#lightline#normal_filepath() abort  " {{{
+def kg8m#plugin#lightline#normal_filepath(): string  # {{{
   return kg8m#plugin#lightline#is_irregular_filepath() ? "" : kg8m#plugin#lightline#filepath()
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#plugin#lightline#normal_fileencoding() abort  " {{{
+def kg8m#plugin#lightline#normal_fileencoding(): string  # {{{
   return kg8m#plugin#lightline#is_irregular_fileencoding() ? "" : kg8m#plugin#lightline#fileencoding()
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#plugin#lightline#warning_filepath() abort  " {{{
-  " Use `%{...}` because component-expansion result is shared with other windows/buffers
+def kg8m#plugin#lightline#warning_filepath(): string  # {{{
+  # Use `%{...}` because component-expansion result is shared with other windows/buffers
   return "%{kg8m#plugin#lightline#is_irregular_filepath() ? kg8m#plugin#lightline#filepath() : ''}"
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#plugin#lightline#warning_fileencoding() abort  " {{{
-  " Use `%{...}` because component-expansion result is shared with other windows/buffers
+def kg8m#plugin#lightline#warning_fileencoding(): string  # {{{
+  # Use `%{...}` because component-expansion result is shared with other windows/buffers
   return "%{kg8m#plugin#lightline#is_irregular_fileencoding() ? kg8m#plugin#lightline#fileencoding() : ''}"
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#plugin#lightline#is_irregular_filepath() abort  " {{{
-  " `sudo:` prefix for sudo.vim, which I used to use
-  return s:is_readonly() || expand("%") =~# '\v^(sudo:|suda://)'
-endfunction  " }}}
+def kg8m#plugin#lightline#is_irregular_filepath(): bool  # {{{
+  # `sudo:` prefix for sudo.vim, which I used to use
+  return s:is_readonly() || !!(expand("%") =~# '\v^(sudo:|suda://)')
+enddef  # }}}
 
-function kg8m#plugin#lightline#is_irregular_fileencoding() abort  " {{{
+def kg8m#plugin#lightline#is_irregular_fileencoding(): bool  # {{{
   return !empty(&fileencoding) && &fileencoding !=# "utf-8"
-endfunction  " }}}
+enddef  # }}}
 
-function kg8m#plugin#lightline#lsp_status() abort  " {{{
+def kg8m#plugin#lightline#lsp_status(): string  # {{{
   if kg8m#plugin#lsp#is_target_buffer()
     if kg8m#plugin#lsp#is_buffer_enabled()
       return s:lsp_status_buffer_enabled_function()
@@ -100,9 +105,9 @@ function kg8m#plugin#lightline#lsp_status() abort  " {{{
   else
     return ""
   endif
-endfunction  " }}}
+enddef  # }}}
 
-function s:filepath() abort  " {{{
+def s:filepath(): string  # {{{
   if &filetype ==# "unite"
     return unite#get_status_string()
   endif
@@ -111,19 +116,19 @@ function s:filepath() abort  " {{{
     return w:quickfix_title
   endif
 
-  let filename = kg8m#util#current_filename()
+  const filename = kg8m#util#current_filename()
 
   if filename ==# ""
     return "[No Name]"
   else
     return winwidth(0) >= 120 ? kg8m#util#current_relative_path() : filename
   endif
-endfunction  " }}}
+enddef  # }}}
 
-function s:is_readonly() abort  " {{{
-  return &filetype !=# "help" && &readonly
-endfunction  " }}}
+def s:is_readonly(): bool  # {{{
+  return &filetype !=# "help" && !!&readonly
+enddef  # }}}
 
-function s:lsp_status_buffer_enabled() abort  " {{{
+def s:lsp_status_buffer_enabled(): string  # {{{
   return "[LSP] Active"
-endfunction  " }}}
+enddef  # }}}

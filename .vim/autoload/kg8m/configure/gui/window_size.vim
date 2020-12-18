@@ -1,23 +1,25 @@
-" http://vim-users.jp/2010/01/hack120/
+vim9script
 
-let s:filepath = expand("~/.vim/gui-window-info")
+# http://vim-users.jp/2010/01/hack120/
 
-function kg8m#configure#gui#window_size#setup() abort  " {{{
-  augroup my_vimrc  " {{{
-    autocmd VimLeavePre * call s:save()
-  augroup END  " }}}
+const s:filepath = expand("~/.vim/gui-window-info")
+
+def kg8m#configure#gui#window_size#setup(): void  # {{{
+  augroup my_vimrc  # {{{
+    autocmd VimLeavePre * s:save()
+  augroup END  # }}}
 
   if has("vim_starting") && filereadable(s:filepath)
-    execute "source "..s:filepath
+    execute "source " .. s:filepath
   endif
-endfunction  " }}}
+enddef  # }}}
 
-function s:save() abort  " {{{
-  let options = [
-  \   "set columns="..&columns,
-  \   "set lines="..&lines,
-  \   "winpos "..getwinposx().." "..getwinposy(),
-  \ ]
+def s:save(): void  # {{{
+  const options = [
+    "set columns=" .. &columns,
+    "set lines=" .. &lines,
+    "winpos " .. getwinposx() .. " " .. getwinposy(),
+  ]
 
-  call writefile(options, s:filepath)
-endfunction  " }}}
+  writefile(options, s:filepath)
+enddef  # }}}

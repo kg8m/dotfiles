@@ -1,5 +1,7 @@
-" https://thinca.hatenablog.com/entry/20110903/1314982646
-function s:setup_writing_help() abort  " {{{
+vim9script
+
+# https://thinca.hatenablog.com/entry/20110903/1314982646
+def s:setup_writing_help(): void  # {{{
   if &buftype !=# "help"
     setlocal list tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab textwidth=78
 
@@ -11,6 +13,6 @@ function s:setup_writing_help() abort  " {{{
       setlocal conceallevel=0
     endif
   endif
-endfunction  " }}}
+enddef  # }}}
 
-call timer_start(200, { -> s:setup_writing_help() })
+timer_start(200, { -> s:setup_writing_help() })

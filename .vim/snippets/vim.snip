@@ -1,10 +1,11 @@
 snippet folding_marker
-abbr    " {{{\n ...\n ...  " }}}
+abbr    # {{{\n ...\n ...  # }}}
 options word
-	" {{{
+	# {{{
 		${0}
-	" }}}
+	# }}}
 
+# Deprecated: for Vim8
 snippet function
 abbr    function {function_name}() abort\n ...\n endfunction
 options head
@@ -22,17 +23,17 @@ options head
 snippet augroup
 abbr    augroup ...\n ...\n augroup END
 options head
-	augroup ${1:#:GroupName}  " {{{
+	augroup ${1:#:GroupName}  # {{{
 		autocmd!
 		autocmd ${2:#:EventName} ${3:#:filetype} ${0}
-	augroup END  " }}}
+	augroup END  # }}}
 
 snippet augroup_my_vimrc
 abbr    augroup my_vimrc\n ...\n augroup END
 options head
-	augroup my_vimrc  " {{{
+	augroup my_vimrc  # {{{
 		autocmd ${1:#:EventName} ${2:#:filetype} ${0}
-	augroup END  " }}}
+	augroup END  # }}}
 
 snippet autocmd
 abbr    autocmd {EventName} {filetype} ...
@@ -40,7 +41,7 @@ options head
 	autocmd ${1:#:EventName} ${2:#:filetype} ${0}
 
 snippet doautocmd
-abbr    doautocmd <nomodeline> {EventName}  " Use `<nomodeline>` for non-buffer-loading events
+abbr    doautocmd <nomodeline> {EventName}  # Use `<nomodeline>` for non-buffer-loading events
 options head
 	doautocmd <nomodeline> ${1:#:EventName}
 

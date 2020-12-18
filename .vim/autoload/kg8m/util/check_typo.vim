@@ -1,21 +1,23 @@
-" http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
-function kg8m#util#check_typo#setup() abort  " {{{
-  augroup my_vimrc  " {{{
-    autocmd BufWriteCmd *[,*] call s:check_typo(expand("<afile>"))
-  augroup END  " }}}
-endfunction  " }}}
+vim9script
 
-function s:check_typo(file) abort  " {{{
-  let writecmd = "write"..(v:cmdbang ? "!" : "").." "..a:file
+# http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
+def kg8m#util#check_typo#setup(): void  # {{{
+  augroup my_vimrc  # {{{
+    autocmd BufWriteCmd *[,*] s:check_typo(expand("<afile>"))
+  augroup END  # }}}
+enddef  # }}}
 
-  if a:file =~? "[qfreplace]"
+def s:check_typo(file: string): void  # {{{
+  const writecmd = "write" .. (v:cmdbang ? "!" : "") .. " " .. file
+
+  if file =~? '[qfreplace]'
     return
   endif
 
-  let prompt = "possible typo: really want to write to '"..a:file.."'?(y/n):"
-  let input = input(prompt)
+  const prompt = "possible typo: really want to write to '" .. file .. "'?(y/n):"
+  const input = input(prompt)
 
   if input =~? '^y'
     execute writecmd
   endif
-endfunction  " }}}
+enddef  # }}}

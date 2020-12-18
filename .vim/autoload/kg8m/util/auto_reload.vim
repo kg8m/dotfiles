@@ -1,20 +1,22 @@
-function kg8m#util#auto_reload#setup() abort  " {{{
-  augroup my_vimrc  " {{{
-    autocmd VimEnter * call timer_start(1000, { -> s:checktime() }, #{ repeat: -1 })
-  augroup END  " }}}
-endfunction  " }}}
+vim9script
 
-function s:checktime() abort  " {{{
+def kg8m#util#auto_reload#setup(): void  # {{{
+  augroup my_vimrc  # {{{
+    autocmd VimEnter * timer_start(1000, { -> s:checktime() }, { repeat: -1 })
+  augroup END  # }}}
+enddef  # }}}
+
+def s:checktime(): void  # {{{
   try
-    " `checktime` is not available in Command Line mode
+    # `checktime` is not available in Command Line mode
     if !getcmdwintype()->empty()
       return
     endif
 
     checktime
-  " Sometimes `checktime` raise an error
-  "   - e.g., E565: "Not allowed to change text or change window" when using vim-sandwich
+  # Sometimes `checktime` raise an error
+  #   - e.g., E565: "Not allowed to change text or change window" when using vim-sandwich
   catch /^Vim\%((\a\+)\)\=:E565:/
-    " Do nothing
+    # Do nothing
   endtry
-endfunction  " }}}
+enddef  # }}}

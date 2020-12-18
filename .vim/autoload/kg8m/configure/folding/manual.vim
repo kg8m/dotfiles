@@ -1,21 +1,23 @@
-function kg8m#configure#folding#manual#setup() abort  " {{{
-  augroup my_vimrc  " {{{
-    " https://vim.fandom.com/wiki/Keep_folds_closed_while_inserting_text
-    autocmd InsertEnter * call s:apply()
-  augroup END  " }}}
-endfunction  " }}}
+vim9script
 
-" Call this before saving session
-function kg8m#configure#folding#manual#restore() abort  " {{{
+def kg8m#configure#folding#manual#setup(): void  # {{{
+  augroup my_vimrc  # {{{
+    # https://vim.fandom.com/wiki/Keep_folds_closed_while_inserting_text
+    autocmd InsertEnter * s:apply()
+  augroup END  # }}}
+enddef  # }}}
+
+# Call this before saving session
+def kg8m#configure#folding#manual#restore(): void  # {{{
   if has_key(w:, "original_foldmethod")
-    let &l:foldmethod = w:original_foldmethod
+    &l:foldmethod = w:original_foldmethod
     unlet w:original_foldmethod
   endif
-endfunction  " }}}
+enddef  # }}}
 
-function s:apply() abort  " {{{
+def s:apply(): void  # {{{
   if !has_key(w:, "original_foldmethod")
-    let w:original_foldmethod = &foldmethod
+    w:original_foldmethod = &foldmethod
     setlocal foldmethod=manual
   endif
-endfunction  " }}}
+enddef  # }}}

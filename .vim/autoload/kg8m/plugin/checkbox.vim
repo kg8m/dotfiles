@@ -1,10 +1,12 @@
-function kg8m#plugin#checkbox#configure() abort  " {{{
-  augroup my_vimrc  " {{{
-    autocmd FileType markdown,moin noremap <buffer> <Leader>c :call checkbox#ToggleCB()<Cr>
-  augroup END  " }}}
+vim9script
 
-  call kg8m#plugin#configure(#{
-  \   lazy:    v:true,
-  \   on_func: "checkbox#",
-  \ })
-endfunction  " }}}
+def kg8m#plugin#checkbox#configure(): void  # {{{
+  augroup my_vimrc  # {{{
+    autocmd FileType markdown,moin noremap <buffer> <Leader>c :call checkbox#ToggleCB()<Cr>
+  augroup END  # }}}
+
+  kg8m#plugin#configure({
+    lazy:    v:true,
+    on_func: "checkbox#",
+  })
+enddef  # }}}

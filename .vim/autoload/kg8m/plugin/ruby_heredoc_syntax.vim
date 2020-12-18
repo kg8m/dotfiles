@@ -1,12 +1,14 @@
-function kg8m#plugin#ruby_heredoc_syntax#configure() abort  " {{{
-  " Default: JS, SQL, HTML
-  let g:ruby_heredoc_syntax_filetypes = #{
-  \   haml: #{ start: "HAML" },
-  \   ruby: #{ start: "RUBY" },
-  \ }
+vim9script
 
-  call kg8m#plugin#configure(#{
-  \   lazy:  v:true,
-  \   on_ft: "ruby",
-  \ })
-endfunction  " }}}
+def kg8m#plugin#ruby_heredoc_syntax#configure(): void  # {{{
+  # Default: JS, SQL, HTML
+  g:ruby_heredoc_syntax_filetypes = {
+    haml: { start: "HAML" },
+    ruby: { start: "RUBY" },
+  }
+
+  kg8m#plugin#configure({
+    lazy:  v:true,
+    on_ft: "ruby",
+  })
+enddef  # }}}

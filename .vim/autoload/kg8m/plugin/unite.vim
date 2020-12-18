@@ -1,28 +1,30 @@
-function kg8m#plugin#unite#configure() abort  " {{{
-  let g:unite_winheight = "100%"
+vim9script
 
-  augroup my_vimrc  " {{{
-    autocmd FileType unite call s:setup_buffer()
-  augroup END  " }}}
+def kg8m#plugin#unite#configure(): void  # {{{
+  g:unite_winheight = "100%"
 
-  call kg8m#plugin#configure(#{
-  \   lazy:    v:true,
-  \   on_cmd:  "Unite",
-  \   on_func: "unite#",
-  \ })
-endfunction  " }}}
+  augroup my_vimrc  # {{{
+    autocmd FileType unite s:setup_buffer()
+  augroup END  # }}}
 
-function s:setup_buffer() abort  " {{{
-  call s:enable_highlighting_cursorline()
-  call s:disable_default_mappings()
-endfunction  " }}}
+  kg8m#plugin#configure({
+    lazy:    v:true,
+    on_cmd:  "Unite",
+    on_func: "unite#",
+  })
+enddef  # }}}
 
-function s:enable_highlighting_cursorline() abort  " {{{
+def s:setup_buffer(): void  # {{{
+  s:enable_highlighting_cursorline()
+  s:disable_default_mappings()
+enddef  # }}}
+
+def s:enable_highlighting_cursorline(): void  # {{{
   setlocal cursorlineopt=both
-endfunction  " }}}
+enddef  # }}}
 
-function s:disable_default_mappings() abort  " {{{
-  if mapcheck("<S-n>", "n")
+def s:disable_default_mappings(): void  # {{{
+  if !!mapcheck("<S-n>", "n")
     nunmap <buffer> <S-n>
   endif
-endfunction  " }}}
+enddef  # }}}

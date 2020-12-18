@@ -1,28 +1,37 @@
-" Sort buffers in dictionary order (Fzf's `:Buffers` doesn't sort them)
-function kg8m#plugin#fzf#buffers#run() abort  " {{{
-  let options = #{
-  \   source:  s:candidates(),
-  \   options: [
-  \     "--header-lines", empty(kg8m#plugin#fzf#current_filepath()) ? 0 : 1,
-  \     "--prompt", "Buffers> ",
-  \     "--preview", "git cat {}",
-  \     "--preview-window", "right:50%:wrap:nohidden",
-  \   ],
-  \ }
+vim9script
 
-  call fzf#run(fzf#wrap("buffer-files", options))
-endfunction  " }}}
+# Manually source the plugin because dein.vim's `on_func` feature is not available.
+# May there be a Vim9 script's bug that `FuncUndefined` event is not triggered?
+if !kg8m#plugin#is_sourced("fzf.vim")
+  kg8m#plugin#source("fzf.vim")
+endif
 
-function s:candidates() abort  " {{{
-  let current = [kg8m#plugin#fzf#current_filepath()]->filter("!empty(v:val)")
-  let buffers = s:list()
+# Sort buffers in dictionary order (Fzf's `:Buffers` doesn't sort them)
+def kg8m#plugin#fzf#buffers#run(): void  # {{{
+  # Use `final` instead of `const` because the variable will be changed by fzf
+  final options = {
+    source:  s:candidates(),
+    options: [
+      "--header-lines", empty(kg8m#plugin#fzf#current_filepath()) ? 0 : 1,
+      "--prompt", "Buffers> ",
+      "--preview", "git cat {}",
+      "--preview-window", "right:50%:wrap:nohidden",
+    ],
+  }
+
+  fzf#run(fzf#wrap("buffer-files", options))
+enddef  # }}}
+
+def s:candidates(): list<string>  # {{{
+  const current = [kg8m#plugin#fzf#current_filepath()]->filter("!empty(v:val)")
+  const buffers = s:list()
 
   return kg8m#util#list_module().uniq(current + buffers)
-endfunction  " }}}
+enddef  # }}}
 
-function s:list() abort  " {{{
-  return getbufinfo(#{ buflisted: v:true })
-  \   ->filter("!empty(v:val.name)")
-  \   ->map("v:val.name->fnamemodify(kg8m#plugin#fzf#filepath_format())")
-  \   ->sort()
-endfunction  " }}}
+def s:list(): list<string>  # {{{
+  return getbufinfo({ buflisted: v:true })
+    ->filter("!empty(v:val.name)")
+    ->map("v:val.name->fnamemodify(kg8m#plugin#fzf#filepath_format())")
+    ->sort()
+enddef  # }}}

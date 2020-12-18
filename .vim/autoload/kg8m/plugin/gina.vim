@@ -1,17 +1,19 @@
-function kg8m#plugin#gina#configure() abort  " {{{
-  call kg8m#plugin#configure(#{
-  \   lazy:   v:true,
-  \   on_cmd: "Gina",
-  \ })
-endfunction  " }}}
+vim9script
 
-function kg8m#plugin#gina#patch(filepath) abort  " {{{
-  let original_diffopt = &diffopt
+def kg8m#plugin#gina#configure(): void  # {{{
+  kg8m#plugin#configure({
+    lazy:   v:true,
+    on_cmd: "Gina",
+  })
+enddef  # }}}
+
+def kg8m#plugin#gina#patch(filepath: string): void  # {{{
+  const original_diffopt = &diffopt
 
   try
     set diffopt+=vertical
-    execute "Gina patch --oneside "..a:filepath
+    execute "Gina patch --oneside " .. filepath
   finally
-    let &diffopt = original_diffopt
+    &diffopt = original_diffopt
   endtry
-endfunction  " }}}
+enddef  # }}}

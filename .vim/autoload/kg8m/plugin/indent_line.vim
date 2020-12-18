@@ -1,18 +1,20 @@
-function kg8m#plugin#indent_line#configure() abort  " {{{
-  call kg8m#configure#conceal()
+vim9script
 
-  let g:indentLine_char            = "|"
-  let g:indentLine_faster          = v:true
-  let g:indentLine_concealcursor   = &concealcursor
-  let g:indentLine_conceallevel    = &conceallevel
-  let g:indentLine_fileTypeExclude = [
-  \   "",
-  \   "diff",
-  \   "startify",
-  \   "unite",
-  \ ]
-  let g:indentLine_bufTypeExclude = [
-  \   "help",
-  \   "terminal",
-  \ ]
-endfunction  " }}}
+def kg8m#plugin#indent_line#configure(): void  # {{{
+  kg8m#configure#conceal()
+
+  g:indentLine_char            = "|"
+  g:indentLine_faster          = v:true
+  g:indentLine_concealcursor   = &concealcursor
+  g:indentLine_conceallevel    = &conceallevel
+  g:indentLine_fileTypeExclude = [
+    "",
+    "diff",
+    "startify",
+    "unite",
+  ]
+  g:indentLine_bufTypeExclude = [
+    "help",
+    "terminal",
+  ]
+enddef  # }}}

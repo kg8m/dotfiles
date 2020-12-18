@@ -1,112 +1,114 @@
-function kg8m#plugin#startify#configure() abort  " {{{
-  if argc()
-    " `on_event: "BufWritePre"` for `s:save_session`: Load startify before writing buffer (on `BufWritePre`) and
-    " register autocmd for `BufWritePost`
-    call kg8m#plugin#configure(#{
-    \   lazy:     v:true,
-    \   on_cmd:   "Startify",
-    \   on_event: "BufWritePre",
-    \   hook_source:      function("s:on_source"),
-    \   hook_post_source: function("s:on_post_source"),
-    \ })
-  else
-    call s:setup()
-  endif
-endfunction  " }}}
+vim9script
 
-function s:setup() abort  " {{{
+def kg8m#plugin#startify#configure(): void  # {{{
+  if argc() ># 0
+    # `on_event: "BufWritePre"` for `s:save_session`: Load startify before writing buffer (on `BufWritePre`) and
+    # register autocmd for `BufWritePost`
+    kg8m#plugin#configure({
+      lazy:     v:true,
+      on_cmd:   "Startify",
+      on_event: "BufWritePre",
+      hook_source:      function("s:on_source"),
+      hook_post_source: function("s:on_post_source"),
+    })
+  else
+    s:setup()
+  endif
+enddef  # }}}
+
+def s:setup(): void  # {{{
   set sessionoptions=buffers,folds
 
-  let g:startify_session_autoload    = v:false
-  let g:startify_session_dir         = getcwd().."/.vim-sessions"
-  let g:startify_session_number      = 10
-  let g:startify_session_persistence = v:false
-  let g:startify_session_sort        = v:true
+  g:startify_session_autoload    = v:false
+  g:startify_session_dir         = getcwd() .. "/.vim-sessions"
+  g:startify_session_number      = 10
+  g:startify_session_persistence = v:false
+  g:startify_session_sort        = v:true
 
-  let g:startify_enable_special = v:true
-  let g:startify_change_to_dir  = v:false
-  let g:startify_relative_path  = v:true
-  let g:startify_lists          = [
-  \   #{ type: "commands",  header: ["My commands:"] },
-  \   #{ type: "bookmarks", header: ["My bookmarks:"] },
-  \   #{ type: "sessions",  header: ["My sessions:"] },
-  \   #{ type: "files",     header: ["Recently opened files:"] },
-  \   #{ type: "dir",       header: ["Recently modified files in the current directory:"] },
-  \ ]
-  let g:startify_commands = [
-  \   #{ p: "call kg8m#plugin#update_all()" },
-  \   #{ P: "call kg8m#plugin#update_all(#{ bulk: v:false })" },
-  \ ]
+  g:startify_enable_special = v:true
+  g:startify_change_to_dir  = v:false
+  g:startify_relative_path  = v:true
+  g:startify_lists          = [
+    { type: "commands",  header: ["My commands:"] },
+    { type: "bookmarks", header: ["My bookmarks:"] },
+    { type: "sessions",  header: ["My sessions:"] },
+    { type: "files",     header: ["Recently opened files:"] },
+    { type: "dir",       header: ["Recently modified files in the current directory:"] },
+  ]
+  g:startify_commands = [
+    { p: "call kg8m#plugin#update_all()" },
+    { P: "call kg8m#plugin#update_all(#{ bulk: v:false })" },
+  ]
 
-  " https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
-  let g:startify_custom_header  = [
-  \   "                      .",
-  \   "      ##############..... ##############",
-  \   "      ##############......##############",
-  \   "        ##########..........##########",
-  \   "        ##########........##########",
-  \   "        ##########.......##########",
-  \   "        ##########.....##########..",
-  \   "        ##########....##########.....",
-  \   "      ..##########..##########.........",
-  \   "    ....##########.#########.............",
-  \   "      ..################JJJ............",
-  \   "        ################.............",
-  \   "        ##############.JJJ.JJJJJJJJJJ",
-  \   "        ############...JJ...JJ..JJ  JJ",
-  \   "        ##########....JJ...JJ..JJ  JJ",
-  \   "        ########......JJJ..JJJ JJJ JJJ",
-  \   "        ######    .........",
-  \   "                    .....",
-  \   "                      .",
-  \ ]
+  # https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
+  g:startify_custom_header = [
+    "                      .",
+    "      ##############..... ##############",
+    "      ##############......##############",
+    "        ##########..........##########",
+    "        ##########........##########",
+    "        ##########.......##########",
+    "        ##########.....##########..",
+    "        ##########....##########.....",
+    "      ..##########..##########.........",
+    "    ....##########.#########.............",
+    "      ..################JJJ............",
+    "        ################.............",
+    "        ##############.JJJ.JJJJJJJJJJ",
+    "        ############...JJ...JJ..JJ  JJ",
+    "        ##########....JJ...JJ..JJ  JJ",
+    "        ########......JJJ..JJJ JJJ JJJ",
+    "        ######    .........",
+    "                    .....",
+    "                      .",
+  ]
 
-  let g:startify_custom_header += [
-  \   "",
-  \   "",
-  \   "  Vim version: "..v:versionlong,
-  \   "",
-  \   "  LSPs: ",
-  \ ]
+  g:startify_custom_header += [
+    "",
+    "",
+    "  Vim version: " .. v:versionlong,
+    "",
+    "  LSPs: ",
+  ]
 
   for server in kg8m#plugin#lsp#servers()
-    let g:startify_custom_header += [
-    \   "  "..(server.available ? "👼 " : "👿 ")..server.name,
-    \ ]
+    g:startify_custom_header += [
+      "  " .. (server.available ? "👼 " : "👿 ") .. server.name,
+    ]
   endfor
 
-  let g:startify_custom_header += [""]
+  g:startify_custom_header += [""]
 
-  augroup my_vimrc  " {{{
-    autocmd ColorScheme  * call s:overwrite_colors()
-    autocmd BufWritePost * call s:save_session()
-  augroup END  " }}}
-endfunction  " }}}
+  augroup my_vimrc  # {{{
+    autocmd ColorScheme  * s:overwrite_colors()
+    autocmd BufWritePost * s:save_session()
+  augroup END  # }}}
+enddef  # }}}
 
-function s:overwrite_colors() abort  " {{{
+def s:overwrite_colors(): void  # {{{
   highlight StartifyFile   guifg=#FFFFFF
   highlight StartifyHeader guifg=#FFFFFF
   highlight StartifyPath   guifg=#777777
   highlight StartifySlash  guifg=#777777
-endfunction  " }}}
+enddef  # }}}
 
-function s:save_session() abort  " {{{
-  call kg8m#configure#folding#manual#restore()
-  execute "silent SSave! "..s:session_name()
-endfunction  " }}}
+def s:save_session(): void  # {{{
+  kg8m#configure#folding#manual#restore()
+  execute "silent SSave! " .. s:session_name()
+enddef  # }}}
 
-function s:session_name() abort  " {{{
+def s:session_name(): string  # {{{
   return "%"
-  \   ->expand()
-  \   ->fnamemodify(":p")
-  \   ->substitute("/", "+=", "g")
-  \   ->substitute('^\.', "_", "")
-endfunction  " }}}
+    ->expand()
+    ->fnamemodify(":p")
+    ->substitute("/", "+=", "g")
+    ->substitute('^\.', "_", "")
+enddef  # }}}
 
-function s:on_source() abort  " {{{
-  call s:setup()
-endfunction  " }}}
+def s:on_source(): void  # {{{
+  s:setup()
+enddef  # }}}
 
-function s:on_post_source() abort  " {{{
-  call s:overwrite_colors()
-endfunction  " }}}
+def s:on_post_source(): void  # {{{
+  s:overwrite_colors()
+enddef  # }}}
