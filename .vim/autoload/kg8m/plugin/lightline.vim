@@ -87,8 +87,7 @@ def kg8m#plugin#lightline#warning_fileencoding(): string  # {{{
 enddef  # }}}
 
 def kg8m#plugin#lightline#is_irregular_filepath(): bool  # {{{
-  # `sudo:` prefix for sudo.vim, which I used to use
-  return s:is_readonly() || !!(expand("%") =~# '\v^(sudo:|suda://)')
+  return s:is_readonly() || !!(expand("%") =~# '^suda://')
 enddef  # }}}
 
 def kg8m#plugin#lightline#is_irregular_fileencoding(): bool  # {{{
