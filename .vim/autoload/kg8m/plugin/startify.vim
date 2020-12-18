@@ -80,8 +80,9 @@ def s:setup(): void  # {{{
   g:startify_custom_header += [""]
 
   augroup my_vimrc  # {{{
-    autocmd ColorScheme  * s:overwrite_colors()
-    autocmd BufWritePost * s:save_session()
+    autocmd FileType startify setlocal cursorline cursorlineopt=both
+    autocmd ColorScheme  *    s:overwrite_colors()
+    autocmd BufWritePost *    s:save_session()
   augroup END  # }}}
 enddef  # }}}
 
