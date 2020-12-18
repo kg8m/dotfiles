@@ -28,8 +28,8 @@ def s:setup_contextual(): void  # {{{
       { pattern: '^app/controllers', snippets: [dir .. "ruby-rails.snip",    dir .. "ruby-rails-controller.snip"] },
       { pattern: '^app/models',      snippets: [dir .. "ruby-rails.snip",    dir .. "ruby-rails-model.snip"] },
       { pattern: '^db/migrate',      snippets: [dir .. "ruby-rails.snip",    dir .. "ruby-rails-migration.snip"] },
-      { pattern: '_test\.rb$',       snippets: [dir .. "ruby-minitest.snip", dir .. "ruby-rails.snip", dir .. "ruby-rails-test.snip", dir .. "ruby-rails-minitest.snip"] },
-      { pattern: '_spec\.rb$',       snippets: [dir .. "ruby-rspec.snip",    dir .. "ruby-rails.snip", dir .. "ruby-rails-test.snip", dir .. "ruby-rails-rspec.snip"] },
+      { pattern: '_test\.rb$',       snippets: [dir .. "ruby-minitest.snip", dir .. "ruby-rails.snip", dir .. "ruby-rails-minitest.snip"] },
+      { pattern: '_spec\.rb$',       snippets: [dir .. "ruby-rspec.snip",    dir .. "ruby-rails.snip", dir .. "ruby-rails-rspec.snip"] },
     ])
   else
     extend(g:neosnippet_contextual#contexts.ruby, [
