@@ -145,7 +145,7 @@ enddef  # }}}
 def kg8m#plugin#show_update_log(): void  # {{{
   const initial_input =
     '!Same\\ revision'
-    .. '\ !Current\\ branch\\ master\\ is\\ up\\ to\\ date.'
+    .. '\ !Current\\ branch\\ *\\ is\\ up\\ to\\ date.'
     .. '\ !^$'
     .. '\ !(*/*)\\ [+'
     .. '\ !(*/*)\\ [-'
@@ -154,7 +154,7 @@ def kg8m#plugin#show_update_log(): void  # {{{
     .. '\ !HEAD\\ is\\ now'
     .. '\ !\\ *->\\ origin/'
     .. '\ !^First,\\ rewinding\\ head\\ to\\ replay\\ your\\ work\\ on\\ top\\ of\\ it'
-    .. '\ !^Fast-forwarded\\ master\\ to'
+    .. '\ !^Fast-forwarded\\ *\\ to'
     .. '\ !^(.*/.*)\\ From\\ '
     .. '\ !Successfully\\ rebased\\ and\\ updated\\ refs/heads/'
     .. '\ !*\\ [new\\ tag]'
