@@ -251,6 +251,10 @@ if kg8m#plugin#register("obcat/vim-hitspop")  # {{{
   kg8m#plugin#hitspop#configure()
 endif  # }}}
 
+if kg8m#plugin#register("kg8m/vim-hz_ja-extracted")  # {{{
+  kg8m#plugin#hz_ja_extracted#configure()
+endif  # }}}
+
 # Text object for (Japanese) sentence: s
 if kg8m#plugin#register("deton/jasentence.vim")  # {{{
   kg8m#plugin#jasentence#configure()
