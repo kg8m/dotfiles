@@ -13,17 +13,12 @@ def kg8m#plugin#yankround#fzf#preview_command(): string  # {{{
   return command
 enddef  # }}}
 
+# Overwrite current register `"`
 def kg8m#plugin#yankround#fzf#handler(yank_item: string): void  # {{{
-  const old_reg = [getreg('"'), getregtype('"')]
   const index = matchlist(yank_item, '\v^\s*(\d+)\t')[1]
   [text, regtype] = yankround#_get_cache_and_regtype(index)
   setreg('"', text, regtype)
-
-  try
-    execute 'normal! ""p'
-  finally
-    setreg('"', old_reg[0], old_reg[1])
-  endtry
+  execute 'normal! ""p'
 enddef  # }}}
 
 def s:format_list_item(index: number): string  # {{{
