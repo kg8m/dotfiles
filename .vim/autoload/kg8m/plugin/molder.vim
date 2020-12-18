@@ -3,7 +3,7 @@ vim9script
 def kg8m#plugin#molder#configure(): void  # {{{
   g:molder_show_hidden = v:true
 
-  nmap <Leader>e :edit %:h<Cr>
+  nmap <Leader>e :edit <C-r>=expand("%")->empty() ? "." : "%:h"<Cr><Cr>
 
   augroup my_vimrc  # {{{
     # Cancel molder
