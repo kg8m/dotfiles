@@ -1,16 +1,26 @@
-function OpenGitDiffWindows() abort
-  if exists("w:git_diff_opened") && w:git_diff_opened
+function s:open_diff_window() abort
+  if has_key(b:, "diff_window_opened")
     return
   endif
 
-  let w:git_diff_opened = 1
+  let b:diff_window_opened = v:true
 
-  set nosplitright
-
+  setlocal nosplitright
   vnew
-  silent! setlocal ft=git bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
-  execute ":r!LANG=ja_JP.UTF8 git log --max-count=100\n"
+
+  setlocal filetype=git
+  setlocal bufhidden=delete
+  setlocal nobackup
+  setlocal noswapfile
+  setlocal nobuflisted
+  setlocal wrap
+  setlocal buftype=nofile
+
+  read !git log --max-count=100
+  call deletebufline(bufnr(), 1, 1)
+
   setlocal nomodifiable
+
   goto 1
   redraw!
   wincmd R
@@ -21,5 +31,5 @@ endfunction
 
 set nowarn
 
-call OpenGitDiffWindows()
+call s:open_diff_window()
 set nowritebackup
