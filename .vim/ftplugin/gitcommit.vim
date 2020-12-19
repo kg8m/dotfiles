@@ -1,9 +1,11 @@
-function s:open_diff_window() abort
+vim9script
+
+def s:open_diff_window(): void
   if has_key(b:, "diff_window_opened")
     return
   endif
 
-  let b:diff_window_opened = v:true
+  b:diff_window_opened = v:true
 
   setlocal nosplitright
   vnew
@@ -17,7 +19,7 @@ function s:open_diff_window() abort
   setlocal buftype=nofile
 
   read !git log --max-count=100
-  call deletebufline(bufnr(), 1, 1)
+  deletebufline(bufnr(), 1, 1)
 
   setlocal nomodifiable
 
@@ -27,9 +29,9 @@ function s:open_diff_window() abort
   wincmd p
   goto 1
   redraw!
-endfunction
+enddef
 
 set nowarn
 
-call s:open_diff_window()
+s:open_diff_window()
 set nowritebackup
