@@ -165,3 +165,32 @@ enddef  # }}}
 def kg8m#util#notify_clear_search_highlight(): void  # {{{
   doautocmd <nomodeline> User clear_search_highlight
 enddef  # }}}
+
+def kg8m#util#convert_to_vim9script(): void  # {{{
+  if getline(1) !=# "vim9script"
+    append(0, "")
+    append(0, "vim9script")
+  endif
+
+  :%s/\v^function>/def/Ie
+  :%s/\v^endfunction>/enddef/Ie
+  :%s/\v\) abort>/)/Ie
+
+  :%s/\v(:)@<!(\<Cmd\>)@<!(")@<!(')@<!<call\s+//Ie
+
+  :%s/\v<(let\s+)([a-zA-Z&:_.]+)(\s+)\.\=/\1\2\3..=/Ie
+
+  :%s/\v(:)@<!<let\s+//Ie
+  :%s/\v<a:([a-zA-Z_]+)/\1/gIe
+
+  :%s/\v#\{/{/ge
+
+  :%s/\v([^.\/ ])\.\.(\.)@!/\1 ../ge
+  :%s/\v(\.)@<!\.\.([^.\/ ])/.. \1/ge
+
+  :%s/\v^(\s*)" /\1# /e
+  :%s/\v" \{\{\{/# {{{/e
+  :%s/\v" \}\}\}/# }}}/e
+
+  :%s/\v^(\s*)\\ /\1/e
+enddef  # }}}
