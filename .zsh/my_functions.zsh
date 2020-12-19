@@ -377,3 +377,26 @@ function benchmark_zsh {
     done
   fi
 }
+
+# https://stackoverflow.com/a/28044986
+function progressbar {
+  local current_index="$1"
+  local total_count="$2"
+
+  if [[ ! "$current_index" =~ ^[0-9]+$ ]] || [[ ! "$total_count" =~ ^[0-9]+$ ]]; then
+    echo "Usage: progressbar {current_index} {total_count}" >&2
+    return 1
+  fi
+
+  local margin="7"
+  local width=$((COLUMNS - margin))
+
+  local progress=$((current_index * 100 * 100 / total_count / 100))
+  local done_count=$((progress * width / 10 / 10))
+  local left_count=$((width - done_count))
+
+  local fill_chars="${(r:$done_count::#:)}"
+  local empty_chars="${(r:$left_count:: :)}"
+
+  printf "\r[%s%s] %3d%%" "$fill_chars" "$empty_chars" "$progress"
+}
