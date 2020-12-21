@@ -122,13 +122,15 @@ bulk-add-by-patch    = sh git:add:bulk:patch
 # restore  # {{{
 unstage = restore --staged
 
-restore-by-select        = bulk-restore
-restore-by-select-staged = bulk-restore-staged
-unstage-by-select        = bulk-unstage
+restore-by-select          = bulk-restore
+restore-by-select-staged   = bulk-restore-staged
+unstage-by-select          = bulk-unstage
+unstage-by-patch-by-select = bulk-unstage-by-patch
 
-bulk-restore        = sh git:restore:bulk
-bulk-restore-staged = sh git:restore:bulk:staged
-bulk-unstage        = sh git:restore:bulk:staged
+bulk-restore          = sh git:restore:bulk
+bulk-restore-staged   = sh git:restore:bulk:staged
+bulk-unstage          = sh git:restore:bulk:staged
+bulk-unstage-by-patch = sh git:restore:bulk:staged:patch
 # }}}
 
 # clone  # {{{
@@ -261,6 +263,7 @@ info = remote show origin
 
 chmod = "!git sh \"git:utility:chmod '$1'\""
 diff-or-cat = "!git sh \"git:utility:diff_or_cat '$1'\""
+diff-or-cat-for-staged = "!git sh \"git:utility:diff_or_cat_for_staged '$1'\""
 cat = "!git sh \"git:utility:cat '$1'\""
 
 sh = "!zsh -c \"source ~/.config/git/aliases; $@\""
