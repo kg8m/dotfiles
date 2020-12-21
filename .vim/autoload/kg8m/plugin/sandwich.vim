@@ -48,8 +48,5 @@ def s:common_options(): dict<any>  # {{{
 enddef  # }}}
 
 def s:on_post_source(): void  # {{{
-  # Don't use `deepcopy(g:sandwich#default_recipes)` because it raises "E121: Undefined variable:
-  # g:sandwich#default_recipes" in Vim9 script. `sandwich#get_recipes` returns deepcopied `g:sandwich#default_recipes`
-  # if neither `b:sanwich_recipes` nor `g:sandwich#recipes` are defined.
-  g:sandwich#recipes = sandwich#get_recipes() + s:surround_like_recipes() + s:zenkaku_recipes()
+  g:sandwich#recipes = deepcopy(g:sandwich#default_recipes) + s:surround_like_recipes() + s:zenkaku_recipes()
 enddef  # }}}
