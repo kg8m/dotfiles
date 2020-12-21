@@ -9,7 +9,7 @@ def kg8m#util#dim_inactive_windows#setup()  # {{{
 enddef  # }}}
 
 def kg8m#util#dim_inactive_windows#reset()  # {{{
-  bufdo s:reset_buffer()
+  bufdo if has_key(b:, "original_colorcolumn") | s:reset_buffer() | endif
 enddef  # }}}
 
 def s:apply(options = {})  # {{{
