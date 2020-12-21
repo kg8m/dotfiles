@@ -110,11 +110,6 @@ abbr    assert_response :{type:success|redirect|missing|error}
 options head
 	assert_response :${1:success}
 
-snippet assert_redirected_to
-abbr    assert_redirected_to {options}
-options head
-	assert_redirected_to ${1:#:options}
-
 snippet assert_template
 abbr    assert_template {options}
 options head
