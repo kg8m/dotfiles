@@ -28,8 +28,8 @@ def s:on_source(): void  # {{{
   augroup my_vimrc  # {{{
     autocmd FileType Gemfile b:caw_oneline_comment = "#"
 
-    # Delay to overwrite caw.vim's defualt
-    autocmd FileType vim timer_start(100, { -> s:setup_vim() })
+    # Re-setup lazily to overwrite caw.vim's defualt
+    autocmd FileType vim s:setup_vim() | timer_start(100, { -> s:setup_vim() })
   augroup END  # }}}
 enddef  # }}}
 
