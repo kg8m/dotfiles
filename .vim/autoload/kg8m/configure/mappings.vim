@@ -1,5 +1,7 @@
 vim9script
 
+var s:is_clear_hlsearch_initialized = v:false
+
 def kg8m#configure#mappings#base(): void  # {{{
   # Split window
   nnoremap <Leader>v :vsplit<CR>
@@ -47,8 +49,9 @@ def kg8m#configure#mappings#base(): void  # {{{
 enddef  # }}}
 
 def kg8m#configure#mappings#search(): void  # {{{
-  nnoremap <Leader>/ :nohlsearch<CR>:call kg8m#util#notify_clear_search_highlight()<CR>
-  nnoremap / /\v
+  nnoremap <expr> <Leader>/ <SID>clear_hlsearch()
+  nnoremap <expr> /         <SID>enter_search()
+  cnoremap <expr> <C-c>     <SID>exit_cmdline()
 enddef  # }}}
 
 def kg8m#configure#mappings#utils(): void  # {{{
@@ -62,4 +65,40 @@ def kg8m#configure#mappings#prevent_unconscious_operation(): void  # {{{
   inoremap <Nul> <C-Space>
   tnoremap <Nul> <C-Space>
   noremap <F1> <Nop>
+enddef  # }}}
+
+def s:clear_hlsearch(): string  # {{{
+  if !s:is_clear_hlsearch_initialized
+    augroup my_vimrc  # {{{
+      autocmd User clear_search_highlight silent
+    augroup END  # }}}
+
+    s:is_clear_hlsearch_initialized = v:true
+  endif
+
+  const clear        = ":nohlsearch\<CR>"
+  const notify       = ":doautocmd <nomodeline> User clear_search_highlight\<CR>"
+  const clear_status = ":echo ''\<CR>"
+
+  return clear .. notify .. clear_status
+enddef  # }}}
+
+def s:enter_search(): string  # {{{
+  const enable_highlight      = ":set hlsearch\<CR>"
+  const enter_with_very_magic = "/\\v"
+
+  return enable_highlight .. enter_with_very_magic
+enddef  # }}}
+
+def s:exit_cmdline(): string  # {{{
+  const original = "\<C-c>"
+
+  var extra = ""
+
+  if getcmdtype() ==# "/"
+    # Call s:clear_hlsearch
+    extra = ":call feedkeys('" .. g:mapleader .. "/')\<CR>"
+  endif
+
+  return original .. extra
 enddef  # }}}
