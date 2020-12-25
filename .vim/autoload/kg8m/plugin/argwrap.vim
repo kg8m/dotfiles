@@ -15,7 +15,12 @@ def s:set_local_options(): void  # {{{
     b:argwrap_tail_comma_braces = "[{"
   elseif &filetype ==# "vim"
     b:argwrap_tail_comma_braces = "[{"
-    b:argwrap_line_prefix = '\'
+
+    if getline(1) ==# "vim9script"
+      b:argwrap_line_prefix = ""
+    else
+      b:argwrap_line_prefix = '\'
+    endif
   endif
 enddef  # }}}
 
