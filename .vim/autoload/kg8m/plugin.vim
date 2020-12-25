@@ -3,24 +3,24 @@ vim9script
 var s:is_update_log_shown = v:false
 
 def kg8m#plugin#disable_defaults(): void  # {{{
-  g:no_vimrc_example          = v:true
-  g:no_gvimrc_example         = v:true
-  g:loaded_gzip               = v:true
-  g:loaded_tar                = v:true
-  g:loaded_tarPlugin          = v:true
-  g:loaded_zip                = v:true
-  g:loaded_zipPlugin          = v:true
-  g:loaded_rrhelper           = v:true
-  g:loaded_vimball            = v:true
-  g:loaded_vimballPlugin      = v:true
-  g:loaded_getscript          = v:true
-  g:loaded_getscriptPlugin    = v:true
-  g:loaded_netrw              = v:true
-  g:loaded_netrwPlugin        = v:true
-  g:loaded_netrwSettings      = v:true
-  g:loaded_netrwFileHandlers  = v:true
-  g:skip_loading_mswin        = v:true
-  g:did_install_syntax_menu   = v:true
+  g:no_vimrc_example         = v:true
+  g:no_gvimrc_example        = v:true
+  g:loaded_gzip              = v:true
+  g:loaded_tar               = v:true
+  g:loaded_tarPlugin         = v:true
+  g:loaded_zip               = v:true
+  g:loaded_zipPlugin         = v:true
+  g:loaded_rrhelper          = v:true
+  g:loaded_vimball           = v:true
+  g:loaded_vimballPlugin     = v:true
+  g:loaded_getscript         = v:true
+  g:loaded_getscriptPlugin   = v:true
+  g:loaded_netrw             = v:true
+  g:loaded_netrwPlugin       = v:true
+  g:loaded_netrwSettings     = v:true
+  g:loaded_netrwFileHandlers = v:true
+  g:skip_loading_mswin       = v:true
+  g:did_install_syntax_menu  = v:true
 
   # MacVim's features, e.g., `Command` + `v` to paste, are broken if setting this
   # g:did_install_default_menus = v:true
