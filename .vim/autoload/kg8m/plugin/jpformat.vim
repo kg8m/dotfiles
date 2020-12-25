@@ -26,9 +26,9 @@ enddef  # }}}
 def s:on_source(): void  # {{{
   s:set_formatexpr()
 
-  const JpFormatCursorMovedI = v:false
-  const JpAutoJoin = v:false
-  const JpAutoFormat = v:false
+  g:JpFormatCursorMovedI = v:false
+  g:JpAutoJoin = v:false
+  g:JpAutoFormat = v:false
 
   augroup my_vimrc  # {{{
     # Overwrite formatexpr
