@@ -138,7 +138,7 @@ enddef  # }}}
 
 def kg8m#plugin#remove_disused(): void  # {{{
   for dirpath in dein#check_clean()
-    kg8m#util#echo_error_msg("Remove " .. dirpath)
+    kg8m#util#echo_warn_msg("Remove " .. dirpath)
     delete(dirpath, "rf")
   endfor
 enddef  # }}}
