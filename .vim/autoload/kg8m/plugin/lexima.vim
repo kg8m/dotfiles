@@ -107,7 +107,7 @@ def s:add_rules_for_markdown(): void  # {{{
   #   [ ] |
   lexima#add_rule({ char: "<Space>", at: '\[\%#]', input: "<Space><Right><Space>", filetype: ["gitcommit", "markdown"] })
 
-  # `<Cr>` when
+  # `<CR>` when
   #
   #   ```|```
   #
@@ -116,9 +116,9 @@ def s:add_rules_for_markdown(): void  # {{{
   #   ```
   #   |
   #   ```
-  lexima#add_rule({ char: "<Cr>", at: '```\%#```', input_after: "<Cr>", filetype: ["gitcommit", "markdown"] })
+  lexima#add_rule({ char: "<CR>", at: '```\%#```', input_after: "<CR>", filetype: ["gitcommit", "markdown"] })
 
-  # `<Cr>` when
+  # `<CR>` when
   #
   #   ```foo|```
   #
@@ -127,7 +127,7 @@ def s:add_rules_for_markdown(): void  # {{{
   #   ```foo
   #   |
   #   ```
-  lexima#add_rule({ char: "<Cr>", at: '```[a-z]\+\%#```', input_after: "<Cr>", filetype: ["gitcommit", "markdown"] })
+  lexima#add_rule({ char: "<CR>", at: '```[a-z]\+\%#```', input_after: "<CR>", filetype: ["gitcommit", "markdown"] })
 enddef  # }}}
 
 def s:add_rules_for_vim(): void  # {{{

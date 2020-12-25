@@ -30,7 +30,7 @@ enddef  # }}}
 def s:handler(item: string): void  # {{{
   # Don't `execute substitute(...)` because it causes problem if the command is Fzf's
   const command = substitute(item, '\v.*--\s+`(.+)`$', '\1', "")
-  feedkeys(":" .. command .. "\<Cr>")
+  feedkeys(":" .. command .. "\<CR>")
 enddef  # }}}
 
 def s:setup_list(): void  # {{{

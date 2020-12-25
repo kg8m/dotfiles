@@ -1,7 +1,7 @@
 vim9script
 
 def kg8m#plugin#mappings#define_cr_for_insert_mode(): void  # {{{
-  imap <silent><expr> <Cr> <SID>cr_expr_for_insert_mode()
+  imap <silent><expr> <CR> <SID>cr_expr_for_insert_mode()
 enddef  # }}}
 
 def kg8m#plugin#mappings#define_bs_for_insert_mode(): void  # {{{
@@ -22,7 +22,7 @@ def s:cr_expr_for_insert_mode(): string  # {{{
     if pumvisible()
       return asyncomplete#close_popup()
     else
-      return lexima#expand("<Cr>", "i")
+      return lexima#expand("<CR>", "i")
     endif
   endif
 enddef  # }}}

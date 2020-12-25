@@ -12,9 +12,9 @@ def s:setup_buffer(): void  # {{{
   setlocal foldmethod=syntax
 
   if kg8m#util#on_tmux()  # {{{
-    nnoremap <buffer> <leader>r :write<Cr>:call kg8m#plugin#vimux#run_command("go run -race <C-r>%")<Cr>
+    nnoremap <buffer> <leader>r :write<CR>:call kg8m#plugin#vimux#run_command("go run -race <C-r>%")<CR>
   else
-    nnoremap <buffer> <leader>r :write<Cr>:GoRun -race %<Cr>
+    nnoremap <buffer> <leader>r :write<CR>:GoRun -race %<CR>
   endif  # }}}
 enddef  # }}}
 

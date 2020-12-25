@@ -1,8 +1,9 @@
 vim9script
 
 def kg8m#configure#mappings#base(): void  # {{{
-  nnoremap <Leader>v :vsplit<Cr>
-  nnoremap <Leader>h :split<Cr>
+  # Split window
+  nnoremap <Leader>v :vsplit<CR>
+  nnoremap <Leader>h :split<CR>
 
   # See also settings of vim-lsp and vim-fzf-tjump
   # <C-t>: Jump back
@@ -46,13 +47,13 @@ def kg8m#configure#mappings#base(): void  # {{{
 enddef  # }}}
 
 def kg8m#configure#mappings#search(): void  # {{{
-  nnoremap <Leader>/ :nohlsearch<Cr>:call kg8m#util#notify_clear_search_highlight()<Cr>
+  nnoremap <Leader>/ :nohlsearch<CR>:call kg8m#util#notify_clear_search_highlight()<CR>
   nnoremap / /\v
 enddef  # }}}
 
 def kg8m#configure#mappings#utils(): void  # {{{
-  vnoremap <Leader>y "yy:call kg8m#util#remote_copy(@")<Cr>
-  vnoremap <Leader>w :call kg8m#util#remove_trailing_whitespaces()<Cr>
+  vnoremap <Leader>y "yy:call kg8m#util#remote_copy(@")<CR>
+  vnoremap <Leader>w :call kg8m#util#remove_trailing_whitespaces()<CR>
 enddef  # }}}
 
 # <Nul> == <C-Space>

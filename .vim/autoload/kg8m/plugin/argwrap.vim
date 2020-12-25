@@ -1,7 +1,7 @@
 vim9script
 
 def kg8m#plugin#argwrap#configure(): void  # {{{
-  nnoremap <Leader>a :ArgWrap<Cr>
+  nnoremap <Leader>a :ArgWrap<CR>
 
   kg8m#plugin#configure({
     lazy:   v:true,

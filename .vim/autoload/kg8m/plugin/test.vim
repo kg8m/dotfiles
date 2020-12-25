@@ -1,8 +1,8 @@
 vim9script
 
 def kg8m#plugin#test#configure(): void  # {{{
-  nnoremap <Leader>T :write<Cr>:TestFile<Cr>
-  nnoremap <Leader>t :write<Cr>:TestNearest<Cr>
+  nnoremap <Leader>T :write<CR>:TestFile<CR>
+  nnoremap <Leader>t :write<CR>:TestNearest<CR>
 
   kg8m#plugin#configure({
     lazy:   v:true,

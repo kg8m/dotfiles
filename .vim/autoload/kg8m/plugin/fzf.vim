@@ -15,22 +15,22 @@ def kg8m#plugin#fzf#configure(): void  # {{{
   g:fzf_action = { ctrl-o: "DWMOpen" }
 
   # See also vim-fzf-tjump's mappings
-  nnoremap <Leader><Leader>f :FzfFiles<Cr>
-  nnoremap <Leader><Leader>v :call kg8m#plugin#fzf#git_files#run()<Cr>
-  nnoremap <Leader><Leader>b :call kg8m#plugin#fzf#buffers#run()<Cr>
-  nnoremap <Leader><Leader>l :FzfBLines<Cr>
+  nnoremap <Leader><Leader>f :FzfFiles<CR>
+  nnoremap <Leader><Leader>v :call kg8m#plugin#fzf#git_files#run()<CR>
+  nnoremap <Leader><Leader>b :call kg8m#plugin#fzf#buffers#run()<CR>
+  nnoremap <Leader><Leader>l :FzfBLines<CR>
   nnoremap <Leader><Leader>g :FzfGrep<Space>
   nnoremap <Leader><Leader>G :FzfGrepForDir<Space>
   vnoremap <Leader><Leader>g "gy:FzfGrep<Space><C-r>"
   vnoremap <Leader><Leader>G "gy:FzfGrepForDir<Space><C-r>"
-  nnoremap <Leader><Leader>m :FzfMarks<Cr>
-  nnoremap <Leader><Leader>h :call kg8m#plugin#fzf#history#run()<Cr>
-  nnoremap <Leader><Leader>H :FzfHelptags<Cr>
-  nnoremap <Leader><Leader>y :call kg8m#plugin#fzf#yank_history#run()<Cr>
-  noremap  <Leader><Leader>s <Cmd>call kg8m#plugin#fzf#shortcuts#run("")<Cr>
-  noremap  <Leader><Leader>a <Cmd>call kg8m#plugin#fzf#shortcuts#run("'EasyAlign ")<Cr>
+  nnoremap <Leader><Leader>m :FzfMarks<CR>
+  nnoremap <Leader><Leader>h :call kg8m#plugin#fzf#history#run()<CR>
+  nnoremap <Leader><Leader>H :FzfHelptags<CR>
+  nnoremap <Leader><Leader>y :call kg8m#plugin#fzf#yank_history#run()<CR>
+  noremap  <Leader><Leader>s <Cmd>call kg8m#plugin#fzf#shortcuts#run("")<CR>
+  noremap  <Leader><Leader>a <Cmd>call kg8m#plugin#fzf#shortcuts#run("'EasyAlign ")<CR>
 
-  nnoremap <silent> m :call kg8m#plugin#fzf#marks#increment()<Cr>
+  nnoremap <silent> m :call kg8m#plugin#fzf#marks#increment()<CR>
 
   command! -nargs=+ -complete=tag FzfGrep       kg8m#plugin#fzf#grep#run(<q-args>, "")
   command! -nargs=+ -complete=tag FzfGrepForDir kg8m#plugin#fzf#grep#run(<q-args>, kg8m#plugin#fzf#grep#input_dir())

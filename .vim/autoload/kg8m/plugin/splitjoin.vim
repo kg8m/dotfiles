@@ -1,8 +1,8 @@
 vim9script
 
 def kg8m#plugin#splitjoin#configure(): void  # {{{
-  nnoremap <Leader>J :SplitjoinJoin<Cr>
-  nnoremap <Leader>S :SplitjoinSplit<Cr>
+  nnoremap <Leader>J :SplitjoinJoin<CR>
+  nnoremap <Leader>S :SplitjoinSplit<CR>
 
   g:splitjoin_split_mapping       = ""
   g:splitjoin_join_mapping        = ""

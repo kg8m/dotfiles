@@ -1,8 +1,8 @@
 vim9script
 
 def kg8m#plugin#dwm#configure(): void  # {{{
-  nnoremap <C-w>n       :call DWM_New()<Cr>
-  nnoremap <C-w><Space> :call DWM_AutoEnter()<Cr>
+  nnoremap <C-w>n       :call DWM_New()<CR>
+  nnoremap <C-w><Space> :call DWM_AutoEnter()<CR>
 
   kg8m#plugin#configure({
     lazy:    v:true,
