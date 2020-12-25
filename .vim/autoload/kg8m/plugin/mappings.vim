@@ -22,7 +22,8 @@ def s:cr_expr_for_insert_mode(): string  # {{{
     if pumvisible()
       return asyncomplete#close_popup()
     else
-      return lexima#expand("<CR>", "i")
+      # <C-g>u: Break undo sequence when a new line is inserted
+      return "\<C-g>u" .. lexima#expand("<CR>", "i")
     endif
   endif
 enddef  # }}}
