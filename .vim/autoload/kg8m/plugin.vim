@@ -1,7 +1,5 @@
 vim9script
 
-var s:is_update_log_shown = v:false
-
 def kg8m#plugin#disable_defaults(): void  # {{{
   g:no_vimrc_example         = v:true
   g:no_gvimrc_example        = v:true
@@ -122,6 +120,9 @@ def kg8m#plugin#update_all(options: dict<any> = {}): void  # {{{
 enddef  # }}}
 
 def kg8m#plugin#check_and_update(options: dict<any> = {}): void  # {{{
+  # Clear messages because they will be used in `s:check_updating_finished`
+  messages clear
+
   # Re-register disabled plugins before update because dein.vim doesn't make helptags for them
   kg8m#plugin#enable_disabled_plugins()
 
@@ -168,8 +169,6 @@ def kg8m#plugin#show_update_log(): void  # {{{
 
   # Press `n` key to search "Updated"
   @/ = "Updated"
-
-  s:is_update_log_shown = v:true
 enddef  # }}}
 
 def kg8m#plugin#source(plugin_name: string): void  # {{{
@@ -213,7 +212,7 @@ def s:check_updating_finished(options: dict<any> = {}): void  # {{{
     options_cache.start_time = localtime()
   endif
 
-  if s:is_update_log_shown && execute("messages") =~# '\v\[dein\] Done:'
+  if execute("messages") =~# '\v\[dein\] Done:'
     const should_stay = (localtime() - options_cache.start_time) > 30
     s:notify_updating("Finished.", { stay: should_stay })
   else
