@@ -1,17 +1,28 @@
-function plugin:setup:prompt {
-  autoload colors && colors
+function setup:prompt {
+  autoload -U colors && colors
 
+  local header=$'%{\e[38;5;245m%}$(prompt:header)%{\e[0m%}'
   local user="%F{green}%n@%m%f"
   local current_dir="%F{cyan}%~%f"
   local git='$(gitprompt)'
   local mark="%F{white}%(!.#.%#)%f "
 
-  export PROMPT="%B${user} ${current_dir}%b ${git}"$'\n'"${mark}"
+  export PROMPT="${header}"$'\n'"%B${user} ${current_dir}%b ${git}"$'\n'"${mark}"
   export PROMPT2="%F{green}%_>%f "
 
-  unset -f plugin:setup:prompt
+  function prompt:header {
+    local timestamp="$(date +'%Y/%m/%d %H:%M:%S')"
+    local timestamp_width="${#timestamp}"
+    local right_margin="$((timestamp_width + 1))"
+    local window_width="${COLUMNS:-}"
+    local line_width="$((window_width - right_margin))"
+
+    printf "%s %s" "${(r:$line_width::-:)}" "$timestamp"
+  }
+
+  unset -f setup:prompt
 }
-plugin:setup:prompt
+setup:prompt
 
 export ZSH_THEME_GIT_PROMPT_PREFIX="["
 export ZSH_THEME_GIT_PROMPT_SUFFIX="]"
