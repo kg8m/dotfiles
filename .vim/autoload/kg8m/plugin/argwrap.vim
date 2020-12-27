@@ -4,7 +4,7 @@ def kg8m#plugin#argwrap#configure(): void  # {{{
   nnoremap <Leader>a :ArgWrap<CR>
 
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_cmd: "ArgWrap",
     hook_source: function("s:on_source"),
   })

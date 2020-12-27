@@ -2,7 +2,7 @@ vim9script
 
 def kg8m#plugin#autodate#configure(): void  # {{{
   kg8m#plugin#configure({
-    lazy:     v:true,
+    lazy:     true,
     on_event: "BufWritePre",
     hook_source:      function("s:on_source"),
     hook_post_source: function("s:on_post_source"),

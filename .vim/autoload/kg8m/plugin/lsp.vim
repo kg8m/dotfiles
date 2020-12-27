@@ -1,28 +1,28 @@
 vim9script
 
-var s:is_initialized = v:false
+var s:is_initialized = false
 
 def kg8m#plugin#lsp#configure(): void  # {{{
   kg8m#plugin#lsp#servers#register()
 
   kg8m#plugin#configure({
-    lazy:  v:true,
+    lazy:  true,
     on_ft: kg8m#plugin#lsp#servers#filetypes(),
     hook_source:      function("s:on_source"),
     hook_post_source: function("s:on_post_source"),
   })
 
-  kg8m#plugin#register("mattn/vim-lsp-settings", { if: v:false, merged: v:false })
-  kg8m#plugin#register("tsuyoshicho/vim-efm-langserver-settings", { if: v:false, merged: v:false })
+  kg8m#plugin#register("mattn/vim-lsp-settings", { if: false, merged: false })
+  kg8m#plugin#register("tsuyoshicho/vim-efm-langserver-settings", { if: false, merged: false })
 enddef  # }}}
 
 def kg8m#plugin#lsp#is_target_buffer(): bool  # {{{
   if !has_key(b:, "lsp_target_buffer")
-    b:lsp_target_buffer = v:false
+    b:lsp_target_buffer = false
 
     for filetype in kg8m#plugin#lsp#servers#filetypes()
       if &filetype ==# filetype
-        b:lsp_target_buffer = v:true
+        b:lsp_target_buffer = true
         break
       endif
     endfor
@@ -34,14 +34,14 @@ enddef  # }}}
 # cf. s:on_lsp_buffer_enabled()
 def kg8m#plugin#lsp#is_buffer_enabled(): bool  # {{{
   if has_key(b:, "lsp_buffer_enabled")
-    return v:true
+    return true
   else
     return s:are_all_servers_running()
   endif
 enddef  # }}}
 
 def s:on_lsp_buffer_enabled(): void  # {{{
-  if get(b:, "lsp_buffer_enabled", v:false)
+  if get(b:, "lsp_buffer_enabled", false)
     return
   endif
 
@@ -61,12 +61,12 @@ def s:on_lsp_buffer_enabled(): void  # {{{
   endif
 
   augroup my_vimrc  # {{{
-    autocmd InsertLeave <buffer> timer_start(100, { -> s:document_format({ sync: v:false }) })
-    autocmd BufWritePre <buffer> s:document_format({ sync: v:true })
+    autocmd InsertLeave <buffer> timer_start(100, { -> s:document_format({ sync: false }) })
+    autocmd BufWritePre <buffer> s:document_format({ sync: true })
   augroup END  # }}}
 
   # cf. kg8m#plugin#lsp#is_buffer_enabled()
-  b:lsp_buffer_enabled = v:true
+  b:lsp_buffer_enabled = true
 enddef  # }}}
 
 def s:reset_target_buffer(): void  # {{{
@@ -78,11 +78,11 @@ enddef  # }}}
 def s:are_all_servers_running(): bool  # {{{
   for server_name in lsp#get_allowed_servers()
     if lsp#get_server_status(server_name) !=# "running"
-      return v:false
+      return false
     endif
   endfor
 
-  return v:true
+  return true
 enddef  # }}}
 
 # Disable some language servers' document formatting because vim-lsp randomly selects only 1 language server to do
@@ -103,7 +103,7 @@ def s:overwrite_capabilities(): void  # {{{
     var capabilities = lsp#get_server_capabilities(server_name)
 
     if has_key(capabilities, "documentFormattingProvider")
-      capabilities.documentFormattingProvider = v:false
+      capabilities.documentFormattingProvider = false
     endif
   endfor
 enddef  # }}}
@@ -111,22 +111,22 @@ enddef  # }}}
 def s:is_definition_supported(): bool  # {{{
   if !s:are_all_servers_running()
     kg8m#util#echo_error_msg("Cannot to judge whether definition is supported or not because some of them are not running")
-    return v:false
+    return false
   endif
 
   for server_name in lsp#get_allowed_servers()
     var capabilities = lsp#get_server_capabilities(server_name)
 
-    if get(capabilities, "definitionProvider", v:false)
-      return v:true
+    if get(capabilities, "definitionProvider", false)
+      return true
     endif
   endfor
 
-  return v:false
+  return false
 enddef  # }}}
 
 def s:document_format(options = {}): void  # {{{
-  if get(options, "sync", v:true)
+  if get(options, "sync", true)
     silent LspDocumentFormatSync
   else
     if &modified && mode() ==# "n"
@@ -140,17 +140,17 @@ def s:on_source(): void  # {{{
     return
   endif
 
-  g:lsp_diagnostics_enabled          = v:true
-  g:lsp_diagnostics_echo_cursor      = v:false
-  g:lsp_diagnostics_float_cursor     = v:true
-  g:lsp_signs_enabled                = v:true
-  g:lsp_highlight_references_enabled = v:true
-  g:lsp_fold_enabled                 = v:false
-  g:lsp_semantic_enabled             = v:true
+  g:lsp_diagnostics_enabled          = true
+  g:lsp_diagnostics_echo_cursor      = false
+  g:lsp_diagnostics_float_cursor     = true
+  g:lsp_signs_enabled                = true
+  g:lsp_highlight_references_enabled = true
+  g:lsp_fold_enabled                 = false
+  g:lsp_semantic_enabled             = true
 
-  g:lsp_async_completion = v:true
+  g:lsp_async_completion = true
 
-  g:lsp_log_verbose = v:true
+  g:lsp_log_verbose = true
   g:lsp_log_file    = expand("~/tmp/vim-lsp.log")
 
   augroup my_vimrc  # {{{
@@ -161,7 +161,7 @@ def s:on_source(): void  # {{{
     autocmd FileType * s:reset_target_buffer()
   augroup END  # }}}
 
-  s:is_initialized = v:true
+  s:is_initialized = true
 enddef  # }}}
 
 def s:on_post_source(): void  # {{{

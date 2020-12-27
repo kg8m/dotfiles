@@ -4,7 +4,7 @@ def kg8m#util#dim_inactive_windows#setup()  # {{{
   augroup my_vimrc  # {{{
     autocmd WinEnter        * s:apply()
     autocmd SessionLoadPost * timer_start(0, { -> s:apply() })
-    autocmd VimResized      * s:apply({ force: v:true })
+    autocmd VimResized      * s:apply({ force: true })
   augroup END  # }}}
 enddef  # }}}
 
@@ -32,7 +32,7 @@ def s:apply(options = {})  # {{{
       if getwinvar(winnr, "original_colorcolumn", v:null) ==# v:null
         setwinvar(winnr, "&colorcolumn", colorcolumns)
       else
-        if get(options, "force", v:false)
+        if get(options, "force", false)
           setwinvar(winnr, "&colorcolumn", colorcolumns)
         endif
       endif

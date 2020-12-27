@@ -9,7 +9,7 @@ def kg8m#plugin#fzf_tjump#configure()  # {{{
   map g] <Plug>(fzf-tjump)
 
   kg8m#plugin#configure({
-    lazy:    v:true,
+    lazy:    true,
     on_cmd:  "FzfTjump",
     on_func: "fzf_tjump#",
     on_map:  [["nv", "<Plug>(fzf-tjump)"]],

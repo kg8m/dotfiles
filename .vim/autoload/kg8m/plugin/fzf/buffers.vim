@@ -30,7 +30,7 @@ def s:candidates(): list<string>  # {{{
 enddef  # }}}
 
 def s:list(): list<string>  # {{{
-  return getbufinfo({ buflisted: v:true })
+  return getbufinfo({ buflisted: true })
     ->filter("!empty(v:val.name)")
     ->map("v:val.name->fnamemodify(kg8m#plugin#fzf#filepath_format())")
     ->sort()

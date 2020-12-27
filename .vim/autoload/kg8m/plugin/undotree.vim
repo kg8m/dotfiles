@@ -6,10 +6,10 @@ def kg8m#plugin#undotree#configure(): void  # {{{
   g:undotree_WindowLayout = 2
   g:undotree_SplitWidth = 50
   g:undotree_DiffpanelHeight = 30
-  g:undotree_SetFocusWhenToggle = v:true
+  g:undotree_SetFocusWhenToggle = true
 
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_cmd: "UndotreeToggle",
   })
 enddef  # }}}

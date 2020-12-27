@@ -2,8 +2,8 @@ vim9script
 
 def kg8m#plugin#asyncomplete#configure(): void  # {{{
   kg8m#plugin#configure({
-    lazy: v:true,
-    on_i: v:true,
+    lazy: true,
+    on_i: true,
     hook_source:      function("s:on_source"),
     hook_post_source: function("s:on_post_source"),
   })
@@ -81,9 +81,9 @@ def s:sorter(lhs: dict<any>, rhs: dict<any>): number  # {{{
 enddef  # }}}
 
 def s:on_source(): void  # {{{
-  g:asyncomplete_auto_popup = v:true
+  g:asyncomplete_auto_popup = true
   g:asyncomplete_popup_delay = 50
-  g:asyncomplete_auto_completeopt = v:false
+  g:asyncomplete_auto_completeopt = false
   g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
   # Hide messages like "Pattern not found" or "Match 1 of <N>"
@@ -99,7 +99,7 @@ enddef  # }}}
 def s:on_post_source(): void  # {{{
   timer_start(0, { -> kg8m#plugin#completion#define_refresh_mappings() })
 
-  if get(b:, "asyncomplete_enable", v:true)
+  if get(b:, "asyncomplete_enable", true)
     asyncomplete#enable_for_buffer()
   endif
 enddef  # }}}

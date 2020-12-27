@@ -7,9 +7,9 @@ var s:snippets_dirpath: string
 def kg8m#plugin#neosnippet#configure(): void  # {{{
   # `on_ft` for Syntaxes
   kg8m#plugin#configure({
-    lazy:  v:true,
+    lazy:  true,
     on_ft: ["snippet", "neosnippet"],
-    on_i:  v:true,
+    on_i:  true,
     hook_source:      function("s:on_source"),
     hook_post_source: function("s:on_post_source"),
   })
@@ -75,7 +75,7 @@ def s:on_source(): void  # {{{
     s:snippets_dirpath(),
   ]
   g:neosnippet#disable_runtime_snippets = {
-    _: v:true,
+    _: true,
   }
 
   augroup my_vimrc  # {{{

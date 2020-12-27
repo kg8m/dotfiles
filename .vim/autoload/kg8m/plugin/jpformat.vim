@@ -4,7 +4,7 @@ const s:formatexpr = "jpfmt#formatexpr()"
 
 def kg8m#plugin#jpformat#configure(): void  # {{{
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_map: ["gq"],
     hook_source: function("s:on_source"),
   })
@@ -20,15 +20,15 @@ def s:set_formatexpr(): void  # {{{
     &l:formatexpr = s:formatexpr
   endif
 
-  b:jpformat_formatexpr_set = v:true
+  b:jpformat_formatexpr_set = true
 enddef  # }}}
 
 def s:on_source(): void  # {{{
   s:set_formatexpr()
 
-  g:JpFormatCursorMovedI = v:false
-  g:JpAutoJoin = v:false
-  g:JpAutoFormat = v:false
+  g:JpFormatCursorMovedI = false
+  g:JpAutoJoin = false
+  g:JpAutoFormat = false
 
   augroup my_vimrc  # {{{
     # Overwrite formatexpr

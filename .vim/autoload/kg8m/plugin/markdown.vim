@@ -1,15 +1,15 @@
 vim9script
 
 def kg8m#plugin#markdown#configure(): void  # {{{
-  g:vim_markdown_override_foldtext         = v:false
-  g:vim_markdown_no_default_key_mappings   = v:true
-  g:vim_markdown_conceal                   = v:false
-  g:vim_markdown_no_extensions_in_markdown = v:true
-  g:vim_markdown_autowrite                 = v:true
+  g:vim_markdown_override_foldtext         = false
+  g:vim_markdown_no_default_key_mappings   = true
+  g:vim_markdown_conceal                   = false
+  g:vim_markdown_no_extensions_in_markdown = true
+  g:vim_markdown_autowrite                 = true
   g:vim_markdown_folding_level             = 10
 
   kg8m#plugin#configure({
-    lazy:    v:true,
+    lazy:    true,
     depends: "vim-markdown-quote-syntax",
     on_ft:   "markdown",
   })
@@ -22,7 +22,7 @@ def kg8m#plugin#markdown#configure(): void  # {{{
     }
 
     kg8m#plugin#configure({
-      lazy: v:true,
+      lazy: true,
     })
   endif  # }}}
 enddef  # }}}

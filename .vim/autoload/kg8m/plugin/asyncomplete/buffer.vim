@@ -1,7 +1,7 @@
 vim9script
 
 var s:refresh_keywords: func
-var s:is_refresh_keywords_defined = v:false
+var s:is_refresh_keywords_defined = false
 
 final s:cache = {}
 
@@ -11,7 +11,7 @@ def kg8m#plugin#asyncomplete#buffer#configure(): void  # {{{
   augroup END  # }}}
 
   kg8m#plugin#configure({
-    lazy:      v:true,
+    lazy:      true,
     on_source: "asyncomplete.vim",
   })
 enddef  # }}}
@@ -81,7 +81,7 @@ def s:setup_refresh_keywords(): void  # {{{
     s:refresh_keywords = function("<SNR>" .. asyncomplete_buffer_sid .. "_refresh_keywords")
   endif
 
-  s:is_refresh_keywords_defined = v:true
+  s:is_refresh_keywords_defined = true
 enddef  # }}}
 
 def s:cannot_refresh_keywords(): void

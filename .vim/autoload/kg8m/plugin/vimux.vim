@@ -2,7 +2,7 @@ vim9script
 
 def kg8m#plugin#vimux#configure(): void  # {{{
   kg8m#plugin#configure({
-    lazy:    v:true,
+    lazy:    true,
     on_cmd:  "VimuxCloseRunner",
     on_func: "VimuxRunCommand",
     hook_source:      function("s:on_source"),
@@ -22,7 +22,7 @@ enddef  # }}}
 
 def s:on_source(): void  # {{{
   g:VimuxHeight     = 30
-  g:VimuxUseNearest = v:true
+  g:VimuxUseNearest = true
 
   augroup my_vimrc  # {{{
     autocmd VimLeavePre * :VimuxCloseRunner

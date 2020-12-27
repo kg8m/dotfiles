@@ -1,27 +1,27 @@
 vim9script
 
 def kg8m#plugin#disable_defaults(): void  # {{{
-  g:no_vimrc_example         = v:true
-  g:no_gvimrc_example        = v:true
-  g:loaded_gzip              = v:true
-  g:loaded_tar               = v:true
-  g:loaded_tarPlugin         = v:true
-  g:loaded_zip               = v:true
-  g:loaded_zipPlugin         = v:true
-  g:loaded_rrhelper          = v:true
-  g:loaded_vimball           = v:true
-  g:loaded_vimballPlugin     = v:true
-  g:loaded_getscript         = v:true
-  g:loaded_getscriptPlugin   = v:true
-  g:loaded_netrw             = v:true
-  g:loaded_netrwPlugin       = v:true
-  g:loaded_netrwSettings     = v:true
-  g:loaded_netrwFileHandlers = v:true
-  g:skip_loading_mswin       = v:true
-  g:did_install_syntax_menu  = v:true
+  g:no_vimrc_example         = true
+  g:no_gvimrc_example        = true
+  g:loaded_gzip              = true
+  g:loaded_tar               = true
+  g:loaded_tarPlugin         = true
+  g:loaded_zip               = true
+  g:loaded_zipPlugin         = true
+  g:loaded_rrhelper          = true
+  g:loaded_vimball           = true
+  g:loaded_vimballPlugin     = true
+  g:loaded_getscript         = true
+  g:loaded_getscriptPlugin   = true
+  g:loaded_netrw             = true
+  g:loaded_netrwPlugin       = true
+  g:loaded_netrwSettings     = true
+  g:loaded_netrwFileHandlers = true
+  g:skip_loading_mswin       = true
+  g:did_install_syntax_menu  = true
 
   # MacVim's features, e.g., `Command` + `v` to paste, are broken if setting this
-  # g:did_install_default_menus = v:true
+  # g:did_install_default_menus = true
 enddef  # }}}
 
 def kg8m#plugin#init_manager(): void  # {{{
@@ -56,21 +56,21 @@ def kg8m#plugin#finish_setup(): void  # {{{
 enddef  # }}}
 
 def kg8m#plugin#register(plugin_name: string, options: dict<any> = {}): bool  # {{{
-  var enabled = v:true
+  var enabled = true
 
   if has_key(options, "merged")
     if options.merged && has_key(options, "if")
-      kg8m#util#echo_warn_msg("Don't use `merged: v:true` with `if` option because merged plugins are always loaded")
+      kg8m#util#echo_warn_msg("Don't use `merged: true` with `if` option because merged plugins are always loaded")
     endif
   else
     options.merged = !has_key(options, "if")
   endif
 
-  if !get(options, "if", v:true)
+  if !get(options, "if", true)
     # Don't load but fetch the plugin
     options.rtp = ""
     remove(options, "if")
-    enabled = v:false
+    enabled = false
   endif
 
   dein#add(plugin_name, options)
@@ -78,8 +78,8 @@ def kg8m#plugin#register(plugin_name: string, options: dict<any> = {}): bool  # 
 enddef  # }}}
 
 def kg8m#plugin#configure(config: dict<any>): dict<any>  # {{{
-  if get(config, "lazy", v:false)
-    config.merged = v:false
+  if get(config, "lazy", false)
+    config.merged = false
   endif
 
   return dein#config(config)
@@ -126,8 +126,8 @@ def kg8m#plugin#check_and_update(options: dict<any> = {}): void  # {{{
   # Re-register disabled plugins before update because dein.vim doesn't make helptags for them
   kg8m#plugin#enable_disabled_plugins()
 
-  if get(options, "bulk", v:true)
-    const force_update = v:true
+  if get(options, "bulk", true)
+    const force_update = true
     dein#check_update(force_update)
   else
     dein#update()
@@ -230,7 +230,7 @@ def s:check_updating_finished(options: dict<any> = {}): void  # {{{
       retry_count += 1
 
       if retry_count > 100
-        s:notify_updating("Something is wrong.", { stay: v:true, level: "error" })
+        s:notify_updating("Something is wrong.", { stay: true, level: "error" })
         return
       endif
     else
@@ -244,7 +244,7 @@ def s:check_updating_finished(options: dict<any> = {}): void  # {{{
 enddef  # }}}
 
 def s:notify_updating(message: string, options: dict<any> = {}): void  # {{{
-  const is_stay = get(options, "stay", v:false)
+  const is_stay = get(options, "stay", false)
   const level   = get(options, "level", "warn")
 
   const hostname = system("hostname")->trim()

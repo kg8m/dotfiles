@@ -6,7 +6,7 @@ def kg8m#plugin#jplus#configure(): void  # {{{
   vmap J <Plug>(jplus)
 
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_map: [["nv", "<Plug>(jplus)"]],
   })
 enddef  # }}}

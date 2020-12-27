@@ -6,7 +6,7 @@ def kg8m#plugin#asyncomplete#neosnippet#configure(): void  # {{{
   augroup END  # }}}
 
   kg8m#plugin#configure({
-    lazy:      v:true,
+    lazy:      true,
     on_source: "asyncomplete.vim",
   })
 enddef  # }}}

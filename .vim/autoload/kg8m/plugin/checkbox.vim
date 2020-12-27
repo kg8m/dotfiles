@@ -6,7 +6,7 @@ def kg8m#plugin#checkbox#configure(): void  # {{{
   augroup END  # }}}
 
   kg8m#plugin#configure({
-    lazy:    v:true,
+    lazy:    true,
     on_func: "checkbox#",
   })
 enddef  # }}}

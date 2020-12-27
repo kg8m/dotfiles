@@ -1,11 +1,11 @@
 vim9script
 
 def kg8m#plugin#lexima#configure(): void  # {{{
-  g:lexima_ctrlh_as_backspace = v:true
+  g:lexima_ctrlh_as_backspace = true
 
   kg8m#plugin#configure({
-    lazy: v:true,
-    on_i: v:true,
+    lazy: true,
+    on_i: true,
     hook_post_source: function("s:on_post_source"),
   })
 enddef  # }}}

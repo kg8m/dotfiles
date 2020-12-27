@@ -5,7 +5,7 @@ def kg8m#plugin#test#configure(): void  # {{{
   nnoremap <Leader>t :write<CR>:TestNearest<CR>
 
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_cmd: ["TestFile", "TestNearest"],
     hook_source: function("s:on_source"),
   })
@@ -23,8 +23,8 @@ def s:on_source(): void  # {{{
     g:test#strategy = "vimux"
   endif
 
-  g:test#preserve_screen = v:true
+  g:test#preserve_screen = true
 
   g:test#go#gotest#options = "-race"
-  g:test#ruby#bundle_exec = v:false
+  g:test#ruby#bundle_exec = false
 enddef  # }}}

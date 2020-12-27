@@ -12,7 +12,7 @@ def kg8m#plugin#open_browser#configure(): void  # {{{
   ]
 
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_map: [["nv", "<Plug>(openbrowser-open)"]],
   })
 enddef  # }}}

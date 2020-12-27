@@ -22,7 +22,7 @@ def kg8m#plugin#lightline#lsp#configure(): void  # {{{
 
   # Don't load lazily because the `component_expand` doesn't work
   kg8m#plugin#configure({
-    lazy: v:false,
+    lazy: false,
   })
 enddef  # }}}
 

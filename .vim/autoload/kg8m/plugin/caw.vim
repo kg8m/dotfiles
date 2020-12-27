@@ -4,7 +4,7 @@ def kg8m#plugin#caw#configure(): void  # {{{
   map gc <Plug>(caw:hatpos:toggle)
 
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_map: [["nv", "<Plug>(caw:"]],
     hook_source:      function("s:on_source"),
     hook_post_source: function("s:on_post_source"),
@@ -22,8 +22,8 @@ def s:setup_vim(): void  # {{{
 enddef  # }}}
 
 def s:on_source(): void  # {{{
-  g:caw_no_default_keymappings = v:true
-  g:caw_hatpos_skip_blank_line = v:true
+  g:caw_no_default_keymappings = true
+  g:caw_hatpos_skip_blank_line = true
 
   augroup my_vimrc  # {{{
     autocmd FileType Gemfile b:caw_oneline_comment = "#"

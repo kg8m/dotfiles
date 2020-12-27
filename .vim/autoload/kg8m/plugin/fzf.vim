@@ -4,7 +4,7 @@ var s:fzf_filepath_format: string
 
 def kg8m#plugin#fzf#configure(): void  # {{{
   g:fzf_command_prefix = "Fzf"
-  g:fzf_buffers_jump   = v:true
+  g:fzf_buffers_jump   = true
   g:fzf_layout         = { up: "~90%" }
   g:fzf_files_options  = [
     "--preview", "git diff-or-cat {1}",
@@ -45,7 +45,7 @@ def kg8m#plugin#fzf#configure(): void  # {{{
   augroup END  # }}}
 
   kg8m#plugin#configure({
-    lazy:    v:true,
+    lazy:    true,
     on_cmd:  ["FzfFiles", "FzfLines", "FzfMarks", "FzfHelptags"],
     on_func: "fzf#",
     depends: "fzf",
@@ -55,13 +55,13 @@ def kg8m#plugin#fzf#configure(): void  # {{{
   # Use fzf binary already installed instead.
   if kg8m#plugin#register("junegunn/fzf")  # {{{
     kg8m#plugin#configure({
-      lazy: v:true,
+      lazy: true,
     })
   endif  # }}}
 
   if kg8m#plugin#register("thinca/vim-qfreplace")  # {{{
     kg8m#plugin#configure({
-      lazy:   v:true,
+      lazy:   true,
       on_cmd: "Qfreplace",
     })
   endif  # }}}

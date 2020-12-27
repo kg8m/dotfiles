@@ -9,13 +9,13 @@ def kg8m#plugin#parallel_auto_ctags#configure(): void  # {{{
       path:    ".",
       options: g:parallel_auto_ctags#options + ["--exclude=node_modules", "--exclude=vendor/bundle", "--languages=-rspec"],
       events:  ["VimEnter", "BufWritePost"],
-      silent:  v:false,
+      silent:  false,
     },
     gems: {
       path:    kg8m#util#rubygems_path() .. "/..",
       options: g:parallel_auto_ctags#options + ["--exclude=test", "--exclude=spec", "--languages=ruby"],
       events:  ["VimEnter"],
-      silent:  v:false,
+      silent:  false,
     },
   }
 enddef  # }}}

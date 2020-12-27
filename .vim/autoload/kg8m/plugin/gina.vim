@@ -2,7 +2,7 @@ vim9script
 
 def kg8m#plugin#gina#configure(): void  # {{{
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_cmd: "Gina",
   })
 enddef  # }}}

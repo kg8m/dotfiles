@@ -5,7 +5,7 @@ def kg8m#plugin#dwm#configure(): void  # {{{
   nnoremap <C-w><Space> :call DWM_AutoEnter()<CR>
 
   kg8m#plugin#configure({
-    lazy:    v:true,
+    lazy:    true,
     on_cmd:  ["DWMOpen"],
     on_func: ["DWM_New", "DWM_AutoEnter", "DWM_Stack"],
     hook_source:      function("s:on_source"),
@@ -36,7 +36,7 @@ def s:open(filepath: string): void  # {{{
 enddef  # }}}
 
 def s:on_source(): void  # {{{
-  g:dwm_map_keys = v:false
+  g:dwm_map_keys = false
 
   # For fzf.vim
   command! -nargs=1 -complete=file DWMOpen s:open(<q-args>)

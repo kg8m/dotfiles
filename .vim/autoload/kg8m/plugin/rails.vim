@@ -22,6 +22,6 @@ def kg8m#plugin#rails#configure(): void  # {{{
 
   # Don't load lazily because some features don't work
   kg8m#plugin#configure({
-    lazy: v:false,
+    lazy: false,
   })
 enddef  # }}}

@@ -1,7 +1,7 @@
 vim9script
 
 def kg8m#plugin#ruby#configure(): void  # {{{
-  g:no_ruby_maps = v:true
+  g:no_ruby_maps = true
 
   augroup my_vimrc  # {{{
     # vim-ruby overwrites vim-gemfile's filetype detection

@@ -9,8 +9,8 @@ endif
 final s:specs: dict<dict<any>> = {}
 final s:type_names = []
 
-var s:is_specs_initialized = v:false
-var s:is_type_names_initialized = v:false
+var s:is_specs_initialized = false
+var s:is_type_names_initialized = false
 
 def kg8m#plugin#fzf#rails#run(type: string): void  # {{{
   s:setup()
@@ -58,7 +58,7 @@ def kg8m#plugin#fzf#rails#type_names(arglead: string, _cmdline: string, _curpos:
 
   if !s:is_type_names_initialized
     s:type_names = s:specs->keys()->sort()
-    s:is_type_names_initialized = v:true
+    s:is_type_names_initialized = true
   endif
 
   if arglead ==# ""
@@ -164,5 +164,5 @@ def s:setup(): void  # {{{
     endfor
   endif
 
-  s:is_specs_initialized = v:true
+  s:is_specs_initialized = true
 enddef  # }}}

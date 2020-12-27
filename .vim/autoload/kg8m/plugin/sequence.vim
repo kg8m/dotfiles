@@ -5,7 +5,7 @@ def kg8m#plugin#sequence#configure(): void  # {{{
   map <Leader>- <Plug>SequenceV_Decrement
 
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_map: [["vn", "<Plug>Sequence"]],
   })
 enddef  # }}}

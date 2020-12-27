@@ -6,14 +6,14 @@ def kg8m#plugin#asyncomplete#nextword#configure(): void  # {{{
   augroup END  # }}}
 
   kg8m#plugin#configure({
-    lazy:      v:true,
+    lazy:      true,
     depends:   "async.vim",
     on_source: "asyncomplete.vim",
   })
 
   if kg8m#plugin#register("prabirshrestha/async.vim")  # {{{
     kg8m#plugin#configure({
-      lazy: v:true,
+      lazy: true,
     })
   endif  # }}}
 enddef  # }}}

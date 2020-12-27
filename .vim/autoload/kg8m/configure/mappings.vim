@@ -1,6 +1,6 @@
 vim9script
 
-var s:is_clear_hlsearch_initialized = v:false
+var s:is_clear_hlsearch_initialized = false
 
 def kg8m#configure#mappings#base(): void  # {{{
   # Split window
@@ -73,7 +73,7 @@ def s:clear_hlsearch(): string  # {{{
       autocmd User clear_search_highlight silent
     augroup END  # }}}
 
-    s:is_clear_hlsearch_initialized = v:true
+    s:is_clear_hlsearch_initialized = true
   endif
 
   const clear        = ":nohlsearch\<CR>"

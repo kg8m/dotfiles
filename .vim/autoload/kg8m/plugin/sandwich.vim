@@ -1,9 +1,9 @@
 vim9script
 
 def kg8m#plugin#sandwich#configure(): void  # {{{
-  g:sandwich_no_default_key_mappings = v:true
-  g:operator_sandwich_no_default_key_mappings = v:true
-  g:textobj_sandwich_no_default_key_mappings = v:true
+  g:sandwich_no_default_key_mappings = true
+  g:operator_sandwich_no_default_key_mappings = true
+  g:textobj_sandwich_no_default_key_mappings = true
 
   vmap <Leader>sa <Plug>(operator-sandwich-add)
   nmap <Leader>sd <Plug>(operator-sandwich-delete)<Plug>(textobj-sandwich-query-a)
@@ -18,7 +18,7 @@ def kg8m#plugin#sandwich#configure(): void  # {{{
   nmap . <Plug>(operator-sandwich-dot)
 
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_map: [["nv", "<Plug>(operator-sandwich-"], ["xo", "<Plug>(textobj-sandwich-"]],
     hook_post_source: function("s:on_post_source"),
   })
@@ -26,7 +26,7 @@ enddef  # }}}
 
 def s:surround_like_recipes(): list<dict<any>>  # {{{
   const add_options    = extend({ kind: ["add", "replace"], action: ["add"] }, s:common_options())
-  const delete_options = extend({ kind: ["delete", "replace", "textobj"], action: ["delete"], regex: v:true }, s:common_options())
+  const delete_options = extend({ kind: ["delete", "replace", "textobj"], action: ["delete"], regex: true }, s:common_options())
 
   return [
     extend({ buns: ["( ", " )"], input: ["("] }, add_options),
@@ -44,7 +44,7 @@ def s:zenkaku_recipes(): list<dict<any>>  # {{{
 enddef  # }}}
 
 def s:common_options(): dict<any>  # {{{
-  return { nesting: v:true, match_syntax: v:true }
+  return { nesting: true, match_syntax: true }
 enddef  # }}}
 
 def s:on_post_source(): void  # {{{

@@ -8,17 +8,17 @@ def kg8m#plugin#easymotion#configure(): void  # {{{
   map F <Plug>(easymotion-Fl)
 
   g:EasyMotion_keys               = "FKLASDHGUIONMREWCVTYBX,.;J"
-  g:EasyMotion_startofline        = v:false
-  g:EasyMotion_do_shade           = v:false
-  g:EasyMotion_do_mapping         = v:false
-  g:EasyMotion_smartcase          = v:true
-  g:EasyMotion_use_migemo         = v:true
-  g:EasyMotion_use_upper          = v:true
-  g:EasyMotion_enter_jump_first   = v:true
-  g:EasyMotion_add_search_history = v:false
+  g:EasyMotion_startofline        = false
+  g:EasyMotion_do_shade           = false
+  g:EasyMotion_do_mapping         = false
+  g:EasyMotion_smartcase          = true
+  g:EasyMotion_use_migemo         = true
+  g:EasyMotion_use_upper          = true
+  g:EasyMotion_enter_jump_first   = true
+  g:EasyMotion_add_search_history = false
 
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_map: "<Plug>(easymotion-",
   })
 enddef  # }}}

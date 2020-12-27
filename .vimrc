@@ -86,7 +86,7 @@ if kg8m#plugin#register("hrsh7th/vim-vsnip")  # {{{
 endif  # }}}
 # }}}
 
-kg8m#plugin#register("dense-analysis/ale", { if: v:false, merged: v:false })
+kg8m#plugin#register("dense-analysis/ale", { if: false, merged: false })
 kg8m#plugin#register("pearofducks/ansible-vim")
 
 # Show diff in Git's interactive rebase
@@ -109,7 +109,7 @@ if kg8m#plugin#register("spolu/dwm.vim", { if: !kg8m#util#is_git_tmp_edit() })  
 endif  # }}}
 
 if kg8m#plugin#register("editorconfig/editorconfig-vim", { if: !kg8m#util#is_git_tmp_edit() && filereadable(".editorconfig") })  # {{{
-  g:EditorConfig_preserve_formatoptions = v:true
+  g:EditorConfig_preserve_formatoptions = true
 endif  # }}}
 
 if kg8m#plugin#register("junegunn/fzf.vim", { if: executable("fzf") })  # {{{
@@ -179,7 +179,7 @@ endif  # }}}
 kg8m#plugin#register("lambdalisue/suda.vim")
 
 if kg8m#plugin#register("leafgarland/typescript-vim")  # {{{
-  g:typescript_indent_disable = v:true
+  g:typescript_indent_disable = true
 endif  # }}}
 
 if kg8m#plugin#register("mbbill/undotree")  # {{{
@@ -265,7 +265,7 @@ if kg8m#plugin#register("osyo-manga/vim-jplus")  # {{{
 endif  # }}}
 
 if kg8m#plugin#register("elzr/vim-json")  # {{{
-  g:vim_json_syntax_conceal = v:false
+  g:vim_json_syntax_conceal = false
 endif  # }}}
 
 if kg8m#plugin#register("rcmdnk/vim-markdown", { if: !kg8m#util#is_git_tmp_edit() })  # {{{
@@ -293,7 +293,7 @@ endif  # }}}
 if kg8m#plugin#register("thinca/vim-prettyprint", { if: !kg8m#util#is_git_tmp_edit() })  # {{{
   # Don't load lazily because dein.vim's `on_cmd: "PP"` doesn't work
   kg8m#plugin#configure({
-    lazy: v:false,
+    lazy: false,
   })
 endif  # }}}
 
@@ -357,8 +357,8 @@ if kg8m#plugin#register("benmills/vimux", { if: kg8m#util#on_tmux() && !kg8m#uti
 endif  # }}}
 
 # See `kg8m#util#xxx_module()`.
-# Specify `merged: v:false` because `Vitalize` fails.
-kg8m#plugin#register("vim-jp/vital.vim", { merged: v:false })
+# Specify `merged: false` because `Vitalize` fails.
+kg8m#plugin#register("vim-jp/vital.vim", { merged: false })
 
 if kg8m#plugin#register("simeji/winresizer", { if: !kg8m#util#is_git_tmp_edit() })  # {{{
   kg8m#plugin#winresizer#configure()
@@ -369,7 +369,7 @@ kg8m#plugin#register("pedrohdz/vim-yaml-folds", { if: !kg8m#util#is_git_tmp_edit
 
 # Disable because yajs.vim conflicts with vim-html-template-literals.
 # Don't merge because some syntax files are duplicated.
-kg8m#plugin#register("othree/yajs.vim", { if: v:false, merged: v:false })
+kg8m#plugin#register("othree/yajs.vim", { if: false, merged: false })
 
 if kg8m#plugin#register("jonsmithers/vim-html-template-literals", { if: !kg8m#util#is_git_tmp_edit() })  # {{{
   kg8m#plugin#html_template_literals#configure()

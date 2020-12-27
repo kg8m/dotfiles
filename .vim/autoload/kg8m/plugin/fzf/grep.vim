@@ -23,7 +23,7 @@ def kg8m#plugin#fzf#grep#run(pattern: string, dirpath: string): void  # {{{
     ],
   }
 
-  fzf#vim#grep("rg " .. grep_options .. " " .. grep_args, v:true, fzf_options)
+  fzf#vim#grep("rg " .. grep_options .. " " .. grep_args, true, fzf_options)
 enddef  # }}}
 
 def kg8m#plugin#fzf#grep#input_dir(): string  # {{{

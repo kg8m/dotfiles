@@ -1,7 +1,7 @@
 vim9script
 
 def kg8m#plugin#molder#configure(): void  # {{{
-  g:molder_show_hidden = v:true
+  g:molder_show_hidden = true
 
   nmap <Leader>e :edit <C-r>=expand("%")->empty() ? "." : "%:h"<CR><CR>
 

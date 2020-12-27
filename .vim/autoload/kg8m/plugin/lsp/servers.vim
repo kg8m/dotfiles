@@ -64,15 +64,15 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
     cmd: { server_info -> ["gopls", "-mode", "stdio"] },
     initialization_options: {
       analyses: {
-        fillstruct: v:true,
+        fillstruct: true,
       },
-      completeUnimported: v:true,
-      completionDocumentation: v:true,
-      deepCompletion: v:true,
+      completeUnimported: true,
+      completionDocumentation: true,
+      deepCompletion: true,
       hoverKind: "SynopsisDocumentation",
       matcher: "fuzzy",
-      staticcheck: v:true,
-      usePlaceholders: v:true,
+      staticcheck: true,
+      usePlaceholders: true,
     },
     allowlist: ["go"],
   })
@@ -82,7 +82,7 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
   s:register({
     name: "html-language-server",
     cmd: { server_info -> ["vscode-html-language-server", "--stdio"] },
-    initialization_options: { embeddedLanguages: { css: v:true, javascript: v:true } },
+    initialization_options: { embeddedLanguages: { css: true, javascript: true } },
     allowlist: ["eruby", "html"],
     config: { -> { refresh_pattern: kg8m#plugin#completion#refresh_pattern("html") } },
     executable_name: "vscode-html-language-server",
@@ -97,7 +97,7 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
     config: { -> { refresh_pattern: kg8m#plugin#completion#refresh_pattern("json") } },
     workspace_config: { -> {
       json: {
-        format: { enable: v:true },
+        format: { enable: true },
         schemas: s:schemas(),
      },
     } },
@@ -111,17 +111,17 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
     name: "solargraph",
     cmd: { server_info -> ["solargraph", "stdio"] },
     initialization_options: { -> {
-      autoformat: v:false,
-      checkGemVersion: v:true,
-      completion: v:true,
-      definitions: v:true,
-      diagnostics: v:true,
-      formatting: v:false,
-      hover: v:true,
+      autoformat: false,
+      checkGemVersion: true,
+      completion: true,
+      definitions: true,
+      diagnostics: true,
+      formatting: false,
+      hover: true,
       logLevel: "info",
-      references: v:true,
-      rename: v:true,
-      symbols: v:true,
+      references: true,
+      rename: true,
+      symbols: true,
       useBundler: filereadable("Gemfile.lock"),
     } },
     allowlist: ["ruby"],
@@ -157,15 +157,15 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
       iskeyword: &iskeyword,
       vimruntime: $VIMRUNTIME,
       runtimepath: kg8m#plugin#all_runtimepath(),
-      diagnostic: { enable: v:true },
+      diagnostic: { enable: true },
       indexes: {
-        runtimepath: v:true,
+        runtimepath: true,
         gap: 100,
         count: 3,
       },
       suggest: {
-        fromVimruntime: v:true,
-        fromRuntimepath: v:true,
+        fromVimruntime: true,
+        fromRuntimepath: true,
       },
     } },
     root_uri: { server_info -> lsp#utils#path_to_uri(expand("~")) },
@@ -182,9 +182,9 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
       config: {
         vetur: {
           completion: {
-            autoImport: v:false,
+            autoImport: false,
             tagCasing: "kebab",
-            useScaffoldSnippets: v:false,
+            useScaffoldSnippets: false,
           },
           format: {
             defaultFormatter: {
@@ -192,14 +192,14 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
               ts: "",
             },
             defaultFormatterOptions: {},
-            scriptInitialIndent: v:false,
-            styleInitialIndent: v:false,
+            scriptInitialIndent: false,
+            styleInitialIndent: false,
           },
-          useWorkspaceDependencies: v:false,
+          useWorkspaceDependencies: false,
           validation: {
-            script: v:true,
-            style: v:true,
-            template: v:true,
+            script: true,
+            style: true,
+            template: true,
           },
           dev: { logLevel: "DEBUG" },
         },
@@ -224,13 +224,13 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
     allowlist: s:yaml_filetypes,
     workspace_config: {
       yaml: {
-        completion: v:true,
+        completion: true,
         customTags: [],
-        format: { enable: v:true },
-        hover: v:true,
+        format: { enable: true },
+        hover: true,
         schemas: {},
-        schemaStore: { enable: v:true },
-        validate: v:true,
+        schemaStore: { enable: true },
+        validate: true,
       },
     },
   })
@@ -277,9 +277,9 @@ def s:register(config: dict<any>): void  # {{{
     add(s:configs, config)
     extend(s:filetypes, config.allowlist)
 
-    add(s:summaries, { name: config.name, available: v:true })
+    add(s:summaries, { name: config.name, available: true })
   else
-    add(s:summaries, { name: config.name, available: v:false })
+    add(s:summaries, { name: config.name, available: false })
   endif
 enddef  # }}}
 

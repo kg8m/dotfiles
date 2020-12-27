@@ -9,7 +9,7 @@ endif
 var s:raw_list: list<list<string>>
 var s:list: list<string>
 var s:max_label_length: number
-var s:is_initialized = v:false
+var s:is_initialized = false
 
 def kg8m#plugin#fzf#shortcuts#run(query: string): void  # {{{
   # Use `final` instead of `const` because the variable will be changed by fzf
@@ -43,7 +43,7 @@ def s:setup_list(): void  # {{{
   s:make_groups()
   s:format_list()
 
-  s:is_initialized = v:true
+  s:is_initialized = true
 enddef  # }}}
 
 def s:define_raw_list(): void  # {{{

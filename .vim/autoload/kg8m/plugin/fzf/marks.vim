@@ -8,7 +8,7 @@ const s:incremental_mark_keys = [
 ]
 const s:incremental_mark_keys_pattern = '^[A-Z]$'
 
-var s:is_initialized = v:false
+var s:is_initialized = false
 var s:incremental_mark_index = -1
 
 def kg8m#plugin#fzf#marks#increment(): void  # {{{
@@ -33,7 +33,7 @@ def s:init(): void  # {{{
   endif
 
   execute "delmarks " .. join(s:incremental_mark_keys, "")
-  s:is_initialized = v:true
+  s:is_initialized = true
 enddef  # }}}
 
 def s:detect_key(): string  # {{{

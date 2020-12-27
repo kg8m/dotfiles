@@ -6,7 +6,7 @@ def kg8m#plugin#rainbow_csv#configure(): void  # {{{
   augroup END  # }}}
 
   kg8m#plugin#configure({
-    lazy:  v:true,
+    lazy:  true,
     on_ft: "csv",
   })
 enddef  # }}}

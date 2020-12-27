@@ -2,7 +2,7 @@ vim9script
 
 def kg8m#plugin#go#configure(): void  # {{{
   kg8m#plugin#configure({
-    lazy:  v:true,
+    lazy:  true,
     on_ft: "go",
     hook_source: function("s:on_source"),
   })
@@ -19,29 +19,29 @@ def s:setup_buffer(): void  # {{{
 enddef  # }}}
 
 def s:on_source(): void  # {{{
-  g:go_code_completion_enabled = v:false
-  g:go_fmt_autosave            = v:false
-  g:go_doc_keywordprg_enabled  = v:false
-  g:go_def_mapping_enabled     = v:false
-  g:go_gopls_enabled           = v:false
+  g:go_code_completion_enabled = false
+  g:go_fmt_autosave            = false
+  g:go_doc_keywordprg_enabled  = false
+  g:go_def_mapping_enabled     = false
+  g:go_gopls_enabled           = false
 
-  g:go_highlight_array_whitespace_error    = v:true
-  g:go_highlight_chan_whitespace_error     = v:true
-  g:go_highlight_extra_types               = v:true
-  g:go_highlight_space_tab_error           = v:true
-  g:go_highlight_trailing_whitespace_error = v:true
-  g:go_highlight_operators                 = v:true
-  g:go_highlight_functions                 = v:true
-  g:go_highlight_function_parameters       = v:true
-  g:go_highlight_function_calls            = v:true
-  g:go_highlight_types                     = v:true
-  g:go_highlight_fields                    = v:true
-  g:go_highlight_build_constraints         = v:true
-  g:go_highlight_generate_tags             = v:true
-  g:go_highlight_string_spellcheck         = v:true
-  g:go_highlight_format_strings            = v:true
-  g:go_highlight_variable_declarations     = v:true
-  g:go_highlight_variable_assignments      = v:true
+  g:go_highlight_array_whitespace_error    = true
+  g:go_highlight_chan_whitespace_error     = true
+  g:go_highlight_extra_types               = true
+  g:go_highlight_space_tab_error           = true
+  g:go_highlight_trailing_whitespace_error = true
+  g:go_highlight_operators                 = true
+  g:go_highlight_functions                 = true
+  g:go_highlight_function_parameters       = true
+  g:go_highlight_function_calls            = true
+  g:go_highlight_types                     = true
+  g:go_highlight_fields                    = true
+  g:go_highlight_build_constraints         = true
+  g:go_highlight_generate_tags             = true
+  g:go_highlight_string_spellcheck         = true
+  g:go_highlight_format_strings            = true
+  g:go_highlight_variable_declarations     = true
+  g:go_highlight_variable_assignments      = true
 
   augroup my_vimrc  # {{{
     autocmd FileType go s:setup_buffer()

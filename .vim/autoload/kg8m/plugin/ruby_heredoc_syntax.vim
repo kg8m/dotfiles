@@ -8,7 +8,7 @@ def kg8m#plugin#ruby_heredoc_syntax#configure(): void  # {{{
   }
 
   kg8m#plugin#configure({
-    lazy:  v:true,
+    lazy:  true,
     on_ft: "ruby",
   })
 enddef  # }}}

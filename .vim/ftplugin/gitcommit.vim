@@ -5,7 +5,7 @@ def s:open_diff_window(): void
     return
   endif
 
-  b:diff_window_opened = v:true
+  b:diff_window_opened = true
 
   setlocal nosplitright
   vnew

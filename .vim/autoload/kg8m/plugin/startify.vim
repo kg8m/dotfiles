@@ -5,7 +5,7 @@ def kg8m#plugin#startify#configure(): void  # {{{
     # `on_event: "BufWritePre"` for `s:save_session`: Load startify before writing buffer (on `BufWritePre`) and
     # register autocmd for `BufWritePost`
     kg8m#plugin#configure({
-      lazy:     v:true,
+      lazy:     true,
       on_cmd:   "Startify",
       on_event: "BufWritePre",
       hook_source:      function("s:on_source"),
@@ -19,15 +19,15 @@ enddef  # }}}
 def s:setup(): void  # {{{
   set sessionoptions=buffers,folds
 
-  g:startify_session_autoload    = v:false
+  g:startify_session_autoload    = false
   g:startify_session_dir         = getcwd() .. "/.vim-sessions"
   g:startify_session_number      = 10
-  g:startify_session_persistence = v:false
-  g:startify_session_sort        = v:true
+  g:startify_session_persistence = false
+  g:startify_session_sort        = true
 
-  g:startify_enable_special = v:true
-  g:startify_change_to_dir  = v:false
-  g:startify_relative_path  = v:true
+  g:startify_enable_special = true
+  g:startify_change_to_dir  = false
+  g:startify_relative_path  = true
   g:startify_lists          = [
     { type: "commands",  header: ["My commands:"] },
     { type: "bookmarks", header: ["My bookmarks:"] },
@@ -37,7 +37,7 @@ def s:setup(): void  # {{{
   ]
   g:startify_commands = [
     { p: "call kg8m#plugin#update_all()" },
-    { P: "call kg8m#plugin#update_all(#{ bulk: v:false })" },
+    { P: "call kg8m#plugin#update_all(#{ bulk: false })" },
   ]
 
   # https://gist.github.com/SammysHP/5611986#file-gistfile1-txt

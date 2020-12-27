@@ -6,11 +6,11 @@ def kg8m#plugin#splitjoin#configure(): void  # {{{
 
   g:splitjoin_split_mapping       = ""
   g:splitjoin_join_mapping        = ""
-  g:splitjoin_ruby_trailing_comma = v:true
-  g:splitjoin_ruby_hanging_args   = v:false
+  g:splitjoin_ruby_trailing_comma = true
+  g:splitjoin_ruby_hanging_args   = false
 
   kg8m#plugin#configure({
-    lazy:   v:true,
+    lazy:   true,
     on_cmd: ["SplitjoinJoin", "SplitjoinSplit"],
   })
 enddef  # }}}
