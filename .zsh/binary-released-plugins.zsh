@@ -33,10 +33,7 @@ function plugin:setup:binary_releaseds {
       bat | delta | direnv | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt)
         mv ./"${plugin}"* ./"$plugin"
         ;;
-      sqls)
-        mv ./* ./"$plugin"
-        ;;
-      fzf | golangci-lint-langserver | nextword)
+      fzf | golangci-lint-langserver | nextword | sqls)
         # Do nothing
         ;;
       *)
@@ -46,10 +43,10 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "$plugin" in
-      bat | delta | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck | sqls)
+      bat | delta | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
-      direnv | fzf | golangci-lint-langserver | nextword | shfmt)
+      direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls)
         local binary="${plugin}"
         ;;
       ripgrep)
