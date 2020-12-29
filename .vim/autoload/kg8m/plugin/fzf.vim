@@ -19,10 +19,6 @@ def kg8m#plugin#fzf#configure(): void  # {{{
   nnoremap <Leader><Leader>v :call kg8m#plugin#fzf#git_files#run()<CR>
   nnoremap <Leader><Leader>b :call kg8m#plugin#fzf#buffers#run()<CR>
   nnoremap <Leader><Leader>l :FzfBLines<CR>
-  nnoremap <Leader><Leader>g :FzfGrep<Space>
-  nnoremap <Leader><Leader>G :FzfGrepForDir<Space>
-  vnoremap <Leader><Leader>g "gy:FzfGrep<Space><C-r>"
-  vnoremap <Leader><Leader>G "gy:FzfGrepForDir<Space><C-r>"
   nnoremap <Leader><Leader>m :FzfMarks<CR>
   nnoremap <Leader><Leader>h :call kg8m#plugin#fzf#history#run()<CR>
   nnoremap <Leader><Leader>H :FzfHelptags<CR>
@@ -30,10 +26,10 @@ def kg8m#plugin#fzf#configure(): void  # {{{
   noremap  <Leader><Leader>s <Cmd>call kg8m#plugin#fzf#shortcuts#run("")<CR>
   noremap  <Leader><Leader>a <Cmd>call kg8m#plugin#fzf#shortcuts#run("'EasyAlign ")<CR>
 
-  nnoremap <silent> m :call kg8m#plugin#fzf#marks#increment()<CR>
+  noremap <expr> <Leader><Leader>g kg8m#plugin#fzf#grep#expr()
+  noremap <expr> <Leader><Leader>G kg8m#plugin#fzf#grep#expr(#{ dir: v:true })
 
-  command! -nargs=+ -complete=tag FzfGrep       kg8m#plugin#fzf#grep#run(<q-args>, "")
-  command! -nargs=+ -complete=tag FzfGrepForDir kg8m#plugin#fzf#grep#run(<q-args>, kg8m#plugin#fzf#grep#input_dir())
+  nnoremap <silent> m :call kg8m#plugin#fzf#marks#increment()<CR>
 
   if kg8m#util#on_rails_dir()
     nnoremap <Leader><Leader>r :FzfRails<Space>

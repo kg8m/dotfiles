@@ -26,8 +26,31 @@ def kg8m#plugin#fzf#grep#run(pattern: string, dirpath: string): void  # {{{
   fzf#vim#grep("rg " .. grep_options .. " " .. grep_args, true, fzf_options)
 enddef  # }}}
 
-def kg8m#plugin#fzf#grep#input_dir(): string  # {{{
-  const dirpath = input("Specify dirpath: ", "", "dir")->expand()
+def kg8m#plugin#fzf#grep#expr(options = {}): string  # {{{
+  final args = [string(s:input_pattern())]
+
+  if get(options, "dir")
+    add(args, string(s:input_dir()))
+  endif
+
+  return ":call kg8m#plugin#fzf#grep#run(" .. join(args, ", ") .. ")\<CR>"
+enddef  # }}}
+
+def s:input_pattern(): string  # {{{
+  var preset: string
+
+  if mode() =~? 'v'
+    feedkeys('"gy', "x")
+    preset = @"
+  else
+    preset = ""
+  endif
+
+  return input("FzfGrep Pattern: ", preset, "tag")
+enddef  # }}}
+
+def s:input_dir(): string  # {{{
+  const dirpath = input("FzfGrep Directory: ", "", "dir")->expand()
 
   if empty(dirpath)
     echoerr "Dirpath not specified."
