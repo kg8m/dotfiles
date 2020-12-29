@@ -8,6 +8,11 @@ endif
 
 # Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)
 def kg8m#plugin#fzf#grep#run(pattern: string, dirpath: string): void  # {{{
+  if empty(pattern)
+    echo "Canceled."
+    return
+  endif
+
   const escaped_pattern = shellescape(pattern)
   const escaped_dirpath = empty(dirpath) ? "" : shellescape(dirpath)
   const grep_args       = escaped_pattern .. " " .. escaped_dirpath
