@@ -31,7 +31,7 @@ def kg8m#util#on_rails_dir(): bool  # {{{
     return cache.on_rails_dir
   endif
 
-  cache.on_rails_dir = isdirectory("./app") && filereadable("./config/environment.rb")
+  extend(cache, { on_rails_dir: isdirectory("./app") && filereadable("./config/environment.rb") })
   return cache.on_rails_dir
 enddef  # }}}
 
@@ -44,7 +44,7 @@ def kg8m#util#is_git_commit(): bool  # {{{
     return cache.is_git_commit
   endif
 
-  cache.is_git_commit = argc() ==# 1 && !!(argv()[0] =~# '\.git/COMMIT_EDITMSG$')
+  extend(cache, { is_git_commit: argc() ==# 1 && !!(argv()[0] =~# '\.git/COMMIT_EDITMSG$') })
   return cache.is_git_commit
 enddef  # }}}
 
@@ -53,7 +53,7 @@ def kg8m#util#is_git_hunk_edit(): bool  # {{{
     return cache.is_git_hunk_edit
   endif
 
-  cache.is_git_hunk_edit = argc() ==# 1 && !!(argv()[0] =~# '\.git/addp-hunk-edit\.diff$')
+  extend(cache, { is_git_hunk_edit: argc() ==# 1 && !!(argv()[0] =~# '\.git/addp-hunk-edit\.diff$') })
   return cache.is_git_hunk_edit
 enddef  # }}}
 
@@ -63,7 +63,7 @@ def kg8m#util#rubygems_path(): string  # {{{
   endif
 
   if exists("$RUBYGEMS_PATH")
-    cache.rubygems_path = $RUBYGEMS_PATH
+    extend(cache, { rubygems_path: $RUBYGEMS_PATH })
   else
     const command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
     const command = command_prefix .. " -e 'print Gem.path.join(\"\\n\")'"
@@ -79,7 +79,7 @@ def kg8m#util#rubygems_path(): string  # {{{
     endfor
 
     if rubygems_path !=# ""
-      cache.rubygems_path = rubygems_path
+      extend(cache, { rubygems_path: rubygems_path })
     else
       throw "Path to Ruby Gems not found. Candidates: " .. string(dirpaths)
     endif
@@ -114,7 +114,7 @@ def kg8m#util#string_module(): dict<func>  # {{{
     return cache.string_module
   endif
 
-  cache.string_module = vital#vital#import("Data.String")
+  extend(cache, { string_module: vital#vital#import("Data.String") })
   return cache.string_module
 enddef  # }}}
 
@@ -124,7 +124,7 @@ def kg8m#util#list_module(): dict<func>  # {{{
     return cache.list_module
   endif
 
-  cache.list_module = vital#vital#import("Data.List")
+  extend(cache, { list_module: vital#vital#import("Data.List") })
   return cache.list_module
 enddef  # }}}
 

@@ -7,7 +7,7 @@ def kg8m#plugin#completion#refresh_pattern(filetype: string): string  # {{{
     const css_pattern = '\v([.#a-zA-Z0-9_-]+)$'
     const sh_pattern  = '\v((\k|-)+)$'
 
-    s:cache.completion_refresh_patterns = {
+    const patterns = {
       _:    '\v(\k+)$',
       css:  css_pattern,
       html: '\v(/|\k+)$',
@@ -21,6 +21,8 @@ def kg8m#plugin#completion#refresh_pattern(filetype: string): string  # {{{
       vue:  '\v([a-zA-Z0-9_-]+|/|\k+)$',
       zsh:  sh_pattern,
     }
+
+    extend(s:cache, { completion_refresh_patterns: patterns })
   endif
 
   return get(s:cache.completion_refresh_patterns, filetype) ?? get(s:cache.completion_refresh_patterns, "_")
@@ -53,7 +55,7 @@ def kg8m#plugin#completion#force_refresh(_timer_id: number): void  # {{{
 enddef  # }}}
 
 def s:start_refresh_timer(): void  # {{{
-  s:cache.refresh_timer = timer_start(200, "kg8m#plugin#completion#force_refresh")
+  extend(s:cache, { refresh_timer: timer_start(200, "kg8m#plugin#completion#force_refresh") })
 enddef  # }}}
 
 def s:stop_refresh_timer(): void  # {{{
