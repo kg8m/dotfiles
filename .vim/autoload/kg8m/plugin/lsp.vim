@@ -99,7 +99,7 @@ def s:overwrite_capabilities(): void  # {{{
     return
   endif
 
-  for server_name in lsp#get_allowed_servers()->filter("v:val !=# 'efm-langserver'")
+  for server_name in lsp#get_allowed_servers()->filter((_, server_name) => server_name !=# "efm-langserver")
     var capabilities = lsp#get_server_capabilities(server_name)
 
     if has_key(capabilities, "documentFormattingProvider")

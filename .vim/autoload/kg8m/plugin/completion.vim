@@ -49,13 +49,13 @@ def kg8m#plugin#completion#refresh(): string  # {{{
   return ""
 enddef  # }}}
 
-def kg8m#plugin#completion#force_refresh(_timer_id: number): void  # {{{
+def kg8m#plugin#completion#force_refresh(): void  # {{{
   asyncomplete#_force_refresh()
   s:stop_refresh_timer()
 enddef  # }}}
 
 def s:start_refresh_timer(): void  # {{{
-  extend(s:cache, { refresh_timer: timer_start(200, "kg8m#plugin#completion#force_refresh") })
+  extend(s:cache, { refresh_timer: timer_start(200, () => kg8m#plugin#completion#force_refresh()) })
 enddef  # }}}
 
 def s:stop_refresh_timer(): void  # {{{

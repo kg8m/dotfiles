@@ -26,7 +26,7 @@ enddef  # }}}
 #   - renamed files by `:Rename`
 #   - opened files by `vim foo bar baz`
 def s:candidates(): list<string>  # {{{
-  const current  = [kg8m#plugin#fzf#current_filepath()]->filter("!empty(v:val)")
+  const current  = [kg8m#plugin#fzf#current_filepath()]->filter((_, filepath) => !empty(filepath))
   const buffers  = s:get_buffers()
   const oldfiles = s:get_oldfiles()
 
@@ -36,8 +36,8 @@ enddef  # }}}
 def s:get_buffers(): list<string>  # {{{
   return getbufinfo()
     ->sort("s:buffers_sorter")
-    ->filter("!empty(v:val.name)")
-    ->map("v:val.name->fnamemodify(kg8m#plugin#fzf#filepath_format())")
+    ->filter((_, bufinfo) => !empty(bufinfo.name))
+    ->map((_, bufinfo) => bufinfo.name->fnamemodify(kg8m#plugin#fzf#filepath_format()))
 enddef  # }}}
 
 def s:buffers_sorter(lhs: dict<any>, rhs: dict<any>): number  # {{{
@@ -49,6 +49,6 @@ def s:buffers_sorter(lhs: dict<any>, rhs: dict<any>): number  # {{{
 enddef  # }}}
 
 def s:get_oldfiles(): list<string>  # {{{
-  final filepaths = mr#mru#list()->copy()->filter("v:val->filereadable()")
-  return filepaths->map("v:val->fnamemodify(kg8m#plugin#fzf#filepath_format())")
+  final filepaths = mr#mru#list()->copy()->filter((_, filepath) => filereadable(filepath))
+  return filepaths->map((_, filepath) => filepath->fnamemodify(kg8m#plugin#fzf#filepath_format()))
 enddef  # }}}

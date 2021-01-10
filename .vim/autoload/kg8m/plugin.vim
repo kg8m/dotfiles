@@ -181,7 +181,7 @@ enddef  # }}}
 
 def kg8m#plugin#all_runtimepath(): string  # {{{
   const current = &runtimepath->split(",")
-  const plugins = kg8m#plugin#get_info()->values()->filter("!v:val.rtp->empty()")->map("v:val.rtp")
+  const plugins = kg8m#plugin#get_info()->values()->filter((_, plugin) => !plugin.rtp->empty())->map((_, plugin) => plugin.rtp)
 
   return kg8m#util#list_module().uniq(current + plugins)->join(",")
 enddef  # }}}
@@ -202,7 +202,7 @@ def kg8m#plugin#enable_disabled_plugins(): void  # {{{
 enddef  # }}}
 
 def kg8m#plugin#disabled_plugins(): list<dict<any>>  # {{{
-  return kg8m#plugin#get_info()->values()->filter("v:val.rtp->empty()")
+  return kg8m#plugin#get_info()->values()->filter((_, plugin) => plugin.rtp->empty())
 enddef  # }}}
 
 def s:check_updating_finished(options: dict<any> = {}): void  # {{{
@@ -261,7 +261,7 @@ def s:notify_updating(message: string, options: dict<any> = {}): void  # {{{
     extend(notify_command, ["-sender", "TERMINAL_NOTIFIER_STAY"])
   endif
 
-  notify_command->map("shellescape(v:val)")
+  notify_command->map((_, command) => shellescape(command))
   job_start(["ssh", "main", "-t", notify_command->join(" ")])
 
   const message_with_title = title .. ": " .. message

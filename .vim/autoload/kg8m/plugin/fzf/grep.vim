@@ -73,7 +73,7 @@ def s:options(): string  # {{{
     return base
   else
     final splitted = split($RIPGREP_EXTRA_OPTIONS, " ")
-    const escaped  = map(splitted, "shellescape(v:val)")
+    const escaped  = map(splitted, (_, option) => shellescape(option))
     return base .. " " .. join(escaped, " ")
   endif
 enddef  # }}}

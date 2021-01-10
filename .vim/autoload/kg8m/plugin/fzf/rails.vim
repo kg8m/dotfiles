@@ -66,7 +66,7 @@ def kg8m#plugin#fzf#rails#type_names(arglead: string, _cmdline: string, _curpos:
   else
     return s:type_names
       ->copy()
-      ->filter("v:val =~# '^" .. arglead .. "'")
+      ->filter((_, type_name) => type_name =~# "^" .. arglead)
   endif
 enddef  # }}}
 

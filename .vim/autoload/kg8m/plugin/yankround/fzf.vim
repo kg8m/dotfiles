@@ -2,7 +2,7 @@ vim9script
 
 # https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
 def kg8m#plugin#yankround#fzf#list(): list<string>  # {{{
-  return range(0, len(g:_yankround_cache) - 1)->map("s:format_list_item(v:val)")
+  return range(0, len(g:_yankround_cache) - 1)->map((_, item) => s:format_list_item(item))
 enddef  # }}}
 
 def kg8m#plugin#yankround#fzf#preview_command(): string  # {{{

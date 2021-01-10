@@ -20,7 +20,7 @@ def kg8m#configure#cursor#match(): void  # {{{
   set showmatch
   set matchtime=1
 
-  const japanese_matchpairs = kg8m#util#japanese_matchpairs()->map("join(v:val, ':')")->join(",")
+  const japanese_matchpairs = kg8m#util#japanese_matchpairs()->map((_, pair) => join(pair, ":"))->join(",")
   &matchpairs ..= "," .. japanese_matchpairs
 enddef  # }}}
 

@@ -23,7 +23,7 @@ def kg8m#plugin#fzf#buffers#run(): void  # {{{
 enddef  # }}}
 
 def s:candidates(): list<string>  # {{{
-  const current = [kg8m#plugin#fzf#current_filepath()]->filter("!empty(v:val)")
+  const current = [kg8m#plugin#fzf#current_filepath()]->filter((_, filepath) => !empty(filepath))
   const buffers = s:list()
 
   return kg8m#util#list_module().uniq(current + buffers)
@@ -31,7 +31,7 @@ enddef  # }}}
 
 def s:list(): list<string>  # {{{
   return getbufinfo({ buflisted: true })
-    ->filter("!empty(v:val.name)")
-    ->map("v:val.name->fnamemodify(kg8m#plugin#fzf#filepath_format())")
+    ->filter((_, bufinfo) => !empty(bufinfo.name))
+    ->map((_, bufinfo) => bufinfo.name->fnamemodify(kg8m#plugin#fzf#filepath_format()))
     ->sort()
 enddef  # }}}
