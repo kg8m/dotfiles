@@ -7,7 +7,7 @@ if !kg8m#plugin#is_sourced("fzf.vim")
 endif
 
 # Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)
-def kg8m#plugin#fzf#grep#run(pattern: string, dirpath: string): void  # {{{
+def kg8m#plugin#fzf#grep#run(pattern: string, dirpath: string = ""): void  # {{{
   if empty(pattern)
     echo "Canceled."
     return
