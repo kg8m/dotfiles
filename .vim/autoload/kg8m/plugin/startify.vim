@@ -37,7 +37,7 @@ def s:setup(): void  # {{{
   ]
   g:startify_commands = [
     { p: "call kg8m#plugin#update_all()" },
-    { P: "call kg8m#plugin#update_all(#{ bulk: false })" },
+    { P: "call kg8m#plugin#update_all(#{ bulk: v:false })" },
   ]
 
   # https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
