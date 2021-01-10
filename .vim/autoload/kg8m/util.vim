@@ -190,8 +190,8 @@ def kg8m#util#convert_to_vim9script(): void  # {{{
   :%s/\v#\{/{/ge
 
   # Add white spaces around `..`
-  :%s/\v([^.\/ ])\.\.(\.)@!/\1 ../ge
-  :%s/\v(\.)@<!\.\.([^.\/ ])/.. \1/ge
+  :%s/\v([^.\/ ])\.\.%(\.)@!/\1 ../ge
+  :%s/\v%(\.)@<!\.\.([^.\/ ])/.. \1/ge
 
   # Replace comment symbols `"` with `#`
   :%s/\v^(\s*)" /\1# /e
