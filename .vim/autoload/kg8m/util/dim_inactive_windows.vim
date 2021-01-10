@@ -3,7 +3,7 @@ vim9script
 def kg8m#util#dim_inactive_windows#setup()  # {{{
   augroup my_vimrc  # {{{
     autocmd WinEnter        * s:apply()
-    autocmd SessionLoadPost * timer_start(0, { -> s:apply() })
+    autocmd SessionLoadPost * timer_start(0, () => s:apply())
     autocmd VimResized      * s:apply({ force: true })
   augroup END  # }}}
 enddef  # }}}

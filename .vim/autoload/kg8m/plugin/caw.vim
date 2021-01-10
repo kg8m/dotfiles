@@ -29,7 +29,7 @@ def s:on_source(): void  # {{{
     autocmd FileType Gemfile b:caw_oneline_comment = "#"
 
     # Re-setup lazily to overwrite caw.vim's defualt
-    autocmd FileType vim s:setup_vim() | timer_start(100, { -> s:setup_vim() })
+    autocmd FileType vim s:setup_vim() | timer_start(100, () => s:setup_vim())
   augroup END  # }}}
 enddef  # }}}
 

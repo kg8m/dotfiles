@@ -7,7 +7,7 @@ final s:cache = {}
 
 def kg8m#plugin#asyncomplete#buffer#configure(): void  # {{{
   augroup my_vimrc  # {{{
-    autocmd User asyncomplete_setup timer_start(0, { -> s:setup() })
+    autocmd User asyncomplete_setup timer_start(0, () => s:setup())
   augroup END  # }}}
 
   kg8m#plugin#configure({

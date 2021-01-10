@@ -4,7 +4,7 @@ def kg8m#configure#formatoptions#base(): void  # {{{
   augroup my_vimrc  # {{{
     # Lazily set formatoptions to overwrite others
     autocmd FileType * s:set()
-    autocmd FileType * timer_start(300, { -> s:set() })
+    autocmd FileType * timer_start(300, () => s:set())
   augroup END  # }}}
 enddef  # }}}
 

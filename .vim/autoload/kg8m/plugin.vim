@@ -114,9 +114,9 @@ def kg8m#plugin#install(plugin_names: list<string> = []): void  # {{{
 enddef  # }}}
 
 def kg8m#plugin#update_all(options: dict<any> = {}): void  # {{{
-  timer_start(   0, { -> kg8m#plugin#check_and_update(options) } )
-  timer_start( 200, { -> kg8m#plugin#remove_disused() })
-  timer_start(1000, { -> kg8m#plugin#show_update_log() })
+  timer_start(   0, () => kg8m#plugin#check_and_update(options) )
+  timer_start( 200, () => kg8m#plugin#remove_disused())
+  timer_start(1000, () => kg8m#plugin#show_update_log())
 enddef  # }}}
 
 def kg8m#plugin#check_and_update(options: dict<any> = {}): void  # {{{
@@ -239,7 +239,7 @@ def s:check_updating_finished(options: dict<any> = {}): void  # {{{
 
     options_cache.prev_progress = progress
     options_cache.retry_count   = retry_count
-    timer_start(300, { -> s:check_updating_finished(options_cache) })
+    timer_start(300, () => s:check_updating_finished(options_cache))
   endif
 enddef  # }}}
 

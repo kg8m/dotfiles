@@ -39,7 +39,7 @@ def s:setup_contextual(): void  # {{{
   endif
 
   augroup my_vimrc  # {{{
-    execute "autocmd FileType " .. join(keys(g:neosnippet_contextual#contexts), ",") .. " timer_start(50, { -> s:source_contextual_snippets() })"
+    execute "autocmd FileType " .. join(keys(g:neosnippet_contextual#contexts), ",") .. " timer_start(50, () => s:source_contextual_snippets())"
   augroup END  # }}}
 enddef  # }}}
 
@@ -86,5 +86,5 @@ def s:on_source(): void  # {{{
 enddef  # }}}
 
 def s:on_post_source(): void  # {{{
-  timer_start(0, { -> s:source_contextual_snippets() })
+  timer_start(0, () => s:source_contextual_snippets())
 enddef  # }}}

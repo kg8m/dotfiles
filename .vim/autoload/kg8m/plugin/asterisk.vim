@@ -23,6 +23,6 @@ def s:with_notify(mapping: string): string  # {{{
     s:is_initialized = true
   endif
 
-  timer_start(100, { -> execute("doautocmd <nomodeline> User search_start") })
+  timer_start(100, () => execute("doautocmd <nomodeline> User search_start"))
   return mapping
 enddef  # }}}

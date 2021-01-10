@@ -15,4 +15,4 @@ def s:setup_writing_help(): void  # {{{
   endif
 enddef  # }}}
 
-timer_start(200, { -> s:setup_writing_help() })
+timer_start(200, () => s:setup_writing_help())

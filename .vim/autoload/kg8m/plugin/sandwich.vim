@@ -40,7 +40,7 @@ enddef  # }}}
 
 def s:zenkaku_recipes(): list<dict<any>>  # {{{
   const options = extend({ kind: ["add", "delete", "replace", "textobj"], action: ["add", "delete"] }, s:common_options())
-  return kg8m#util#japanese_matchpairs()->map({ _, pair -> extend({ buns: pair, input: pair }, options) })
+  return kg8m#util#japanese_matchpairs()->map((_, pair) => extend({ buns: pair, input: pair }, options))
 enddef  # }}}
 
 def s:common_options(): dict<any>  # {{{
