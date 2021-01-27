@@ -37,7 +37,7 @@ def s:get_buffers(): list<string>  # {{{
   return getbufinfo()
     ->sort("s:buffers_sorter")
     ->filter((_, bufinfo) => !empty(bufinfo.name))
-    ->map((_, bufinfo) => bufinfo.name->fnamemodify(kg8m#plugin#fzf#filepath_format()))
+    ->mapnew((_, bufinfo) => bufinfo.name->fnamemodify(kg8m#plugin#fzf#filepath_format()))
 enddef  # }}}
 
 def s:buffers_sorter(lhs: dict<any>, rhs: dict<any>): number  # {{{

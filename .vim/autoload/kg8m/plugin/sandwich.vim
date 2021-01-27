@@ -25,22 +25,22 @@ def kg8m#plugin#sandwich#configure(): void  # {{{
 enddef  # }}}
 
 def s:surround_like_recipes(): list<dict<any>>  # {{{
-  const add_options    = extend({ kind: ["add", "replace"], action: ["add"] }, s:common_options())
-  const delete_options = extend({ kind: ["delete", "replace", "textobj"], action: ["delete"], regex: true }, s:common_options())
+  const add_options    = extendnew({ kind: ["add", "replace"], action: ["add"] }, s:common_options())
+  const delete_options = extendnew({ kind: ["delete", "replace", "textobj"], action: ["delete"], regex: true }, s:common_options())
 
   return [
-    extend({ buns: ["( ", " )"], input: ["("] }, add_options),
-    extend({ buns: ["[ ", " ]"], input: ["["] }, add_options),
-    extend({ buns: ["{ ", " }"], input: ["{"] }, add_options),
-    extend({ buns: ['[(（]\s*', '\s*[)）]'], input: ["(", ")"] }, delete_options),
-    extend({ buns: ['[[［]\s*', '\s*[\]］]'], input: ["[", "]"] }, delete_options),
-    extend({ buns: ['[{｛]\s*', '\s*[}｝]'], input: ["{", "}"] }, delete_options),
+    extendnew({ buns: ["( ", " )"], input: ["("] }, add_options),
+    extendnew({ buns: ["[ ", " ]"], input: ["["] }, add_options),
+    extendnew({ buns: ["{ ", " }"], input: ["{"] }, add_options),
+    extendnew({ buns: ['[(（]\s*', '\s*[)）]'], input: ["(", ")"] }, delete_options),
+    extendnew({ buns: ['[[［「]\s*', '\s*[\]］」]'], input: ["[", "]"] }, delete_options),
+    extendnew({ buns: ['[{｛]\s*', '\s*[}｝]'], input: ["{", "}"] }, delete_options),
   ]
 enddef  # }}}
 
 def s:zenkaku_recipes(): list<dict<any>>  # {{{
-  const options = extend({ kind: ["add", "delete", "replace", "textobj"], action: ["add", "delete"] }, s:common_options())
-  return kg8m#util#japanese_matchpairs()->map((_, pair) => extend({ buns: pair, input: pair }, options))
+  const options = extendnew({ kind: ["add", "delete", "replace", "textobj"], action: ["add", "delete"] }, s:common_options())
+  return kg8m#util#japanese_matchpairs()->mapnew((_, pair) => extendnew({ buns: pair, input: pair }, options))
 enddef  # }}}
 
 def s:common_options(): dict<any>  # {{{

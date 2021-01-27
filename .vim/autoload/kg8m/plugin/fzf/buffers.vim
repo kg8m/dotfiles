@@ -32,6 +32,6 @@ enddef  # }}}
 def s:list(): list<string>  # {{{
   return getbufinfo({ buflisted: true })
     ->filter((_, bufinfo) => !empty(bufinfo.name))
-    ->map((_, bufinfo) => bufinfo.name->fnamemodify(kg8m#plugin#fzf#filepath_format()))
+    ->mapnew((_, bufinfo) => bufinfo.name->fnamemodify(kg8m#plugin#fzf#filepath_format()))
     ->sort()
 enddef  # }}}

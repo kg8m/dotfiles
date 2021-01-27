@@ -106,7 +106,7 @@ def s:count_max_label_length(): void  # {{{
   s:max_label_length =
     s:raw_list
       ->copy()
-      ->map((_, item) => s:item_label_length(item[0]))
+      ->mapnew((_, item) => s:item_label_length(item[0]))
       ->max()
 enddef  # }}}
 
@@ -137,7 +137,7 @@ def s:group_name(item: string): string  # {{{
 enddef  # }}}
 
 def s:format_list(): void  # {{{
-  s:list = s:raw_list->copy()->map((_, item) => s:format_item(item))
+  s:list = s:raw_list->mapnew((_, item) => s:format_item(item))
 enddef  # }}}
 
 def s:format_item(item: list<string>): string  # {{{
