@@ -30,8 +30,6 @@ def s:candidates(): list<string>  # {{{
 enddef  # }}}
 
 def s:list(): list<string>  # {{{
-  return getbufinfo({ buflisted: true })
-    ->filter((_, bufinfo) => !empty(bufinfo.name))
-    ->mapnew((_, bufinfo) => bufinfo.name->fnamemodify(kg8m#plugin#fzf#filepath_format()))
-    ->sort()
+  const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : fnamemodify(bufinfo.name, kg8m#plugin#fzf#filepath_format())
+  return getbufinfo({ buflisted: true })->kg8m#util#filter_map(MapperCallback)->sort()
 enddef  # }}}

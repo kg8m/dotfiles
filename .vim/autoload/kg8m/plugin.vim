@@ -181,7 +181,9 @@ enddef  # }}}
 
 def kg8m#plugin#all_runtimepath(): string  # {{{
   const current = &runtimepath->split(",")
-  const plugins = kg8m#plugin#get_info()->values()->filter((_, plugin) => !plugin.rtp->empty())->map((_, plugin) => plugin.rtp)
+  const plugins = kg8m#plugin#get_info()
+    ->values()
+    ->kg8m#util#filter_map((plugin) => empty(plugin.rtp) ? false : plugin.rtp)
 
   return kg8m#util#list_module().uniq(current + plugins)->join(",")
 enddef  # }}}

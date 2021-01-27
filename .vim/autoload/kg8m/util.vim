@@ -158,6 +158,20 @@ def kg8m#util#japanese_matchpairs(): list<list<string>>  # {{{
   ]
 enddef  # }}}
 
+def kg8m#util#filter_map(list: list<any>, Callback: func): list<any>  # {{{
+  var result = []
+
+  for item in list
+    const new_item = Callback(item)
+
+    if !!new_item
+      result += [new_item]
+    endif
+  endfor
+
+  return result
+enddef  # }}}
+
 def kg8m#util#convert_to_vim9script(): void  # {{{
   if getline(1) !=# "vim9script"
     append(0, "")

@@ -34,10 +34,8 @@ def s:candidates(): list<string>  # {{{
 enddef  # }}}
 
 def s:get_buffers(): list<string>  # {{{
-  return getbufinfo()
-    ->sort("s:buffers_sorter")
-    ->filter((_, bufinfo) => !empty(bufinfo.name))
-    ->mapnew((_, bufinfo) => bufinfo.name->fnamemodify(kg8m#plugin#fzf#filepath_format()))
+  const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : fnamemodify(bufinfo.name, kg8m#plugin#fzf#filepath_format())
+  return getbufinfo()->sort("s:buffers_sorter")->kg8m#util#filter_map(MapperCallback)
 enddef  # }}}
 
 def s:buffers_sorter(lhs: dict<any>, rhs: dict<any>): number  # {{{
@@ -49,6 +47,6 @@ def s:buffers_sorter(lhs: dict<any>, rhs: dict<any>): number  # {{{
 enddef  # }}}
 
 def s:get_oldfiles(): list<string>  # {{{
-  final filepaths = mr#mru#list()->copy()->filter((_, filepath) => filereadable(filepath))
-  return filepaths->map((_, filepath) => filepath->fnamemodify(kg8m#plugin#fzf#filepath_format()))
+  const MapperCallback = (filepath) => filereadable(filepath) ? fnamemodify(filepath, kg8m#plugin#fzf#filepath_format()) : false
+  return mr#mru#list()->kg8m#util#filter_map(MapperCallback)
 enddef  # }}}
