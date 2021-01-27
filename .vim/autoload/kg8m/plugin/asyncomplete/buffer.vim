@@ -55,7 +55,7 @@ def s:on_event_async(..._args: any): void  # {{{
 enddef  # }}}
 
 def s:start_refresh_timer(): void  # {{{
-  extend(s:cache, { refresh_timer: timer_start(200, () => kg8m#plugin#asyncomplete#buffer#on_event()) })
+  s:cache.refresh_timer = timer_start(200, () => kg8m#plugin#asyncomplete#buffer#on_event())
 enddef  # }}}
 
 def s:stop_refresh_timer(): void  # {{{

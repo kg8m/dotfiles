@@ -287,7 +287,8 @@ def s:schemas(): list<any>  # {{{
   if !has_key(s:cache, "lsp_schemas_json")
     const filepath = kg8m#plugin#get_info("vim-lsp-settings").path .. "/data/catalog.json"
     const json     = filepath->readfile()->join("\n")->json_decode()
-    extend(s:cache, { lsp_schemas_json: json.schemas })
+
+    s:cache.lsp_schemas_json = json.schemas
   endif
 
   return s:cache.lsp_schemas_json
