@@ -103,11 +103,7 @@ def s:define_raw_list(): void  # {{{
 enddef  # }}}
 
 def s:count_max_label_length(): void  # {{{
-  s:max_label_length =
-    s:raw_list
-      ->copy()
-      ->mapnew((_, item) => s:item_label_length(item[0]))
-      ->max()
+  s:max_label_length = s:raw_list->mapnew((_, item) => s:item_label_length(item[0]))->max()
 enddef  # }}}
 
 def s:item_label_length(item_label: string): number  # {{{
