@@ -149,7 +149,7 @@ def s:setup(): void  # {{{
     for name in keys(g:fzf#rails#extra_specs)
       if has_key(s:specs, name)
         extend(
-          specs[name],
+          s:specs[name],
           g:fzf#rails#extra_specs[name]
         )
       else
