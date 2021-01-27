@@ -1,6 +1,6 @@
 vim9script
 
-final cache = {}
+final s:cache = {}
 
 def kg8m#util#source_local_vimrc(): void  # {{{
   const filepath = expand("~/.vimrc.local")
@@ -27,12 +27,12 @@ def kg8m#util#on_tmux(): bool  # {{{
 enddef  # }}}
 
 def kg8m#util#on_rails_dir(): bool  # {{{
-  if has_key(cache, "on_rails_dir")
-    return cache.on_rails_dir
+  if has_key(s:cache, "on_rails_dir")
+    return s:cache.on_rails_dir
   endif
 
-  cache.on_rails_dir = isdirectory("./app") && filereadable("./config/environment.rb")
-  return cache.on_rails_dir
+  s:cache.on_rails_dir = isdirectory("./app") && filereadable("./config/environment.rb")
+  return s:cache.on_rails_dir
 enddef  # }}}
 
 def kg8m#util#is_git_tmp_edit(): bool  # {{{
@@ -40,30 +40,30 @@ def kg8m#util#is_git_tmp_edit(): bool  # {{{
 enddef  # }}}
 
 def kg8m#util#is_git_commit(): bool  # {{{
-  if has_key(cache, "is_git_commit")
-    return cache.is_git_commit
+  if has_key(s:cache, "is_git_commit")
+    return s:cache.is_git_commit
   endif
 
-  cache.is_git_commit = argc() ==# 1 && !!(argv()[0] =~# '\.git/COMMIT_EDITMSG$')
-  return cache.is_git_commit
+  s:cache.is_git_commit = argc() ==# 1 && !!(argv()[0] =~# '\.git/COMMIT_EDITMSG$')
+  return s:cache.is_git_commit
 enddef  # }}}
 
 def kg8m#util#is_git_hunk_edit(): bool  # {{{
-  if has_key(cache, "is_git_hunk_edit")
-    return cache.is_git_hunk_edit
+  if has_key(s:cache, "is_git_hunk_edit")
+    return s:cache.is_git_hunk_edit
   endif
 
-  cache.is_git_hunk_edit = argc() ==# 1 && !!(argv()[0] =~# '\.git/addp-hunk-edit\.diff$')
-  return cache.is_git_hunk_edit
+  s:cache.is_git_hunk_edit = argc() ==# 1 && !!(argv()[0] =~# '\.git/addp-hunk-edit\.diff$')
+  return s:cache.is_git_hunk_edit
 enddef  # }}}
 
 def kg8m#util#rubygems_path(): string  # {{{
-  if has_key(cache, "rubygems_path")
-    return cache.rubygems_path
+  if has_key(s:cache, "rubygems_path")
+    return s:cache.rubygems_path
   endif
 
   if exists("$RUBYGEMS_PATH")
-    cache.rubygems_path = $RUBYGEMS_PATH
+    s:cache.rubygems_path = $RUBYGEMS_PATH
   else
     const command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
     const command = command_prefix .. " -e 'print Gem.path.join(\"\\n\")'"
@@ -79,13 +79,13 @@ def kg8m#util#rubygems_path(): string  # {{{
     endfor
 
     if rubygems_path !=# ""
-      cache.rubygems_path = rubygems_path
+      s:cache.rubygems_path = rubygems_path
     else
       throw "Path to Ruby Gems not found. Candidates: " .. string(dirpaths)
     endif
   endif
 
-  return cache.rubygems_path
+  return s:cache.rubygems_path
 enddef  # }}}
 
 def kg8m#util#remote_copy(original_text: string): void  # {{{
@@ -110,22 +110,22 @@ enddef  # }}}
 
 # Depend on vital.vim
 def kg8m#util#string_module(): dict<func>  # {{{
-  if has_key(cache, "string_module")
-    return cache.string_module
+  if has_key(s:cache, "string_module")
+    return s:cache.string_module
   endif
 
-  cache.string_module = vital#vital#import("Data.String")
-  return cache.string_module
+  s:cache.string_module = vital#vital#import("Data.String")
+  return s:cache.string_module
 enddef  # }}}
 
 # Depend on vital.vim
 def kg8m#util#list_module(): dict<func>  # {{{
-  if has_key(cache, "list_module")
-    return cache.list_module
+  if has_key(s:cache, "list_module")
+    return s:cache.list_module
   endif
 
-  cache.list_module = vital#vital#import("Data.List")
-  return cache.list_module
+  s:cache.list_module = vital#vital#import("Data.List")
+  return s:cache.list_module
 enddef  # }}}
 
 def kg8m#util#current_filename(): string  # {{{
