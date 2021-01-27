@@ -57,7 +57,7 @@ def kg8m#plugin#fzf#rails#type_names(arglead: string, _cmdline: string, _curpos:
   s:setup()
 
   if !s:is_type_names_initialized
-    s:type_names = s:specs->keys()->sort()
+    extend(s:type_names, s:specs->keys()->sort())
     s:is_type_names_initialized = true
   endif
 
@@ -75,7 +75,7 @@ def s:setup(): void  # {{{
     return
   endif
 
-  s:specs = {
+  extend(s:specs, {
     assets: {
       dir:      "{app/assets,app/javascripts,public}",
       excludes: ["-path 'public/packs*'"],
@@ -118,7 +118,7 @@ def s:setup(): void  # {{{
     test: {
       dir: "{spec,test}",
     },
-  }
+  })
 
   s:specs["db/migrates"] = { dir: "db/migrate" }
 
