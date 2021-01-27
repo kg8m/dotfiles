@@ -132,6 +132,11 @@ def kg8m#util#current_filename(): string  # {{{
   return expand("%:t")
 enddef  # }}}
 
+def kg8m#util#current_filepath(): string  # {{{
+  const raw_filepath = expand("%")
+  return empty(raw_filepath) ? "" : raw_filepath->kg8m#util#formatted_filepath()
+enddef  # }}}
+
 def kg8m#util#current_relative_path(): string  # {{{
   const raw_filepath = expand("%")
   return empty(raw_filepath) ? "" : raw_filepath->fnamemodify(":~:.")
@@ -140,6 +145,14 @@ enddef  # }}}
 def kg8m#util#current_absolute_path(): string  # {{{
   const raw_filepath = expand("%")
   return empty(raw_filepath) ? "" : raw_filepath->fnamemodify(":~")
+enddef  # }}}
+
+def kg8m#util#formatted_filepath(filepath: string): string  # {{{
+  if !has_key(s:cache, "regular_filepath_format")
+    s:cache.regular_filepath_format = getcwd() ==# expand("~") ? ":~" : ":~:."
+  endif
+
+  return fnamemodify(filepath, s:cache.regular_filepath_format)
 enddef  # }}}
 
 def kg8m#util#japanese_matchpairs(): list<list<string>>  # {{{

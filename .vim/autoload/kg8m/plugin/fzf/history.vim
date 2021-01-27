@@ -12,7 +12,7 @@ def kg8m#plugin#fzf#history#run(): void  # {{{
   final options = {
     source:  s:candidates(),
     options: [
-      "--header-lines", empty(kg8m#plugin#fzf#current_filepath()) ? 0 : 1,
+      "--header-lines", empty(kg8m#util#current_filepath()) ? 0 : 1,
       "--prompt", "History> ",
       "--preview", "git cat {}",
       "--preview-window", "right:50%:wrap:nohidden",
@@ -26,7 +26,7 @@ enddef  # }}}
 #   - renamed files by `:Rename`
 #   - opened files by `vim foo bar baz`
 def s:candidates(): list<string>  # {{{
-  const current  = [kg8m#plugin#fzf#current_filepath()]->filter((_, filepath) => !empty(filepath))
+  const current  = [kg8m#util#current_filepath()]->filter((_, filepath) => !empty(filepath))
   const buffers  = s:get_buffers()
   const oldfiles = s:get_oldfiles()
 
@@ -34,7 +34,7 @@ def s:candidates(): list<string>  # {{{
 enddef  # }}}
 
 def s:get_buffers(): list<string>  # {{{
-  const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : fnamemodify(bufinfo.name, kg8m#plugin#fzf#filepath_format())
+  const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : kg8m#util#formatted_filepath(bufinfo.name)
   return getbufinfo()->sort("s:buffers_sorter")->kg8m#util#filter_map(MapperCallback)
 enddef  # }}}
 
@@ -47,6 +47,6 @@ def s:buffers_sorter(lhs: dict<any>, rhs: dict<any>): number  # {{{
 enddef  # }}}
 
 def s:get_oldfiles(): list<string>  # {{{
-  const MapperCallback = (filepath) => filereadable(filepath) ? fnamemodify(filepath, kg8m#plugin#fzf#filepath_format()) : false
+  const MapperCallback = (filepath) => filereadable(filepath) ? kg8m#util#formatted_filepath(filepath) : false
   return mr#mru#list()->kg8m#util#filter_map(MapperCallback)
 enddef  # }}}

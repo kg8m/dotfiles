@@ -118,7 +118,7 @@ def s:filepath(): string  # {{{
   if kg8m#util#current_filename() ==# ""
     return "[No Name]"
   else
-    return s:truncate_filepath(kg8m#util#current_relative_path())
+    return s:truncate_filepath(kg8m#util#current_filepath())
   endif
 enddef  # }}}
 

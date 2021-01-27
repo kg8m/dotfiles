@@ -1,7 +1,5 @@
 vim9script
 
-var s:fzf_filepath_format: string
-
 def kg8m#plugin#fzf#configure(): void  # {{{
   g:fzf_command_prefix = "Fzf"
   g:fzf_buffers_jump   = true
@@ -65,19 +63,6 @@ def kg8m#plugin#fzf#configure(): void  # {{{
   if kg8m#plugin#register("kg8m/vim-fzf-tjump")  # {{{
     kg8m#plugin#fzf_tjump#configure()
   endif  # }}}
-enddef  # }}}
-
-def kg8m#plugin#fzf#current_filepath(): string  # {{{
-  const filepath = expand("%")
-  return empty(filepath) ? "" : fnamemodify(filepath, kg8m#plugin#fzf#filepath_format())
-enddef  # }}}
-
-def kg8m#plugin#fzf#filepath_format(): string  # {{{
-  if empty(s:fzf_filepath_format)
-    s:fzf_filepath_format = getcwd() ==# expand("~") ? ":~" : ":~:."
-  endif
-
-  return s:fzf_filepath_format
 enddef  # }}}
 
 def s:setup_window(): void  # {{{
