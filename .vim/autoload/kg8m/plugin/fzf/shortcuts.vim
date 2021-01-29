@@ -14,9 +14,9 @@ var s:is_initialized = false
 def kg8m#plugin#fzf#shortcuts#run(query: string): void  # {{{
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
-    "source":  s:candidates(),
-    "sink":    function("s:handler"),
-    "options": ["--no-multi", "--prompt", "Shortcuts> ", "--query", query],
+    source:  s:candidates(),
+    sink:    function("s:handler"),
+    options: ["--no-multi", "--prompt", "Shortcuts> ", "--query", query],
   }
 
   fzf#run(fzf#wrap("my-shortcuts", options))
