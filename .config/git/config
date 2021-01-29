@@ -227,7 +227,7 @@
 	# status
 	st = status
 
-	status-with-filter = sh git:status:filter:all
+	status-with-filter = "!args=\"$@\"; git sh \"git:status:filter:all $args\""
 
 	# submodule
 	submodule-update-all = update-submodules

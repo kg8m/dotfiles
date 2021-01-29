@@ -262,7 +262,7 @@ function git:stash:all:with_message {
 }
 
 function git:status:filter:all {
-  git status --short | git:status:utility:filter
+  git status --short "$@" | git:status:utility:filter
 }
 
 function git:status:filter:staged {
