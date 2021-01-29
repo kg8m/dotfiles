@@ -2,14 +2,14 @@
 snippet function
 abbr    function {function_name}() abort\n ...\n endfunction
 options head
-	function ${1:#:function_name}() abort  " {{{
+	function ${1:`expand("%") =~# '\<autoload/' ? expand("%")->substitute('^.*\<autoload/', "", "")->substitute('/', "#", "g")->substitute('\.vim$', "#", "") : ""`}() abort  " {{{
 		${0}
 	endfunction  " }}}
 
 snippet def
 abbr    def {function_name}(): {return_type}\n ...\n enddef
 options head
-	def ${1:#:function_name}(): ${2:#:return_type}  # {{{
+	def ${1:`expand("%") =~# '\<autoload/' ? expand("%")->substitute('^.*\<autoload/', "", "")->substitute('/', "#", "g")->substitute('\.vim$', "#", "") : ""`}(): ${2:#:return_type}  # {{{
 		${0}
 	enddef  # }}}
 
