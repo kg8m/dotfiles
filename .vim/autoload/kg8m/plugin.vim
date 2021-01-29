@@ -41,6 +41,9 @@ def kg8m#plugin#init_manager(): void  # {{{
     autocmd VimEnter * kg8m#plugin#call_hooks()
   augroup END  # }}}
 
+  # Decrease max processes because too many processes sometimes get refused
+  g:dein#install_max_processes = 4
+
   g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
 
   kg8m#plugin#register(manager_path)
