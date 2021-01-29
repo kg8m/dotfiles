@@ -336,7 +336,7 @@ function git:utility:diff_or_cat {
 
   # Untracked files
   if [[ "$git_status" =~ '^\?\?' ]]; then
-    git:proxy:cat:files "$filepath"
+    git:utility:cat "$filepath"
   # Others: unstaged tracked files
   else
     git:utility:diff -- "$filepath"
