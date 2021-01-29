@@ -36,7 +36,7 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
   })
   # }}}
 
-  # go get github.com/mattn/efm-langserver  # {{{
+  # go install github.com/mattn/efm-langserver  # {{{
   # cf. .config/efm-langserver/config.yaml
   s:register({
     name: "efm-langserver",
@@ -47,7 +47,7 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
   })
   # }}}
 
-  # go get github.com/nametake/golangci-lint-langserver  # {{{
+  # go install github.com/nametake/golangci-lint-langserver  # {{{
   s:register({
     name: "golangci-lint-langserver",
     cmd: (server_info) => ["golangci-lint-langserver"],
@@ -58,7 +58,7 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
   })
   # }}}
 
-  # go get golang.org/x/tools/gopls  # {{{
+  # go install golang.org/x/tools/gopls  # {{{
   s:register({
     name: "gopls",
     cmd: (server_info) => ["gopls", "-mode", "stdio"],
@@ -128,7 +128,7 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
   })
   # }}}
 
-  # go get github.com/lighttiger2505/sqls  # {{{
+  # go install github.com/lighttiger2505/sqls  # {{{
   s:register({
     name: "sqls",
     cmd: (server_info) => ["sqls"],

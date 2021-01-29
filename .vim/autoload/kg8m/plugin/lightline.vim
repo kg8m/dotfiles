@@ -129,6 +129,7 @@ def s:truncate_filepath(filepath: string): string  # {{{
   if length <= max
     return filepath
   else
+    # Footer = the last slash and filename
     const footer_width = length - strridx(filepath, "/")
     const separator    = "..."
 
