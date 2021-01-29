@@ -23,8 +23,8 @@ def kg8m#plugin#fzf#grep#run(pattern: string, dirpath: string = ""): void  # {{{
     options: [
       "--header", "Grep: " .. grep_args,
       "--delimiter", ":",
-      "--preview-window", "right:50%:wrap:nohidden:+{2}-/2",
       "--preview", kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh {}",
+      "--preview-window", "right:50%:wrap:nohidden:+{2}-/2",
     ],
   }
 
