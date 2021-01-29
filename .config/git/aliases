@@ -339,7 +339,7 @@ function git:utility:diff_or_cat {
     git:proxy:cat:files "$filepath"
   # Others: unstaged tracked files
   else
-    git diff-without-space-changes --color=always -- "$filepath" | git pager
+    git:utility:diff -- "$filepath"
   fi
 }
 
@@ -349,7 +349,7 @@ function git:utility:diff_or_cat_for_staged {
 
   # Staged files
   if [[ "$git_status" =~ ^[A-Z] ]]; then
-    git diff-without-space-changes --color=always --staged -- "$filepath" | git pager
+    git:utility:diff --staged -- "$filepath"
   else
     git diff-or-cat "$filepath"
   fi
@@ -357,6 +357,10 @@ function git:utility:diff_or_cat_for_staged {
 
 function git:utility:cat {
   git:proxy:cat:files "$@"
+}
+
+function git:utility:diff {
+  git diff-without-space-changes --color=always "$@" | git pager
 }
 
 function git:utility:preview:log {
