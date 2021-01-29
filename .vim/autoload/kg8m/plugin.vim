@@ -146,5 +146,5 @@ def kg8m#plugin#enable_disabled_plugins(): void  # {{{
 enddef  # }}}
 
 def kg8m#plugin#disabled_plugins(): list<dict<any>>  # {{{
-  return kg8m#plugin#get_info()->values()->filter((_, plugin) => plugin.rtp->empty())
+  return kg8m#plugin#get_info()->values()->filter((_, plugin) => empty(plugin.rtp))
 enddef  # }}}
