@@ -1,273 +1,255 @@
 [github]
-user = kg8m
+	user = kg8m
 
 [user]
-name  = kg8m
-email = takumi.kagiyama@gmail.com
-useConfigOnly = true
+	name  = kg8m
+	email = takumi.kagiyama@gmail.com
+	useConfigOnly = true
 
 [url "git@github.com:"]
-pushInsteadOf = https://github.com/
+	pushInsteadOf = https://github.com/
 
 [url "git@gitlab.com:"]
-pushInsteadOf = https://gitlab.com/
+	pushInsteadOf = https://gitlab.com/
 
 [branch]
-autosetupmerge = true
-sort = -authordate
+	autosetupmerge = true
+	sort = -authordate
 
 [color]
-branch = auto
-diff   = auto
-status = auto
-ui = true
+	branch = auto
+	diff   = auto
+	status = auto
+	ui = true
 
 [color "branch"]
-current = white red
-local   = yellow
-remote  = green
+	current = white red
+	local   = yellow
+	remote  = green
 
 [color "diff"]
-meta = green
-frag = magenta bold
-old  = cyan
-new  = red
+	meta = green
+	frag = magenta bold
+	old  = cyan
+	new  = red
 
-# For delta
-oldMoved = white "#050000"
-newMoved = white "#000500"
+	# For delta
+	oldMoved = white "#050000"
+	newMoved = white "#000500"
 
 [color "interactive"]
-prompt = 236 yellow bold
+	prompt = 236 yellow bold
 
 [color "status"]
-added     = yellow
-changed   = green
-untracked = cyan
+	added     = yellow
+	changed   = green
+	untracked = cyan
 
 [commit]
-verbose = true
-cleanup = scissors
+	verbose = true
+	cleanup = scissors
 
 [core]
-whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-editor = vim
-excludesfile = ~/.gitignore
-hooksPath = ~/.config/git/hooks
-pager = git-pager
+	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	editor = vim
+	excludesfile = ~/.gitignore
+	hooksPath = ~/.config/git/hooks
+	pager = git-pager
 
 [delta]
-line-numbers = true
-line-numbers-minus-style = "red auto"
-line-numbers-zero-style = "#999999 auto"
-line-numbers-plus-style = "green auto"
+	line-numbers = true
+	line-numbers-minus-style = "red auto"
+	line-numbers-zero-style = "#999999 auto"
+	line-numbers-plus-style = "green auto"
 
 [diff]
-algorithm = patience
-context = 10
-compactionHeuristic = true
-colorMoved = plain
-colorMovedWS = ignore-all-space
-renames = true
+	algorithm = patience
+	context = 10
+	compactionHeuristic = true
+	colorMoved = plain
+	colorMovedWS = ignore-all-space
+	renames = true
 
-# Disable because some tools to apply patches don't work
-noprefix = false
+	# Disable because some tools to apply patches don't work
+	noprefix = false
 
 [fetch]
-prune = true
+	prune = true
 
 [interactive]
-diffFilter = git-diff-filter
+	diffFilter = git-diff-filter
 
 [mergetool]
-keepBackup = false
+	keepBackup = false
 
 [pager]
-log  = git-pager
-show = git-pager
-diff = git-pager
+	log  = git-pager
+	show = git-pager
+	diff = git-pager
 
 [pull]
-rebase = true
+	rebase = true
 
 [rebase]
-autostash = true
-showCurrentPatch = true
+	autostash = true
+	showCurrentPatch = true
 
 [rerere]
-enabled = true
+	enabled = true
 
 [stash]
-showPatch = true
+	showPatch = true
 
 [status]
-showUntrackedFiles = all
+	showUntrackedFiles = all
 
 [submodule]
-fetchJobs = 4
+	fetchJobs = 4
 
 [alias]
-# add  # {{{
-add-by-select             = bulk-add
-add-with-intent-by-select = bulk-add-with-intent
-add-by-patch-by-select    = bulk-add-by-patch
+	# add
+	add-by-select             = bulk-add
+	add-with-intent-by-select = bulk-add-with-intent
+	add-by-patch-by-select    = bulk-add-by-patch
 
-bulk-intent-to-add = bulk-add-with-intent
+	bulk-intent-to-add = bulk-add-with-intent
 
-bulk-add             = sh git:add:bulk
-bulk-add-with-intent = sh git:add:bulk:intent
-bulk-add-by-patch    = sh git:add:bulk:patch
-# }}}
+	bulk-add             = sh git:add:bulk
+	bulk-add-with-intent = sh git:add:bulk:intent
+	bulk-add-by-patch    = sh git:add:bulk:patch
 
-# restore  # {{{
-unstage = restore --staged
+	# restore
+	unstage = restore --staged
 
-restore-by-select          = bulk-restore
-restore-by-select-staged   = bulk-restore-staged
-unstage-by-select          = bulk-unstage
-unstage-by-patch-by-select = bulk-unstage-by-patch
+	restore-by-select          = bulk-restore
+	restore-by-select-staged   = bulk-restore-staged
+	unstage-by-select          = bulk-unstage
+	unstage-by-patch-by-select = bulk-unstage-by-patch
 
-bulk-restore          = sh git:restore:bulk
-bulk-restore-staged   = sh git:restore:bulk:staged
-bulk-unstage          = sh git:restore:bulk:staged
-bulk-unstage-by-patch = sh git:restore:bulk:staged:patch
-# }}}
+	bulk-restore          = sh git:restore:bulk
+	bulk-restore-staged   = sh git:restore:bulk:staged
+	bulk-unstage          = sh git:restore:bulk:staged
+	bulk-unstage-by-patch = sh git:restore:bulk:staged:patch
 
-# clone  # {{{
-clone-with-submodules = clone --recursive
+	# clone
+	clone-with-submodules = clone --recursive
 
-shallow-clone = "!args=\"$@\"; git sh \"git:clone:shallow $args\""
-# }}}
+	shallow-clone = "!args=\"$@\"; git sh \"git:clone:shallow $args\""
 
-# switch  # {{{
-sw  = switch
-sws = switch-by-select
+	# switch
+	sw  = switch
+	sws = switch-by-select
 
-switch-by-select = sh git:switch:select
-# }}}
+	switch-by-select = sh git:switch:select
 
-# checkout  # {{{
-co = checkout
-# }}}
+	# checkout
+	co = checkout
 
-# pull/fetch/merge/rebase  # {{{
-up = update
-f  = fetch
+	# pull/fetch/merge/rebase
+	up = update
+	f  = fetch
 
-update         = sh git:update:with_log
-shallow-update = sh git:update:shallow
-update-master  = sh git:update:master
-# }}}
+	update         = sh git:update:with_log
+	shallow-update = sh git:update:shallow
+	update-master  = sh git:update:master
 
-# branch  # {{{
-brs      = branches
-br       = branch
-branches = branch --all -vv
+	# branch
+	brs      = branches
+	br       = branch
+	branches = branch --all -vv
 
-create-branch-with-set-upstream = "!git sh \"git:branch:create:with_set_upstream '$1' '$2' '$3'\""
+	create-branch-with-set-upstream = "!git sh \"git:branch:create:with_set_upstream '$1' '$2' '$3'\""
 
-delete-fully-merged-local-branch = branch --delete
-delete-local-branches            = bulk-delete-local-branches
-delete-remote-branches           = bulk-delete-remote-branches
+	delete-fully-merged-local-branch = branch --delete
+	delete-local-branches            = bulk-delete-local-branches
+	delete-remote-branches           = bulk-delete-remote-branches
 
-branch-delete-locals  = bulk-delete-local-branches
-branch-delete-remotes = bulk-delete-remote-branches
+	branch-delete-locals  = bulk-delete-local-branches
+	branch-delete-remotes = bulk-delete-remote-branches
 
-bulk-delete-local-branches  = sh git:branch:delete:bulk:local
-bulk-delete-remote-branches = sh git:branch:delete:bulk:remote
-# }}}
+	bulk-delete-local-branches  = sh git:branch:delete:bulk:local
+	bulk-delete-remote-branches = sh git:branch:delete:bulk:remote
 
-# commit  # {{{
-ci = commit
-ca = commit --all
-# }}}
+	# commit
+	ci = commit
+	ca = commit --all
 
-# push  # {{{
-  push-with-revision = "!revision=\"$1\"; git sh \"git:push:revision $revision\""
-# }}}
+	# push
+	push-with-revision = "!revision=\"$1\"; git sh \"git:push:revision $revision\""
 
-# reset/revert  # {{{
-edit-commits      = rebase --interactive
-reset-commits     = edit-commits
-reset-last-commit = reset --soft HEAD~
-undo-add          = reset --soft
-# }}}
+	# reset/revert
+	edit-commits      = rebase --interactive
+	reset-commits     = edit-commits
+	reset-last-commit = reset --soft HEAD~
+	undo-add          = reset --soft
 
-# clean  # {{{
-clean-by-select = bulk-clean
+	# clean
+	clean-by-select = bulk-clean
 
-bulk-clean = sh git:clean:bulk
-# }}}
+	bulk-clean = sh git:clean:bulk
 
-# log  # {{{
-lg = log-graph
-la = log --branches --tags --remotes
-lp = log-with-patch
+	# log
+	lg = log-graph
+	la = log --branches --tags --remotes
+	lp = log-with-patch
 
-log-graph      = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%an %Creset%s\"
-log-with-patch = log --stat --patch
+	log-graph      = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%an %Creset%s\"
+	log-with-patch = log --stat --patch
 
-lg-branches = sh 'git:log:compare:branch --graph --pretty=format:\\\"\"%Cgreen%h %ci %Cblue[C] %cn [A] %an %Creset%s\\\"\"'
-lp-branches = sh 'git:log:compare:branch --stat --patch'
-# }}}
+	lg-branches = sh 'git:log:compare:branch --graph --pretty=format:\\\"\"%Cgreen%h %ci %Cblue[C] %cn [A] %an %Creset%s\\\"\"'
+	lp-branches = sh 'git:log:compare:branch --stat --patch'
 
-# diff  # {{{
-di = diff-without-space-changes
-dc = diff-without-space-changes --cached
-ds = diff-without-space-changes --staged
-dw = diff-without-space-changes --color-words
-dh = diff-without-space-changes HEAD
-dl = diff-local-without-space-changes
+	# diff
+	di = diff-without-space-changes
+	dc = diff-without-space-changes --cached
+	ds = diff-without-space-changes --staged
+	dw = diff-without-space-changes --color-words
+	dh = diff-without-space-changes HEAD
+	dl = diff-local-without-space-changes
 
-diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --color-moved-ws=allow-indentation-change
+	diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --color-moved-ws=allow-indentation-change
 
-diff-local                       = diff --no-index
-diff-local-without-space-changes = diff-without-space-changes --no-index
+	diff-local                       = diff --no-index
+	diff-local-without-space-changes = diff-without-space-changes --no-index
 
-diff-stat-branches = diff-branches --stat-width = 150
+	diff-stat-branches = diff-branches --stat-width = 150
 
-diff-branches      = "!args=\"$@\"; git sh \"git:diff:branch $args\""
-diff-branch-from   = "!args=\"$@\"; git sh \"git:diff:branch:from $args\""
-changed-files-from = "!args=\"$@\"; git sh \"git:diff:branch:from:nameonly $args\""
-# }}}
+	diff-branches      = "!args=\"$@\"; git sh \"git:diff:branch $args\""
+	diff-branch-from   = "!args=\"$@\"; git sh \"git:diff:branch:from $args\""
+	changed-files-from = "!args=\"$@\"; git sh \"git:diff:branch:from:nameonly $args\""
 
-# stash  # {{{
-stash-all-with-message = "!args=\"$@\"; git sh \"git:stash:all:with_message $args\""
-# }}}
+	# stash
+	stash-all-with-message = "!args=\"$@\"; git sh \"git:stash:all:with_message $args\""
 
-# show  # {{{
-show-without-diff = show -s
-# }}}
+	# show
+	show-without-diff = show -s
 
-# status  # {{{
-st = status
+	# status
+	st = status
 
-status-with-filter = sh git:status:filter:all
-# }}}
+	status-with-filter = sh git:status:filter:all
 
-# submodule  # {{{
-submodule-update-all = update-submodules
-submodule-remove     = remove-submodules
-submodule-deinit     = deinit-submodules
+	# submodule
+	submodule-update-all = update-submodules
+	submodule-remove     = remove-submodules
+	submodule-deinit     = deinit-submodules
 
-update-submodules = sh git:submodule:update
-remove-submodules = sh git:submodule:remove:bulk
-deinit-submodules = sh git:submodule:deinit:bulk
-# }}}
+	update-submodules = sh git:submodule:update
+	remove-submodules = sh git:submodule:remove:bulk
+	deinit-submodules = sh git:submodule:deinit:bulk
 
-# utility  # {{{
-aliases = alias
-alias   = sh git:alias:list
+	# utility
+	aliases = alias
+	alias   = sh git:alias:list
 
-info = remote show origin
+	info = remote show origin
 
-chmod = "!git sh \"git:utility:chmod '$1'\""
-diff-or-cat = "!git sh \"git:utility:diff_or_cat '$1'\""
-diff-or-cat-for-staged = "!git sh \"git:utility:diff_or_cat_for_staged '$1'\""
-cat = "!git sh \"git:utility:cat '$1'\""
+	chmod = "!git sh \"git:utility:chmod '$1'\""
+	diff-or-cat = "!git sh \"git:utility:diff_or_cat '$1'\""
+	diff-or-cat-for-staged = "!git sh \"git:utility:diff_or_cat_for_staged '$1'\""
+	cat = "!git sh \"git:utility:cat '$1'\""
 
-sh = "!zsh -c \"source ~/.config/git/aliases; $@\""
-# }}}
+	sh = "!zsh -c \"source ~/.config/git/aliases; $@\""
 
 [include]
-path = ~/.gitconfig.local
+	path = ~/.gitconfig.local

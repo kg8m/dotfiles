@@ -21,7 +21,7 @@ def kg8m#configure#indent#filetypes(): void  # {{{
   g:vim_indent_cont = 0
 
   augroup my_vimrc  # {{{
-    autocmd FileType neosnippet set noexpandtab
+    autocmd FileType gitconfig,neosnippet set noexpandtab
     autocmd FileType text,markdown,moin setlocal cinkeys-=:
   augroup END  # }}}
 enddef  # }}}
