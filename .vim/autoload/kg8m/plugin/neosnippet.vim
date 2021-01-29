@@ -10,8 +10,8 @@ def kg8m#plugin#neosnippet#configure(): void  # {{{
     lazy:  true,
     on_ft: ["snippet", "neosnippet"],
     on_i:  true,
-    hook_source:      function("s:on_source"),
-    hook_post_source: function("s:on_post_source"),
+    hook_source:      () => s:on_source(),
+    hook_post_source: () => s:on_post_source(),
   })
 enddef  # }}}
 

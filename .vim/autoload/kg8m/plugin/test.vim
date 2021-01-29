@@ -7,7 +7,7 @@ def kg8m#plugin#test#configure(): void  # {{{
   kg8m#plugin#configure({
     lazy:   true,
     on_cmd: ["TestFile", "TestNearest"],
-    hook_source: function("s:on_source"),
+    hook_source: () => s:on_source(),
   })
 enddef  # }}}
 

@@ -4,7 +4,7 @@ def kg8m#plugin#go#configure(): void  # {{{
   kg8m#plugin#configure({
     lazy:  true,
     on_ft: "go",
-    hook_source: function("s:on_source"),
+    hook_source: () => s:on_source(),
   })
 enddef  # }}}
 

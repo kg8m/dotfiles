@@ -42,14 +42,14 @@ def s:setup(): void  # {{{
     allowlist: ["*"],
     completor: function("asyncomplete#sources#buffer#completor"),
     events: events,
-    on_event: function("s:on_event_async"),
+    on_event: () => s:on_event_async(),
     priority: 2,
   }))
 
   s:activate()
 enddef  # }}}
 
-def s:on_event_async(..._args: any): void  # {{{
+def s:on_event_async(): void  # {{{
   s:stop_refresh_timer()
   s:start_refresh_timer()
 enddef  # }}}

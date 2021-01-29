@@ -8,8 +8,8 @@ def kg8m#plugin#startify#configure(): void  # {{{
       lazy:     true,
       on_cmd:   "Startify",
       on_event: "BufWritePre",
-      hook_source:      function("s:on_source"),
-      hook_post_source: function("s:on_post_source"),
+      hook_source:      () => s:on_source(),
+      hook_post_source: () => s:on_post_source(),
     })
   else
     s:setup()

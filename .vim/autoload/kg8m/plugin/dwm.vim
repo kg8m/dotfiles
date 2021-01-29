@@ -8,8 +8,8 @@ def kg8m#plugin#dwm#configure(): void  # {{{
     lazy:    true,
     on_cmd:  ["DWMOpen"],
     on_func: ["DWM_New", "DWM_AutoEnter", "DWM_Stack"],
-    hook_source:      function("s:on_source"),
-    hook_post_source: function("s:on_post_source"),
+    hook_source:      () => s:on_source(),
+    hook_post_source: () => s:on_post_source(),
   })
 enddef  # }}}
 

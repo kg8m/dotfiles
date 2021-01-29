@@ -8,8 +8,8 @@ def kg8m#plugin#lsp#configure(): void  # {{{
   kg8m#plugin#configure({
     lazy:  true,
     on_ft: kg8m#plugin#lsp#servers#filetypes(),
-    hook_source:      function("s:on_source"),
-    hook_post_source: function("s:on_post_source"),
+    hook_source:      () => s:on_source(),
+    hook_post_source: () => s:on_post_source(),
   })
 
   kg8m#plugin#register("mattn/vim-lsp-settings", { if: false, merged: false })

@@ -4,8 +4,8 @@ def kg8m#plugin#autodate#configure(): void  # {{{
   kg8m#plugin#configure({
     lazy:     true,
     on_event: "BufWritePre",
-    hook_source:      function("s:on_source"),
-    hook_post_source: function("s:on_post_source"),
+    hook_source:      () => s:on_source(),
+    hook_post_source: () => s:on_post_source(),
   })
 enddef  # }}}
 
@@ -22,5 +22,6 @@ def s:on_source(): void  # {{{
 enddef  # }}}
 
 def s:on_post_source(): void  # {{{
-  Autodate
+  # Use `execute` because `Autodate` command causes "E476: Invalid command: Autodate"
+  execute "Autodate"
 enddef  # }}}

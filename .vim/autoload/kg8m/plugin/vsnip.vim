@@ -4,7 +4,7 @@ def kg8m#plugin#vsnip#configure(): void  # {{{
   kg8m#plugin#configure({
     lazy: true,
     on_i: true,
-    hook_source: function("s:on_source"),
+    hook_source: () => s:on_source(),
   })
 
   if kg8m#plugin#register("hrsh7th/vim-vsnip-integ")  # {{{

@@ -6,7 +6,7 @@ def kg8m#plugin#argwrap#configure(): void  # {{{
   kg8m#plugin#configure({
     lazy:   true,
     on_cmd: "ArgWrap",
-    hook_source: function("s:on_source"),
+    hook_source: () => s:on_source(),
   })
 enddef  # }}}
 

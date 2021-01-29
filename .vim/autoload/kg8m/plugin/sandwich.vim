@@ -20,7 +20,7 @@ def kg8m#plugin#sandwich#configure(): void  # {{{
   kg8m#plugin#configure({
     lazy:   true,
     on_map: [["nv", "<Plug>(operator-sandwich-"], ["xo", "<Plug>(textobj-sandwich-"]],
-    hook_post_source: function("s:on_post_source"),
+    hook_post_source: () => s:on_post_source(),
   })
 enddef  # }}}
 
