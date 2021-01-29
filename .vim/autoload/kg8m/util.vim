@@ -94,8 +94,7 @@ def kg8m#util#remote_copy(original_text: string): void  # {{{
   system("printf %s " .. text .. " | ssh main -t 'LC_CTYPE=UTF-8 pbcopy'")
 
   if &columns > 50
-    const truncated_text = trim(kg8m#util#string_module().truncate(text, &columns - 30))
-    echomsg "Copied: " .. truncated_text .. (trim(text) ==# truncated_text ? "" : "...")
+    echomsg "Copied: " .. trim(kg8m#util#string_module().truncate_skipping(text, &columns - 30, 0, "..."))
   else
     echomsg "Copied"
   endif
