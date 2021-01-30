@@ -71,6 +71,81 @@ def s:add_rules_for_eruby(): void  # {{{
   lexima#add_rule({ char: "<Space>", at: '<%=\S*\%#', except: '<%=\S*\%#.*%>', input_after: "<Space>%>", filetype: "eruby" })
 enddef  # }}}
 
+def s:add_rules_for_html(): void  # {{{
+  # https://developer.mozilla.org/en-US/docs/Web/HTML/Element
+  const tagnames = [
+    # Main root
+    "html",
+
+    # Document metadata
+    "base", "head", "link", "meta", "style", "title",
+
+    # Sectioning root
+    "body",
+
+    # Content sectioning
+    "address", "article", "aside", "footer", "header", "h1", "h2", "h3", "h4", "h5", "h6", "hgroup", "main", "nav",
+    "section",
+
+    # Text content
+    "blockquote", "dd", "div", "dl", "dt", "figcaption", "figure", "hr", "li", "main", "ol", "p", "pre", "ul",
+
+    # Inline text semantics
+    "a", "abbr", "b", "bdi", "bdo", "br", "cite", "code", "data", "dfn", "em", "i", "kbd", "mark", "q", "rb", "rp",
+    "rt", "rtc", "ruby", "s", "samp", "small", "span", "strong", "sub", "sup", "time", "u", "var", "wbr",
+
+    # Image and multimedia
+    "area", "audio", "img", "map", "track", "video",
+
+    # Embedded content
+    "embed", "iframe", "object", "param", "picture", "source",
+
+    # SVG and MathML
+    "svg", "math",
+
+    # Scripting
+    "canvas", "noscript", "script",
+
+    # Demarcating edits
+    "del", "ins",
+
+    # Table content
+    "caption", "col", "colgroup", "table", "tbody", "td", "tfoot", "th", "thead", "tr",
+
+    # Forms
+    "button", "datalist", "fieldset", "form", "input", "label", "legend", "meter", "optgroup", "option", "output",
+    "progress", "select", "textarea",
+
+    # Interactive elements
+    "details", "dialog", "menu", "summary",
+
+    # Web Components
+    "content", "element", "shadow", "slot", "template",
+  ]
+
+  for tagname in tagnames
+    # `>` when
+    #
+    #   <foo|
+    #
+    # then
+    #
+    #   <foo>|</foo>
+    lexima#add_rule({ char: ">", at: '<' .. tagname .. '\>[^>]*\%#', input_after: "</" .. tagname .. ">", filetype: ["eruby", "html"] })
+  endfor
+
+  # `<CR>` when
+  #
+  #   <foo>|</foo>
+  #
+  # then
+  #
+  #   <foo>
+  #     |
+  #   </foo>
+  lexima#add_rule({ char: "<CR>", at: '>\%#</', input_after: "<CR>", filetype: ["eruby", "html"] })
+enddef  # }}}
+
 def s:add_rules_for_markdown(): void  # {{{
   # `<Space>` when
   #
@@ -129,6 +204,7 @@ enddef  # }}}
 def s:on_post_source(): void  # {{{
   s:add_common_rules()
   s:add_rules_for_eruby()
+  s:add_rules_for_html()
   s:add_rules_for_markdown()
   s:add_rules_for_vim()
 
