@@ -230,10 +230,15 @@ function my_grep_with_filter() {
     fi
   done
 
+  if [ "${#non_options}" = "0" ] && ! [[ "${options[-1]}" =~ ^- ]]; then
+    non_options+=("${options[-1]}")
+    options=("${options[1,-2]}")
+  fi
+
   local query="${non_options[1]}"
   local results=("${(@f)$(
     my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2> /dev/null |
-      filter --header="Grep: '$query'" --delimiter=":" --preview-window="right:50%:wrap:nohidden:+{2}-/2" --preview="$FZF_VIM_PATH/bin/preview.sh {}"
+      filter --header="Grep: $*" --delimiter=":" --preview-window="right:50%:wrap:nohidden:+{2}-/2" --preview="$FZF_VIM_PATH/bin/preview.sh {}"
   )}")
 
   if [ -z "${results[*]}" ]; then
