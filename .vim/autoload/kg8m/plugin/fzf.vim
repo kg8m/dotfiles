@@ -23,6 +23,8 @@ def kg8m#plugin#fzf#configure(): void  # {{{
   nnoremap <Leader><Leader>y :call kg8m#plugin#fzf#yank_history#run()<CR>
   noremap  <Leader><Leader>s <Cmd>call kg8m#plugin#fzf#shortcuts#run("")<CR>
   noremap  <Leader><Leader>a <Cmd>call kg8m#plugin#fzf#shortcuts#run("'EasyAlign ")<CR>
+  nnoremap <Leader><Leader>[ :call kg8m#plugin#fzf#jumplist#back()<CR>
+  nnoremap <Leader><Leader>] :call kg8m#plugin#fzf#jumplist#forward()<CR>
 
   noremap <expr> <Leader><Leader>g kg8m#plugin#fzf#grep#expr()
   noremap <expr> <Leader><Leader>G kg8m#plugin#fzf#grep#expr(#{ dir: v:true })
