@@ -108,7 +108,6 @@ function __my_preexec_end_timetrack() {
     printf "\n* * *\n"
     echo "$title"
     echo "$message"
-    date
 
     unset __timetrack_start
     unset __timetrack_command
