@@ -202,12 +202,14 @@ def s:add_rules_for_vim(): void  # {{{
 enddef  # }}}
 
 def s:on_post_source(): void  # {{{
-  s:add_common_rules()
-  s:add_rules_for_eruby()
-  s:add_rules_for_html()
-  s:add_rules_for_markdown()
-  s:add_rules_for_vim()
+  # Delay for performance
+  timer_start(50, () => s:add_common_rules())
+  timer_start(50, () => s:add_rules_for_eruby())
+  timer_start(50, () => s:add_rules_for_html())
+  timer_start(50, () => s:add_rules_for_markdown())
+  timer_start(50, () => s:add_rules_for_vim())
 
-  kg8m#plugin#mappings#define_cr_for_insert_mode()
-  kg8m#plugin#mappings#define_bs_for_insert_mode()
+  # Delay to overwrite lexima.vim's default mapping
+  timer_start(100, () => kg8m#plugin#mappings#define_cr_for_insert_mode())
+  timer_start(100, () => kg8m#plugin#mappings#define_bs_for_insert_mode())
 enddef  # }}}
