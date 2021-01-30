@@ -21,6 +21,32 @@ function setup:prompt {
     printf "%s %s" "${(r:$line_width::-:)}" "$timestamp"
   }
 
+  # Refresh prompt at any widget triggered/executed
+  function setup:prompt:reset_hook {
+    function prompt:reset {
+      case "${LASTWIDGET:-}" in
+        fzf-completion | autosuggest-suggest)
+          case "${_lastcomp[insert]:-}" in
+            # Don't reset prompt when a completion candidate is selected because resetting prompt hides candidates
+            automenu | automenu-unambiguous)
+              return
+              ;;
+          esac
+          ;;
+      esac
+
+      zle && zle .reset-prompt
+    }
+
+    # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Manipulating-Hook-Functions
+    autoload -U add-zle-hook-widget
+    add-zle-hook-widget zle-line-pre-redraw prompt:reset
+
+    unset -f setup:prompt:reset_hook
+  }
+  zinit ice lucid nocd wait"0c" atload"setup:prompt:reset_hook"
+  zinit snippet /dev/null
+
   unset -f setup:prompt
 }
 setup:prompt
