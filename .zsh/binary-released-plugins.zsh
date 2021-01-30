@@ -63,6 +63,7 @@ function plugin:setup:binary_releaseds {
     mkdir -p "$HOME/bin"
     rm -f "$HOME/bin/$(basename "$binary")"
     execute_with_echo "ln -s '$PWD/${binary}' '$HOME/bin/$(basename "$binary")'"
+    execute_with_echo "which $(basename "$binary")"
 
     case "$plugin" in
       bat)
