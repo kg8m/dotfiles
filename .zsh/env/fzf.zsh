@@ -28,6 +28,7 @@ function plugin:setup:env:fzf {
   local options=(
     "--ansi"
     "--bind=${(j:,:)binds}"
+    "--exact"
     "--exit-0"
     "--info=inline"
     "--multi"
