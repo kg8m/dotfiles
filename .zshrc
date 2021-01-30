@@ -49,6 +49,11 @@ bindkey "^E" end-of-line
 
 # http://memo.officebrook.net/20090316.html
 bindkey -a "q" push-line
+
+# Edit the command by Vim: Normal mode => e
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey -a "e" edit-command-line
 # }}}
 
 # http://blog.blueblack.net/item_204
