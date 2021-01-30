@@ -1,16 +1,28 @@
 # See also `.zsh/filter.zsh`
 function plugin:setup:env:fzf {
+  local alt_a="å"
+  local alt_b="∫"
+  local alt_f="ƒ"
+  local alt_j="∆"
+  local alt_k="˚"
+  local alt_n="˜"
+  local alt_p="π"
+
   # shellcheck disable=SC2034
   local binds=(
     "change:top"
-    "ctrl-f:page-down"
-    "ctrl-b:page-up"
-    "ctrl-h:backward-char"
-    "ctrl-l:forward-char"
+
+    "${alt_f}:page-down"
+    "${alt_b}:page-up"
+
+    "${alt_a}:toggle-all"
     "ctrl-space:toggle+down"
+
     "tab:toggle-preview"
-    "ctrl-j:preview-down"
-    "ctrl-k:preview-up"
+    "${alt_j}:preview-down"
+    "${alt_n}:preview-down"
+    "${alt_k}:preview-up"
+    "${alt_p}:preview-up"
   )
 
   local options=(
