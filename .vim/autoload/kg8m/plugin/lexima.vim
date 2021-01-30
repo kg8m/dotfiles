@@ -41,6 +41,24 @@ def s:add_common_rules(): void  # {{{
     # Use `"<BS><Del>"` instead of `delete: 1` option because the option doesn't work
     lexima#add_rule({ char: "<BS>", at: join(pair, '\%#'), input: "<BS><Del>" })
   endfor
+
+  # `"` when
+  #
+  #   "foo|
+  #
+  # or
+  #
+  #   'foo|
+  #
+  # then
+  #
+  #   "foo"|
+  #
+  # or
+  #
+  #   'foo'|
+  lexima#add_rule({ char: '"', syntax: "String" })
+  lexima#add_rule({ char: "'", syntax: "String" })
 enddef  # }}}
 
 def s:add_rules_for_eruby(): void  # {{{
