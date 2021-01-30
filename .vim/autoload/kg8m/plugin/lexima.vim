@@ -51,16 +51,7 @@ def s:add_rules_for_eruby(): void  # {{{
   # then
   #
   #   <% | %>
-  lexima#add_rule({ char: "<Space>", at: '<%\%#', input_after: "<Space>%>", filetype: "eruby" })
-
-  # `<Space>` when
-  #
-  #   <%|... %>
-  #
-  # then
-  #
-  #   <% |... %>
-  lexima#add_rule({ char: "<Space>", at: '<%\%#.*%>', leave: 1, filetype: "eruby" })
+  lexima#add_rule({ char: "<Space>", at: '<%\%#', except: '<%\%#.*%>', input_after: "<Space>%>", filetype: "eruby" })
 
   # `<Space>` when
   #
@@ -77,24 +68,7 @@ def s:add_rules_for_eruby(): void  # {{{
   # or
   #
   #   <%=something | %>
-  lexima#add_rule({ char: "<Space>", at: '<%=\S*\%#', input_after: "<Space>%>", filetype: "eruby" })
-
-  # `<Space>` when
-  #
-  #   <%=|... %>
-  #
-  # or
-  #
-  #   <%=something|... %>
-  #
-  # then
-  #
-  #   <%= |... %>
-  #
-  # or
-  #
-  #   <%=something ...%>
-  lexima#add_rule({ char: "<Space>", at: '<%=\S*\%#.*%>', leave: 1, filetype: "eruby" })
+  lexima#add_rule({ char: "<Space>", at: '<%=\S*\%#', except: '<%=\S*\%#.*%>', input_after: "<Space>%>", filetype: "eruby" })
 enddef  # }}}
 
 def s:add_rules_for_markdown(): void  # {{{
@@ -148,9 +122,8 @@ def s:add_rules_for_vim(): void  # {{{
   #   ..."|
   #
   # NOTE: Always write comments at the beginning of line (indentation is allowed)
-  # Use `"<Right>"` instead of `leave: 1` option because the option doesn't work
-  lexima#add_rule({ char: '"', at: '\S.*\%#\%([^"]\|$\)', input_after: '"', filetype: "vim" })
-  lexima#add_rule({ char: '"', at: '\%#"', input: "<Right>", filetype: "vim" })
+  lexima#add_rule({ char: '"', at: '\S.*\%#\%([^"]\|$\)', except: '\%#"', input_after: '"', filetype: "vim" })
+  lexima#add_rule({ char: '"', at: '\%#"', leave: 1, filetype: "vim" })
 enddef  # }}}
 
 def s:on_post_source(): void  # {{{
