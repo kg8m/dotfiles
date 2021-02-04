@@ -2,31 +2,31 @@
 snippet function
 abbr    function {function_name}() abort\n ...\n endfunction
 options head
-	function ${1:`expand("%") =~# '\<autoload/' ? expand("%")->substitute('^.*\<autoload/', "", "")->substitute('/', "#", "g")->substitute('\.vim$', "#", "") : ""`}() abort  " {{{
+	function ${1:`expand("%") =~# '\<autoload/' ? expand("%")->substitute('^.*\<autoload/', "", "")->substitute('/', "#", "g")->substitute('\.vim$', "#", "") : ""`}() abort
 		${0}
-	endfunction  " }}}
+	endfunction
 
 snippet def
 abbr    def {function_name}(): {return_type}\n ...\n enddef
 options head
-	def ${1:`expand("%") =~# '\<autoload/' ? expand("%")->substitute('^.*\<autoload/', "", "")->substitute('/', "#", "g")->substitute('\.vim$', "#", "") : ""`}(): ${2:#:return_type}  # {{{
+	def ${1:`expand("%") =~# '\<autoload/' ? expand("%")->substitute('^.*\<autoload/', "", "")->substitute('/', "#", "g")->substitute('\.vim$', "#", "") : ""`}(): ${2:#:return_type}
 		${0}
-	enddef  # }}}
+	enddef
 
 snippet augroup
 abbr    augroup ...\n ...\n augroup END
 options head
-	augroup ${1:#:GroupName}  # {{{
+	augroup ${1:#:GroupName}
 		autocmd!
 		autocmd ${2:#:EventName} ${3:#:filetype} ${0}
-	augroup END  # }}}
+	augroup END
 
 snippet augroup_my_vimrc
 abbr    augroup my_vimrc\n ...\n augroup END
 options head
-	augroup my_vimrc  # {{{
+	augroup my_vimrc
 		autocmd ${1:#:EventName} ${2:#:filetype} ${0}
-	augroup END  # }}}
+	augroup END
 
 snippet autocmd
 abbr    autocmd {EventName} {filetype} ...

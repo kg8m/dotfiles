@@ -16,7 +16,6 @@ def kg8m#configure#folding#local_options(): void  # {{{
     autocmd FileType haml       setlocal foldmethod=indent
     autocmd FileType neosnippet setlocal foldmethod=marker
     autocmd FileType sh,zsh     setlocal foldmethod=syntax
-    autocmd FileType vim        setlocal foldmethod=marker
     autocmd FileType gitcommit,qfreplace setlocal nofoldenable
     autocmd BufEnter addp-hunk-edit.diff setlocal nofoldenable
   augroup END  # }}}
