@@ -56,6 +56,16 @@ const config = {
 
       "ja-no-redundant-expression": {
         severity: "warning",
+        dictOptions: {
+          // dict1: "すること[助詞](不)可能" は冗長な表現です。 "すること[助詞](不)可能" を省き簡潔な表現にすると文章が明瞭になります。
+          dict1: { disabled: true },
+
+          // dict2: "すること[助詞]できる" は冗長な表現です。 "すること[助詞]" を省き簡潔な表現にすると文章が明瞭になります。
+          dict2: { disabled: true },
+
+          // dict5: "[サ変名詞]を行う" は冗長な表現です。 "[サ変名詞]する" など簡潔な表現にすると文章が明瞭になります。
+          dict5: { disabled: true },
+        },
       },
       "ja-no-weak-phrase": false,
 
