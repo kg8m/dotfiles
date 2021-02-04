@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#operator#camelize#configure(): void  # {{{
+def kg8m#plugin#operator#camelize#configure(): void
   vmap <Leader>C <Plug>(operator-camelize)
   vmap <Leader>c <Plug>(operator-decamelize)
 
@@ -11,4 +11,4 @@ def kg8m#plugin#operator#camelize#configure(): void  # {{{
       ["v", "<Plug>(operator-decamelize)"]
     ],
   })
-enddef  # }}}
+enddef

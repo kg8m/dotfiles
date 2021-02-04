@@ -9,7 +9,7 @@ endif
 # https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
 # Also see configs for yankround.vim
 
-def kg8m#plugin#fzf#yank_history#run(): void  # {{{
+def kg8m#plugin#fzf#yank_history#run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  s:candidates(),
@@ -25,8 +25,8 @@ def kg8m#plugin#fzf#yank_history#run(): void  # {{{
   }
 
   fzf#run(fzf#wrap("yank-history", options))
-enddef  # }}}
+enddef
 
-def s:candidates(): list<string>  # {{{
+def s:candidates(): list<string>
   return kg8m#plugin#yankround#fzf#list()
-enddef  # }}}
+enddef

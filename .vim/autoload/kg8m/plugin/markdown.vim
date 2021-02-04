@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#markdown#configure(): void  # {{{
+def kg8m#plugin#markdown#configure(): void
   g:vim_markdown_override_foldtext         = false
   g:vim_markdown_no_default_key_mappings   = true
   g:vim_markdown_conceal                   = false
@@ -14,7 +14,7 @@ def kg8m#plugin#markdown#configure(): void  # {{{
     on_ft:   "markdown",
   })
 
-  if kg8m#plugin#register("joker1007/vim-markdown-quote-syntax")  # {{{
+  if kg8m#plugin#register("joker1007/vim-markdown-quote-syntax")
     g:markdown_quote_syntax_filetypes = {
        css:  { start: '\%(css\|scss\|sass\)' },
        haml: { start: "haml" },
@@ -24,5 +24,5 @@ def kg8m#plugin#markdown#configure(): void  # {{{
     kg8m#plugin#configure({
       lazy: true,
     })
-  endif  # }}}
-enddef  # }}}
+  endif
+enddef

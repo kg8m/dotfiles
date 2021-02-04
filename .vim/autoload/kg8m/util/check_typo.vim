@@ -1,13 +1,13 @@
 vim9script
 
 # http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
-def kg8m#util#check_typo#setup(): void  # {{{
-  augroup my_vimrc  # {{{
+def kg8m#util#check_typo#setup(): void
+  augroup my_vimrc
     autocmd BufWriteCmd *[,*] s:check_typo(expand("<afile>"))
-  augroup END  # }}}
-enddef  # }}}
+  augroup END
+enddef
 
-def s:check_typo(file: string): void  # {{{
+def s:check_typo(file: string): void
   const writecmd = "write" .. (v:cmdbang ? "!" : "") .. " " .. file
 
   if file =~? '[qfreplace]'
@@ -20,4 +20,4 @@ def s:check_typo(file: string): void  # {{{
   if input =~? '^y'
     execute writecmd
   endif
-enddef  # }}}
+enddef

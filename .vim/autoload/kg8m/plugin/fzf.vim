@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#fzf#configure(): void  # {{{
+def kg8m#plugin#fzf#configure(): void
   g:fzf_command_prefix = "Fzf"
   g:fzf_buffers_jump   = true
   g:fzf_layout         = { up: "~90%" }
@@ -36,9 +36,9 @@ def kg8m#plugin#fzf#configure(): void  # {{{
     command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#type_names FzfRails kg8m#plugin#fzf#rails#run(<q-args>)
   endif
 
-  augroup my_vimrc  # {{{
+  augroup my_vimrc
     autocmd FileType fzf s:setup_window()
-  augroup END  # }}}
+  augroup END
 
   kg8m#plugin#configure({
     lazy:    true,
@@ -49,27 +49,27 @@ def kg8m#plugin#fzf#configure(): void  # {{{
 
   # Add to runtimepath (and use its Vim scripts) but don't use its binary.
   # Use fzf binary already installed instead.
-  if kg8m#plugin#register("junegunn/fzf")  # {{{
+  if kg8m#plugin#register("junegunn/fzf")
     kg8m#plugin#configure({
       lazy: true,
     })
-  endif  # }}}
+  endif
 
-  if kg8m#plugin#register("thinca/vim-qfreplace")  # {{{
+  if kg8m#plugin#register("thinca/vim-qfreplace")
     kg8m#plugin#configure({
       lazy:   true,
       on_cmd: "Qfreplace",
     })
-  endif  # }}}
+  endif
 
-  if kg8m#plugin#register("kg8m/vim-fzf-tjump")  # {{{
+  if kg8m#plugin#register("kg8m/vim-fzf-tjump")
     kg8m#plugin#fzf_tjump#configure()
-  endif  # }}}
-enddef  # }}}
+  endif
+enddef
 
-def s:setup_window(): void  # {{{
+def s:setup_window(): void
   # Temporarily increase window height
   set winheight=999
   set winheight=1
   redraw
-enddef  # }}}
+enddef

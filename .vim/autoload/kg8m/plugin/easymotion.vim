@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#easymotion#configure(): void  # {{{
+def kg8m#plugin#easymotion#configure(): void
   map <Leader>f <Plug>(easymotion-bd-fn)
 
   # Replace default `f` and `F`
@@ -21,4 +21,4 @@ def kg8m#plugin#easymotion#configure(): void  # {{{
     lazy:   true,
     on_map: "<Plug>(easymotion-",
   })
-enddef  # }}}
+enddef

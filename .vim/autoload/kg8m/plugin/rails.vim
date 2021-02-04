@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#rails#configure(): void  # {{{
+def kg8m#plugin#rails#configure(): void
   if !has_key(g:, "rails_projections")
     g:rails_projections = {}
   endif
@@ -24,4 +24,4 @@ def kg8m#plugin#rails#configure(): void  # {{{
   kg8m#plugin#configure({
     lazy: false,
   })
-enddef  # }}}
+enddef

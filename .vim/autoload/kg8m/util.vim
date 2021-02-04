@@ -2,50 +2,50 @@ vim9script
 
 final s:cache = {}
 
-def kg8m#util#source_local_vimrc(): void  # {{{
+def kg8m#util#source_local_vimrc(): void
   const filepath = expand("~/.vimrc.local")
 
   if filereadable(filepath)
     execute "source " .. filepath
   endif
-enddef  # }}}
+enddef
 
-def kg8m#util#on_tmux(): bool  # {{{
+def kg8m#util#on_tmux(): bool
   return !!exists("$TMUX")
-enddef  # }}}
+enddef
 
-def kg8m#util#on_rails_dir(): bool  # {{{
+def kg8m#util#on_rails_dir(): bool
   if has_key(s:cache, "on_rails_dir")
     return s:cache.on_rails_dir
   endif
 
   s:cache.on_rails_dir = isdirectory("./app") && filereadable("./config/environment.rb")
   return s:cache.on_rails_dir
-enddef  # }}}
+enddef
 
-def kg8m#util#is_git_tmp_edit(): bool  # {{{
+def kg8m#util#is_git_tmp_edit(): bool
   return kg8m#util#is_git_commit() || kg8m#util#is_git_hunk_edit()
-enddef  # }}}
+enddef
 
-def kg8m#util#is_git_commit(): bool  # {{{
+def kg8m#util#is_git_commit(): bool
   if has_key(s:cache, "is_git_commit")
     return s:cache.is_git_commit
   endif
 
   s:cache.is_git_commit = argc() ==# 1 && !!(argv()[0] =~# '\.git/COMMIT_EDITMSG$')
   return s:cache.is_git_commit
-enddef  # }}}
+enddef
 
-def kg8m#util#is_git_hunk_edit(): bool  # {{{
+def kg8m#util#is_git_hunk_edit(): bool
   if has_key(s:cache, "is_git_hunk_edit")
     return s:cache.is_git_hunk_edit
   endif
 
   s:cache.is_git_hunk_edit = argc() ==# 1 && !!(argv()[0] =~# '\.git/addp-hunk-edit\.diff$')
   return s:cache.is_git_hunk_edit
-enddef  # }}}
+enddef
 
-def kg8m#util#rubygems_path(): string  # {{{
+def kg8m#util#rubygems_path(): string
   if has_key(s:cache, "rubygems_path")
     return s:cache.rubygems_path
   endif
@@ -74,9 +74,9 @@ def kg8m#util#rubygems_path(): string  # {{{
   endif
 
   return s:cache.rubygems_path
-enddef  # }}}
+enddef
 
-def kg8m#util#remote_copy(original_text: string): void  # {{{
+def kg8m#util#remote_copy(original_text: string): void
   const text = original_text->substitute('\n$', "", "")->shellescape()
 
   system("printf %s " .. text .. " | ssh main -t 'LC_CTYPE=UTF-8 pbcopy'")
@@ -86,15 +86,15 @@ def kg8m#util#remote_copy(original_text: string): void  # {{{
   else
     echomsg "Copied"
   endif
-enddef  # }}}
+enddef
 
-def kg8m#util#remove_trailing_whitespaces()  # {{{
+def kg8m#util#remove_trailing_whitespaces()
   const position = getpos(".")
   keeppatterns '<,'>s/\s\+$//ge
   setpos(".", position)
-enddef  # }}}
+enddef
 
-def kg8m#util#japanese_matchpairs(): list<list<string>>  # {{{
+def kg8m#util#japanese_matchpairs(): list<list<string>>
   return [
     ["（", "）"],
     ["「", "」"],
@@ -108,9 +108,9 @@ def kg8m#util#japanese_matchpairs(): list<list<string>>  # {{{
     ["“", "”"],
     ["‘", "’"],
   ]
-enddef  # }}}
+enddef
 
-def kg8m#util#convert_to_vim9script(): void  # {{{
+def kg8m#util#convert_to_vim9script(): void
   if getline(1) !=# "vim9script"
     append(0, "")
     append(0, "vim9script")
@@ -155,4 +155,4 @@ def kg8m#util#convert_to_vim9script(): void  # {{{
 
   # Reset some configurations
   set filetype=vim
-enddef  # }}}
+enddef

@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#choosewin#configure(): void  # {{{
+def kg8m#plugin#choosewin#configure(): void
   nmap <C-w>f <Plug>(choosewin)
 
   g:choosewin_overlay_enable          = false
@@ -13,4 +13,4 @@ def kg8m#plugin#choosewin#configure(): void  # {{{
     lazy:   true,
     on_map: "<Plug>(choosewin)",
   })
-enddef  # }}}
+enddef

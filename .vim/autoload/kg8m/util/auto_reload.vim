@@ -1,12 +1,12 @@
 vim9script
 
-def kg8m#util#auto_reload#setup(): void  # {{{
-  augroup my_vimrc  # {{{
+def kg8m#util#auto_reload#setup(): void
+  augroup my_vimrc
     autocmd VimEnter * timer_start(1000, () => s:checktime(), { repeat: -1 })
-  augroup END  # }}}
-enddef  # }}}
+  augroup END
+enddef
 
-def s:checktime(): void  # {{{
+def s:checktime(): void
   try
     # `checktime` is not available in Command Line mode
     if !getcmdwintype()->empty()
@@ -19,4 +19,4 @@ def s:checktime(): void  # {{{
   catch /^Vim\%((\a\+)\)\=:E565:/
     # Do nothing
   endtry
-enddef  # }}}
+enddef

@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#configure#backup(): void  # {{{
+def kg8m#configure#backup(): void
   set nobackup
 
   # Double slash:    fullpath like `%home%admin%.vimrc.swp`
@@ -12,15 +12,15 @@ def kg8m#configure#backup(): void  # {{{
   endif
 
   &directory = swapdir
-enddef  # }}}
+enddef
 
-def kg8m#configure#colors(): void  # {{{
+def kg8m#configure#colors(): void
   kg8m#configure#colors#terminal()
   kg8m#configure#colors#colorscheme()
   kg8m#configure#colors#performance()
-enddef  # }}}
+enddef
 
-def kg8m#configure#column(): void  # {{{
+def kg8m#configure#column(): void
   set number
   set signcolumn=number
 
@@ -29,62 +29,62 @@ def kg8m#configure#column(): void  # {{{
 
   set wrap
 
-  augroup my_vimrc  # {{{
+  augroup my_vimrc
     autocmd FileType markdown,moin set colorcolumn=
-  augroup END  # }}}
-enddef  # }}}
+  augroup END
+enddef
 
-def kg8m#configure#completion(): void  # {{{
+def kg8m#configure#completion(): void
   set completeopt=menu,menuone,popup,noinsert,noselect
   set pumheight=20
 
   set wildmenu
   set wildmode=list:longest,full
-enddef  # }}}
+enddef
 
-def kg8m#configure#cursor(): void  # {{{
+def kg8m#configure#cursor(): void
   kg8m#configure#cursor#base()
   kg8m#configure#cursor#match()
   kg8m#configure#cursor#highlight()
   kg8m#configure#cursor#shape()
-enddef  # }}}
+enddef
 
-def kg8m#configure#folding(): void  # {{{
+def kg8m#configure#folding(): void
   kg8m#configure#folding#global_options()
   kg8m#configure#folding#local_options()
   kg8m#configure#folding#mappings()
   kg8m#configure#folding#manual#setup()
-enddef  # }}}
+enddef
 
-def kg8m#configure#formatoptions(): void  # {{{
+def kg8m#configure#formatoptions(): void
   kg8m#configure#formatoptions#base()
-enddef  # }}}
+enddef
 
-def kg8m#configure#indent(): void  # {{{
+def kg8m#configure#indent(): void
   kg8m#configure#indent#base()
   kg8m#configure#indent#filetypes()
-enddef  # }}}
+enddef
 
-def kg8m#configure#scroll(): void  # {{{
+def kg8m#configure#scroll(): void
   set diffopt+=context:10
   set scrolloff=15
-enddef  # }}}
+enddef
 
-def kg8m#configure#search(): void  # {{{
+def kg8m#configure#search(): void
   set hlsearch
   set incsearch
 
   set ignorecase
   set smartcase
-enddef  # }}}
+enddef
 
-def kg8m#configure#statusline(): void  # {{{
+def kg8m#configure#statusline(): void
   set display+=lastline
   set noshowmode
   set showcmd
-enddef  # }}}
+enddef
 
-def kg8m#configure#undo(): void  # {{{
+def kg8m#configure#undo(): void
   set undofile
 
   const undodir = expand("~/tmp/.vimundo")
@@ -94,9 +94,9 @@ def kg8m#configure#undo(): void  # {{{
   endif
 
   &undodir = undodir
-enddef  # }}}
+enddef
 
-def kg8m#configure#commands(): void  # {{{
+def kg8m#configure#commands(): void
   # http://vim-users.jp/2009/05/hack17/
   command! -nargs=1 -complete=file Rename f <args> | delete(expand("#")) | write
 
@@ -104,9 +104,9 @@ def kg8m#configure#commands(): void  # {{{
   # :h v_g_CTRL-G
   command! -nargs=0 -range Stats feedkeys("g\<C-g>")
   command! -nargs=0 -range Counts Stats
-enddef  # }}}
+enddef
 
-def kg8m#configure#mappings(): void  # {{{
+def kg8m#configure#mappings(): void
   # Time to wait for a key code or mapped key sequence
   set timeoutlen=3000
 
@@ -114,9 +114,9 @@ def kg8m#configure#mappings(): void  # {{{
   kg8m#configure#mappings#search()
   kg8m#configure#mappings#utils()
   kg8m#configure#mappings#prevent_unconscious_operation()
-enddef  # }}}
+enddef
 
-def kg8m#configure#others(): void  # {{{
+def kg8m#configure#others(): void
   set belloff=all
   set hidden
   set list
@@ -139,12 +139,12 @@ def kg8m#configure#others(): void  # {{{
   # s => Maximum size of an item in Kbyte.
   set viminfo='20,<20,h,s10
 
-  augroup my_vimrc  # {{{
+  augroup my_vimrc
     autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
-  augroup END  # }}}
-enddef  # }}}
+  augroup END
+enddef
 
-def kg8m#configure#gui(): void  # {{{
+def kg8m#configure#gui(): void
   set guioptions=none
 
   # set guifont=Osaka-Mono:h14
@@ -157,10 +157,10 @@ def kg8m#configure#gui(): void  # {{{
   set showtabline=2
 
   kg8m#configure#gui#window_size#setup()
-enddef  # }}}
+enddef
 
 # Called from configurations for some plugins
-def kg8m#configure#conceal(): void  # {{{
+def kg8m#configure#conceal(): void
   set concealcursor=nvic
   set conceallevel=2
-enddef  # }}}
+enddef

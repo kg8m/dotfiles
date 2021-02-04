@@ -1,6 +1,6 @@
 vim9script
 
-def s:open_diff_window(): void  # {{{
+def s:open_diff_window(): void
   if has_key(b:, "diff_window_opened")
     return
   endif
@@ -29,7 +29,7 @@ def s:open_diff_window(): void  # {{{
   wincmd p
   goto 1
   redraw!
-enddef  # }}}
+enddef
 
 set nowarn
 

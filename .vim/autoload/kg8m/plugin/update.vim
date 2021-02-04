@@ -1,12 +1,12 @@
 vim9script
 
-def kg8m#plugin#update#run(options: dict<any> = {}): void  # {{{
+def kg8m#plugin#update#run(options: dict<any> = {}): void
   timer_start(   0, () => s:run(options) )
   timer_start( 200, () => s:remove_disused())
   timer_start(1000, () => s:show_log())
-enddef  # }}}
+enddef
 
-def s:run(options: dict<any> = {}): void  # {{{
+def s:run(options: dict<any> = {}): void
   # Clear messages because they will be used in `s:check_finished`
   messages clear
 
@@ -21,16 +21,16 @@ def s:run(options: dict<any> = {}): void  # {{{
   endif
 
   s:check_finished()
-enddef  # }}}
+enddef
 
-def s:remove_disused(): void  # {{{
+def s:remove_disused(): void
   for dirpath in dein#check_clean()
     kg8m#util#logger#warn("Remove " .. dirpath)
     delete(dirpath, "rf")
   endfor
-enddef  # }}}
+enddef
 
-def s:show_log(): void  # {{{
+def s:show_log(): void
   const initial_input =
     '!Same\\ revision'
     .. '\ !Current\\ branch\\ *\\ is\\ up\\ to\\ date.'
@@ -56,9 +56,9 @@ def s:show_log(): void  # {{{
 
   # Press `n` key to search "Updated"
   @/ = "Updated"
-enddef  # }}}
+enddef
 
-def s:check_finished(options: dict<any> = {}): void  # {{{
+def s:check_finished(options: dict<any> = {}): void
   final options_cache = copy(options)
 
   if !has_key(options_cache, "start_time")
@@ -94,9 +94,9 @@ def s:check_finished(options: dict<any> = {}): void  # {{{
     options_cache.retry_count   = retry_count
     timer_start(300, () => s:check_finished(options_cache))
   endif
-enddef  # }}}
+enddef
 
-def s:notify(message: string, options: dict<any> = {}): void  # {{{
+def s:notify(message: string, options: dict<any> = {}): void
   const is_stay = get(options, "stay", false)
   const level   = get(options, "level", "warn")
 
@@ -124,4 +124,4 @@ def s:notify(message: string, options: dict<any> = {}): void  # {{{
   else
     kg8m#util#logger#error(message_with_title)
   endif
-enddef  # }}}
+enddef

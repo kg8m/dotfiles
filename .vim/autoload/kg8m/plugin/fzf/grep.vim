@@ -7,7 +7,7 @@ if !kg8m#plugin#is_sourced("fzf.vim")
 endif
 
 # Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)
-def kg8m#plugin#fzf#grep#run(pattern: string, dirpath: string = ""): void  # {{{
+def kg8m#plugin#fzf#grep#run(pattern: string, dirpath: string = ""): void
   if empty(pattern)
     echo "Canceled."
     return
@@ -29,9 +29,9 @@ def kg8m#plugin#fzf#grep#run(pattern: string, dirpath: string = ""): void  # {{{
   }
 
   fzf#vim#grep("rg " .. grep_options .. " " .. grep_args, true, fzf_options)
-enddef  # }}}
+enddef
 
-def kg8m#plugin#fzf#grep#expr(options = {}): string  # {{{
+def kg8m#plugin#fzf#grep#expr(options = {}): string
   final args = [string(s:input_pattern())]
 
   if get(options, "dir")
@@ -39,9 +39,9 @@ def kg8m#plugin#fzf#grep#expr(options = {}): string  # {{{
   endif
 
   return ":call kg8m#plugin#fzf#grep#run(" .. join(args, ", ") .. ")\<CR>"
-enddef  # }}}
+enddef
 
-def s:input_pattern(): string  # {{{
+def s:input_pattern(): string
   var preset: string
 
   if mode() =~? 'v'
@@ -52,9 +52,9 @@ def s:input_pattern(): string  # {{{
   endif
 
   return input("FzfGrep Pattern: ", preset, "tag")
-enddef  # }}}
+enddef
 
-def s:input_dir(): string  # {{{
+def s:input_dir(): string
   const dirpath = input("FzfGrep Directory: ", "", "dir")->expand()
 
   if empty(dirpath)
@@ -64,9 +64,9 @@ def s:input_dir(): string  # {{{
   endif
 
   return dirpath
-enddef  # }}}
+enddef
 
-def s:options(): string  # {{{
+def s:options(): string
   const base = "--column --line-number --no-heading --color=always"
 
   if empty($RIPGREP_EXTRA_OPTIONS)
@@ -76,4 +76,4 @@ def s:options(): string  # {{{
     const escaped  = map(splitted, (_, option) => shellescape(option))
     return base .. " " .. join(escaped, " ")
   endif
-enddef  # }}}
+enddef

@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#undotree#configure(): void  # {{{
+def kg8m#plugin#undotree#configure(): void
   nnoremap <Leader>u :UndotreeToggle<CR>
 
   g:undotree_WindowLayout = 2
@@ -12,4 +12,4 @@ def kg8m#plugin#undotree#configure(): void  # {{{
     lazy:   true,
     on_cmd: "UndotreeToggle",
   })
-enddef  # }}}
+enddef

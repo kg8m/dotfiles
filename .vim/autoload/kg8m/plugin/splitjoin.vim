@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#splitjoin#configure(): void  # {{{
+def kg8m#plugin#splitjoin#configure(): void
   nnoremap <Leader>J :SplitjoinJoin<CR>
   nnoremap <Leader>S :SplitjoinSplit<CR>
 
@@ -13,4 +13,4 @@ def kg8m#plugin#splitjoin#configure(): void  # {{{
     lazy:   true,
     on_cmd: ["SplitjoinJoin", "SplitjoinSplit"],
   })
-enddef  # }}}
+enddef

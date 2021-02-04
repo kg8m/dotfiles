@@ -7,7 +7,7 @@ if !kg8m#plugin#is_sourced("fzf.vim")
 endif
 
 # Sort buffers in dictionary order (Fzf's `:Buffers` doesn't sort them)
-def kg8m#plugin#fzf#buffers#run(): void  # {{{
+def kg8m#plugin#fzf#buffers#run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  s:candidates(),
@@ -20,16 +20,16 @@ def kg8m#plugin#fzf#buffers#run(): void  # {{{
   }
 
   fzf#run(fzf#wrap("buffer-files", options))
-enddef  # }}}
+enddef
 
-def s:candidates(): list<string>  # {{{
+def s:candidates(): list<string>
   const current = [kg8m#util#file#current_path()]->filter((_, filepath) => !empty(filepath))
   const buffers = s:list()
 
   return kg8m#util#list#vital().uniq(current + buffers)
-enddef  # }}}
+enddef
 
-def s:list(): list<string>  # {{{
+def s:list(): list<string>
   const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : kg8m#util#file#format_path(bufinfo.name)
   return getbufinfo({ buflisted: true })->kg8m#util#list#filter_map(MapperCallback)->sort()
-enddef  # }}}
+enddef

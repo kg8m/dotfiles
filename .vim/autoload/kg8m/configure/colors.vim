@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#configure#colors#terminal(): void  # {{{
+def kg8m#configure#colors#terminal(): void
   set termguicolors
 
   g:terminal_ansi_colors = [
@@ -13,22 +13,22 @@ def kg8m#configure#colors#terminal(): void  # {{{
     "#333333",   "#FF8200",    "#C1F600",  "#FFE000",
     "#00C2F9",   "#C6ABFF",    "#71C0ED",  "#FFFFFF",
   ]
-enddef  # }}}
+enddef
 
-def kg8m#configure#colors#colorscheme(): void  # {{{
+def kg8m#configure#colors#colorscheme(): void
   colorscheme molokai
-enddef  # }}}
+enddef
 
-def kg8m#configure#colors#performance(): void  # {{{
-  augroup my_vimrc  # {{{
+def kg8m#configure#colors#performance(): void
+  augroup my_vimrc
     # Prevent syntax highlighting from being too slow
     # cf. `:h :syn-sync-maxlines` / `:h :syn-sync-minlines`
     autocmd Syntax * syntax sync minlines=100 maxlines=1000
-  augroup END  # }}}
+  augroup END
 
   set maxmempattern=5000
   set redrawtime=5000
 
   set lazyredraw
   set ttyfast
-enddef  # }}}
+enddef

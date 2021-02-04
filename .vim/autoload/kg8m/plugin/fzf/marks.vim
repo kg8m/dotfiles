@@ -11,7 +11,7 @@ const s:incremental_mark_keys_pattern = '^[A-Z]$'
 var s:is_initialized = false
 var s:incremental_mark_index = -1
 
-def kg8m#plugin#fzf#marks#increment(): void  # {{{
+def kg8m#plugin#fzf#marks#increment(): void
   s:init()
 
   const incremental_mark_key = s:detect_key()
@@ -25,18 +25,18 @@ def kg8m#plugin#fzf#marks#increment(): void  # {{{
 
   execute "mark " .. s:incremental_mark_keys[s:incremental_mark_index]
   echo "Marked to " .. s:incremental_mark_keys[s:incremental_mark_index]
-enddef  # }}}
+enddef
 
-def s:init(): void  # {{{
+def s:init(): void
   if s:is_initialized
     return
   endif
 
   execute "delmarks " .. join(s:incremental_mark_keys, "")
   s:is_initialized = true
-enddef  # }}}
+enddef
 
-def s:detect_key(): string  # {{{
+def s:detect_key(): string
   var detected_mark_key = ""
 
   const current_filepath    = expand("%")
@@ -59,4 +59,4 @@ def s:detect_key(): string  # {{{
   endfor
 
   return detected_mark_key
-enddef  # }}}
+enddef

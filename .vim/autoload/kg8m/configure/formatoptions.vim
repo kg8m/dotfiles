@@ -1,14 +1,14 @@
 vim9script
 
-def kg8m#configure#formatoptions#base(): void  # {{{
-  augroup my_vimrc  # {{{
+def kg8m#configure#formatoptions#base(): void
+  augroup my_vimrc
     # Lazily set formatoptions to overwrite others
     autocmd FileType * s:set()
     autocmd FileType * timer_start(300, () => s:set())
-  augroup END  # }}}
-enddef  # }}}
+  augroup END
+enddef
 
-def s:set(): void  # {{{
+def s:set(): void
   # Formatoptions:
   #   t: Auto-wrap text using textwidth.
   #   c: Auto-wrap comments using textwidth, inserting the current comment leader automatically.
@@ -36,4 +36,4 @@ def s:set(): void  # {{{
   if &filetype =~# '\v^(gitcommit|markdown|moin|text)$'
     setlocal fo-=r fo-=o
   endif
-enddef  # }}}
+enddef

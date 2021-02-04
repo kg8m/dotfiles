@@ -2,7 +2,7 @@ vim9script
 
 var s:is_clear_hlsearch_initialized = false
 
-def kg8m#configure#mappings#base(): void  # {{{
+def kg8m#configure#mappings#base(): void
   # Split window
   nnoremap <Leader>v :vsplit<CR>
   nnoremap <Leader>h :split<CR>
@@ -46,32 +46,32 @@ def kg8m#configure#mappings#base(): void  # {{{
   cnoremap <C-b> <Left>
   cnoremap <C-a> <Home>
   cnoremap <C-e> <End>
-enddef  # }}}
+enddef
 
-def kg8m#configure#mappings#search(): void  # {{{
+def kg8m#configure#mappings#search(): void
   nnoremap <expr> <Leader>/ <SID>clear_hlsearch()
   nnoremap <expr> /         <SID>enter_search()
   cnoremap <expr> <C-c>     <SID>exit_cmdline()
-enddef  # }}}
+enddef
 
-def kg8m#configure#mappings#utils(): void  # {{{
+def kg8m#configure#mappings#utils(): void
   vnoremap <Leader>y "yy:call kg8m#util#remote_copy(@")<CR>
   vnoremap <Leader>w :call kg8m#util#remove_trailing_whitespaces()<CR>
-enddef  # }}}
+enddef
 
 # <Nul> == <C-Space>
-def kg8m#configure#mappings#prevent_unconscious_operation(): void  # {{{
+def kg8m#configure#mappings#prevent_unconscious_operation(): void
   inoremap <C-w> <Esc><C-w>
   inoremap <Nul> <C-Space>
   tnoremap <Nul> <C-Space>
   noremap <F1> <Nop>
-enddef  # }}}
+enddef
 
-def s:clear_hlsearch(): string  # {{{
+def s:clear_hlsearch(): string
   if !s:is_clear_hlsearch_initialized
-    augroup my_vimrc  # {{{
+    augroup my_vimrc
       autocmd User clear_search_highlight silent
-    augroup END  # }}}
+    augroup END
 
     s:is_clear_hlsearch_initialized = true
   endif
@@ -81,16 +81,16 @@ def s:clear_hlsearch(): string  # {{{
   const clear_status = ":echo ''\<CR>"
 
   return clear .. notify .. clear_status
-enddef  # }}}
+enddef
 
-def s:enter_search(): string  # {{{
+def s:enter_search(): string
   const enable_highlight      = ":set hlsearch\<CR>"
   const enter_with_very_magic = "/\\v"
 
   return enable_highlight .. enter_with_very_magic
-enddef  # }}}
+enddef
 
-def s:exit_cmdline(): string  # {{{
+def s:exit_cmdline(): string
   const original = "\<C-c>"
 
   var extra = ""
@@ -101,4 +101,4 @@ def s:exit_cmdline(): string  # {{{
   endif
 
   return original .. extra
-enddef  # }}}
+enddef

@@ -21,7 +21,7 @@ const FOLD_START_PATTERN =
 const FOLD_END_PATTERN = '\v^%(end|\}|\])$'
 const FINISH_WITH_END_PATTERN = '\v%(<end|\}|\])$'
 
-def kg8m#fold#ruby#expr(lnum: number): string  # {{{
+def kg8m#fold#ruby#expr(lnum: number): string
   const line = getline(lnum)->trim()
 
   if s:is_no_content(line)
@@ -43,32 +43,32 @@ def kg8m#fold#ruby#expr(lnum: number): string  # {{{
     # Return stringified number because Vim9 script currenty doesn't support `string | number` return type
     return string(s:indent_level(lnum) - 1)
   endif
-enddef  # }}}
+enddef
 
-def s:indent_level(lnum: number): number  # {{{
+def s:indent_level(lnum: number): number
   return indent(lnum) / &shiftwidth + 1
-enddef  # }}}
+enddef
 
-def s:is_no_content(line: string): bool  # {{{
+def s:is_no_content(line: string): bool
   return line ==# EMPTY_STRING || kg8m#util#string#starts_with(line, COMMENT_CHAR)
-enddef  # }}}
+enddef
 
-def s:is_fold_start(line: string): bool  # {{{
+def s:is_fold_start(line: string): bool
   return !!(line =~# FOLD_START_PATTERN && line !~# FINISH_WITH_END_PATTERN)
-enddef  # }}}
+enddef
 
-def s:is_fold_end(line: string): bool  # {{{
+def s:is_fold_end(line: string): bool
   return !!(line =~# FOLD_END_PATTERN)
-enddef  # }}}
+enddef
 
-def s:is_heredoc_start(line: string): bool  # {{{
+def s:is_heredoc_start(line: string): bool
   return !!(line =~# HEREDOC_START_PATTERN)
-enddef  # }}}
+enddef
 
-def s:is_prev_line_in_heredoc(): bool  # {{{
+def s:is_prev_line_in_heredoc(): bool
   return !!has_key(b:, "ruby_fold_heredoc_end_pattern")
-enddef  # }}}
+enddef
 
-def s:is_heredoc_end(line: string): bool  # {{{
+def s:is_heredoc_end(line: string): bool
   return s:is_prev_line_in_heredoc() && !!(line =~# b:ruby_fold_heredoc_end_pattern)
-enddef  # }}}
+enddef

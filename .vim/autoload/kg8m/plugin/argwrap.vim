@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#argwrap#configure(): void  # {{{
+def kg8m#plugin#argwrap#configure(): void
   nnoremap <Leader>a :ArgWrap<CR>
 
   kg8m#plugin#configure({
@@ -8,9 +8,9 @@ def kg8m#plugin#argwrap#configure(): void  # {{{
     on_cmd: "ArgWrap",
     hook_source: () => s:on_source(),
   })
-enddef  # }}}
+enddef
 
-def s:set_local_options(): void  # {{{
+def s:set_local_options(): void
   if &filetype =~# '\v^(eruby|ruby)$'
     b:argwrap_tail_comma_braces = "[{"
   elseif &filetype ==# "vim"
@@ -22,14 +22,14 @@ def s:set_local_options(): void  # {{{
       b:argwrap_line_prefix = '\'
     endif
   endif
-enddef  # }}}
+enddef
 
-def s:on_source(): void  # {{{
+def s:on_source(): void
   g:argwrap_padded_braces = "{"
 
-  augroup my_vimrc  # {{{
+  augroup my_vimrc
     autocmd FileType * s:set_local_options()
-  augroup END  # }}}
+  augroup END
 
   s:set_local_options()
-enddef  # }}}
+enddef

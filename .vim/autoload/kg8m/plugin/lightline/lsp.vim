@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#lightline#lsp#configure(): void  # {{{
+def kg8m#plugin#lightline#lsp#configure(): void
   g:lightline#lsp#indicator_error       = "E:"
   g:lightline#lsp#indicator_warning     = "W:"
   g:lightline#lsp#indicator_information = "I:"
@@ -24,50 +24,50 @@ def kg8m#plugin#lightline#lsp#configure(): void  # {{{
   kg8m#plugin#configure({
     lazy: false,
   })
-enddef  # }}}
+enddef
 
-def kg8m#plugin#lightline#lsp#status(): string  # {{{
+def kg8m#plugin#lightline#lsp#status(): string
   if !s:is_stats_available()
     return ""
   endif
 
   const stats = s:get_stats()
   return (stats.is_error || stats.is_warning) ? "" : stats.counts
-enddef  # }}}
+enddef
 
-def kg8m#plugin#lightline#lsp#status_for_error(): string  # {{{
+def kg8m#plugin#lightline#lsp#status_for_error(): string
   # Use `%{...}` because component-expansion result is shared with other windows/buffers
   return "%{kg8m#plugin#lightline#lsp#status_for_error_detail()}"
-enddef  # }}}
+enddef
 
-def kg8m#plugin#lightline#lsp#status_for_error_detail(): string  # {{{
+def kg8m#plugin#lightline#lsp#status_for_error_detail(): string
   if !s:is_stats_available()
     return ""
   endif
 
   const stats = s:get_stats()
   return stats.is_error ? stats.counts : ""
-enddef  # }}}
+enddef
 
-def kg8m#plugin#lightline#lsp#status_for_warning(): string  # {{{
+def kg8m#plugin#lightline#lsp#status_for_warning(): string
   # Use `%{...}` because component-expansion result is shared with other windows/buffers
   return "%{kg8m#plugin#lightline#lsp#status_for_warning_detail()}"
-enddef  # }}}
+enddef
 
-def kg8m#plugin#lightline#lsp#status_for_warning_detail(): string  # {{{
+def kg8m#plugin#lightline#lsp#status_for_warning_detail(): string
   if !s:is_stats_available()
     return ""
   endif
 
   const stats = s:get_stats()
   return (!stats.is_error && stats.is_warning) ? stats.counts : ""
-enddef  # }}}
+enddef
 
-def s:is_stats_available(): bool  # {{{
+def s:is_stats_available(): bool
   return kg8m#plugin#lsp#is_target_buffer() && kg8m#plugin#lsp#is_buffer_enabled()
-enddef  # }}}
+enddef
 
-def s:get_stats(): dict<any>  # {{{
+def s:get_stats(): dict<any>
   var error       = lightline#lsp#error()
   var warning     = lightline#lsp#warning()
   var information = lightline#lsp#information()
@@ -86,4 +86,4 @@ def s:get_stats(): dict<any>  # {{{
     is_error:   is_error,
     is_warning: is_warning,
   }
-enddef  # }}}
+enddef

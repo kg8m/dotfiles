@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#configure#indent#base(): void  # {{{
+def kg8m#configure#indent#base(): void
   set expandtab
   set noshiftround
   set shiftwidth=2
@@ -11,17 +11,17 @@ def kg8m#configure#indent#base(): void  # {{{
   set smartindent
 
   set fixendofline
-enddef  # }}}
+enddef
 
-def kg8m#configure#indent#filetypes(): void  # {{{
+def kg8m#configure#indent#filetypes(): void
   g:html_indent_script1 = "inc"
   g:html_indent_style1  = "inc"
 
   # :h ft-vim-indent
   g:vim_indent_cont = 0
 
-  augroup my_vimrc  # {{{
+  augroup my_vimrc
     autocmd FileType gitconfig,neosnippet set noexpandtab
     autocmd FileType text,markdown,moin setlocal cinkeys-=:
-  augroup END  # }}}
-enddef  # }}}
+  augroup END
+enddef

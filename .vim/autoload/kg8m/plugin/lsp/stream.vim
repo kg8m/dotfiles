@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#lsp#stream#subscribe(): void  # {{{
+def kg8m#plugin#lsp#stream#subscribe(): void
   # Fallback to ctags if definition fails.
   # Depend on vim-fzf-tjump.
   lsp#callbag#pipe(
@@ -8,14 +8,14 @@ def kg8m#plugin#lsp#stream#subscribe(): void  # {{{
     lsp#callbag#filter((x) => s:is_definition_failed_stream(x)),
     lsp#callbag#subscribe({ next: (x) => s:definition_fallback(x) }),
   )
-enddef  # }}}
+enddef
 
-def s:is_definition_failed_stream(x: dict<any>): bool  # {{{
+def s:is_definition_failed_stream(x: dict<any>): bool
   return has_key(x, "request") && get(x.request, "method", "") ==# "textDocument/definition" &&
     has_key(x, "response") && empty(get(x.response, "result", []))
-enddef  # }}}
+enddef
 
-def s:definition_fallback(x: dict<any>): void  # {{{
+def s:definition_fallback(x: dict<any>): void
   # Use timer and delay execution because it is too early.
   # Manually source vim-fzf-tjump because dein.vim's `on_func` feature is not available.
   # Vim9 script doesn't support `FuncUndefined` event: https://github.com/vim/vim/issues/7501
@@ -24,4 +24,4 @@ def s:definition_fallback(x: dict<any>): void  # {{{
   endif
 
   timer_start(0, () => fzf_tjump#jump())
-enddef  # }}}
+enddef

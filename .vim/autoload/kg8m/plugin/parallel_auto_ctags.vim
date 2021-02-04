@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#parallel_auto_ctags#configure(): void  # {{{
+def kg8m#plugin#parallel_auto_ctags#configure(): void
   &tags ..= "," .. kg8m#util#rubygems_path() .. "/../tags"
 
   g:parallel_auto_ctags#options      = ["--fields=n", "--tag-relative=yes", "--recurse=yes", "--sort=yes", "--exclude=.vim-sessions"]
@@ -18,4 +18,4 @@ def kg8m#plugin#parallel_auto_ctags#configure(): void  # {{{
       silent:  false,
     },
   }
-enddef  # }}}
+enddef

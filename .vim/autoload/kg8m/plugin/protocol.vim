@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#protocol#configure(): void  # {{{
+def kg8m#plugin#protocol#configure(): void
   # Disable netrw.vim
   g:loaded_netrw             = true
   g:loaded_netrwPlugin       = true
@@ -11,4 +11,4 @@ def kg8m#plugin#protocol#configure(): void  # {{{
     lazy:    true,
     on_path: '^https\?://',
   })
-enddef  # }}}
+enddef

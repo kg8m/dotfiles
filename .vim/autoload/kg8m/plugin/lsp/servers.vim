@@ -10,7 +10,7 @@ const s:js_filetypes   = ["javascript", "typescript"]
 const s:sh_filetypes   = ["sh", "zsh"]
 const s:yaml_filetypes = ["eruby.yaml", "yaml", "yaml.ansible"]
 
-def kg8m#plugin#lsp#servers#register(): void  # {{{
+def kg8m#plugin#lsp#servers#register(): void
   # yarn add bash-language-server  # {{{
   # Syntax errors sometimes occur when editing zsh file
   s:register({
@@ -237,9 +237,9 @@ def kg8m#plugin#lsp#servers#register(): void  # {{{
   # }}}
 
   uniq(sort(s:filetypes))
-enddef  # }}}
+enddef
 
-def kg8m#plugin#lsp#servers#enable(): void  # {{{
+def kg8m#plugin#lsp#servers#enable(): void
   for config in s:configs
     for key in ["config", "initialization_options", "workspace_config"]
       if type(get(config, key)) ==# v:t_func
@@ -249,17 +249,17 @@ def kg8m#plugin#lsp#servers#enable(): void  # {{{
 
     lsp#register_server(config)
   endfor
-enddef  # }}}
+enddef
 
-def kg8m#plugin#lsp#servers#summaries(): list<dict<any>>  # {{{
+def kg8m#plugin#lsp#servers#summaries(): list<dict<any>>
   return s:summaries
-enddef  # }}}
+enddef
 
-def kg8m#plugin#lsp#servers#filetypes(): list<string>  # {{{
+def kg8m#plugin#lsp#servers#filetypes(): list<string>
   return s:filetypes
-enddef  # }}}
+enddef
 
-def s:register(config: dict<any>): void  # {{{
+def s:register(config: dict<any>): void
   var executable_name: string
 
   if has_key(config, "executable_name")
@@ -281,9 +281,9 @@ def s:register(config: dict<any>): void  # {{{
   else
     add(s:summaries, { name: config.name, available: false })
   endif
-enddef  # }}}
+enddef
 
-def s:schemas(): list<any>  # {{{
+def s:schemas(): list<any>
   if !has_key(s:cache, "lsp_schemas_json")
     const filepath = kg8m#plugin#get_info("vim-lsp-settings").path .. "/data/catalog.json"
     const json     = filepath->readfile()->join("\n")->json_decode()
@@ -292,4 +292,4 @@ def s:schemas(): list<any>  # {{{
   endif
 
   return s:cache.lsp_schemas_json
-enddef  # }}}
+enddef

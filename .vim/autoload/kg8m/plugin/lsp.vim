@@ -2,7 +2,7 @@ vim9script
 
 var s:is_initialized = false
 
-def kg8m#plugin#lsp#configure(): void  # {{{
+def kg8m#plugin#lsp#configure(): void
   kg8m#plugin#lsp#servers#register()
 
   kg8m#plugin#configure({
@@ -14,9 +14,9 @@ def kg8m#plugin#lsp#configure(): void  # {{{
 
   kg8m#plugin#register("mattn/vim-lsp-settings", { if: false, merged: false })
   kg8m#plugin#register("tsuyoshicho/vim-efm-langserver-settings", { if: false, merged: false })
-enddef  # }}}
+enddef
 
-def kg8m#plugin#lsp#is_target_buffer(): bool  # {{{
+def kg8m#plugin#lsp#is_target_buffer(): bool
   if !has_key(b:, "lsp_target_buffer")
     b:lsp_target_buffer = false
 
@@ -29,18 +29,18 @@ def kg8m#plugin#lsp#is_target_buffer(): bool  # {{{
   endif
 
   return b:lsp_target_buffer
-enddef  # }}}
+enddef
 
 # cf. s:on_lsp_buffer_enabled()
-def kg8m#plugin#lsp#is_buffer_enabled(): bool  # {{{
+def kg8m#plugin#lsp#is_buffer_enabled(): bool
   if has_key(b:, "lsp_buffer_enabled")
     return true
   else
     return s:are_all_servers_running()
   endif
-enddef  # }}}
+enddef
 
-def s:on_lsp_buffer_enabled(): void  # {{{
+def s:on_lsp_buffer_enabled(): void
   if get(b:, "lsp_buffer_enabled", false)
     return
   endif
@@ -60,22 +60,22 @@ def s:on_lsp_buffer_enabled(): void  # {{{
     nmap <buffer> g] <Plug>(lsp-definition)
   endif
 
-  augroup my_vimrc  # {{{
+  augroup my_vimrc
     autocmd InsertLeave <buffer> timer_start(100, () => s:document_format({ sync: false }))
     autocmd BufWritePre <buffer> s:document_format({ sync: true })
-  augroup END  # }}}
+  augroup END
 
   # cf. kg8m#plugin#lsp#is_buffer_enabled()
   b:lsp_buffer_enabled = true
-enddef  # }}}
+enddef
 
-def s:reset_target_buffer(): void  # {{{
+def s:reset_target_buffer(): void
   if has_key(b:, "lsp_target_buffer")
     unlet b:lsp_target_buffer
   endif
-enddef  # }}}
+enddef
 
-def s:are_all_servers_running(): bool  # {{{
+def s:are_all_servers_running(): bool
   for server_name in lsp#get_allowed_servers()
     if lsp#get_server_status(server_name) !=# "running"
       return false
@@ -83,13 +83,13 @@ def s:are_all_servers_running(): bool  # {{{
   endfor
 
   return true
-enddef  # }}}
+enddef
 
 # Disable some language servers' document formatting because vim-lsp randomly selects only 1 language server to do
 # formatting from language servers which have capability of document formatting. I want to do formatting by
 # efm-langserver but vim-lsp sometimes doesn't select it. efm-langserver is always selected if it is the only 1
 # language server which has capability of document formatting.
-def s:overwrite_capabilities(): void  # {{{
+def s:overwrite_capabilities(): void
   if &filetype !~# '\v^(go|javascript|ruby|typescript)$'
     return
   endif
@@ -106,9 +106,9 @@ def s:overwrite_capabilities(): void  # {{{
       capabilities.documentFormattingProvider = false
     endif
   endfor
-enddef  # }}}
+enddef
 
-def s:is_definition_supported(): bool  # {{{
+def s:is_definition_supported(): bool
   if !s:are_all_servers_running()
     kg8m#util#logger#error("Cannot to judge whether definition is supported or not because some of them are not running")
     return false
@@ -123,9 +123,9 @@ def s:is_definition_supported(): bool  # {{{
   endfor
 
   return false
-enddef  # }}}
+enddef
 
-def s:document_format(options = {}): void  # {{{
+def s:document_format(options = {}): void
   if get(options, "sync", true)
     silent LspDocumentFormatSync
   else
@@ -133,9 +133,9 @@ def s:document_format(options = {}): void  # {{{
       silent LspDocumentFormat
     endif
   endif
-enddef  # }}}
+enddef
 
-def s:on_source(): void  # {{{
+def s:on_source(): void
   if s:is_initialized
     return
   endif
@@ -153,18 +153,18 @@ def s:on_source(): void  # {{{
   g:lsp_log_verbose = true
   g:lsp_log_file    = expand("~/tmp/vim-lsp.log")
 
-  augroup my_vimrc  # {{{
+  augroup my_vimrc
     autocmd User lsp_setup          kg8m#plugin#lsp#servers#enable()
     autocmd User lsp_setup          kg8m#plugin#lsp#stream#subscribe()
     autocmd User lsp_buffer_enabled s:on_lsp_buffer_enabled()
 
     autocmd FileType * s:reset_target_buffer()
-  augroup END  # }}}
+  augroup END
 
   s:is_initialized = true
-enddef  # }}}
+enddef
 
-def s:on_post_source(): void  # {{{
+def s:on_post_source(): void
   # https://github.com/prabirshrestha/vim-lsp/blob/e2a052acce38bd0ae25e57fff734a14a9e2c9ef7/plugin/lsp.vim#L52
   lsp#enable()
-enddef  # }}}
+enddef

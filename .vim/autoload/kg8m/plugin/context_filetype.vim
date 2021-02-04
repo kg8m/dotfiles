@@ -7,10 +7,10 @@ const s:filetypes = {
   ],
 }
 
-def kg8m#plugin#context_filetype#configure(): void  # {{{
+def kg8m#plugin#context_filetype#configure(): void
   # For caw.vim and so on
   g:context_filetype#filetypes = {
     javascript: s:filetypes.for_js,
     typescript: s:filetypes.for_js,
   }
-enddef  # }}}
+enddef

@@ -6,7 +6,7 @@ if !kg8m#plugin#is_sourced("fzf.vim")
   kg8m#plugin#source("fzf.vim")
 endif
 
-def kg8m#plugin#fzf#jumplist#back(): void  # {{{
+def kg8m#plugin#fzf#jumplist#back(): void
   const info = s:jumplist_info()
 
   if info.current_position <# 1
@@ -23,9 +23,9 @@ def kg8m#plugin#fzf#jumplist#back(): void  # {{{
   )
 
   s:run(candidates)
-enddef  # }}}
+enddef
 
-def kg8m#plugin#fzf#jumplist#forward(): void  # {{{
+def kg8m#plugin#fzf#jumplist#forward(): void
   const info = s:jumplist_info()
 
   if info.current_position >=# len(info.jumplist)
@@ -36,9 +36,9 @@ def kg8m#plugin#fzf#jumplist#forward(): void  # {{{
   const candidates = s:jumplist_to_candidates(info.jumplist[info.current_position : -1])
 
   s:run(candidates)
-enddef  # }}}
+enddef
 
-def s:run(candidates: list<string>): void  # {{{
+def s:run(candidates: list<string>): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  candidates,
@@ -55,14 +55,14 @@ def s:run(candidates: list<string>): void  # {{{
   }
 
   fzf#run(fzf#wrap("jumplist", options))
-enddef  # }}}
+enddef
 
-def s:jumplist_info(): dict<any>  # {{{
+def s:jumplist_info(): dict<any>
   const info = getjumplist()
   return { jumplist: info[0], current_position: info[1] }
-enddef  # }}}
+enddef
 
-def s:jumplist_to_candidates(jumplist: list<dict<any>>, options: dict<any> = {}): list<string>  # {{{
+def s:jumplist_to_candidates(jumplist: list<dict<any>>, options: dict<any> = {}): list<string>
   const direction    = get(options, "direction", 1)
   const index_offset = get(options, "index_offset", 0)
   const index_width  = len(len(jumplist) - 1) + (direction <# 0 ? 1 : 0)
@@ -71,9 +71,9 @@ def s:jumplist_to_candidates(jumplist: list<dict<any>>, options: dict<any> = {})
   return jumplist->mapnew((i, bufinfo) => (
     printf(format, (i + index_offset) * direction, s:bufnr_to_filepath(bufinfo.bufnr), bufinfo.lnum, bufinfo.col)
   ))
-enddef  # }}}
+enddef
 
-def s:bufnr_to_filepath(bufnr: number): string  # {{{
+def s:bufnr_to_filepath(bufnr: number): string
   const filepath = bufname(bufnr)
 
   if empty(filepath)
@@ -84,9 +84,9 @@ def s:bufnr_to_filepath(bufnr: number): string  # {{{
   else
     return filepath
   endif
-enddef  # }}}
+enddef
 
-def s:handler(candidate: string): void  # {{{
+def s:handler(candidate: string): void
   const index = candidate->trim()->matchstr('\v^-?\d+')->str2nr()
 
   if index <# 0
@@ -94,4 +94,4 @@ def s:handler(candidate: string): void  # {{{
   else
     printf("%d\<C-i>", index)->feedkeys()
   endif
-enddef  # }}}
+enddef

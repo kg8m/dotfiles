@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#startify#configure(): void  # {{{
+def kg8m#plugin#startify#configure(): void
   if argc() ># 0
     # `on_event: "BufWritePre"` for `s:save_session`: Load startify before writing buffer (on `BufWritePre`) and
     # register autocmd for `BufWritePost`
@@ -14,9 +14,9 @@ def kg8m#plugin#startify#configure(): void  # {{{
   else
     s:setup()
   endif
-enddef  # }}}
+enddef
 
-def s:setup(): void  # {{{
+def s:setup(): void
   set sessionoptions=buffers,folds
 
   g:startify_session_autoload    = false
@@ -79,37 +79,37 @@ def s:setup(): void  # {{{
 
   g:startify_custom_header += [""]
 
-  augroup my_vimrc  # {{{
+  augroup my_vimrc
     autocmd FileType startify setlocal cursorline cursorlineopt=both
     autocmd ColorScheme  *    s:overwrite_colors()
     autocmd BufWritePost *    s:save_session()
-  augroup END  # }}}
-enddef  # }}}
+  augroup END
+enddef
 
-def s:overwrite_colors(): void  # {{{
+def s:overwrite_colors(): void
   highlight StartifyFile   guifg=#FFFFFF
   highlight StartifyHeader guifg=#FFFFFF
   highlight StartifyPath   guifg=#777777
   highlight StartifySlash  guifg=#777777
-enddef  # }}}
+enddef
 
-def s:save_session(): void  # {{{
+def s:save_session(): void
   kg8m#configure#folding#manual#restore()
   execute "silent SSave! " .. s:session_name()
-enddef  # }}}
+enddef
 
-def s:session_name(): string  # {{{
+def s:session_name(): string
   return "%"
     ->expand()
     ->fnamemodify(":p")
     ->substitute("/", "+=", "g")
     ->substitute('^\.', "_", "")
-enddef  # }}}
+enddef
 
-def s:on_source(): void  # {{{
+def s:on_source(): void
   s:setup()
-enddef  # }}}
+enddef
 
-def s:on_post_source(): void  # {{{
+def s:on_post_source(): void
   s:overwrite_colors()
-enddef  # }}}
+enddef

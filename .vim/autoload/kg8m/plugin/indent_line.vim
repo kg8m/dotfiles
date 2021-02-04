@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#indent_line#configure(): void  # {{{
+def kg8m#plugin#indent_line#configure(): void
   kg8m#configure#conceal()
 
   g:indentLine_char            = "|"
@@ -17,4 +17,4 @@ def kg8m#plugin#indent_line#configure(): void  # {{{
     "help",
     "terminal",
   ]
-enddef  # }}}
+enddef

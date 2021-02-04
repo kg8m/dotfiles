@@ -4,17 +4,17 @@ vim9script
 
 const s:filepath = expand("~/.vim/gui-window-info")
 
-def kg8m#configure#gui#window_size#setup(): void  # {{{
-  augroup my_vimrc  # {{{
+def kg8m#configure#gui#window_size#setup(): void
+  augroup my_vimrc
     autocmd VimLeavePre * s:save()
-  augroup END  # }}}
+  augroup END
 
   if has("vim_starting") && filereadable(s:filepath)
     execute "source " .. s:filepath
   endif
-enddef  # }}}
+enddef
 
-def s:save(): void  # {{{
+def s:save(): void
   const options = [
     "set columns=" .. &columns,
     "set lines=" .. &lines,
@@ -22,4 +22,4 @@ def s:save(): void  # {{{
   ]
 
   writefile(options, s:filepath)
-enddef  # }}}
+enddef

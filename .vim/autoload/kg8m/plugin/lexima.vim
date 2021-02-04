@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#lexima#configure(): void  # {{{
+def kg8m#plugin#lexima#configure(): void
   g:lexima_ctrlh_as_backspace = true
 
   kg8m#plugin#configure({
@@ -8,9 +8,9 @@ def kg8m#plugin#lexima#configure(): void  # {{{
     on_i: true,
     hook_post_source: () => s:on_post_source(),
   })
-enddef  # }}}
+enddef
 
-def s:add_common_rules(): void  # {{{
+def s:add_common_rules(): void
   for pair in kg8m#util#japanese_matchpairs()
     # `「` when
     #
@@ -59,9 +59,9 @@ def s:add_common_rules(): void  # {{{
   #   'foo'|
   lexima#add_rule({ char: '"', syntax: "String" })
   lexima#add_rule({ char: "'", syntax: "String" })
-enddef  # }}}
+enddef
 
-def s:add_rules_for_eruby(): void  # {{{
+def s:add_rules_for_eruby(): void
   # `<Space>` when
   #
   #   <%|
@@ -87,9 +87,9 @@ def s:add_rules_for_eruby(): void  # {{{
   #
   #   <%=something | %>
   lexima#add_rule({ char: "<Space>", at: '<%=\S*\%#', except: '<%=\S*\%#.*%>', input_after: "<Space>%>", filetype: "eruby" })
-enddef  # }}}
+enddef
 
-def s:add_rules_for_html(): void  # {{{
+def s:add_rules_for_html(): void
   # https://developer.mozilla.org/en-US/docs/Web/HTML/Element
   const tagnames = [
     # Main root
@@ -162,9 +162,9 @@ def s:add_rules_for_html(): void  # {{{
   #     |
   #   </foo>
   lexima#add_rule({ char: "<CR>", at: '>\%#</', input_after: "<CR>", filetype: ["eruby", "html"] })
-enddef  # }}}
+enddef
 
-def s:add_rules_for_markdown(): void  # {{{
+def s:add_rules_for_markdown(): void
   # `<Space>` when
   #
   #   [|]
@@ -195,9 +195,9 @@ def s:add_rules_for_markdown(): void  # {{{
   #   |
   #   ```
   lexima#add_rule({ char: "<CR>", at: '```[a-z]\+\%#```', input_after: "<CR>", filetype: ["gitcommit", "markdown"] })
-enddef  # }}}
+enddef
 
-def s:add_rules_for_vim(): void  # {{{
+def s:add_rules_for_vim(): void
   # `"` when
   #
   #   ...|
@@ -217,9 +217,9 @@ def s:add_rules_for_vim(): void  # {{{
   # NOTE: Always write comments at the beginning of line (indentation is allowed)
   lexima#add_rule({ char: '"', at: '\S.*\%#\%([^"]\|$\)', except: '\%#"', input_after: '"', filetype: "vim" })
   lexima#add_rule({ char: '"', at: '\%#"', leave: 1, filetype: "vim" })
-enddef  # }}}
+enddef
 
-def s:on_post_source(): void  # {{{
+def s:on_post_source(): void
   # Delay for performance
   timer_start(50, () => s:add_common_rules())
   timer_start(50, () => s:add_rules_for_eruby())
@@ -230,4 +230,4 @@ def s:on_post_source(): void  # {{{
   # Delay to overwrite lexima.vim's default mapping
   timer_start(100, () => kg8m#plugin#mappings#define_cr_for_insert_mode())
   timer_start(100, () => kg8m#plugin#mappings#define_bs_for_insert_mode())
-enddef  # }}}
+enddef

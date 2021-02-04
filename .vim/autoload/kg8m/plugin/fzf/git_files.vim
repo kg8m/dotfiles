@@ -7,11 +7,11 @@ if !kg8m#plugin#is_sourced("fzf.vim")
 endif
 
 # Show preview of dirty files (Fzf's `:GFiles?` doesn't show preview)
-def kg8m#plugin#fzf#git_files#run(): void  # {{{
+def kg8m#plugin#fzf#git_files#run(): void
   fzf#vim#gitfiles("?", {
     options: [
       "--preview", "git diff-or-cat {2}",
       "--preview-window", "right:50%:wrap:nohidden",
     ],
   })
-enddef  # }}}
+enddef

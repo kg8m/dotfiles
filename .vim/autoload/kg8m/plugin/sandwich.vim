@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#sandwich#configure(): void  # {{{
+def kg8m#plugin#sandwich#configure(): void
   g:sandwich_no_default_key_mappings = true
   g:operator_sandwich_no_default_key_mappings = true
   g:textobj_sandwich_no_default_key_mappings = true
@@ -22,9 +22,9 @@ def kg8m#plugin#sandwich#configure(): void  # {{{
     on_map: [["nv", "<Plug>(operator-sandwich-"], ["xo", "<Plug>(textobj-sandwich-"]],
     hook_post_source: () => s:on_post_source(),
   })
-enddef  # }}}
+enddef
 
-def s:surround_like_recipes(): list<dict<any>>  # {{{
+def s:surround_like_recipes(): list<dict<any>>
   const add_options    = extendnew({ kind: ["add", "replace"], action: ["add"] }, s:common_options())
   const delete_options = extendnew({ kind: ["delete", "replace", "textobj"], action: ["delete"], regex: true }, s:common_options())
 
@@ -36,17 +36,17 @@ def s:surround_like_recipes(): list<dict<any>>  # {{{
     extendnew({ buns: ['[[［「]\s*', '\s*[\]］」]'], input: ["[", "]"] }, delete_options),
     extendnew({ buns: ['[{｛]\s*', '\s*[}｝]'], input: ["{", "}"] }, delete_options),
   ]
-enddef  # }}}
+enddef
 
-def s:zenkaku_recipes(): list<dict<any>>  # {{{
+def s:zenkaku_recipes(): list<dict<any>>
   const options = extendnew({ kind: ["add", "delete", "replace", "textobj"], action: ["add", "delete"] }, s:common_options())
   return kg8m#util#japanese_matchpairs()->mapnew((_, pair) => extendnew({ buns: pair, input: pair }, options))
-enddef  # }}}
+enddef
 
-def s:common_options(): dict<any>  # {{{
+def s:common_options(): dict<any>
   return { nesting: true, match_syntax: true }
-enddef  # }}}
+enddef
 
-def s:on_post_source(): void  # {{{
+def s:on_post_source(): void
   g:sandwich#recipes = deepcopy(g:sandwich#default_recipes) + s:surround_like_recipes() + s:zenkaku_recipes()
-enddef  # }}}
+enddef

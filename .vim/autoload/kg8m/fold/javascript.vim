@@ -6,7 +6,7 @@ vim9script
 const FOLD_START = '\v(\{|\[)\s*$'
 const FOLD_END   = '\v^\s*(\}|\])'
 
-def kg8m#fold#javascript#expr(lnum: number): string  # {{{
+def kg8m#fold#javascript#expr(lnum: number): string
   const line = getline(lnum)
 
   if line =~# FOLD_START
@@ -16,8 +16,8 @@ def kg8m#fold#javascript#expr(lnum: number): string  # {{{
   else
     return "="
   endif
-enddef  # }}}
+enddef
 
-def s:indent_level(lnum: number): number  # {{{
+def s:indent_level(lnum: number): number
   return indent(lnum) / &shiftwidth + 1
-enddef  # }}}
+enddef

@@ -1,24 +1,24 @@
 vim9script
 
-def kg8m#plugin#go#configure(): void  # {{{
+def kg8m#plugin#go#configure(): void
   kg8m#plugin#configure({
     lazy:  true,
     on_ft: "go",
     hook_source: () => s:on_source(),
   })
-enddef  # }}}
+enddef
 
-def s:setup_buffer(): void  # {{{
+def s:setup_buffer(): void
   setlocal foldmethod=syntax
 
-  if kg8m#util#on_tmux()  # {{{
+  if kg8m#util#on_tmux()
     nnoremap <buffer> <leader>r :write<CR>:call kg8m#plugin#vimux#run_command("go run -race <C-r>%")<CR>
   else
     nnoremap <buffer> <leader>r :write<CR>:GoRun -race %<CR>
-  endif  # }}}
-enddef  # }}}
+  endif
+enddef
 
-def s:on_source(): void  # {{{
+def s:on_source(): void
   g:go_code_completion_enabled = false
   g:go_fmt_autosave            = false
   g:go_doc_keywordprg_enabled  = false
@@ -43,7 +43,7 @@ def s:on_source(): void  # {{{
   g:go_highlight_variable_declarations     = true
   g:go_highlight_variable_assignments      = true
 
-  augroup my_vimrc  # {{{
+  augroup my_vimrc
     autocmd FileType go s:setup_buffer()
-  augroup END  # }}}
-enddef  # }}}
+  augroup END
+enddef

@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#dwm#configure(): void  # {{{
+def kg8m#plugin#dwm#configure(): void
   nnoremap <C-w>n       :call DWM_New()<CR>
   nnoremap <C-w><Space> :call DWM_AutoEnter()<CR>
 
@@ -11,9 +11,9 @@ def kg8m#plugin#dwm#configure(): void  # {{{
     hook_source:      () => s:on_source(),
     hook_post_source: () => s:on_post_source(),
   })
-enddef  # }}}
+enddef
 
-def s:open(filepath: string): void  # {{{
+def s:open(filepath: string): void
   if bufexists(filepath)
     const winnr = bufwinnr(filepath)
 
@@ -33,18 +33,18 @@ def s:open(filepath: string): void  # {{{
 
     execute "edit " .. filepath
   endif
-enddef  # }}}
+enddef
 
-def s:on_source(): void  # {{{
+def s:on_source(): void
   g:dwm_map_keys = false
 
   # For fzf.vim
   command! -nargs=1 -complete=file DWMOpen s:open(<q-args>)
-enddef  # }}}
+enddef
 
-def s:on_post_source(): void  # {{{
+def s:on_post_source(): void
   # Disable DWM's default behavior on buffer loaded
   augroup dwm
     autocmd!
   augroup END
-enddef  # }}}
+enddef

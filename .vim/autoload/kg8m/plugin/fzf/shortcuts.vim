@@ -11,7 +11,7 @@ var s:list: list<string>
 var s:max_label_length: number
 var s:is_initialized = false
 
-def kg8m#plugin#fzf#shortcuts#run(query: string): void  # {{{
+def kg8m#plugin#fzf#shortcuts#run(query: string): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  s:candidates(),
@@ -20,20 +20,20 @@ def kg8m#plugin#fzf#shortcuts#run(query: string): void  # {{{
   }
 
   fzf#run(fzf#wrap("my-shortcuts", options))
-enddef  # }}}
+enddef
 
-def s:candidates(): list<string>  # {{{
+def s:candidates(): list<string>
   s:setup_list()
   return s:list
-enddef  # }}}
+enddef
 
-def s:handler(item: string): void  # {{{
+def s:handler(item: string): void
   # Don't `execute substitute(...)` because it causes problem if the command is Fzf's
   const command = substitute(item, '\v.*--\s+`(.+)`$', '\1', "")
   feedkeys(":" .. command .. "\<CR>")
-enddef  # }}}
+enddef
 
-def s:setup_list(): void  # {{{
+def s:setup_list(): void
   if s:is_initialized
     return
   endif
@@ -44,9 +44,9 @@ def s:setup_list(): void  # {{{
   s:format_list()
 
   s:is_initialized = true
-enddef  # }}}
+enddef
 
-def s:define_raw_list(): void  # {{{
+def s:define_raw_list(): void
   # Hankaku/Zenkaku: http://nanasi.jp/articles/vim/hz_ja_vim.html
   s:raw_list = [
     ["[Hankaku/Zenkaku] All to Hankaku",           "'<,'>Hankaku"],
@@ -100,17 +100,17 @@ def s:define_raw_list(): void  # {{{
 
     ["[QuickFix] Replace", "Qfreplace"],
   ]
-enddef  # }}}
+enddef
 
-def s:count_max_label_length(): void  # {{{
+def s:count_max_label_length(): void
   s:max_label_length = s:raw_list->mapnew((_, item) => s:item_label_length(item[0]))->max()
-enddef  # }}}
+enddef
 
-def s:item_label_length(item_label: string): number  # {{{
+def s:item_label_length(item_label: string): number
   return item_label->strlen()
-enddef  # }}}
+enddef
 
-def s:make_groups(): void  # {{{
+def s:make_groups(): void
   var prev_prefix = ""
   final new_list = []
 
@@ -126,17 +126,17 @@ def s:make_groups(): void  # {{{
   endfor
 
   s:raw_list = new_list
-enddef  # }}}
+enddef
 
-def s:group_name(item: string): string  # {{{
+def s:group_name(item: string): string
   return matchstr(item, '\v^\[[^]]+\]')
-enddef  # }}}
+enddef
 
-def s:format_list(): void  # {{{
+def s:format_list(): void
   s:list = s:raw_list->mapnew((_, item) => s:format_item(item))
-enddef  # }}}
+enddef
 
-def s:format_item(item: list<string>): string  # {{{
+def s:format_item(item: list<string>): string
   const description = item[0]
   const command     = item[1]
 
@@ -145,8 +145,8 @@ def s:format_item(item: list<string>): string  # {{{
   else
     return description .. s:word_padding(description) .. "  --  `" .. command .. "`"
   endif
-enddef  # }}}
+enddef
 
-def s:word_padding(item: string): string  # {{{
+def s:word_padding(item: string): string
   return repeat(" ", s:max_label_length - strlen(item))
-enddef  # }}}
+enddef

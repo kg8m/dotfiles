@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#test#configure(): void  # {{{
+def kg8m#plugin#test#configure(): void
   nnoremap <Leader>T :write<CR>:TestFile<CR>
   nnoremap <Leader>t :write<CR>:TestNearest<CR>
 
@@ -9,14 +9,14 @@ def kg8m#plugin#test#configure(): void  # {{{
     on_cmd: ["TestFile", "TestNearest"],
     hook_source: () => s:on_source(),
   })
-enddef  # }}}
+enddef
 
-def s:vimux_strategy(command: string): void  # {{{
+def s:vimux_strategy(command: string): void
   # Just execute the command without echo it
   kg8m#plugin#vimux#run_command(command)
-enddef  # }}}
+enddef
 
-def s:on_source(): void  # {{{
+def s:on_source(): void
   if kg8m#util#on_tmux()
     g:test#custom_strategies = get(g:, "test#custom_strategies", {})
     g:test#custom_strategies.vimux = function("s:vimux_strategy")
@@ -27,4 +27,4 @@ def s:on_source(): void  # {{{
 
   g:test#go#gotest#options = "-race"
   g:test#ruby#bundle_exec = false
-enddef  # }}}
+enddef

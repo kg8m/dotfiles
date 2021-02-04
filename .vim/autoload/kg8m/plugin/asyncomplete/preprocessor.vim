@@ -1,7 +1,7 @@
 vim9script
 
 # Sort items by their each priority and filter them that fuzzy match
-def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: dict<any>): void  # {{{
+def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: dict<any>): void
   const filetype      = kg8m#plugin#lsp#is_target_buffer() && kg8m#plugin#lsp#is_buffer_enabled() ? &filetype : "_"
   const match_pattern = kg8m#plugin#completion#refresh_pattern(filetype)
   const base_matcher  = matchstr(options.base, match_pattern)
@@ -39,14 +39,14 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
   options.startcol = min(startcols)
 
   asyncomplete#preprocess_complete(options, items)
-enddef  # }}}
+enddef
 
-def s:matchfuzzy_text_cb(item: dict<any>, sorter_context: dict<any>): string  # {{{
+def s:matchfuzzy_text_cb(item: dict<any>, sorter_context: dict<any>): string
   item.priority = s:item_priority(item, sorter_context)
   return item.word
-enddef  # }}}
+enddef
 
-def s:item_priority(item: dict<any>, context: dict<any>): number  # {{{
+def s:item_priority(item: dict<any>, context: dict<any>): number
   const word = item.word
 
   if !has_key(context.cache, word)
@@ -66,8 +66,8 @@ def s:item_priority(item: dict<any>, context: dict<any>): number  # {{{
   endif
 
   return context.cache[word] * context.priority
-enddef  # }}}
+enddef
 
-def s:sorter(lhs: dict<any>, rhs: dict<any>): number  # {{{
+def s:sorter(lhs: dict<any>, rhs: dict<any>): number
   return lhs.priority - rhs.priority
-enddef  # }}}
+enddef

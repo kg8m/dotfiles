@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#open_browser#configure(): void  # {{{
+def kg8m#plugin#open_browser#configure(): void
   map <Leader>o <Plug>(openbrowser-open)
 
   # `main` server configs in `.ssh/config` is required
@@ -15,4 +15,4 @@ def kg8m#plugin#open_browser#configure(): void  # {{{
     lazy:   true,
     on_map: [["nv", "<Plug>(openbrowser-open)"]],
   })
-enddef  # }}}
+enddef

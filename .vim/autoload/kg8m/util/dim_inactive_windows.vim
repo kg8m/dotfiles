@@ -1,18 +1,18 @@
 vim9script
 
-def kg8m#util#dim_inactive_windows#setup()  # {{{
-  augroup my_vimrc  # {{{
+def kg8m#util#dim_inactive_windows#setup()
+  augroup my_vimrc
     autocmd WinEnter        * s:apply()
     autocmd SessionLoadPost * timer_start(0, () => s:apply())
     autocmd VimResized      * s:apply({ force: true })
-  augroup END  # }}}
-enddef  # }}}
+  augroup END
+enddef
 
-def kg8m#util#dim_inactive_windows#reset()  # {{{
+def kg8m#util#dim_inactive_windows#reset()
   bufdo if has_key(b:, "original_colorcolumn") | s:reset_buffer() | endif
-enddef  # }}}
+enddef
 
-def s:apply(options = {})  # {{{
+def s:apply(options = {})
   const current_winnr = winnr()
   const last_winnr    = winnr("$")
   const colorcolumns  = range(1, &columns)->join(",")
@@ -38,8 +38,8 @@ def s:apply(options = {})  # {{{
       endif
     endif
   endfor
-enddef  # }}}
+enddef
 
-def s:reset_buffer()  # {{{
+def s:reset_buffer()
   &l:colorcolumn = b:original_colorcolumn
-enddef  # }}}
+enddef

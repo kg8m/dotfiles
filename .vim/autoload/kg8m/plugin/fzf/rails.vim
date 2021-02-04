@@ -12,7 +12,7 @@ final s:type_names = []
 var s:is_specs_initialized = false
 var s:is_type_names_initialized = false
 
-def kg8m#plugin#fzf#rails#run(type: string): void  # {{{
+def kg8m#plugin#fzf#rails#run(type: string): void
   s:setup()
 
   const type_spec = s:specs[type]
@@ -50,10 +50,10 @@ def kg8m#plugin#fzf#rails#run(type: string): void  # {{{
   }
 
   fzf#run(fzf#wrap("rails", options))
-enddef  # }}}
+enddef
 
 # For command's '-complete' option
-def kg8m#plugin#fzf#rails#type_names(arglead: string, _cmdline: string, _curpos: number): list<string>  # {{{
+def kg8m#plugin#fzf#rails#type_names(arglead: string, _cmdline: string, _curpos: number): list<string>
   s:setup()
 
   if !s:is_type_names_initialized
@@ -68,9 +68,9 @@ def kg8m#plugin#fzf#rails#type_names(arglead: string, _cmdline: string, _curpos:
       ->copy()
       ->filter((_, type_name) => type_name =~# "^" .. arglead)
   endif
-enddef  # }}}
+enddef
 
-def s:setup(): void  # {{{
+def s:setup(): void
   if s:is_specs_initialized
     return
   endif
@@ -165,4 +165,4 @@ def s:setup(): void  # {{{
   endif
 
   s:is_specs_initialized = true
-enddef  # }}}
+enddef

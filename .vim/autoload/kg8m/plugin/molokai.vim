@@ -1,14 +1,14 @@
 vim9script
 
-def kg8m#plugin#molokai#configure(): void  # {{{
+def kg8m#plugin#molokai#configure(): void
   g:molokai_original = true
 
-  augroup my_vimrc  # {{{
+  augroup my_vimrc
     autocmd ColorScheme molokai s:overwrite()
-  augroup END  # }}}
-enddef  # }}}
+  augroup END
+enddef
 
-def s:overwrite(): void  # {{{
+def s:overwrite(): void
   highlight Comment       guifg=#AAAAAA
   highlight ColorColumn                  guibg=#1F1E19
   highlight CursorColumn                 guibg=#1F1E19
@@ -41,4 +41,4 @@ def s:overwrite(): void  # {{{
     highlight Special     guibg=#000000
     highlight Todo        guibg=#000000
   endif
-enddef  # }}}
+enddef
