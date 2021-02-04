@@ -12,7 +12,7 @@ def kg8m#plugin#fzf#buffers#run(): void  # {{{
   final options = {
     source:  s:candidates(),
     options: [
-      "--header-lines", empty(kg8m#util#current_filepath()) ? 0 : 1,
+      "--header-lines", empty(kg8m#util#file#current_path()) ? 0 : 1,
       "--prompt", "Buffers> ",
       "--preview", "git cat {}",
       "--preview-window", "right:50%:wrap:nohidden",
@@ -23,13 +23,13 @@ def kg8m#plugin#fzf#buffers#run(): void  # {{{
 enddef  # }}}
 
 def s:candidates(): list<string>  # {{{
-  const current = [kg8m#util#current_filepath()]->filter((_, filepath) => !empty(filepath))
+  const current = [kg8m#util#file#current_path()]->filter((_, filepath) => !empty(filepath))
   const buffers = s:list()
 
-  return kg8m#util#list_module().uniq(current + buffers)
+  return kg8m#util#list#vital().uniq(current + buffers)
 enddef  # }}}
 
 def s:list(): list<string>  # {{{
-  const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : kg8m#util#formatted_filepath(bufinfo.name)
-  return getbufinfo({ buflisted: true })->kg8m#util#filter_map(MapperCallback)->sort()
+  const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : kg8m#util#file#format_path(bufinfo.name)
+  return getbufinfo({ buflisted: true })->kg8m#util#list#filter_map(MapperCallback)->sort()
 enddef  # }}}

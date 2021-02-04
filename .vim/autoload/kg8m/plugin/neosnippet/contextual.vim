@@ -11,7 +11,7 @@ enddef  # }}}
 def kg8m#plugin#neosnippet#contextual#source(): void  # {{{
   s:setup_contexts()
 
-  const current_path = kg8m#util#current_relative_path()
+  const current_path = kg8m#util#file#current_relative_path()
 
   for context in get(s:contexts, &filetype, [])
     if current_path =~# context.pattern

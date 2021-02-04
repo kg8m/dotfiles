@@ -10,18 +10,6 @@ def kg8m#util#source_local_vimrc(): void  # {{{
   endif
 enddef  # }}}
 
-def kg8m#util#echo_error_msg(message: string): void  # {{{
-  echohl ErrorMsg
-  echomsg message
-  echohl None
-enddef  # }}}
-
-def kg8m#util#echo_warn_msg(message: string): void  # {{{
-  echohl WarningMsg
-  echomsg message
-  echohl None
-enddef  # }}}
-
 def kg8m#util#on_tmux(): bool  # {{{
   return !!exists("$TMUX")
 enddef  # }}}
@@ -94,7 +82,7 @@ def kg8m#util#remote_copy(original_text: string): void  # {{{
   system("printf %s " .. text .. " | ssh main -t 'LC_CTYPE=UTF-8 pbcopy'")
 
   if &columns > 50
-    echomsg "Copied: " .. trim(kg8m#util#string_module().truncate_skipping(text, &columns - 30, 0, "..."))
+    echomsg "Copied: " .. trim(kg8m#util#string#vital().truncate_skipping(text, &columns - 30, 0, "..."))
   else
     echomsg "Copied"
   endif
@@ -104,53 +92,6 @@ def kg8m#util#remove_trailing_whitespaces()  # {{{
   const position = getpos(".")
   keeppatterns '<,'>s/\s\+$//ge
   setpos(".", position)
-enddef  # }}}
-
-# Depend on vital.vim
-def kg8m#util#string_module(): dict<func>  # {{{
-  if has_key(s:cache, "string_module")
-    return s:cache.string_module
-  endif
-
-  s:cache.string_module = vital#vital#import("Data.String")
-  return s:cache.string_module
-enddef  # }}}
-
-# Depend on vital.vim
-def kg8m#util#list_module(): dict<func>  # {{{
-  if has_key(s:cache, "list_module")
-    return s:cache.list_module
-  endif
-
-  s:cache.list_module = vital#vital#import("Data.List")
-  return s:cache.list_module
-enddef  # }}}
-
-def kg8m#util#current_filename(): string  # {{{
-  return expand("%:t")
-enddef  # }}}
-
-def kg8m#util#current_filepath(): string  # {{{
-  const raw_filepath = expand("%")
-  return empty(raw_filepath) ? "" : raw_filepath->kg8m#util#formatted_filepath()
-enddef  # }}}
-
-def kg8m#util#current_relative_path(): string  # {{{
-  const raw_filepath = expand("%")
-  return empty(raw_filepath) ? "" : raw_filepath->fnamemodify(":~:.")
-enddef  # }}}
-
-def kg8m#util#current_absolute_path(): string  # {{{
-  const raw_filepath = expand("%")
-  return empty(raw_filepath) ? "" : raw_filepath->fnamemodify(":~")
-enddef  # }}}
-
-def kg8m#util#formatted_filepath(filepath: string): string  # {{{
-  if !has_key(s:cache, "regular_filepath_format")
-    s:cache.regular_filepath_format = getcwd() ==# expand("~") ? ":~" : ":~:."
-  endif
-
-  return fnamemodify(filepath, s:cache.regular_filepath_format)
 enddef  # }}}
 
 def kg8m#util#japanese_matchpairs(): list<list<string>>  # {{{
@@ -167,20 +108,6 @@ def kg8m#util#japanese_matchpairs(): list<list<string>>  # {{{
     ["“", "”"],
     ["‘", "’"],
   ]
-enddef  # }}}
-
-def kg8m#util#filter_map(list: list<any>, Callback: func): list<any>  # {{{
-  var result = []
-
-  for item in list
-    const new_item = Callback(item)
-
-    if !!new_item
-      result += [new_item]
-    endif
-  endfor
-
-  return result
 enddef  # }}}
 
 def kg8m#util#convert_to_vim9script(): void  # {{{

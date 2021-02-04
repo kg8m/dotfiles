@@ -95,7 +95,7 @@ def s:overwrite_capabilities(): void  # {{{
   endif
 
   if !s:are_all_servers_running()
-    kg8m#util#echo_error_msg("Cannot to overwrite language servers' capabilities because some of them are not running")
+    kg8m#util#logger#error("Cannot to overwrite language servers' capabilities because some of them are not running")
     return
   endif
 
@@ -110,7 +110,7 @@ enddef  # }}}
 
 def s:is_definition_supported(): bool  # {{{
   if !s:are_all_servers_running()
-    kg8m#util#echo_error_msg("Cannot to judge whether definition is supported or not because some of them are not running")
+    kg8m#util#logger#error("Cannot to judge whether definition is supported or not because some of them are not running")
     return false
   endif
 

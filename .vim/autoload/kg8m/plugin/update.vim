@@ -25,7 +25,7 @@ enddef  # }}}
 
 def s:remove_disused(): void  # {{{
   for dirpath in dein#check_clean()
-    kg8m#util#echo_warn_msg("Remove " .. dirpath)
+    kg8m#util#logger#warn("Remove " .. dirpath)
     delete(dirpath, "rf")
   endfor
 enddef  # }}}
@@ -120,8 +120,8 @@ def s:notify(message: string, options: dict<any> = {}): void  # {{{
   const message_with_title = title .. ": " .. message
 
   if level ==# "warn"
-    kg8m#util#echo_warn_msg(message_with_title)
+    kg8m#util#logger#warn(message_with_title)
   else
-    kg8m#util#echo_error_msg(message_with_title)
+    kg8m#util#logger#error(message_with_title)
   endif
 enddef  # }}}

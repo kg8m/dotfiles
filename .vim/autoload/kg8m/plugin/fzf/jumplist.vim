@@ -10,7 +10,7 @@ def kg8m#plugin#fzf#jumplist#back(): void  # {{{
   const info = s:jumplist_info()
 
   if info.current_position <# 1
-    kg8m#util#echo_warn_msg("Cannot jump.")
+    kg8m#util#logger#warn("Cannot jump.")
     return
   endif
 
@@ -29,7 +29,7 @@ def kg8m#plugin#fzf#jumplist#forward(): void  # {{{
   const info = s:jumplist_info()
 
   if info.current_position >=# len(info.jumplist)
-    kg8m#util#echo_warn_msg("Cannot jump.")
+    kg8m#util#logger#warn("Cannot jump.")
     return
   endif
 

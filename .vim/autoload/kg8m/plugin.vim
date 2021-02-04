@@ -63,7 +63,7 @@ def kg8m#plugin#register(plugin_name: string, options: dict<any> = {}): bool  # 
 
   if has_key(options, "merged")
     if options.merged && has_key(options, "if")
-      kg8m#util#echo_warn_msg("Don't use `merged: true` with `if` option because merged plugins are always loaded")
+      kg8m#util#logger#warn("Don't use `merged: true` with `if` option because merged plugins are always loaded")
     endif
   else
     options.merged = !has_key(options, "if")
@@ -128,9 +128,9 @@ def kg8m#plugin#all_runtimepath(): string  # {{{
   const current = &runtimepath->split(",")
   const plugins = kg8m#plugin#get_info()
     ->values()
-    ->kg8m#util#filter_map((plugin) => empty(plugin.rtp) ? false : plugin.rtp)
+    ->kg8m#util#list#filter_map((plugin) => empty(plugin.rtp) ? false : plugin.rtp)
 
-  return kg8m#util#list_module().uniq(current + plugins)->join(",")
+  return kg8m#util#list#vital().uniq(current + plugins)->join(",")
 enddef  # }}}
 
 def kg8m#plugin#recache_runtimepath(): void  # {{{

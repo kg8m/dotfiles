@@ -76,9 +76,9 @@ def s:define_raw_list(): void  # {{{
     ["[Set File Format] unix", "set fileformat=unix"],
     ["[Set File Format] mac",  "set fileformat=mac"],
 
-    ["[Copy] filename",          "call kg8m#util#remote_copy(kg8m#util#current_filename())"],
-    ["[Copy] relative filepath", "call kg8m#util#remote_copy(kg8m#util#current_relative_path())"],
-    ["[Copy] absolute filepath", "call kg8m#util#remote_copy(kg8m#util#current_absolute_path())"],
+    ["[Copy] filename",          "call kg8m#util#remote_copy(kg8m#util#file#current_name())"],
+    ["[Copy] relative filepath", "call kg8m#util#remote_copy(kg8m#util#file#current_relative_path())"],
+    ["[Copy] absolute filepath", "call kg8m#util#remote_copy(kg8m#util#file#current_absolute_path())"],
 
     ["[Git] Gina patch",                                 "call kg8m#plugin#gina#patch(expand(\"%\"))"],
     ["[Git] Apply the patch/hunk to the another side",   "'<,'>diffput"],

@@ -85,7 +85,7 @@ def s:setup_refresh_keywords(): void  # {{{
 enddef  # }}}
 
 def s:cannot_refresh_keywords(): void
-  kg8m#util#echo_error_msg("Cannot refresh keywords because asyncomplete-buffer.vim's SID can't be detected.")
+  kg8m#util#logger#error("Cannot refresh keywords because asyncomplete-buffer.vim's SID can't be detected.")
 enddef
 
 def s:activate(): void  # {{{

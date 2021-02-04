@@ -115,10 +115,10 @@ def s:filepath(): string  # {{{
     return w:quickfix_title
   endif
 
-  if kg8m#util#current_filename() ==# ""
+  if kg8m#util#file#current_name() ==# ""
     return "[No Name]"
   else
-    return s:truncate_filepath(kg8m#util#current_filepath())
+    return s:truncate_filepath(kg8m#util#file#current_path())
   endif
 enddef  # }}}
 
@@ -133,7 +133,7 @@ def s:truncate_filepath(filepath: string): string  # {{{
     const footer_width = length - strridx(filepath, "/")
     const separator    = "..."
 
-    return kg8m#util#string_module().truncate_skipping(filepath, max, footer_width, separator)
+    return kg8m#util#string#vital().truncate_skipping(filepath, max, footer_width, separator)
   endif
 enddef  # }}}
 
