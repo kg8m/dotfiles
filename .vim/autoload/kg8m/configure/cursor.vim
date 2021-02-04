@@ -34,11 +34,11 @@ def kg8m#configure#cursor#highlight(): void  # {{{
 enddef  # }}}
 
 def kg8m#configure#cursor#shape(): void  # {{{
-  if stridx(&t_SI, s:vertical_line_code) ==# -1
+  if !kg8m#util#string#starts_with(&t_SI, s:vertical_line_code)
     &t_SI ..= s:vertical_line_code
   endif
 
-  if stridx(&t_EI, s:vertical_bold_line_code) ==# -1
+  if !kg8m#util#string#starts_with(&t_EI, s:vertical_bold_line_code)
     &t_EI ..= s:vertical_bold_line_code
   endif
 enddef  # }}}

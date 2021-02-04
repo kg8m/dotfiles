@@ -21,8 +21,6 @@ const FOLD_START_PATTERN =
 const FOLD_END_PATTERN = '\v^%(end|\}|\])$'
 const FINISH_WITH_END_PATTERN = '\v%(<end|\}|\])$'
 
-const STRING_MODULE = kg8m#util#string_module()
-
 def kg8m#fold#ruby#expr(lnum: number): string  # {{{
   const line = getline(lnum)->trim()
 
@@ -52,7 +50,7 @@ def s:indent_level(lnum: number): number  # {{{
 enddef  # }}}
 
 def s:is_no_content(line: string): bool  # {{{
-  return line ==# EMPTY_STRING || STRING_MODULE.starts_with(line, COMMENT_CHAR)
+  return line ==# EMPTY_STRING || kg8m#util#string#starts_with(line, COMMENT_CHAR)
 enddef  # }}}
 
 def s:is_fold_start(line: string): bool  # {{{
