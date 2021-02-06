@@ -266,7 +266,8 @@ function git:status:filter:all {
 }
 
 function git:status:filter:staged {
-  git status --short | grep -E '^[^ ?]|^ A' | git:status:utility:filter_for_staged
+  # `^ A` for intent-to-add
+  git status --short | grep -E '^[^ ?]|^ A' | git:status:utility:filter
 }
 
 function git:status:filter:unstaged {
@@ -287,10 +288,6 @@ function git:status:filter:untracked {
 
 function git:status:utility:filter {
   filter --prompt="Select files: " --preview-window="right:50%:wrap:nohidden" --preview="git diff-or-cat '{2..}'" | git:proxy:sed -e 's/^..\s//'
-}
-
-function git:status:utility:filter_for_staged {
-  filter --prompt="Select files: " --preview-window="right:50%:wrap:nohidden" --preview="git diff-or-cat-for-staged '{2..}'" | git:proxy:sed -e 's/^..\s//'
 }
 
 function git:submodule:update {
@@ -337,21 +334,18 @@ function git:utility:diff_or_cat {
   # Untracked files
   if [[ "$git_status" =~ '^\?\?' ]]; then
     git:utility:cat "$filepath"
+  # Partially staged files
+  elif [[ "$git_status" =~ ^[A-Z]{2} ]]; then
+    echo "Staged:"
+    git:utility:diff --staged -- "$filepath"
+    echo -e "\n\nNot Staged:"
+    git:utility:diff -- "$filepath"
+  # Staged files
+  elif [[ "$git_status" =~ ^[A-Z] ]]; then
+    git:utility:diff --staged -- "$filepath"
   # Others: unstaged tracked files
   else
     git:utility:diff -- "$filepath"
-  fi
-}
-
-function git:utility:diff_or_cat_for_staged {
-  local filepath="$1"
-  local git_status="$(git status --short -- "$filepath")"
-
-  # Staged files
-  if [[ "$git_status" =~ ^[A-Z] ]]; then
-    git:utility:diff --staged -- "$filepath"
-  else
-    git diff-or-cat "$filepath"
   fi
 }
 

@@ -246,7 +246,6 @@
 
 	chmod = "!git sh \"git:utility:chmod '$1'\""
 	diff-or-cat = "!git sh \"git:utility:diff_or_cat '$1'\""
-	diff-or-cat-for-staged = "!git sh \"git:utility:diff_or_cat_for_staged '$1'\""
 	cat = "!git sh \"git:utility:cat '$1'\""
 
 	sh = "!zsh -c \"source ~/.config/git/aliases; $@\""
