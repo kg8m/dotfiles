@@ -27,15 +27,18 @@ def kg8m#fold#ruby#expr(lnum: number): string
   if s:is_no_content(line)
     return "="
   elseif s:is_heredoc_end(line)
+    const indent = b:ruby_fold_heredoc_indent
     unlet! b:ruby_fold_heredoc_key
-    return "<" .. string(s:indent_level(lnum))
+    unlet! b:ruby_fold_heredoc_indent
+    return "<" .. string(indent)
   elseif s:is_prev_line_in_heredoc()
     return "="
   elseif s:is_fold_end(line)
     return "<" .. string(s:indent_level(lnum))
   elseif s:is_heredoc_start(line)
-    b:ruby_fold_heredoc_key = matchstr(line, HEREDOC_START_PATTERN)
-    return ">" .. string(s:indent_level(lnum))
+    b:ruby_fold_heredoc_key    = matchstr(line, HEREDOC_START_PATTERN)
+    b:ruby_fold_heredoc_indent = s:indent_level(lnum)
+    return ">" .. string(b:ruby_fold_heredoc_indent)
   elseif s:is_fold_start(line)
     return ">" .. string(s:indent_level(lnum))
   else
