@@ -123,7 +123,7 @@ def kg8m#util#convert_to_vim9script(): void
 
   # Remove `call` except for:
   #   - :call foo()
-  #   - <Cmd>foo()
+  #   - <Cmd>call foo()
   #   - "call foo()"
   #   - 'call foo()'
   :%s/\v(:)@<!(\<Cmd\>)@<!(")@<!(')@<!<call\s+//Ie
