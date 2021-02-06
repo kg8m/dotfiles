@@ -53,3 +53,15 @@ options head
 	declare global {
 		${0}
 	}
+
+# Overwrite snippets for JavaScript
+
+snippet querySelector
+abbr    querySelector<{type}>({selector})
+options word
+	querySelector<${1:HTMLElement}>(${2:#:selector})
+
+snippet querySelectorAll
+abbr    querySelectorAll<{type}>({selector})
+options word
+	querySelectorAll<${1:HTMLElement}>(${1:#:selector})
