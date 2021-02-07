@@ -95,6 +95,11 @@ enddef
 
 def s:save_session(): void
   kg8m#configure#folding#manual#restore()
+
+  if !isdirectory(g:startify_session_dir)
+    mkdir(g:startify_session_dir, "p")
+  endif
+
   execute "silent SSave! " .. s:session_name()
 enddef
 
