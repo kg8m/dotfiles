@@ -22,8 +22,8 @@ const START_KEYWORD_PATTERN = '\v^%(function|def|if|for)>|^augroup\s+(END)@!'
 const END_KEYWORD_PATTERN   = '\v^%(endfunction|enddef|endif|endfor|augroup\s+END)>'
 const ONE_LINER_PATTERN     = '\v<%(endfunction|enddef|endif|endfor|augroup\s+END)>'
 
-const START_MARKER_PATTERN = '\v["#].*\{\{\{'
-const END_MARKER_PATTERN   = '\v["#].*\}\}\}'
+const START_MARKER_PATTERN = '\v["#].*\{{3}'
+const END_MARKER_PATTERN   = '\v["#].*\}{3}'
 
 def kg8m#fold#vim#expr(lnum: number): string
   const line = getline(lnum)->trim()
