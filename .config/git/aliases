@@ -271,6 +271,8 @@ function git:stash:all:with_message {
   execute_with_confirm "git stash push --no-keep-index --include-untracked --message '$*'"
 }
 
+# SC2120: references arguments, but none are ever passed.
+# shellcheck disable=SC2120
 function git:status:filter:all {
   git status --short "$@" | git:status:utility:filter
 }
