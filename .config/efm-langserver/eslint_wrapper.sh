@@ -59,11 +59,17 @@ if [ -n "$out" ]; then
   if [ -n "$is_fixing" ]; then
     if [ "$executable" = "eslint_d" ]; then
       echo "$out"
+      exit 0
     else
-      echo "$out" | jq --raw-output ".[0].output"
-    fi
+      output="$(echo "$out" | jq --raw-output ".[0].output")"
 
-    exit 0
+      if [ "$output" = "null" ]; then
+        exit 1
+      else
+        echo "$output"
+        exit 0
+      fi
+    fi
   else
     format="$(
       printf '%s + ":" + %s + ":" + %s + ": [eslint][" + %s + "] " + %s' \
