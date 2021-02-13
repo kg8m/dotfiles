@@ -90,7 +90,7 @@ kg8m#plugin#register("dense-analysis/ale", { if: false, merged: false })
 kg8m#plugin#register("pearofducks/ansible-vim")
 
 # Show diff in Git's interactive rebase
-kg8m#plugin#register("hotwatermorning/auto-git-diff", { if: !kg8m#util#is_git_tmp_edit() })
+kg8m#plugin#register("hotwatermorning/auto-git-diff", { if: kg8m#util#is_git_rebase() })
 
 if kg8m#plugin#register("vim-scripts/autodate.vim", { if: !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#autodate#configure()

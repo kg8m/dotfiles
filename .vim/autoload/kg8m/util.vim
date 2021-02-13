@@ -24,7 +24,7 @@ def kg8m#util#on_rails_dir(): bool
 enddef
 
 def kg8m#util#is_git_tmp_edit(): bool
-  return kg8m#util#is_git_commit() || kg8m#util#is_git_hunk_edit()
+  return kg8m#util#is_git_commit() || kg8m#util#is_git_hunk_edit() || kg8m#util#is_git_rebase()
 enddef
 
 def kg8m#util#is_git_commit(): bool
@@ -43,6 +43,15 @@ def kg8m#util#is_git_hunk_edit(): bool
 
   s:cache.is_git_hunk_edit = argc() ==# 1 && !!(argv()[0] =~# '\.git/addp-hunk-edit\.diff$')
   return s:cache.is_git_hunk_edit
+enddef
+
+def kg8m#util#is_git_rebase(): bool
+  if has_key(s:cache, "is_git_rebase")
+    return s:cache.is_git_rebase
+  endif
+
+  s:cache.is_git_rebase = argc() ==# 1 && !!(argv()[0] =~# '\.git/rebase-merge/git-rebase-todo$')
+  return s:cache.is_git_rebase
 enddef
 
 def kg8m#util#rubygems_path(): string
