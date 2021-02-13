@@ -172,7 +172,6 @@
 
 	# commit
 	ci = commit
-	ca = commit --all
 
 	commit-by-select = bulk-commit
 
@@ -185,7 +184,6 @@
 	edit-commits      = rebase --interactive
 	reset-commits     = edit-commits
 	reset-last-commit = reset --soft HEAD~
-	undo-add          = reset --soft
 
 	# clean
 	clean-by-select = bulk-clean
