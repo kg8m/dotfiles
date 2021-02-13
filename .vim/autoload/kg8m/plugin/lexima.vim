@@ -90,6 +90,9 @@ def s:add_rules_for_eruby(): void
 enddef
 
 def s:add_rules_for_html(): void
+  # JavaScript and TypeScript for html`...`
+  const filetypes = ["eruby", "html", "javascript", "markdown", "typescript", "vue"]
+
   # https://developer.mozilla.org/en-US/docs/Web/HTML/Element
   const tagnames = [
     # Main root
@@ -149,7 +152,7 @@ def s:add_rules_for_html(): void
     # then
     #
     #   <foo>|</foo>
-    lexima#add_rule({ char: ">", at: '<' .. tagname .. '\>[^>]*\%#', input_after: "</" .. tagname .. ">", filetype: ["eruby", "html"] })
+    lexima#add_rule({ char: ">", at: '<' .. tagname .. '\>[^>]*\%#', input_after: "</" .. tagname .. ">", filetype: filetypes })
   endfor
 
   # `<CR>` when
@@ -161,7 +164,7 @@ def s:add_rules_for_html(): void
   #   <foo>
   #     |
   #   </foo>
-  lexima#add_rule({ char: "<CR>", at: '>\%#</', input_after: "<CR>", filetype: ["eruby", "html"] })
+  lexima#add_rule({ char: "<CR>", at: '>\%#</', input_after: "<CR>", filetype: filetypes })
 enddef
 
 def s:add_rules_for_markdown(): void
