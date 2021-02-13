@@ -3,34 +3,10 @@ vim9script
 def kg8m#plugin#update#run(options: dict<any> = {}): void
   timer_start(   0, () => s:run(options) )
   timer_start( 200, () => s:remove_disused())
-  timer_start(1000, () => s:show_log())
+  timer_start(1000, () => kg8m#plugin#update#show_log())
 enddef
 
-def s:run(options: dict<any> = {}): void
-  # Clear messages because they will be used in `s:check_finished`
-  messages clear
-
-  # Re-register disabled plugins before update because dein.vim doesn't make helptags for them
-  kg8m#plugin#enable_disabled_plugins()
-
-  if get(options, "bulk", true)
-    const force_update = true
-    dein#check_update(force_update)
-  else
-    dein#update()
-  endif
-
-  s:check_finished()
-enddef
-
-def s:remove_disused(): void
-  for dirpath in dein#check_clean()
-    kg8m#util#logger#warn("Remove " .. dirpath)
-    delete(dirpath, "rf")
-  endfor
-enddef
-
-def s:show_log(): void
+def kg8m#plugin#update#show_log(): void
   const initial_input =
     '!Same\\ revision'
     .. '\ !Current\\ branch\\ *\\ is\\ up\\ to\\ date.'
@@ -56,6 +32,30 @@ def s:show_log(): void
 
   # Press `n` key to search "Updated"
   @/ = "Updated"
+enddef
+
+def s:run(options: dict<any> = {}): void
+  # Clear messages because they will be used in `s:check_finished`
+  messages clear
+
+  # Re-register disabled plugins before update because dein.vim doesn't make helptags for them
+  kg8m#plugin#enable_disabled_plugins()
+
+  if get(options, "bulk", true)
+    const force_update = true
+    dein#check_update(force_update)
+  else
+    dein#update()
+  endif
+
+  s:check_finished()
+enddef
+
+def s:remove_disused(): void
+  for dirpath in dein#check_clean()
+    kg8m#util#logger#warn("Remove " .. dirpath)
+    delete(dirpath, "rf")
+  endfor
 enddef
 
 def s:check_finished(options: dict<any> = {}): void
