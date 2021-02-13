@@ -62,31 +62,14 @@ def s:add_common_rules(): void
 enddef
 
 def s:add_rules_for_eruby(): void
-  # `<Space>` when
+  # `%` when
   #
-  #   <%|
-  #
-  # then
-  #
-  #   <% | %>
-  lexima#add_rule({ char: "<Space>", at: '<%\%#', except: '<%\%#.*%>', input_after: "<Space>%>", filetype: "eruby" })
-
-  # `<Space>` when
-  #
-  #   <%=|
-  #
-  # or
-  #
-  #   <%=something|
+  #   <|
   #
   # then
   #
-  #   <%= | %>
-  #
-  # or
-  #
-  #   <%=something | %>
-  lexima#add_rule({ char: "<Space>", at: '<%=\S*\%#', except: '<%=\S*\%#.*%>', input_after: "<Space>%>", filetype: "eruby" })
+  #   <%| %>
+  lexima#add_rule({ char: "%", at: '<\%#', input_after: "<Space>%>", filetype: "eruby" })
 enddef
 
 def s:add_rules_for_html(): void
