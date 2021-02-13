@@ -108,6 +108,10 @@
 
 [alias]
 	# add
+	ads  = add-by-select
+	adsi = add-with-intent-by-select
+	adsp = add-by-patch-by-select
+
 	add-by-select             = bulk-add
 	add-with-intent-by-select = bulk-add-with-intent
 	add-by-patch-by-select    = bulk-add-by-patch
