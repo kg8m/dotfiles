@@ -16,8 +16,8 @@ def kg8m#configure#folding#local_options(): void
     autocmd FileType haml       setlocal foldmethod=indent
     autocmd FileType neosnippet setlocal foldmethod=marker
     autocmd FileType sh,zsh     setlocal foldmethod=syntax
-    autocmd FileType gitcommit,qfreplace setlocal nofoldenable
-    autocmd BufEnter addp-hunk-edit.diff setlocal nofoldenable
+
+    autocmd FileType * if s:should_disable_folding() | setlocal nofoldenable | endif
   augroup END
 enddef
 
@@ -34,4 +34,23 @@ def kg8m#configure#folding#mappings(): void
   #   zk: Move to end of previous fold
   noremap z[ [z
   noremap z] ]z
+enddef
+
+def s:should_disable_folding(): bool
+  # For auto-git-diff
+  if kg8m#util#is_git_rebase() && &filetype ==# "diff"
+    return true
+  endif
+
+  # For diffs of `git commit --verbose` and candidates of qfreplace
+  if &filetype =~# '\v^%(gitcommit|qfreplace)$'
+    return true
+  endif
+
+  # For edit mode of `git add --patch`
+  if bufname() ==# "addp-hunk-edit.diff"
+    return true
+  endif
+
+  return false
 enddef
