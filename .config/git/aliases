@@ -187,6 +187,16 @@ function git:clone:shallow {
   execute_with_echo "git clone --single-branch --depth 1 $*"
 }
 
+function git:commit:bulk {
+  local files=("${(@f)$(git:status:filter:all)}")
+
+  if [ -n "${files[*]}" ]; then
+    execute_with_echo    "git commit --dry-run -- ${files[*]} | git pager"
+    execute_with_confirm "git commit -- ${files[*]}"
+    execute_with_echo    "git status"
+  fi
+}
+
 function git:push:revision {
   local revision="$1"
 
