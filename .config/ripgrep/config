@@ -58,3 +58,6 @@
 --type-add=tags:tags.lock
 --type-add=tags:tags.temp
 --type-not=tags
+
+--type-add=zwc:*.zwc
+--type-not=zwc
