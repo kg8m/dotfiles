@@ -141,6 +141,9 @@ def kg8m#configure#others(): void
 
   augroup my_vimrc
     autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
+
+    autocmd BufNewFile,BufRead *.csv          kg8m#util#encoding#edit_with_cp932()
+    autocmd BufNewFile,BufRead COMMIT_EDITMSG kg8m#util#encoding#edit_with_utf8()
   augroup END
 enddef
 
