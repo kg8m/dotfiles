@@ -55,12 +55,12 @@ def s:define_raw_list(): void
     ["[Hankaku/Zenkaku] All to Zenkaku",           "'<,'>Zenkaku"],
     ["[Hankaku/Zenkaku] Kana to Zenkaku",          "'<,'>HzjaConvert zen_kana"],
 
-    ["[Reload with Encoding] latin1",      "edit ++encoding=latin1 +set\\ noreadonly"],
-    ["[Reload with Encoding] cp932",       "edit ++encoding=cp932 +set\\ noreadonly"],
-    ["[Reload with Encoding] shift-jis",   "edit ++encoding=shift-jis +set\\ noreadonly"],
-    ["[Reload with Encoding] iso-2022-jp", "edit ++encoding=iso-2022-jp +set\\ noreadonly"],
-    ["[Reload with Encoding] euc-jp",      "edit ++encoding=euc-jp +set\\ noreadonly"],
-    ["[Reload with Encoding] utf-8",       "edit ++encoding=utf-8 +set\\ noreadonly"],
+    ["[Reload with Encoding] latin1",      "call kg8m#util#encoding#edit_with_latin1(#{ force: v:true })"],
+    ["[Reload with Encoding] cp932",       "call kg8m#util#encoding#edit_with_cp932(#{ force: v:true })"],
+    ["[Reload with Encoding] shift-jis",   "call kg8m#util#encoding#edit_with_shiftjis(#{ force: v:true })"],
+    ["[Reload with Encoding] iso-2022-jp", "call kg8m#util#encoding#edit_with_iso2022jp(#{ force: v:true })"],
+    ["[Reload with Encoding] euc-jp",      "call kg8m#util#encoding#edit_with_eucjp(#{ force: v:true })"],
+    ["[Reload with Encoding] utf-8",       "call kg8m#util#encoding#edit_with_utf8(#{ force: v:true })"],
 
     ["[Reload by Sudo]",     "SudaRead"],
     ["[Write/save by Sudo]", "SudaWrite"],
