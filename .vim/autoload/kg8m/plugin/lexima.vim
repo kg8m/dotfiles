@@ -132,10 +132,18 @@ def s:add_rules_for_html(): void
     #
     #   <foo|
     #
+    # or
+    #
+    #   <foo /|
+    #
     # then
     #
     #   <foo>|</foo>
-    lexima#add_rule({ char: ">", at: '<' .. tagname .. '\>[^>]*\%#', input_after: "</" .. tagname .. ">", filetype: filetypes })
+    #
+    # or
+    #
+    #   <foo />|
+    lexima#add_rule({ char: ">", at: '<' .. tagname .. '\>[^>]*\%#', except: '/\%#', input_after: "</" .. tagname .. ">", filetype: filetypes })
   endfor
 
   # `<CR>` when
