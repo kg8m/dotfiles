@@ -77,7 +77,7 @@ const config = {
       },
       "no-doubled-joshi": {
         severity: "warning",
-        allow: ["か", "とか", "にも", "も"],
+        allow: ["か", "とか", "とも", "にも", "も"],
         commaCharacters: ["、", "，", "「", "」", "（", "）", "/", "→", "←"],
       },
       "no-exclamation-question-mark": false,
