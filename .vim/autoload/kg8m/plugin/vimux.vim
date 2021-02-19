@@ -2,11 +2,9 @@ vim9script
 
 def kg8m#plugin#vimux#configure(): void
   kg8m#plugin#configure({
-    lazy:    true,
-    on_cmd:  "VimuxCloseRunner",
-    on_func: "VimuxRunCommand",
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    lazy:   true,
+    on_cmd: "VimuxCloseRunner",
+    hook_source: () => s:on_source(),
   })
 enddef
 
@@ -17,45 +15,44 @@ def kg8m#plugin#vimux#run_command(command: string): void
     kg8m#plugin#source("vimux")
   endif
 
+  s:calculate_runner_index()
   execute "VimuxRunCommand " .. string(command)
 enddef
 
+# Always use current pane's next one.
+def s:calculate_runner_index(): void
+  if has_key(g:, "VimuxRunnerIndex")
+    # Reset every time because panes sometimes change
+    unlet g:VimuxRunnerIndex
+  endif
+
+  const views = split(system("tmux list-panes -F '#{pane_active}:#{pane_id}'"), "\\n")
+  const views_length = len(views)
+
+  var index = views_length - 1
+
+  while index >= 0
+    const view = views[index]
+
+    # `pane_active` is `1` if the pane is active
+    if kg8m#util#string#starts_with(view, "1")
+      if index !=# views_length - 1
+        g:VimuxRunnerIndex = split(views[index + 1], ":")[1]
+      endif
+
+      return
+    endif
+
+    index -= 1
+  endwhile
+enddef
+
 def s:on_source(): void
-  g:VimuxHeight     = 30
-  g:VimuxUseNearest = true
+  g:VimuxHeight      = 30
+  g:VimuxOrientation = "v"
+  g:VimuxUseNearest  = false
 
   augroup my_vimrc
     autocmd VimLeavePre * :VimuxCloseRunner
   augroup END
-enddef
-
-def s:on_post_source(): void
-  # Overwrite function: Always use current pane's next one.
-  # https://github.com/benmills/vimux/blob/37f41195e6369ac602a08ec61364906600b771f1/plugin/vimux.vim#L173-L183
-  # Use `delfunction` because `def! _VimuxNearestIndex()` produces "E1117: Cannot use ! with nested :def".
-  # Use `execute` because "E117: Unknown function: _VimuxNearestIndex" occurs without `execute`.
-  const overwrite =<< trim VIM
-    delfunction _VimuxNearestIndex
-    def _VimuxNearestIndex(): number
-      const views = split(_VimuxTmux("list-" .. _VimuxRunnerType() .. "s"), "\\n")
-      var index = len(views) - 1
-
-      while index >= 0
-        const view = views[index]
-
-        if match(view, "(active)") != -1
-          if index ==# len(views) - 1
-            return -1
-          else
-            return str2nr(split(views[index + 1], ":")[0])
-          endif
-        endif
-
-        index -= 1
-      endwhile
-
-      return -1
-    enddef
-  VIM
-  execute join(overwrite, "\n")
 enddef

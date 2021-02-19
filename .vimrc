@@ -352,7 +352,7 @@ if kg8m#plugin#register("Shougo/vimproc")
   kg8m#plugin#vimproc#configure()
 endif
 
-if kg8m#plugin#register("benmills/vimux", { if: kg8m#util#on_tmux() && !kg8m#util#is_git_tmp_edit() })
+if kg8m#plugin#register("preservim/vimux", { if: kg8m#util#on_tmux() && !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#vimux#configure()
 endif
 
