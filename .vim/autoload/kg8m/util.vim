@@ -32,7 +32,7 @@ def kg8m#util#is_git_commit(): bool
     return s:cache.is_git_commit
   endif
 
-  s:cache.is_git_commit = argc() ==# 1 && !!(argv()[0] =~# '\.git/COMMIT_EDITMSG$')
+  s:cache.is_git_commit = argc() ==# 1 && !!(argv()[0] =~# '\v\.git%(/.*)?/COMMIT_EDITMSG$')
   return s:cache.is_git_commit
 enddef
 
@@ -41,7 +41,7 @@ def kg8m#util#is_git_hunk_edit(): bool
     return s:cache.is_git_hunk_edit
   endif
 
-  s:cache.is_git_hunk_edit = argc() ==# 1 && !!(argv()[0] =~# '\.git/addp-hunk-edit\.diff$')
+  s:cache.is_git_hunk_edit = argc() ==# 1 && !!(argv()[0] =~# '\v\.git%(/.*)?/addp-hunk-edit\.diff$')
   return s:cache.is_git_hunk_edit
 enddef
 
@@ -50,7 +50,7 @@ def kg8m#util#is_git_rebase(): bool
     return s:cache.is_git_rebase
   endif
 
-  s:cache.is_git_rebase = argc() ==# 1 && !!(argv()[0] =~# '\.git/rebase-merge/git-rebase-todo$')
+  s:cache.is_git_rebase = argc() ==# 1 && !!(argv()[0] =~# '\v\.git%(/.*)?/rebase-merge/git-rebase-todo$')
   return s:cache.is_git_rebase
 enddef
 
