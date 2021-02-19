@@ -126,6 +126,10 @@ def s:is_definition_supported(): bool
 enddef
 
 def s:document_format(options = {}): void
+  if kg8m#util#string#starts_with(bufname(), "gina://")
+    return
+  endif
+
   if get(options, "sync", true)
     silent LspDocumentFormatSync
   else
