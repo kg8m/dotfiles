@@ -50,6 +50,9 @@ def kg8m#configure#mappings#base(): void
   # v_o: Go to other end of highlighted text
   # Invert visual selection start and end => !
   vnoremap ! o
+
+  # Clear and redraw the screen even if Insert mode
+  inoremap <C-l> <C-o><C-l>
 enddef
 
 def kg8m#configure#mappings#search(): void
