@@ -46,6 +46,10 @@ def kg8m#configure#mappings#base(): void
   cnoremap <C-b> <Left>
   cnoremap <C-a> <Home>
   cnoremap <C-e> <End>
+
+  # v_o: Go to other end of highlighted text
+  # Invert visual selection start and end => !
+  vnoremap ! o
 enddef
 
 def kg8m#configure#mappings#search(): void
