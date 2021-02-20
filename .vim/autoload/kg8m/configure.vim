@@ -6,11 +6,7 @@ def kg8m#configure#backup(): void
   # Double slash:    fullpath like `%home%admin%.vimrc.swp`
   # Single/no slash: only filename like `.vimrc.swp`
   const swapdir = expand("~/tmp/.vimswap//")
-
-  if !isdirectory(swapdir)
-    mkdir(swapdir, "p")
-  endif
-
+  mkdir(swapdir, "p")
   &directory = swapdir
 enddef
 
@@ -88,11 +84,7 @@ def kg8m#configure#undo(): void
   set undofile
 
   const undodir = expand("~/tmp/.vimundo")
-
-  if !isdirectory(undodir)
-    mkdir(undodir, "p")
-  endif
-
+  mkdir(undodir, "p")
   &undodir = undodir
 enddef
 
