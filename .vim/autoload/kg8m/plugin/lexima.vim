@@ -1,11 +1,10 @@
 vim9script
 
 def kg8m#plugin#lexima#configure(): void
-  g:lexima_ctrlh_as_backspace = true
-
   kg8m#plugin#configure({
     lazy: true,
     on_i: true,
+    hook_source:      () => s:on_source(),
     hook_post_source: () => s:on_post_source(),
   })
 enddef
@@ -222,6 +221,11 @@ def s:add_rules_for_vim(): void
   # NOTE: Always write comments at the beginning of line (indentation is allowed)
   lexima#add_rule({ char: '"', at: '\S.*\%#\%([^"]\|$\)', except: '\%#"', input_after: '"', filetype: "vim" })
   lexima#add_rule({ char: '"', at: '\%#"', leave: 1, filetype: "vim" })
+enddef
+
+def s:on_source(): void
+  g:lexima_enable_endwise_rules = false
+  g:lexima_ctrlh_as_backspace   = true
 enddef
 
 def s:on_post_source(): void
