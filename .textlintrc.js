@@ -87,6 +87,8 @@ const config = {
         exclusionPatterns: [
           "/\\bhttps?:\\/\\/[^\\s)>]+/",  // URL
           "/\\b[a-z\\d]{40}\\b/",         // commit hash
+          "/\\(.+?\\)/",                  // inside parentheses
+          "/（.+?）/",                    // かっこ内
         ],
       },
     },
