@@ -1,6 +1,10 @@
 vim9script
 
-const PLUGINS_DIRPATH    = expand("~/.vim/plugins")
+if !isdirectory($VIM_PLUGINS)
+  throw "`$VIM_PLUGINS` is not a directory."
+endif
+
+const PLUGINS_DIRPATH    = fnamemodify($VIM_PLUGINS, ":h")
 const MANAGER_REPOSITORY = "Shougo/dein.vim"
 
 def kg8m#plugin#disable_defaults(): void
