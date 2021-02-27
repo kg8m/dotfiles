@@ -43,7 +43,6 @@ def kg8m#plugin#fzf#configure(): void
   kg8m#plugin#configure({
     lazy:    true,
     on_cmd:  ["FzfFiles", "FzfLines", "FzfMarks", "FzfHelptags"],
-    on_func: "fzf#",
     depends: "fzf",
   })
 

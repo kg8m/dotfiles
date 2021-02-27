@@ -2,8 +2,7 @@ vim9script
 
 def kg8m#plugin#vimux#configure(): void
   kg8m#plugin#configure({
-    lazy:   true,
-    on_cmd: "VimuxCloseRunner",
+    lazy: true,
     hook_source: () => s:on_source(),
   })
 enddef

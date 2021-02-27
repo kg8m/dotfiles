@@ -8,9 +8,8 @@ def kg8m#plugin#unite#configure(): void
   augroup END
 
   kg8m#plugin#configure({
-    lazy:    true,
-    on_cmd:  "Unite",
-    on_func: "unite#",
+    lazy:   true,
+    on_cmd: "Unite",
   })
 enddef
 
