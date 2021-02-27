@@ -32,9 +32,9 @@ def s:surround_like_recipes(): list<dict<any>>
     extendnew({ buns: ["( ", " )"], input: ["("] }, add_options),
     extendnew({ buns: ["[ ", " ]"], input: ["["] }, add_options),
     extendnew({ buns: ["{ ", " }"], input: ["{"] }, add_options),
-    extendnew({ buns: ['[(（]\s*', '\s*[)）]'], input: ["(", ")"] }, delete_options),
-    extendnew({ buns: ['[[［「]\s*', '\s*[\]］」]'], input: ["[", "]"] }, delete_options),
-    extendnew({ buns: ['[{｛]\s*', '\s*[}｝]'], input: ["{", "}"] }, delete_options),
+    extendnew({ buns: ['[(（]\s*',         '\s*[)）]'],          input: ["(", ")"] }, delete_options),
+    extendnew({ buns: ['[[［「『〔〈]\s*', '\s*[\]］」』〕〉]'], input: ["[", "]"] }, delete_options),
+    extendnew({ buns: ['[{｛【]\s*',       '\s*[}｝】]'],        input: ["{", "}"] }, delete_options),
   ]
 enddef
 
