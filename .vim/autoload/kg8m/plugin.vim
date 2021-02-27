@@ -63,7 +63,7 @@ def kg8m#plugin#finish_setup(): void
   dein#end()
 enddef
 
-def kg8m#plugin#register(plugin_name: string, options: dict<any> = {}): bool
+def kg8m#plugin#register(repository: string, options: dict<any> = {}): bool
   var enabled = true
 
   if has_key(options, "merged")
@@ -84,7 +84,7 @@ def kg8m#plugin#register(plugin_name: string, options: dict<any> = {}): bool
   # Skip dein.vim's unnecessary parsing
 
   if !has_key(options, "name")
-    options.name = fnamemodify(plugin_name, ":t")
+    options.name = fnamemodify(repository, ":t")
   endif
 
   if !has_key(options, "normalized_name")
@@ -95,7 +95,7 @@ def kg8m#plugin#register(plugin_name: string, options: dict<any> = {}): bool
     options.lazy = false
   endif
 
-  dein#add(plugin_name, options)
+  dein#add(repository, options)
   return dein#tap(options.normalized_name) && enabled
 enddef
 
