@@ -61,7 +61,7 @@ function git:restore:bulk:staged:patch {
 
 function git:switch:select {
   local current="$(git branch --show-current)"
-  local branch="$(git:branch:filter:one "^${current} +")"
+  local branch="$(git:branch:filter:one "^${current} ")"
 
   [ -n "$branch" ] && execute_with_echo "git switch $branch"
 }
@@ -110,10 +110,9 @@ function git:branch:create:with_set_upstream {
 function git:branch:delete:bulk:local {
   local filter_options=(--nth=1 --prompt="select branches: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"")
   local branches=("${(@f)$(
-    git branch --verbose |
+    git:branch:list |
       grep -E -v "${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
       filter "${filter_options[@]}" |
-      sed -e 's/^[* ]*//' |
       awk '{ print $1 }'
   )}")
 
@@ -128,11 +127,10 @@ function git:branch:delete:bulk:local {
 function git:branch:delete:bulk:remote {
   local filter_options=(--nth=1 --prompt="select branches: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"")
   local branches=("${(@f)$(
-    git branch --verbose --remote |
+    git:branch:list --remote |
       grep -E -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
       filter "${filter_options[@]}" |
-      awk '{ print $1 }' |
-      sed -e 's#^origin/##'
+      awk '{ print $1 }'
   )}")
 
   if [ -n "${branches[*]}" ]; then
@@ -146,7 +144,7 @@ function git:branch:delete:bulk:remote {
 function git:branch:filter:one {
   local ignore_pattern="$1"
   local filter_options=(--no-multi --nth=1 --prompt="select a branch: " --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"")
-  local branches=("${(@f)$(git:branch:all | grep -E -v "${ignore_pattern}" | filter "${filter_options[@]}" | awk '{ print $1 }')}")
+  local branches=("${(@f)$(git:branch:list --all | grep -E -v "${ignore_pattern}" | filter "${filter_options[@]}" | awk '{ print $1 }')}")
 
   if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
     echo "Select a branch." >&2; exit 1
@@ -158,7 +156,7 @@ function git:branch:filter:one {
 function git:branch:filter:remote:one {
   local prompt=${1:-"Select a branch: "}
   local filter_options=(--no-multi --nth=1 --prompt="${prompt}" --preview-window="down:50%:wrap:nohidden" --preview="git sh \"git:utility:preview:log {1}\"")
-  local branches=("${(@f)$(git:branch:remote | filter "${filter_options[@]}" | awk '{ print $1 }')}")
+  local branches=("${(@f)$(git:branch:list --remote | filter "${filter_options[@]}" | awk '{ print $1 }')}")
 
   if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
     echo "Select only 1 branch." >&2; exit 1
@@ -167,20 +165,16 @@ function git:branch:filter:remote:one {
   fi
 }
 
-function git:branch:all {
+function git:branch:list {
   local SEP="💩"
-  local list_format="%(refname:short)${SEP}%(objectname:short)${SEP}%(contents:subject)"
+  local list_format="%(refname:short)${SEP}%(objectname:short)${SEP}%(authorname)${SEP}%(authordate:short)${SEP}%(contents:subject)"
 
-  git branch --all --format "${list_format}" |
+  git branch --format "${list_format}" "$@" |
     git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" -e 's/^origin\///' |
     grep -E -v "^HEAD${SEP}" |
     grep -E "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
     column -t -s "$SEP" |
-    awk '!x[$1]++'          # Remove duplicated branches
-}
-
-function git:branch:remote {
-  git branch --remote --verbose | grep -E -v '^ *[^/]+/HEAD\b'
+    awk '!x[$1]++'  # Remove duplicated branches
 }
 
 function git:clone:shallow {
