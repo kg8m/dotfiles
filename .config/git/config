@@ -44,6 +44,7 @@
 	added     = yellow
 	changed   = green
 	untracked = cyan
+	unmerged  = red
 
 [commit]
 	verbose = true
