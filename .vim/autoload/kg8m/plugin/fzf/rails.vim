@@ -104,6 +104,10 @@ def s:setup(): void
       dir:      "public",
       excludes: ["-path 'public/packs*'"],
     },
+    routing: {
+      dir: "config",
+      pattern:  '.*/(routes\.rb|routes/.*\.rb)$',
+    },
     script: {
       dir: "script",
     },
