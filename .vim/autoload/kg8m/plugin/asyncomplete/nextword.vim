@@ -1,14 +1,12 @@
 vim9script
 
 def kg8m#plugin#asyncomplete#nextword#configure(): void
-  augroup my_vimrc
-    autocmd User asyncomplete_setup timer_start(0, () => s:setup())
-  augroup END
-
   kg8m#plugin#configure({
-    lazy:      true,
-    depends:   "async.vim",
-    on_source: "asyncomplete.vim",
+    lazy:     true,
+    on_i:     true,
+    on_start: true,
+    depends:  ["async.vim", "asyncomplete.vim"],
+    hook_post_source: () => s:on_post_source(),
   })
 
   if kg8m#plugin#register("prabirshrestha/async.vim")
@@ -18,7 +16,7 @@ def kg8m#plugin#asyncomplete#nextword#configure(): void
   endif
 enddef
 
-def s:setup(): void
+def s:on_post_source(): void
   # Should specify filetypes? `allowlist: ["gitcommit", "markdown", "moin", "text"],`
   asyncomplete#register_source(asyncomplete#sources#nextword#get_source_options({
     name: "nextword",

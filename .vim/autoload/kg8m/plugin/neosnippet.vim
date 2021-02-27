@@ -7,9 +7,10 @@ var s:snippets_dirpath: string
 def kg8m#plugin#neosnippet#configure(): void
   # `on_ft` for Syntaxes
   kg8m#plugin#configure({
-    lazy:  true,
-    on_ft: ["snippet", "neosnippet"],
-    on_i:  true,
+    lazy:     true,
+    on_ft:    ["snippet", "neosnippet"],
+    on_i:     true,
+    on_start: true,
     hook_source:      () => s:on_source(),
     hook_post_source: () => s:on_post_source(),
   })

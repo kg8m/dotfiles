@@ -7,6 +7,8 @@ endif
 const PLUGINS_DIRPATH    = fnamemodify($VIM_PLUGINS, ":h")
 const MANAGER_REPOSITORY = "Shougo/dein.vim"
 
+final s:on_start_queue = []
+
 def kg8m#plugin#disable_defaults(): void
   g:no_vimrc_example         = true
   g:no_gvimrc_example        = true
@@ -46,6 +48,7 @@ def kg8m#plugin#init_manager(): void
   augroup kg8m-plugin
     autocmd!
     autocmd VimEnter * kg8m#plugin#call_hooks()
+    autocmd VimEnter * timer_start(0, () => s:source_on_start())
   augroup END
 
   # Decrease max processes because too many processes sometimes get refused
@@ -102,6 +105,11 @@ enddef
 def kg8m#plugin#configure(config: dict<any>): dict<any>
   if get(config, "lazy", false)
     config.merged = false
+  endif
+
+  if get(config, "on_start", false)
+    remove(config, "on_start")
+    add(s:on_start_queue, g:dein#plugin.name)
   endif
 
   return dein#config(config)
@@ -169,4 +177,14 @@ enddef
 
 def kg8m#plugin#disabled_plugins(): list<dict<any>>
   return kg8m#plugin#get_info()->values()->filter((_, plugin) => empty(plugin.rtp))
+enddef
+
+# Source lazily but early to optimize sourcing many plugins
+def s:source_on_start(): void
+  if !empty(s:on_start_queue)
+    const plugin_name = remove(s:on_start_queue, 0)
+
+    timer_start(50, () => kg8m#plugin#is_sourced(plugin_name) ? v:null : kg8m#plugin#source(plugin_name))
+    timer_start(50, () => s:source_on_start())
+  endif
 enddef

@@ -2,8 +2,9 @@ vim9script
 
 def kg8m#plugin#asyncomplete#configure(): void
   kg8m#plugin#configure({
-    lazy: true,
-    on_i: true,
+    lazy:     true,
+    on_i:     true,
+    on_start: true,
     hook_source:      () => s:on_source(),
     hook_post_source: () => s:on_post_source(),
   })

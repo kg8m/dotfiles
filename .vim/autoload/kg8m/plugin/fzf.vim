@@ -41,9 +41,10 @@ def kg8m#plugin#fzf#configure(): void
   augroup END
 
   kg8m#plugin#configure({
-    lazy:    true,
-    on_cmd:  ["FzfFiles", "FzfLines", "FzfMarks", "FzfHelptags"],
-    depends: "fzf",
+    lazy:     true,
+    on_cmd:   ["FzfFiles", "FzfLines", "FzfMarks", "FzfHelptags"],
+    on_start: true,
+    depends:  "fzf",
   })
 
   # Add to runtimepath (and use its Vim scripts) but don't use its binary.
