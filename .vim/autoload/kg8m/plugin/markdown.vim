@@ -10,8 +10,8 @@ def kg8m#plugin#markdown#configure(): void
 
   kg8m#plugin#configure({
     lazy:    true,
-    depends: "vim-markdown-quote-syntax",
     on_ft:   "markdown",
+    depends: "vim-markdown-quote-syntax",
   })
 
   if kg8m#plugin#register("joker1007/vim-markdown-quote-syntax")
