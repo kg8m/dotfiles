@@ -20,3 +20,13 @@ alias ssh="TERM=xterm-256color ssh"
 
 alias sudo='sudo env PATH=$PATH'
 alias watch="watch --color"
+
+function plugin:setup:abbr {
+  abbr --session --quiet -g g="git"
+  abbr --session --quiet -g v="vim"
+  abbr --session --quiet -g vi="vim"
+
+  unset -f plugin:setup:abbr
+}
+zinit ice lucid wait"0c" atload"plugin:setup:abbr"
+zinit light olets/zsh-abbr
