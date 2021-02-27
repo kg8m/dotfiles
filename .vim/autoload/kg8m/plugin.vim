@@ -1,5 +1,8 @@
 vim9script
 
+const PLUGINS_DIRPATH    = expand("~/.vim/plugins")
+const MANAGER_REPOSITORY = "Shougo/dein.vim"
+
 def kg8m#plugin#disable_defaults(): void
   g:no_vimrc_example         = true
   g:no_gvimrc_example        = true
@@ -25,16 +28,16 @@ def kg8m#plugin#disable_defaults(): void
 enddef
 
 def kg8m#plugin#init_manager(): void
-  const plugins_path = expand("~/.vim/plugins")
-  const manager_path = expand(plugins_path .. "/repos/github.com/Shougo/dein.vim")
+  const manager_path = expand(PLUGINS_DIRPATH .. "/repos/github.com/" .. MANAGER_REPOSITORY)
 
   if !isdirectory(manager_path)
     echo "Installing plugin manager..."
-    system("git clone https://github.com/Shougo/dein.vim " .. manager_path)
+    system("git clone https://github.com/" .. MANAGER_REPOSITORY .. " " .. manager_path)
   endif
 
   &runtimepath ..= "," .. manager_path
-  dein#begin(plugins_path)
+  dein#begin(PLUGINS_DIRPATH)
+  kg8m#plugin#register(MANAGER_REPOSITORY, { if: false })
 
   augroup kg8m-plugin
     autocmd!
@@ -45,8 +48,6 @@ def kg8m#plugin#init_manager(): void
   g:dein#install_max_processes = 4
 
   g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
-
-  kg8m#plugin#register(manager_path)
 enddef
 
 def kg8m#plugin#call_hooks(): void
