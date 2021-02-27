@@ -4,8 +4,9 @@ final s:cache = {}
 
 def kg8m#plugin#completion#refresh_pattern(filetype: string): string
   if !has_key(s:cache, "completion_refresh_patterns")
-    const css_pattern = '\v([.#a-zA-Z0-9_-]+)$'
-    const sh_pattern  = '\v((\k|-)+)$'
+    const css_pattern  = '\v([.#a-zA-Z0-9_-]+)$'
+    const ruby_pattern = kg8m#plugin#lsp#servers#is_available("solargraph") ? '\v(\@?\@\k*|(:)@<!:\k*|\k+)$' : '\v(\k+)$'
+    const sh_pattern   = '\v((\k|-)+)$'
 
     s:cache.completion_refresh_patterns = {
       _:    '\v(\k+)$',
@@ -13,7 +14,7 @@ def kg8m#plugin#completion#refresh_pattern(filetype: string): string
       html: '\v(/|\k+)$',
       json: '\v("\k*|\[|\k+)$',
       less: css_pattern,
-      ruby: '\v(\@?\@\k*|(:)@<!:\k*|\k+)$',
+      ruby: ruby_pattern,
       sass: css_pattern,
       scss: css_pattern,
       sh:   sh_pattern,

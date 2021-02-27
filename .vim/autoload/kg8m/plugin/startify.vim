@@ -71,9 +71,10 @@ def s:setup(): void
     "  LSPs: ",
   ]
 
-  for lsp_server_summary in kg8m#plugin#lsp#servers#summaries()
+  for server_name in kg8m#plugin#lsp#servers#server_names()
+    const is_available = kg8m#plugin#lsp#servers#is_available(server_name)
     g:startify_custom_header += [
-      "  " .. (lsp_server_summary.available ? "👼 " : "👿 ") .. lsp_server_summary.name,
+      "  " .. (is_available ? "👼 " : "😈 ") .. server_name,
     ]
   endfor
 

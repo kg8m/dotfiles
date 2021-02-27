@@ -1,8 +1,8 @@
 vim9script
 
-final s:summaries: list<dict<any>> = []
 final s:configs:   list<dict<any>> = []
 final s:filetypes: list<string>    = []
+final s:availabilities: dict<bool> = {}
 
 final s:cache = {}
 
@@ -251,12 +251,16 @@ def kg8m#plugin#lsp#servers#enable(): void
   endfor
 enddef
 
-def kg8m#plugin#lsp#servers#summaries(): list<dict<any>>
-  return s:summaries
+def kg8m#plugin#lsp#servers#server_names(): list<string>
+  return s:configs->mapnew((_, config) => config.name)
 enddef
 
 def kg8m#plugin#lsp#servers#filetypes(): list<string>
   return s:filetypes
+enddef
+
+def kg8m#plugin#lsp#servers#is_available(server_name: string): bool
+  return get(s:availabilities, server_name, false)
 enddef
 
 def s:register(config: dict<any>): void
@@ -277,9 +281,9 @@ def s:register(config: dict<any>): void
     add(s:configs, config)
     extend(s:filetypes, config.allowlist)
 
-    add(s:summaries, { name: config.name, available: true })
+    s:availabilities[config.name] = true
   else
-    add(s:summaries, { name: config.name, available: false })
+    s:availabilities[config.name] = false
   endif
 enddef
 
