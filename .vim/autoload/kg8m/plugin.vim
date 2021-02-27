@@ -81,8 +81,22 @@ def kg8m#plugin#register(plugin_name: string, options: dict<any> = {}): bool
     enabled = false
   endif
 
+  # Skip dein.vim's unnecessary parsing
+
+  if !has_key(options, "name")
+    options.name = fnamemodify(plugin_name, ":t")
+  endif
+
+  if !has_key(options, "normalized_name")
+    options.normalized_name = options.name
+  endif
+
+  if !has_key(options, "lazy")
+    options.lazy = false
+  endif
+
   dein#add(plugin_name, options)
-  return dein#tap(fnamemodify(plugin_name, ":t")) && enabled
+  return dein#tap(options.normalized_name) && enabled
 enddef
 
 def kg8m#plugin#configure(config: dict<any>): dict<any>
