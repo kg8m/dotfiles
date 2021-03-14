@@ -84,8 +84,8 @@ def s:define_raw_list(): void
     ["[Git] Apply the patch/hunk to the another side",   "'<,'>diffput"],
     ["[Git] Apply the patch/hunk from the another side", "'<,'>diffget"],
 
-    ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):(\\w+)( *)\\=\\> /\\1\\2:\\3/g"],
-    ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v(\\w+):( *) /:\\1\\2 => /g"],
+    ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):([a-zA-Z0-9_\"']+)( *)\\=\\> /\\1\\2:\\3/g"],
+    ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v([a-zA-Z0-9_\"']+):( *) /:\\1\\2 => /g"],
 
     ["[SimpleAlign] \"=\"",          "'<,'>SimpleAlign = -count 1"],
     ["[SimpleAlign] \"=>\"",         "'<,'>SimpleAlign => -count 1"],
