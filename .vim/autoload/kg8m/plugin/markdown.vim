@@ -1,12 +1,13 @@
 vim9script
 
 def kg8m#plugin#markdown#configure(): void
-  g:vim_markdown_override_foldtext         = false
+  # Disable folding because it is too heavy
+  g:vim_markdown_folding_disabled = true
+
   g:vim_markdown_no_default_key_mappings   = true
   g:vim_markdown_conceal                   = false
   g:vim_markdown_no_extensions_in_markdown = true
   g:vim_markdown_autowrite                 = true
-  g:vim_markdown_folding_level             = 10
 
   kg8m#plugin#configure({
     lazy:    true,
