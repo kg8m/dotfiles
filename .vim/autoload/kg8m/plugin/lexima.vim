@@ -1,5 +1,7 @@
 vim9script
 
+# Get syntax name by `synIDattr(synID(line("."), col("."), 1), "name")`
+
 def kg8m#plugin#lexima#configure(): void
   kg8m#plugin#configure({
     lazy:     true,
@@ -57,8 +59,8 @@ def s:add_common_rules(): void
   # or
   #
   #   'foo'|
-  lexima#add_rule({ char: '"', syntax: "String" })
-  lexima#add_rule({ char: "'", syntax: "String" })
+  lexima#add_rule({ char: '"', except: '\%#"', syntax: "String" })
+  lexima#add_rule({ char: "'", except: "\\%#'", syntax: "String" })
 enddef
 
 def s:add_rules_for_eruby(): void
@@ -200,6 +202,15 @@ def s:add_rules_for_markdown(): void
   #   |
   #   ```
   lexima#add_rule({ char: "<CR>", at: '```[a-z]\+\%#```', input_after: "<CR>", filetype: filetypes })
+
+  # ``` when
+  #
+  #   `foo|
+  #
+  # then
+  #
+  #   `foo`|
+  lexima#add_rule({ char: "`", except: '\%#`\|``\%#', syntax: ["mkdCode", "mkdInlineCodeDelimiter"] })
 enddef
 
 def s:add_rules_for_vim(): void
