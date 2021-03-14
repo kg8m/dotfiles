@@ -190,6 +190,10 @@ if kg8m#plugin#register("Shougo/unite.vim", { if: !kg8m#util#is_git_tmp_edit() }
   kg8m#plugin#unite#configure()
 endif
 
+if kg8m#plugin#register("kg8m/vim-simple-align")
+  kg8m#plugin#simple_align#configure()
+endif
+
 if kg8m#plugin#register("FooSoft/vim-argwrap", { if: !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#argwrap#configure()
 endif
@@ -213,10 +217,6 @@ if kg8m#plugin#register("t9md/vim-choosewin", { if: !kg8m#util#is_git_tmp_edit()
 endif
 
 kg8m#plugin#register("hail2u/vim-css3-syntax", { if: !kg8m#util#is_git_tmp_edit() })
-
-if kg8m#plugin#register("junegunn/vim-easy-align", { if: !kg8m#util#is_git_tmp_edit() })
-  kg8m#plugin#easyalign#configure()
-endif
 
 if kg8m#plugin#register("easymotion/vim-easymotion")
   kg8m#plugin#easymotion#configure()
