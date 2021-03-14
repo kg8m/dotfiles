@@ -43,7 +43,7 @@ function plugin:setup:env:fzf {
   export FZF_DEFAULT_OPTS="${options[*]}"
   export FZF_DEFAULT_COMMAND="source ~/.zsh/my_functions.zsh; my_grep --files"
 
-  export FZF_VIM_PATH="${VIM_PLUGINS:-}/github.com/junegunn/fzf.vim"
+  export FZF_VIM_PATH="${VIM_PLUGINS:?}/github.com/junegunn/fzf.vim"
 
   unset -f plugin:setup:env:fzf
 }

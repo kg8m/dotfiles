@@ -299,19 +299,19 @@ function update_zsh_plugins {
   execute_with_echo "zinit self-update"
   execute_with_echo "zinit delete --clean --yes"
   execute_with_echo "zinit cclear"
-  execute_with_echo "find ${ZINIT[SNIPPETS_DIR]:-} -type d -empty -delete"
+  execute_with_echo "find ${ZINIT[SNIPPETS_DIR]:?} -type d -empty -delete"
 
   local current_dir="$PWD"
 
   # Clean up the directory because enhancd makes it dirty when loaded
-  execute_with_echo "cd ${ENHANCD_ROOT:-}"
+  execute_with_echo "cd ${ENHANCD_ROOT:?}"
   execute_with_echo "git restore ."
   execute_with_echo "cd $current_dir"
 
   execute_with_echo "zinit update --all --parallel --quiet"
 
   # Remote `_*.fish` files because they are treated as completions by zinit
-  execute_with_echo "cd ${ENHANCD_ROOT:-}"
+  execute_with_echo "cd ${ENHANCD_ROOT:?}"
   execute_with_echo "rm -f ./**/_*.fish"
   execute_with_echo "cd $current_dir"
 
@@ -343,7 +343,7 @@ function compile_zshrcs:cleanup {
 
 function uninstall_go_library {
   local library="$1"
-  local libpaths=("${(@f)$(find ~/go "${GOENV_ROOT:-}" -maxdepth 5 -path "*${library}*")}")
+  local libpaths=("${(@f)$(find ~/go "${GOENV_ROOT:?}" -maxdepth 5 -path "*${library}*")}")
 
   if [ -z "${libpaths[*]}" ]; then
     echo "No library files/directories found for ${library}."
