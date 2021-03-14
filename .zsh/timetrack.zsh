@@ -97,13 +97,13 @@ function __my_preexec_end_timetrack() {
     ssh main -t "echo '[$(hostname)] $message' | /usr/local/bin/terminal-notifier ${notifier_options[*]}" > /dev/null 2>&1
 
     if [ "$last_status" = "0" ]; then
-      title="${title//${result}/\e[0;32m${result}\e[1;37m}"
+      title="${title//${result}/\e[1;32m${result}\e[0;37m}"
     else
-      title="${title//${result}/\e[0;31m${result}\e[1;37m}"
+      title="${title//${result}/\e[1;31m${result}\e[0;37m}"
     fi
 
     if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
-      title="${title//${exec_time} seconds/\e[1;33m${exec_time} seconds\e[1;37m}"
+      title="${title//${exec_time} seconds/\e[1;33m${exec_time} seconds\e[0;37m}"
     fi
 
     printf "\n* * *\n"
