@@ -120,6 +120,10 @@ if kg8m#plugin#register("lambdalisue/gina.vim", { if: !kg8m#util#is_git_tmp_edit
   kg8m#plugin#gina#configure()
 endif
 
+if kg8m#plugin#register("tweekmonster/helpful.vim")
+  kg8m#plugin#helpful#configure()
+endif
+
 if kg8m#plugin#register("Yggdroot/indentLine", { if: !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#indent_line#configure()
 endif
