@@ -90,7 +90,7 @@ enddef
 # efm-langserver but vim-lsp sometimes doesn't select it. efm-langserver is always selected if it is the only 1
 # language server which has capability of document formatting.
 def s:overwrite_capabilities(): void
-  if &filetype !~# '\v^(go|javascript|ruby|typescript)$'
+  if &filetype !~# '\v^(javascript|ruby|typescript)$'
     return
   endif
 
@@ -132,6 +132,10 @@ def s:document_format(options = {}): void
 
   if get(options, "sync", true)
     silent LspDocumentFormatSync
+
+    if &filetype ==# "go"
+      LspCodeActionSync source.organizeImports
+    endif
   else
     if &modified && mode() ==# "n"
       silent LspDocumentFormat

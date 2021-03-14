@@ -35,10 +35,6 @@ tools:
     format-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}' --fix"
     format-stdin: true
 
-  goimports: &goimports
-    format-command: "goimports '${INPUT}'"
-    format-stdin: true
-
   markdownlint: &markdownlint
     lint-command: "markdownlint --stdin"
     lint-stdin: true
@@ -112,9 +108,6 @@ languages:
 
   eruby.yaml:
     - <<: *yamllint
-
-  go:
-    - <<: *goimports
 
   html:
     - <<: *markuplint
