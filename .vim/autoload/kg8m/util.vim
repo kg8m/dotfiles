@@ -99,7 +99,7 @@ enddef
 
 def kg8m#util#remove_trailing_whitespaces()
   const position = getpos(".")
-  keeppatterns '<,'>s/\s\+$//ge
+  keeppatterns :'<,'>s/\s\+$//ge
   setpos(".", position)
 enddef
 

@@ -60,7 +60,7 @@ enddef
 
 def kg8m#plugin#lightline#filepath(): string
   return (s:is_readonly() ? "X " : "")
-    .. s:filepath()
+    .. s:current_filepath()
     .. (&modified ? " +" : (&modifiable ? "" : " -"))
 enddef
 
@@ -106,7 +106,7 @@ def kg8m#plugin#lightline#lsp_status(): string
   endif
 enddef
 
-def s:filepath(): string
+def s:current_filepath(): string
   if &filetype ==# "unite"
     return unite#get_status_string()
   endif
