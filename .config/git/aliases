@@ -94,6 +94,7 @@ function git:update:master {
   execute_with_echo "git switch master"
   execute_with_echo "git update"
   execute_with_echo "git switch ${current_branch}"
+  execute_with_echo "git branches"
 }
 
 function git:branch:create:with_set_upstream {
