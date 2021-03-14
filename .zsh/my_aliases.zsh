@@ -22,9 +22,9 @@ alias sudo='sudo env PATH=$PATH'
 alias watch="watch --color"
 
 function plugin:setup:abbr {
-  abbr --session --quiet -g g="git"
-  abbr --session --quiet -g v="vim"
-  abbr --session --quiet -g vi="vim"
+  abbr --session --quiet --force --global g="git"
+  abbr --session --quiet --force --global v="vim"
+  abbr --session --quiet --force --global vi="vim"
 
   unset -f plugin:setup:abbr
 }
