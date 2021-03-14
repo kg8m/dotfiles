@@ -4,10 +4,10 @@ vim9script
 # This `kg8m#fold#ruby#expr` is based on keywords and each line indent.
 #   - keywords: `class`, `def`, `end`, and so on
 #   - other supports:
-#     - here-documents
-#     - blocks (do-end or `{ ... }`)
-#     - multi-line hash literals
-#     - multi-line array literals
+#     - here-documents: `<<FOO ... FOO`
+#     - blocks:  `do ... end` or `{ ... }`
+#     - multi-line hash literals: `{ ... }`
+#     - multi-line array literals: `[ ... ]`
 
 const EMPTY_STRING = ""
 const COMMENT_CHAR = "#"
@@ -18,21 +18,21 @@ const FOLD_START_PATTERN =
     .. '^%(public|protected|private)$|'
     .. '%(<do|\{)%(\s*\|.+\|)?$|'
     .. '\[$'
-const FOLD_END_PATTERN = '\v^%(end|\}|\])$'
-const ONE_LINER_PATTERN = '\v%(<end|\}|\])$'
+const FOLD_END_PATTERN = '\v^%(end>|\}|\])'
+const ONE_LINER_PATTERN = '\v<end>'
 
 def kg8m#fold#ruby#expr(lnum: number): string
   const line = getline(lnum)->trim()
 
-  if s:is_no_content(line)
+  if s:is_in_heredoc(line)
+    return "="
+  elseif s:is_no_content(line)
     return "="
   elseif s:is_heredoc_end(line)
     const indent = b:ruby_fold_heredoc_indent
     unlet! b:ruby_fold_heredoc_key
     unlet! b:ruby_fold_heredoc_indent
     return "<" .. string(indent)
-  elseif s:is_in_heredoc()
-    return "="
   elseif s:is_fold_end(line)
     return "<" .. string(s:indent_level(lnum))
   elseif s:is_heredoc_start(line)
@@ -67,10 +67,10 @@ def s:is_heredoc_start(line: string): bool
   return !!(line =~# HEREDOC_START_PATTERN)
 enddef
 
-def s:is_in_heredoc(): bool
-  return !!has_key(b:, "ruby_fold_heredoc_key")
+def s:is_in_heredoc(line: string): bool
+  return !!has_key(b:, "ruby_fold_heredoc_key") && !s:is_heredoc_end(line)
 enddef
 
 def s:is_heredoc_end(line: string): bool
-  return s:is_in_heredoc() && line ==# b:ruby_fold_heredoc_key
+  return !!has_key(b:, "ruby_fold_heredoc_key") && line ==# b:ruby_fold_heredoc_key
 enddef
