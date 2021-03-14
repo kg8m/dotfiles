@@ -86,7 +86,7 @@ autoload -U zmv
 
 autoload -U add-zsh-hook
 
-mkdir -p "${KGYM_ZSH_CACHE_DIR:-}"
+mkdir -p "${KG8M_ZSH_CACHE_DIR:?}"
 
 # zdharma/zinit  {{{
 [ -d ~/.zinit/bin ] || git clone https://github.com/zdharma/zinit.git ~/.zinit/bin

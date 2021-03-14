@@ -291,8 +291,8 @@ function tig {
 }
 
 function update_zsh_plugins {
-  trash "${KGYM_ZSH_CACHE_DIR:-}"
-  mkdir -p "$KGYM_ZSH_CACHE_DIR"
+  trash "${KG8M_ZSH_CACHE_DIR:?}"
+  mkdir -p "$KG8M_ZSH_CACHE_DIR"
 
   execute_with_echo "compile_zshrcs:cleanup"
 

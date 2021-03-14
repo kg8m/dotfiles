@@ -1,10 +1,10 @@
 function plugin:setup:rbenv {
   if [ -d ~/.rbenv ] && command -v rbenv > /dev/null; then
-    if ! [ -f "${KGYM_ZSH_CACHE_DIR:-}/rbenv_init" ]; then
-      rbenv init - > "$KGYM_ZSH_CACHE_DIR/rbenv_init"
-      zcompile "$KGYM_ZSH_CACHE_DIR/rbenv_init"
+    if ! [ -f "${KG8M_ZSH_CACHE_DIR:?}/rbenv_init" ]; then
+      rbenv init - > "$KG8M_ZSH_CACHE_DIR/rbenv_init"
+      zcompile "$KG8M_ZSH_CACHE_DIR/rbenv_init"
     fi
-    source "$KGYM_ZSH_CACHE_DIR/rbenv_init"
+    source "$KG8M_ZSH_CACHE_DIR/rbenv_init"
 
     function plugin:setup:rbenv_default_gems {
       if [ ! -f ~/.rbenv/default-gems ]; then

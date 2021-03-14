@@ -28,7 +28,7 @@ if [ -z "${TMUX:-}" ]; then
   export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
   export VIM_PLUGINS=$HOME/.vim/plugins/repos
 
-  export KGYM_ZSH_CACHE_DIR=$XDG_CACHE_HOME/zsh
+  export KG8M_ZSH_CACHE_DIR=$XDG_CACHE_HOME/zsh
 
   case "$-" in
     *i*)  # Interactive shell
