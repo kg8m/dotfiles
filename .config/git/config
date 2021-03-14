@@ -159,9 +159,10 @@
 	update-master  = sh git:update:master
 
 	# branch
-	brs      = branches
-	br       = branch
-	branches = branch --all -vv
+	brs = branches
+	br  = branch
+
+	branches = sh git:branch:list:all
 
 	create-branch-with-set-upstream = "!git sh \"git:branch:create:with_set_upstream '$1' '$2' '$3'\""
 
