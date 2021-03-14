@@ -81,6 +81,7 @@
 	diffFilter = git-diff-filter
 
 [mergetool]
+	tool = vimdiff
 	keepBackup = false
 
 [pager]
