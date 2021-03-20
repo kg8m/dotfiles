@@ -48,7 +48,7 @@ def kg8m#plugin#init_manager(): void
   augroup kg8m-plugin
     autocmd!
     autocmd VimEnter * kg8m#plugin#call_hooks()
-    autocmd VimEnter * timer_start(0, () => s:source_on_start())
+    autocmd VimEnter * timer_start(100, () => s:source_on_start())
   augroup END
 
   # Decrease max processes because too many processes sometimes get refused
