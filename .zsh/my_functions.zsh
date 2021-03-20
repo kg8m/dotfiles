@@ -65,6 +65,10 @@ function horizontal_line {
   echo "${(r:$COLUMNS::-:)}"
 }
 
+function highlight_yellow {
+  printf "\e[1;33m%s\e[0;37m" "${1:?}"
+}
+
 function notify {
   local options=("${(M)@:#-*}")
   local non_options=("${@:#-*}")
