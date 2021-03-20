@@ -1,14 +1,6 @@
 version: 2
 provide-definition: false
 
-commands:
-  - title: reload config
-    command: ":reload-config"
-
-  # cf. tools.shfmt
-  - title: shfmt
-    command: "shfmt -i 2 -ci -sr -kp -w '${INPUT}'"
-
 tools:
   checkmake: &checkmake
     lint-command: "checkmake"
