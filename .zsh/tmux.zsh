@@ -34,32 +34,28 @@ function plugin:setup:tmux_plugins {
 zinit ice lucid nocd wait"0c" atload"plugin:setup:tmux_plugins"
 zinit snippet /dev/null
 
-case "$-" in
-  *i*)  # Interactive shell
-    if [ -n "${TMUX:-}" ]; then
-      function tmux_save_pane_logs_automatically {
-        local DIRPATH="$HOME/tmp/tmux-logs"
-        local FILENAME="$(tmux run-shell "echo tmux-#{session_name}-#{window_index}-#{pane_index}.log")"
+if [[ -o interactive ]]; then
+  if [ -n "${TMUX:-}" ]; then
+    function tmux_save_pane_logs_automatically {
+      local DIRPATH="$HOME/tmp/tmux-logs"
+      local FILENAME="$(tmux run-shell "echo tmux-#{session_name}-#{window_index}-#{pane_index}.log")"
 
-        if echo | sed -r > /dev/null 2>&1; then
-          local sed="sed -r"
-        else
-          local sed="sed -E"
-        fi
+      if echo | sed -r > /dev/null 2>&1; then
+        local sed="sed -r"
+      else
+        local sed="sed -E"
+      fi
 
-        mkdir -p "$DIRPATH"
+      mkdir -p "$DIRPATH"
 
-        # Remove escape sequences
-        # https://stackoverflow.com/questions/17998978/removing-colors-from-output
-        # https://stackoverflow.com/questions/19296667/remove-ansi-color-codes-from-a-text-file-using-bash
-        tmux pipe-pane "cat | $sed 's/[[:cntrl:]]\\[([0-9]{1,3}(;[0-9]{1,3}){0,4})?[fmGHJK]//g' >> '$DIRPATH/$FILENAME'"
+      # Remove escape sequences
+      # https://stackoverflow.com/questions/17998978/removing-colors-from-output
+      # https://stackoverflow.com/questions/19296667/remove-ansi-color-codes-from-a-text-file-using-bash
+      tmux pipe-pane "cat | $sed 's/[[:cntrl:]]\\[([0-9]{1,3}(;[0-9]{1,3}){0,4})?[fmGHJK]//g' >> '$DIRPATH/$FILENAME'"
 
-        unset -f tmux_save_pane_logs_automatically
-      }
-      zinit ice lucid nocd wait"0c" atload"tmux_save_pane_logs_automatically"
-      zinit snippet /dev/null
-    fi
-    ;;
-  *)  # Non interactive shell
-    ;;
-esac
+      unset -f tmux_save_pane_logs_automatically
+    }
+    zinit ice lucid nocd wait"0c" atload"tmux_save_pane_logs_automatically"
+    zinit snippet /dev/null
+  fi
+fi

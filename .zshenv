@@ -40,14 +40,10 @@ export VIM_PLUGINS=$HOME/.vim/plugins/repos
 
 export KG8M_ZSH_CACHE_DIR=$XDG_CACHE_HOME/zsh
 
-case "$-" in
-  *i*)  # Interactive shell
-    ;;
-  *)  # Non interactive shell
-    source ~/.zsh/env/fzf.zsh
-    source ~/.zsh/env/go.zsh
-    source ~/.zsh/env/ruby.zsh
-    ;;
-esac
+if [[ ! -o interactive ]]; then
+  source ~/.zsh/env/fzf.zsh
+  source ~/.zsh/env/go.zsh
+  source ~/.zsh/env/ruby.zsh
+fi
 
 try_to_source ~/.zshenv.local
