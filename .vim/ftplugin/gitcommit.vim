@@ -18,8 +18,7 @@ def s:open_diff_window(): void
   setlocal wrap
   setlocal buftype=nofile
 
-  read !git log --max-count=100
-  deletebufline(bufnr(), 1, 1)
+  :0read !git log --max-count=100
 
   setlocal nomodifiable
 
