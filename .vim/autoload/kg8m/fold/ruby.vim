@@ -1,7 +1,7 @@
 vim9script
 
 # Syntax-based folding gets broken depending on syntax-brokenness.
-# This `kg8m#fold#ruby#expr` is based on keywords and each line indent.
+# This `kg8m#fold#ruby#expr` is based on keywords and each line indent instead.
 #   - keywords: `class`, `def`, `end`, and so on
 #   - other supports:
 #     - here-documents: `<<FOO ... FOO`
