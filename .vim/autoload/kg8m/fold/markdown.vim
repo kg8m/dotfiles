@@ -16,13 +16,13 @@ const HYPHEN_H2_PATTERN   = '\v^-{3,}$'
 def kg8m#fold#markdown#expr(lnum: number): string
   const line = getline(lnum)->trim()
 
-  if s:is_in_codeblock(line)
+  if s:is_codeblock_end(line)
+    unlet! b:is_markdown_fold_codeblock
+    return "s1"
+  elseif s:is_in_codeblock(line)
     return "="
   elseif s:is_no_content(line)
     return "="
-  elseif s:is_codeblock_end(line)
-    unlet! b:is_markdown_fold_codeblock
-    return "s1"
   elseif s:is_codeblock_start(line)
     b:is_markdown_fold_codeblock = true
     return "a1"
@@ -62,14 +62,15 @@ def s:is_codeblock_start(line: string): bool
   return !has_key(b:, "is_markdown_fold_codeblock") && s:is_codeblock_start_or_end(line)
 enddef
 
-def s:is_in_codeblock(line: string): bool
-  return !!has_key(b:, "is_markdown_fold_codeblock") && !s:is_codeblock_end(line)
-enddef
-
 def s:is_codeblock_end(line: string): bool
   return !!has_key(b:, "is_markdown_fold_codeblock") && s:is_codeblock_start_or_end(line)
 enddef
 
 def s:is_codeblock_start_or_end(line: string): bool
   return !!(line =~# CODEBLOCK_PATTERN)
+enddef
+
+# Call this only if `s:is_codeblock_end()` returns `false`
+def s:is_in_codeblock(line: string): bool
+  return !!has_key(b:, "is_markdown_fold_codeblock")
 enddef

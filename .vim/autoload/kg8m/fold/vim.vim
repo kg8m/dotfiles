@@ -31,7 +31,10 @@ const END_MARKER_PATTERN   = '\v["#].*\}{3}'
 def kg8m#fold#vim#expr(lnum: number): string
   const line = getline(lnum)->trim()
 
-  if s:is_in_heredoc(line)
+  if s:is_heredoc_end(line)
+    unlet! b:vim_fold_heredoc_key
+    return "s1"
+  elseif s:is_in_heredoc(line)
     return "="
   elseif s:is_no_content(line)
     if s:contains_start_marker(line)
@@ -41,9 +44,6 @@ def kg8m#fold#vim#expr(lnum: number): string
     else
       return "="
     endif
-  elseif s:is_heredoc_end(line)
-    unlet! b:vim_fold_heredoc_key
-    return "s1"
   elseif s:contains_end_keywords(line) || s:contains_end_marker(line)
     return "s1"
   elseif s:is_heredoc_start(line)
@@ -80,10 +80,11 @@ def s:is_heredoc_start(line: string): bool
   return !!(line =~# HEREDOC_START_PATTERN)
 enddef
 
-def s:is_in_heredoc(line: string): bool
-  return !!has_key(b:, "vim_fold_heredoc_key") && !s:is_heredoc_end(line)
-enddef
-
 def s:is_heredoc_end(line: string): bool
   return !!has_key(b:, "vim_fold_heredoc_key") && line ==# b:vim_fold_heredoc_key
+enddef
+
+# Call this only if `s:is_heredoc_end()` returns `false`
+def s:is_in_heredoc(line: string): bool
+  return !!has_key(b:, "vim_fold_heredoc_key")
 enddef

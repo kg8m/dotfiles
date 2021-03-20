@@ -24,15 +24,15 @@ const ONE_LINER_PATTERN = '\v<end>'
 def kg8m#fold#ruby#expr(lnum: number): string
   const line = getline(lnum)->trim()
 
-  if s:is_in_heredoc(line)
-    return "="
-  elseif s:is_no_content(line)
-    return "="
-  elseif s:is_heredoc_end(line)
+  if s:is_heredoc_end(line)
     const indent = b:ruby_fold_heredoc_indent
     unlet! b:ruby_fold_heredoc_key
     unlet! b:ruby_fold_heredoc_indent
     return "<" .. string(indent)
+  elseif s:is_in_heredoc(line)
+    return "="
+  elseif s:is_no_content(line)
+    return "="
   elseif s:is_fold_end(line)
     return "<" .. string(s:indent_level(lnum))
   elseif s:is_heredoc_start(line)
@@ -67,10 +67,11 @@ def s:is_heredoc_start(line: string): bool
   return !!(line =~# HEREDOC_START_PATTERN)
 enddef
 
-def s:is_in_heredoc(line: string): bool
-  return !!has_key(b:, "ruby_fold_heredoc_key") && !s:is_heredoc_end(line)
-enddef
-
 def s:is_heredoc_end(line: string): bool
   return !!has_key(b:, "ruby_fold_heredoc_key") && line ==# b:ruby_fold_heredoc_key
+enddef
+
+# Call this only if `s:is_heredoc_end()` returns `false`
+def s:is_in_heredoc(line: string): bool
+  return !!has_key(b:, "ruby_fold_heredoc_key")
 enddef
