@@ -135,11 +135,7 @@ function tmux_setup_default {
 }
 
 function attach_or_new_tmux {
-  if [ -n "$1" ]; then
-    local session_name="$1"
-  else
-    local session_name=default
-  fi
+  local session_name="${1:-default}"
 
   if ! tmux has-session -t "$session_name" > /dev/null 2>&1; then
     local response
@@ -338,7 +334,7 @@ function compile_zshrcs:cleanup {
 }
 
 function uninstall_go_library {
-  local library="$1"
+  local library="${1:?}"
   local libpaths=("${(@f)$(find ~/go "${GOENV_ROOT:?}" -maxdepth 5 -path "*${library}*")}")
 
   if [ -z "${libpaths[*]}" ]; then
@@ -381,8 +377,8 @@ function benchmark_zsh {
 
 # https://stackoverflow.com/a/28044986
 function progressbar {
-  local current_index="$1"
-  local total_count="$2"
+  local current_index="${1:?}"
+  local total_count="${2:?}"
 
   if [[ ! "$current_index" =~ ^[0-9]+$ ]] || [[ ! "$total_count" =~ ^[0-9]+$ ]]; then
     echo "Usage: progressbar {current_index} {total_count}" >&2
