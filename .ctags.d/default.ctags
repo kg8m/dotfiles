@@ -20,7 +20,6 @@
 --regex-ruby=/\battr_(accessor|reader|writer)\s+:([a-zA-Z0-9_?, ]+)/\2/
 --regex-ruby=/\bnamed_scope\s*:([a-zA-Z0-9_]+[!?]?)/\1/
 --regex-ruby=/\bscope\s*:([a-zA-Z0-9_]+[!?]?)/\1/
---regex-ruby=/\bdef_erb_method\s*\(?[\s\r\n]*["']([a-zA-Z0-9_]+[!?]?)/\1/
 --regex-ruby=/\b([A-Z0-9_]+)\s*=($|[^=>])/\1/
 --regex-ruby=/const_set(\s+|\():([A-Z0-9_]+)/\2/
 --regex-ruby=/shared_(examples|context|examples_for)\s+["'](.*)["']\s+do/\2/
