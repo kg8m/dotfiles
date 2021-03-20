@@ -16,7 +16,8 @@ def kg8m#configure#folding#local_options(): void
     autocmd FileType haml       setlocal foldmethod=indent
     autocmd FileType neosnippet setlocal foldmethod=marker
 
-    autocmd FileType * if s:should_disable_folding() | setlocal nofoldenable | endif
+    # Delay to overwrite plugins' configurations
+    autocmd FileType * timer_start(100, () => s:manage_foldenable())
   augroup END
 enddef
 
@@ -35,21 +36,24 @@ def kg8m#configure#folding#mappings(): void
   noremap z] ]z
 enddef
 
-def s:should_disable_folding(): bool
-  # For auto-git-diff
-  if kg8m#util#is_git_rebase() && &filetype ==# "diff"
-    return true
+def s:manage_foldenable(): void
+  if s:should_disable()
+    setlocal nofoldenable
   endif
+enddef
 
-  # For diffs of `git commit --verbose` and candidates of qfreplace
-  if &filetype =~# '\v^%(gitcommit|qfreplace)$'
-    return true
-  endif
+def s:should_disable(): bool
+  return (
+    # For auto-git-diff
+    (kg8m#util#is_git_rebase() && &filetype ==# "diff") ||
 
-  # For edit mode of `git add --patch`
-  if bufname() ==# "addp-hunk-edit.diff"
-    return true
-  endif
+    # For diffs of `git commit --verbose`
+    &filetype ==# "gitcommit" ||
 
-  return false
+    # For candidates of qfreplace
+    &filetype ==# "qfreplace" ||
+
+    # For edit mode of `git add --patch`
+    kg8m#util#file#current_name() ==# "addp-hunk-edit.diff"
+  )
 enddef
