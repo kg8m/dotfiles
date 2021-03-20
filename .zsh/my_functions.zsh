@@ -163,9 +163,6 @@ function attach_or_new_tmux {
   tmux attach -t "$session_name"
 }
 
-# Never use tmuxinator
-alias mux="attach_or_new_tmux"
-
 # http://d.hatena.ne.jp/itchyny/20130227/1361933011
 function extract() {
   case "$1" in
@@ -270,7 +267,6 @@ function my_grep_with_filter() {
     fi
   fi
 }
-alias gr="my_grep_with_filter"
 
 function tig {
   case "$1" in

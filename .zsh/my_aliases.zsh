@@ -26,7 +26,11 @@ function plugin:setup:abbr {
   abbr --session --quiet --force --global v="vim"
   abbr --session --quiet --force --global vi="vim"
 
+  abbr --session --quiet --force cdb="cd-bookmark"
+  abbr --session --quiet --force gr="my_grep_with_filter"
+  abbr --session --quiet --force t="attach_or_new_tmux"
+
   unset -f plugin:setup:abbr
 }
-zinit ice lucid wait"0c" atload"plugin:setup:abbr"
+zinit ice lucid wait"0a" atload"plugin:setup:abbr"
 zinit light olets/zsh-abbr
