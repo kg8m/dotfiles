@@ -8,37 +8,46 @@ function try_to_source {
   [ -f "$filepath" ] && source "$filepath"
 }
 
-# Sessions in tmux inherit original environemnt
-if [ -z "${TMUX:-}" ]; then
-  # https://wiki.archlinux.org/index.php/XDG_Base_Directory
-  export XDG_CONFIG_HOME=$HOME/.config     # Where user-specific configurations should be written (analogous to `/etc`).
-  export XDG_CACHE_HOME=$HOME/.cache       # Where user-specific non-essential (cached) data should be written (analogous to `/var/cache`).
-  export XDG_DATA_HOME=$HOME/.local/share  # Where user-specific data files should be written (analogous to `/usr/share`).
+# https://wiki.archlinux.org/index.php/XDG_Base_Directory
+export XDG_CONFIG_HOME=$HOME/.config     # Where user-specific configurations should be written (analogous to `/etc`).
+export XDG_CACHE_HOME=$HOME/.cache       # Where user-specific non-essential (cached) data should be written (analogous to `/var/cache`).
+export XDG_DATA_HOME=$HOME/.local/share  # Where user-specific data files should be written (analogous to `/usr/share`).
 
-  export PATH=/usr/local/bin:/usr/local/sbin:/sbin:$PATH
-  export PATH=$HOME/bin:$PATH
-  export PATH=$HOME/.config/git/bin:$PATH
-  export PATH=$HOME/.local/bin:$PATH
-  export PATH=$HOME/.zsh/bin:$PATH
+# Remove duplicated paths
+typeset -U path
 
-  export COLORTERM=truecolor
+# (N-/): Ignore unless exists
+path=(
+  "$HOME/.zsh/bin"
+  "$HOME/.local/bin"
+  "$HOME/.config/git/bin"
+  "$HOME/bin"
+  "/usr/local/bin"(N-/)
+  "/usr/bin"(N-/)
+  "/bin"(N-/)
+  "/usr/local/sbin"(N-/)
+  "/usr/sbin"(N-/)
+  "/sbin"(N-/)
+  "${path[@]}"
+)
 
-  export BAT_THEME="Monokai Extended"
-  export NEXTWORD_DATA_PATH=$HOME/.local/share/nextword/nextword-data
-  export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
-  export VIM_PLUGINS=$HOME/.vim/plugins/repos
+export COLORTERM=truecolor
 
-  export KG8M_ZSH_CACHE_DIR=$XDG_CACHE_HOME/zsh
+export BAT_THEME="Monokai Extended"
+export NEXTWORD_DATA_PATH=$HOME/.local/share/nextword/nextword-data
+export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
+export VIM_PLUGINS=$HOME/.vim/plugins/repos
 
-  case "$-" in
-    *i*)  # Interactive shell
-      ;;
-    *)  # Non interactive shell
-      source ~/.zsh/env/fzf.zsh
-      source ~/.zsh/env/go.zsh
-      source ~/.zsh/env/ruby.zsh
-      ;;
-  esac
+export KG8M_ZSH_CACHE_DIR=$XDG_CACHE_HOME/zsh
 
-  try_to_source ~/.zshenv.local
-fi
+case "$-" in
+  *i*)  # Interactive shell
+    ;;
+  *)  # Non interactive shell
+    source ~/.zsh/env/fzf.zsh
+    source ~/.zsh/env/go.zsh
+    source ~/.zsh/env/ruby.zsh
+    ;;
+esac
+
+try_to_source ~/.zshenv.local

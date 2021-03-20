@@ -1,6 +1,6 @@
 function plugin:setup:nodenv {
   if [ -d ~/.nodenv ]; then
-    export PATH=~/.nodenv/bin:$PATH
+    path=("$HOME/.nodenv/bin" "${path[@]}")
 
     if command -v nodenv > /dev/null; then
       if ! [ -f "${KG8M_ZSH_CACHE_DIR:?}/nodenv_init" ]; then

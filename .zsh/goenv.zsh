@@ -1,7 +1,7 @@
 # See also `.zsh/env/go.zsh`
 function plugin:setup:goenv {
   export GOENV_ROOT="$PWD"
-  export PATH=$GOENV_ROOT/bin:$PATH
+  path=("$GOENV_ROOT/shims" "$GOENV_ROOT/bin" "${path[@]}")
 
   if ! [ -f "${KG8M_ZSH_CACHE_DIR:?}/goenv_init" ]; then
     goenv init - > "$KG8M_ZSH_CACHE_DIR/goenv_init"
@@ -11,9 +11,9 @@ function plugin:setup:goenv {
 
   if [ -n "${GOROOT:-}" ] && [ -n "${GOPATH:-}" ]; then
     # Disable because this obstructs $GOENV_ROOT/shims
-    # export PATH=$GOROOT/bin:$PATH
+    # path=("$GOROOT/bin" "${path[@]}")
 
-    export PATH=$PATH:$GOPATH/bin
+    path=("${path[@]}" "$GOPATH/bin")
   fi
 
   unset -f plugin:setup:goenv
