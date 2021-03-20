@@ -121,8 +121,7 @@ enddef
 
 def kg8m#util#convert_to_vim9script(): void
   if getline(1) !=# "vim9script"
-    append(0, "")
-    append(0, "vim9script")
+    append(0, ["vim9script", ""])
   endif
 
   # Replace `function` with `def` and remove `abort`
