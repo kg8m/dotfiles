@@ -12,14 +12,14 @@ enddef
 
 def s:set_local_options(): void
   if &filetype =~# '\v^(eruby|ruby)$'
-    b:argwrap_tail_comma_braces = "[{"
+    b:argwrap_tail_comma_braces = "([{"
   elseif &filetype ==# "vim"
-    b:argwrap_tail_comma_braces = "[{"
+    b:argwrap_tail_comma_braces = "([{"
 
     if getline(1) ==# "vim9script"
       b:argwrap_line_prefix = ""
     else
-      b:argwrap_line_prefix = '\'
+      b:argwrap_line_prefix = '\ '
     endif
   endif
 enddef
