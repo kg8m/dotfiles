@@ -15,7 +15,6 @@ def kg8m#configure#folding#local_options(): void
     autocmd FileType gitconfig  setlocal foldmethod=indent
     autocmd FileType haml       setlocal foldmethod=indent
     autocmd FileType neosnippet setlocal foldmethod=marker
-    autocmd FileType sh,zsh     setlocal foldmethod=syntax
 
     autocmd FileType * if s:should_disable_folding() | setlocal nofoldenable | endif
   augroup END
