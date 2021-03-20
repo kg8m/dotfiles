@@ -92,10 +92,6 @@ kg8m#plugin#register("pearofducks/ansible-vim")
 # Show diff in Git's interactive rebase
 kg8m#plugin#register("hotwatermorning/auto-git-diff", { if: kg8m#util#is_git_rebase() })
 
-if kg8m#plugin#register("vim-scripts/autodate.vim", { if: !kg8m#util#is_git_tmp_edit() })
-  kg8m#plugin#autodate#configure()
-endif
-
 if kg8m#plugin#register("tyru/caw.vim", { if: !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#caw#configure()
 endif
@@ -271,10 +267,6 @@ endif
 
 if kg8m#plugin#register("elzr/vim-json")
   g:vim_json_syntax_conceal = false
-endif
-
-if kg8m#plugin#register("rcmdnk/vim-markdown", { if: !kg8m#util#is_git_tmp_edit() })
-  kg8m#plugin#markdown#configure()
 endif
 
 if kg8m#plugin#register("andymass/vim-matchup")

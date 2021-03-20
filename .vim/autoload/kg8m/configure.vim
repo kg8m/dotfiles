@@ -131,6 +131,8 @@ def kg8m#configure#others(): void
   # s => Maximum size of an item in Kbyte.
   set viminfo='20,<20,h,s10
 
+  s:configure_markdown()
+
   augroup my_vimrc
     autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
 
@@ -158,4 +160,20 @@ enddef
 def kg8m#configure#conceal(): void
   set concealcursor=nvic
   set conceallevel=2
+enddef
+
+# https://github.com/tpope/vim-markdown
+def s:configure_markdown(): void
+  g:markdown_fenced_languages = [
+    "css",
+    "diff",
+    "html",
+    "javascript", "js=javascript",
+    "ruby", "rb=ruby",
+    "sh",
+    "sql",
+    "vim",
+  ]
+  g:markdown_syntax_conceal = false
+  g:markdown_minlines = 300
 enddef
