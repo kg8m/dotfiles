@@ -1,6 +1,4 @@
 #!/usr/bin/env sh
-# http://klabgames.tech.blog.jp.klab.com/archives/1033121546.html
-
 PREVIOUS_HEAD=$1
 # NEW_HEAD=$2
 BRANCH_SWITCH=$3
