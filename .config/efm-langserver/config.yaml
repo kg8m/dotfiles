@@ -101,6 +101,9 @@ languages:
   eruby.yaml:
     - <<: *yamllint
 
+  gitcommit:
+    - <<: *textlint
+
   html:
     - <<: *markuplint
 

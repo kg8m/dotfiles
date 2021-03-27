@@ -1,4 +1,12 @@
 #!/usr/bin/env sh
+SCISSORS_PATTERN='\(# -\{1,\} >8 -\{1,\}\)'
+EXTRA_TEXT="# <!-- textlint-disable -->"
+
+# https://rcmdnk.com/blog/2014/09/21/computer-bash/#bsd-sed-1
+LF=$'\\\x0A'
+
+sed -ie "s/${SCISSORS_PATTERN}/\1${LF}${EXTRA_TEXT}/" "$1"
+
 if [ -f .git_templates/hooks/prepare-commit-msg ]; then
   # shellcheck disable=SC1091
   source .git_templates/hooks/prepare-commit-msg

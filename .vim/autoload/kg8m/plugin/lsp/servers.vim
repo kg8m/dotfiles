@@ -42,7 +42,7 @@ def kg8m#plugin#lsp#servers#register(): void
     name: "efm-langserver",
     cmd: (server_info) => ["efm-langserver"],
     allowlist: [
-      "css", "eruby", "go", "html", "json", "make", "markdown", "ruby", "vim",
+      "css", "eruby", "gitcommit", "go", "html", "json", "make", "markdown", "ruby", "vim",
     ] + s:js_filetypes + s:sh_filetypes + s:yaml_filetypes,
   })
   # }}}

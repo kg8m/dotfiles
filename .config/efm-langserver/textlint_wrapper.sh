@@ -7,7 +7,16 @@ trap "rm -f $err_temp_filepath" EXIT
 
 function format_target_filepath {
   local original_target_filepath="$1"
-  echo "$original_target_filepath"
+
+  case "$original_target_filepath" in
+    */COMMIT_EDITMSG)
+      # Remove `.git/` because it causes `Not found available plugin for .git/COMMIT_EDITMSG.md` error
+      basename "$original_target_filepath.md"
+      ;;
+    *)
+      echo "$original_target_filepath"
+      ;;
+  esac
 }
 
 if [ -f "$HOME/.textlint_wrapper_extends.sh" ]; then
