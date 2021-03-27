@@ -23,6 +23,15 @@ def kg8m#util#on_rails_dir(): bool
   return s:cache.on_rails_dir
 enddef
 
+def kg8m#util#is_ctags_available(): bool
+  if has_key(s:cache, "is_ctags_available")
+    return s:cache.is_ctags_available
+  endif
+
+  s:cache.is_ctags_available = (kg8m#util#on_rails_dir() || !empty($CTAGS_AVAILABLE))
+  return s:cache.is_ctags_available
+enddef
+
 def kg8m#util#is_git_tmp_edit(): bool
   return kg8m#util#is_git_commit() || kg8m#util#is_git_hunk_edit() || kg8m#util#is_git_rebase()
 enddef

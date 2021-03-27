@@ -285,7 +285,7 @@ endif
 
 kg8m#plugin#register("kana/vim-operator-user")
 
-if kg8m#plugin#register("kg8m/vim-parallel-auto-ctags", { if: kg8m#util#on_rails_dir() && !kg8m#util#is_git_tmp_edit() })
+if kg8m#plugin#register("kg8m/vim-parallel-auto-ctags", { if: kg8m#util#is_ctags_available() && !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#parallel_auto_ctags#configure()
 endif
 
