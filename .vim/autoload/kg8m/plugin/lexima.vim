@@ -40,7 +40,7 @@ def s:add_common_rules(): void
     #
     #   |
     #
-    # Use `"<BS><Del>"` instead of `delete: 1` option because the option doesn't work
+    # Use `input: "<BS><Del>"` instead of `delete: 1` because it sometimes doesn't work depending on input stack
     lexima#add_rule({ char: "<BS>", at: join(pair, '\%#'), input: "<BS><Del>" })
   endfor
 
@@ -61,6 +61,11 @@ def s:add_common_rules(): void
   #   'foo'|
   lexima#add_rule({ char: '"', except: '\%#"', syntax: "String" })
   lexima#add_rule({ char: "'", except: "\\%#'", syntax: "String" })
+
+  # Overwrite default rules and use `input: "<BS><Del>"` instead of `delete: 1` because it sometimes doesn't work
+  # depending on input stack
+  lexima#add_rule({ char: "<BS>", at: '"\%#"', input: "<BS><Del>" })
+  lexima#add_rule({ char: "<BS>", at: "'\\%#'", input: "<BS><Del>" })
 enddef
 
 def s:add_rules_for_eruby(): void
