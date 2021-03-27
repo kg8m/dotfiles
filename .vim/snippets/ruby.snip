@@ -340,6 +340,11 @@ abbr    instance_variable_defined?(:@instance_var_name)
 options word
 	instance_variable_defined?(:@${0})
 
+snippet remove_instance_variable
+abbr    remove_instance_variable(:@instance_var_name)
+options word
+	remove_instance_variable(:@${0})
+
 snippet tap
 abbr    tap {|object|\n ...\n }
 options word
