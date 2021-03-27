@@ -259,11 +259,12 @@ function my_grep_with_filter() {
       if [[ "${options[*]}" =~ --files ]]; then
         local filepaths=("${results[@]}")
       else
-        local filepaths=("${(@f)$(echo "${(j:\n:)results[@]}" | grep -E ':[0-9]+:[0-9]+:' | grep -E -o '^[^:]+' | sort -u)}")
+        local filepaths=("${(@f)$(
+          echo "${(j:\n:)results[@]}" | grep -E ':[0-9]+:[0-9]+:' | grep -E -o '^[^:]+:[0-9]+:[0-9]+' | sort -u
+        )}")
       fi
 
-      # Don't use literal `vim` because it sometimes refers to wrong Vim
-      eval "vim ${filepaths[*]}"
+      execute_with_echo "vim ${filepaths[*]}"
     fi
   fi
 }
