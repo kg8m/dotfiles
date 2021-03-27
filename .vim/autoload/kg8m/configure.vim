@@ -90,7 +90,8 @@ enddef
 
 def kg8m#configure#commands(): void
   # http://vim-users.jp/2009/05/hack17/
-  command! -nargs=1 -complete=file Rename f <args> | delete(expand("#")) | write
+  # Execute `:edit` to record as a MRU file
+  command! -nargs=1 -complete=file Rename f <args> | delete(expand("#")) | write | edit
 
   # Show counts
   # :h v_g_CTRL-G
