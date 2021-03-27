@@ -254,7 +254,7 @@ if kg8m#plugin#register("obcat/vim-hitspop")
   kg8m#plugin#hitspop#configure()
 endif
 
-if kg8m#plugin#register("kg8m/vim-hz_ja-extracted")
+if kg8m#plugin#register("git@github.com:kg8m/vim-hz_ja-extracted")
   kg8m#plugin#hz_ja_extracted#configure()
 endif
 
