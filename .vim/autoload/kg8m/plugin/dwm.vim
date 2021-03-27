@@ -23,7 +23,7 @@ def s:open(filepath: string): void
       execute "edit " .. filepath
       DWM_AutoEnter()
     else
-      execute winnr .. "wincmd w"
+      execute printf(":%dwincmd w", winnr)
       DWM_AutoEnter()
     endif
   else
