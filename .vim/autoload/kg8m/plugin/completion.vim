@@ -58,8 +58,5 @@ def s:start_refresh_timer(): void
 enddef
 
 def s:stop_refresh_timer(): void
-  if has_key(s:cache, "refresh_timer")
-    timer_stop(s:cache.refresh_timer)
-    remove(s:cache, "refresh_timer")
-  endif
+  timer_stop(get(s:cache, "refresh_timer"))
 enddef
