@@ -39,3 +39,5 @@
 
 --regex-javascript=/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*(function\b|\([^)]*\)\s*=>)/\5/,function/
 --regex-javascript=/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*function\b\(/\2/,function/
+
+--options-maybe=.ctags
