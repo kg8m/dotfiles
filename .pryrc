@@ -71,7 +71,7 @@ def __benchmark__(n = nil, **labels_and_procs)
 
     Benchmark.ips do |x|
       labels_and_procs.each do |label, _proc|
-        x.report("#{label}:"){ _proc.call }
+        x.report("#{label}:", _proc)
       end
       x.compare!
     end
