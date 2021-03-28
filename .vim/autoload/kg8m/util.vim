@@ -28,7 +28,7 @@ def kg8m#util#is_ctags_available(): bool
     return s:cache.is_ctags_available
   endif
 
-  s:cache.is_ctags_available = (kg8m#util#on_rails_dir() || !empty($CTAGS_AVAILABLE))
+  s:cache.is_ctags_available = !empty($CTAGS_AVAILABLE)
   return s:cache.is_ctags_available
 enddef
 
