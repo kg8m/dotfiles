@@ -18,17 +18,28 @@ def kg8m#plugin#fzf#grep#run(pattern: string, path: string = ""): void
   const grep_args       = escaped_pattern .. " " .. escaped_path
   const grep_options    = s:options()
 
-  # Use `final` instead of `const` because the variable will be changed by fzf
-  final fzf_options = {
-    options: [
-      "--header", "Grep: " .. grep_args,
-      "--delimiter", ":",
-      "--preview", kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh {}",
-      "--preview-window", "right:50%:wrap:nohidden:+{2}-/2",
-    ],
-  }
+  final fzf_options = [
+    "--header", "Grep: " .. grep_args,
+    "--delimiter", ":",
+  ]
 
-  fzf#vim#grep("rg " .. grep_options .. " " .. grep_args, true, fzf_options)
+  var preview_option        = kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh "
+  var preview_window_option = "right:50%:wrap:nohidden:"
+
+  if filereadable(path)
+    preview_option        ..= escaped_path .. ":{}"
+    preview_window_option ..= "+{1}-/2"
+  else
+    preview_option        ..= "{}"
+    preview_window_option ..= "+{2}-/2"
+  endif
+
+  extend(fzf_options, [
+    "--preview", preview_option,
+    "--preview-window", preview_window_option,
+  ])
+
+  fzf#vim#grep("rg " .. grep_options .. " " .. grep_args, true, { options: fzf_options })
 enddef
 
 def kg8m#plugin#fzf#grep#expr(options = {}): string
