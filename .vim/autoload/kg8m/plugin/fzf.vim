@@ -27,7 +27,7 @@ def kg8m#plugin#fzf#configure(): void
   nnoremap <Leader><Leader>] :call kg8m#plugin#fzf#jumplist#forward()<CR>
 
   noremap <expr> <Leader><Leader>g kg8m#plugin#fzf#grep#expr()
-  noremap <expr> <Leader><Leader>G kg8m#plugin#fzf#grep#expr(#{ dir: v:true })
+  noremap <expr> <Leader><Leader>G kg8m#plugin#fzf#grep#expr(#{ path: v:true })
 
   nnoremap <silent> m :call kg8m#plugin#fzf#marks#increment()<CR>
 

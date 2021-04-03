@@ -7,15 +7,15 @@ if !kg8m#plugin#is_sourced("fzf.vim")
 endif
 
 # Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)
-def kg8m#plugin#fzf#grep#run(pattern: string, dirpath: string = ""): void
+def kg8m#plugin#fzf#grep#run(pattern: string, path: string = ""): void
   if empty(pattern)
     echo "Canceled."
     return
   endif
 
   const escaped_pattern = shellescape(pattern)
-  const escaped_dirpath = empty(dirpath) ? "" : shellescape(dirpath)
-  const grep_args       = escaped_pattern .. " " .. escaped_dirpath
+  const escaped_path    = empty(path) ? "" : shellescape(path)
+  const grep_args       = escaped_pattern .. " " .. escaped_path
   const grep_options    = s:options()
 
   # Use `final` instead of `const` because the variable will be changed by fzf
@@ -34,8 +34,8 @@ enddef
 def kg8m#plugin#fzf#grep#expr(options = {}): string
   final args = [string(s:input_pattern())]
 
-  if get(options, "dir")
-    add(args, string(s:input_dir()))
+  if get(options, "path")
+    add(args, string(s:input_path()))
   endif
 
   return ":call kg8m#plugin#fzf#grep#run(" .. join(args, ", ") .. ")\<CR>"
@@ -54,16 +54,16 @@ def s:input_pattern(): string
   return input("FzfGrep Pattern: ", preset, "tag")
 enddef
 
-def s:input_dir(): string
-  const dirpath = input("FzfGrep Directory: ", "", "dir")->expand()
+def s:input_path(): string
+  const path = input("FzfGrep Path: ", "", "file")->expand()
 
-  if empty(dirpath)
-    echoerr "Dirpath not specified."
-  elseif !isdirectory(dirpath)
-    echoerr "Dirpath doesn't exist."
+  if empty(path)
+    echoerr "Path not specified."
+  elseif !isdirectory(path) && !filereadable(path)
+    echoerr "Path doesn't exist."
   endif
 
-  return dirpath
+  return path
 enddef
 
 def s:options(): string
