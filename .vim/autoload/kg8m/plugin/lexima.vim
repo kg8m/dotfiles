@@ -174,6 +174,21 @@ def s:add_rules_for_html(): void
   lexima#add_rule({ char: "!", at: '<\%#', input: "!--<Space>", input_after: "<Space>-->", filetype: filetypes })
 enddef
 
+def s:add_rules_for_js(): void
+  const filetypes = ["javascript", "typescript"]
+
+  # `<CR>` when
+  #
+  #   `|`
+  #
+  # then
+  #
+  #   `
+  #     |
+  #   `
+  lexima#add_rule({ char: "<CR>", at: '`\%#`', input_after: "<CR>", filetype: filetypes })
+enddef
+
 def s:add_rules_for_markdown(): void
   const filetypes = ["gitcommit", "markdown"]
 
@@ -250,6 +265,7 @@ def s:on_post_source(): void
   timer_start(50, () => s:add_common_rules())
   timer_start(50, () => s:add_rules_for_eruby())
   timer_start(50, () => s:add_rules_for_html())
+  timer_start(50, () => s:add_rules_for_js())
   timer_start(50, () => s:add_rules_for_markdown())
   timer_start(50, () => s:add_rules_for_vim())
 
