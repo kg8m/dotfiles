@@ -134,9 +134,12 @@ def kg8m#util#convert_to_vim9script(): void
   endif
 
   # Replace `function` with `def` and remove `abort`
-  :%s/\v^function>/def/Ie
-  :%s/\v^endfunction>/enddef/Ie
+  :%s/\v^(\s*)function>/\1def/Ie
+  :%s/\v^(\s*)endfunction>/\1enddef/Ie
   :%s/\v\) abort>/)/Ie
+
+  # Add function's return type and argument's type
+  :%s/\v^(\s*)def ([a-zA-Z&:#_.]+)\((\w+)(.*)\)$/\1def \2(\3: FIXME\4): void/Ie
 
   # Remove `call` except for:
   #   - :call foo()
@@ -146,11 +149,11 @@ def kg8m#util#convert_to_vim9script(): void
   :%s/\v(:)@<!(\<Cmd\>)@<!(")@<!(')@<!<call\s+//Ie
 
   # Replace `let foo .= bar` with `let foo ..= bar`
-  :%s/\v<(let\s+)([a-zA-Z&:_.]+)(\s+)\.\=/\1\2\3..=/Ie
+  :%s/\v<(let\s+)([a-zA-Z&:#_.]+)(\s+)\.\=/\1\2\3..=/Ie
 
-  # Remove `let` except for:
+  # Replace `let` with `const` except for:
   #   - :let foo = bar
-  :%s/\v(:)@<!<let\s+//Ie
+  :%s/\v(:)@<!<let(\s+)/const\2/Ie
 
   # Remove function argument's prefix `a:`
   :%s/\v<a:([a-zA-Z_]+)/\1/gIe
@@ -160,7 +163,7 @@ def kg8m#util#convert_to_vim9script(): void
 
   # Add white spaces around `..`
   :%s/\v([^.\/ ])\.\.%(\.)@!/\1 ../ge
-  :%s/\v%(\.)@<!\.\.([^.\/ ])/.. \1/ge
+  :%s/\v%(\.)@<!\.\.([^.\/ ])@<!\=/.. \1/ge
 
   # Replace comment symbols `"` with `#`
   :%s/\v^(\s*)" /\1# /e
