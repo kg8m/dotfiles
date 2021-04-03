@@ -173,6 +173,7 @@ def s:configure_markdown(): void
     "ruby", "rb=ruby",
     "sh",
     "sql",
+    "typescript", "ts=typescript",
     "vim",
   ]
   g:markdown_syntax_conceal = false
