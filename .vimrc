@@ -222,7 +222,9 @@ if kg8m#plugin#register("easymotion/vim-easymotion")
   kg8m#plugin#easymotion#configure()
 endif
 
-kg8m#plugin#register("wsdjeg/vim-fetch")
+if kg8m#plugin#register("wsdjeg/vim-fetch")
+  kg8m#plugin#fetch#configure()
+endif
 
 # Disable because findent sometimes detects wrong indentations
 if kg8m#plugin#register("lambdalisue/vim-findent", { if: false && !kg8m#util#is_git_tmp_edit() && !filereadable(".editorconfig") })
