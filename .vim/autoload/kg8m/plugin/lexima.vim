@@ -2,6 +2,8 @@ vim9script
 
 # Get syntax name by `synIDattr(synID(line("."), col("."), 1), "name")`
 
+var s:queue_on_post_source: list<func>
+
 def kg8m#plugin#lexima#configure(): void
   kg8m#plugin#configure({
     lazy:     true,
@@ -255,21 +257,37 @@ def s:add_rules_for_vim(): void
   lexima#add_rule({ char: '"', at: '\%#"', leave: 1, filetype: "vim" })
 enddef
 
+def s:dequeue_on_post_source(): void
+  if !empty(s:queue_on_post_source)
+    const Callback = remove(s:queue_on_post_source, 0)
+    timer_start(50, () => s:callback_proxy_on_post_source(Callback))
+  endif
+enddef
+
+def s:callback_proxy_on_post_source(Callback: func): void
+  Callback()
+  s:dequeue_on_post_source()
+enddef
+
 def s:on_source(): void
   g:lexima_enable_endwise_rules = false
   g:lexima_ctrlh_as_backspace   = true
 enddef
 
 def s:on_post_source(): void
-  # Delay for performance
-  timer_start(50, () => s:add_common_rules())
-  timer_start(50, () => s:add_rules_for_eruby())
-  timer_start(50, () => s:add_rules_for_html())
-  timer_start(50, () => s:add_rules_for_js())
-  timer_start(50, () => s:add_rules_for_markdown())
-  timer_start(50, () => s:add_rules_for_vim())
+  s:queue_on_post_source = [
+    # Delay for performance
+    () => s:add_common_rules(),
+    () => s:add_rules_for_eruby(),
+    () => s:add_rules_for_html(),
+    () => s:add_rules_for_js(),
+    () => s:add_rules_for_markdown(),
+    () => s:add_rules_for_vim(),
 
-  # Delay to overwrite lexima.vim's default mapping
-  timer_start(100, () => kg8m#plugin#mappings#define_cr_for_insert_mode())
-  timer_start(100, () => kg8m#plugin#mappings#define_bs_for_insert_mode())
+    # Delay to overwrite lexima.vim's default mapping
+    () => kg8m#plugin#mappings#define_cr_for_insert_mode(),
+    () => kg8m#plugin#mappings#define_bs_for_insert_mode(),
+  ]
+
+  s:dequeue_on_post_source()
 enddef
