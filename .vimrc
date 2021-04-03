@@ -190,7 +190,7 @@ if kg8m#plugin#register("Shougo/unite.vim", { if: !kg8m#util#is_git_tmp_edit() }
   kg8m#plugin#unite#configure()
 endif
 
-if kg8m#plugin#register("kg8m/vim-simple-align")
+if kg8m#plugin#register("kg8m/vim-simple-align", { rev: "vim9" })
   kg8m#plugin#simple_align#configure()
 endif
 
