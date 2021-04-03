@@ -1,8 +1,5 @@
 vim9script
 
-var s:refresh_keywords: func
-var s:is_refresh_keywords_defined = false
-
 final s:cache = {}
 
 def kg8m#plugin#asyncomplete#buffer#configure(): void
@@ -17,11 +14,11 @@ enddef
 
 # https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
 def kg8m#plugin#asyncomplete#buffer#on_event(): void
-  if !s:is_refresh_keywords_defined
+  if !get(s:cache, "is_refresh_keywords_defined", false)
     s:setup_refresh_keywords()
   endif
 
-  s:refresh_keywords()
+  s:cache.refresh_keywords()
   s:stop_refresh_timer()
 enddef
 
@@ -52,12 +49,12 @@ def s:setup_refresh_keywords(): void
   endfor
 
   if empty(asyncomplete_buffer_sid)
-    s:refresh_keywords = function("s:cannot_refresh_keywords")
+    s:cache.refresh_keywords = function("s:cannot_refresh_keywords")
   else
-    s:refresh_keywords = function("<SNR>" .. asyncomplete_buffer_sid .. "_refresh_keywords")
+    s:cache.refresh_keywords = function("<SNR>" .. asyncomplete_buffer_sid .. "_refresh_keywords")
   endif
 
-  s:is_refresh_keywords_defined = true
+  s:cache.is_refresh_keywords_defined = true
 enddef
 
 def s:cannot_refresh_keywords(): void
@@ -71,7 +68,7 @@ def s:activate(): void
 enddef
 
 def s:on_post_source(): void
-  # Call asyncomplete-buffer.vim's function to refresh keywords (`s:refresh_keywords`) on some events not only
+  # Call asyncomplete-buffer.vim's function to refresh keywords (`s:cache.refresh_keywords`) on some events not only
   # `BufWinEnter` in order to include keywords added after `BufWinEnter` in completion candidates
   # https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
   const events = [

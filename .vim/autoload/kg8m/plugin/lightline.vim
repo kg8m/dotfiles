@@ -17,7 +17,7 @@ final s:elements = {
   ],
 }
 
-var s:lsp_status_buffer_enabled_function: func
+final s:cache = {}
 
 def kg8m#plugin#lightline#configure(): void
   # http://d.hatena.ne.jp/itchyny/20130828/1377653592
@@ -48,9 +48,9 @@ def kg8m#plugin#lightline#configure(): void
 
   if kg8m#plugin#register("tsuyoshicho/lightline-lsp")
     kg8m#plugin#lightline#lsp#configure()
-    s:lsp_status_buffer_enabled_function = function("kg8m#plugin#lightline#lsp#status")
+    s:cache.lsp_status_buffer_enabled_function = function("kg8m#plugin#lightline#lsp#status")
   else
-    s:lsp_status_buffer_enabled_function = function("s:lsp_status_buffer_enabled")
+    s:cache.lsp_status_buffer_enabled_function = function("s:lsp_status_buffer_enabled")
   endif
 enddef
 
@@ -97,7 +97,7 @@ enddef
 def kg8m#plugin#lightline#lsp_status(): string
   if kg8m#plugin#lsp#is_target_buffer()
     if kg8m#plugin#lsp#is_buffer_enabled()
-      return s:lsp_status_buffer_enabled_function()
+      return s:cache.lsp_status_buffer_enabled_function()
     else
       return "[LSP] Loading..."
     endif
