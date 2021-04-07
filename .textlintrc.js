@@ -75,6 +75,9 @@ const config = {
       "no-double-negative-ja": {
         severity: "warning",
       },
+      "no-doubled-conjunction": {
+        severity: "warning",
+      },
       "no-doubled-joshi": {
         severity: "warning",
         allow: ["か", "とか", "とも", "にも", "も"],
