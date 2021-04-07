@@ -4,10 +4,15 @@ vim9script
 # This folding expression is based on some symbols:
 #   - headers
 #   - fenced code blocks
+#   - `<details><summary>Summary</summary> ... </details>`
 
 const EMPTY_STRING = ""
 
 const CODEBLOCK_START_PATTERN = '\v^\zs`{3,}\ze'
+
+const DETAILS_START_PATTERN = '\v^\<details\>$'
+const DETAILS_END_PATTERN   = '\v^\</details\>$'
+const SUMMARY_END_PATTERN   = '\v\</summary\>'
 
 const HASH_HEADER_PATTERN = '\v^\zs#{1,}\ze'
 const EQUAL_H1_PATTERN    = '\v^\={3,}$'
@@ -26,6 +31,14 @@ def kg8m#fold#markdown#expr(lnum: number): string
   elseif s:is_codeblock_start(line)
     b:markdown_fold_codeblock_backticks = matchstr(line, CODEBLOCK_START_PATTERN)
     return "a1"
+  elseif s:is_summary_end(line)
+    return "a1"
+  elseif s:is_details_end(line)
+    unlet! b:markdown_fold_details
+    return "s1"
+  elseif s:is_details_start(line)
+    b:markdown_fold_details = true
+    return "="
   elseif s:is_hash_header(line)
     const hashes = matchstr(line, HASH_HEADER_PATTERN)
     return ">" .. string(len(hashes))
@@ -69,4 +82,16 @@ enddef
 # Call this only if `s:is_codeblock_end()` returns `false`
 def s:is_in_codeblock(line: string): bool
   return !!has_key(b:, "markdown_fold_codeblock_backticks")
+enddef
+
+def s:is_details_start(line: string): bool
+  return !!(line =~# DETAILS_START_PATTERN)
+enddef
+
+def s:is_details_end(line: string): bool
+  return !!has_key(b:, "markdown_fold_details") && !!(line =~# DETAILS_END_PATTERN)
+enddef
+
+def s:is_summary_end(line: string): bool
+  return !!has_key(b:, "markdown_fold_details") && !!(line =~# SUMMARY_END_PATTERN)
 enddef
