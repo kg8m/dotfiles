@@ -11,8 +11,8 @@ enddef
 def s:overwrite(): void
   highlight Comment       guifg=#AAAAAA
   highlight ColorColumn                  guibg=#1F1E19
-  highlight CursorColumn                 guibg=#1F1E19
-  highlight CursorLine                   guibg=#1F1E19
+  highlight CursorColumn                 guibg=#4b4a46
+  highlight CursorLine                   guibg=#4b4a46
   highlight DiffChange    guifg=#CCCCCC  guibg=#4C4745
   highlight DiffFile      guifg=#A6E22E                 gui=bold       cterm=bold
   highlight FoldColumn    guifg=#6A7678  guibg=NONE
