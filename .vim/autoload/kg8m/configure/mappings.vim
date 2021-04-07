@@ -53,6 +53,12 @@ def kg8m#configure#mappings#base(): void
 
   # Clear and redraw the screen even if Insert mode
   inoremap <C-l> <C-o><C-l>
+
+  # Select text with quotation marks without spaces around them
+  # :h v_iquote
+  onoremap a" 2i"
+  onoremap a' 2i'
+  onoremap a` 2i`
 enddef
 
 def kg8m#configure#mappings#search(): void
