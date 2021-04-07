@@ -10,9 +10,6 @@ function plugin:setup:anyframe {
     source ~/.zsh/env/fzf.zsh
     zstyle ":anyframe:selector:" use fzf
     zstyle ":anyframe:selector:fzf:" command filter
-  elif command -v peco > /dev/null; then
-    zstyle ":anyframe:selector:" use peco
-    zstyle ":anyframe:selector:peco:" command filter
   else
     echo "Any filter is not found." >&2
     return 1

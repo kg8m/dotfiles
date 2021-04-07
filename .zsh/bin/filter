@@ -1,8 +1,6 @@
 #!/usr/bin/env zsh
 if command -v fzf > /dev/null; then
   fzf "$@"
-elif command -v peco > /dev/null; then
-  peco --rcfile ~/.filter/config.json "$@"
 else
   echo "Any filter is not found." >&2
   cat
