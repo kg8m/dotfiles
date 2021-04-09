@@ -143,7 +143,7 @@ function attach_or_new_tmux {
 
   if ! tmux has-session -t "$session_name" > /dev/null 2>&1; then
     local response
-    read -r "response?Create new session in directory \`$PWD\` with session name \`$session_name\`? [y/n]:"
+    read -r "response?Create new session in directory \`$PWD\` with session name \`$session_name\`? [y/n]: "
 
     if [[ "$response" =~ ^y ]]; then
       if [ "$session_name" = "default" ]; then
