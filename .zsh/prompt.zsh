@@ -2,7 +2,7 @@ function setup:prompt {
   autoload -U colors && colors
 
   # Execute `man zshmisc` and see "SIMPLE PROMPT ESCAPES" and "CONDITIONAL SUBSTRINGS IN PROMPTS" sections
-  local header=$'%{\e[38;5;250;1m%}$(prompt:header:render)%{\e[0m%}'
+  local header=$'%{\e[38;5;240;1m%}$(prompt:header:render)%{\e[0m%}'
   local user="%F{green}%n@%m%f"
   local current_dir="%F{cyan}%~%f"
   local git='$(gitprompt)'

@@ -62,7 +62,7 @@ function retriable_execute_with_confirm {
 }
 
 function horizontal_line {
-  echo "\e[38;5;245m${(r:$COLUMNS::-:)}\e[0m"
+  echo "\e[38;5;239m${(r:$COLUMNS::-:)}\e[0m"
 }
 
 function highlight_yellow {
