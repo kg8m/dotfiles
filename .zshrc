@@ -119,7 +119,7 @@ source ~/.zsh/tmux.zsh
 
 source ~/.zsh/others.zsh
 
-try_to_source ~/.zshrc.local
+try_to_source ~/.config/zsh.local/.zshrc.local
 
 zinit ice lucid nocd wait"!0c" compinit atload"echo"
 zinit snippet /dev/null

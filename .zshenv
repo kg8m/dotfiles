@@ -46,4 +46,4 @@ if [[ ! -o interactive ]]; then
   source ~/.zsh/env/ruby.zsh
 fi
 
-try_to_source ~/.zshenv.local
+try_to_source ~/.config/zsh.local/.zshenv.local

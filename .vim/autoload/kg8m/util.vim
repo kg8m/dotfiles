@@ -3,7 +3,7 @@ vim9script
 final s:cache = {}
 
 def kg8m#util#source_local_vimrc(): void
-  const filepath = expand("~/.vimrc.local")
+  const filepath = expand("~/.config/vim.local/.vimrc.local")
 
   if filereadable(filepath)
     execute "source " .. filepath
