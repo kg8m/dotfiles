@@ -21,6 +21,10 @@ alias ssh="TERM=xterm-256color ssh"
 alias sudo='sudo env PATH=$PATH'
 alias watch="watch --color"
 
+function plugin:init:abbr {
+  # Instead of `$XDG_CONFIG_HOME/zsh/abbreviations`
+  export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CACHE_HOME:?}/zsh/abbreviations"
+}
 function plugin:setup:abbr {
   abbr --session --quiet --force --global g="git"
   abbr --session --quiet --force --global v="vim"
@@ -32,5 +36,5 @@ function plugin:setup:abbr {
 
   unset -f plugin:setup:abbr
 }
-zinit ice lucid wait"0a" atload"plugin:setup:abbr"
+zinit ice lucid wait"0a" atinit"plugin:init:abbr" atload"plugin:setup:abbr"
 zinit light olets/zsh-abbr
