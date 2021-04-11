@@ -2,7 +2,10 @@
 *.zwc
 .DS_Store
 .bundle/cache
+.bundle/config
 .envrc
 .vim-sessions
-Gemfile.local
-Gemfile.local.lock
+node_modules
+tags
+tags.lock
+tags.temp
