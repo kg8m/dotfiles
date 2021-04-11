@@ -270,6 +270,8 @@ function my_grep_with_filter() {
 }
 
 function tig {
+  mkdir -p "${XDG_DATA_HOME:?}/tig"
+
   case "$1" in
     bl*)
       shift
