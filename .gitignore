@@ -1,8 +1,8 @@
 *.un~
+*.zwc
 .DS_Store
 .bundle/cache
 .envrc
 .vim-sessions
-.zsh/*.zwc
 Gemfile.local
 Gemfile.local.lock

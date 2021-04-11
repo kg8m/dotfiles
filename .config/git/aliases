@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-source ~/.zsh/my_functions.zsh
+source ~/.config/zsh/my_functions.zsh
 
 function git:add:bulk {
   local files=("${(@f)$(git:status:filter:unstaged:with_untracked)}")

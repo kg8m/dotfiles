@@ -99,27 +99,27 @@ autoload -U _zinit
 # shellcheck disable=SC2034,SC2154
 ((${+_comps})) && _comps[zinit]=_zinit
 
-source ~/.zsh/binary-released-plugins.zsh
-source ~/.zsh/cd-bookmark.zsh
-source ~/.zsh/colors.zsh
-source ~/.zsh/completion.zsh
-source ~/.zsh/direnv.zsh
-source ~/.zsh/enhancd.zsh
-source ~/.zsh/filter.zsh
-source ~/.zsh/git.zsh
-source ~/.zsh/goenv.zsh
-source ~/.zsh/history-search.zsh
-source ~/.zsh/my_aliases.zsh
-source ~/.zsh/my_functions.zsh
-source ~/.zsh/nodenv.zsh
-source ~/.zsh/prompt.zsh
-source ~/.zsh/rbenv.zsh
-source ~/.zsh/rubocop.zsh
-source ~/.zsh/syntax-highlighting.zsh
-source ~/.zsh/timetrack.zsh
-source ~/.zsh/tmux.zsh
+source ~/.config/zsh/binary-released-plugins.zsh
+source ~/.config/zsh/cd-bookmark.zsh
+source ~/.config/zsh/colors.zsh
+source ~/.config/zsh/completion.zsh
+source ~/.config/zsh/direnv.zsh
+source ~/.config/zsh/enhancd.zsh
+source ~/.config/zsh/filter.zsh
+source ~/.config/zsh/git.zsh
+source ~/.config/zsh/goenv.zsh
+source ~/.config/zsh/history-search.zsh
+source ~/.config/zsh/my_aliases.zsh
+source ~/.config/zsh/my_functions.zsh
+source ~/.config/zsh/nodenv.zsh
+source ~/.config/zsh/prompt.zsh
+source ~/.config/zsh/rbenv.zsh
+source ~/.config/zsh/rubocop.zsh
+source ~/.config/zsh/syntax-highlighting.zsh
+source ~/.config/zsh/timetrack.zsh
+source ~/.config/zsh/tmux.zsh
 
-source ~/.zsh/others.zsh
+source ~/.config/zsh/others.zsh
 
 try_to_source ~/.config/zsh.local/.zshrc.local
 

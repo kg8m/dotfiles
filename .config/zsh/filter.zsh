@@ -5,9 +5,9 @@ function plugin:setup:anyframe {
   autoload -U anyframe-init
   anyframe-init
 
-  # `filter` is `.zsh/bin/filter`
+  # `filter` is `.config/zsh/bin/filter`
   if command -v fzf > /dev/null; then
-    source ~/.zsh/env/fzf.zsh
+    source ~/.config/zsh/env/fzf.zsh
     zstyle ":anyframe:selector:" use fzf
     zstyle ":anyframe:selector:fzf:" command filter
   else

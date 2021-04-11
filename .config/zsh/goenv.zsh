@@ -1,4 +1,4 @@
-# See also `.zsh/env/go.zsh`
+# See also `.config/zsh/env/go.zsh`
 function plugin:setup:goenv {
   export GOENV_ROOT="$PWD"
   path=("$GOENV_ROOT/shims" "$GOENV_ROOT/bin" "${path[@]}")

@@ -322,7 +322,7 @@ function update_zsh_plugins {
 
 function compile_zshrcs:run {
   local zshrc
-  for zshrc in ~/.config/zsh.local/.z* ~/.zshenv* ~/.zshrc* ~/.zsh/*.zsh; do
+  for zshrc in ~/.config/zsh/*.zsh ~/.config/zsh.local/.z* ~/.zshenv* ~/.zshrc*; do
     if [ -f "$zshrc" ] && ! [[ "$zshrc" =~ \.zwc$ ]]; then
       zcompile "$zshrc"
     fi
@@ -331,7 +331,7 @@ function compile_zshrcs:run {
 
 function compile_zshrcs:cleanup {
   local zwc
-  for zwc in ~/.config/zsh.local/.z*.zwc ~/.zshenv*.zwc ~/.zshrc*.zwc ~/.zsh/*.zsh.zwc; do
+  for zwc in ~/.config/zsh/*.zsh.zwc ~/.config/zsh.local/.z*.zwc ~/.zshenv*.zwc ~/.zshrc*.zwc; do
     if [ -f "$zwc" ]; then
       rm -f "$zwc"
     fi

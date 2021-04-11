@@ -18,9 +18,9 @@ typeset -U path
 
 # (N-/): Ignore unless exists
 path=(
-  "$HOME/.zsh/bin"
-  "$HOME/.local/bin"
   "$HOME/.config/git/bin"
+  "$HOME/.config/zsh/bin"
+  "$HOME/.local/bin"
   "$HOME/bin"
   "/usr/local/bin"(N-/)
   "/usr/bin"(N-/)
@@ -41,9 +41,9 @@ export VIM_PLUGINS=$HOME/.vim/plugins/repos
 export KG8M_ZSH_CACHE_DIR=$XDG_CACHE_HOME/zsh
 
 if [[ ! -o interactive ]]; then
-  source ~/.zsh/env/fzf.zsh
-  source ~/.zsh/env/go.zsh
-  source ~/.zsh/env/ruby.zsh
+  source ~/.config/zsh/env/fzf.zsh
+  source ~/.config/zsh/env/go.zsh
+  source ~/.config/zsh/env/ruby.zsh
 fi
 
 try_to_source ~/.config/zsh.local/.zshenv.local
