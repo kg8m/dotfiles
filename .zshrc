@@ -18,7 +18,7 @@ export GREP_COLOR='01;35'
 export PROMPT_EOL_MARK=""
 
 # History  {{{
-export HISTFILE=~/.zsh_histfile
+export HISTFILE="${XDG_DATA_HOME:?}/zsh/history"
 export HISTSIZE=100000
 export SAVEHIST=100000
 export HISTORY_IGNORE="rm -f*|git * -f*|*secret*|*SECRET*|*token*|*TOKEN*"
