@@ -18,6 +18,9 @@ function plugin:setup:others {
   zinit ice lucid wait"0c" as"null" atclone"plugin:setup:vim_themis"
   zinit light thinca/vim-themis
 
+  mkdir -p "${XDG_DATA_HOME:?}/mysql"
+  export MYSQL_HISTFILE="${XDG_DATA_HOME:?}/mysql/history"
+
   unset -f plugin:setup:others
 }
 
