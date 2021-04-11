@@ -88,14 +88,16 @@ autoload -U add-zsh-hook
 
 mkdir -p "${KG8M_ZSH_CACHE_DIR:?}"
 
-# zdharma/zinit  {{{
-[ -d ~/.zinit/bin ] || git clone https://github.com/zdharma/zinit.git ~/.zinit/bin
-source ~/.zinit/bin/zinit.zsh
+# Setup zinit
+typeset -gAH ZINIT
+ZINIT[HOME_DIR]="$XDG_DATA_HOME/zsh/zinit"
+
+[ -d "${ZINIT[HOME_DIR]}/bin" ] || git clone https://github.com/zdharma/zinit.git "${ZINIT[HOME_DIR]}/bin"
+source "${ZINIT[HOME_DIR]}/bin/zinit.zsh"
 autoload -U _zinit
 
 # shellcheck disable=SC2034,SC2154
 ((${+_comps})) && _comps[zinit]=_zinit
-# }}}
 
 source ~/.zsh/binary-released-plugins.zsh
 source ~/.zsh/cd-bookmark.zsh
