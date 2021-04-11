@@ -109,8 +109,8 @@ source ~/.config/zsh/filter.zsh
 source ~/.config/zsh/git.zsh
 source ~/.config/zsh/goenv.zsh
 source ~/.config/zsh/history-search.zsh
-source ~/.config/zsh/my_aliases.zsh
-source ~/.config/zsh/my_functions.zsh
+source ~/.config/zsh/my-aliases.zsh
+source ~/.config/zsh/my-functions.zsh
 source ~/.config/zsh/nodenv.zsh
 source ~/.config/zsh/prompt.zsh
 source ~/.config/zsh/rbenv.zsh
