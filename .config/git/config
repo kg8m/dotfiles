@@ -258,4 +258,4 @@
 	sh = "!zsh -c \"source ~/.config/git/aliases; $@\""
 
 [include]
-	path = ~/.config/git.local/.gitconfig.local
+	path = ~/.config/git.local/config
