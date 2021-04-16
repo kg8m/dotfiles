@@ -44,6 +44,9 @@ enddef
 
 def s:should_disable(): bool
   return (
+    # For vimdiff
+    &diff ||
+
     # For auto-git-diff
     (kg8m#util#is_git_rebase() && &filetype ==# "diff") ||
 
