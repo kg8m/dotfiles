@@ -260,7 +260,7 @@ enddef
 def s:dequeue_on_post_source(): void
   if !empty(s:queue_on_post_source)
     const Callback = remove(s:queue_on_post_source, 0)
-    timer_start(50, () => s:callback_proxy_on_post_source(Callback))
+    timer_start(50, (_) => s:callback_proxy_on_post_source(Callback))
   endif
 enddef
 

@@ -32,6 +32,6 @@ def s:on_source(): void
 
   augroup my_vimrc
     # Overwrite formatexpr
-    autocmd OptionSet formatexpr timer_start(200, () => s:set_formatexpr())
+    autocmd OptionSet formatexpr timer_start(200, (_) => s:set_formatexpr())
   augroup END
 enddef

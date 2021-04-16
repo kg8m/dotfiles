@@ -23,5 +23,5 @@ def s:definition_fallback(x: dict<any>): void
     kg8m#plugin#source("vim-fzf-tjump")
   endif
 
-  timer_start(0, () => fzf_tjump#jump())
+  timer_start(0, (_) => fzf_tjump#jump())
 enddef

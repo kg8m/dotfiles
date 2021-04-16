@@ -48,7 +48,7 @@ def kg8m#plugin#init_manager(): void
   augroup kg8m-plugin
     autocmd!
     autocmd VimEnter * kg8m#plugin#call_hooks()
-    autocmd VimEnter * timer_start(100, () => s:dequeue_on_start())
+    autocmd VimEnter * timer_start(100, (_) => s:dequeue_on_start())
   augroup END
 
   # Decrease max processes because too many processes sometimes get refused
@@ -183,7 +183,7 @@ enddef
 def s:dequeue_on_start(): void
   if !empty(s:on_start_queue)
     const plugin_name = remove(s:on_start_queue, 0)
-    timer_start(50, () => s:source_on_start(plugin_name))
+    timer_start(50, (_) => s:source_on_start(plugin_name))
   endif
 enddef
 

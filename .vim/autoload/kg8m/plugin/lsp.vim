@@ -61,7 +61,7 @@ def s:on_lsp_buffer_enabled(): void
   endif
 
   augroup my_vimrc
-    autocmd InsertLeave <buffer> timer_start(100, () => s:document_format({ sync: false }))
+    autocmd InsertLeave <buffer> timer_start(100, (_) => s:document_format({ sync: false }))
     autocmd BufWritePre <buffer> s:document_format({ sync: true })
   augroup END
 

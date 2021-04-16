@@ -27,7 +27,7 @@ def s:on_source(): void
 enddef
 
 def s:on_post_source(): void
-  timer_start(0, () => kg8m#plugin#completion#define_refresh_mappings())
+  timer_start(0, (_) => kg8m#plugin#completion#define_refresh_mappings())
 
   if get(b:, "asyncomplete_enable", true)
     asyncomplete#enable_for_buffer()

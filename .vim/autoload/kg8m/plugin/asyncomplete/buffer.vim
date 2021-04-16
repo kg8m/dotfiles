@@ -28,7 +28,7 @@ def s:on_event_async(): void
 enddef
 
 def s:start_refresh_timer(): void
-  s:cache.refresh_timer = timer_start(200, () => kg8m#plugin#asyncomplete#buffer#on_event())
+  s:cache.refresh_timer = timer_start(200, (_) => kg8m#plugin#asyncomplete#buffer#on_event())
 enddef
 
 def s:stop_refresh_timer(): void
@@ -83,7 +83,7 @@ def s:on_post_source(): void
     allowlist: ["*"],
     completor: function("asyncomplete#sources#buffer#completor"),
     events: events,
-    on_event: () => s:on_event_async(),
+    on_event: (..._) => s:on_event_async(),
     priority: 2,
   }))
 

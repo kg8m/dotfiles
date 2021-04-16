@@ -1,9 +1,9 @@
 vim9script
 
 def kg8m#plugin#update#run(options: dict<any> = {}): void
-  timer_start(   0, () => s:run(options) )
-  timer_start( 200, () => s:remove_disused())
-  timer_start(1000, () => kg8m#plugin#update#show_log())
+  timer_start(   0, (_) => s:run(options) )
+  timer_start( 200, (_) => s:remove_disused())
+  timer_start(1000, (_) => kg8m#plugin#update#show_log())
 enddef
 
 def kg8m#plugin#update#show_log(): void
@@ -92,7 +92,7 @@ def s:check_finished(options: dict<any> = {}): void
 
     options_cache.prev_progress = progress
     options_cache.retry_count   = retry_count
-    timer_start(300, () => s:check_finished(options_cache))
+    timer_start(300, (_) => s:check_finished(options_cache))
   endif
 enddef
 

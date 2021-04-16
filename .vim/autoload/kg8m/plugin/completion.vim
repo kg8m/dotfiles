@@ -54,7 +54,7 @@ def kg8m#plugin#completion#force_refresh(): void
 enddef
 
 def s:start_refresh_timer(): void
-  s:cache.refresh_timer = timer_start(200, () => kg8m#plugin#completion#force_refresh())
+  s:cache.refresh_timer = timer_start(200, (_) => kg8m#plugin#completion#force_refresh())
 enddef
 
 def s:stop_refresh_timer(): void

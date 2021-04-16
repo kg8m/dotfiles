@@ -15,7 +15,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # Syntax errors sometimes occur when editing zsh file
   s:register({
     name: "bash-language-server",
-    cmd: (server_info) => ["bash-language-server", "start"],
+    cmd: (_) => ["bash-language-server", "start"],
     allowlist: s:sh_filetypes,
   })
   # }}}
@@ -24,7 +24,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # css-languageserver doesn't work when editing .sass file
   s:register({
     name: "css-language-server",
-    cmd: (server_info) => ["vscode-css-language-server", "--stdio"],
+    cmd: (_) => ["vscode-css-language-server", "--stdio"],
     allowlist: ["css", "less", "scss"],
     config: () => ({ refresh_pattern: kg8m#plugin#completion#refresh_pattern("css") }),
     workspace_config: {
@@ -40,7 +40,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # cf. .config/efm-langserver/config.yaml
   s:register({
     name: "efm-langserver",
-    cmd: (server_info) => ["efm-langserver"],
+    cmd: (_) => ["efm-langserver"],
     allowlist: [
       "css", "eruby", "gitcommit", "go", "html", "json", "make", "markdown", "ruby", "vim",
     ] + s:js_filetypes + s:sh_filetypes + s:yaml_filetypes,
@@ -50,7 +50,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # go install github.com/nametake/golangci-lint-langserver  # {{{
   s:register({
     name: "golangci-lint-langserver",
-    cmd: (server_info) => ["golangci-lint-langserver"],
+    cmd: (_) => ["golangci-lint-langserver"],
     initialization_options: {
       command: ["golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json"],
     },
@@ -61,7 +61,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # go install golang.org/x/tools/gopls  # {{{
   s:register({
     name: "gopls",
-    cmd: (server_info) => ["gopls", "-mode", "stdio"],
+    cmd: (_) => ["gopls", "-mode", "stdio"],
     initialization_options: {
       analyses: {
         fillstruct: true,
@@ -81,7 +81,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # yarn add vscode-langservers-extracted  # {{{
   s:register({
     name: "html-language-server",
-    cmd: (server_info) => ["vscode-html-language-server", "--stdio"],
+    cmd: (_) => ["vscode-html-language-server", "--stdio"],
     initialization_options: { embeddedLanguages: { css: true, javascript: true } },
     allowlist: ["eruby", "html"],
     config: () => ({ refresh_pattern: kg8m#plugin#completion#refresh_pattern("html") }),
@@ -92,7 +92,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # yarn add vscode-langservers-extracted  # {{{
   s:register({
     name: "json-language-server",
-    cmd: (server_info) => ["vscode-json-language-server", "--stdio"],
+    cmd: (_) => ["vscode-json-language-server", "--stdio"],
     allowlist: ["json"],
     config: () => ({ refresh_pattern: kg8m#plugin#completion#refresh_pattern("json") }),
     workspace_config: () => ({
@@ -109,7 +109,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # initialization_options: https://github.com/castwide/vscode-solargraph/blob/master/package.json
   s:register({
     name: "solargraph",
-    cmd: (server_info) => ["solargraph", "stdio"],
+    cmd: (_) => ["solargraph", "stdio"],
     initialization_options: () => ({
       autoformat: false,
       checkGemVersion: true,
@@ -131,7 +131,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # go install github.com/lighttiger2505/sqls  # {{{
   s:register({
     name: "sqls",
-    cmd: (server_info) => ["sqls"],
+    cmd: (_) => ["sqls"],
     allowlist: ["sql"],
     workspace_config: () => ({
       sqls: {
@@ -144,7 +144,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # yarn add typescript-language-server typescript  # {{{
   s:register({
     name: "typescript-language-server",
-    cmd: (server_info) => ["typescript-language-server", "--stdio"],
+    cmd: (_) => ["typescript-language-server", "--stdio"],
     allowlist: s:js_filetypes,
   })
   # }}}
@@ -152,7 +152,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # yarn add vim-language-server  # {{{
   s:register({
     name: "vim-language-server",
-    cmd: (server_info) => ["vim-language-server", "--stdio"],
+    cmd: (_) => ["vim-language-server", "--stdio"],
     initialization_options: () => ({
       iskeyword: &iskeyword,
       vimruntime: $VIMRUNTIME,
@@ -168,7 +168,7 @@ def kg8m#plugin#lsp#servers#register(): void
         fromRuntimepath: true,
       },
     }),
-    root_uri: (server_info) => lsp#utils#path_to_uri(expand("~")),
+    root_uri: (_) => lsp#utils#path_to_uri(expand("~")),
     allowlist: ["vim"],
   })
   # }}}
@@ -177,7 +177,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # cf. https://github.com/sublimelsp/LSP-vue/blob/master/LSP-vue.sublime-settings
   s:register({
     name: "vue-language-server",
-    cmd: (server_info) => ["vls"],
+    cmd: (_) => ["vls"],
     initialization_options: {
       config: {
         vetur: {
@@ -220,7 +220,7 @@ def kg8m#plugin#lsp#servers#register(): void
   # Syntax errors sometimes occur when editing eruby.yaml file
   s:register({
     name: "yaml-language-server",
-    cmd: (server_info) => ["yaml-language-server", "--stdio"],
+    cmd: (_) => ["yaml-language-server", "--stdio"],
     allowlist: s:yaml_filetypes,
     workspace_config: {
       yaml: {
@@ -275,7 +275,7 @@ def s:register(config: dict<any>): void
 
   if executable(executable_name)
     if !has_key(config, "root_uri")
-      extend(config, { root_uri: (server_info) => lsp#utils#path_to_uri(getcwd()) })
+      extend(config, { root_uri: (_) => lsp#utils#path_to_uri(getcwd()) })
     endif
 
     add(s:configs, config)

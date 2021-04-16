@@ -4,7 +4,7 @@ final s:contexts: dict<list<dict<any>>> = {}
 
 def kg8m#plugin#neosnippet#contextual#setup(): void
   augroup my_vimrc
-    autocmd FileType * timer_start(50, () => kg8m#plugin#neosnippet#contextual#source())
+    autocmd FileType * timer_start(50, (_) => kg8m#plugin#neosnippet#contextual#source())
   augroup END
 enddef
 

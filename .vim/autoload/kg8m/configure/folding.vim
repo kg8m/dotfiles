@@ -17,7 +17,7 @@ def kg8m#configure#folding#local_options(): void
     autocmd FileType neosnippet setlocal foldmethod=marker
 
     # Delay to overwrite plugins' configurations
-    autocmd FileType * timer_start(100, () => s:manage_foldenable())
+    autocmd FileType * timer_start(100, (_) => s:manage_foldenable())
   augroup END
 enddef
 

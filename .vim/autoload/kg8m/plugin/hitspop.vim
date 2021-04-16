@@ -21,7 +21,7 @@ def s:update_search_status(): void
     remove(s:cache, "timer")
   endif
 
-  s:cache.timer = timer_start(100, () => s:force_update_search_status())
+  s:cache.timer = timer_start(100, (_) => s:force_update_search_status())
 enddef
 
 def s:force_update_search_status(): void
