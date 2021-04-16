@@ -23,7 +23,7 @@ def kg8m#configure#colors#performance(): void
   augroup my_vimrc
     # Prevent syntax highlighting from being too slow
     # cf. `:h :syn-sync-maxlines` / `:h :syn-sync-minlines`
-    autocmd Syntax * syntax sync minlines=100 maxlines=1000
+    autocmd Syntax * syntax sync minlines=1000 maxlines=2000
   augroup END
 
   set maxmempattern=5000
