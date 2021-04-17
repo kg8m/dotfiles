@@ -2,6 +2,9 @@ function plugin:setup:tmux_plugins {
   function plugin:setup:tmux_plugin {
     local plugin_name="$(basename "$1")"
 
+    remove_symlink ~/.config/tmux
+    remove_symlink ~/.config/tmux/plugins/"$plugin_name"
+
     [ -d ~/.config/tmux ]                        || ln -s ~/dotfiles/.tmux ~/.config/tmux
     [ -d ~/.config/tmux/plugins/"$plugin_name" ] || ln -s "$PWD" ~/.config/tmux/plugins/"$plugin_name"
 

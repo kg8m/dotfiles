@@ -99,6 +99,9 @@ autoload -U _zinit
 # shellcheck disable=SC2034,SC2154
 ((${+_comps})) && _comps[zinit]=_zinit
 
+source ~/.config/zsh/my-aliases.zsh
+source ~/.config/zsh/my-functions.zsh
+
 source ~/.config/zsh/binary-released-plugins.zsh
 source ~/.config/zsh/cd-bookmark.zsh
 source ~/.config/zsh/colors.zsh
@@ -109,8 +112,6 @@ source ~/.config/zsh/filter.zsh
 source ~/.config/zsh/git.zsh
 source ~/.config/zsh/goenv.zsh
 source ~/.config/zsh/history-search.zsh
-source ~/.config/zsh/my-aliases.zsh
-source ~/.config/zsh/my-functions.zsh
 source ~/.config/zsh/nodenv.zsh
 source ~/.config/zsh/prompt.zsh
 source ~/.config/zsh/rbenv.zsh

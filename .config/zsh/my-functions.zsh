@@ -120,6 +120,16 @@ function trash {
   done
 }
 
+function remove_symlink {
+  local filepath="${1:?}"
+
+  if [ -L "$filepath" ]; then
+    rm "$filepath"
+  else
+    echo "$filepath is not a symbolic link." >&2
+  fi
+}
+
 function tmux_setup_default {
   tmux new-session -d -s default
   tmux new-window -t default:2
