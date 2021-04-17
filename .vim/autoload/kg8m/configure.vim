@@ -1,5 +1,7 @@
 vim9script
 
+final s:cache = {}
+
 def kg8m#configure#backup(): void
   set nobackup
 
@@ -159,8 +161,16 @@ enddef
 
 # Called from configurations for some plugins
 def kg8m#configure#conceal(): void
+  if get(s:cache, "is_conceal_configured", false)
+    return
+  endif
+
   set concealcursor=nvic
   set conceallevel=2
+
+  g:vim_json_conceal = false
+
+  s:cache.is_conceal_configured = true
 enddef
 
 # https://github.com/tpope/vim-markdown
