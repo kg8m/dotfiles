@@ -104,12 +104,12 @@ function git:branch:create:with_set_upstream {
 
   # shellcheck disable=SC2034
   local commands=(
-    "git switch --create ${branch_name} ${original_branch}"
-    "git commit --allow-empty --message=\"${commit_message}\""
-    "git push --set-upstream origin ${branch_name}"
+    "execute_with_echo 'git switch --create ${branch_name} ${original_branch}'"
+    "execute_with_echo 'git commit --allow-empty --message=\"${commit_message}\"'"
+    "execute_with_echo 'git push --set-upstream origin ${branch_name}'"
   )
 
-  execute_with_confirm "${(j: && :)commands}; git branches"
+  execute_with_confirm "${(j: && :)commands}; execute_with_echo 'git branches'"
 }
 
 function git:branch:delete:bulk:local {
