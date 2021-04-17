@@ -116,7 +116,7 @@ function trash {
     fi
 
     touch "$source"
-    execute_with_echo "mv -i '$source' '$trash_path/$new_filename'"
+    execute_with_echo "mv '$source' '$trash_path/$new_filename'"
   done
 }
 
