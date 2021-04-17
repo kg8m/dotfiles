@@ -15,7 +15,8 @@ export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --no-init --quit-if-one-screen"
 # http://dsas.blog.klab.org/archives/50808759.html
 export GREP_COLOR='01;35'
 
-export PROMPT_EOL_MARK=""
+# `PROMPT_EOL_MARK=""` hides "%" at the end of a partial line. Show the "%" because partial lines should be detected.
+# export PROMPT_EOL_MARK=""
 
 # History  {{{
 export HISTFILE="${XDG_DATA_HOME:?}/zsh/history"
