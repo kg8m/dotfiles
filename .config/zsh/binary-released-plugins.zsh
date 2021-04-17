@@ -67,10 +67,37 @@ function plugin:setup:binary_releaseds {
 
     chmod +x "$binary"
 
+    local command="$(basename "$binary")"
+
     mkdir -p "$HOME/bin"
-    rm -f "$HOME/bin/$(basename "$binary")"
-    execute_with_echo "ln -s '$PWD/${binary}' '$HOME/bin/$(basename "$binary")'"
-    execute_with_echo "which $(basename "$binary")"
+    rm -f "$HOME/bin/$command"
+    execute_with_echo "ln -s '$PWD/$binary' '$HOME/bin/$command'"
+    execute_with_echo "which $command"
+
+    case "$plugin" in
+      bat | cli | delta | direnv | fzf | hyperfine | mmv | ripgrep | shellcheck)
+        execute_with_echo "$command --version"
+        ;;
+      make2help)
+        execute_with_echo "$command -h"
+        ;;
+      efm-langserver | nextword)
+        execute_with_echo "$command -v"
+        ;;
+      shfmt | sqls)
+        execute_with_echo "$command -version"
+        ;;
+      ghch | golangci-lint)
+        execute_with_echo "$command version"
+        ;;
+      golangci-lint-langserver)
+        # Do nothing because there are no ways to check version
+        ;;
+      *)
+        echo "Unknown plugin to detect binary: ${plugin}" >&2
+        return 1
+        ;;
+    esac
 
     case "$plugin" in
       bat)
