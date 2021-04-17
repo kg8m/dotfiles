@@ -312,7 +312,13 @@ function git:status:filter:untracked {
 }
 
 function git:status:utility:filter {
-  filter --prompt="Select files: " --preview-window="right:50%:wrap:nohidden" --preview="git diff-or-cat '{2..}'" | git:proxy:sed -e 's/^..\s//'
+  local filter_options=(
+    --prompt "Select files: "
+    --preview-window "right:50%:wrap:nohidden"
+    --preview "git diff-or-cat '{2..}'"
+  )
+
+  filter "${filter_options[@]}" | git:proxy:sed -e 's/^..\s//'
 }
 
 function git:submodule:update {
