@@ -1,8 +1,8 @@
 vim9script
 
 const s:for_js = [
-  { start: '\<html`$', end: '^\s*`', filetype: 'html' },
-  { start: '\<css`$', end: '^\s*`', filetype: 'css' },
+  { start: '\<html`$', end: '\v^\s*%(//|/?\*)?\s*`', filetype: "html" },
+  { start: '\<css`$',  end: '\v^\s*%(//|/?\*)?\s*`', filetype: "css" },
 ]
 
 def kg8m#plugin#context_filetype#configure(): void
