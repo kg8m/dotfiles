@@ -14,6 +14,7 @@ function plugin:setup:binary_releaseds {
   if ! command -v brew > /dev/null; then
     repositories+=(
       sharkdp/bat
+      cli/cli
       dandavison/delta
       direnv/direnv
       junegunn/fzf
@@ -33,6 +34,9 @@ function plugin:setup:binary_releaseds {
       bat | delta | direnv | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt)
         mv ./"${plugin}"* ./"$plugin"
         ;;
+      cli)
+        mv ./gh* ./"$plugin"
+        ;;
       fzf | golangci-lint-langserver | nextword | sqls)
         # Do nothing
         ;;
@@ -48,6 +52,9 @@ function plugin:setup:binary_releaseds {
         ;;
       direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls)
         local binary="${plugin}"
+        ;;
+      cli)
+        local binary="${plugin}/bin/gh"
         ;;
       ripgrep)
         local binary="${plugin}/rg"
@@ -124,7 +131,7 @@ function plugin:setup:binary_releaseds {
         # Choose musl for legacy environments
         options+=(bpick"*musl*")
         ;;
-      golangci-lint)
+      cli | golangci-lint)
         options+=(bpick"*.tar.gz")
         ;;
     esac
