@@ -6,17 +6,17 @@ function plugin:setup:rbenv {
     fi
     source "$KG8M_ZSH_CACHE_DIR/rbenv_init"
 
+    mkdir -p ~/.rbenv/plugins
+
     function plugin:setup:rbenv_default_gems {
       remove_symlink ~/dotfiles/.rbenv/default-gems
       remove_symlink ~/.rbenv/plugins/rbenv-default-gems
 
       if ! [ -f ~/.rbenv/default-gems ]; then
-        mkdir -p ~/.rbenv
         ln -s ~/dotfiles/.rbenv/default-gems ~/.rbenv/default-gems
       fi
 
       if ! [ -d ~/.rbenv/plugins/rbenv-default-gems ]; then
-        mkdir -p ~/.rbenv/plugins
         ln -s "$PWD" ~/.rbenv/plugins/rbenv-default-gems
       fi
 
@@ -27,7 +27,6 @@ function plugin:setup:rbenv {
       remove_symlink ~/.rbenv/plugins/rbenv-each
 
       if ! [ -d ~/.rbenv/plugins/rbenv-each ]; then
-        mkdir -p ~/.rbenv/plugins
         ln -s "$PWD" ~/.rbenv/plugins/rbenv-each
       fi
 
@@ -38,7 +37,6 @@ function plugin:setup:rbenv {
       remove_symlink ~/.rbenv/plugins/ruby-build
 
       if ! [ -d ~/.rbenv/plugins/ruby-build ]; then
-        mkdir -p ~/.rbenv/plugins
         ln -s "$PWD" ~/.rbenv/plugins/ruby-build
       fi
 
