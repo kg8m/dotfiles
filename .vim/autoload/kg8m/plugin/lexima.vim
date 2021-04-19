@@ -196,12 +196,14 @@ def s:add_rules_for_markdown(): void
 
   # `<Space>` when
   #
-  #   [|]
+  #   - [|]
+  #   * [|]
   #
   # then
   #
-  #   [ ] |
-  lexima#add_rule({ char: "<Space>", at: '\[\%#]', input: "<Space><Right><Space>", filetype: filetypes })
+  #   - [ ] |
+  #   * [ ] |
+  lexima#add_rule({ char: "<Space>", at: '^\s*[-*]\+\s\+\[\%#\]', input: "<Space><Right><Space>", filetype: filetypes })
 
   # `<CR>` when
   #
