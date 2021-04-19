@@ -1,10 +1,4 @@
-# http://news.mynavi.jp/column/zsh/024/
-export LANG=ja_JP.UTF-8
-case ${UID} in
-  0)
-    LANG=C
-    ;;
-esac
+export LANG=en_US.UTF-8
 
 export VISUAL=vim
 export EDITOR=vim
