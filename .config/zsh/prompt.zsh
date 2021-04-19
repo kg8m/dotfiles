@@ -37,14 +37,14 @@ function setup:prompt {
   }
 
   # Refresh prompt at any widget triggered/executed
-  function setup:prompt:reset_hook {
-    export PROMPT_RESETTER_WORKER_NAME="PROMPT_RESETTER_$$"
+  function setup:prompt:refresh {
+    export PROMPT_REFRESHER_WORKER_NAME="PROMPT_REFRESHER_$$"
 
-    function prompt:reset:queue {
+    function prompt:refresh:trigger {
       case "${LASTWIDGET:-}" in
         fzf-completion | autosuggest-suggest)
           case "${_lastcomp[insert]:-}" in
-            # Don't reset prompt when a completion candidate is selected because resetting prompt hides candidates
+            # Don't refresh prompt when a completion candidate is selected because refreshing prompt hides candidates
             automenu | automenu-unambiguous)
               return
               ;;
@@ -52,33 +52,33 @@ function setup:prompt {
           ;;
         _abbr_widget_expand_and_accept | accept-line)
           prompt:header:build
-          prompt:reset
+          prompt:refresh:finish
           return
           ;;
       esac
 
       # Restart the worker everytime because it causes high load average and it is sometimes dead in background
-      async_stop_worker       "$PROMPT_RESETTER_WORKER_NAME"
-      async_start_worker      "$PROMPT_RESETTER_WORKER_NAME"
-      async_job               "$PROMPT_RESETTER_WORKER_NAME" "prompt:header:lazy_build $COLUMNS"
-      async_register_callback "$PROMPT_RESETTER_WORKER_NAME" "prompt:reset"
+      async_stop_worker       "$PROMPT_REFRESHER_WORKER_NAME"
+      async_start_worker      "$PROMPT_REFRESHER_WORKER_NAME"
+      async_job               "$PROMPT_REFRESHER_WORKER_NAME" "prompt:header:lazy_build $COLUMNS"
+      async_register_callback "$PROMPT_REFRESHER_WORKER_NAME" "prompt:refresh:finish"
     }
 
-    function prompt:reset {
+    function prompt:refresh:finish {
       zle .reset-prompt
-      async_stop_worker "$PROMPT_RESETTER_WORKER_NAME"
+      async_stop_worker "$PROMPT_REFRESHER_WORKER_NAME"
     }
 
     # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Manipulating-Hook-Functions
     autoload -U add-zle-hook-widget
-    add-zle-hook-widget zle-line-pre-redraw prompt:reset:queue
-    add-zle-hook-widget zle-line-init       prompt:reset:queue
+    add-zle-hook-widget zle-line-pre-redraw prompt:refresh:trigger
+    add-zle-hook-widget zle-line-init       prompt:refresh:trigger
 
-    prompt:reset:queue
+    prompt:refresh:trigger
 
-    unset -f setup:prompt:reset_hook
+    unset -f setup:prompt:refresh
   }
-  zinit ice lucid wait"0c" atload"setup:prompt:reset_hook"
+  zinit ice lucid wait"0c" atload"setup:prompt:refresh"
   zinit light mafredri/zsh-async
 
   unset -f setup:prompt
