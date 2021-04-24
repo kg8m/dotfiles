@@ -20,6 +20,7 @@ def kg8m#plugin#update#show_log(): void
     .. '\ !^First,\\ rewinding\\ head\\ to\\ replay\\ your\\ work\\ on\\ top\\ of\\ it'
     .. '\ !^Fast-forwarded\\ *\\ to'
     .. '\ !^(.*/.*)\\ From\\ '
+    .. '\ !^From\\ https://'
     .. '\ !Successfully\\ rebased\\ and\\ updated\\ refs/heads/'
     .. '\ !*\\ [new\\ tag]'
     .. '\ !already\\ exists,\\ disabling\\ multiplexing'
