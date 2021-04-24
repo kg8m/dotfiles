@@ -367,11 +367,10 @@ function git:utility:diff_or_cat {
     git:utility:cat "$filepath"
   # Partially staged files
   elif [[ "$git_status" =~ ^[A-Z]{2} ]]; then
-    echo "Staged"
-    echo "${(r:$COLUMNS / 3::-:)}"
+    git:utility:header "Staged"
     git:utility:diff --staged -- "$filepath"
-    echo -e "\n\nNot Staged"
-    echo "${(r:$COLUMNS / 3::-:)}"
+    echo
+    git:utility:header "Not Staged"
     git:utility:diff -- "$filepath"
   # Staged files
   elif [[ "$git_status" =~ ^[A-Z] ]]; then
@@ -380,6 +379,16 @@ function git:utility:diff_or_cat {
   else
     git:utility:diff -- "$filepath"
   fi
+}
+
+function git:utility:header {
+  local border="$(printf "%s" "${(r:$COLUMNS / 3::-:)}")"
+
+  printf "\e[1;37m"
+  printf "%s\n" "$border"
+  printf "%s\n" "$@"
+  printf "%s\n" "$border"
+  printf "\e[0;37m"
 }
 
 function git:utility:cat {
