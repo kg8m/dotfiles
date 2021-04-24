@@ -431,7 +431,7 @@ function git:proxy:cat:files {
   done
 
   if command -v bat > /dev/null; then
-    bat --wrap --color=always --style=full "${realpaths[@]}"
+    bat "${realpaths[@]}"
   else
     for filepath in "${realpaths[@]}"; do
       printf "\n** File: %s\n\n" "${filepath}"
