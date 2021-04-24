@@ -148,14 +148,14 @@ def s:on_source(): void
     return
   endif
 
-  g:lsp_diagnostics_enabled          = true
-  g:lsp_diagnostics_echo_cursor      = false
-  g:lsp_diagnostics_float_cursor     = true
+  g:lsp_diagnostics_enabled                        = true
+  g:lsp_diagnostics_echo_cursor                    = false
+  g:lsp_diagnostics_float_cursor                   = true
   g:lsp_diagnostics_highlights_insert_mode_enabled = false
-  g:lsp_signs_enabled                = true
-  g:lsp_highlight_references_enabled = true
-  g:lsp_fold_enabled                 = false
-  g:lsp_semantic_enabled             = true
+  g:lsp_signs_enabled                              = true
+  g:lsp_highlight_references_enabled               = true
+  g:lsp_fold_enabled                               = false
+  g:lsp_semantic_enabled                           = true
 
   g:lsp_async_completion = true
 
