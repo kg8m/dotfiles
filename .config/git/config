@@ -63,10 +63,6 @@
 	line-numbers-zero-style = "#999999 auto"
 	line-numbers-plus-style = "green auto"
 
-	# Don't use multibyte/ambiwidth characters
-	line-numbers-left-format = "{nm:>1} : "
-	line-numbers-right-format = "{np:>1} | "
-
 [diff]
 	algorithm = patience
 	context = 10

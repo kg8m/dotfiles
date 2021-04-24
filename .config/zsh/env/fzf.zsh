@@ -33,7 +33,6 @@ function plugin:setup:env:fzf {
     "--info=inline"
     "--multi"
     "--no-sort"
-    "--no-unicode"
     "--reverse"
     "--preview='echo {} | head -n3'"
     "--preview-window='down:3:wrap:hidden'"

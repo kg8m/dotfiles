@@ -23,7 +23,10 @@ kg8m#plugin#disable_defaults()
 g:mapleader = ","
 
 set fileformats=unix,dos,mac
-set ambiwidth=double
+
+# `ambiwidth=double` sometimes breaks terminal rendering because many tools use ambiwidth characters
+set ambiwidth=single
+
 scriptencoding utf-8
 # }}}
 
