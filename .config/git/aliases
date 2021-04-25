@@ -354,6 +354,31 @@ function git:alias:list {
     git:proxy:sed -e 's/alias\.\([^ ]*\) \(.*\)/\1\t => \2/'
 }
 
+function git:alias:which {
+  local command="$1"
+
+  if [ -z "$command" ]; then
+    echo "Specify a command name." >&2
+    return
+  fi
+
+  local result="$(git:alias:list | grep -E "^${command}\s+" | git:proxy:sed -e 's/\s\+/ /')"
+  echo "$result"
+
+  if [[ "$result" =~ \ sh\ [\"\']?git:[a-z_:]+ ]]; then
+    echo
+    # shellcheck disable=SC2230
+    which "$(echo "$result" | grep -E -o '\bgit:[a-z_:]+')"
+  else
+    local original="$(echo "$result" | grep -E -o '=> [-a-z]+' | sed -e 's/=> //')"
+
+    if git:alias:list | grep -q -E "^${original}\s+"; then
+      echo
+      git:alias:which "$original"
+    fi
+  fi
+}
+
 function git:utility:chmod {
   execute_with_echo "git update-index --add --chmod=$1"
 }

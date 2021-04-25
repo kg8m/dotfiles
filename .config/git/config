@@ -248,6 +248,7 @@
 	# utility
 	aliases = alias
 	alias   = sh git:alias:list
+	which   = "!git sh \"git:alias:which '$1'\""
 
 	info = remote show origin
 
