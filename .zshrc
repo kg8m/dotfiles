@@ -5,6 +5,7 @@ export EDITOR=vim
 
 export GIT_EDITOR=vim
 export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --no-init --quit-if-one-screen"
+export LESSHISTFILE="${XDG_DATA_HOME:?}/less/lesshst"
 
 # http://dsas.blog.klab.org/archives/50808759.html
 export GREP_COLOR='01;35'
