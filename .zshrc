@@ -7,6 +7,8 @@ export GIT_EDITOR=vim
 export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --no-init --quit-if-one-screen"
 export LESSHISTFILE="${XDG_DATA_HOME:?}/less/lesshst"
 
+mkdir -p "$(dirname "$LESSHISTFILE")"
+
 # http://dsas.blog.klab.org/archives/50808759.html
 export GREP_COLOR='01;35'
 
@@ -18,6 +20,8 @@ export HISTFILE="${XDG_DATA_HOME:?}/zsh/history"
 export HISTSIZE=100000
 export SAVEHIST=100000
 export HISTORY_IGNORE="rm -f*|git * -f*|*secret*|*SECRET*|*token*|*TOKEN*"
+
+mkdir -p "$(dirname "$HISTFILE")"
 
 # https://mollifier.hatenablog.com/entry/20090728/p1
 zshaddhistory() {
