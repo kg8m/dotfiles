@@ -377,19 +377,7 @@ function uninstall_go_library {
 function benchmark_zsh {
   execute_with_echo "compile_zshrcs:cleanup"
   execute_with_echo "compile_zshrcs:run"
-
-  if command -v hyperfine > /dev/null && [ -z "${DISABLE_HYPERFINE:-}" ]; then
-    execute_with_echo "hyperfine 'zsh -i -c exit' --warmup=10"
-  else
-    local i
-    for i in $( seq 1 5 ); do
-      for _ in $( seq 1 10 ); do
-        time zsh -i -c exit
-      done
-
-      [ "$i" -lt "5" ] && sleep 0.1
-    done
-  fi
+  execute_with_echo "hyperfine 'zsh -i -c exit' --warmup=10"
 }
 
 # https://stackoverflow.com/a/28044986
