@@ -377,7 +377,7 @@ function uninstall_go_library {
 function benchmark_zsh {
   execute_with_echo "compile_zshrcs:cleanup"
   execute_with_echo "compile_zshrcs:run"
-  execute_with_echo "hyperfine 'zsh -i -c exit' --warmup=10"
+  execute_with_echo "hyperfine 'zsh --no-rcs -i -c exit' 'zsh -i -c exit' --warmup=10"
 }
 
 # https://stackoverflow.com/a/28044986
