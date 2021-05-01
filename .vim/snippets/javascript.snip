@@ -17,12 +17,11 @@ options word
 
 snippet if_else
 alias   ife
-abbr    if (...) {\n ...\n }\n else {\n ...\n }
+abbr    if (...) {\n ...\n } else {\n ...\n }
 options head
 	if (${1:#:condition}) {
 		${0}
-	}
-	else {
+	} else {
 	}
 
 snippet else
@@ -34,14 +33,12 @@ options head
 
 snippet if_else_if
 alias   ifeif
-abbr    if (...) {\n ...\n }\n else if (...) {\n ...\n }\n else {\n ...\n }
+abbr    if (...) {\n ...\n } else if (...) {\n ...\n } else {\n ...\n }
 options head
 	if (${1:#:condition}) {
 		${0}
-	}
-	else if () {
-	}
-	else {
+	} else if () {
+	} else {
 	}
 # }}}
 
