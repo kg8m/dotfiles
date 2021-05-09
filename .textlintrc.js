@@ -51,30 +51,21 @@ const config = {
     "preset-ja-technical-writing": {
       "arabic-kanji-numbers": false,
 
-      // Disable because of false positive: some emojis even if `allowEmojiAtEnd` option enabled
-      "ja-no-mixed-period": false,
-
+      "ja-no-mixed-period": {
+        allowPeriodMarks: ["、", "👍"],
+        allowEmojiAtEnd: true,
+      },
       "ja-no-redundant-expression": {
         severity: "warning",
-        dictOptions: {
-          // dict1: "すること[助詞](不)可能" は冗長な表現です。 "すること[助詞](不)可能" を省き簡潔な表現にすると文章が明瞭になります。
-          dict1: { disabled: true },
-
-          // dict2: "すること[助詞]できる" は冗長な表現です。 "すること[助詞]" を省き簡潔な表現にすると文章が明瞭になります。
-          dict2: { disabled: true },
-
-          // dict5: "[サ変名詞]を行う" は冗長な表現です。 "[サ変名詞]する" など簡潔な表現にすると文章が明瞭になります。
-          dict5: { disabled: true },
-        },
       },
       "ja-no-weak-phrase": false,
 
-      // Disable because of false positive: listing items are sometimes treated as error
-      "max-ten": false,
-
-      "no-double-negative-ja": {
-        severity: "warning",
+      "ja-no-successive-word": {
+        allow: ["…", "─", "など"],
       },
+
+      "no-double-negative-ja": false,
+
       "no-doubled-conjunction": {
         severity: "warning",
       },
@@ -89,9 +80,12 @@ const config = {
         max: 100,
         exclusionPatterns: [
           "/\\bhttps?:\\/\\/[^\\s)>]+/",  // URL
-          "/\\b[a-z\\d]{40}\\b/",         // commit hash
+          "/\\b[a-z\\d]{7,40}\\b/",       // commit hash
           "/\\(.+?\\)/",                  // inside parentheses
+          "/\".+?\"/",                    // inside quotation marks
           "/（.+?）/",                    // かっこ内
+          "/「.+?」/",                    // かぎかっこ内
+          "/“.+?”/",                    // 引用符内
         ],
       },
     },
@@ -105,7 +99,6 @@ const config = {
       "4.2.6.ハイフン(-)": false,
       "4.2.7.コロン(：)": false,
       "4.3.1.丸かっこ（）": false,
-      "4.3.2.大かっこ［］": false,
     },
     "terminology": {
       defaultTerms: true,
