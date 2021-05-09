@@ -80,7 +80,7 @@ function git:update:with_log {
     echo "Up to date."
   else
     execute_with_echo "git --no-pager log --reverse HEAD.. ${remote_branch}"
-    execute_with_echo "git pull --stat --rebase"
+    execute_with_echo "git pull --stat"
   fi
 }
 
