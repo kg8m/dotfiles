@@ -11,16 +11,10 @@ def kg8m#plugin#jpformat#configure(): void
 enddef
 
 def s:set_formatexpr(): void
-  if has_key(b:, "jpformat_formatexpr_set")
-    return
-  endif
-
   if &l:formatexpr !=# s:formatexpr
     # Replace built-in `jq` operator
     &l:formatexpr = s:formatexpr
   endif
-
-  b:jpformat_formatexpr_set = true
 enddef
 
 def s:on_source(): void
@@ -31,6 +25,8 @@ def s:on_source(): void
   g:JpAutoFormat = false
 
   augroup my_vimrc
+    autocmd FileType * s:set_formatexpr()
+
     # Overwrite formatexpr
     autocmd OptionSet formatexpr timer_start(200, (_) => s:set_formatexpr())
   augroup END
