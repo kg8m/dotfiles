@@ -29,8 +29,14 @@ enddef
 
 def kg8m#plugin#completion#set_refresh_pattern(): void
   if !has_key(b:, "asyncomplete_refresh_pattern")
-    b:asyncomplete_refresh_pattern = kg8m#plugin#completion#refresh_pattern(&filetype)
+    const filetype = kg8m#plugin#lsp#is_target_buffer() && kg8m#plugin#lsp#is_buffer_enabled() ? &filetype : "_"
+    b:asyncomplete_refresh_pattern = kg8m#plugin#completion#refresh_pattern(filetype)
   endif
+enddef
+
+def kg8m#plugin#completion#reset_refresh_pattern(): void
+  unlet! b:asyncomplete_refresh_pattern
+  kg8m#plugin#completion#set_refresh_pattern()
 enddef
 
 def kg8m#plugin#completion#define_refresh_mappings(): void

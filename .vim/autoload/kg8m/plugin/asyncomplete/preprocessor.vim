@@ -2,9 +2,7 @@ vim9script
 
 # Sort items by their each priority and filter them that fuzzy match
 def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: dict<any>): void
-  const filetype      = kg8m#plugin#lsp#is_target_buffer() && kg8m#plugin#lsp#is_buffer_enabled() ? &filetype : "_"
-  const match_pattern = kg8m#plugin#completion#refresh_pattern(filetype)
-  const base_matcher  = matchstr(options.base, match_pattern)
+  const base_matcher = matchstr(options.base, b:asyncomplete_refresh_pattern)
 
   var items     = []
   var startcols = []

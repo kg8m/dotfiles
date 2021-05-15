@@ -22,11 +22,14 @@ def s:on_source(): void
   g:asyncomplete_preprocessor = [function("kg8m#plugin#asyncomplete#preprocessor#callback")]
 
   augroup my_vimrc
-    autocmd BufWinEnter,FileType * kg8m#plugin#completion#set_refresh_pattern()
+    autocmd BufWinEnter                 * kg8m#plugin#completion#set_refresh_pattern()
+    autocmd FileType                    * kg8m#plugin#completion#reset_refresh_pattern()
+    autocmd User after_lsp_buffer_enabled kg8m#plugin#completion#reset_refresh_pattern()
   augroup END
 enddef
 
 def s:on_post_source(): void
+  timer_start(0, (_) => kg8m#plugin#completion#set_refresh_pattern())
   timer_start(0, (_) => kg8m#plugin#completion#define_refresh_mappings())
 
   if get(b:, "asyncomplete_enable", true)
