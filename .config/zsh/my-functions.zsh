@@ -31,7 +31,7 @@ function execute_commands_with_echo {
 function execute_with_confirm {
   local response
 
-  printf "\n\e[0;36mExecute:\e[1;37m \`%s\`\e[0;37m\n\n" "$*"
+  printf "\n\e[0;36mExecute:\e[1;37m \`%s\`\e[0;37m\n\n" "$*" >&2
   read -r "response?Are you sure? [y/n]: "
 
   if [[ ${response} =~ ^y ]]; then
@@ -39,7 +39,7 @@ function execute_with_confirm {
     eval "$@"
   else
     export __execute_with_confirm_executed=""
-    echo "Canceled."
+    echo "Canceled." >&2
   fi
 }
 
@@ -48,11 +48,15 @@ function retriable_execute_with_confirm {
   local result=$?
 
   if [ "$__execute_with_confirm_executed" = "1" ]; then
-    local response
+    local message response
 
-    echo
-    [ "$result" = "0" ] && echo "👼 Succeeded." || echo "👿 Failed."
-    echo
+    if [ "$result" = "0" ]; then
+      message="👼 Succeeded."
+    else
+      message="👿 Failed."
+    fi
+
+    printf "\n%s\n\n" "$message" >&2
     read -r "response?Retry? [y/n]: "
 
     if [[ "$response" =~ ^y ]]; then
@@ -93,7 +97,7 @@ function batch_move {
   if [[ "$response" =~ ^y ]]; then
     zmv "$@"
   else
-    echo "Canceled."
+    echo "Canceled." >&2
   fi
 }
 alias bmv="batch_move"
@@ -166,7 +170,7 @@ function attach_or_new_tmux {
         fi
       fi
     else
-      echo "Session not created."
+      echo "Session not created." >&2
     fi
   fi
 
@@ -262,7 +266,7 @@ function my_grep_with_filter() {
   if [ -t 1 ]; then
     local response
 
-    echo
+    echo >&2
     read -r "response?Open found files? [y/n]: "
 
     if [[ "$response" =~ ^y ]]; then
@@ -355,7 +359,7 @@ function uninstall_go_library {
   local libpaths=("${(@f)$(find ~/go "${GOENV_ROOT:?}" -maxdepth 5 -path "*${library}*")}")
 
   if [ -z "${libpaths[*]}" ]; then
-    echo "No library files/directories found for ${library}."
+    echo "No library files/directories found for ${library}." >&2
     return 1
   fi
 
@@ -370,7 +374,7 @@ function uninstall_go_library {
       trash "$libpath"
     done
   else
-    echo "Canceled."
+    echo "Canceled." >&2
   fi
 }
 
