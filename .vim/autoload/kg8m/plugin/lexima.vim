@@ -191,6 +191,41 @@ def s:add_rules_for_js(): void
   lexima#add_rule({ char: "<CR>", at: '`\%#`', input_after: "<CR>", filetype: filetypes })
 enddef
 
+def s:add_rules_for_ts(): void
+  const filetypes = ["typescript"]
+
+  # `<` when
+  #
+  #   Foo|
+  #
+  # then
+  #
+  #   Foo<|>
+  lexima#add_rule({ char: "<", at: '\w\%#', input_after: ">", filetype: filetypes })
+
+  # `<` when
+  #
+  #   Foo|<
+  #
+  # then
+  #
+  #   Foo<|
+  #
+  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
+  lexima#add_rule({ char: "<", at: '\w\%#<', input: "<Right>", filetype: filetypes })
+
+  # `>` when
+  #
+  #   <foo|>
+  #
+  # then
+  #
+  #   <foo>|
+  #
+  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
+  lexima#add_rule({ char: ">", at: '\%#>', input: "<Right>", filetype: filetypes })
+enddef
+
 def s:add_rules_for_markdown(): void
   const filetypes = ["gitcommit", "markdown"]
 
@@ -283,6 +318,7 @@ def s:on_post_source(): void
     () => s:add_rules_for_eruby(),
     () => s:add_rules_for_html(),
     () => s:add_rules_for_js(),
+    () => s:add_rules_for_ts(),
     () => s:add_rules_for_markdown(),
     () => s:add_rules_for_vim(),
 
