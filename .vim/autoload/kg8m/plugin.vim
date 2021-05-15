@@ -47,7 +47,6 @@ def kg8m#plugin#init_manager(): void
 
   augroup kg8m-plugin
     autocmd!
-    autocmd VimEnter * kg8m#plugin#call_hooks()
     autocmd VimEnter * timer_start(100, (_) => s:dequeue_on_start())
   augroup END
 
@@ -55,11 +54,6 @@ def kg8m#plugin#init_manager(): void
   g:dein#install_max_processes = 4
 
   g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
-enddef
-
-def kg8m#plugin#call_hooks(): void
-  dein#call_hook("source")
-  dein#call_hook("post_source")
 enddef
 
 def kg8m#plugin#finish_setup(): void

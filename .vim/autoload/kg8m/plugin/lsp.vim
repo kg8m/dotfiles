@@ -1,7 +1,5 @@
 vim9script
 
-var s:is_initialized = false
-
 def kg8m#plugin#lsp#configure(): void
   kg8m#plugin#lsp#servers#register()
 
@@ -144,10 +142,6 @@ def s:document_format(options = {}): void
 enddef
 
 def s:on_source(): void
-  if s:is_initialized
-    return
-  endif
-
   g:lsp_diagnostics_enabled                        = true
   g:lsp_diagnostics_echo_cursor                    = false
   g:lsp_diagnostics_float_cursor                   = true
@@ -169,8 +163,6 @@ def s:on_source(): void
 
     autocmd FileType * s:reset_target_buffer()
   augroup END
-
-  s:is_initialized = true
 enddef
 
 def s:on_post_source(): void
