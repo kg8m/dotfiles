@@ -1,6 +1,6 @@
 vim9script
 
-# Get syntax name by `synIDattr(synID(line("."), col("."), 1), "name")`
+# Get syntax name by `synIDattr(synID(line("."), col("."), 1), "name")`.
 
 var s:queue_on_post_source: list<func>
 
@@ -42,7 +42,7 @@ def s:add_common_rules(): void
     #
     #   |
     #
-    # Use `input: "<BS><Del>"` instead of `delete: 1` because it sometimes doesn't work depending on input stack
+    # Use `input: "<BS><Del>"` instead of `delete: 1` because it sometimes doesn't work depending on input stack.
     lexima#add_rule({ char: "<BS>", at: join(pair, '\%#'), input: "<BS><Del>" })
   endfor
 
@@ -65,7 +65,7 @@ def s:add_common_rules(): void
   lexima#add_rule({ char: "'", except: "\\%#'", syntax: "String" })
 
   # Overwrite default rules and use `input: "<BS><Del>"` instead of `delete: 1` because it sometimes doesn't work
-  # depending on input stack
+  # depending on input stack.
   lexima#add_rule({ char: "<BS>", at: '"\%#"', input: "<BS><Del>" })
   lexima#add_rule({ char: "<BS>", at: "'\\%#'", input: "<BS><Del>" })
 enddef
@@ -289,7 +289,7 @@ def s:add_rules_for_vim(): void
   #
   #   ..."|
   #
-  # NOTE: Always write comments at the beginning of line (indentation is allowed)
+  # NOTE: Always write comments at the beginning of line (indentation is allowed).
   lexima#add_rule({ char: '"', at: '\S.*\%#\%([^"]\|$\)', except: '\%#"', input_after: '"', filetype: "vim" })
   lexima#add_rule({ char: '"', at: '\%#"', leave: 1, filetype: "vim" })
 enddef
@@ -313,7 +313,7 @@ enddef
 
 def s:on_post_source(): void
   s:queue_on_post_source = [
-    # Delay for performance
+    # Delay for performance.
     () => s:add_common_rules(),
     () => s:add_rules_for_eruby(),
     () => s:add_rules_for_html(),
@@ -322,7 +322,7 @@ def s:on_post_source(): void
     () => s:add_rules_for_markdown(),
     () => s:add_rules_for_vim(),
 
-    # Delay to overwrite lexima.vim's default mapping
+    # Delay to overwrite lexima.vim's default mapping.
     () => kg8m#plugin#mappings#define_cr_for_insert_mode(),
     () => kg8m#plugin#mappings#define_bs_for_insert_mode(),
   ]
