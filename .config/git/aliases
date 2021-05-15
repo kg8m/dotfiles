@@ -156,7 +156,7 @@ function git:branch:filter {
 function git:branch:filter:single {
   local options=("$@")
   local branches=("${(@f)$(
-    git:branch:filter --no-multi --prompt="select a branch: " "${options[@]}"
+    git:branch:filter --no-multi --prompt="Select a branch: " "${options[@]}"
   )}")
 
   if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
@@ -235,20 +235,20 @@ function git:clean:bulk {
 }
 
 function git:log:compare:branch {
-  local branch1=$(git:branch:list --remote | git:branch:filter:single --prompt="select first branch: ")
+  local branch1=$(git:branch:list --remote | git:branch:filter:single --prompt="Select first branch: ")
   [ -n "$branch1" ] || exit 1
 
-  local branch2=$(git:branch:list --remote | git:branch:filter:single --prompt="select another branch: ")
+  local branch2=$(git:branch:list --remote | git:branch:filter:single --prompt="Select another branch: ")
   [ -n "$branch2" ] || exit 1
 
   execute_with_confirm "git log $* origin/${branch1}...origin/${branch2}"
 }
 
 function git:diff:branch {
-  local branch1=$(git:branch:list --remote | git:branch:filter:single --prompt="select first branch: ")
+  local branch1=$(git:branch:list --remote | git:branch:filter:single --prompt="Select first branch: ")
   [ -n "$branch1" ] || exit 1
 
-  local branch2=$(git:branch:list --remote | git:branch:filter:single --prompt="select another branch: ")
+  local branch2=$(git:branch:list --remote | git:branch:filter:single --prompt="Select another branch: ")
   [ -n "$branch2" ] || exit 1
 
   execute_with_confirm "git diff-without-space-changes $* origin/${branch1}...origin/${branch2}"
