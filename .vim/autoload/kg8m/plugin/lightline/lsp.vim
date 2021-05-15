@@ -24,6 +24,10 @@ def kg8m#plugin#lightline#lsp#configure(): void
   kg8m#plugin#configure({
     lazy: false,
   })
+
+  augroup my_vimrc
+    autocmd User after_lsp_buffer_enabled lightline#update()
+  augroup END
 enddef
 
 def kg8m#plugin#lightline#lsp#status(): string

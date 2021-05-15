@@ -6,8 +6,7 @@ def kg8m#plugin#lsp#configure(): void
   kg8m#plugin#configure({
     lazy:  true,
     on_ft: kg8m#plugin#lsp#servers#filetypes(),
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    hook_source: () => s:on_source(),
   })
 
   kg8m#plugin#register("mattn/vim-lsp-settings", { if: false, merged: false })
@@ -34,7 +33,7 @@ def kg8m#plugin#lsp#is_buffer_enabled(): bool
   if has_key(b:, "lsp_buffer_enabled")
     return true
   else
-    return s:are_all_servers_running()
+    return kg8m#plugin#lsp#servers#are_all_running()
   endif
 enddef
 
@@ -43,16 +42,18 @@ def s:on_lsp_buffer_enabled(): void
     return
   endif
 
-  if !s:are_all_servers_running()
+  if !kg8m#plugin#lsp#servers#are_all_running()
     return
   endif
 
+  # cf. kg8m#plugin#lsp#is_buffer_enabled()
+  b:lsp_buffer_enabled = true
+
   setlocal omnifunc=lsp#complete
+
   nmap <buffer> gd <Plug>(lsp-next-diagnostic)
   nmap <buffer> ge <Plug>(lsp-next-error)
   nmap <buffer> <S-h> <Plug>(lsp-hover)
-
-  s:overwrite_capabilities()
 
   if s:is_definition_supported()
     nmap <buffer> g] <Plug>(lsp-definition)
@@ -63,8 +64,7 @@ def s:on_lsp_buffer_enabled(): void
     autocmd BufWritePre <buffer> s:document_format({ sync: true })
   augroup END
 
-  # cf. kg8m#plugin#lsp#is_buffer_enabled()
-  b:lsp_buffer_enabled = true
+  doautocmd <nomodeline> User after_lsp_buffer_enabled
 enddef
 
 def s:reset_target_buffer(): void
@@ -73,46 +73,8 @@ def s:reset_target_buffer(): void
   endif
 enddef
 
-def s:are_all_servers_running(): bool
-  for server_name in lsp#get_allowed_servers()
-    if lsp#get_server_status(server_name) !=# "running"
-      return false
-    endif
-  endfor
-
-  return true
-enddef
-
-# Disable some language servers' document formatting because vim-lsp randomly selects only 1 language server to do
-# formatting from language servers which have capability of document formatting. I want to do formatting by
-# efm-langserver but vim-lsp sometimes doesn't select it. efm-langserver is always selected if it is the only 1
-# language server which has capability of document formatting.
-def s:overwrite_capabilities(): void
-  if &filetype !~# '\v^(javascript|ruby|typescript)$'
-    return
-  endif
-
-  if !s:are_all_servers_running()
-    kg8m#util#logger#error("Cannot to overwrite language servers' capabilities because some of them are not running")
-    return
-  endif
-
-  for server_name in lsp#get_allowed_servers()->filter((_, server_name) => server_name !=# "efm-langserver")
-    var capabilities = lsp#get_server_capabilities(server_name)
-
-    if has_key(capabilities, "documentFormattingProvider")
-      capabilities.documentFormattingProvider = false
-    endif
-  endfor
-enddef
-
 def s:is_definition_supported(): bool
-  if !s:are_all_servers_running()
-    kg8m#util#logger#error("Cannot to judge whether definition is supported or not because some of them are not running")
-    return false
-  endif
-
-  for server_name in lsp#get_allowed_servers()
+  for server_name in kg8m#plugin#lsp#servers#names(&filetype)
     var capabilities = lsp#get_server_capabilities(server_name)
 
     if get(capabilities, "definitionProvider", false)
@@ -157,15 +119,10 @@ def s:on_source(): void
   g:lsp_log_file    = expand("~/tmp/vim-lsp.log")
 
   augroup my_vimrc
-    autocmd User lsp_setup          kg8m#plugin#lsp#servers#enable()
-    autocmd User lsp_setup          kg8m#plugin#lsp#stream#subscribe()
-    autocmd User lsp_buffer_enabled s:on_lsp_buffer_enabled()
+    autocmd User lsp_setup                kg8m#plugin#lsp#stream#subscribe()
+    autocmd User lsp_buffer_enabled       s:on_lsp_buffer_enabled()
+    autocmd User after_lsp_buffer_enabled silent
 
     autocmd FileType * s:reset_target_buffer()
   augroup END
-enddef
-
-def s:on_post_source(): void
-  # https://github.com/prabirshrestha/vim-lsp/blob/e2a052acce38bd0ae25e57fff734a14a9e2c9ef7/plugin/lsp.vim#L52
-  lsp#enable()
 enddef
