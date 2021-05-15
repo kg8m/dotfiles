@@ -81,7 +81,7 @@ def s:register_efm_langserver(): void
 
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
-      "css", "eruby", "gitcommit", "go", "html", "json", "make", "markdown", "ruby", "vim",
+      "css", "eruby", "gitcommit", "html", "make", "markdown", "ruby",
     ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES,
   })
 enddef
