@@ -63,6 +63,11 @@
 	line-numbers-zero-style = "#999999 auto"
 	line-numbers-plus-style = "green auto"
 
+	file-style = "yellow auto bold"
+	file-decoration-style = "yellow ul"
+	hunk-header-style = "syntax #333333"
+	hunk-header-decoration-style = "none"
+
 [diff]
 	algorithm = patience
 	context = 10

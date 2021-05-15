@@ -1,10 +1,6 @@
 #!/usr/bin/env zsh
 if command -v delta > /dev/null; then
   delta \
-    --file-style "yellow auto bold" \
-    --file-decoration-style "yellow ul" \
-    --hunk-header-style "syntax #333333" \
-    --hunk-header-decoration-style "none" \
     "$@" ||
     (diff-highlight "$@" | less --LINE-NUMBERS)
 else
