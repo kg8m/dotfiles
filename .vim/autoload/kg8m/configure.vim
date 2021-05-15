@@ -112,6 +112,11 @@ def kg8m#configure#mappings(): void
 enddef
 
 def kg8m#configure#others(): void
+  set fileformats=unix,dos,mac
+
+  # `ambiwidth=double` sometimes breaks terminal rendering because many tools use ambiwidth characters
+  set ambiwidth=single
+
   set belloff=all
   set hidden
   set list
