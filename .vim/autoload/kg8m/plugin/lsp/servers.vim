@@ -256,7 +256,9 @@ def s:activate_vim_language_server(): void
   s:activate("vim-language-server", {
     cmd: (_) => ["vim-language-server", "--stdio"],
     initialization_options: {
-      iskeyword: &iskeyword,
+      # vim-language-server uses only `:`.
+      iskeyword: ":",
+
       vimruntime: $VIMRUNTIME,
       runtimepath: kg8m#plugin#all_runtimepath(),
       diagnostic: { enable: true },
