@@ -64,9 +64,9 @@
 	line-numbers-plus-style = "green auto"
 
 	file-style = "yellow auto bold"
-	file-decoration-style = "yellow ul"
-	hunk-header-style = "syntax #333333"
-	hunk-header-decoration-style = "none"
+	file-decoration-style = "yellow ul ol"
+	hunk-header-style = "line-number syntax"
+	hunk-header-decoration-style = "#666666 box"
 
 [diff]
 	algorithm = patience
