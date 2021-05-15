@@ -49,7 +49,9 @@ def s:on_lsp_buffer_enabled(): void
   # cf. kg8m#plugin#lsp#is_buffer_enabled()
   b:lsp_buffer_enabled = true
 
-  setlocal omnifunc=lsp#complete
+  # Lazily set omnifunc to overwrite plugins' configurations.
+  s:set_omnifunc()
+  timer_start(200, (_) => s:set_omnifunc())
 
   nmap <buffer> gd <Plug>(lsp-next-diagnostic)
   nmap <buffer> ge <Plug>(lsp-next-error)
@@ -70,6 +72,12 @@ enddef
 def s:reset_target_buffer(): void
   if has_key(b:, "lsp_target_buffer")
     unlet b:lsp_target_buffer
+  endif
+enddef
+
+def s:set_omnifunc(): void
+  if &omnifunc !=# "lsp#complete" && kg8m#plugin#lsp#is_buffer_enabled()
+    setlocal omnifunc=lsp#complete
   endif
 enddef
 
