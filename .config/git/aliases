@@ -277,7 +277,9 @@ function git:diff:branch:from:nameonly {
 }
 
 function git:stash:all:with_message {
-  execute_with_confirm "git stash push --no-keep-index --include-untracked --message '$*'"
+  # Make all changes staged before `git stash` instead of using `--include-untracked` option. Untracked files stashed
+  # with `--include-untracked` aren't shown in diffs, i.e., `git diff ...stash@{0}` doesn't contain the untracked files.
+  execute_with_confirm "git add --all && git stash push --no-keep-index --message '$*'"
 }
 
 # SC2120: references arguments, but none are ever passed.
