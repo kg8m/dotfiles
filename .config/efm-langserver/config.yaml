@@ -62,7 +62,6 @@ tools:
     lint-formats:
       - "%f:%l:%c: %t%*[a-z]: %m"
 
-  # cf. commands.shfmt
   shfmt: &shfmt
     format-command: "shfmt -i 2 -ci -sr -kp -filename '${INPUT}'"
     format-stdin: true
@@ -137,5 +136,5 @@ languages:
 
   zsh:
     - <<: *shellcheck
-    # Disable because shfmt sometimes fails to parse or freezes. Use `shfmt` code action instead if needed.
+    # Disable because shfmt sometimes fails to parse or freezes.
     # - <<: *shfmt
