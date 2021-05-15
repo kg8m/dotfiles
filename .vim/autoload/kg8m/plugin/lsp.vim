@@ -100,10 +100,6 @@ def s:document_format(options = {}): void
 
   if get(options, "sync", true)
     silent LspDocumentFormatSync
-
-    if &filetype ==# "go"
-      LspCodeActionSync source.organizeImports
-    endif
   else
     if &modified && mode() ==# "n"
       silent LspDocumentFormat
