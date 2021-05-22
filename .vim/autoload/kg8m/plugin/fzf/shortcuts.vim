@@ -106,6 +106,9 @@ def s:define_raw_list(): void
     ["[SimpleAlign] \"  #=> \"",     "'<,'>SimpleAlign #=> -lpadding 2"],
     ["[SimpleAlign] \"  //=> \"",    "'<,'>SimpleAlign //=> -lpadding 2"],
 
+    ["[LSP] CodeAction",                  "LspCodeAction"],
+    ["[LSP] CodeAction: organizeImports", "LspCodeAction source.organizeImports"],
+
     ["[Autoformat] Format Source Codes", "Autoformat"],
 
     ["[Diff] Linediff", "'<,'>Linediff"],
