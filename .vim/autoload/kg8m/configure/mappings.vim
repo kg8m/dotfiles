@@ -49,7 +49,7 @@ def kg8m#configure#mappings#base(): void
 
   # v_o: Go to other end of highlighted text
   # Invert visual selection start and end => !
-  vnoremap ! o
+  xnoremap ! o
 
   # Clear and redraw the screen even if Insert mode
   inoremap <C-l> <C-o><C-l>
@@ -68,8 +68,8 @@ def kg8m#configure#mappings#search(): void
 enddef
 
 def kg8m#configure#mappings#utils(): void
-  vnoremap <Leader>y "yy:call kg8m#util#remote_copy(@")<CR>
-  vnoremap <Leader>w :call kg8m#util#remove_trailing_whitespaces()<CR>
+  xnoremap <Leader>y "yy:call kg8m#util#remote_copy(@")<CR>
+  xnoremap <Leader>w :call kg8m#util#remove_trailing_whitespaces()<CR>
 enddef
 
 # <Nul> == <C-Space>

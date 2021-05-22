@@ -5,7 +5,7 @@ def kg8m#plugin#sandwich#configure(): void
   g:operator_sandwich_no_default_key_mappings = true
   g:textobj_sandwich_no_default_key_mappings = true
 
-  vmap <Leader>sa <Plug>(operator-sandwich-add)
+  xmap <Leader>sa <Plug>(operator-sandwich-add)
   nmap <Leader>sd <Plug>(operator-sandwich-delete)<Plug>(textobj-sandwich-query-a)
   nmap <Leader>sr <Plug>(operator-sandwich-replace)<Plug>(textobj-sandwich-query-a)
 

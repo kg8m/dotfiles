@@ -32,8 +32,8 @@ def kg8m#configure#folding#mappings(): void
   #   z]: Move to end of current fold
   #   zj: Move to start of next fold
   #   zk: Move to end of previous fold
-  noremap z[ [z
-  noremap z] ]z
+  nnoremap z[ [z
+  nnoremap z] ]z
 enddef
 
 def s:manage_foldenable(): void
