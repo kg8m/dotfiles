@@ -9,9 +9,10 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
 
   if !empty(base_matcher)
     final context = {
-      matcher:  base_matcher,
+      matcher: base_matcher,
       priority: 0,
-      cache:    {},
+      following_text: strpart(getline("."), options.col - 1),
+      cache: {},
     }
 
     for [source_name, source_matches] in items(matches)
@@ -41,7 +42,30 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
 enddef
 
 def s:decorate_item(item: dict<any>, context: dict<any>): void
+  # :h complete-items
+  # item.word: the text that will be inserted, mandatory
+  # item.abbr: abbreviation of "word"; when not empty it is used in the menu instead of "word"
+  item.abbr = item.word
+  item.word = s:remove_overlap_with_following_text(item.word, context.following_text)
+
   item.priority = s:word_priority(item.word, context)
+enddef
+
+def s:remove_overlap_with_following_text(original_text: string, following_text: string): string
+  const max_index = len(original_text) - 1
+  var i = 0
+
+  while i <=# max_index
+    const tail = strpart(original_text, i)
+
+    if kg8m#util#string#starts_with(following_text, tail)
+      return strpart(original_text, 0, i)
+    endif
+
+    i += 1
+  endwhile
+
+  return original_text
 enddef
 
 def s:word_priority(word: string, context: dict<any>): number
