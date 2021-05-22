@@ -1,7 +1,5 @@
 vim9script
 
-var s:is_initialized = false
-
 def kg8m#plugin#asterisk#configure(): void
   map <expr> *  <SID>with_notify("<Plug>(asterisk-z*)")
   map <expr> #  <SID>with_notify("<Plug>(asterisk-z#)")
@@ -15,14 +13,6 @@ def kg8m#plugin#asterisk#configure(): void
 enddef
 
 def s:with_notify(mapping: string): string
-  if !s:is_initialized
-    augroup my_vimrc
-      autocmd User search_start silent
-    augroup END
-
-    s:is_initialized = true
-  endif
-
-  timer_start(100, (_) => execute("doautocmd <nomodeline> User search_start"))
+  timer_start(100, (_) => kg8m#events#notify_search_start())
   return mapping
 enddef
