@@ -114,8 +114,10 @@ enddef
 def kg8m#configure#others(): void
   set fileformats=unix,dos,mac
 
-  # `ambiwidth=double` sometimes breaks terminal rendering because many tools use ambiwidth characters
-  set ambiwidth=single
+  s:set_ambiwidth()
+  augroup my_vimrc
+    autocmd BufEnter,TerminalWinOpen * s:set_ambiwidth()
+  augroup END
 
   set belloff=all
   set hidden
@@ -176,6 +178,17 @@ def kg8m#configure#conceal(): void
   g:vim_json_conceal = false
 
   s:cache.is_conceal_configured = true
+enddef
+
+def s:set_ambiwidth(): void
+  if &buftype ==# "terminal"
+    # For tools which use ambiwidth borders, e.g., bat, delta, fzf, and so on.
+    set ambiwidth=single
+  else
+    # For basic text editing especially Japanese text. Make some ambiwidth characters more readable. Prevent an
+    # ambiwidth character from being overlapped by its next character.
+    set ambiwidth=double
+  endif
 enddef
 
 # https://github.com/tpope/vim-markdown
