@@ -1,6 +1,6 @@
 vim9script
 
-const s:formatexpr = "jpfmt#formatexpr()"
+const FORMATEXPR = "jpfmt#formatexpr()"
 
 def kg8m#plugin#jpformat#configure(): void
   kg8m#plugin#configure({
@@ -11,9 +11,9 @@ def kg8m#plugin#jpformat#configure(): void
 enddef
 
 def s:set_formatexpr(): void
-  if &l:formatexpr !=# s:formatexpr
+  if &l:formatexpr !=# FORMATEXPR
     # Replace built-in `jq` operator
-    &l:formatexpr = s:formatexpr
+    &l:formatexpr = FORMATEXPR
   endif
 enddef
 
@@ -25,9 +25,7 @@ def s:on_source(): void
   g:JpAutoFormat = false
 
   augroup my_vimrc
-    autocmd FileType * s:set_formatexpr()
-
-    # Overwrite formatexpr
-    autocmd OptionSet formatexpr timer_start(200, (_) => s:set_formatexpr())
+    # Overwrite default/plugins' `formatexpr` especially configured when multiple files are opened same time
+    autocmd BufEnter * timer_start(200, (_) => s:set_formatexpr())
   augroup END
 enddef
