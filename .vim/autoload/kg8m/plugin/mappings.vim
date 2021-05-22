@@ -7,6 +7,13 @@ def kg8m#plugin#mappings#define_for_insert_mode(): void
 
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+  # Insert selected completion candidate word via `<Up>`/`<Down>` keys like `<C-p>`/`<C-n>` keys.
+  # <Up>:   Select the previous match, as if CTRL-P was used, but don't insert it.
+  # <Down>: Select the next match, as if CTRL-N was used, but don't insert it.
+  # :h popupmenu-keys
+  inoremap <expr> <Up>   pumvisible() ? "\<C-p>" : "\<Up>"
+  inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
 enddef
 
 def s:cr_expr_for_insert_mode(): string
