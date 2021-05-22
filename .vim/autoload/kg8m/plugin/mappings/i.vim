@@ -1,9 +1,9 @@
 vim9script
 
-def kg8m#plugin#mappings#define_for_insert_mode(): void
-  imap <silent><expr> <CR> <SID>cr_expr_for_insert_mode()
+def kg8m#plugin#mappings#i#define(): void
+  imap <silent><expr> <CR> <SID>cr_expr()
 
-  inoremap <silent><expr> <BS> <SID>bs_expr_for_insert_mode()
+  inoremap <silent><expr> <BS> <SID>bs_expr()
 
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -16,7 +16,7 @@ def kg8m#plugin#mappings#define_for_insert_mode(): void
   inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
 enddef
 
-def s:cr_expr_for_insert_mode(): string
+def s:cr_expr(): string
   if neosnippet#expandable_or_jumpable()
     return "\<Plug>(neosnippet_expand_or_jump)"
   elseif vsnip#available(1)
@@ -31,6 +31,6 @@ def s:cr_expr_for_insert_mode(): string
   endif
 enddef
 
-def s:bs_expr_for_insert_mode(): string
+def s:bs_expr(): string
   return lexima#expand("<BS>", "i") .. kg8m#plugin#completion#refresh()
 enddef
