@@ -56,8 +56,8 @@ def s:input_pattern(): string
   var preset: string
 
   if mode() =~? 'v'
-    feedkeys('"gy', "x")
-    preset = @"
+    feedkeys('"zy', "x")
+    preset = @z
   else
     preset = ""
   endif

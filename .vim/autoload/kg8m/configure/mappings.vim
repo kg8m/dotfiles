@@ -68,7 +68,7 @@ def kg8m#configure#mappings#search(): void
 enddef
 
 def kg8m#configure#mappings#utils(): void
-  xnoremap <Leader>y "yy:call kg8m#util#remote_copy(@")<CR>
+  xnoremap <Leader>y "zy:call kg8m#util#remote_copy(@")<CR>
   xnoremap <Leader>w :call kg8m#util#remove_trailing_whitespaces()<CR>
 enddef
 
