@@ -24,7 +24,7 @@ def kg8m#plugin#fzf#grep#run(pattern: string, path: string = ""): void
   ]
 
   var preview_option        = kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh "
-  var preview_window_option = "right:50%:wrap:nohidden:"
+  var preview_window_option = "down:75%:wrap:nohidden:"
 
   if filereadable(path)
     preview_option        ..= escaped_path .. ":{}"

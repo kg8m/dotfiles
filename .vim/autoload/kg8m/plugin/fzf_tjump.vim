@@ -1,6 +1,7 @@
 vim9script
 
 def kg8m#plugin#fzf_tjump#configure()
+  g:fzf_tjump_preview_options     = "down:75%:wrap:nohidden:+{3}-/2"
   g:fzf_tjump_path_to_preview_bin = kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh"
 
   nnoremap <Leader><Leader>t :FzfTjump<Space>

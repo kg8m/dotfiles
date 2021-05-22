@@ -15,7 +15,7 @@ def kg8m#plugin#fzf#buffers#run(): void
       "--header-lines", empty(kg8m#util#file#current_path()) ? 0 : 1,
       "--prompt", "Buffers> ",
       "--preview", "git cat {}",
-      "--preview-window", "right:50%:wrap:nohidden",
+      "--preview-window", "down:75%:wrap:nohidden",
     ],
   }
 

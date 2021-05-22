@@ -35,7 +35,7 @@ function plugin:setup:env:fzf {
     "--no-sort"
     "--reverse"
     "--preview='echo {} | head -n3'"
-    "--preview-window='down:3:wrap:hidden'"
+    "--preview-window='down:5:wrap:hidden'"
     "--select-1"
   )
 

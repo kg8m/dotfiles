@@ -45,7 +45,7 @@ def kg8m#plugin#fzf#rails#run(type: string): void
     "options": [
       "--prompt", "Rails/" .. type .. "> ",
       "--preview", "git cat {}",
-      "--preview-window", "right:50%:wrap:nohidden",
+      "--preview-window", "down:75%:wrap:nohidden",
     ],
   }
 

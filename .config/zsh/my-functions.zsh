@@ -249,7 +249,7 @@ function my_grep_with_filter() {
   local query="${non_options[1]}"
   local results=("${(@f)$(
     my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2> /dev/null |
-      filter --header="Grep: $*" --delimiter=":" --preview-window="right:50%:wrap:nohidden:+{2}-/2" --preview="$FZF_VIM_PATH/bin/preview.sh {}"
+      filter --header="Grep: $*" --delimiter=":" --preview-window="down:75%:wrap:nohidden:+{2}-/2" --preview="$FZF_VIM_PATH/bin/preview.sh {}"
   )}")
 
   if [ -z "${results[*]}" ]; then

@@ -20,7 +20,7 @@ def kg8m#plugin#fzf#yank_history#run(): void
       "--prompt", "Yank> ",
       "--tabstop", "1",
       "--preview", kg8m#plugin#yankround#fzf#preview_command(),
-      "--preview-window", "down:5:wrap:nohidden",
+      "--preview-window", "down:10:wrap:nohidden",
     ],
   }
 

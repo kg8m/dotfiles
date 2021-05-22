@@ -11,7 +11,7 @@ def kg8m#plugin#fzf#git_files#run(): void
   fzf#vim#gitfiles("?", {
     options: [
       "--preview", "git diff-or-cat {2}",
-      "--preview-window", "right:50%:wrap:nohidden",
+      "--preview-window", "down:75%:wrap:nohidden",
     ],
   })
 enddef

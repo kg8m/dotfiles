@@ -50,7 +50,7 @@ def s:run(candidates: list<string>): void
       "--prompt", "Jumplist> ",
       "--delimiter", ":",
       "--preview", kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh {2..}",
-      "--preview-window", "right:50%:wrap:nohidden:+{3}-/2",
+      "--preview-window", "down:75%:wrap:nohidden:+{3}-/2",
     ],
   }
 

@@ -6,7 +6,7 @@ def kg8m#plugin#fzf#configure(): void
   g:fzf_layout         = { up: "~90%" }
   g:fzf_files_options  = [
     "--preview", "git diff-or-cat {1}",
-    "--preview-window", "right:50%:wrap:nohidden",
+    "--preview-window", "down:75%:wrap:nohidden",
   ]
 
   # See dwm.vim

@@ -6,11 +6,7 @@ def kg8m#plugin#yankround#fzf#list(): list<string>
 enddef
 
 def kg8m#plugin#yankround#fzf#preview_command(): string
-  const command = "echo {}"
-    .. " | sed -e 's/^ *[0-9]\\{1,\\}\t//' -e 's/\\\\/\\\\\\\\/g'"
-    .. " | head -n5"
-
-  return command
+  return "echo {} | sed -e 's/^ *[0-9]\\{1,\\}\t//' -e 's/\\\\/\\\\\\\\/g'"
 enddef
 
 # Overwrite current register `"`
