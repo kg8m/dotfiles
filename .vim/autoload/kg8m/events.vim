@@ -3,6 +3,7 @@ vim9script
 augroup my_vimrc
   autocmd User search_start              silent
   autocmd User clear_search_highlight    silent
+  autocmd User after_lsp_buffer_enabled  silent
 augroup END
 
 def kg8m#events#notify_search_start(): void
@@ -11,4 +12,8 @@ enddef
 
 def kg8m#events#notify_clear_search_highlight(): void
   doautocmd <nomodeline> User clear_search_highlight
+enddef
+
+def kg8m#events#notify_after_lsp_buffer_enabled(): void
+  doautocmd <nomodeline> User after_lsp_buffer_enabled
 enddef

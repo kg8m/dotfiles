@@ -66,7 +66,7 @@ def s:on_lsp_buffer_enabled(): void
     autocmd BufWritePre <buffer> s:document_format({ sync: true })
   augroup END
 
-  doautocmd <nomodeline> User after_lsp_buffer_enabled
+  kg8m#events#notify_after_lsp_buffer_enabled()
 enddef
 
 def s:reset_target_buffer(): void
@@ -123,9 +123,8 @@ def s:on_source(): void
   g:lsp_log_file    = expand("~/tmp/vim-lsp.log")
 
   augroup my_vimrc
-    autocmd User lsp_setup                kg8m#plugin#lsp#stream#subscribe()
-    autocmd User lsp_buffer_enabled       s:on_lsp_buffer_enabled()
-    autocmd User after_lsp_buffer_enabled silent
+    autocmd User lsp_setup          kg8m#plugin#lsp#stream#subscribe()
+    autocmd User lsp_buffer_enabled s:on_lsp_buffer_enabled()
 
     autocmd FileType * s:reset_target_buffer()
   augroup END
