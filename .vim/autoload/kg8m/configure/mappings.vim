@@ -1,6 +1,5 @@
 vim9script
 
-var s:is_clear_hlsearch_initialized = false
 
 def kg8m#configure#mappings#base(): void
   # Split window
@@ -81,16 +80,8 @@ def kg8m#configure#mappings#prevent_unconscious_operation(): void
 enddef
 
 def s:clear_hlsearch(): string
-  if !s:is_clear_hlsearch_initialized
-    augroup my_vimrc
-      autocmd User clear_search_highlight silent
-    augroup END
-
-    s:is_clear_hlsearch_initialized = true
-  endif
-
   const clear        = ":nohlsearch\<CR>"
-  const notify       = ":doautocmd <nomodeline> User clear_search_highlight\<CR>"
+  const notify       = ":call kg8m#events#notify_clear_search_highlight()\<CR>"
   const clear_status = ":echo ''\<CR>"
 
   return clear .. notify .. clear_status
