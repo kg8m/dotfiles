@@ -8,7 +8,7 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
   var startcols = []
 
   if !empty(base_matcher)
-    final sorter_context = {
+    final context = {
       matcher:  base_matcher,
       priority: 0,
       cache:    {},
@@ -18,11 +18,11 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
       var original_length = len(items)
 
       # Language server sources have no priority
-      sorter_context.priority = get(asyncomplete#get_source_info(source_name), "priority", 0) + 2
+      context.priority = get(asyncomplete#get_source_info(source_name), "priority", 0) + 2
 
       items += matchfuzzy(
-        source_matches.items, sorter_context.matcher,
-        { text_cb: (item) => s:matchfuzzy_text_cb(item, sorter_context) }
+        source_matches.items, context.matcher,
+        { text_cb: (item) => s:matchfuzzy_text_cb(item, context) }
       )
 
       if len(items) !=# original_length
@@ -39,8 +39,8 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
   asyncomplete#preprocess_complete(options, items)
 enddef
 
-def s:matchfuzzy_text_cb(item: dict<any>, sorter_context: dict<any>): string
-  item.priority = s:item_priority(item, sorter_context)
+def s:matchfuzzy_text_cb(item: dict<any>, context: dict<any>): string
+  item.priority = s:item_priority(item, context)
   return item.word
 enddef
 
