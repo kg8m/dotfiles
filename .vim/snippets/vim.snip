@@ -78,6 +78,13 @@ options head
 		${0}
 	endfor
 
+snippet while
+abbr    while ...\n ...\n endwhile
+options head
+	while ${1}
+		${0}
+	endwhile
+
 snippet try_catch
 abbr    try\n ...\ncatch /.../\n ...\n endtry
 options head
