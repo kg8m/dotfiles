@@ -322,9 +322,8 @@ def s:on_post_source(): void
     () => s:add_rules_for_markdown(),
     () => s:add_rules_for_vim(),
 
-    # Delay to overwrite lexima.vim's default mapping.
-    () => kg8m#plugin#mappings#define_cr_for_insert_mode(),
-    () => kg8m#plugin#mappings#define_bs_for_insert_mode(),
+    # Overwrite lexima.vim's default mapping.
+    () => kg8m#events#notify_insert_mode_plugin_loaded(),
   ]
 
   s:dequeue_on_post_source()

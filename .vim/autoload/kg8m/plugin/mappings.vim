@@ -1,14 +1,10 @@
 vim9script
 
-def kg8m#plugin#mappings#define_cr_for_insert_mode(): void
+def kg8m#plugin#mappings#define_for_insert_mode(): void
   imap <silent><expr> <CR> <SID>cr_expr_for_insert_mode()
-enddef
 
-def kg8m#plugin#mappings#define_bs_for_insert_mode(): void
   inoremap <silent><expr> <BS> <SID>bs_expr_for_insert_mode()
-enddef
 
-def kg8m#plugin#mappings#define_tab_for_insert_mode(): void
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 enddef

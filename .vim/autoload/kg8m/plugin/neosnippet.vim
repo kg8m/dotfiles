@@ -25,8 +25,6 @@ def kg8m#plugin#neosnippet#snippets_dirpath(): string
 enddef
 
 def s:on_source(): void
-  kg8m#plugin#completion#define_mappings()
-
   g:neosnippet#snippets_directory = [kg8m#plugin#neosnippet#snippets_dirpath()]
   g:neosnippet#disable_runtime_snippets = { _: true }
 
@@ -38,5 +36,6 @@ def s:on_source(): void
 enddef
 
 def s:on_post_source(): void
+  timer_start(0, (_) => kg8m#events#notify_insert_mode_plugin_loaded())
   timer_start(0, (_) => kg8m#plugin#neosnippet#contextual#source())
 enddef

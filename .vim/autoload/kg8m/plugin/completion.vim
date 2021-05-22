@@ -39,15 +39,6 @@ def kg8m#plugin#completion#reset_refresh_pattern(): void
   kg8m#plugin#completion#set_refresh_pattern()
 enddef
 
-def kg8m#plugin#completion#define_refresh_mappings(): void
-  kg8m#plugin#mappings#define_bs_for_insert_mode()
-enddef
-
-def kg8m#plugin#completion#define_mappings(): void
-  kg8m#plugin#mappings#define_cr_for_insert_mode()
-  kg8m#plugin#mappings#define_tab_for_insert_mode()
-enddef
-
 def kg8m#plugin#completion#refresh(): string
   s:stop_refresh_timer()
   s:start_refresh_timer()

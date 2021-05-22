@@ -29,8 +29,8 @@ def s:on_source(): void
 enddef
 
 def s:on_post_source(): void
+  timer_start(0, (_) => kg8m#events#notify_insert_mode_plugin_loaded())
   timer_start(0, (_) => kg8m#plugin#completion#set_refresh_pattern())
-  timer_start(0, (_) => kg8m#plugin#completion#define_refresh_mappings())
 
   if get(b:, "asyncomplete_enable", true)
     asyncomplete#enable_for_buffer()

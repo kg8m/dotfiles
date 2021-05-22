@@ -4,7 +4,7 @@ def kg8m#plugin#vsnip#configure(): void
   kg8m#plugin#configure({
     lazy: true,
     on_i: true,
-    hook_source: () => s:on_source(),
+    hook_post_source: () => s:on_post_source(),
   })
 
   if kg8m#plugin#register("hrsh7th/vim-vsnip-integ")
@@ -15,6 +15,6 @@ def kg8m#plugin#vsnip#configure(): void
   endif
 enddef
 
-def s:on_source(): void
-  kg8m#plugin#completion#define_mappings()
+def s:on_post_source(): void
+  timer_start(0, (_) => kg8m#events#notify_insert_mode_plugin_loaded())
 enddef
