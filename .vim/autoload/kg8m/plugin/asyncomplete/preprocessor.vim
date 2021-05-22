@@ -20,14 +20,15 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
       # Language server sources have no priority
       context.priority = get(asyncomplete#get_source_info(source_name), "priority", 0) + 2
 
-      items += matchfuzzy(
-        source_matches.items, context.matcher,
-        { text_cb: (item) => s:matchfuzzy_text_cb(item, context) }
-      )
+      items += matchfuzzy(source_matches.items, context.matcher, { key: "word" })
 
       if len(items) !=# original_length
         startcols += [source_matches.startcol]
       endif
+    endfor
+
+    for item in items
+      s:decorate_item(item, context)
     endfor
 
     sort(items, "s:sorter")
@@ -39,16 +40,13 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
   asyncomplete#preprocess_complete(options, items)
 enddef
 
-def s:matchfuzzy_text_cb(item: dict<any>, context: dict<any>): string
-  item.priority = s:item_priority(item, context)
-  return item.word
+def s:decorate_item(item: dict<any>, context: dict<any>): void
+  item.priority = s:word_priority(item.word, context)
 enddef
 
-def s:item_priority(item: dict<any>, context: dict<any>): number
-  const word = item.word
-
+def s:word_priority(word: string, context: dict<any>): number
   if !has_key(context.cache, word)
-    const target = matchstr(item.word, '\v\w+.*')
+    const target = matchstr(word, '\v\w+.*')
     const lower_target  = tolower(target)
     const lower_matcher = tolower(context.matcher)
 
@@ -68,6 +66,7 @@ def s:item_priority(item: dict<any>, context: dict<any>): number
   return context.cache[word] * context.priority
 enddef
 
+# The result of `matchfuzzy()` is used if each priority is same
 def s:sorter(lhs: dict<any>, rhs: dict<any>): number
   return lhs.priority - rhs.priority
 enddef
