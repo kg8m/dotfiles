@@ -51,15 +51,15 @@ def s:item_priority(item: dict<any>, context: dict<any>): number
     const target = matchstr(item.word, '\v\w+.*')
 
     if target =~# "^" .. context.matcher
-      extend(context.cache, { [word]: 2 })
+      context.cache[word] = 2
     elseif target =~? "^" .. context.matcher
-      extend(context.cache, { [word]: 3 })
+      context.cache[word] = 3
     elseif target =~# context.matcher
-      extend(context.cache, { [word]: 5 })
+      context.cache[word] = 5
     elseif target =~? context.matcher
-      extend(context.cache, { [word]: 8 })
+      context.cache[word] = 8
     else
-      extend(context.cache, { [word]: 13 })
+      context.cache[word] = 13
     endif
   endif
 
