@@ -49,14 +49,16 @@ def s:item_priority(item: dict<any>, context: dict<any>): number
 
   if !has_key(context.cache, word)
     const target = matchstr(item.word, '\v\w+.*')
+    const lower_target  = tolower(target)
+    const lower_matcher = tolower(context.matcher)
 
-    if target =~# "^" .. context.matcher
+    if kg8m#util#string#starts_with(target, context.matcher)
       context.cache[word] = 2
-    elseif target =~? "^" .. context.matcher
+    elseif kg8m#util#string#starts_with(lower_target, lower_matcher)
       context.cache[word] = 3
-    elseif target =~# context.matcher
+    elseif kg8m#util#string#includes(target, context.matcher)
       context.cache[word] = 5
-    elseif target =~? context.matcher
+    elseif kg8m#util#string#includes(lower_target, lower_matcher)
       context.cache[word] = 8
     else
       context.cache[word] = 13

@@ -11,8 +11,13 @@ def kg8m#util#string#vital(): dict<func>
   return s:cache.vital
 enddef
 
-# vital.vim's `Vital.Data.String.starts_with()` is 5-6 times slower.
+# https://github.com/vim-jp/vital.vim/blob/5828301d6bae0858e9ea21012913544f5ef8e375/autoload/vital/__vital__/Data/String.vim#L48-L50
+# Re-implement because vital.vim's `Vital.Data.String.starts_with()` is 5-6 times slower.
 # (fast) direct `stridx()` >> `kg8m#util#string#starts_with()` > regexp (`=~#`) >>>>> `Vital.Data.String.starts_with()` (slow)
 def kg8m#util#string#starts_with(string: string, prefix: string): bool
   return stridx(string, prefix) ==# 0
+enddef
+
+def kg8m#util#string#includes(string: string, query: string): bool
+  return stridx(string, query) >=# 0
 enddef
