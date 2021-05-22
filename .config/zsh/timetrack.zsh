@@ -1,6 +1,6 @@
 TIMETRACK_IGNORE_PATTERN="^$"
 TIMETRACK_IGNORE_PATTERN+="|\bNO_TIMETRACK\b"
-TIMETRACK_IGNORE_PATTERN+="|\bgit (add|bulk|ca|checkout|ci|clone|co\b|commit\b|d|l|mergetool|open-changed-files|rebase -i|restore|revert|show|st|sw)"
+TIMETRACK_IGNORE_PATTERN+="|\bgit (add|bulk|ca|checkout|ci|co\b|commit\b|d|l|mergetool|open-changed-files|rebase -i|restore|revert|show|st|sw)"
 TIMETRACK_IGNORE_PATTERN+="|\bless\b|\bL$"
 TIMETRACK_IGNORE_PATTERN+="|\bmy_grep_with_filter\b"
 TIMETRACK_IGNORE_PATTERN+="|\brails (c|db)"
@@ -20,6 +20,7 @@ TIMETRACK_PATTERN+="|\bconfigure\b"
 TIMETRACK_PATTERN+="|\berblint\b"
 TIMETRACK_PATTERN+="|\bfind\b"
 TIMETRACK_PATTERN+="|\bfor\b"
+TIMETRACK_PATTERN+="|\bgit\b"
 TIMETRACK_PATTERN+="|\bgo\b"
 TIMETRACK_PATTERN+="|\bmake\b"
 TIMETRACK_PATTERN+="|\bmysql .*( -e|<)"
@@ -40,7 +41,6 @@ TIMETRACK_PATTERN+="|\byum\b"
 TIMETRACK_PATTERN+="|\bzcat\b"
 TIMETRACK_PATTERN+="|\bzip\b"
 TIMETRACK_PATTERN+="|\.z?sh$"
-TIMETRACK_PATTERN+="|^git "
 
 export TIMETRACK_IGNORE_PATTERN
 export TIMETRACK_PATTERN
