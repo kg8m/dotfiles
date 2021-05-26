@@ -1,5 +1,5 @@
 # See also `.config/zsh/filter.zsh`
-function plugin:setup:env:fzf {
+function() {
   local alt_a="å"
   local alt_b="∫"
   local alt_f="ƒ"
@@ -43,7 +43,4 @@ function plugin:setup:env:fzf {
   export FZF_DEFAULT_COMMAND="source ~/.config/zsh/my-functions.zsh; my_grep --files"
 
   export FZF_VIM_PATH="${VIM_PLUGINS:?}/github.com/junegunn/fzf.vim"
-
-  unset -f plugin:setup:env:fzf
 }
-plugin:setup:env:fzf

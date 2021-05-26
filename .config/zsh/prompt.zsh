@@ -1,4 +1,4 @@
-function setup:prompt {
+function() {
   autoload -U colors && colors
 
   # Execute `man zshmisc` and see "SIMPLE PROMPT ESCAPES" and "CONDITIONAL SUBSTRINGS IN PROMPTS" sections
@@ -81,9 +81,7 @@ function setup:prompt {
   zinit ice lucid wait"0c" atload"setup:prompt:refresh"
   zinit light mafredri/zsh-async
 
-  unset -f setup:prompt
 }
-setup:prompt
 
 export ZSH_THEME_GIT_PROMPT_PREFIX="["
 export ZSH_THEME_GIT_PROMPT_SUFFIX="]"
