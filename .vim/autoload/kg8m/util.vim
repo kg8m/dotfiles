@@ -176,3 +176,9 @@ def kg8m#util#convert_to_vim9script(): void
   # Reset some configurations
   set filetype=vim
 enddef
+
+def kg8m#util#setup_demo(): void
+  set foldcolumn=0
+  set signcolumn=no
+  lightline#disable()
+enddef
