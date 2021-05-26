@@ -76,16 +76,17 @@ def s:define_raw_list(): void
     ["[Set File Format] unix", "set fileformat=unix"],
     ["[Set File Format] mac",  "set fileformat=mac"],
 
-    ["[Copy] filename",          "call kg8m#util#remote_copy(kg8m#util#file#current_name())"],
-    ["[Copy] relative filepath", "call kg8m#util#remote_copy(kg8m#util#file#current_relative_path())"],
-    ["[Copy] absolute filepath", "call kg8m#util#remote_copy(kg8m#util#file#current_absolute_path())"],
+    ["[Copy] filename",                       "call kg8m#util#remote_copy(kg8m#util#file#current_name())"],
+    ["[Copy] relative filepath",              "call kg8m#util#remote_copy(kg8m#util#file#current_relative_path())"],
+    ["[Copy] absolute filepath",              "call kg8m#util#remote_copy(kg8m#util#file#current_absolute_path())"],
+    ["[Copy][Ruby] nested class/module name", "call kg8m#util#filetypes#ruby#copy_nested_class_name()"],
 
     ["[Git] Gina patch",                                 "call kg8m#plugin#gina#patch(expand(\"%\"))"],
     ["[Git] Apply the patch/hunk to the another side",   "'<,'>diffput"],
     ["[Git] Apply the patch/hunk from the another side", "'<,'>diffget"],
 
-    ["[Ruby Hash Syntax] Old to New", "'<,'>s/\\v([^:]):([a-zA-Z0-9_\"']+)( *)\\=\\> /\\1\\2:\\3/g"],
-    ["[Ruby Hash Syntax] New to Old", "'<,'>s/\\v([a-zA-Z0-9_\"']+):( *) /:\\1\\2 => /g"],
+    ["[Ruby] Hash Syntax: Old to new", "'<,'>s/\\v([^:]):([a-zA-Z0-9_\"']+)( *)\\=\\> /\\1\\2:\\3/g"],
+    ["[Ruby] Hash Syntax: New to old", "'<,'>s/\\v([a-zA-Z0-9_\"']+):( *) /:\\1\\2 => /g"],
 
     ["[SimpleAlign] \"=\"",          "'<,'>SimpleAlign = -count 1"],
     ["[SimpleAlign] \"=>\"",         "'<,'>SimpleAlign => -count 1"],
