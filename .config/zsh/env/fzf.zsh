@@ -35,7 +35,7 @@ function() {
     "--no-sort"
     "--reverse"
     "--preview='echo {} | head -n3'"
-    "--preview-window='down:5:wrap:hidden'"
+    "--preview-window='down:5:wrap'"
     "--select-1"
   )
 
