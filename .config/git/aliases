@@ -184,7 +184,7 @@ function git:branch:list:all {
   git branch --all --format "%(HEAD) $(git:branch:list_format)" "$@" |
     git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" |
     grep -E -v "^\s+origin/HEAD${SEP}" |
-    column -t -s "${SEP})" |
+    column -t -s "${SEP}" |
     git:branch:colorize
 }
 
