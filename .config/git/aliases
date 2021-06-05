@@ -230,10 +230,9 @@ function git:push:revision {
     return 1
   fi
 
-  local remote="$(git remote show)"
   local branch="$(git branch --show-current)"
 
-  git push "$remote" "${revision}:refs/heads/${branch}"
+  git push origin "${revision}:refs/heads/${branch}"
 }
 
 function git:clean:bulk {
