@@ -37,7 +37,9 @@ def kg8m#plugin#fzf#rails#run(type: string): void
   endif
 
   command ..= " -type f -not -name '.keep'"
-  command ..= " | sort"
+
+  # Specify `LC_COLLATE=C` to sort files with underscore "_". Underscores are ignored without it.
+  command ..= " | LC_COLLATE=C sort"
 
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
