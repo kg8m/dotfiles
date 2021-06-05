@@ -174,17 +174,18 @@ function git:branch:list {
     grep -E -v "^HEAD${SEP}" |
     grep -E "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
     column -t -s "$SEP" |
-    awk '!x[$1]++'  # Remove duplicated branches
+    awk '!x[$1]++' |  # Remove duplicated branches
+    git:branch:colorize
 }
 
 function git:branch:list:all {
   local SEP="$(git:branch:list_format_separator)"
-  local ESC="$(printf '\e')"
 
   git branch --all --format "%(HEAD) $(git:branch:list_format)" "$@" |
     git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" |
+    grep -E -v "^\s+origin/HEAD${SEP}" |
     column -t -s "${SEP})" |
-    git:proxy:sed -e "s/\borigin\//${ESC}[0;32morigin\/${ESC}[0;37m/"
+    git:branch:colorize
 }
 
 function git:branch:list_format {
@@ -194,6 +195,17 @@ function git:branch:list_format {
 
 function git:branch:list_format_separator {
   echo "💩"
+}
+
+function git:branch:colorize {
+  local ESC="$(printf '\e')"
+  local USER_NAME="$(git config user.name)"
+
+  git:proxy:sed \
+    -e "s/\b\(${USER_NAME}\)/${ESC}[38;5;219m\1${ESC}[0m/" \
+    -e "s/\b\(origin\/[-_a-zA-Z0-9]\+\)/${ESC}[38;5;10m\1${ESC}[0m/" \
+    -e "s/^\(\s\+\)\([-_a-zA-Z0-9]\+\)/\1${ESC}[38;5;11m\2${ESC}[0m/" \
+    -e "s/^\* \([-_a-zA-Z0-9]\+\)/* ${ESC}[48;5;4m\1${ESC}[0m/"
 }
 
 function git:clone:shallow {
