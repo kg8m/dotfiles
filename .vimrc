@@ -214,6 +214,10 @@ if kg8m#plugin#register("t9md/vim-choosewin", { if: !kg8m#util#is_git_tmp_edit()
   kg8m#plugin#choosewin#configure()
 endif
 
+if kg8m#plugin#register("alvan/vim-closetag")
+  kg8m#plugin#closetag#configure()
+endif
+
 kg8m#plugin#register("hail2u/vim-css3-syntax", { if: !kg8m#util#is_git_tmp_edit() })
 
 if kg8m#plugin#register("easymotion/vim-easymotion")
