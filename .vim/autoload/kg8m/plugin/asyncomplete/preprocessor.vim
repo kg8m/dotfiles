@@ -23,7 +23,10 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
       # Language server sources have no priority
       context.priority = get(asyncomplete#get_source_info(source_name), "priority", 0) + 2
 
-      items += matchfuzzy(source_matches.items, context.matcher, { key: "word" })
+      items += matchfuzzy(
+        source_matches.items, context.matcher,
+        { text_cb: (item) => s:matchfuzzy_text_cb(item, context) },
+      )
 
       if len(items) !=# original_length
         startcols += [source_matches.startcol]
@@ -43,14 +46,17 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
   asyncomplete#preprocess_complete(options, items)
 enddef
 
+def s:matchfuzzy_text_cb(item: dict<any>, context: dict<any>): string
+  item.priority = s:word_priority(item.word, context)
+  return item.word
+enddef
+
 def s:decorate_item(item: dict<any>, context: dict<any>): void
   # :h complete-items
   # item.word: the text that will be inserted, mandatory
   # item.abbr: abbreviation of "word"; when not empty it is used in the menu instead of "word"
   item.abbr = item.word
   item.word = s:remove_overlap_with_following_text(item.word, context.following_text)
-
-  item.priority = s:word_priority(item.word, context)
 enddef
 
 def s:remove_overlap_with_following_text(original_text: string, following_text: string): string
