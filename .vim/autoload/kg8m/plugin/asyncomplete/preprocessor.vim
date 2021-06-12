@@ -88,7 +88,10 @@ def s:word_priority(word: string, context: dict<any>): number
     const lower_target  = tolower(target)
     const lower_matcher = tolower(context.matcher)
 
-    if kg8m#util#string#starts_with(target, context.matcher)
+    if target ==# context.matcher
+      # Ignore candidates exactly matched
+      context.cache[word] = 999
+    elseif kg8m#util#string#starts_with(target, context.matcher)
       context.cache[word] = 2
     elseif kg8m#util#string#starts_with(lower_target, lower_matcher)
       context.cache[word] = 3
