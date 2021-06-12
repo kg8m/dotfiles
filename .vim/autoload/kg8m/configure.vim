@@ -145,6 +145,7 @@ def kg8m#configure#others(): void
 
   augroup my_vimrc
     autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
+    autocmd BufWritePre * s:mkdir_unless_exist()
 
     autocmd BufNewFile,BufRead *.csv          kg8m#util#encoding#edit_with_cp932()
     autocmd BufNewFile,BufRead COMMIT_EDITMSG kg8m#util#encoding#edit_with_utf8()
@@ -206,4 +207,15 @@ def s:configure_markdown(): void
   ]
   g:markdown_syntax_conceal = false
   g:markdown_minlines = 300
+enddef
+
+# https://vim-jp.org/vim-users-jp/2011/02/20/Hack-202.html
+def s:mkdir_unless_exist(): void
+  const dirpath = expand("%:p:h")
+
+  if !isdirectory(dirpath)
+    if input(printf("`%s` doesn't exist. Create? [y/n]", dirpath)) =~? '^y'
+      mkdir(dirpath, "p")
+    endif
+  endif
 enddef
