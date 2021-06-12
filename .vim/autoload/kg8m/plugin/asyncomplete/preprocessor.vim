@@ -1,6 +1,8 @@
 vim9script
 
-# Sort items by their each priority and filter them that fuzzy match
+# Sort items by their each priority and filter them that fuzzy match.
+# Omit items with lower priority.
+# Remove characters overlapping with following text.
 def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: dict<any>): void
   const base_matcher = matchstr(options.base, b:asyncomplete_refresh_pattern)
 
