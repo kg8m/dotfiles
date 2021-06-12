@@ -14,6 +14,9 @@ def kg8m#plugin#mappings#i#define(): void
   # :h popupmenu-keys
   inoremap <expr> <Up>   pumvisible() ? "\<C-p>" : "\<Up>"
   inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
+
+  # <silent> for lexima#expand's echo
+  imap     <silent><expr> <buffer> > <SID>gt_expr()
 enddef
 
 def s:cr_expr(): string
@@ -33,4 +36,16 @@ enddef
 
 def s:bs_expr(): string
   return lexima#expand("<BS>", "i") .. kg8m#plugin#completion#refresh()
+enddef
+
+def s:gt_expr(): string
+  if getline(".")->strpart(col(".") - 1, 1) ==# ">"
+    return lexima#expand(">", "i")
+  else
+    if kg8m#util#list#includes(kg8m#plugin#closetag#filetypes(), &filetype)
+      return g:closetag_shortcut
+    else
+      return ">"
+    endif
+  endif
 enddef

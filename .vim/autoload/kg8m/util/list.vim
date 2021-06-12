@@ -11,6 +11,10 @@ def kg8m#util#list#vital(): dict<func>
   return s:cache.vital
 enddef
 
+def kg8m#util#list#includes(list: list<any>, item: any): bool
+  return index(list, item) >=# 0
+enddef
+
 def kg8m#util#list#filter_map(list: list<any>, Callback: func): list<any>
   var result = []
 
