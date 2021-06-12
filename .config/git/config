@@ -23,15 +23,15 @@
 	ui = true
 
 [color "branch"]
-	current = white red
+	current = white blue
 	local   = yellow
 	remote  = green
 
 [color "diff"]
-	meta = green
+	meta = yellow
 	frag = magenta bold
-	old  = cyan
-	new  = red
+	old  = red
+	new  = green
 
 	# For delta
 	oldMoved = white "#050000"
