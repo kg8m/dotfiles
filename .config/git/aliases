@@ -190,7 +190,16 @@ function git:branch:list:all {
 
 function git:branch:list_format {
   local SEP="$(git:branch:list_format_separator)"
-  echo "%(refname:short)${SEP}%(objectname:short)${SEP}%(authorname)${SEP}%(authordate:short)${SEP}%(contents:subject)"
+  # shellcheck disable=SC2034
+  local items=(
+    "%(refname:short)"
+    "%(objectname:short)"
+    "%(authorname)"
+    "%(authordate:short)"
+    "%(contents:subject)"
+  )
+
+  echo "${(pj:$SEP:)items}"
 }
 
 function git:branch:list_format_separator {
