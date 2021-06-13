@@ -1,20 +1,20 @@
 vim9script
 
 def kg8m#plugin#mappings#i#define(): void
-  imap <silent><expr> <CR> <SID>cr_expr()
+  imap     <silent><expr> <buffer> <CR> <SID>cr_expr()
 
-  inoremap <silent><expr> <BS>  <SID>bs_expr()
-  inoremap <silent><expr> <C-h> <SID>bs_expr()
+  inoremap <silent><expr> <buffer> <BS>  <SID>bs_expr()
+  inoremap <silent><expr> <buffer> <C-h> <SID>bs_expr()
 
-  inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap         <expr> <buffer> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap         <expr> <buffer> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
   # Insert selected completion candidate word via `<Up>`/`<Down>` keys like `<C-p>`/`<C-n>` keys.
   # <Up>:   Select the previous match, as if CTRL-P was used, but don't insert it.
   # <Down>: Select the next match, as if CTRL-N was used, but don't insert it.
   # :h popupmenu-keys
-  inoremap <expr> <Up>   pumvisible() ? "\<C-p>" : "\<Up>"
-  inoremap <expr> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
+  inoremap         <expr> <buffer> <Up>   pumvisible() ? "\<C-p>" : "\<Up>"
+  inoremap         <expr> <buffer> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
 
   # <silent> for lexima#expand's echo
   imap     <silent><expr> <buffer> > <SID>gt_expr()
