@@ -163,12 +163,14 @@ def s:add_rules_for_markdown(): void
   #
   #   - [|]
   #   * [|]
+  #   1. [|]
   #
   # then
   #
   #   - [ ] |
   #   * [ ] |
-  lexima#add_rule({ char: "<Space>", at: '^\s*[-*]\+\s\+\[\%#\]', input: "<Space><Right><Space>", filetype: filetypes })
+  #   1. [ ] |
+  lexima#add_rule({ char: "<Space>", at: '^\s*\%([-*]\|\d\+\.\)\+\s\+\[\%#\]', input: "<Space><Right><Space>", filetype: filetypes })
 
   # `<CR>` when
   #
