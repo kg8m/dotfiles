@@ -240,7 +240,6 @@ enddef
 
 def s:on_source(): void
   g:lexima_enable_endwise_rules = false
-  g:lexima_ctrlh_as_backspace   = true
 enddef
 
 def s:on_post_source(): void

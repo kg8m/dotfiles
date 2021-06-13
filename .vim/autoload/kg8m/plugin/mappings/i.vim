@@ -3,7 +3,8 @@ vim9script
 def kg8m#plugin#mappings#i#define(): void
   imap <silent><expr> <CR> <SID>cr_expr()
 
-  inoremap <silent><expr> <BS> <SID>bs_expr()
+  inoremap <silent><expr> <BS>  <SID>bs_expr()
+  inoremap <silent><expr> <C-h> <SID>bs_expr()
 
   inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
