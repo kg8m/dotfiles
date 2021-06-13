@@ -1,6 +1,8 @@
 vim9script
 
 def kg8m#plugin#mappings#i#define(): void
+  inoremap         <expr> <buffer> . <SID>dot_expr()
+
   # <silent> for lexima#expand's echo
   imap     <silent><expr> <buffer> <CR> <SID>cr_expr()
 
@@ -22,6 +24,14 @@ def kg8m#plugin#mappings#i#define(): void
   imap     <silent><expr> <buffer> > <SID>gt_expr()
 enddef
 
+def s:dot_expr(): string
+  if &omnifunc ==# ""
+    return "."
+  else
+    return ".\<C-x>\<C-o>"
+  endif
+enddef
+
 def s:cr_expr(): string
   if neosnippet#expandable_or_jumpable()
     return "\<Plug>(neosnippet_expand_or_jump)"
@@ -38,7 +48,15 @@ def s:cr_expr(): string
 enddef
 
 def s:bs_expr(): string
-  return lexima#expand("<BS>", "i") .. kg8m#plugin#completion#refresh()
+  const prev_char = strpart(getline("."), col(".") - 3, 1)
+  const base = lexima#expand("<BS>", "i") .. kg8m#plugin#completion#refresh()
+
+  if &omnifunc !=# "" && prev_char ==# "."
+    # Trigger omni completion
+    return base .. "\<C-x>\<C-o>"
+  else
+    return base
+  endif
 enddef
 
 def s:gt_expr(): string
