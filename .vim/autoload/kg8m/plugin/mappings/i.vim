@@ -1,8 +1,10 @@
 vim9script
 
 def kg8m#plugin#mappings#i#define(): void
+  # <silent> for lexima#expand's echo
   imap     <silent><expr> <buffer> <CR> <SID>cr_expr()
 
+  # <silent> for lexima#expand's echo
   inoremap <silent><expr> <buffer> <BS>  <SID>bs_expr()
   inoremap <silent><expr> <buffer> <C-h> <SID>bs_expr()
 
