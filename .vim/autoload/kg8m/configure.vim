@@ -158,6 +158,11 @@ def kg8m#configure#gui(): void
   # set guifont=Osaka-Mono:h14
   set guifont=SFMono-Regular:h12
 
+  # Fallback to Migu 1M for Japanese characters. `guifontset` is not available because my MacVim is built without
+  # `xfontset` feature. According to help, `guifontwide` is "When not empty, specifies a comma-separated list of fonts
+  # to be used for double-width characters."
+  set guifontwide=migu-1m-regular:h12
+
   set transparency=20
   set imdisable
 
