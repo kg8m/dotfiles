@@ -212,9 +212,9 @@ function git:branch:colorize {
 
   git:proxy:sed \
     -e "s/\b\(${USER_NAME}\)/${ESC}[1;38;5;219m\1${ESC}[0m/" \
-    -e "s/\b\(origin\/[-_a-zA-Z0-9]\+\)/${ESC}[0;38;5;10m\1${ESC}[0m/" \
-    -e "s/^\(\s\+\)\([-_a-zA-Z0-9]\+\)/\1${ESC}[0;38;5;11m\2${ESC}[0m/" \
-    -e "s/^\* \([-_a-zA-Z0-9]\+\)/* ${ESC}[1;48;5;4m\1${ESC}[0m/"
+    -e "s/\b\(origin\/[^ ]\+\)/${ESC}[0;38;5;10m\1${ESC}[0m/" \
+    -e "s/^\(\s\+\)\([^ ]\+\)/\1${ESC}[0;38;5;11m\2${ESC}[0m/" \
+    -e "s/^\* \([^ ]\+\)/* ${ESC}[1;48;5;4m\1${ESC}[0m/"
 }
 
 function git:clone:shallow {
