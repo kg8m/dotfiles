@@ -168,8 +168,6 @@ def kg8m#configure#gui(): void
 
   # Always show tabline
   set showtabline=2
-
-  kg8m#configure#gui#window_size#setup()
 enddef
 
 # Called from configurations for some plugins
