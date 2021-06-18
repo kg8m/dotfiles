@@ -216,8 +216,12 @@ enddef
 def s:mkdir_unless_exist(): void
   const dirpath = expand("%:p:h")
 
+  if kg8m#util#string#starts_with(dirpath, "suda://")
+    return
+  endif
+
   if !isdirectory(dirpath)
-    if input(printf("`%s` doesn't exist. Create? [y/n]", dirpath)) =~? '^y'
+    if input(printf("`%s` doesn't exist. Create? [y/n] ", dirpath)) =~? '^y'
       mkdir(dirpath, "p")
     endif
   endif
