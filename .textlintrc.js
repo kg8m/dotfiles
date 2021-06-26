@@ -53,7 +53,7 @@ const config = {
       "arabic-kanji-numbers": false,
 
       "ja-no-mixed-period": {
-        allowPeriodMarks: [":", "、", "👍"],
+        allowPeriodMarks: [":", "、", "ｗ", "👍"],
         allowEmojiAtEnd: true,
       },
       "ja-no-redundant-expression": {
