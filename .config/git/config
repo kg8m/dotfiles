@@ -23,7 +23,7 @@
 	ui = true
 
 [color "branch"]
-	current = white blue
+	current = white red
 	local   = yellow
 	remote  = green
 
