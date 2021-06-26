@@ -173,7 +173,7 @@ function git:branch:list {
     git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" -e 's/^origin\///' |
     grep -E -v "^HEAD${SEP}" |
     grep -E "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
-    column -t -s "$SEP" |
+    git:proxy:column "${SEP}" |
     awk '!x[$1]++' |  # Remove duplicated branches
     git:branch:colorize
 }
@@ -184,7 +184,7 @@ function git:branch:list:all {
   git branch --all --format "%(HEAD) $(git:branch:list_format)" "$@" |
     git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" |
     grep -E -v "^\s+origin/HEAD${SEP}" |
-    column -t -s "${SEP}" |
+    git:proxy:column "${SEP}" |
     git:branch:colorize
 }
 
@@ -454,6 +454,19 @@ function git:utility:preview:log {
   fi
 
   git log --max-count=100 --color=always "$branch"
+}
+
+# Use short options like `-t` or `-s` because BSD `column` command doesn't support long options like `--table` or
+# `--separator`.
+# The local variable `dummy` is for newer `column` command. Newer `column` command removes leading whitespaces. So
+# prevent it by putting a dummy text on the top of each line.
+function git:proxy:column {
+  local separator="${1:?}"
+  local dummy="@"
+
+  git:proxy:sed -e "s/^/${dummy}/" |
+    column -t -s "${separator}" |
+    git:proxy:sed -e "s/^${dummy}//"
 }
 
 function git:proxy:sed {
