@@ -13,6 +13,7 @@ function plugin:setup:binary_releaseds {
   # Use `brew` command if available to detect that zinit gets broken or something is wrong
   if ! command -v brew > /dev/null; then
     repositories+=(
+      rhysd/actionlint
       sharkdp/bat
       cli/cli
       dandavison/delta
@@ -31,7 +32,7 @@ function plugin:setup:binary_releaseds {
     local plugin="$1"
 
     case "$plugin" in
-      bat | delta | direnv | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt)
+      actionlint | bat | delta | direnv | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt)
         mv ./"${plugin}"* ./"$plugin"
         ;;
       cli)
@@ -50,7 +51,7 @@ function plugin:setup:binary_releaseds {
       bat | delta | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
-      direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls)
+      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls)
         local binary="${plugin}"
         ;;
       cli)
@@ -84,7 +85,7 @@ function plugin:setup:binary_releaseds {
       efm-langserver | nextword)
         execute_with_echo "$command -v"
         ;;
-      shfmt | sqls)
+      actionlint | shfmt | sqls)
         execute_with_echo "$command -version"
         ;;
       ghch | golangci-lint)
