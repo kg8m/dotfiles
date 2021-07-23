@@ -60,6 +60,11 @@ def s:bs_expr(): string
 enddef
 
 def s:gt_expr(): string
+  # Don't overwrite while blockwise inserting.
+  if !empty(state())
+    return ">"
+  endif
+
   if getline(".")->strpart(col(".") - 1, 1) ==# ">"
     return lexima#expand(">", "i")
   else
