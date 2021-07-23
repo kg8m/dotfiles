@@ -12,7 +12,7 @@ function plugin:setup:direnv {
   else
     function error_for_envrc {
       if [ -f .envrc ]; then
-        echo "WARNING: .envrc exists but direnv isn't installed." >&2
+        echo:warn ".envrc exists but direnv isn't installed."
       fi
     }
     add-zsh-hook chpwd error_for_envrc

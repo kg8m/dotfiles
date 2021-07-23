@@ -69,8 +69,22 @@ function horizontal_line {
   echo "\e[38;5;239m${(r:$COLUMNS::-:)}\e[0m"
 }
 
-function highlight_yellow {
-  printf "\e[1;33m%s\e[0;37m" "${1:?}"
+function highlight:red {
+  printf "\e[1;38;5;1m%s\e[0;0m" "${*:?}"
+}
+
+function highlight:yellow {
+  printf "\e[1;38;5;3m%s\e[0;0m" "${*:?}"
+}
+
+function echo:error {
+  highlight:red "ERROR: " >&2
+  echo "$@" >&2
+}
+
+function echo:warn {
+  highlight:yellow "WARN: " >&2
+  echo "$@" >&2
 }
 
 function notify {
@@ -130,7 +144,7 @@ function remove_symlink {
   if [ -L "$filepath" ]; then
     rm "$filepath"
   else
-    echo "$filepath is not a symbolic link." >&2
+    echo:warn "$filepath is not a symbolic link."
   fi
 }
 
@@ -170,7 +184,7 @@ function attach_or_new_tmux {
         fi
       fi
     else
-      echo "Session not created." >&2
+      echo:warn "Session not created."
     fi
   fi
 
@@ -359,7 +373,7 @@ function uninstall_go_library {
   local libpaths=("${(@f)$(find ~/go "${GOENV_ROOT:?}" -maxdepth 5 -path "*${library}*")}")
 
   if [ -z "${libpaths[*]}" ]; then
-    echo "No library files/directories found for ${library}." >&2
+    echo:error "No library files/directories found for ${library}."
     return 1
   fi
 

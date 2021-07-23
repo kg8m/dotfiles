@@ -42,7 +42,7 @@ function plugin:setup:binary_releaseds {
         # Do nothing
         ;;
       *)
-        echo "Unknown plugin to move files: ${plugin}" >&2
+        echo:error "Unknown plugin to move files: ${plugin}"
         return 1
         ;;
     esac
@@ -61,7 +61,7 @@ function plugin:setup:binary_releaseds {
         local binary="${plugin}/rg"
         ;;
       *)
-        echo "Unknown plugin to detect binary: ${plugin}" >&2
+        echo:error "Unknown plugin to detect binary: ${plugin}"
         return 1
         ;;
     esac
@@ -95,7 +95,7 @@ function plugin:setup:binary_releaseds {
         # Do nothing because there are no ways to check version
         ;;
       *)
-        echo "Unknown plugin to detect binary: ${plugin}" >&2
+        echo:error "Unknown plugin to detect binary: ${plugin}"
         return 1
         ;;
     esac
@@ -131,7 +131,7 @@ function plugin:setup:binary_releaseds {
         cd "$current_dir"
       fi
     else
-      echo 'Command `nextword` not found.' >&2
+      echo:warn 'Command `nextword` not found.'
     fi
   }
 

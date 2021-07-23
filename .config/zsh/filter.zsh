@@ -11,7 +11,7 @@ function plugin:setup:anyframe {
     zstyle ":anyframe:selector:" use fzf
     zstyle ":anyframe:selector:fzf:" command filter
   else
-    echo "Any filter is not found." >&2
+    echo:warn "Any filter is not found."
     return 1
   fi
 
