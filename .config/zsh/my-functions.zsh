@@ -16,10 +16,12 @@ function execute_with_echo {
 }
 
 function execute_commands_with_echo {
+  # shellcheck disable=SC2198
   if [ ! "${@[(I)-s]}" = "0" ] || [ ! "${@[(I)--separate]}" = "0" ]; then
     local separate="1"
   fi
 
+  # shellcheck disable=SC2198
   if [ ! "${@[(I)--dryrun]}" = "0" ]; then
     local dryrun="1"
   fi
