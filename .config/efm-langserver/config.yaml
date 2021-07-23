@@ -33,6 +33,11 @@ tools:
     format-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}' --fix"
     format-stdin: true
 
+  lit-analyzer: &lit-analyzer
+    lint-command: "lit-analyzer '${INPUT}' --format list --noColor"
+    lint-formats:
+      - "%*[ ]%l:%c%*[ ]%t%*[a-z]%*[ ]%m"
+
   markdownlint: &markdownlint
     lint-command: "markdownlint --stdin"
     lint-stdin: true
@@ -114,6 +119,7 @@ languages:
 
   javascript:
     - <<: *eslint
+    - <<: *lit-analyzer
 
   make:
     - <<: *checkmake
@@ -132,6 +138,7 @@ languages:
 
   typescript:
     - <<: *eslint
+    - <<: *lit-analyzer
 
   # Disable because modern syntaxes are not supported
   # vim:
