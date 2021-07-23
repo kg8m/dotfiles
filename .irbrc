@@ -21,13 +21,34 @@ def __benchmark__(*args)
   when Hash
     require "benchmark/ips"
 
-    cases = args[0]
+    option_keys     = [:only_comparison]
+    non_option_keys = args[0].keys - option_keys
 
-    Benchmark.ips do |x|
+    options = Hash[option_keys.zip(args[0].values_at(*option_keys))]
+    cases   = Hash[non_option_keys.zip(args[0].values_at(*non_option_keys))]
+
+    if options[:only_comparison]
+      benchmark_options = { :quiet => true }
+    else
+      benchmark_options = {}
+    end
+
+    benchmark = Benchmark.ips(benchmark_options) do |x|
+      if options[:only_comparison]
+        $stderr.puts "Calculating..."
+      end
+
       cases.each do |label, _proc|
         x.report("#{label}:", _proc)
       end
-      x.compare!
+
+      unless options[:only_comparison]
+        x.compare!
+      end
+    end
+
+    if options[:only_comparison]
+      benchmark.run_comparison
     end
   end
 ensure
