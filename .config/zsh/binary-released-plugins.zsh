@@ -166,6 +166,11 @@ function plugin:setup:binary_releaseds {
       cli | glab | golangci-lint)
         options+=(bpick"*.tar.gz")
         ;;
+      sqls)
+        if [ -n "$SQLS_VERSION" ]; then
+          options+=(ver"$SQLS_VERSION")
+        fi
+        ;;
     esac
 
     zinit ice lucid "${options[@]}"
