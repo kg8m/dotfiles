@@ -14,7 +14,7 @@ def s:overwrite(): void
   highlight CursorColumn                 guibg=#4b4a46
   highlight CursorLine                   guibg=#4b4a46
   highlight DiffChange    guifg=#CCCCCC  guibg=#4C4745
-  highlight DiffFile      guifg=#A6E22E                 gui=bold         cterm=bold
+  highlight DiffFile      guifg=#A6E22E                 gui=bold       cterm=bold
   highlight FoldColumn    guifg=#6A7678  guibg=NONE
   highlight Folded        guifg=#6A7678  guibg=NONE
   highlight Ignore        guifg=#808080  guibg=NONE
@@ -22,14 +22,14 @@ def s:overwrite(): void
   highlight LineNr        guifg=#BCBCBC  guibg=#222222
   highlight Normal        guifg=#F8F8F8  guibg=NONE
   highlight Pmenu         guifg=#66D9EF  guibg=NONE
-  highlight QuickFixLine                                gui=bold,italic  cterm=bold,italic
+  highlight QuickFixLine                                gui=bold       cterm=bold
   highlight Search        guifg=#FFFFFF  guibg=#F92672
   highlight SignColumn    guifg=#A6E22E  guibg=#111111
-  highlight Special       guifg=#66D9EF  guibg=NONE     gui=italic
+  highlight Special       guifg=#66D9EF  guibg=NONE     gui=bold
   highlight Todo          guifg=#FFFFFF  guibg=NONE     gui=bold
-  highlight Underlined    guifg=#AAAAAA                 gui=underline    cterm=underline
-  highlight Visual                       guibg=#403D3D  gui=bold         cterm=bold
-  highlight VisualNOS                    guibg=#403D3D  gui=bold         cterm=bold
+  highlight Underlined    guifg=#AAAAAA                 gui=underline  cterm=underline
+  highlight Visual                       guibg=#403D3D  gui=bold       cterm=bold
+  highlight VisualNOS                    guibg=#403D3D  gui=bold       cterm=bold
 
   if has("gui_running")
     # `guibg=NONE` doesn't work in GUI Vim
