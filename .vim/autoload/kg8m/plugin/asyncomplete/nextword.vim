@@ -23,6 +23,6 @@ def s:on_post_source(): void
     allowlist: ["*"],
     args: ["-n", "10000"],
     completor: function("asyncomplete#sources#nextword#completor"),
-    priority: 3,
+    priority: 4,
   }))
 enddef
