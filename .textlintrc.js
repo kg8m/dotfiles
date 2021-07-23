@@ -29,7 +29,10 @@ const config = {
   filters: {
     comments: true,
     allowlist: {
-      allow: [],
+      allow: [
+        // Ignore "方" because "ja-hiragana-keishikimeishi" shows too many false positives.
+        "方",
+      ],
     },
     "node-types": {
       nodeTypes: ["BlockQuote", "Code", "CodeBlock"],
