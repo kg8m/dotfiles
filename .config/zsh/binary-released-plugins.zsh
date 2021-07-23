@@ -19,6 +19,7 @@ function plugin:setup:binary_releaseds {
       dandavison/delta
       direnv/direnv
       junegunn/fzf
+      profclems/glab
       sharkdp/hyperfine
       itchyny/mmv
       koalaman/shellcheck
@@ -32,7 +33,7 @@ function plugin:setup:binary_releaseds {
     local plugin="$1"
 
     case "$plugin" in
-      actionlint | bat | delta | direnv | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt)
+      actionlint | bat | delta | direnv | efm-langserver | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt)
         mv ./"${plugin}"* ./"$plugin"
         ;;
       cli)
@@ -60,6 +61,9 @@ function plugin:setup:binary_releaseds {
       ripgrep)
         local binary="${plugin}/rg"
         ;;
+      glab)
+        local binary="bin/${plugin}"
+        ;;
       *)
         echo:error "Unknown plugin to detect binary: ${plugin}"
         return 1
@@ -76,7 +80,7 @@ function plugin:setup:binary_releaseds {
     execute_with_echo "which $command"
 
     case "$plugin" in
-      bat | cli | delta | direnv | fzf | hyperfine | mmv | ripgrep | shellcheck)
+      bat | cli | delta | direnv | fzf | glab | hyperfine | mmv | ripgrep | shellcheck)
         execute_with_echo "$command --version"
         ;;
       make2help)
@@ -159,7 +163,7 @@ function plugin:setup:binary_releaseds {
         # Choose musl for legacy environments
         options+=(bpick"*musl*")
         ;;
-      cli | golangci-lint)
+      cli | glab | golangci-lint)
         options+=(bpick"*.tar.gz")
         ;;
     esac
