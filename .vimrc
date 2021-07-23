@@ -21,8 +21,6 @@ const s:utility_path = expand("~/dotfiles/.vim")
 kg8m#plugin#disable_defaults()
 
 g:mapleader = ","
-
-scriptencoding utf-8
 # }}}
 
 # Reset my autocommands for reloading vimrc
