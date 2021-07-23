@@ -296,7 +296,7 @@ function my_grep_with_filter() {
     return
   fi
 
-  if [ "${options[*]}" =~ --files ]; then
+  if [[ "${options[*]}" =~ --files ]]; then
     echo "${(j:\n:)results[@]}" 2> /dev/null
   else
     echo "${(j:\n:)results[@]}" | my_grep "$query" "${options[@]}" 2> /dev/null
