@@ -1,5 +1,5 @@
 function execute_with_echo {
-  printf "\n$(highlight:cyan "Execute:")\e[1;37m \`%s\`\e[0;37m\n\n" "$*" >&2
+  printf "\n$(highlight:cyan "Execute:")\e[0;1m \`%s\`\e[0m\n\n" "$*" >&2
   eval "$@"
 }
 

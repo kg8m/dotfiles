@@ -431,11 +431,11 @@ function git:utility:diff_or_cat {
 function git:utility:header {
   local border="$(printf "%s" "${(r:$COLUMNS / 3::-:)}")"
 
-  printf "\e[1;37m"
+  printf "\e[1m"
   printf "%s\n" "$border"
   printf "%s\n" "$@"
   printf "%s\n" "$border"
-  printf "\e[0;37m"
+  printf "\e[0m"
 }
 
 function git:utility:cat {
