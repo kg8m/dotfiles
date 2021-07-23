@@ -1,15 +1,31 @@
 function execute_with_echo {
-  printf "\n$(highlight:cyan "Execute:")\e[0;1m \`%s\`\e[0m\n\n" "$*" >&2
-  eval "$@"
+  # shellcheck disable=SC2198
+  if [ ! "${@[(I)--dryrun]}" = "0" ]; then
+    local dryrun="1"
+  fi
+
+  local cmd="${*// --dryrun/}"
+
+  printf "\n$(highlight:cyan "Execute%s:")\e[0;1m \`%s\`\e[0m\n\n" \
+    "$([ "${dryrun}" = "1" ] && echo " (dryrun)")" \
+    "${cmd}" >&2
+
+  if [ ! "${dryrun}" = "1" ]; then
+    eval "$cmd"
+  fi
 }
 
 function execute_commands_with_echo {
-  local cmd
-  local result=0
-
   if [ ! "${@[(I)-s]}" = "0" ] || [ ! "${@[(I)--separate]}" = "0" ]; then
     local separate="1"
   fi
+
+  if [ ! "${@[(I)--dryrun]}" = "0" ]; then
+    local dryrun="1"
+  fi
+
+  local cmd
+  local result=0
 
   for cmd in "${@:#-*}"; do
     if [ "${separate}" = "1" ]; then
@@ -17,7 +33,7 @@ function execute_commands_with_echo {
       horizontal_line
     fi
 
-    execute_with_echo "$cmd" || result=$?
+    execute_with_echo "$cmd" "$([ "${dryrun}" = "1" ] && echo "--dryrun")" || result=$?
   done
 
   if [ "${separate}" = "1" ]; then
