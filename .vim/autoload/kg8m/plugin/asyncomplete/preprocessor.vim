@@ -49,7 +49,7 @@ enddef
 
 def s:filter_and_sort(items: list<dict<any>>, context: dict<any>): void
   filter(items, (_, item): bool => {
-    if item.priority <=# 30
+    if item.priority <=# 50
       # :h complete-items
       # item.word: the text that will be inserted, mandatory
       # item.abbr: abbreviation of "word"; when not empty it is used in the menu instead of "word"
@@ -91,16 +91,18 @@ def s:word_priority(word: string, context: dict<any>): number
     if target ==# context.matcher
       # Ignore candidates exactly matched
       context.cache[word] = 999
-    elseif kg8m#util#string#starts_with(target, context.matcher)
+    elseif lower_target ==# lower_matcher
       context.cache[word] = 2
-    elseif kg8m#util#string#starts_with(lower_target, lower_matcher)
+    elseif kg8m#util#string#starts_with(target, context.matcher)
       context.cache[word] = 3
-    elseif kg8m#util#string#includes(target, context.matcher)
+    elseif kg8m#util#string#starts_with(lower_target, lower_matcher)
       context.cache[word] = 5
-    elseif kg8m#util#string#includes(lower_target, lower_matcher)
+    elseif kg8m#util#string#includes(target, context.matcher)
       context.cache[word] = 8
-    else
+    elseif kg8m#util#string#includes(lower_target, lower_matcher)
       context.cache[word] = 13
+    else
+      context.cache[word] = 21
     endif
   endif
 
