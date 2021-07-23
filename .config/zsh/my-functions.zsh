@@ -1,5 +1,5 @@
 function execute_with_echo {
-  printf "\n\e[0;36mExecute:\e[1;37m \`%s\`\e[0;37m\n\n" "$*" >&2
+  printf "\n$(highlight:cyan "Execute:")\e[1;37m \`%s\`\e[0;37m\n\n" "$*" >&2
   eval "$@"
 }
 
@@ -31,7 +31,7 @@ function execute_commands_with_echo {
 function execute_with_confirm {
   local response
 
-  printf "\n\e[0;36mExecute:\e[1;37m \`%s\`\e[0;37m\n\n" "$*" >&2
+  printf "\n$(highlight:cyan "Execute:")\e[0;1m \`%s\`\e[0m\n\n" "$*" >&2
   read -r "response?Are you sure? [y/n]: "
 
   if [[ ${response} =~ ^y ]]; then
@@ -73,8 +73,16 @@ function highlight:red {
   printf "\e[1;38;5;1m%s\e[0;0m" "${*:?}"
 }
 
+function highlight:green {
+  printf "\e[1;38;5;2m%s\e[0;0m" "${*:?}"
+}
+
 function highlight:yellow {
   printf "\e[1;38;5;3m%s\e[0;0m" "${*:?}"
+}
+
+function highlight:cyan {
+  printf "\e[1;38;5;6m%s\e[0;0m" "${*:?}"
 }
 
 function echo:error {
