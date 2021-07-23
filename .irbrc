@@ -9,22 +9,22 @@ def __benchmark__(*args)
     require "benchmark"
 
     n = args[0]
-    labels_and_procs = args[1]
+    cases = args[1]
 
-    max_label_width = labels_and_procs.keys.map(&:to_s).map(&:length).max
+    max_label_width = cases.keys.map(&:to_s).map(&:length).max
 
     Benchmark.bm(max_label_width + 1) do |x|
-      labels_and_procs.each do |label, _proc|
+      cases.each do |label, _proc|
         x.report("#{label}:"){ n.times(&_proc) }
       end
     end
   when Hash
     require "benchmark/ips"
 
-    labels_and_procs = args[0]
+    cases = args[0]
 
     Benchmark.ips do |x|
-      labels_and_procs.each do |label, _proc|
+      cases.each do |label, _proc|
         x.report("#{label}:", _proc)
       end
       x.compare!
