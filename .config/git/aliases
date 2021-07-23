@@ -98,6 +98,11 @@ function git:update:master {
 }
 
 function git:branch:create:with_set_upstream {
+  if git status --porcelain | grep -E '^[^ ]' -q; then
+    echo:error "Staged changes exist. Unstage them before creating a branch."
+    return 1
+  fi
+
   local original_branch="$1"
   local branch_name="$2"
   local commit_message="$3"
