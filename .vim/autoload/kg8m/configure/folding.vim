@@ -48,7 +48,7 @@ def s:should_disable(): bool
     &diff ||
 
     # For auto-git-diff
-    (kg8m#util#is_git_rebase() && &filetype ==# "diff") ||
+    (&filetype ==# "diff" && kg8m#util#is_git_rebase()) ||
 
     # For diffs of `git commit --verbose`
     &filetype ==# "gitcommit" ||
