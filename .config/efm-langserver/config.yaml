@@ -34,7 +34,7 @@ tools:
     format-stdin: true
 
   lit-analyzer: &lit-analyzer
-    lint-command: "lit-analyzer '${INPUT}' --format list --noColor"
+    lint-command: "lit-analyzer '${INPUT}' --format list --noColor --strict"
     lint-formats:
       - "%*[ ]%l:%c%*[ ]%t%*[a-z]%*[ ]%m"
 
