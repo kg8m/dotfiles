@@ -302,6 +302,8 @@ if kg8m#plugin#register("lambdalisue/vim-protocol", { if: !kg8m#util#is_git_tmp_
   kg8m#plugin#protocol#configure()
 endif
 
+kg8m#plugin#register("thinca/vim-qfhl")
+
 if kg8m#plugin#register("tpope/vim-rails", { if: !kg8m#util#is_git_tmp_edit() && kg8m#util#on_rails_dir() })
   kg8m#plugin#rails#configure()
 endif
