@@ -88,6 +88,8 @@ def s:define_raw_list(): void
     ["[Ruby] Hash Syntax: Old to new", "'<,'>s/\\v([^:]):([a-zA-Z0-9_\"']+)( *)\\=\\> /\\1\\2:\\3/g"],
     ["[Ruby] Hash Syntax: New to old", "'<,'>s/\\v([a-zA-Z0-9_\"']+):( *) /:\\1\\2 => /g"],
 
+    ["[Outline][Ruby][RSpec] Show Outline", "call kg8m#plugin#fzf#rspec#outline()"],
+
     ["[SimpleAlign] \"=\"",          "'<,'>SimpleAlign = -count 1"],
     ["[SimpleAlign] \"=>\"",         "'<,'>SimpleAlign => -count 1"],
     ["[SimpleAlign] \"+=\"",         "'<,'>SimpleAlign [\\ +]= -count 1"],
