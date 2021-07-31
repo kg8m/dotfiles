@@ -8,7 +8,7 @@ function git:add:bulk {
     execute_with_echo    "git add --intent-to-add -- ${files[*]}"
     execute_with_echo    "git diff -- ${files[*]}"
     execute_with_confirm "git add -- ${files[*]}"
-    execute_with_echo    "git status"
+    execute_with_echo    "git status-with-color"
   fi
 }
 
@@ -17,7 +17,7 @@ function git:add:bulk:intent {
 
   if [ -n "${files[*]}" ]; then
     execute_with_echo "git add --intent-to-add -- ${files[*]}"
-    execute_with_echo "git status"
+    execute_with_echo "git status-with-color"
   fi
 }
 
@@ -26,7 +26,7 @@ function git:add:bulk:patch {
 
   if [ -n "${files[*]}" ]; then
     execute_with_echo "git add --patch -- ${files[*]}"
-    execute_with_echo "git status"
+    execute_with_echo "git status-with-color"
   fi
 }
 
@@ -36,7 +36,7 @@ function git:restore:bulk {
   if [ -n "${files[*]}" ]; then
     execute_with_echo    "git diff -R -- ${files[*]}"
     execute_with_confirm "git restore -- ${files[*]}"
-    execute_with_echo    "git status"
+    execute_with_echo    "git status-with-color"
   fi
 }
 
@@ -46,7 +46,7 @@ function git:restore:bulk:staged {
   if [ -n "${files[*]}" ]; then
     execute_with_echo    "git diff --staged -R -- ${files[*]}"
     execute_with_confirm "git restore --staged -- ${files[*]}"
-    execute_with_echo    "git status"
+    execute_with_echo    "git status-with-color"
   fi
 }
 
@@ -55,7 +55,7 @@ function git:restore:bulk:staged:patch {
 
   if [ -n "${files[*]}" ]; then
     execute_with_echo "git restore --staged --patch -- ${files[*]}"
-    execute_with_echo "git status"
+    execute_with_echo "git status-with-color"
   fi
 }
 
@@ -81,6 +81,7 @@ function git:update:with_log {
   else
     execute_with_echo "git --no-pager log --reverse HEAD.. ${remote_branch}"
     execute_with_echo "git pull --stat"
+    execute_with_echo "git status-with-color"
   fi
 }
 
@@ -232,7 +233,7 @@ function git:commit:bulk {
   if [ -n "${files[*]}" ]; then
     execute_with_echo    "git commit --dry-run -- ${files[*]} | git pager"
     execute_with_confirm "git commit -- ${files[*]}"
-    execute_with_echo    "git status"
+    execute_with_echo    "git status-with-color"
   fi
 }
 
@@ -255,7 +256,7 @@ function git:clean:bulk {
   if [ -n "${files[*]}" ]; then
     git:proxy:cat:files "${files[@]}"
     execute_with_confirm "git clean --force -- ${files[*]}"
-    execute_with_echo    "git status"
+    execute_with_echo    "git status-with-color"
   fi
 }
 
@@ -317,6 +318,28 @@ function git:status:filter:all {
   git status --short "$@" | git:status:utility:filter
 }
 
+function git:status:color {
+  local local_branch="$(git branch --show-current)"
+  local local_branch_message_prefix="On branch"
+  local local_branch_pattern="^${local_branch_message_prefix} ${local_branch}$"
+  local local_branch_replace="${local_branch_message_prefix} $(highlight:magenta "${local_branch}")"
+
+  local remote_branch="$(git rev-parse --abbrev-ref --symbolic-full-name "@{u}")"
+  local remote_branch_message_prefix="Your branch is"
+  local remote_branch_pattern="^\\(${remote_branch_message_prefix} .\\+\\) '${remote_branch}'\\(.\\+\\)$"
+  local remote_branch_replace="\\1 '$(highlight:magenta "${remote_branch}")'\\2"
+
+  local ok_message="nothing to commit, working tree clean"
+  local ok_pattern="^${ok_message}$"
+  local ok_replace="$(highlight:green "${ok_message}")"
+
+  git -c color.status=always status "$@" |
+    git:proxy:sed \
+      -e "s!${local_branch_pattern}!${local_branch_replace}!" \
+      -e "s!${remote_branch_pattern}!${remote_branch_replace}!" \
+      -e "s/${ok_pattern}/${ok_replace}/"
+}
+
 function git:status:filter:staged {
   # `^ A` for intent-to-add
   git status --short | grep -E '^[^ ?]|^ A' | git:status:utility:filter
@@ -350,7 +373,7 @@ function git:status:utility:filter {
 
 function git:submodule:update {
   execute_with_echo "git submodule update --remote --rebase"
-  execute_with_echo "git status"
+  execute_with_echo "git status-with-color"
 }
 
 function git:submodule:remove:bulk {

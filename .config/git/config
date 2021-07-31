@@ -237,9 +237,10 @@
 	show-without-diff = show -s
 
 	# status
-	st = status
+	st = status-with-color
 
 	status-with-filter = "!args=\"$@\"; git sh \"git:status:filter:all $args\""
+	status-with-color  = "!args=\"$@\"; git sh \"git:status:color $args\""
 
 	# submodule
 	submodule-update-all = update-submodules

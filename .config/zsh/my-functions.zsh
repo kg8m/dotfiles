@@ -99,6 +99,10 @@ function highlight:yellow {
   printf "\e[1;38;5;3m%s\e[0;0m" "${*:?}"
 }
 
+function highlight:magenta {
+  printf "\e[1;38;5;5m%s\e[0;0m" "${*:?}"
+}
+
 function highlight:cyan {
   printf "\e[1;38;5;6m%s\e[0;0m" "${*:?}"
 }
