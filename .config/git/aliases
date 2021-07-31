@@ -70,6 +70,14 @@ function git:switch:select {
   [ -n "$branch" ] && execute_with_echo "git switch $branch"
 }
 
+function git:switch:main {
+  if git branch --contains main > /dev/null 2>&1; then
+    git switch main
+  else
+    git switch master
+  fi
+}
+
 function git:update:with_log {
   local remote_branch="$(git rev-parse --abbrev-ref '@{upstream}')"
 
@@ -89,13 +97,19 @@ function git:update:shallow {
   execute_with_echo "git pull --rebase --depth 1"
 }
 
-function git:update:master {
+function git:update:main {
   local current_branch="$(git branch --show-current)"
 
-  execute_with_echo "git switch master"
-  execute_with_echo "git update"
-  execute_with_echo "git switch ${current_branch}"
-  execute_with_echo "git branches"
+  execute_with_echo "git switch-to-main"
+
+  if [[ "$(git branch --show-current)" =~ ^(main|master)$ ]]; then
+    execute_with_echo "git update"
+    execute_with_echo "git switch ${current_branch}"
+    execute_with_echo "git branches"
+  else
+    echo:error "Switching branch failed."
+    return 1
+  fi
 }
 
 function git:branch:create:with_set_upstream {
@@ -298,7 +312,7 @@ function git:diff:branch:from {
 
     execute_with_confirm "git diff-without-space-changes ${options[*]} origin/${target}... ${pathspecs[*]}"
   else
-    echo:error "Specify a branch name, e.g., \"master\"."; exit 1
+    echo:error "Specify a branch name, e.g., \"main\"."; exit 1
   fi
 }
 

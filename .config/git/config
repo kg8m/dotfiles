@@ -151,6 +151,9 @@
 
 	switch-by-select = sh git:switch:select
 
+	switch-to-main   = sh git:switch:main
+	switch-to-master = sh git:switch:main
+
 	# checkout
 	co = checkout
 
@@ -160,7 +163,8 @@
 
 	update         = sh git:update:with_log
 	shallow-update = sh git:update:shallow
-	update-master  = sh git:update:master
+	update-main    = sh git:update:main
+	update-master  = sh git:update:main
 
 	# branch
 	brs = branches
