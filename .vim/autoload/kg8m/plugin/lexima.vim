@@ -144,6 +144,15 @@ def s:add_rules_for_ts(): void
   # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
   lexima#add_rule({ char: "<", at: '\w\%#<', input: "<Right>", filetype: filetypes })
 
+  # `<` when
+  #
+  #   |(
+  #
+  # then
+  #
+  #   <|>(
+  lexima#add_rule({ char: "<", at: '\%#(', input_after: ">", filetype: filetypes })
+
   # `>` when
   #
   #   <foo|>
