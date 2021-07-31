@@ -114,6 +114,13 @@ def s:on_source(): void
   g:lsp_fold_enabled                               = false
   g:lsp_semantic_enabled                           = true
 
+  # Prevent signs for code actions from hiding error/warning signs.
+  g:lsp_diagnostics_signs_priority     = 10  # (Default)
+  g:lsp_diagnostics_signs_priority_map = {
+    LspError:   g:lsp_diagnostics_signs_priority + 2,
+    LspWarning: g:lsp_diagnostics_signs_priority + 1,
+  }
+
   g:lsp_async_completion = true
 
   g:lsp_log_verbose = true
