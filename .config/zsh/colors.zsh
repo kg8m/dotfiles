@@ -1,5 +1,5 @@
 function plugin:setup:dircolors {
-  if ! [ -f "${KG8M_ZSH_CACHE_DIR:?}/dircolors_ansi-universal" ]; then
+  if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/dircolors_ansi-universal" ]; then
     if command -v gdircolors > /dev/null; then
       local dircolors=gdircolors
     else

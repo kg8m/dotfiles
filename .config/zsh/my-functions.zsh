@@ -285,7 +285,7 @@ function my_grep_with_filter() {
     fi
   done
 
-  if [ "${#non_options}" = "0" ] && ! [[ "${options[-1]}" =~ ^- ]]; then
+  if [ "${#non_options}" = "0" ] && [[ ! "${options[-1]}" =~ ^- ]]; then
     non_options+=("${options[-1]}")
     options=("${options[1,-2]}")
   fi
@@ -383,7 +383,7 @@ function update_zsh_plugins {
 function compile_zshrcs:run {
   local zshrc
   for zshrc in ~/.config/zsh/*.zsh ~/.config/zsh.local/.z* ~/.zshenv* ~/.zshrc*; do
-    if [ -f "$zshrc" ] && ! [[ "$zshrc" =~ \.zwc$ ]]; then
+    if [ -f "$zshrc" ] && [[ ! "$zshrc" =~ \.zwc$ ]]; then
       zcompile "$zshrc"
     fi
   done

@@ -118,7 +118,7 @@ function plugin:setup:binary_releaseds {
 
   function plugin:setup:nextword {
     if command -v nextword > /dev/null; then
-      if ! [ -d "${NEXTWORD_DATA_PATH:-}" ]; then
+      if [ ! -d "${NEXTWORD_DATA_PATH:-}" ]; then
         local current_dir="$PWD"
         local parent_dir="$(dirname "$NEXTWORD_DATA_PATH")"
 

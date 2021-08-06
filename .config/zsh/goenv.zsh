@@ -3,7 +3,7 @@ function plugin:setup:goenv {
   export GOENV_ROOT="$PWD"
   path=("$GOENV_ROOT/shims" "$GOENV_ROOT/bin" "${path[@]}")
 
-  if ! [ -f "${KG8M_ZSH_CACHE_DIR:?}/goenv_init" ]; then
+  if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/goenv_init" ]; then
     goenv init - > "$KG8M_ZSH_CACHE_DIR/goenv_init"
     zcompile "$KG8M_ZSH_CACHE_DIR/goenv_init"
   fi

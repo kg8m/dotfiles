@@ -3,7 +3,7 @@ if ! command -v rubocop > /dev/null; then
   exit 1
 fi
 
-if ! [ -f .rubocop.yml ]; then
+if [ ! -f .rubocop.yml ]; then
   exit 1
 fi
 

@@ -3,7 +3,7 @@ function plugin:setup:nodenv {
     path=("$HOME/.nodenv/bin" "${path[@]}")
 
     if command -v nodenv > /dev/null; then
-      if ! [ -f "${KG8M_ZSH_CACHE_DIR:?}/nodenv_init" ]; then
+      if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/nodenv_init" ]; then
         nodenv init - > "$KG8M_ZSH_CACHE_DIR/nodenv_init"
         zcompile "$KG8M_ZSH_CACHE_DIR/nodenv_init"
       fi

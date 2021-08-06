@@ -1,6 +1,6 @@
 function plugin:setup:direnv {
   if command -v direnv > /dev/null; then
-    if ! [ -f "${KG8M_ZSH_CACHE_DIR:?}/direnv_hook" ]; then
+    if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/direnv_hook" ]; then
       direnv hook zsh > "$KG8M_ZSH_CACHE_DIR/direnv_hook"
       zcompile "$KG8M_ZSH_CACHE_DIR/direnv_hook"
     fi
