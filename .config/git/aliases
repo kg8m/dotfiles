@@ -113,7 +113,7 @@ function git:update:main {
 }
 
 function git:branch:create:with_set_upstream {
-  if git status --porcelain | grep -E '^[^ ]' -q; then
+  if git status --porcelain | grep -E '^[^ ?]' -q; then
     echo:error "Staged changes exist. Unstage them before creating a branch."
     return 1
   fi
