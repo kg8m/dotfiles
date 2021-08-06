@@ -107,6 +107,10 @@ function highlight:cyan {
   printf "\e[1;38;5;6m%s\e[0;0m" "${*:?}"
 }
 
+function highlight:gray {
+  printf "\e[1;38;5;245m%s\e[0;0m" "${*:?}"
+}
+
 function echo:error {
   highlight:red "ERROR: " >&2
   echo "$@" >&2
@@ -119,7 +123,7 @@ function echo:warn {
 
 function notify {
   local options=("${(M)@:#-*}")
-  local non_options=("${@:#-*}")
+  local non_options=("${(R)@:#-*}")
   local message="[$(hostname)] ${non_options:-Command finished.}"
 
   local notifier_options=("-group \"NOTIFY_${message}\"")
@@ -347,6 +351,107 @@ function tig {
   esac
 }
 
+function parallel {
+  local commands=("$@")
+
+  if [ -z "${commands[*]}" ]; then
+    echo:error "No commands given."
+    return 1
+  fi
+
+  function parallel:log:register {
+    ((PARALLEL_REGISTER_COUNT+=1))
+
+    local message="${1:?}"
+    local full_message="$(
+      printf "%s%s %s" \
+        "$(highlight:cyan "[Parallel]")" \
+        "$(highlight:gray "$(printf "[%d/%d]" "${PARALLEL_REGISTER_COUNT}" "${PARALLEL_TOTAL_COUNT}")")" \
+        "${message}"
+    )"
+
+    echo -e "${full_message}" >&2
+  }
+
+  function parallel:log:done {
+    ((PARALLEL_DONE_COUNT+=1))
+
+    local options=("${(M)@:#-*}")
+    local non_options=("${(R)@:#-*}")
+    local full_message="$(
+      printf "%s%s %s" \
+        "$(highlight:cyan "[Parallel]")" \
+        "$(highlight:gray "$(printf "[%d/%d]" "${PARALLEL_DONE_COUNT}" "${PARALLEL_TOTAL_COUNT}")")" \
+        "${non_options[*]}"
+    )"
+
+    echo -e "${full_message}\n" >&2
+
+    local notify_message="$(echo "${full_message}" | remove_escape_sequences 2>/dev/null)"
+
+    if [ "${options[(I)--notify-stay]}" = "0" ]; then
+      notify --nostay "${notify_message}"
+    else
+      notify "${notify_message}"
+    fi
+  }
+
+  function parallel:callback {
+    local job_name="$1"
+    local returned_code="$2"
+    local stdout="$3"
+    local execution_time="$4"
+    local stderr="$5"
+
+    local log_options=()
+
+    if [ "${returned_code}" = "0" ]; then
+      local result="$(highlight:green "Succeeded")"
+    else
+      log_options+=("--notify-stay")
+      local result="$(highlight:red "Failed")"
+    fi
+
+    local log_message="$(printf "%s in %.3f: \`%s\`" "${result}" "${execution_time}" "${job_name}")"
+    parallel:log:done "${log_options[@]}" "${log_message}"
+
+    if [ -n "${stderr}" ]; then
+      echo -e "${stderr}\n" >&2
+    fi
+
+    if [ -n "${stdout}" ]; then
+      echo -e "${stdout}\n"
+    fi
+
+    horizontal_line
+
+    if [ "${PARALLEL_DONE_COUNT}" = "${PARALLEL_TOTAL_COUNT}" ]; then
+      echo -e "$(highlight:cyan "[Parallel]") All commands finished.\n\n" >&2
+      zle .reset-prompt
+
+      async_stop_worker "PARALLEL_WORKER"
+
+      unseet -f parallel:log:register
+      unseet -f parallel:log:done
+      unseet -f parallel:callback
+    fi
+  }
+
+  export PARALLEL_TOTAL_COUNT="${#commands}"
+  export PARALLEL_REGISTER_COUNT=0
+  export PARALLEL_DONE_COUNT=0
+
+  async_stop_worker       "PARALLEL_WORKER"
+  async_start_worker      "PARALLEL_WORKER"
+  async_register_callback "PARALLEL_WORKER" "parallel:callback"
+
+  local command
+  for command in "${commands[@]}"; do
+    parallel:log:register "Execute: \`${command}\`"
+    async_job "PARALLEL_WORKER" "${command}"
+  done
+}
+
 function update_zsh_plugins {
   trash "${KG8M_ZSH_CACHE_DIR:?}"
   mkdir -p "$KG8M_ZSH_CACHE_DIR"
@@ -449,4 +554,21 @@ function progressbar {
   local empty_chars="${(r:$left_count:: :)}"
 
   printf "\r[%s%s] %3d%%" "$fill_chars" "$empty_chars" "$progress"
+}
+
+# Remove escape sequences
+# https://stackoverflow.com/questions/17998978/removing-colors-from-output
+# https://stackoverflow.com/questions/19296667/remove-ansi-color-codes-from-a-text-file-using-bash
+function remove_escape_sequences {
+  local sed_args=()
+
+  if echo | sed -r > /dev/null 2>&1; then
+    sed_args+=("-r")
+  else
+    sed_args+=("-E")
+  fi
+
+  sed_args+=('s/[[:cntrl:]]\[([0-9]{1,3}(;[0-9]{1,3}){0,4})?[fmGHJK]//g')
+
+  sed "${sed_args[@]}"
 }

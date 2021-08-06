@@ -23,3 +23,7 @@ function plugin:setup:others {
 
 zinit ice lucid wait"0c" atload"plugin:setup:others"
 zinit snippet /dev/null
+
+# cf. async_start_worker, async_stop_worker, async_job, and so on
+zinit ice lucid wait"0c"
+zinit light mafredri/zsh-async

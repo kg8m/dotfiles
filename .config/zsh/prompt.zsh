@@ -78,9 +78,8 @@ function() {
 
     unset -f setup:prompt:refresh
   }
-  zinit ice lucid wait"0c" atload"setup:prompt:refresh"
-  zinit light mafredri/zsh-async
-
+  zinit ice lucid wait"command -v async_start_worker > /dev/null" atload"setup:prompt:refresh"
+  zinit snippet /dev/null
 }
 
 export ZSH_THEME_GIT_PROMPT_PREFIX="["
