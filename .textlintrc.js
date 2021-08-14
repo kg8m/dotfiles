@@ -32,6 +32,9 @@ const config = {
       allow: [
         // Ignore "方" because "ja-hiragana-keishikimeishi" shows too many false positives.
         "方",
+
+        // Disable ja-unnatural-alphabet.
+        "ｗｗｗ",
       ],
     },
     "node-types": {
