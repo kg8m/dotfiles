@@ -25,6 +25,10 @@ function plugin:init:abbr {
   # Silence "Added the global session abbreviation `foo`" messages.
   export ABBR_QUIET="1"
 
+  # Prevent "_abbr_global_expansion:source:12: no such file or directory:
+  # /var/folders/foo/bar/baz/zsh-abbr/global-user-abbreviations" error after long sleep of OS.
+  export ABBR_TMPDIR="${XDG_CACHE_HOME:?}/zsh/abbr/"
+
   # Instead of `$XDG_CONFIG_HOME/zsh/abbreviations`
   export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CACHE_HOME:?}/zsh/abbreviations"
 }
