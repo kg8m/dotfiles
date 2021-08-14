@@ -28,6 +28,7 @@ function() {
   local options=(
     "--ansi"
     "--bind=${(j:,:)binds}"
+    "--color='fg:250,fg+:255'"
     "--exact"
     "--exit-0"
     "--info=inline"
