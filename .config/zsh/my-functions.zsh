@@ -431,9 +431,9 @@ function parallel {
 
       async_stop_worker "PARALLEL_WORKER"
 
-      unseet -f parallel:log:register
-      unseet -f parallel:log:done
-      unseet -f parallel:callback
+      unset -f parallel:log:register
+      unset -f parallel:log:done
+      unset -f parallel:callback
     fi
   }
 
