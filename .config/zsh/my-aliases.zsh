@@ -31,7 +31,10 @@ function plugin:init:abbr {
 function plugin:setup:abbr {
   abbr --session --force --global g="git"
   abbr --session --force --global v="vim"
-  abbr --session --force --global vi="vim"
+
+  # Use `--quieter` option to silence "`vi` will now expand as an abbreviation" warning when overwriting system `vi`
+  # command.
+  abbr --session --force --global --quieter vi="vim"
 
   abbr --session --force cdb="cd-bookmark"
   abbr --session --force gr="my_grep_with_filter"
