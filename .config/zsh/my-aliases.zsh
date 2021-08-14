@@ -22,17 +22,20 @@ alias sudo='sudo env PATH=$PATH'
 alias watch="watch --color"
 
 function plugin:init:abbr {
+  # Silence "Added the global session abbreviation `foo`" messages.
+  export ABBR_QUIET="1"
+
   # Instead of `$XDG_CONFIG_HOME/zsh/abbreviations`
   export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CACHE_HOME:?}/zsh/abbreviations"
 }
 function plugin:setup:abbr {
-  abbr --session --quiet --force --global g="git"
-  abbr --session --quiet --force --global v="vim"
-  abbr --session --quiet --force --global vi="vim"
+  abbr --session --force --global g="git"
+  abbr --session --force --global v="vim"
+  abbr --session --force --global vi="vim"
 
-  abbr --session --quiet --force cdb="cd-bookmark"
-  abbr --session --quiet --force gr="my_grep_with_filter"
-  abbr --session --quiet --force t="attach_or_new_tmux"
+  abbr --session --force cdb="cd-bookmark"
+  abbr --session --force gr="my_grep_with_filter"
+  abbr --session --force t="attach_or_new_tmux"
 
   unset -f plugin:setup:abbr
 }
