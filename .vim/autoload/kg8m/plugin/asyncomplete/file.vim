@@ -15,6 +15,6 @@ def s:on_post_source(): void
     name: "file",
     allowlist: ["*"],
     completor: function("asyncomplete#sources#file#completor"),
-    priority: 3,
+    priority: 2,
   }))
 enddef
