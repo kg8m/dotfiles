@@ -112,6 +112,10 @@ const config = {
       "4.2.7.コロン(：)": false,                                // 4.2.7: コロン(：)を使用する場合は「全角」で表記します。 → 半角＋スペースが好み
       "4.3.1.丸かっこ（）": false,                              // 4.3.1: 半角のかっこ()が使用されています。全角のかっこ（）を使用してください。 → 使うことがある
     },
+    // For Japanese contents. Terminology doesn't work for Japanese.
+    "prh": {
+      rulePaths: ["~/.config/textlint/prh-rules.yml"],
+    },
     "terminology": {
       defaultTerms: true,
     },

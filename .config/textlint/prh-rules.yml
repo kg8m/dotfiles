@@ -1,0 +1,84 @@
+version: 1
+rules:
+  # - expected: Expected Text
+  #   options:
+  #     wordBoundary: true
+  #   prh: (Some comments)
+  - expected: Bash
+    options:
+      wordBoundary: true
+  - expected: ESLint
+    options:
+      wordBoundary: true
+  - expected: iTerm2
+    pattern: /iterm2?/i
+    options:
+      wordBoundary: true
+  - expected: jQuery
+    options:
+      wordBoundary: true
+  - expected: MacVim
+    pattern: /mac ?vim/i
+    options:
+      wordBoundary: true
+  - expected: MACアドレス
+  - expected: Markdown
+    options:
+      wordBoundary: true
+  - expected: MySQL
+    options:
+      wordBoundary: true
+  - expected: Neovim
+    pattern: /neo ?vim/i
+    options:
+      wordBoundary: true
+  - expected: PostgreSQL
+    options:
+      wordBoundary: true
+  - expected: RSpec
+    options:
+      wordBoundary: true
+  - expected: RuboCop
+    pattern: /rubo ?cop/i
+    options:
+      wordBoundary: true
+  - expected: sh
+    options:
+      wordBoundary: true
+  - expected: textlint
+    options:
+      wordBoundary: true
+  - expected: Tig
+    options:
+      wordBoundary: true
+  - expected: tmux
+    options:
+      wordBoundary: true
+  - expected: vanilla-extract
+    pattern: /vanilla[- ]?extract/i
+    options:
+      wordBoundary: true
+  - expected: Vim
+    options:
+      wordBoundary: true
+  - expected: Vim script
+    pattern: /vim ?script/i
+    options:
+      wordBoundary: true
+  - expected: Vim9 script
+    pattern: /vim9 ?script/i
+    options:
+      wordBoundary: true
+  - expected: VS Code
+    pattern: /vs ?code/i
+    options:
+      wordBoundary: true
+  - expected: webpack
+    options:
+      wordBoundary: true
+  - expected: Webpacker
+    options:
+      wordBoundary: true
+  - expected: zsh
+    options:
+      wordBoundary: true
