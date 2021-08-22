@@ -48,14 +48,18 @@ def s:cr_expr(): string
 enddef
 
 def s:bs_expr(): string
-  const prev_char = strpart(getline("."), col(".") - 3, 1)
   const base = lexima#expand("<BS>", "i") .. kg8m#plugin#completion#refresh()
 
-  if &omnifunc !=# "" && prev_char ==# "."
-    # Trigger omni completion
-    return base .. "\<C-x>\<C-o>"
-  else
+  if &omnifunc ==# ""
     return base
+  else
+    const prev_char = strpart(getline("."), col(".") - 3, 1)
+
+    if prev_char ==# "."
+      return base .. "\<C-x>\<C-o>"
+    else
+      return base
+    endif
   endif
 enddef
 
