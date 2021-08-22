@@ -55,5 +55,5 @@ def s:start_refresh_timer(): void
 enddef
 
 def s:stop_refresh_timer(): void
-  timer_stop(get(s:cache, "refresh_timer"))
+  timer_stop(get(s:cache, "refresh_timer", -1))
 enddef

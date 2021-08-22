@@ -16,11 +16,7 @@ def kg8m#plugin#hitspop#configure(): void
 enddef
 
 def s:update_search_status(): void
-  if has_key(s:cache, "timer")
-    timer_stop(s:cache.timer)
-    remove(s:cache, "timer")
-  endif
-
+  timer_stop(get(s:cache, "timer", -1))
   s:cache.timer = timer_start(100, (_) => s:force_update_search_status())
 enddef
 

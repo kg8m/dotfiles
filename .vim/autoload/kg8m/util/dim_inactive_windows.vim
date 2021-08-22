@@ -1,6 +1,6 @@
 vim9script
 
-var s:timer: any
+var s:timer = -1
 
 def kg8m#util#dim_inactive_windows#setup(): void
   augroup my_vimrc
