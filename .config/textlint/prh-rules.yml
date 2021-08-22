@@ -59,6 +59,7 @@ rules:
     options:
       wordBoundary: true
   - expected: Vim
+    pattern: /(?<!\.)vim(?!-)/i
     options:
       wordBoundary: true
   - expected: Vim script
