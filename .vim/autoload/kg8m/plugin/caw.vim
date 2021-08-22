@@ -1,14 +1,33 @@
 vim9script
 
 def kg8m#plugin#caw#configure(): void
-  map gc <Plug>(caw:hatpos:toggle)
+  map <expr> gc <SID>exec_with_setup()
 
   kg8m#plugin#configure({
-    lazy:   true,
-    on_map: [["nv", "<Plug>(caw:"]],
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    lazy: true,
+    hook_source: () => s:on_source(),
   })
+enddef
+
+def s:exec_with_setup(): string
+  if !kg8m#plugin#is_sourced("caw.vim")
+    kg8m#plugin#source("caw.vim")
+  endif
+
+  s:setup_filetype()
+  return "\<Plug>(caw:hatpos:toggle)"
+enddef
+
+def s:setup_filetype(): void
+  if &filetype ==# "Gemfile"
+    s:setup_gemfile()
+  elseif &filetype ==# "vim"
+    s:setup_vim()
+  endif
+enddef
+
+def s:setup_gemfile(): void
+  caw#load_ftplugin("ruby")
 enddef
 
 # Overwrite caw.vim's default: https://github.com/tyru/caw.vim/blob/41be34ca231c97d6be6c05e7ecb5b020f79cd37f/after/ftplugin/vim/caw.vim#L5-L9
@@ -24,17 +43,4 @@ enddef
 def s:on_source(): void
   g:caw_no_default_keymappings = true
   g:caw_hatpos_skip_blank_line = true
-
-  augroup my_vimrc
-    autocmd FileType Gemfile b:caw_oneline_comment = "#"
-
-    # Re-setup lazily to overwrite caw.vim's defualt
-    autocmd FileType vim s:setup_vim() | timer_start(100, (_) => s:setup_vim())
-  augroup END
-enddef
-
-def s:on_post_source(): void
-  if &filetype ==# "vim"
-    s:setup_vim()
-  endif
 enddef
