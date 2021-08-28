@@ -20,8 +20,10 @@ def kg8m#plugin#lsp#servers#register(): void
   s:register_gopls()
   s:register_html_language_server()
   s:register_json_language_server()
+  s:register_ruby_language_server()
   s:register_solargraph()
   s:register_sqls()
+  s:register_steep()
   s:register_typescript_language_server()
   s:register_vim_language_server()
   s:register_vue_language_server()
@@ -178,6 +180,24 @@ def s:activate_json_language_server(): void
   })
 enddef
 
+# gem install ruby_language_server
+def s:register_ruby_language_server(): void
+  s:register({
+    name: "ruby_language_server",
+    allowlist: ["ruby"],
+  })
+enddef
+
+def s:activate_ruby_language_server(): void
+  s:activate("ruby_language_server", {
+    cmd: (_) => ["ruby_language_server"],
+    initialization_options: {
+      diagnostics: "false",
+    },
+    document_format: false,
+  })
+enddef
+
 # gem install solargraph
 def s:register_solargraph(): void
   s:register({
@@ -225,6 +245,25 @@ def s:activate_sqls(): void
       sqls: {
         connections: get(g:, "sqls_connections", []),
       },
+    },
+  })
+enddef
+
+# gem install steep
+# Requires Steepfile.
+def s:register_steep(): void
+  s:register({
+    name: "steep",
+    allowlist: ["ruby"],
+  })
+enddef
+
+def s:activate_steep(): void
+  s:activate("steep", {
+    cmd: (_) => ["steep", "langserver"],
+
+    initialization_options: {
+      diagnostics: true,
     },
   })
 enddef
