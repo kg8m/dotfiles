@@ -163,11 +163,12 @@ def kg8m#configure#gui(): void
   # to be used for double-width characters."
   set guifontwide=migu-1m-regular:h12
 
-  set transparency=20
   set imdisable
 
-  # Always show tabline
-  set showtabline=2
+  # 0: never
+  # 1: only if there are at least two tab pages
+  # 2: always
+  set showtabline=1
 enddef
 
 # Called from configurations for some plugins
