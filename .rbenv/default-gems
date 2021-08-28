@@ -4,4 +4,6 @@ erb_lint
 pry
 pry-byebug
 pry-doc
+ruby_language_server
 solargraph
+steep
