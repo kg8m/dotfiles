@@ -154,6 +154,15 @@ if kg8m#plugin#register("tyru/operator-camelize.vim")
   kg8m#plugin#operator#camelize#configure()
 endif
 
+if kg8m#plugin#register("yssl/QFEnter")
+  g:qfenter_keymap = {
+    open: ["<CR>"],
+
+    # Disable other mappings.
+    vopen: [], hopen: [], topen: [],
+  }
+endif
+
 if kg8m#plugin#register("mechatroner/rainbow_csv", { if: !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#rainbow_csv#configure()
 endif
