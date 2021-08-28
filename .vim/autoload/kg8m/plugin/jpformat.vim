@@ -5,7 +5,7 @@ const FORMATEXPR = "jpfmt#formatexpr()"
 def kg8m#plugin#jpformat#configure(): void
   kg8m#plugin#configure({
     lazy:   true,
-    on_map: ["gq"],
+    on_map: { x: "gq" },
     hook_source: () => s:on_source(),
   })
 enddef

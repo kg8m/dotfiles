@@ -8,7 +8,7 @@ def kg8m#plugin#asterisk#configure(): void
 
   kg8m#plugin#configure({
     lazy:   true,
-    on_map: [["nv", "<Plug>(asterisk-"]],
+    on_map: { nx: "<Plug>(asterisk-" },
   })
 enddef
 

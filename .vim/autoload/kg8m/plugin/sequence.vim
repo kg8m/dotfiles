@@ -6,6 +6,6 @@ def kg8m#plugin#sequence#configure(): void
 
   kg8m#plugin#configure({
     lazy:   true,
-    on_map: [["vn", "<Plug>Sequence"]],
+    on_map: { x: "<Plug>Sequence" },
   })
 enddef

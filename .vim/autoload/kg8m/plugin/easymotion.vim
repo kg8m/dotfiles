@@ -19,6 +19,6 @@ def kg8m#plugin#easymotion#configure(): void
 
   kg8m#plugin#configure({
     lazy:   true,
-    on_map: "<Plug>(easymotion-",
+    on_map: { nx: "<Plug>(easymotion-" },
   })
 enddef

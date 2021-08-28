@@ -12,7 +12,7 @@ def kg8m#plugin#fzf_tjump#configure()
   kg8m#plugin#configure({
     lazy:    true,
     on_cmd:  "FzfTjump",
-    on_map:  [["nv", "<Plug>(fzf-tjump)"]],
+    on_map:  { nx: "<Plug>(fzf-tjump)" },
     depends: "fzf.vim",
   })
 enddef

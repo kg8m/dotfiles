@@ -5,6 +5,6 @@ def kg8m#plugin#winresizer#configure(): void
 
   kg8m#plugin#configure({
     lazy:   true,
-    on_map: [["n", g:winresizer_start_key]],
+    on_map: { n: g:winresizer_start_key },
   })
 enddef

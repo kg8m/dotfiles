@@ -11,6 +11,6 @@ def kg8m#plugin#choosewin#configure(): void
 
   kg8m#plugin#configure({
     lazy:   true,
-    on_map: "<Plug>(choosewin)",
+    on_map: { n: "<Plug>(choosewin)" },
   })
 enddef

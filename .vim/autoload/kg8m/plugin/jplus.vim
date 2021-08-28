@@ -7,6 +7,6 @@ def kg8m#plugin#jplus#configure(): void
 
   kg8m#plugin#configure({
     lazy:   true,
-    on_map: [["nv", "<Plug>(jplus)"]],
+    on_map: { nx: "<Plug>(jplus)" },
   })
 enddef

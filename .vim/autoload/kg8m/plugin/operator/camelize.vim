@@ -6,9 +6,6 @@ def kg8m#plugin#operator#camelize#configure(): void
 
   kg8m#plugin#configure({
     lazy:   true,
-    on_map: [
-      ["v", "<Plug>(operator-camelize)"],
-      ["v", "<Plug>(operator-decamelize)"]
-    ],
+    on_map: { x: ["<Plug>(operator-camelize)", "<Plug>(operator-decamelize)"] },
   })
 enddef

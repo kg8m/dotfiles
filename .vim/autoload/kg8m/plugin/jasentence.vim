@@ -5,6 +5,6 @@ def kg8m#plugin#jasentence#configure(): void
 
   kg8m#plugin#configure({
     lazy:   true,
-    on_map: [["nv", "("], ["nv", ")"], ["o", "s"]],
+    on_map: { nv: ["(", ")"], o: "s" },
   })
 enddef
