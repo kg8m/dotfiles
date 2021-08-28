@@ -120,6 +120,7 @@ def kg8m#configure#others(): void
   augroup END
 
   set belloff=all
+  set diffopt+=algorithm:histogram
   set hidden
   set list
   set listchars=tab:>\ ,eol:\ ,trail:_,extends:>,precedes:<

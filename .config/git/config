@@ -69,7 +69,7 @@
 	hunk-header-decoration-style = "#666666 box"
 
 [diff]
-	algorithm = patience
+	algorithm = histogram
 	context = 10
 	compactionHeuristic = true
 	colorMoved = plain
