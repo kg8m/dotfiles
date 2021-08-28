@@ -21,6 +21,7 @@ def kg8m#plugin#update#show_log(): void
     .. '\ !^Fast-forwarded\\ *\\ to'
     .. '\ !^(.*/.*)\\ From\\ '
     .. '\ !^From\\ https://'
+    .. '\ !^Already\\ up\\ to\\ date\\.$'
     .. '\ !Successfully\\ rebased\\ and\\ updated\\ refs/heads/'
     .. '\ !*\\ [new\\ tag]'
     .. '\ !already\\ exists,\\ disabling\\ multiplexing'
