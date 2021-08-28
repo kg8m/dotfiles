@@ -33,7 +33,7 @@ def kg8m#plugin#lsp#is_buffer_enabled(): bool
   if has_key(b:, "lsp_buffer_enabled")
     return true
   else
-    return kg8m#plugin#lsp#servers#are_all_running()
+    return kg8m#plugin#lsp#servers#are_all_running_or_exited()
   endif
 enddef
 
@@ -42,7 +42,7 @@ def s:on_lsp_buffer_enabled(): void
     return
   endif
 
-  if !kg8m#plugin#lsp#servers#are_all_running()
+  if !kg8m#plugin#lsp#servers#are_all_running_or_exited()
     return
   endif
 
@@ -129,6 +129,7 @@ def s:on_source(): void
   augroup my_vimrc
     autocmd User lsp_setup          kg8m#plugin#lsp#stream#subscribe()
     autocmd User lsp_buffer_enabled s:on_lsp_buffer_enabled()
+    autocmd User lsp_server_exit    s:on_lsp_buffer_enabled()
 
     autocmd FileType * s:reset_target_buffer()
   augroup END

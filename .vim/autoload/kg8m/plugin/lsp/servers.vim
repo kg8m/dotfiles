@@ -34,6 +34,7 @@ def kg8m#plugin#lsp#servers#register(): void
 
     autocmd User lsp_register_server      timer_start(100, (_) => lsp#activate())
     autocmd User after_lsp_buffer_enabled s:overwrite_capabilities()
+    autocmd User after_lsp_buffer_enabled s:check_exited_servers()
   augroup END
 
   timer_start(1000, (_) => s:ready())
@@ -505,9 +506,10 @@ def s:schemas(): list<any>
   return s:cache.lsp_schemas_json
 enddef
 
-def kg8m#plugin#lsp#servers#are_all_running(): bool
+def kg8m#plugin#lsp#servers#are_all_running_or_exited(): bool
   for server_name in kg8m#plugin#lsp#servers#names(&filetype)
-    if lsp#get_server_status(server_name) !=# "running"
+    if lsp#get_server_status(server_name) !=# "running" &&
+       lsp#get_server_status(server_name) !=# "exited"
       return false
     endif
   endfor
@@ -529,6 +531,16 @@ def s:overwrite_capabilities(): void
 
     if has_key(capabilities, "documentFormattingProvider")
       capabilities.documentFormattingProvider = false
+    endif
+  endfor
+enddef
+
+def s:check_exited_servers(): void
+  for server_name in kg8m#plugin#lsp#servers#names(&filetype)
+    if lsp#get_server_status(server_name) ==# "exited"
+      kg8m#util#logger#error(
+        printf("%s has been exited. Check %s.", server_name, g:lsp_log_file)
+      )
     endif
   endfor
 enddef
