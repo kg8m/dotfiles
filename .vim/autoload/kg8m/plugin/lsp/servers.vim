@@ -490,10 +490,6 @@ def kg8m#plugin#lsp#servers#filetypes(): list<string>
   return keys(s:filetyped_configs)
 enddef
 
-def kg8m#plugin#lsp#servers#candidate_names(): list<string>
-  return keys(s:availabilities)
-enddef
-
 def kg8m#plugin#lsp#servers#is_available(server_name: string): bool
   return get(s:availabilities, server_name, false)
 enddef

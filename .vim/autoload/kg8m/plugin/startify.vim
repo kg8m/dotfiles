@@ -68,17 +68,7 @@ def s:setup(): void
     "",
     "  Vim version: " .. v:versionlong,
     "",
-    "  LSPs: ",
   ]
-
-  for server_name in kg8m#plugin#lsp#servers#candidate_names()->copy()->sort()
-    const is_available = kg8m#plugin#lsp#servers#is_available(server_name)
-    g:startify_custom_header += [
-      "  " .. (is_available ? "👼 " : "😈 ") .. server_name,
-    ]
-  endfor
-
-  g:startify_custom_header += [""]
 
   augroup my_vimrc
     autocmd FileType startify setlocal cursorline cursorlineopt=both
