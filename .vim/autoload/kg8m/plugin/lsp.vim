@@ -98,7 +98,21 @@ def s:document_format(options = {}): void
   endif
 
   if get(options, "sync", true)
-    silent LspDocumentFormatSync
+    const configs   = kg8m#plugin#lsp#servers#configs(&filetype)
+    const Mapper    = (_, config) => get(config, "document_format_max_bytes", 9'999'999)
+    const max_bytes = configs->mapnew(Mapper)->min()
+
+    if getfsize(@%) <= max_bytes
+      silent LspDocumentFormatSync
+    else
+      # Show warning after written message.
+      timer_start(500, (_) => {
+        kg8m#util#logger#warn([
+          "Document formatting is skipped because the file is too large.",
+          "Execute `:LspDocumentFormat` manually.",
+        ]->join(" "))
+      })
+    endif
   else
     if &modified && mode() ==# "n"
       silent LspDocumentFormat

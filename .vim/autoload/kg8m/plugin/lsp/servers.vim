@@ -247,6 +247,9 @@ def s:activate_sqls(): void
         connections: get(g:, "sqls_connections", []),
       },
     },
+
+    # sqls' document formatting is too heavy if the file is very large.
+    document_format_max_bytes: 10'000,
   })
 enddef
 
