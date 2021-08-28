@@ -32,8 +32,8 @@ def kg8m#plugin#update#show_log(): void
 
   execute "Unite dein/log -buffer-name=update_plugins -input=" .. initial_input
 
-  # Press `n` key to search "Updated"
-  @/ = "Updated"
+  # Press `n` key to search.
+  @/ = "\\v<(Error|Updated)>"
 enddef
 
 def s:run(options: dict<any> = {}): void
