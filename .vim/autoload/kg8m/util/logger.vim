@@ -11,3 +11,7 @@ def kg8m#util#logger#warn(message: string): void
   echomsg message
   echohl None
 enddef
+
+def kg8m#util#logger#info(message: string): void
+  echomsg message
+enddef
