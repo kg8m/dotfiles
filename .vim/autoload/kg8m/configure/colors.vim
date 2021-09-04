@@ -5,7 +5,7 @@ def kg8m#configure#colors#terminal(): void
 
   g:terminal_ansi_colors = [
     # Black,     Dark Red,     Dark GreeN, Brown,
-    # Dark Blue, Dark Magenta, Dark Cyan,  Light GrEy,
+    # Dark Blue, Dark Magenta, Dark Cyan,  Light Grey,
     # Dark Grey, Red,          Green,      YellOw,
     # Blue,      Magenta,      Cyan,       White,
     "#000000",   "#F92672",    "#BAED00",  "#EBCE00",
