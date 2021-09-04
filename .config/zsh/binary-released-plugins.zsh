@@ -22,8 +22,9 @@ function plugin:setup:binary_releaseds {
       profclems/glab
       sharkdp/hyperfine
       itchyny/mmv
-      koalaman/shellcheck
       BurntSushi/ripgrep
+      koalaman/shellcheck
+      XAMPPRocky/tokei
     )
   fi
 
@@ -39,7 +40,7 @@ function plugin:setup:binary_releaseds {
       cli)
         mv ./gh* ./"$plugin"
         ;;
-      fzf | golangci-lint-langserver | nextword | sqls)
+      fzf | golangci-lint-langserver | nextword | sqls | tokei)
         # Do nothing
         ;;
       *)
@@ -52,7 +53,7 @@ function plugin:setup:binary_releaseds {
       bat | delta | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
-      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls)
+      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | tokei)
         local binary="${plugin}"
         ;;
       cli)
@@ -80,7 +81,7 @@ function plugin:setup:binary_releaseds {
     execute_with_echo "which $command"
 
     case "$plugin" in
-      bat | cli | delta | direnv | fzf | glab | hyperfine | mmv | ripgrep | shellcheck)
+      bat | cli | delta | direnv | fzf | glab | hyperfine | mmv | ripgrep | shellcheck | tokei)
         execute_with_echo "$command --version"
         ;;
       make2help)
@@ -159,7 +160,7 @@ function plugin:setup:binary_releaseds {
     )
 
     case "$plugin" in
-      bat | delta | hyperfine | ripgrep)
+      bat | delta | hyperfine | ripgrep | tokei)
         # Choose musl for legacy environments
         options+=(bpick"*musl*")
         ;;
