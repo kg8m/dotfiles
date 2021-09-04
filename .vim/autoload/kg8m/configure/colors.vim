@@ -8,10 +8,10 @@ def kg8m#configure#colors#terminal(): void
     # Dark Blue, Dark Magenta, Dark Cyan,  Light GrEy,
     # Dark Grey, Red,          Green,      YellOw,
     # Blue,      Magenta,      Cyan,       White,
-    "#000000",   "#EE7900",    "#BAED00",  "#EBCE00",
-    "#00BEF3",   "#BAA0F0",    "#66AED7",  "#EAEAEA",
-    "#333333",   "#FF8200",    "#C1F600",  "#FFE000",
-    "#00C2F9",   "#C6ABFF",    "#71C0ED",  "#FFFFFF",
+    "#000000",   "#F92672",    "#BAED00",  "#EBCE00",
+    "#00BEF3",   "#BAA0F0",    "#71C0ED",  "#EAEAEA",
+    "#333333",   "#FA397E",    "#C1F600",  "#FFE000",
+    "#00C2F9",   "#C6ABFF",    "#79CEFF",  "#FFFFFF",
   ]
 enddef
 
