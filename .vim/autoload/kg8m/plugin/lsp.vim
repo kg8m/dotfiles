@@ -62,7 +62,7 @@ def s:on_lsp_buffer_enabled(): void
   endif
 
   augroup my_vimrc
-    autocmd BufWritePre <buffer> s:document_format({ sync: true })
+    autocmd BufWritePre <buffer> s:document_format_on_save()
   augroup END
 
   kg8m#events#notify_after_lsp_buffer_enabled()
@@ -92,27 +92,52 @@ def s:is_definition_supported(): bool
   return false
 enddef
 
+def s:document_format_on_save(): void
+  const configs = kg8m#plugin#lsp#servers#configs(&filetype)
+
+  const IgnoreFiletypesMapper = (_, config) => get(config, "document_format_ignore_filetypes", [])
+  const ignore_filetypes      = configs->mapnew(IgnoreFiletypesMapper)->flattennew()
+
+  if kg8m#util#list#includes(ignore_filetypes, &filetype)
+    s:log_document_formatting_skipped(
+      "ignore_filetypes",
+      "Document formatting is skipped because of ignore-filetypes."
+    )
+    return
+  endif
+
+  const MaxBytesMapper = (_, config) => get(config, "document_format_max_bytes", 9'999'999)
+  const max_bytes      = configs->mapnew(MaxBytesMapper)->min()
+
+  if getfsize(@%) > max_bytes
+    s:log_document_formatting_skipped(
+      "max_bytes",
+      "Document formatting is skipped because the file is too large. Execute `:LspDocumentFormat` manually."
+    )
+    return
+  endif
+
+  s:document_format({ sync: true })
+enddef
+
+def s:log_document_formatting_skipped(type: string, message: string): void
+  const var_name = "lsp_document_format_skipped_by_" .. type
+
+  if !has_key(b:, var_name)
+    setbufvar(bufnr(), var_name, true)
+
+    # Show after written message.
+    timer_start(500, (_) => kg8m#util#logger#info(message))
+  endif
+enddef
+
 def s:document_format(options = {}): void
   if kg8m#util#string#starts_with(bufname(), "gina://")
     return
   endif
 
   if get(options, "sync", true)
-    const configs   = kg8m#plugin#lsp#servers#configs(&filetype)
-    const Mapper    = (_, config) => get(config, "document_format_max_bytes", 9'999'999)
-    const max_bytes = configs->mapnew(Mapper)->min()
-
-    if getfsize(@%) <= max_bytes
-      silent LspDocumentFormatSync
-    else
-      # Show warning after written message.
-      timer_start(500, (_) => {
-        kg8m#util#logger#warn([
-          "Document formatting is skipped because the file is too large.",
-          "Execute `:LspDocumentFormat` manually.",
-        ]->join(" "))
-      })
-    endif
+    silent LspDocumentFormatSync
   else
     if &modified && mode() ==# "n"
       silent LspDocumentFormat
