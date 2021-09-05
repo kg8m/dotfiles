@@ -8,6 +8,7 @@ function plugin:setup:binary_releaseds {
     high-moctane/nextword
     lighttiger2505/sqls
     mvdan/sh
+    juliosueiras/terraform-lsp
   )
 
   # Use `brew` command if available to detect that zinit gets broken or something is wrong
@@ -34,7 +35,7 @@ function plugin:setup:binary_releaseds {
     local plugin="$1"
 
     case "$plugin" in
-      actionlint | bat | delta | direnv | efm-langserver | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt)
+      actionlint | bat | delta | direnv | efm-langserver | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt | terraform-lsp)
         mv ./"${plugin}"* ./"$plugin"
         ;;
       cli)
@@ -53,7 +54,7 @@ function plugin:setup:binary_releaseds {
       bat | delta | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
-      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | tokei)
+      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | terraform-lsp | tokei)
         local binary="${plugin}"
         ;;
       cli)
@@ -96,8 +97,9 @@ function plugin:setup:binary_releaseds {
       ghch | golangci-lint)
         execute_with_echo "$command version"
         ;;
-      golangci-lint-langserver)
-        # Do nothing because there are no ways to check version
+      golangci-lint-langserver | terraform-lsp)
+        echo >&2
+        echo:info "Skip checking version because there are no ways."
         ;;
       *)
         echo:error "Unknown plugin to detect binary: ${plugin}"
@@ -110,11 +112,17 @@ function plugin:setup:binary_releaseds {
         execute_with_echo "mv ./bat/autocomplete/{bat.zsh,_bat}"
         ;;
       nextword)
-        plugin:setup:nextword
+        execute_with_echo "plugin:setup:nextword"
+        ;;
+      *)
+        # Do nothing.
         ;;
     esac
 
     [ -n "$(find . -type f -name '_*')" ] && execute_with_echo "zinit creinstall '$PWD'"
+
+    echo >&2
+    echo:info "Done."
   }
 
   function plugin:setup:nextword {

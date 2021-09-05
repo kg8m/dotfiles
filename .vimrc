@@ -342,6 +342,8 @@ if kg8m#plugin#register("kopischke/vim-stay", { if: !kg8m#util#is_git_commit() }
   kg8m#plugin#stay#configure()
 endif
 
+kg8m#plugin#register("hashivim/vim-terraform")
+
 if kg8m#plugin#register("janko/vim-test", { if: !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#test#configure()
 endif

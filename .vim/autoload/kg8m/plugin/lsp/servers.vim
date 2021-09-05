@@ -24,6 +24,7 @@ def kg8m#plugin#lsp#servers#register(): void
   s:register_solargraph()
   s:register_sqls()
   s:register_steep()
+  s:register_terraform_lsp()
   s:register_typescript_language_server()
   s:register_vim_language_server()
   s:register_vue_language_server()
@@ -273,6 +274,20 @@ def s:activate_steep(): void
     initialization_options: {
       diagnostics: true,
     },
+  })
+enddef
+
+# Install from https://github.com/juliosueiras/terraform-lsp/releases
+def s:register_terraform_lsp(): void
+  s:register({
+    name: "terraform-lsp",
+    allowlist: ["terraform"],
+  })
+enddef
+
+def s:activate_terraform_lsp(): void
+  s:activate("terraform-lsp", {
+    cmd: (_) => ["terraform-lsp"],
   })
 enddef
 

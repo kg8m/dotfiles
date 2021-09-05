@@ -121,6 +121,10 @@ function echo:warn {
   echo "$@" >&2
 }
 
+function echo:info {
+  printf "INFO: %s\n" "$*" >&2
+}
+
 function notify {
   local options=("${(M)@:#-*}")
   local non_options=("${(R)@:#-*}")
