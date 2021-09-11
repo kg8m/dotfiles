@@ -17,6 +17,11 @@ def kg8m#plugin#matchup#configure(): void
   augroup my_vimrc
     autocmd ColorScheme * s:overwrite_colors()
   augroup END
+
+  kg8m#plugin#configure({
+    lazy:     true,
+    on_start: true,
+  })
 enddef
 
 def s:overwrite_colors(): void

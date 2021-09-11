@@ -92,6 +92,11 @@ def kg8m#plugin#register(repository: string, options: dict<any> = {}): bool
     options.lazy = false
   endif
 
+  if get(options, "on_start", false)
+    remove(options, "on_start")
+    add(s:on_start_queue, options.name)
+  endif
+
   dein#add(repository, options)
   return dein#tap(options.normalized_name) && enabled
 enddef
@@ -177,7 +182,7 @@ enddef
 def s:dequeue_on_start(): void
   if !empty(s:on_start_queue)
     const plugin_name = remove(s:on_start_queue, 0)
-    timer_start(50, (_) => s:source_on_start(plugin_name))
+    timer_start(100, (_) => s:source_on_start(plugin_name))
   endif
 enddef
 

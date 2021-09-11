@@ -349,10 +349,10 @@ if kg8m#plugin#register("janko/vim-test", { if: !kg8m#util#is_git_tmp_edit() })
 endif
 
 # Text object for indentation: i
-kg8m#plugin#register("kana/vim-textobj-indent")
+kg8m#plugin#register("kana/vim-textobj-indent", { lazy: true, on_start: true })
 
 # Text object for last search pattern: /
-kg8m#plugin#register("kana/vim-textobj-lastpat")
+kg8m#plugin#register("kana/vim-textobj-lastpat", { lazy: true, on_start: true })
 
 kg8m#plugin#register("kana/vim-textobj-user")
 
