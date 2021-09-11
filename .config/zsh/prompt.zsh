@@ -39,6 +39,7 @@ function() {
   # Refresh prompt at any widget triggered/executed
   function setup:prompt:refresh {
     export PROMPT_REFRESHER_WORKER_NAME="PROMPT_REFRESHER_$$"
+    export GIT_PROMPT_REFRESHER_WORKER_NAME="GIT_PROMPT_REFRESHER_$$"
 
     function prompt:refresh:trigger {
       case "${LASTWIDGET:-}" in
@@ -61,12 +62,49 @@ function() {
       async_stop_worker       "$PROMPT_REFRESHER_WORKER_NAME"
       async_start_worker      "$PROMPT_REFRESHER_WORKER_NAME"
       async_job               "$PROMPT_REFRESHER_WORKER_NAME" "prompt:header:lazy_build $COLUMNS"
-      async_register_callback "$PROMPT_REFRESHER_WORKER_NAME" "prompt:refresh:finish"
+      async_register_callback "$PROMPT_REFRESHER_WORKER_NAME" "prompt:refresh:finish:with_trigger"
     }
 
     function prompt:refresh:finish {
       zle .reset-prompt
       async_stop_worker "$PROMPT_REFRESHER_WORKER_NAME"
+    }
+
+    function prompt:refresh:finish:with_trigger {
+      prompt:refresh:finish
+
+      local sleep
+      if [ -n "${TMUX:-}" ]; then
+        local tmux_format="#{session_attached}#{window_active}#{pane_active}#{pane_current_command}"
+        local tmux_filter="#{==:#{pane_id},${TMUX_PANE:-}}"
+        local tmux_status="$(tmux list-panes -a -F "${tmux_format}" -f "${tmux_filter}")"
+
+        if [ "${tmux_status}" = "111zsh" ]; then
+          sleep="0.3"
+        elif [ "${tmux_status}" = "110zsh" ]; then
+          sleep="1"
+        else
+          sleep="10"
+        fi
+      else
+        sleep="10"
+      fi
+
+      async_start_worker      "$PROMPT_REFRESHER_WORKER_NAME"
+      async_job               "$PROMPT_REFRESHER_WORKER_NAME" "sleep ${sleep}"
+      async_register_callback "$PROMPT_REFRESHER_WORKER_NAME" "prompt:refresh:trigger"
+    }
+
+    function prompt:refresh:git:trigger {
+      async_stop_worker       "$GIT_PROMPT_REFRESHER_WORKER_NAME"
+      async_start_worker      "$GIT_PROMPT_REFRESHER_WORKER_NAME"
+      async_job               "$GIT_PROMPT_REFRESHER_WORKER_NAME" "sleep 10"
+      async_register_callback "$GIT_PROMPT_REFRESHER_WORKER_NAME" "prompt:refresh:git:finish:with_trigger"
+    }
+
+    function prompt:refresh:git:finish:with_trigger {
+      _zsh_git_prompt_async_request
+      prompt:refresh:git:trigger
     }
 
     # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html#Manipulating-Hook-Functions
@@ -75,6 +113,7 @@ function() {
     add-zle-hook-widget zle-line-init       prompt:refresh:trigger
 
     prompt:refresh:trigger
+    prompt:refresh:git:trigger
 
     unset -f setup:prompt:refresh
   }
