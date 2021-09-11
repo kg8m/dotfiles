@@ -38,8 +38,8 @@ enddef
 def s:is_valid_filesize(): bool
   const configs = kg8m#plugin#lsp#servers#configs(&filetype)
 
-  const Mapper    = (_, config) => get(config, "document_format_max_bytes", 9'999'999)
-  const max_bytes = configs->mapnew(Mapper)->min()
+  const Mapper   = (_, config) => get(config, "document_format_max_byte", 9'999'999)
+  const max_byte = configs->mapnew(Mapper)->min()
 
   return wordcount().bytes <= max_byte
 enddef

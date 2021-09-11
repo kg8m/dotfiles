@@ -254,7 +254,7 @@ def s:activate_sqls(): void
     },
 
     # sqls' document formatting is too heavy if the file is very large.
-    document_format_max_bytes: 10'000,
+    document_format_max_byte: 10'000,
   })
 enddef
 
