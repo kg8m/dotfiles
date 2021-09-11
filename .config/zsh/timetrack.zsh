@@ -1,4 +1,5 @@
 TIMETRACK_IGNORE_PATTERN="^$"
+TIMETRACK_IGNORE_PATTERN+="|^man "
 TIMETRACK_IGNORE_PATTERN+="|\bNO_TIMETRACK\b"
 TIMETRACK_IGNORE_PATTERN+="|\bgit (add|bulk|ca|checkout|ci|co\b|commit\b|d|l|mergetool|open-changed-files|rebase -i|restore|revert|show|st|sw)"
 TIMETRACK_IGNORE_PATTERN+="|\bless\b|\bL$"
