@@ -9,6 +9,7 @@ function plugin:setup:binary_releaseds {
     lighttiger2505/sqls
     mvdan/sh
     juliosueiras/terraform-lsp
+    rhysd/vim-startuptime
   )
 
   # Use `brew` command if available to detect that zinit gets broken or something is wrong
@@ -35,7 +36,7 @@ function plugin:setup:binary_releaseds {
     local plugin="$1"
 
     case "$plugin" in
-      actionlint | bat | delta | direnv | efm-langserver | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt | terraform-lsp)
+      actionlint | bat | delta | direnv | efm-langserver | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt | terraform-lsp | vim-startuptime)
         mv ./"${plugin}"* ./"$plugin"
         ;;
       cli)
@@ -54,7 +55,7 @@ function plugin:setup:binary_releaseds {
       bat | delta | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
-      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | terraform-lsp | tokei)
+      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | terraform-lsp | tokei | vim-startuptime)
         local binary="${plugin}"
         ;;
       cli)
@@ -97,7 +98,7 @@ function plugin:setup:binary_releaseds {
       ghch | golangci-lint)
         execute_with_echo "$command version"
         ;;
-      golangci-lint-langserver | terraform-lsp)
+      golangci-lint-langserver | terraform-lsp | vim-startuptime)
         echo >&2
         echo:info "Skip checking version because there are no ways."
         ;;
