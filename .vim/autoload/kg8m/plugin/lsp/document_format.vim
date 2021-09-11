@@ -41,7 +41,7 @@ def s:is_valid_filesize(): bool
   const Mapper    = (_, config) => get(config, "document_format_max_bytes", 9'999'999)
   const max_bytes = configs->mapnew(Mapper)->min()
 
-  return getfsize(@%) <= max_bytes
+  return wordcount().bytes <= max_byte
 enddef
 
 def s:log_skipped(type: string, message: string): void
