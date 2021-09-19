@@ -33,7 +33,7 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
       endif
     endfor
 
-    s:filter_and_sort(items, context)
+    s:filter_with_sort(items, context)
   endif
 
   # https://github.com/prabirshrestha/asyncomplete.vim/blob/1f8d8ed26acd23d6bf8102509aca1fc99130087d/autoload/asyncomplete.vim#L474
@@ -47,9 +47,14 @@ def s:matchfuzzy_text_cb(item: dict<any>, context: dict<any>): string
   return item.word
 enddef
 
-def s:filter_and_sort(items: list<dict<any>>, context: dict<any>): void
+def s:filter_with_sort(items: list<dict<any>>, context: dict<any>): void
+  sort(items, (lhs, rhs) => lhs.priority - rhs.priority)
+
+  var i = 1
   filter(items, (_, item): bool => {
-    if item.priority <=# 50
+    if i <=# 30
+      i += 1
+
       # :h complete-items
       # item.word: the text that will be inserted, mandatory
       # item.abbr: abbreviation of "word"; when not empty it is used in the menu instead of "word"
@@ -61,8 +66,6 @@ def s:filter_and_sort(items: list<dict<any>>, context: dict<any>): void
       return false
     endif
   })
-
-  sort(items, "s:sorter")
 enddef
 
 def s:remove_overlap_with_following_text(original_text: string, following_text: string): string
@@ -107,9 +110,4 @@ def s:word_priority(word: string, context: dict<any>): number
   endif
 
   return context.cache[word] * context.priority
-enddef
-
-# The result of `matchfuzzy()` is used if each priority is same
-def s:sorter(lhs: dict<any>, rhs: dict<any>): number
-  return lhs.priority - rhs.priority
 enddef
