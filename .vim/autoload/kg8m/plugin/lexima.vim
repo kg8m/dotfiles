@@ -7,7 +7,7 @@ var s:queue_on_post_source: list<func>
 def kg8m#plugin#lexima#configure(): void
   kg8m#plugin#configure({
     lazy:     true,
-    on_i:     true,
+    on_event: ["InsertEnter"],
     on_start: true,
     hook_source:      () => s:on_source(),
     hook_post_source: () => s:on_post_source(),

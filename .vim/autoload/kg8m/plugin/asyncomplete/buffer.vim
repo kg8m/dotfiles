@@ -5,7 +5,7 @@ final s:cache = {}
 def kg8m#plugin#asyncomplete#buffer#configure(): void
   kg8m#plugin#configure({
     lazy:     true,
-    on_i:     true,
+    on_event: ["InsertEnter"],
     on_start: true,
     depends:  "asyncomplete.vim",
     hook_post_source: () => s:on_post_source(),

@@ -3,7 +3,7 @@ vim9script
 def kg8m#plugin#vsnip#configure(): void
   kg8m#plugin#configure({
     lazy: true,
-    on_i: true,
+    on_event: ["InsertEnter"],
     hook_post_source: () => s:on_post_source(),
   })
 
