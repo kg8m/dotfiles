@@ -88,10 +88,6 @@ enddef
 def s:setup_vim(): void
   b:caw_hatpos_sp  = " "
   b:caw_zeropos_sp = " "
-
-  if getline(1) ==# "vim9script"
-    b:caw_oneline_comment = "#"
-  endif
 enddef
 
 def kg8m#plugin#caw#teardown(): void
