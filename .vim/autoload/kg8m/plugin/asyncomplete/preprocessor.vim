@@ -55,12 +55,14 @@ def s:filter_with_sort(items: list<dict<any>>, context: dict<any>): void
     if i <=# 30
       i += 1
 
-      if !has_key(item, "abbr") || item.word !=# item.abbr
+      if !has_key(item, "overlap_removed")
         # :h complete-items
         # item.word: the text that will be inserted, mandatory
         # item.abbr: abbreviation of "word"; when not empty it is used in the menu instead of "word"
         item.abbr = item.word
         item.word = s:remove_overlap_with_following_text(item.word, context.following_text)
+
+        item.overlap_removed = true
       endif
 
       return true
