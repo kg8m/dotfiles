@@ -10,6 +10,7 @@ function plugin:setup:binary_releaseds {
     mvdan/sh
     juliosueiras/terraform-lsp
     rhysd/vim-startuptime
+    Ryooooooga/zabrze
   )
 
   # Use `brew` command if available to detect that zinit gets broken or something is wrong
@@ -36,7 +37,7 @@ function plugin:setup:binary_releaseds {
     local plugin="$1"
 
     case "$plugin" in
-      actionlint | bat | delta | direnv | efm-langserver | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt | terraform-lsp | vim-startuptime)
+      actionlint | bat | delta | direnv | efm-langserver | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt | terraform-lsp | vim-startuptime | zabrze)
         mv ./"${plugin}"* ./"$plugin"
         ;;
       cli)
@@ -55,7 +56,7 @@ function plugin:setup:binary_releaseds {
       bat | delta | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
-      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | terraform-lsp | tokei | vim-startuptime)
+      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | terraform-lsp | tokei | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
       cli)
@@ -83,7 +84,7 @@ function plugin:setup:binary_releaseds {
     execute_with_echo "which $command"
 
     case "$plugin" in
-      bat | cli | delta | direnv | fzf | glab | hyperfine | mmv | ripgrep | shellcheck | tokei)
+      bat | cli | delta | direnv | fzf | glab | hyperfine | mmv | ripgrep | shellcheck | tokei | zabrze)
         execute_with_echo "$command --version"
         ;;
       make2help)
@@ -185,6 +186,16 @@ function plugin:setup:binary_releaseds {
 
     zinit ice lucid "${options[@]}"
     zinit light "$repository"
+
+    case "$plugin" in
+      zabrze)
+        if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init" ]; then
+          zabrze init --bind-keys > "$KG8M_ZSH_CACHE_DIR/zabrze_init"
+          zcompile "$KG8M_ZSH_CACHE_DIR/zabrze_init"
+        fi
+        source "$KG8M_ZSH_CACHE_DIR/zabrze_init"
+        ;;
+    esac
   done
 
   unset -f plugin:setup:binary_releaseds

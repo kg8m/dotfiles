@@ -1,0 +1,126 @@
+abbrevs:
+  - name: cd-bookmark
+    abbr: cdb
+    snippet: cd-bookmark
+
+  - name: git
+    abbr: g
+    snippet: git
+    global: true
+  - name: git aliases
+    abbr: alias
+    snippet: aliases
+    global: true
+    context: '^git\s'
+  - name: git branch
+    abbr: br
+    snippet: branch
+    global: true
+    context: '^git\s'
+  - name: git branches
+    abbr: brs
+    snippet: branches
+    global: true
+    context: '^git\s'
+  - name: git checkout
+    abbr: co
+    snippet: checkout
+    global: true
+    context: '^git\s'
+  - name: git commit
+    abbr: ci
+    snippet: commit
+    global: true
+    context: '^git\s'
+  - name: git diff-without-space-changes
+    abbr: di
+    snippet: diff-without-space-changes
+    global: true
+    context: '^git\s'
+  - name: git diff-without-space-changes --cached
+    abbr: sc
+    snippet: diff-without-space-changes --cached
+    global: true
+    context: '^git\s'
+  - name: git diff-without-space-changes --staged
+    abbr: ds
+    snippet: diff-without-space-changes --staged
+    global: true
+    context: '^git\s'
+  - name: git diff-without-space-changes --color-words
+    abbr: dw
+    snippet: diff-without-space-changes --color-words
+    global: true
+    context: '^git\s'
+  - name: git diff-without-space-changes HEAD
+    abbr: dh
+    snippet: diff-without-space-changes HEAD
+    global: true
+    context: '^git\s'
+  - name: git diff-local-without-space-changes
+    abbr: dl
+    snippet: diff-local-without-space-changes
+    global: true
+    context: '^git\s'
+  - name: git _
+    abbr: _
+    snippet: _
+    global: true
+    context: '^git\s'
+  - name: git fetch
+    abbr: f
+    snippet: fetch
+    global: true
+    context: '^git\s'
+  - name: git log-graph
+    abbr: lg
+    snippet: log-graph
+    global: true
+    context: '^git\s'
+  - name: git log --branches --tags --remotes
+    abbr: la
+    snippet: log --branches --tags --remotes
+    global: true
+    context: '^git\s'
+  - name: git log-with-patch
+    abbr: lp
+    snippet: log-with-patch
+    global: true
+    context: '^git\s'
+  - name: git status-with-color
+    abbr: st
+    snippet: status-with-color
+    global: true
+    context: '^git\s'
+  - name: git switch
+    abbr: sw
+    snippet: switch
+    global: true
+    context: '^git\s'
+  - name: git switch-by-select
+    abbr: sws
+    snippet: switch-by-select
+    global: true
+    context: '^git\s'
+  - name: git update
+    abbr: up
+    snippet: update
+    global: true
+    context: '^git\s'
+
+  - name: my_grep_with_filter
+    abbr: gr
+    snippet: my_grep_with_filter
+
+  - name: attach_or_new_tmux
+    abbr: t
+    snippet: attach_or_new_tmux
+
+  - name: vim
+    abbr: v
+    snippet: vim
+    global: true
+  - name: vim2
+    abbr: vi
+    snippet: vim
+    global: true
