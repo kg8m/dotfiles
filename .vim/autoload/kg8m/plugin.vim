@@ -51,7 +51,7 @@ def kg8m#plugin#init_manager(): void
   augroup END
 
   # Decrease max processes because too many processes sometimes get refused
-  g:dein#install_max_processes = 3
+  g:dein#install_max_processes = 2
 
   g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
 enddef
