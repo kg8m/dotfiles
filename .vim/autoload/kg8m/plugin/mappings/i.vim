@@ -1,6 +1,10 @@
 vim9script
 
 def kg8m#plugin#mappings#i#define(): void
+  if get(b:, "kg8m_custom_imaps_disabled", false)
+    return
+  endif
+
   inoremap         <expr> <buffer> . <SID>dot_expr()
 
   # <silent> for lexima#expand's echo
@@ -22,6 +26,10 @@ def kg8m#plugin#mappings#i#define(): void
 
   # <silent> for lexima#expand's echo
   imap     <silent><expr> <buffer> > <SID>gt_expr()
+enddef
+
+def kg8m#plugin#mappings#i#disable(): void
+  b:kg8m_custom_imaps_disabled = true
 enddef
 
 def s:dot_expr(): string

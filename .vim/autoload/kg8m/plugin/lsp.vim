@@ -118,5 +118,8 @@ def s:on_source(): void
     autocmd User lsp_server_exit    s:on_lsp_buffer_enabled()
 
     autocmd FileType * s:reset_target_buffer()
+
+    autocmd FileType lsp-quickpick-filter kg8m#plugin#completion#disable()
+    autocmd FileType lsp-quickpick-filter kg8m#plugin#mappings#i#disable()
   augroup END
 enddef

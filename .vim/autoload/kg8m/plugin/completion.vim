@@ -2,6 +2,10 @@ vim9script
 
 final s:cache = {}
 
+def kg8m#plugin#completion#disable(): void
+  b:asyncomplete_enable = false
+enddef
+
 def kg8m#plugin#completion#refresh_pattern(filetype: string): string
   if !has_key(s:cache, "completion_refresh_patterns")
     const css_pattern  = '\v([.#a-zA-Z0-9_-]+)$'
