@@ -13,7 +13,7 @@ function plugin:setup:goenv {
     # Disable because this obstructs $GOENV_ROOT/shims
     # path=("$GOROOT/bin" "${path[@]}")
 
-    path=("${path[@]}" "$GOPATH/bin")
+    path+=("$GOPATH/bin")
   fi
 
   unset -f plugin:setup:goenv
