@@ -477,6 +477,12 @@ def s:activate(name: string, extra_config: dict<any>): void
     extend(config, { root_uri: (_) => lsp#utils#path_to_uri(getcwd()) })
   endif
 
+  # `rootUri` is deprecated in favour of `workspaceFolders`.
+  # https://microsoft.github.io/language-server-protocol/specification
+  if !has_key(config, "workspace_folders")
+    extend(config, { workspace_folders: config.root_uri })
+  endif
+
   # Delay because some servers don't work just after Vim starts with editing files. For example, no completion
   # candidates are provided.
   const delay = s:is_ready ? 0 : 1000
