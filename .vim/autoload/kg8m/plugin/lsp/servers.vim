@@ -60,7 +60,7 @@ def s:register_css_language_server(): void
   s:register({
     name: "css-language-server",
     allowlist: ["css", "less", "scss"],
-    executable_name: "vscode-css-language-server",
+    executable: "vscode-css-language-server",
   })
 enddef
 
@@ -74,7 +74,7 @@ def s:activate_css_language_server(): void
       less: { lint: { validProperties: [] } },
       scss: { lint: { validProperties: [] } },
     },
-    executable_name: "vscode-css-language-server",
+    executable: "vscode-css-language-server",
   })
 enddef
 
@@ -151,7 +151,7 @@ def s:register_html_language_server(): void
   s:register({
     name: "html-language-server",
     allowlist: ["eruby", "html"],
-    executable_name: "vscode-html-language-server",
+    executable: "vscode-html-language-server",
   })
 enddef
 
@@ -168,7 +168,7 @@ def s:register_json_language_server(): void
   s:register({
     name: "json-language-server",
     allowlist: ["json"],
-    executable_name: "vscode-json-language-server",
+    executable: "vscode-json-language-server",
   })
 enddef
 
@@ -343,7 +343,7 @@ def s:register_vue_language_server(): void
   s:register({
     name: "vue-language-server",
     allowlist: ["vue"],
-    executable_name: "vls",
+    executable: "vls",
   })
 enddef
 
@@ -414,16 +414,16 @@ def s:activate_yaml_language_server(): void
 enddef
 
 def s:register(config: dict<any>): void
-  var executable_name: string
+  var executable: string
 
-  if has_key(config, "executable_name")
-    executable_name = config.executable_name
-    remove(config, "executable_name")
+  if has_key(config, "executable")
+    executable = config.executable
+    remove(config, "executable")
   else
-    executable_name = config.name
+    executable = config.name
   endif
 
-  if executable(executable_name)
+  if executable(executable)
     s:named_configs[config.name] = config
 
     for filetype in config.allowlist
