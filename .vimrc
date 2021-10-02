@@ -57,7 +57,8 @@ if kg8m#plugin#register("high-moctane/asyncomplete-nextword.vim")
   kg8m#plugin#asyncomplete#nextword#configure()
 endif
 
-if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", { build: "./install.sh" })
+# Disable due to extremely high memory usage.
+if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", { if: false, build: "./install.sh" })
   kg8m#plugin#asyncomplete#tabnine#configure()
 endif
 
