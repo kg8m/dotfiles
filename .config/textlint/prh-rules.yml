@@ -35,6 +35,9 @@ rules:
   - expected: PostgreSQL
     options:
       wordBoundary: true
+  - expected: ripgrep
+    options:
+      wordBoundary: true
   - expected: RSpec
     options:
       wordBoundary: true
@@ -70,6 +73,9 @@ rules:
     pattern: /vim9 ?script/i
     options:
       wordBoundary: true
+  - expected: VMware
+    options:
+      wordBoundary: true
   - expected: VS Code
     pattern: /vs ?code/i
     options:
@@ -78,6 +84,9 @@ rules:
     options:
       wordBoundary: true
   - expected: Webpacker
+    options:
+      wordBoundary: true
+  - expected: Xcode
     options:
       wordBoundary: true
   - expected: zsh
