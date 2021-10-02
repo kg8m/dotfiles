@@ -454,6 +454,12 @@ function git:utility:diff_or_cat {
   # Untracked files
   if [[ "$git_status" =~ '^\?\?' ]]; then
     git:utility:cat "$filepath"
+  # Renamed files
+  elif [[ "$git_status" =~ ^D ]] && git status --short | grep -F "R  $filepath ->" -q; then
+    local removed="$filepath"
+    local added="$(git status --short | grep -F "R  $filepath ->" | git:proxy:sed -e 's/^.* -> //')"
+
+    git:utility:diff --staged -- "$removed" "$added"
   # Partially staged files
   elif [[ "$git_status" =~ ^[A-Z]{2} ]]; then
     git:utility:header "Staged"
