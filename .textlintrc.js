@@ -5,6 +5,8 @@ const homePath = process.env["HOME"];
 const localConfigDirpath = path.join(homePath, ".config/textlint.local");
 
 const localConfigPath = path.join(localConfigDirpath, ".textlintrc.local.js");
+const localPrhConfigPath = path.join(localConfigDirpath, "prh-rules.local.yml");
+const localPrhConfigPaths = fs.existsSync(localPrhConfigPath) ? [localPrhConfigPath] : [];
 
 const localConfig = fs.existsSync(localConfigPath) ? require(localConfigPath) : {};
 
@@ -120,7 +122,7 @@ const config = {
     },
     // For Japanese contents. Terminology doesn't work for Japanese.
     "prh": {
-      rulePaths: ["~/.config/textlint/prh-rules.yml"],
+      rulePaths: ["~/.config/textlint/prh-rules.yml"].concat(localPrhConfigPaths),
     },
     "terminology": {
       defaultTerms: true,
