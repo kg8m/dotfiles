@@ -1,5 +1,5 @@
 # Dynamically choose between supported regex engines depending on the features used in the pattern
---auto-hybrid-regex
+--engine=auto
 
 # Search hidden files and directories
 --hidden
