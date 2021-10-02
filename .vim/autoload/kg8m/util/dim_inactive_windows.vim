@@ -16,7 +16,7 @@ enddef
 
 def s:trigger(options = {}): void
   timer_stop(s:timer)
-  s:timer = timer_start(0, (_) => s:apply(options))
+  s:timer = timer_start(100, (_) => s:apply(options))
 enddef
 
 def s:apply(options = {}): void
