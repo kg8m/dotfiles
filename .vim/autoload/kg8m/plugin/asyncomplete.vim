@@ -14,7 +14,9 @@ def s:on_source(): void
   g:asyncomplete_auto_popup = true
   g:asyncomplete_popup_delay = 50
   g:asyncomplete_auto_completeopt = false
-  g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
+
+  # Usually disable asyncomplete.vim's logging because it makes Vim slower.
+  # g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
   # Hide messages like "Pattern not found" or "Match 1 of <N>"
   set shortmess+=c

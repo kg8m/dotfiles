@@ -109,8 +109,8 @@ def s:on_source(): void
 
   g:lsp_async_completion = true
 
-  g:lsp_log_verbose = true
-  g:lsp_log_file    = expand("~/tmp/vim-lsp.log")
+  # Usually disable vim-lsp's logging because it makes Vim slower.
+  # g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
   augroup my_vimrc
     autocmd User lsp_setup          kg8m#plugin#lsp#stream#subscribe()
