@@ -4,7 +4,7 @@ options head
 	assert_raise(${1:#:Exception}) { ${0} }
 
 snippet assert_raise_block
-abbr    assert_raise {Exception} do\n ...\n end
+abbr    assert_raise {Exception} do ... end
 options head
 	assert_raise ${1:#:Exception} do
 		${0}
@@ -16,56 +16,56 @@ options head
 	assert_nothing_raised { ${0} }
 
 snippet assert_nothing_raised_block
-abbr    assert_nothing_raised do\n ...\n end
+abbr    assert_nothing_raised do ... end
 options head
 	assert_nothing_raised do
 		${0}
 	end
 
 snippet assert_difference
-abbr    assert_difference -> { ... }, {difference} do\n ...\n end
+abbr    assert_difference -> { ... }, {difference} do ... end
 options head
 	assert_difference -> { ${1:#:expression} }, ${2:#:difference} do
 		${0}
 	end
 
 snippet assert_difference_array
-abbr    assert_difference [-> { ... }, -> { ... }], {difference} do\n ...\n end
+abbr    assert_difference [-> { ... }, -> { ... }], {difference} do ... end
 options head
 	assert_difference [-> { ${1:#:expression1} }, -> { ${2:#:expression2} }], ${3:#:difference} do
 		${0}
 	end
 
 snippet assert_difference_hash
-abbr    assert_difference -> { ... } => {difference} do\n ...\n end
+abbr    assert_difference -> { ... } => {difference} do ... end
 options head
 	assert_difference -> { ${1:#:expression} } => ${2:#:difference} do
 		${0}
 	end
 
 snippet assert_no_difference
-abbr    assert_no_difference -> { ... } do\n ...\n end
+abbr    assert_no_difference -> { ... } do ... end
 options head
 	assert_no_difference -> { ${1:#:expression} } do
 		${0}
 	end
 
 snippet assert_changes
-abbr    assert_changes -> { {expression} } do\n ...\n end
+abbr    assert_changes -> { {expression} } do ... end
 options head
 	assert_changes -> { ${1:#:expression} } do
 		${0}
 	end
 
 snippet assert_changes_from_to
-abbr    assert_changes -> { ... }, from: ..., to: ... do\n ...\n end
+abbr    assert_changes -> { ... }, from: ..., to: ... do ... end
 options head
 	assert_changes -> { ${1:#:expression} }, from: ${2:#:from}, to: ${3:#:to} do
 		${0}
 	end
 
 snippet assert_no_changes
-abbr    assert_no_changes -> { ... } do\n ...\n end
+abbr    assert_no_changes -> { ... } do ... end
 options head
 	assert_no_changes -> { ${1:#:expression} } do
 		${0}

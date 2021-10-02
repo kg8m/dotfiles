@@ -1,6 +1,6 @@
 # Function  {{{
 snippet function
-abbr    function {function_name}() {\n ...\n }
+abbr    function {function_name}() { ... }
 options word
 	function ${1:#:function_name}(${2:#:args}) {
 		${0}
@@ -9,7 +9,7 @@ options word
 
 # If  {{{
 snippet if
-abbr    if (...) {\n ...\n }
+abbr    if (...) { ... }
 options word
 	if (${1:#:condition}) {
 		${0}
@@ -17,7 +17,7 @@ options word
 
 snippet if_else
 alias   ife
-abbr    if (...) {\n ...\n } else {\n ...\n }
+abbr    if (...) { ... } else { ... }
 options head
 	if (${1:#:condition}) {
 		${0}
@@ -26,7 +26,7 @@ options head
 
 snippet if_else_if
 alias   ifeif
-abbr    if (...) {\n ...\n } else if (...) {\n ...\n } else {\n ...\n }
+abbr    if (...) { ... } else if (...) { ... } else { ... }
 options head
 	if (${1:#:condition}) {
 		${0}
@@ -76,7 +76,7 @@ options word
 # Try-Catch  {{{
 snippet try_catch
 alias   try
-abbr    try {\n ...\n }\n catch (error) {\n ... }
+abbr    try { ... } catch (error) { ... }
 options head
 	try {
 		${0}
@@ -85,7 +85,7 @@ options head
 	}
 
 snippet try_catch_finally
-abbr    try {\n ...\n }\n catch (error) {\n ... }\n finally {\n ... }
+abbr    try { ... } catch (error) { ... } finally { ... }
 options head
 	try {
 		${0}
@@ -96,7 +96,7 @@ options head
 	}
 
 snippet try_finally
-abbr    try {\n ...\n }\n finally {\n ... }
+abbr    try { ... } finally { ... }
 options head
 	try {
 		${0}
@@ -107,14 +107,14 @@ options head
 
 # Timer  {{{
 snippet setTimeout
-abbr    setTimeout(() => {\n ...\n }, {timeout})
+abbr    setTimeout(() => { ... }, {timeout})
 options word
 	setTimeout(() => {
 	  ${0}
 	}, ${1:#:timeout})
 
 snippet setInterval
-abbr    setInterval(() => {\n ...\n }, {interval})
+abbr    setInterval(() => { ... }, {interval})
 options word
 	setInterval(() => {
 	  ${0}
@@ -146,7 +146,7 @@ options word
 	addEventListener("DOMContentLoaded", ${1:#:listenerFunction})
 
 snippet removeEventListener
-abbr    removeEventListener({event}, () => {\n ...\n }
+abbr    removeEventListener({event}, () => { ... }
 options word
 	removeEventListener("${1:#:event}", ${2:#:listenerFunction})
 # }}}

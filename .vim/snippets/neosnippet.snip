@@ -1,5 +1,5 @@
 snippet snippet
-abbr    snippet\n abbr ...\n options head/word\n ...
+abbr    snippet ... abbr ... options head/word ...
 options head
 	snippet ${1:#:snippet_name}
 	abbr    $3
@@ -7,7 +7,7 @@ options head
 		${3}
 
 snippet snippet_alias
-abbr    snippet\n alias ...\n ...
+abbr    snippet ... alias ... ...
 options head
 	snippet ${1:#:snippet_name}
 	alias   ${2:#:alias_name}
@@ -16,7 +16,7 @@ options head
 		${4}
 
 snippet snippet_regexp
-abbr    snippet\n regxp ...\n ...
+abbr    snippet ... regxp ... ...
 options head
 	snippet ${1:#:snippet_name}
 	abbr    $6

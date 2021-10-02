@@ -1,19 +1,19 @@
 snippet create_table
-abbr    create_table :{table_name} do |t|\n ...\n end
+abbr    create_table :{table_name} do |t| ... end
 options head
 	create_table :${1:#:table_name} do |t|
 		t.${2:belongs_to} :${3:#:column_name}, null: false, index: { unique: true }${0}
 	end
 
 snippet change_table
-abbr    change_table :{table_name} do |t|\n ...\n end
+abbr    change_table :{table_name} do |t| ... end
 options head
 	change_table :${1:#:table_name} do |t|
 		t.${0}
 	end
 
 snippet reversible
-abbr    reversible do |direction|\n ...\n end
+abbr    reversible do |direction| ... end
 options head
 	reversible do |direction|
 		direction.up do
@@ -25,7 +25,7 @@ options head
 	end
 
 snippet say_with_time
-abbr    say_with_time "{message}" do\n ...\n end
+abbr    say_with_time "{message}" do ... end
 options head
 	say_with_time "${1:#:message}" do
 		${0}

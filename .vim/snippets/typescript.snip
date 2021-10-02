@@ -8,7 +8,7 @@ options head
 	}
 
 snippet declare_const
-abbr    declare const {Name}: {\n ...\n }
+abbr    declare const {Name}: { ... }
 options head
 	declare const ${1:#:Name}: {
 		${0}
@@ -20,35 +20,35 @@ options head
 	declare var ${1:#:name}: ${0}
 
 snippet declare_function
-abbr    declare function {name}(): {\n ...\n }
+abbr    declare function {name}(): { ... }
 options head
 	declare function ${1:#:name}(): {
 		${0}
 	}
 
 snippet declare_class
-abbr    declare class {Name} {\n ...\n }
+abbr    declare class {Name} { ... }
 options head
 	declare class ${1:#:Name} {
 		${0}
 	}
 
 snippet declare_namespace
-abbr    declare namespace {Name} {\n ...\n }
+abbr    declare namespace {Name} { ... }
 options head
 	declare namespace ${1:#:Name} {
 		${0}
 	}
 
 snippet declare_module
-abbr    declare module "{module}": {\n ...\n }
+abbr    declare module "{module}": { ... }
 options head
 	declare module "${1:#:module}": {
 		${0}
 	}
 
 snippet declare_global
-abbr    declare global {\n ...\n }
+abbr    declare global { ... }
 options head
 	declare global {
 		${0}

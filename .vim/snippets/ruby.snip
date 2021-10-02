@@ -47,21 +47,21 @@ options word
 
 # class, module  {{{
 snippet class
-abbr    class ...\n end
+abbr    class ... end
 options head
 	class ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
 		${0}
 	end
 
 snippet class_inherit
-abbr    class ... < {ParentClass}\n end
+abbr    class ... < {ParentClass} end
 options head
 	class ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`} < ${2}
 		${0}
 	end
 
 snippet class_exception
-abbr    class ... < StandardError\n ...\n end
+abbr    class ... < StandardError ... end
 options head
 	class ${1:#:class_name} < StandardError
 		def initialize(message)
@@ -70,7 +70,7 @@ options head
 	end
 
 snippet module
-abbr    module ...\n end
+abbr    module ... end
 options head
 	module ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
 		${0}
@@ -94,7 +94,7 @@ options head
 
 # def  {{{
 snippet def
-abbr    def ...\n end
+abbr    def ... end
 options head
 	def ${1:#:method_name}
 		${0}
@@ -154,7 +154,7 @@ options word
 
 # do ... end  {{{
 snippet do
-abbr    do ...\n end
+abbr    do ... end
 options word
 	do
 		${0}
@@ -162,7 +162,7 @@ options word
 
 snippet do_var
 alias   dov
-abbr    do |var|\n ...\n end
+abbr    do |var| ... end
 options word
 	do |${1:#:var}|
 		${0}
@@ -171,7 +171,7 @@ options word
 
 # if, unless, case  {{{
 snippet if
-abbr    if ...\n end
+abbr    if ... end
 options head
 	if ${1:#:condition}
 		${0}
@@ -179,7 +179,7 @@ options head
 
 snippet if_else
 alias   ife
-abbr    if ...\n else\n ...\n end
+abbr    if ... else ... end
 options head
 	if ${1:#:condition}
 		${0}
@@ -187,14 +187,14 @@ options head
 	end
 
 snippet unless
-abbr    unless ...\n ...\n end
+abbr    unless ... ... end
 options head
 	unless ${1:#:condition}
 		${0}
 	end
 
 snippet case
-abbr    case\n when ...\n end
+abbr    case when ... end
 options head
 	case
 	when ${1:#:condition}
@@ -202,7 +202,7 @@ options head
 	end
 
 snippet case_object
-abbr    case {object}\n when ...\n end
+abbr    case {object} when ... end
 options head
 	case ${1:#:object}
 	when ${2:#:condition}
@@ -212,14 +212,14 @@ options head
 
 # while, until  {{{
 snippet while
-abbr    while ...\n ...\n end
+abbr    while ... ... end
 options head
 	while ${1:#:condition}
 		${0}
 	end
 
 snippet until
-abbr    until ...\n ...\n end
+abbr    until ... ... end
 options head
 	until ${1:#:condition}
 		${0}
@@ -332,7 +332,7 @@ options word
 	remove_instance_variable(:@${0})
 
 snippet tap
-abbr    tap {|object|\n ...\n }
+abbr    tap {|object| ... }
 options word
 	tap {|${1:object}|
 		${0}
@@ -362,7 +362,7 @@ options head
 
 snippet optparse
 alias   require_optparse
-abbr    require "optparse"\n ...\n opts.banner ...
+abbr    require "optparse" ... opts.banner ...
 options word
 	require "optparse"
 
@@ -387,7 +387,7 @@ options word
 	each {|${1:#:var}| ${0} }
 
 snippet each_do
-abbr    each do |var|\n ...\n end
+abbr    each do |var| ... end
 options word
 	each do |${1:#:var}|
 		${0}
@@ -439,21 +439,21 @@ options word
 	each_with_index {|${1:#:var}, ${2:i}| ${0} }
 
 snippet each_with_index_do
-abbr    each_with_index do |var, i|\n ...\n end
+abbr    each_with_index do |var, i| ... end
 options word
 	each_with_index do |${1:#:var}, ${2:i}|
 		${0}
 	end
 
 snippet each_with_object
-abbr    each_with_object(init) {|var, memo|\n ...\n }
+abbr    each_with_object(init) {|var, memo| ... }
 options word
 	each_with_object(${1:#:initial_value}) {|${2:#:var}, ${3:memo}|
 		${0}
 	}
 
 snippet inject
-abbr    inject(init) {|memo, var|\n ...\n }
+abbr    inject(init) {|memo, var| ... }
 options word
 	inject(${1:#:initial_value}) {|${2:memo}, ${3:#:var}|
 		${0}
@@ -537,14 +537,14 @@ options word
 
 # File, Dir  {{{
 snippet fileopen
-abbr    File.open(filepath, mode) do |f|\n ...\n end
+abbr    File.open(filepath, mode) do |f| ... end
 options head
 	File.open(${1:#:filepath}, "${2:#:mode}") do |f|
 		${0}
 	end
 
 snippet glob
-abbr    Dir.glob("**/*") do |filepath|\n ...\n end
+abbr    Dir.glob("**/*") do |filepath| ... end
 options head
 	Dir.glob(${1:"**/*"}) do |filepath|
 		${0}

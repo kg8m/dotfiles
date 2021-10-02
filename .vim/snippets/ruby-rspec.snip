@@ -16,7 +16,7 @@ options head
 	let!(:${1:#:name}) { ${0} }
 
 snippet it
-abbr    it "{description}" do\n ...\n end
+abbr    it "{description}" do ... end
 options head
 	it "${1:#:description}" do
 		${0}
@@ -50,7 +50,7 @@ options head
 	xit description
 
 snippet specify
-abbr    specify "{description}" do\n ...\n end
+abbr    specify "{description}" do ... end
 options head
 	specify "${1:#:description}" do
 		${0}
@@ -73,63 +73,63 @@ options head
 	expect { ${1:#:subject} }.to ${0}
 
 snippet describe
-abbr    describe ... do\n ...\n end
+abbr    describe ... do ... end
 options head
 	describe ${1:`substitute(substitute(vim_snippets#Filename(), '_spec$', '', ''), '\(_\|^\)\(.\)', '\u\2', 'g')`} do
 		${0}
 	end
 
 snippet context
-abbr    context "{context}" do\n ...\n end
+abbr    context "{context}" do ... end
 options head
 	context "${1:#:context}" do
 		${0}
 	end
 
 snippet before
-abbr    before do\n ...\n end
+abbr    before do ... end
 options head
 	before do
 		${0}
 	end
 
 snippet before_each
-abbr    before :each do\n ...\n end
+abbr    before :each do ... end
 options head
 	before :each do
 		${0}
 	end
 
 snippet before_all
-abbr    before :all do\n ...\n end
+abbr    before :all do ... end
 options head
 	before :all do
 		${0}
 	end
 
 snippet after
-abbr    after do\n ...\n end
+abbr    after do ... end
 options head
 	after do
 		${0}
 	end
 
 snippet after_each
-abbr    after :each do\n ...\n end
+abbr    after :each do ... end
 options head
 	after :each do
 		${0}
 	end
 
 snippet after_all
-abbr    after :all do\n ...\n end
+abbr    after :all do ... end
 options head
 	after :all do
 		${0}
 	end
 
 snippet pending
-abbr    pending "..." do\n ...\n end
+abbr    pending "..." do ... end
 options head
 	pending "${1}" do
 		${0}

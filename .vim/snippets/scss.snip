@@ -2,7 +2,7 @@ extends css
 
 snippet @mixin
 alias   mixin
-abbr    @mixin {name}(args) {\n ...\n }
+abbr    @mixin {name}(args) { ... }
 options head
 	@mixin ${1:#:name}(${2:#:args}) {
 		${0}
@@ -22,7 +22,7 @@ options head
 
 snippet @function
 alias   function
-abbr    @function {name}({args}) {\n ...\n }
+abbr    @function {name}({args}) { ... }
 options head
 	@function ${1:#:name}(${2:#:args}) {
 		${0}
@@ -30,7 +30,7 @@ options head
 
 snippet @if
 alias   if
-abbr    @if ... {\n ...\n }
+abbr    @if ... { ... }
 options head
 	@if ${1:#:condition} {
 		${0}
@@ -39,7 +39,7 @@ options head
 snippet @if_else
 alias   if_else
 alias   ife
-abbr    @if ... {\n ...\n } @else {\n ...\n }
+abbr    @if ... { ... } @else { ... }
 options head
 	@if ${1:#:condition} {
 		${0}
@@ -49,7 +49,7 @@ options head
 snippet @if_else_if
 alias   if_else_if
 alias   ifeif
-abbr    @if ... {\n ...\n } @else @if ... {\n ...\n } @else {\n ...\n }
+abbr    @if ... { ... } @else @if ... { ... } @else { ... }
 options head
 	@if ${1:#:condition} {
 		${0}

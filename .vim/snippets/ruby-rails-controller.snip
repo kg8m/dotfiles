@@ -35,7 +35,7 @@ options head
 	params.require(:${1:#:model_name}).permit(:${2:#:attribute})
 
 snippet respond_to_format
-abbr    respond_to do |format|\n format.{format} { ... }\n end
+abbr    respond_to do |format| format.{format} { ... } end
 options head
 	respond_to do |format|
 		format.${1:js} { ${0} }
