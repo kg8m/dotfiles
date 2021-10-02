@@ -74,7 +74,6 @@ def s:activate_css_language_server(): void
       less: { lint: { validProperties: [] } },
       scss: { lint: { validProperties: [] } },
     },
-    executable: "vscode-css-language-server",
   })
 enddef
 
