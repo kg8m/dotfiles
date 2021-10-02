@@ -19,8 +19,8 @@ function format_target_filepath {
   esac
 }
 
-if [ -f "$HOME/.textlint_wrapper_extends.sh" ]; then
-  source "$HOME/.textlint_wrapper_extends.sh"
+if [ -f "$HOME/.config/textlint.local/.textlint_wrapper_extends.sh" ]; then
+  source "$HOME/.config/textlint.local/.textlint_wrapper_extends.sh"
 fi
 
 options=(

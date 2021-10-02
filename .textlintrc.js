@@ -1,8 +1,11 @@
 const path = require("path");
-const homePath = process.env["HOME"];
-const localConfigPath = path.join(homePath, ".textlintrc.local.js")
-
 const fs = require("fs");
+
+const homePath = process.env["HOME"];
+const localConfigDirpath = path.join(homePath, ".config/textlint.local");
+
+const localConfigPath = path.join(localConfigDirpath, ".textlintrc.local.js");
+
 const localConfig = fs.existsSync(localConfigPath) ? require(localConfigPath) : {};
 
 // https://qiita.com/riversun/items/60307d58f9b2f461082a
