@@ -8,6 +8,8 @@ def kg8m#configure#folding#global_options(): void
 
   # Don't use `set fillchars=vert:\|` because it raises an error in Vim9 script
   &fillchars = "vert:|"
+
+  set fillchars+=diff:/
 enddef
 
 def kg8m#configure#folding#local_options(): void
