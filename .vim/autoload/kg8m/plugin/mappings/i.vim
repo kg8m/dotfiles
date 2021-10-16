@@ -33,10 +33,10 @@ def kg8m#plugin#mappings#i#disable(): void
 enddef
 
 def s:dot_expr(): string
-  if &omnifunc ==# ""
-    return "."
-  else
+  if &omnifunc ==# "lsp#complete"
     return ".\<C-x>\<C-o>"
+  else
+    return "."
   endif
 enddef
 
