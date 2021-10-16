@@ -16,7 +16,7 @@ def kg8m#plugin#fzf#configure(): void
   nnoremap <Leader><Leader>f :FzfFiles<CR>
   nnoremap <Leader><Leader>v :call kg8m#plugin#fzf#git_files#run()<CR>
   nnoremap <Leader><Leader>b :call kg8m#plugin#fzf#buffers#run()<CR>
-  nnoremap <Leader><Leader>l :FzfBLines<CR>
+  nnoremap <Leader><Leader>l :call kg8m#plugin#fzf#buffer_lines#run()<CR>
   nnoremap <Leader><Leader>m :FzfMarks<CR>
   nnoremap <Leader><Leader>h :call kg8m#plugin#fzf#history#run()<CR>
   nnoremap <Leader><Leader>H :FzfHelptags<CR>

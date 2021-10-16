@@ -8,10 +8,5 @@ def kg8m#plugin#fzf#rspec#outline(): void
     return
   endif
 
-  const options = [
-    "--preview-window", "down:50%:wrap:nohidden:+{1}-/2",
-    "--preview", printf("$FZF_VIM_PATH/bin/preview.sh %s:{1}", expand("%")),
-  ]
-
-  fzf#vim#buffer_lines(PATTERN, { options: options })
+  kg8m#plugin#fzf#buffer_lines#run(PATTERN)
 enddef
