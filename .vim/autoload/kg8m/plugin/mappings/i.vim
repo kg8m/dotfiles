@@ -56,7 +56,7 @@ def s:cr_expr(): string
 enddef
 
 def s:bs_expr(): string
-  const base = lexima#expand("<BS>", "i") .. kg8m#plugin#completion#refresh()
+  const base = lexima#expand("<BS>", "i")
 
   if &omnifunc ==# ""
     return base

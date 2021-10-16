@@ -43,10 +43,9 @@ def kg8m#plugin#completion#reset_refresh_pattern(): void
   kg8m#plugin#completion#set_refresh_pattern()
 enddef
 
-def kg8m#plugin#completion#refresh(): string
+def kg8m#plugin#completion#refresh(wait: number = 200): void
   s:stop_refresh_timer()
-  s:start_refresh_timer()
-  return ""
+  s:start_refresh_timer(wait)
 enddef
 
 def kg8m#plugin#completion#force_refresh(): void
@@ -54,8 +53,8 @@ def kg8m#plugin#completion#force_refresh(): void
   s:stop_refresh_timer()
 enddef
 
-def s:start_refresh_timer(): void
-  s:cache.refresh_timer = timer_start(200, (_) => kg8m#plugin#completion#force_refresh())
+def s:start_refresh_timer(wait: number): void
+  s:cache.refresh_timer = timer_start(wait, (_) => kg8m#plugin#completion#force_refresh())
 enddef
 
 def s:stop_refresh_timer(): void
