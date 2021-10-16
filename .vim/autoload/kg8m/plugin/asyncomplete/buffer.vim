@@ -59,9 +59,7 @@ def s:cannot_refresh_keywords(): void
 enddef
 
 def s:activate(): void
-  # Trigger one of the events given to `asyncomplete#sources#buffer#get_source_options`.
-  # Don't use `TextChangedI` or `TextChangedP` because they cause asyncomplete.vim's error about previous_position.
-  doautocmd <nomodeline> TextChanged
+  s:on_event_async()
 enddef
 
 def s:on_post_source(): void
