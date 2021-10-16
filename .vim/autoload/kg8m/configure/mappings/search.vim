@@ -7,11 +7,11 @@ def kg8m#configure#mappings#search#define(): void
 enddef
 
 def s:clear_hlsearch(): string
-  const clear        = ":nohlsearch\<CR>"
-  const notify       = ":call kg8m#events#notify_clear_search_highlight()\<CR>"
-  const clear_status = ":echo ''\<CR>"
+  const clear    = ":nohlsearch\<CR>"
+  const notify   = ":call kg8m#events#notify_clear_search_highlight()\<CR>"
+  const teardown = ":echo ''\<CR>"
 
-  return clear .. notify .. clear_status
+  return clear .. notify .. teardown
 enddef
 
 def s:enter_search(): string
@@ -24,12 +24,9 @@ enddef
 def s:exit_cmdline(): string
   const original = "\<C-c>"
 
-  var extra = ""
-
   if getcmdtype() ==# "/"
-    # Call s:clear_hlsearch
-    extra = ":call feedkeys('" .. g:mapleader .. "/')\<CR>"
+    return original .. s:clear_hlsearch()
+  else
+    return original
   endif
-
-  return original .. extra
 enddef
