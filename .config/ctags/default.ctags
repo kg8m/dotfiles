@@ -15,6 +15,7 @@
 
 --regex-ruby=/\s*(class|module)\s+[a-zA-Z0-9_:]+:([a-zA-Z0-9_]+)/\2/
 --regex-ruby=/\b([A-Z0-9_]+)\s*=($|[^=>])/\1/
+--regex-ruby=/\b[A-Z0-9_]+\s*=\s*\b([A-Z0-9_]+)\s*=($|[^=>])/\1/
 --regex-ruby=/const_set(\s+|\():([A-Z0-9_]+)/\2/
 
 --regex-ruby=/\battr_(accessor|reader|writer)\s+:([a-zA-Z0-9_?, ]+)/\2/
