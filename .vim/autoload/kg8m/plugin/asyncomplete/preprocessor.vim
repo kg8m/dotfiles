@@ -33,7 +33,8 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
       endif
     endfor
 
-    s:filter_with_sort(items, context)
+    s:select_items(items)
+    s:decorate_items(items, context)
   endif
 
   # https://github.com/prabirshrestha/asyncomplete.vim/blob/1f8d8ed26acd23d6bf8102509aca1fc99130087d/autoload/asyncomplete.vim#L474
@@ -47,29 +48,30 @@ def s:matchfuzzy_text_cb(item: dict<any>, context: dict<any>): string
   return item.word
 enddef
 
-def s:filter_with_sort(items: list<dict<any>>, context: dict<any>): void
+def s:sort_items(items: list<dict<any>>): void
   sort(items, (lhs, rhs) => lhs.priority - rhs.priority)
+enddef
 
-  var i = 1
-  filter(items, (_, item): bool => {
-    if i <=# 30
-      i += 1
+def s:select_items(items: list<dict<any>>): void
+  s:sort_items(items)
 
-      if !has_key(item, "overlap_removed")
-        # :h complete-items
-        # item.word: the text that will be inserted, mandatory
-        # item.abbr: abbreviation of "word"; when not empty it is used in the menu instead of "word"
-        item.abbr = item.word
-        item.word = s:remove_overlap_with_following_text(item.word, context.following_text)
+  if len(items) ># 30
+    remove(items, 30, -1)
+  endif
+enddef
 
-        item.overlap_removed = true
-      endif
+def s:decorate_items(items: list<dict<any>>, context: dict<any>): void
+  for item in items
+    if !has_key(item, "overlap_removed")
+      # :h complete-items
+      # item.word: the text that will be inserted, mandatory
+      # item.abbr: abbreviation of "word"; when not empty it is used in the menu instead of "word"
+      item.abbr = item.word
+      item.word = s:remove_overlap_with_following_text(item.word, context.following_text)
 
-      return true
-    else
-      return false
+      item.overlap_removed = true
     endif
-  })
+  endfor
 enddef
 
 def s:remove_overlap_with_following_text(original_text: string, following_text: string): string
