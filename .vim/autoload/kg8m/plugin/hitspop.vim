@@ -7,6 +7,8 @@ def kg8m#plugin#hitspop#configure(): void
   g:hitspop_line_mod   = -1
   g:hitspop_column     = "winright"
   g:hitspop_column_mod = -2
+  g:hitspop_maxwidth   = 50
+  g:hitspop_timeout    = 100
 
   augroup my_vimrc
     autocmd CmdlineChanged /            s:update_search_status()
