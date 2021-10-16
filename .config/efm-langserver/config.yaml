@@ -78,6 +78,10 @@ tools:
     format-command: "shfmt -i 2 -ci -sr -kp -filename '${INPUT}'"
     format-stdin: true
 
+  sql-formatter: &sql-formatter
+    format-command: "sql-formatter --uppercase"
+    format-stdin: true
+
   stylelint: &stylelint
     lint-command: "stylelint --stdin --stdin-filename /dummy.css --formatter unix --no-color"
     lint-stdin: true
@@ -135,6 +139,9 @@ languages:
   sh:
     - <<: *shellcheck
     - <<: *shfmt
+
+  sql:
+    - <<: *sql-formatter
 
   typescript:
     - <<: *eslint

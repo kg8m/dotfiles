@@ -84,7 +84,7 @@ def s:register_efm_langserver(): void
 
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
-      "css", "eruby", "gitcommit", "html", "make", "markdown", "ruby",
+      "css", "eruby", "gitcommit", "html", "make", "markdown", "ruby", "sql",
     ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES,
   })
 enddef
@@ -252,8 +252,8 @@ def s:activate_sqls(): void
       },
     },
 
-    # sqls' document formatting is too heavy if the file is very large.
-    document_format_max_byte: 10'000,
+    # sqls' document formatting is buggy.
+    document_format: false,
   })
 enddef
 
