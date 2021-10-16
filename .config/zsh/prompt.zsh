@@ -78,9 +78,15 @@ function() {
     }
 
     function prompt:refresh:git:trigger {
+      local sleep="$(prompt:refresh:calculate_sleep)"
+
+      if [[ "${sleep}" =~ \\. ]]; then
+        sleep="1"
+      fi
+
       async_stop_worker       "$GIT_PROMPT_REFRESHER_WORKER_NAME"
       async_start_worker      "$GIT_PROMPT_REFRESHER_WORKER_NAME"
-      async_job               "$GIT_PROMPT_REFRESHER_WORKER_NAME" "sleep \"$(prompt:refresh:calculate_sleep)\""
+      async_job               "$GIT_PROMPT_REFRESHER_WORKER_NAME" "sleep \"${sleep}\""
       async_register_callback "$GIT_PROMPT_REFRESHER_WORKER_NAME" "prompt:refresh:git:finish:with_trigger"
     }
 
