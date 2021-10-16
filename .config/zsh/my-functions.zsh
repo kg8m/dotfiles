@@ -58,6 +58,7 @@ function execute_with_confirm {
   else
     export __execute_with_confirm_executed=""
     echo "Canceled." >&2
+    return 1
   fi
 }
 
