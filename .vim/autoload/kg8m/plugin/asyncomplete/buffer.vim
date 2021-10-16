@@ -13,7 +13,7 @@ def kg8m#plugin#asyncomplete#buffer#configure(): void
 enddef
 
 # https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
-def kg8m#plugin#asyncomplete#buffer#on_event(): void
+def s:on_event(): void
   if !get(s:cache, "is_refresh_keywords_defined", false)
     s:setup_refresh_keywords()
   endif
@@ -28,7 +28,7 @@ def s:on_event_async(): void
 enddef
 
 def s:start_refresh_timer(): void
-  s:cache.refresh_timer = timer_start(200, (_) => kg8m#plugin#asyncomplete#buffer#on_event())
+  s:cache.refresh_timer = timer_start(200, (_) => s:on_event())
 enddef
 
 def s:stop_refresh_timer(): void
