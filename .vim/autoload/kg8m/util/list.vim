@@ -21,7 +21,7 @@ def kg8m#util#list#filter_map(list: list<any>, Callback: func): list<any>
   for item in list
     const new_item = Callback(item)
 
-    if !!new_item
+    if type(new_item) !=# type(false) || new_item !=# false
       result += [new_item]
     endif
   endfor
