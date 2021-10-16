@@ -31,6 +31,11 @@ def s:apply(options = {}): void
   endif
 
   for winnr in range(1, last_winnr)
+    # Skip diff windows because colorcolumn hides diff colors.
+    if getwinvar(winnr, "&diff")
+      continue
+    endif
+
     if winnr !=# current_winnr
       if getbufvar(winbufnr(winnr), "original_colorcolumn", v:null) ==# v:null
         setbufvar(winbufnr(winnr), "original_colorcolumn", getwinvar(winnr, "&colorcolumn"))
