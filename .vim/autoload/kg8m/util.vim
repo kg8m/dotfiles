@@ -134,12 +134,13 @@ def kg8m#util#convert_to_vim9script(): void
   endif
 
   # Replace `function` with `def` and remove `abort`
-  :%s/\v^(\s*)function>/\1def/Ie
+  :%s/\v^(\s*)function>!?/\1def/Ie
   :%s/\v^(\s*)endfunction>/\1enddef/Ie
   :%s/\v\) abort>/)/Ie
 
   # Add function's return type and argument's type
   :%s/\v^(\s*)def ([a-zA-Z&:#_.]+)\((\w+)(.*)\)$/\1def \2(\3: FIXME\4): void/Ie
+  :%s/\v^(\s*)def ([a-zA-Z&:#_.]+)\(\)$/\1def \2(): void/Ie
 
   # Remove `call` except for:
   #   - :call foo()
@@ -151,12 +152,15 @@ def kg8m#util#convert_to_vim9script(): void
   # Replace `let foo .= bar` with `let foo ..= bar`
   :%s/\v<(let\s+)([a-zA-Z&:#_.]+)(\s+)\.\=/\1\2\3..=/Ie
 
-  # Replace `let` with `const` except for:
-  #   - :let foo = bar
-  :%s/\v(:)@<!<let(\s+)/const\2/Ie
+  # Replace `let` with `const`
+  :%s/\v(:)@<!<let(\s+)([bgsw]:)@!/const\2/Ie
 
-  # Remove function argument's prefix `a:`
-  :%s/\v<a:([a-zA-Z_]+)/\1/gIe
+  # Remove `let`
+  :%s/\v(:)@<!<let\s+([bgsw]:)/\2/Ie
+
+  # Replace `is#` and `isnot#`
+  :%s/\v<is(#?)/==\1/gIe
+  :%s/\v<isnot(#?)/!=\1/gIe
 
   # Remove `#` from dictionary literals
   :%s/\v#\{/{/ge
@@ -175,6 +179,20 @@ def kg8m#util#convert_to_vim9script(): void
 
   # Reset some configurations
   set filetype=vim
+
+  echomsg "Fix argument types and return types of functions."
+  echomsg "Remove `a:` namespace from argument variables names with attention to `l:` or `s:` namespaced same name variables."
+  echomsg "Remove `l:` namespace from variable names with attention to `s:` namespaced same name variables."
+
+  echomsg "Convert extracting string parts as following:"
+  echomsg "  - string[i]       => strpart(string, i, 1)"
+  echomsg "  - string[i : ]    => strpart(string, i)"
+  echomsg "  - string[-i : ]   => strpart(string, len(string) - i)"
+  echomsg "  - string[ : i]    => strpart(string, 0, i + 1)"
+  echomsg "  - string[ : -i]   => strpart(string, 0, len(string) - i + 1)"
+  echomsg "  - string[i : j]   => strpart(string, i, j - i + 1)"
+  echomsg "  - string[i : -j]  => strpart(string, i, len(string) - i - j + 1)"
+  echomsg "  - string[-i : -j] => strpart(string, len(string) - i, i - j + 1)"
 enddef
 
 def kg8m#util#setup_demo(): void
