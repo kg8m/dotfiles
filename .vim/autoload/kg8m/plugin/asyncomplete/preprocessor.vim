@@ -64,6 +64,8 @@ def s:select_items(items: list<dict<any>>): void
 enddef
 
 def s:decorate_items(items: list<dict<any>>, context: dict<any>): void
+  var priority_changed = false
+
   for item in items
     if !has_key(item, "overlap_removed")
       # :h complete-items
@@ -72,9 +74,19 @@ def s:decorate_items(items: list<dict<any>>, context: dict<any>): void
       item.abbr = item.word
       item.word = s:remove_overlap_with_following_text(item.word, context.following_text)
 
+      # The item may have higher score when overlap has been removed.
+      if item.word !=# item.abbr
+        item.priority = item.priority / 2
+        priority_changed = true
+      endif
+
       item.overlap_removed = true
     endif
   endfor
+
+  if priority_changed
+    s:sort_items(items)
+  endif
 enddef
 
 def s:remove_overlap_with_following_text(original_text: string, following_text: string): string
