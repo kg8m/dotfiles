@@ -29,6 +29,9 @@ options=(
   --stdin-filename "$(format_target_filepath "$target_filepath")"
 )
 
+# Kill existing processes because too many processes run and they cause high CPU usage.
+pkill -f ".*textlint.* ${options[*]}"
+
 out="$(textlint "${options[@]}" 2> "$err_temp_filepath")"
 err="$(cat "$err_temp_filepath")"
 
