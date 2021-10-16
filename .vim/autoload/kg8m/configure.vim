@@ -108,6 +108,7 @@ def kg8m#configure#mappings(): void
   kg8m#configure#mappings#base()
   kg8m#configure#mappings#utils()
   kg8m#configure#mappings#prevent_unconscious_operation()
+  kg8m#configure#mappings#batch_cursor_move#define()
   kg8m#configure#mappings#search#define()
 enddef
 
