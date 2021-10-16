@@ -70,7 +70,7 @@ if kg8m#plugin#register("prabirshrestha/asyncomplete-lsp.vim")
   kg8m#plugin#asyncomplete#lsp#configure()
 endif
 
-if kg8m#plugin#register("Shougo/neosnippet")
+if kg8m#plugin#register("Shougo/neosnippet.vim")
   kg8m#plugin#neosnippet#configure()
 endif
 
