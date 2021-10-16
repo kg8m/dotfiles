@@ -44,7 +44,10 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
 enddef
 
 def s:matchfuzzy_text_cb(item: dict<any>, context: dict<any>): string
-  item.priority = s:word_priority(item.word, context)
+  if !has_key(item, "priority")
+    item.priority = s:word_priority(item.word, context)
+  endif
+
   return item.word
 enddef
 
