@@ -106,9 +106,9 @@ def kg8m#configure#mappings(): void
   set timeoutlen=3000
 
   kg8m#configure#mappings#base()
-  kg8m#configure#mappings#search()
   kg8m#configure#mappings#utils()
   kg8m#configure#mappings#prevent_unconscious_operation()
+  kg8m#configure#mappings#search#define()
 enddef
 
 def kg8m#configure#others(): void
