@@ -14,6 +14,7 @@ var s:is_ready = false
 
 def kg8m#plugin#lsp#servers#register(): void
   s:register_bash_language_server()
+  s:register_clangd()
   s:register_css_language_server()
   s:register_efm_langserver()
   s:register_golangci_lint_langserver()
@@ -52,6 +53,19 @@ enddef
 def s:activate_bash_language_server(): void
   s:activate("bash-language-server", {
     cmd: (_) => ["bash-language-server", "start"],
+  })
+enddef
+
+def s:register_clangd(): void
+  s:register({
+    name: "clangd",
+    allowlist: ["c"],
+  })
+enddef
+
+def s:activate_clangd(): void
+  s:activate("clangd", {
+    cmd: (_) => ["clangd"],
   })
 enddef
 
