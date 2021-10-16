@@ -1,5 +1,7 @@
 vim9script
 
+final s:cache = {}
+
 const s:vertical_line_code      = "\e[6 q"
 const s:vertical_bold_line_code = "\e[2 q"
 
@@ -21,7 +23,13 @@ def kg8m#configure#cursor#match(): void
   set matchtime=1
 
   const japanese_matchpairs = kg8m#util#japanese_matchpairs()->mapnew((_, pair) => join(pair, ":"))->join(",")
-  &matchpairs ..= "," .. japanese_matchpairs
+
+  if has_key(s:cache, "original_matchpairs")
+    &matchpairs = s:cache.original_matchpairs .. "," .. japanese_matchpairs
+  else
+    s:cache.original_matchpairs = &matchpairs
+    &matchpairs ..= "," .. japanese_matchpairs
+  endif
 enddef
 
 def kg8m#configure#cursor#highlight(): void
