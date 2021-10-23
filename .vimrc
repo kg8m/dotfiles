@@ -361,7 +361,6 @@ kg8m#plugin#register("kana/vim-textobj-user")
 # For syntaxes
 kg8m#plugin#register("thinca/vim-themis")
 
-kg8m#plugin#register("cespare/vim-toml")
 kg8m#plugin#register("posva/vim-vue")
 
 if kg8m#plugin#register("thinca/vim-zenspace")
