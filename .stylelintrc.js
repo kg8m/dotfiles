@@ -1,6 +1,6 @@
 const path = require("path");
-const homePath = process.env["HOME"];
-const modulesPath = path.join(homePath, ".local/share/yarn/global/node_modules");
+const dataHomePath = process.env["XDG_DATA_HOME"];
+const modulesPath = path.join(dataHomePath, "yarn/global/node_modules");
 
 module.exports = {
   extends: [
