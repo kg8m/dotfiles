@@ -10,6 +10,9 @@ rules:
   - expected: ESLint
     options:
       wordBoundary: true
+  - expected: Git
+    options:
+      wordBoundary: true
   - expected: iTerm2
     pattern: /iterm2?/i
     options:
