@@ -39,7 +39,10 @@ export VIM_PLUGINS=$HOME/.vim/plugins/repos
 
 export KG8M_ZSH_CACHE_DIR=$XDG_CACHE_HOME/zsh
 
-if [[ ! -o interactive ]]; then
+if [[ -o interactive ]]; then
+  # https://github.com/sharkdp/bat/blob/ed3246c423932561435d45c50fd8cd9e06add7f5/README.md?plain=1#L171
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+else
   source ~/.config/zsh/env/fzf.zsh
   source ~/.config/zsh/env/go.zsh
   source ~/.config/zsh/env/ruby.zsh
