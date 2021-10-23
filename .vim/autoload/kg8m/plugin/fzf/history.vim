@@ -26,16 +26,10 @@ enddef
 #   - renamed files by `:Rename`
 #   - opened files by `vim foo bar baz`
 def s:candidates(): list<string>
-  const current  = [kg8m#util#file#current_path()]->filter((_, filepath) => !empty(filepath))
-  const buffers  = s:get_buffers()
+  const buffers  = kg8m#plugin#fzf#buffers#list({ sorter: function("s:buffers_sorter") })
   const oldfiles = s:get_oldfiles()
 
-  return kg8m#util#list#vital().uniq(current + buffers + oldfiles)
-enddef
-
-def s:get_buffers(): list<string>
-  const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : kg8m#util#file#format_path(bufinfo.name)
-  return getbufinfo()->sort("s:buffers_sorter")->kg8m#util#list#filter_map(MapperCallback)
+  return kg8m#util#list#vital().uniq(buffers + oldfiles)
 enddef
 
 def s:buffers_sorter(lhs: dict<any>, rhs: dict<any>): number

@@ -10,7 +10,7 @@ endif
 def kg8m#plugin#fzf#buffers#run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
-    source:  s:candidates(),
+    source:  kg8m#plugin#fzf#buffers#list(),
     options: [
       "--header-lines", empty(kg8m#util#file#current_path()) ? 0 : 1,
       "--prompt", "Buffers> ",
@@ -22,14 +22,20 @@ def kg8m#plugin#fzf#buffers#run(): void
   fzf#run(fzf#wrap("buffer-files", options))
 enddef
 
-def s:candidates(): list<string>
+def kg8m#plugin#fzf#buffers#list(options: dict<any> = {}): list<string>
+  const sorter = get(options, "sorter") ?? function("s:default_sorter")
+
   const current = [kg8m#util#file#current_path()]->filter((_, filepath) => !empty(filepath))
-  const buffers = s:list()
+  const buffers = s:bufinfo_list()->sort(sorter)->mapnew((_, bufinfo) => kg8m#util#file#format_path(bufinfo.name))
 
   return kg8m#util#list#vital().uniq(current + buffers)
 enddef
 
-def s:list(): list<string>
-  const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : kg8m#util#file#format_path(bufinfo.name)
-  return getbufinfo({ buflisted: true })->kg8m#util#list#filter_map(MapperCallback)->sort()
+def s:bufinfo_list(): list<dict<any>>
+  const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : bufinfo
+  return getbufinfo({ buflisted: true })->kg8m#util#list#filter_map(MapperCallback)
+enddef
+
+def s:default_sorter(lhs: dict<any>, rhs: dict<any>): number
+  return lhs.name <# rhs.name ? 1 : -1
 enddef
