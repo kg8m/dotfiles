@@ -14,43 +14,43 @@ const MODE_PATTERN = "^[nvs\<C-v>\<C-s>]"
 
 # Move cursor in batches because Vim sometimes gets too slow at moving cursor, e.g., when hlsearch is set.
 def kg8m#configure#mappings#batch_cursor_move#define(): void
-  noremap <expr> j     <SID>run("j")
-  noremap <expr> k     <SID>run("k")
-  noremap <expr> h     <SID>run("h")
-  noremap <expr> l     <SID>run("l")
-  noremap <expr> <C-e> <SID>run("<C-e>")
-  noremap <expr> <C-y> <SID>run("<C-y>")
+  noremap <expr> j     <SID>trigger("j")
+  noremap <expr> k     <SID>trigger("k")
+  noremap <expr> h     <SID>trigger("h")
+  noremap <expr> l     <SID>trigger("l")
+  noremap <expr> <C-e> <SID>trigger("<C-e>")
+  noremap <expr> <C-y> <SID>trigger("<C-y>")
 enddef
 
-def s:run(key: string): string
+def s:trigger(key: string): string
   timer_stop(s:timer_id)
 
   if v:count !=# 0
-    s:teardown()
+    s:release()
     return key
   endif
 
   if key ==# s:current_key
     if s:count >=# 5
-      s:teardown()
+      s:release()
     else
       s:count += 1
     endif
   else
     if s:count ># 0
-      s:teardown()
+      s:release()
     endif
 
     s:count += 1
   endif
 
   s:current_key = key
-  s:timer_id = timer_start(50, (_) => s:teardown())
+  s:timer_id = timer_start(50, (_) => s:release())
 
   return ""
 enddef
 
-def s:teardown(): void
+def s:release(): void
   if s:count ># 0 && mode() =~? MODE_PATTERN
     # `n` for preventing remap. `t` for opening folds.
     feedkeys(s:count .. s:current_key, "nt")
