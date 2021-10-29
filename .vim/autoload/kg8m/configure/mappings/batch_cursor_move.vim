@@ -4,6 +4,14 @@ var s:timer_id = -1
 var s:current_key = ""
 var s:count = 0
 
+# :h mode()
+#   n*:  Normal or Operator-pending
+#   v*:  Visual
+#   ^V*: Visual blockwise
+#   s*:  Select
+#   ^S:  Select blockwise
+const MODE_PATTERN = "^[nvs\<C-v>\<C-s>]"
+
 # Move cursor in batches because Vim sometimes gets too slow at moving cursor, e.g., when hlsearch is set.
 def kg8m#configure#mappings#batch_cursor_move#define(): void
   noremap <expr> j     <SID>run("j")
@@ -43,7 +51,7 @@ def s:run(key: string): string
 enddef
 
 def s:teardown(): void
-  if s:count ># 0
+  if s:count ># 0 && mode() =~? MODE_PATTERN
     # `n` for preventing remap. `t` for opening folds.
     feedkeys(s:count .. s:current_key, "nt")
   endif
