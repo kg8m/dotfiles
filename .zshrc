@@ -92,7 +92,7 @@ mkdir -p "${KG8M_ZSH_CACHE_DIR:?}"
 typeset -gAH ZINIT
 ZINIT[HOME_DIR]="$XDG_DATA_HOME/zsh/zinit"
 
-[ -d "${ZINIT[HOME_DIR]}/bin" ] || git clone https://github.com/zdharma/zinit.git "${ZINIT[HOME_DIR]}/bin"
+[ -d "${ZINIT[HOME_DIR]}/bin" ] || git clone https://github.com/zdharma-continuum/zinit.git "${ZINIT[HOME_DIR]}/bin"
 source "${ZINIT[HOME_DIR]}/bin/zinit.zsh"
 autoload -U _zinit
 
