@@ -5,7 +5,7 @@ def kg8m#plugin#fzf_tjump#configure()
   g:fzf_tjump_path_to_preview_bin = kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh"
 
   nnoremap <Leader><Leader>t :FzfTjump<Space>
-  xnoremap <Leader><Leader>t "zy:FzfTjump<Space><C-r>"
+  xnoremap <Leader><Leader>t "zy:FzfTjump<Space><C-r>z
 
   map g] <Plug>(fzf-tjump)
 
