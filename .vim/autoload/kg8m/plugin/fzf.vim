@@ -13,25 +13,25 @@ def kg8m#plugin#fzf#configure(): void
   g:fzf_action = { ctrl-o: "DWMOpen" }
 
   # See also vim-fzf-tjump's mappings
-  nnoremap <Leader><Leader>f :FzfFiles<CR>
-  nnoremap <Leader><Leader>v :call kg8m#plugin#fzf#git_files#run()<CR>
-  nnoremap <Leader><Leader>b :call kg8m#plugin#fzf#buffers#run()<CR>
-  nnoremap <Leader><Leader>l :call kg8m#plugin#fzf#buffer_lines#run()<CR>
-  nnoremap <Leader><Leader>m :FzfMarks<CR>
-  nnoremap <Leader><Leader>h :call kg8m#plugin#fzf#history#run()<CR>
-  nnoremap <Leader><Leader>H :FzfHelptags<CR>
-  nnoremap <Leader><Leader>y :call kg8m#plugin#fzf#yank_history#run()<CR>
-  nnoremap <Leader><Leader>g :call kg8m#plugin#fzf#grep#enter_command()<CR>
-  xnoremap <Leader><Leader>g "zy:call kg8m#plugin#fzf#grep#enter_command(@z)<CR>
-  noremap  <Leader><Leader>s <Cmd>call kg8m#plugin#fzf#shortcuts#run("")<CR>
-  noremap  <Leader><Leader>a <Cmd>call kg8m#plugin#fzf#shortcuts#run("SimpleAlign ")<CR>
-  nnoremap <Leader><Leader>[ :call kg8m#plugin#fzf#jumplist#back()<CR>
-  nnoremap <Leader><Leader>] :call kg8m#plugin#fzf#jumplist#forward()<CR>
+  nnoremap <silent> <Leader><Leader>f :FzfFiles<CR>
+  nnoremap <silent> <Leader><Leader>v :call kg8m#plugin#fzf#git_files#run()<CR>
+  nnoremap <silent> <Leader><Leader>b :call kg8m#plugin#fzf#buffers#run()<CR>
+  nnoremap <silent> <Leader><Leader>l :call kg8m#plugin#fzf#buffer_lines#run()<CR>
+  nnoremap <silent> <Leader><Leader>m :FzfMarks<CR>
+  nnoremap <silent> <Leader><Leader>h :call kg8m#plugin#fzf#history#run()<CR>
+  nnoremap <silent> <Leader><Leader>H :FzfHelptags<CR>
+  nnoremap <silent> <Leader><Leader>y :call kg8m#plugin#fzf#yank_history#run()<CR>
+  nnoremap <silent> <Leader><Leader>g :call kg8m#plugin#fzf#grep#enter_command()<CR>
+  xnoremap <silent> <Leader><Leader>g "zy:call kg8m#plugin#fzf#grep#enter_command(@z)<CR>
+  noremap  <silent> <Leader><Leader>s <Cmd>call kg8m#plugin#fzf#shortcuts#run("")<CR>
+  noremap  <silent> <Leader><Leader>a <Cmd>call kg8m#plugin#fzf#shortcuts#run("SimpleAlign ")<CR>
+  nnoremap <silent> <Leader><Leader>[ :call kg8m#plugin#fzf#jumplist#back()<CR>
+  nnoremap <silent> <Leader><Leader>] :call kg8m#plugin#fzf#jumplist#forward()<CR>
 
   nnoremap <silent> m :call kg8m#plugin#fzf#marks#increment()<CR>
 
   if kg8m#util#on_rails_dir()
-    nnoremap <Leader><Leader>r :call kg8m#plugin#fzf#rails#enter_command()<CR>
+    nnoremap <silent> <Leader><Leader>r :call kg8m#plugin#fzf#rails#enter_command()<CR>
   endif
 
   augroup my_vimrc
