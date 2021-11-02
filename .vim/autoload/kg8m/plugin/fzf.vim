@@ -31,8 +31,7 @@ def kg8m#plugin#fzf#configure(): void
   nnoremap <silent> m :call kg8m#plugin#fzf#marks#increment()<CR>
 
   if kg8m#util#on_rails_dir()
-    nnoremap <Leader><Leader>r :FzfRails<Space>
-    command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#type_names FzfRails kg8m#plugin#fzf#rails#run(<q-args>)
+    nnoremap <Leader><Leader>r :call kg8m#plugin#fzf#rails#enter_command()<CR>
   endif
 
   augroup my_vimrc

@@ -6,15 +6,16 @@ if !kg8m#plugin#is_sourced("fzf.vim")
   kg8m#plugin#source("fzf.vim")
 endif
 
+command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#type_names FzfRails kg8m#plugin#fzf#rails#run(<q-args>)
+
+def kg8m#plugin#fzf#rails#enter_command(): void
+  feedkeys(":FzfRails\<Space>", "t")
+enddef
+
 final s:specs: dict<dict<any>> = {}
 final s:type_names = []
 
-var s:is_specs_initialized = false
-var s:is_type_names_initialized = false
-
 def kg8m#plugin#fzf#rails#run(type: string): void
-  s:setup()
-
   const type_spec = s:specs[type]
 
   var command: string
@@ -54,15 +55,7 @@ def kg8m#plugin#fzf#rails#run(type: string): void
   fzf#run(fzf#wrap("rails", options))
 enddef
 
-# For command's '-complete' option
 def kg8m#plugin#fzf#rails#type_names(arglead: string, _cmdline: string, _curpos: number): list<string>
-  s:setup()
-
-  if !s:is_type_names_initialized
-    extend(s:type_names, s:specs->keys()->sort())
-    s:is_type_names_initialized = true
-  endif
-
   if arglead ==# ""
     return s:type_names
   else
@@ -73,10 +66,6 @@ def kg8m#plugin#fzf#rails#type_names(arglead: string, _cmdline: string, _curpos:
 enddef
 
 def s:setup(): void
-  if s:is_specs_initialized
-    return
-  endif
-
   extend(s:specs, {
     assets: {
       dir:      "{app/assets,app/javascripts,public}",
@@ -170,5 +159,6 @@ def s:setup(): void
     endfor
   endif
 
-  s:is_specs_initialized = true
+  extend(s:type_names, s:specs->keys()->sort())
 enddef
+s:setup()
