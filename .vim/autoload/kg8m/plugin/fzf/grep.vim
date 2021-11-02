@@ -23,20 +23,9 @@ def kg8m#plugin#fzf#grep#run(pattern: string, path: string = ""): void
     "--delimiter", ":",
   ]
 
-  var preview_option        = kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh "
-  var preview_window_option = "down:75%:wrap:nohidden:"
-
-  if filereadable(path)
-    preview_option        ..= escaped_path .. ":{}"
-    preview_window_option ..= "+{1}-/2"
-  else
-    preview_option        ..= "{}"
-    preview_window_option ..= "+{2}-/2"
-  endif
-
   extend(fzf_options, [
-    "--preview", preview_option,
-    "--preview-window", preview_window_option,
+    "--preview",        kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh {}",
+    "--preview-window", "down:75%:wrap:nohidden:+{2}-/2",
   ])
 
   fzf#vim#grep("rg " .. grep_options .. " " .. grep_args, true, { options: fzf_options })
@@ -78,7 +67,7 @@ def s:input_path(): string
 enddef
 
 def s:options(): string
-  const base = "--column --line-number --no-heading --color=always"
+  const base = "--column --line-number --no-heading --with-filename --color always"
 
   if empty($RIPGREP_EXTRA_OPTIONS)
     return base
