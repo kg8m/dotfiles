@@ -37,6 +37,7 @@ function() {
     "--reverse"
     "--preview='echo {} | head -n3'"
     "--preview-window='down:5:wrap'"
+    "--scroll-off=15"
     "--select-1"
   )
 
