@@ -95,9 +95,8 @@ def kg8m#util#rubygems_path(): string
 enddef
 
 def kg8m#util#remote_copy(original_text: string): void
-  const text = original_text->substitute('\n$', "", "")->shellescape()
-
-  system("printf %s " .. text .. " | ssh main -t 'LC_CTYPE=UTF-8 pbcopy'")
+  const text = original_text->substitute('\n$', "", "")
+  system("ssh main -t 'LC_CTYPE=UTF-8 pbcopy'", text)
 
   if &columns > 50
     echomsg "Copied: " .. trim(kg8m#util#string#vital().truncate_skipping(text, &columns - 30, 0, "..."))
