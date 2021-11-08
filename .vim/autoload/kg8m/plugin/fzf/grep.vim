@@ -40,11 +40,7 @@ def kg8m#plugin#fzf#grep#run(args: string): void
 enddef
 
 def kg8m#plugin#fzf#grep#complete(arglead: string, _cmdline: string, _curpos: number): list<string>
-  if empty(arglead)
-    return []
-  endif
-
-  if arglead =~# '^-'
+  if empty(arglead) || arglead =~# '^-'
     if !has_key(s:cache, "grep_option_candidates")
       s:cache.grep_option_candidates = system(s:command_to_show_grep_option_candidates())->split("\n")
     endif
