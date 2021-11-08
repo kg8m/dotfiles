@@ -23,7 +23,7 @@ def kg8m#plugin#fzf#grep#enter_command(preset: string = ""): void
   HINT
 
   echo hint->join("\n") .. "\n\n"
-  feedkeys(":\<C-u>FzfGrep\<Space>" .. preset, "t")
+  feedkeys(":\<C-u>FzfGrep\<Space>'" .. preset .. "'\<Left>", "t")
 enddef
 
 def kg8m#plugin#fzf#grep#run(args: string): void
