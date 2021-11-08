@@ -1,6 +1,9 @@
 # Dynamically choose between supported regex engines depending on the features used in the pattern
 --engine=auto
 
+# Follow symbolic links while traversing directories
+--follow
+
 # Search hidden files and directories
 --hidden
 
