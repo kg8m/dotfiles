@@ -65,8 +65,8 @@ def kg8m#configure#mappings#base(): void
 enddef
 
 def kg8m#configure#mappings#utils(): void
-  xnoremap <Leader>y "zy:call kg8m#util#remote_copy(@z)<CR>
-  xnoremap <Leader>w :call kg8m#util#remove_trailing_whitespaces()<CR>
+  xnoremap <silent> <Leader>y "zy:call kg8m#util#remote_copy(@z)<CR>
+  xnoremap <silent> <Leader>w :call kg8m#util#remove_trailing_whitespaces()<CR>
 enddef
 
 # <Nul> == <C-Space>
