@@ -14,8 +14,12 @@ command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#complete FzfGrep kg8
 def kg8m#plugin#fzf#grep#enter_command(preset: string = ""): void
   const hint =<< trim HINT
     Hint:
-      - :FzfGrep {PATTERN} {PATH}
-      - :FzfGrep {PATTERN} --glob !{PATH_TO_IGNORE}
+      - :FzfGrep '{PATTERN}'                        # Search the current directory
+      - :FzfGrep '{PATTERN}' {PATH_TO_SEARCH}       # Search specified files/directories
+      - :FzfGrep '{PATTERN}' -g !{PATH_TO_EXCLUDE}  # Exclude files/directories for sarching (--glob)
+      - :FzfGrep '{PATTERN}' -s                     # Search case sensitively (--case-sensitive)
+      - :FzfGrep '{PATTERN}' -o                     # Print only the matched parts of a matching line (--only-matching)
+      - :FzfGrep '{PATTERN}' -v                     # Invert matching (--invert-match)
   HINT
 
   echo hint->join("\n") .. "\n\n"
