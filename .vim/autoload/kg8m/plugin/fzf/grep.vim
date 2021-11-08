@@ -46,14 +46,7 @@ def kg8m#plugin#fzf#grep#complete(arglead: string, _cmdline: string, _curpos: nu
 
   if arglead =~# '^-'
     if !has_key(s:cache, "grep_option_candidates")
-      s:cache.grep_option_candidates =
-        system("rg --help")
-          ->split("\n")
-          ->filter((_, line) => line =~# '^\s*-')
-          ->mapnew((_, line) => split(line, '\s\+\|/'))
-          ->flattennew()
-          ->filter((_, item) => item =~# '^-')
-          ->sort()
+      s:cache.grep_option_candidates = system(s:command_to_show_grep_option_candidates())->split("\n")
     endif
 
     const pattern = "^" .. arglead
@@ -101,6 +94,15 @@ def s:grep_explicit_options(): string
   endif
 
   return s:cache.grep_explicit_options
+enddef
+
+def s:command_to_show_grep_option_candidates(): string
+  const show_help           = "rg --help"
+  const filter_option_lines = "grep -E '^\\s*-'"
+  const extract_options     = "grep -E '\\-[.0-9a-zA-Z]\\b|--[-0-9a-zA-Z]+' -o"
+  const sort_and_uniquify   = "sort -u"
+
+  return [show_help, filter_option_lines, extract_options, sort_and_uniquify]->join(" | ")
 enddef
 
 def s:join_presences(list: list<string>): string
