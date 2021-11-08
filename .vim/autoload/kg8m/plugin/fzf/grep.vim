@@ -44,10 +44,7 @@ def kg8m#plugin#fzf#grep#complete(arglead: string, _cmdline: string, _curpos: nu
     return []
   endif
 
-  const laststr = arglead->split(" ")[-1]
-  var prefix_length = len(arglead) - len(laststr)
-
-  if laststr =~# '^-'
+  if arglead =~# '^-'
     if !has_key(s:cache, "grep_option_candidates")
       s:cache.grep_option_candidates =
         system("rg --help")
@@ -59,27 +56,24 @@ def kg8m#plugin#fzf#grep#complete(arglead: string, _cmdline: string, _curpos: nu
           ->sort()
     endif
 
-    const pattern = "^" .. laststr
+    const pattern = "^" .. arglead
     return s:cache.grep_option_candidates->copy()->filter((_, item) => item =~# pattern)
   else
-    var pattern = laststr
+    var pattern = arglead
 
     if pattern =~# '^["'']'
-      pattern = strpart(pattern, 1)
-      prefix_length += 1
+      pattern = pattern[1 :]
     endif
 
     if pattern =~# '^\'
-      pattern = strpart(pattern, 1)
-      prefix_length += 1
+      pattern = pattern[1 :]
     endif
 
     if pattern =~# '^!'
-      pattern = strpart(pattern, 1)
-      prefix_length += 1
+      pattern = pattern[1 :]
     endif
 
-    const prefix = strpart(arglead, 0, prefix_length)
+    const prefix = strpart(arglead, 0, len(arglead) - len(pattern))
     return getcompletion(pattern, "file")->map((_, item) => prefix .. item)
   endif
 enddef
