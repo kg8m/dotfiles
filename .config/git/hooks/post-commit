@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 if [ -f .git_templates/hooks/post-commit ]; then
-  # shellcheck disable=SC1091
   source .git_templates/hooks/post-commit
 else
   exit 0

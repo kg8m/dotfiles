@@ -7,7 +7,7 @@ export GIT_EDITOR=vim
 export LESS="--RAW-CONTROL-CHARS --LONG-PROMPT --no-init --quit-if-one-screen"
 export LESSHISTFILE="${XDG_DATA_HOME:?}/less/lesshst"
 
-mkdir -p "$(dirname "$LESSHISTFILE")"
+mkdir -p "$(dirname "${LESSHISTFILE}")"
 
 # http://dsas.blog.klab.org/archives/50808759.html
 export GREP_COLOR='01;35'
@@ -21,7 +21,7 @@ export HISTSIZE=100000
 export SAVEHIST=100000
 export HISTORY_IGNORE="rm -f*|git * -f*|*secret*|*SECRET*|*token*|*TOKEN*"
 
-mkdir -p "$(dirname "$HISTFILE")"
+mkdir -p "$(dirname "${HISTFILE}")"
 
 # https://mollifier.hatenablog.com/entry/20090728/p1
 zshaddhistory() {
@@ -90,7 +90,7 @@ mkdir -p "${KG8M_ZSH_CACHE_DIR:?}"
 
 # Setup zinit
 typeset -gAH ZINIT
-ZINIT[HOME_DIR]="$XDG_DATA_HOME/zsh/zinit"
+ZINIT[HOME_DIR]="${XDG_DATA_HOME}/zsh/zinit"
 
 [ -d "${ZINIT[HOME_DIR]}/bin" ] || git clone https://github.com/zdharma-continuum/zinit.git "${ZINIT[HOME_DIR]}/bin"
 source "${ZINIT[HOME_DIR]}/bin/zinit.zsh"

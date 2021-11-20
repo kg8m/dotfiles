@@ -43,7 +43,7 @@ function execute_commands_with_echo {
     horizontal_line
   fi
 
-  return "$result"
+  return "${result}"
 }
 
 function execute_with_confirm {
@@ -54,7 +54,7 @@ function execute_with_confirm {
 
   if [[ ${response} =~ ^y ]]; then
     export __execute_with_confirm_executed="1"
-    eval "$@"
+    eval "$*"
   else
     export __execute_with_confirm_executed=""
     echo "Canceled." >&2
@@ -66,26 +66,26 @@ function retriable_execute_with_confirm {
   execute_with_confirm "$@"
   local result=$?
 
-  if [ "$__execute_with_confirm_executed" = "1" ]; then
+  if [ "${__execute_with_confirm_executed}" = "1" ]; then
     local message response
 
-    if [ "$result" = "0" ]; then
+    if [ "${result}" = "0" ]; then
       message="👼 Succeeded."
     else
       message="👿 Failed."
     fi
 
-    printf "\n%s\n\n" "$message" >&2
+    printf "\n%s\n\n" "${message}" >&2
     read -r "response?Retry? [y/n]: "
 
-    if [[ "$response" =~ ^y ]]; then
+    if [[ "${response}" =~ ^y ]]; then
       retriable_execute_with_confirm "$@"
     fi
   fi
 }
 
 function horizontal_line {
-  echo "\e[38;5;239m${(r:$COLUMNS::-:)}\e[0m"
+  echo "\e[38;5;239m${(r:${COLUMNS}::-:)}\e[0m"
 }
 
 function highlight:red {
@@ -147,7 +147,7 @@ function batch_move {
   zmv -n "$@" | less
   read -r "response?Execute? [y/n]: "
 
-  if [[ "$response" =~ ^y ]]; then
+  if [[ "${response}" =~ ^y ]]; then
     zmv "$@"
   else
     echo "Canceled." >&2
@@ -163,27 +163,27 @@ function trash {
   local trash_path=${TRASH_PATH:-/tmp}
 
   for source in "$@"; do
-    filename=$(basename "$source")
+    filename=$(basename "${source}")
 
-    if [ -f "$trash_path/$filename" ] || [ -d "$trash_path/$filename" ]; then
-      sed_expr='s/^\(\.\?[^.]\+\)\(\.\?\)/\1 '"$timestamp.${RANDOM}"'\2/'
-      new_filename=$(echo "$filename" | sed -e "$sed_expr")
+    if [ -f "${trash_path}/${filename}" ] || [ -d "${trash_path}/${filename}" ]; then
+      sed_expr='s/^\(\.\?[^.]\+\)\(\.\?\)/\1 '"${timestamp}.${RANDOM}"'\2/'
+      new_filename=$(echo "${filename}" | sed -e "${sed_expr}")
     else
-      new_filename="$filename"
+      new_filename="${filename}"
     fi
 
-    touch "$source"
-    execute_with_echo "mv '$source' '$trash_path/$new_filename'"
+    touch "${source}"
+    execute_with_echo "mv '${source}' '${trash_path}/${new_filename}'"
   done
 }
 
 function remove_symlink {
   local filepath="${1:?}"
 
-  if [ -L "$filepath" ]; then
-    rm "$filepath"
+  if [ -L "${filepath}" ]; then
+    rm "${filepath}"
   else
-    echo:warn "$filepath is not a symbolic link."
+    echo:warn "${filepath} is not a symbolic link."
   fi
 }
 
@@ -208,18 +208,18 @@ function tmux_setup_default {
 function attach_or_new_tmux {
   local session_name="${1:-default}"
 
-  if ! tmux has-session -t "$session_name" > /dev/null 2>&1; then
+  if ! tmux has-session -t "${session_name}" > /dev/null 2>&1; then
     local response
-    read -r "response?Create new session in directory \`$PWD\` with session name \`$session_name\`? [y/n]: "
+    read -r "response?Create new session in directory \`${PWD}\` with session name \`${session_name}\`? [y/n]: "
 
-    if [[ "$response" =~ ^y ]]; then
-      if [ "$session_name" = "default" ]; then
+    if [[ "${response}" =~ ^y ]]; then
+      if [ "${session_name}" = "default" ]; then
         tmux_setup_default
       else
-        tmux new-session -d -s "$session_name"
+        tmux new-session -d -s "${session_name}"
 
         if [ -n "$2" ]; then
-          tmux send-keys -t "$session_name":1 "$2" Enter
+          tmux send-keys -t "${session_name}":1 "$2" Enter
         fi
       fi
     else
@@ -227,7 +227,7 @@ function attach_or_new_tmux {
     fi
   fi
 
-  tmux attach -t "$session_name"
+  tmux attach -t "${session_name}"
 }
 
 # http://d.hatena.ne.jp/itchyny/20130227/1361933011
@@ -270,26 +270,26 @@ function my_grep_with_filter() {
   local arg
 
   for arg in "$@"; do
-    if [[ "$arg" =~ ^-- ]]; then
+    if [[ "${arg}" =~ ^-- ]]; then
       is_waiting_option_value=false
-      options+=("$arg")
+      options+=("${arg}")
 
-      if [[ ! "$arg" =~ = ]]; then
+      if [[ ! "${arg}" =~ = ]]; then
         is_waiting_option_value=true
       fi
-    elif [[ "$arg" =~ ^- ]]; then
+    elif [[ "${arg}" =~ ^- ]]; then
       is_waiting_option_value=false
-      options+=("$arg")
+      options+=("${arg}")
 
-      if [[ "$arg" =~ ^-.$ ]]; then
+      if [[ "${arg}" =~ ^-.$ ]]; then
         is_waiting_option_value=true
       fi
     else
-      if "$is_waiting_option_value"; then
+      if "${is_waiting_option_value}"; then
         is_waiting_option_value=false
-        options+=("$arg")
+        options+=("${arg}")
       else
-        non_options+=("$arg")
+        non_options+=("${arg}")
       fi
     fi
   done
@@ -302,7 +302,7 @@ function my_grep_with_filter() {
   local query="${non_options[1]}"
   local results=("${(@f)$(
     my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2> /dev/null |
-      filter --header="Grep: $*" --delimiter=":" --preview-window="down:75%:wrap:nohidden:+{2}-/2" --preview="$FZF_VIM_PATH/bin/preview.sh {}"
+      filter --header="Grep: $*" --delimiter=":" --preview-window="down:75%:wrap:nohidden:+{2}-/2" --preview="${FZF_VIM_PATH}/bin/preview.sh {}"
   )}")
 
   if [ -z "${results[*]}" ]; then
@@ -312,7 +312,7 @@ function my_grep_with_filter() {
   if [[ "${options[*]}" =~ --files ]]; then
     echo "${(j:\n:)results[@]}" 2> /dev/null
   else
-    echo "${(j:\n:)results[@]}" | my_grep "$query" "${options[@]}" 2> /dev/null
+    echo "${(j:\n:)results[@]}" | my_grep "${query}" "${options[@]}" 2> /dev/null
   fi
 
   # Check whether the output is on a terminal
@@ -322,7 +322,7 @@ function my_grep_with_filter() {
     echo >&2
     read -r "response?Open found files? [y/n]: "
 
-    if [[ "$response" =~ ^y ]]; then
+    if [[ "${response}" =~ ^y ]]; then
       if [[ "${options[*]}" =~ --files ]]; then
         local filepaths=("${results[@]}")
       else
@@ -459,7 +459,7 @@ function parallel {
 
 function update_zsh_plugins {
   trash "${KG8M_ZSH_CACHE_DIR:?}"
-  mkdir -p "$KG8M_ZSH_CACHE_DIR"
+  mkdir -p "${KG8M_ZSH_CACHE_DIR}"
 
   execute_with_echo "compile_zshrcs:cleanup"
 
@@ -468,19 +468,19 @@ function update_zsh_plugins {
   execute_with_echo "zinit cclear"
   execute_with_echo "find ${ZINIT[SNIPPETS_DIR]:?} -type d -empty -delete"
 
-  local current_dir="$PWD"
+  local current_dir="${PWD}"
 
   # Clean up the directory because enhancd makes it dirty when loaded
   execute_with_echo "cd ${ENHANCD_ROOT:?}"
   execute_with_echo "git restore ."
-  execute_with_echo "cd $current_dir"
+  execute_with_echo "cd ${current_dir}"
 
   execute_with_echo "zinit update --all --parallel --quiet"
 
   # Remote `_*.fish` files because they are treated as completions by zinit
   execute_with_echo "cd ${ENHANCD_ROOT:?}"
   execute_with_echo "rm -f ./**/_*.fish"
-  execute_with_echo "cd $current_dir"
+  execute_with_echo "cd ${current_dir}"
 
   execute_with_echo "zinit creinstall ${ZINIT[BIN_DIR]}"
   execute_with_echo "zinit csearch"
@@ -493,8 +493,8 @@ function update_zsh_plugins {
 function compile_zshrcs:run {
   local zshrc
   for zshrc in ~/.config/zsh/*.zsh ~/.config/zsh.local/.z* ~/.zshenv* ~/.zshrc*; do
-    if [ -f "$zshrc" ] && [[ ! "$zshrc" =~ \.zwc$ ]]; then
-      zcompile "$zshrc"
+    if [ -f "${zshrc}" ] && [[ ! "${zshrc}" =~ \.zwc$ ]]; then
+      zcompile "${zshrc}"
     fi
   done
 }
@@ -502,8 +502,8 @@ function compile_zshrcs:run {
 function compile_zshrcs:cleanup {
   local zwc
   for zwc in ~/.config/zsh/*.zsh.zwc ~/.config/zsh.local/.z*.zwc ~/.zshenv*.zwc ~/.zshrc*.zwc; do
-    if [ -f "$zwc" ]; then
-      rm -f "$zwc"
+    if [ -f "${zwc}" ]; then
+      rm -f "${zwc}"
     fi
   done
 }
@@ -523,9 +523,9 @@ function uninstall_go_library {
   local response
   read -r "response?Remove found files/directories? [y/n]: "
 
-  if [[ "$response" =~ ^y ]]; then
+  if [[ "${response}" =~ ^y ]]; then
     echo "${(j:\n:)libpaths[@]}" | while read -r libpath; do
-      trash "$libpath"
+      trash "${libpath}"
     done
   else
     echo "Canceled." >&2
@@ -543,7 +543,7 @@ function progressbar {
   local current_index="${1:?}"
   local total_count="${2:?}"
 
-  if [[ ! "$current_index" =~ ^[0-9]+$ ]] || [[ ! "$total_count" =~ ^[0-9]+$ ]]; then
+  if [[ ! "${current_index}" =~ ^[0-9]+$ ]] || [[ ! "${total_count}" =~ ^[0-9]+$ ]]; then
     echo "Usage: progressbar {current_index} {total_count}" >&2
     return 1
   fi
@@ -555,10 +555,10 @@ function progressbar {
   local done_count=$((progress * width / 10 / 10))
   local left_count=$((width - done_count))
 
-  local fill_chars="${(r:$done_count::#:)}"
-  local empty_chars="${(r:$left_count:: :)}"
+  local fill_chars="${(r:${done_count}::#:)}"
+  local empty_chars="${(r:${left_count}:: :)}"
 
-  printf "\r[%s%s] %3d%%" "$fill_chars" "$empty_chars" "$progress"
+  printf "\r[%s%s] %3d%%" "${fill_chars}" "${empty_chars}" "${progress}"
 }
 
 # Remove escape sequences

@@ -13,7 +13,7 @@ if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
 
-if [ -n "$is_fixing" ] && [ -z "${VIM_FIX_ON_SAVE_RUBY:-}" ]; then
+if [ -n "${is_fixing}" ] && [ -z "${VIM_FIX_ON_SAVE_RUBY:-}" ]; then
   exit 1
 fi
 
@@ -23,10 +23,10 @@ else
   executable="rubocop"
 fi
 
-options=(--force-exclusion --format simple --no-color --stdin "$target_filepath")
+options=(--force-exclusion --format simple --no-color --stdin "${target_filepath}")
 
-if [ -n "$is_fixing" ]; then
-  "$executable" "${options[@]}" --auto-correct | awk '/^=+$/,eof' | awk 'NR > 1 { print }'
+if [ -n "${is_fixing}" ]; then
+  "${executable}" "${options[@]}" --auto-correct | awk '/^=+$/,eof' | awk 'NR > 1 { print }'
 else
   if command -v gsed > /dev/null; then
     sed="gsed"
@@ -35,8 +35,8 @@ else
   fi
 
   out="$(
-    "$executable" "${options[@]}" |
-      "$sed" \
+    "${executable}" "${options[@]}" |
+      "${sed}" \
         -e 's/^C:/Convention:/' \
         -e 's/^E:/Error:/' \
         -e 's/^F:/Fatal:/' \
@@ -47,8 +47,8 @@ else
         -e 's/^F:/E:/'
   )"
 
-  if echo "$out" | grep -E -q '^[A-Z]:[0-9]+:[0-9]+:'; then
-    echo "$out"
+  if echo "${out}" | grep -E -q '^[A-Z]:[0-9]+:[0-9]+:'; then
+    echo "${out}"
     exit 1
   else
     exit 0

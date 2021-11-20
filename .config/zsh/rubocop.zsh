@@ -1,10 +1,10 @@
 # Don't use zinit's options like `as"command" pick"bin/rubocop-daemon-wrapper"` because it makes the `$PATH` longer and
-# longer. Make symbolic links in `$HOME/bin` instead.
+# longer. Make symbolic links in `${HOME}/bin` instead.
 function plugin:setup:rubocop_daemon {
   local binary="bin/rubocop-daemon-wrapper"
 
-  mkdir -p "$HOME/bin"
-  ln -fs "$PWD/${binary}" "$HOME/bin/$(basename "$binary")"
+  mkdir -p "${HOME}/bin"
+  ln -fs "${PWD}/${binary}" "${HOME}/bin/$(basename "${binary}")"
 }
 zinit ice lucid wait"0c" as"null" atclone"plugin:setup:rubocop_daemon"
 zinit light fohte/rubocop-daemon

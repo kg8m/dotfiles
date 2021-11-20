@@ -67,7 +67,7 @@ function git:switch:select {
       git:branch:filter:single
   )"
 
-  [ -n "$branch" ] && execute_with_echo "git switch $branch"
+  [ -n "${branch}" ] && execute_with_echo "git switch ${branch}"
 }
 
 function git:switch:main {
@@ -219,6 +219,7 @@ function git:branch:list_format {
     "%(contents:subject)"
   )
 
+  # shellcheck disable=SC2250
   echo "${(pj:$SEP:)items}"
 }
 
@@ -254,7 +255,7 @@ function git:commit:bulk {
 function git:push:revision {
   local revision="$1"
 
-  if [ -z "$revision" ]; then
+  if [ -z "${revision}" ]; then
     echo:error "Specify a revision."
     return 1
   fi
@@ -276,20 +277,20 @@ function git:clean:bulk {
 
 function git:log:compare:branch {
   local branch1=$(git:branch:list --remote | git:branch:filter:single --prompt="Select first branch: ")
-  [ -n "$branch1" ] || exit 1
+  [ -n "${branch1}" ] || exit 1
 
   local branch2=$(git:branch:list --remote | git:branch:filter:single --prompt="Select another branch: ")
-  [ -n "$branch2" ] || exit 1
+  [ -n "${branch2}" ] || exit 1
 
   execute_with_confirm "git log $* origin/${branch1}...origin/${branch2}"
 }
 
 function git:diff:branch {
   local branch1=$(git:branch:list --remote | git:branch:filter:single --prompt="Select first branch: ")
-  [ -n "$branch1" ] || exit 1
+  [ -n "${branch1}" ] || exit 1
 
   local branch2=$(git:branch:list --remote | git:branch:filter:single --prompt="Select another branch: ")
-  [ -n "$branch2" ] || exit 1
+  [ -n "${branch2}" ] || exit 1
 
   execute_with_confirm "git diff-without-space-changes $* origin/${branch1}...origin/${branch2}"
 }
@@ -297,16 +298,16 @@ function git:diff:branch {
 function git:diff:branch:from {
   local target="$1"
 
-  if [ -n "$target" ]; then
+  if [ -n "${target}" ]; then
     local options=()
     local pathspecs=()
 
     local item
     for item in "${@[2,-1]}"; do
-      if [ "$item" = "--" ] || [ "${#pathspecs[@]}" -gt 0 ]; then
-        pathspecs+=("$item")
+      if [ "${item}" = "--" ] || [ "${#pathspecs[@]}" -gt 0 ]; then
+        pathspecs+=("${item}")
       else
-        options+=("$item")
+        options+=("${item}")
       fi
     done
 
@@ -395,9 +396,9 @@ function git:submodule:remove:bulk {
   local target
 
   for target in "${targets[@]}"; do
-    execute_with_confirm "git submodule deinit $target"
-    execute_with_confirm "git rm $target"
-    execute_with_confirm "trash $target"
+    execute_with_confirm "git submodule deinit ${target}"
+    execute_with_confirm "git rm ${target}"
+    execute_with_confirm "trash ${target}"
   done
 }
 
@@ -406,10 +407,10 @@ function git:submodule:deinit:bulk {
   local target
 
   for target in "${targets[@]}"; do
-    execute_with_confirm "git submodule deinit -f $target"
-    execute_with_confirm "rm -r ./git/modules/$target"
-    execute_with_confirm "trash $target/*"
-    execute_with_confirm "trash $target/.*"
+    execute_with_confirm "git submodule deinit -f ${target}"
+    execute_with_confirm "rm -r ./git/modules/${target}"
+    execute_with_confirm "trash ${target}/*"
+    execute_with_confirm "trash ${target}/.*"
   done
 }
 
@@ -421,24 +422,24 @@ function git:alias:list {
 function git:alias:which {
   local command="$1"
 
-  if [ -z "$command" ]; then
+  if [ -z "${command}" ]; then
     echo:error "Specify a command name."
     return 1
   fi
 
   local result="$(git:alias:list | grep -E "^${command}\s+" | git:proxy:sed -e 's/\s\+/ /')"
-  echo "$result"
+  echo "${result}"
 
-  if [[ "$result" =~ \ sh\ [\"\']?git:[a-z_:]+ ]]; then
+  if [[ "${result}" =~ \ sh\ [\"\']?git:[a-z_:]+ ]]; then
     echo
     # shellcheck disable=SC2230
-    which "$(echo "$result" | grep -E -o '\bgit:[a-z_:]+')"
+    which "$(echo "${result}" | grep -E -o '\bgit:[a-z_:]+')"
   else
-    local original="$(echo "$result" | grep -E -o '=> [-a-z]+' | sed -e 's/=> //')"
+    local original="$(echo "${result}" | grep -E -o '=> [-a-z]+' | sed -e 's/=> //')"
 
     if git:alias:list | grep -q -E "^${original}\s+"; then
       echo
-      git:alias:which "$original"
+      git:alias:which "${original}"
     fi
   fi
 }
@@ -449,40 +450,40 @@ function git:utility:chmod {
 
 function git:utility:diff_or_cat {
   local filepath="$1"
-  local git_status="$(git status --short -- "$filepath")"
+  local git_status="$(git status --short -- "${filepath}")"
 
   # Untracked files
-  if [[ "$git_status" =~ '^\?\?' ]]; then
-    git:utility:cat "$filepath"
+  if [[ "${git_status}" =~ '^\?\?' ]]; then
+    git:utility:cat "${filepath}"
   # Renamed files
-  elif [[ "$git_status" =~ ^D ]] && git status --short | grep -F "R  $filepath ->" -q; then
-    local removed="$filepath"
-    local added="$(git status --short | grep -F "R  $filepath ->" | git:proxy:sed -e 's/^.* -> //')"
+  elif [[ "${git_status}" =~ ^D ]] && git status --short | grep -F "R  ${filepath} ->" -q; then
+    local removed="${filepath}"
+    local added="$(git status --short | grep -F "R  ${filepath} ->" | git:proxy:sed -e 's/^.* -> //')"
 
-    git:utility:diff --staged -- "$removed" "$added"
+    git:utility:diff --staged -- "${removed}" "${added}"
   # Partially staged files
-  elif [[ "$git_status" =~ ^[A-Z]{2} ]]; then
+  elif [[ "${git_status}" =~ ^[A-Z]{2} ]]; then
     git:utility:header "Staged"
-    git:utility:diff --staged -- "$filepath"
+    git:utility:diff --staged -- "${filepath}"
     echo
     git:utility:header "Not Staged"
-    git:utility:diff -- "$filepath"
+    git:utility:diff -- "${filepath}"
   # Staged files
-  elif [[ "$git_status" =~ ^[A-Z] ]]; then
-    git:utility:diff --staged -- "$filepath"
+  elif [[ "${git_status}" =~ ^[A-Z] ]]; then
+    git:utility:diff --staged -- "${filepath}"
   # Others: unstaged tracked files
   else
-    git:utility:diff -- "$filepath"
+    git:utility:diff -- "${filepath}"
   fi
 }
 
 function git:utility:header {
-  local border="$(printf "%s" "${(r:$COLUMNS / 3::-:)}")"
+  local border="$(printf "%s" "${(r:${COLUMNS} / 3::-:)}")"
 
   printf "\e[1m"
-  printf "%s\n" "$border"
+  printf "%s\n" "${border}"
   printf "%s\n" "$@"
-  printf "%s\n" "$border"
+  printf "%s\n" "${border}"
   printf "\e[0m"
 }
 
@@ -497,11 +498,11 @@ function git:utility:diff {
 function git:utility:preview:log {
   local branch="$1"
 
-  if ! git branch --contains "$branch" > /dev/null 2>&1; then
-    branch="origin/$branch"
+  if ! git branch --contains "${branch}" > /dev/null 2>&1; then
+    branch="origin/${branch}"
   fi
 
-  git log --max-count=100 --color=always "$branch"
+  git log --max-count=100 --color=always "${branch}"
 }
 
 # Use short options like `-t` or `-s` because BSD `column` command doesn't support long options like `--table` or
@@ -544,7 +545,7 @@ function git:proxy:cat:files {
   local realpaths=()
 
   for filepath in "${filepaths[@]}"; do
-    realpaths+=("${filepath/\~/$HOME}")
+    realpaths+=("${filepath/\~/${HOME}}")
   done
 
   if command -v bat > /dev/null; then

@@ -14,8 +14,8 @@ function() {
   export PROMPT_HEADER_CACHE_FILEPATH="${KG8M_ZSH_CACHE_DIR:?}/prompt_header.$$"
 
   function prompt:header:render {
-    if [ -f "$PROMPT_HEADER_CACHE_FILEPATH" ]; then
-      cat "$PROMPT_HEADER_CACHE_FILEPATH"
+    if [ -f "${PROMPT_HEADER_CACHE_FILEPATH}" ]; then
+      cat "${PROMPT_HEADER_CACHE_FILEPATH}"
     else
       echo
     fi
@@ -28,7 +28,7 @@ function() {
     local window_width="${1:-COLUMNS}"
     local line_width="$((window_width - right_margin))"
 
-    printf "%s %s" "${(r:$line_width::-:)}" "$timestamp" > "$PROMPT_HEADER_CACHE_FILEPATH"
+    printf "%s %s" "${(r:${line_width}::-:)}" "${timestamp}" > "${PROMPT_HEADER_CACHE_FILEPATH}"
   }
 
   function prompt:header:lazy_build {
@@ -59,22 +59,22 @@ function() {
       esac
 
       # Restart the worker everytime because it causes high load average and it is sometimes dead in background
-      async_stop_worker       "$PROMPT_REFRESHER_WORKER_NAME"
-      async_start_worker      "$PROMPT_REFRESHER_WORKER_NAME"
-      async_job               "$PROMPT_REFRESHER_WORKER_NAME" "prompt:header:lazy_build $COLUMNS"
-      async_register_callback "$PROMPT_REFRESHER_WORKER_NAME" "prompt:refresh:finish:with_trigger"
+      async_stop_worker       "${PROMPT_REFRESHER_WORKER_NAME}"
+      async_start_worker      "${PROMPT_REFRESHER_WORKER_NAME}"
+      async_job               "${PROMPT_REFRESHER_WORKER_NAME}" "prompt:header:lazy_build ${COLUMNS}"
+      async_register_callback "${PROMPT_REFRESHER_WORKER_NAME}" "prompt:refresh:finish:with_trigger"
     }
 
     function prompt:refresh:finish {
       zle .reset-prompt
-      async_stop_worker "$PROMPT_REFRESHER_WORKER_NAME"
+      async_stop_worker "${PROMPT_REFRESHER_WORKER_NAME}"
     }
 
     function prompt:refresh:finish:with_trigger {
       prompt:refresh:finish
-      async_start_worker      "$PROMPT_REFRESHER_WORKER_NAME"
-      async_job               "$PROMPT_REFRESHER_WORKER_NAME" "sleep \"$(prompt:refresh:calculate_sleep)\""
-      async_register_callback "$PROMPT_REFRESHER_WORKER_NAME" "prompt:refresh:trigger"
+      async_start_worker      "${PROMPT_REFRESHER_WORKER_NAME}"
+      async_job               "${PROMPT_REFRESHER_WORKER_NAME}" "sleep \"$(prompt:refresh:calculate_sleep)\""
+      async_register_callback "${PROMPT_REFRESHER_WORKER_NAME}" "prompt:refresh:trigger"
     }
 
     function prompt:refresh:git:trigger {
@@ -84,10 +84,10 @@ function() {
         sleep="1"
       fi
 
-      async_stop_worker       "$GIT_PROMPT_REFRESHER_WORKER_NAME"
-      async_start_worker      "$GIT_PROMPT_REFRESHER_WORKER_NAME"
-      async_job               "$GIT_PROMPT_REFRESHER_WORKER_NAME" "sleep \"${sleep}\""
-      async_register_callback "$GIT_PROMPT_REFRESHER_WORKER_NAME" "prompt:refresh:git:finish:with_trigger"
+      async_stop_worker       "${GIT_PROMPT_REFRESHER_WORKER_NAME}"
+      async_start_worker      "${GIT_PROMPT_REFRESHER_WORKER_NAME}"
+      async_job               "${GIT_PROMPT_REFRESHER_WORKER_NAME}" "sleep \"${sleep}\""
+      async_register_callback "${GIT_PROMPT_REFRESHER_WORKER_NAME}" "prompt:refresh:git:finish:with_trigger"
     }
 
     function prompt:refresh:git:finish:with_trigger {

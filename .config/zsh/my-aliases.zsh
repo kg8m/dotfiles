@@ -18,7 +18,7 @@ alias rm="rm -i"
 # `xterm-256color-italic` is set in tmux.
 alias ssh="TERM=xterm-256color ssh"
 
-alias sudo='sudo env PATH=$PATH'
+alias sudo='sudo env PATH=${PATH}'
 alias watch="watch --color"
 
 function plugin:init:abbr {
@@ -29,7 +29,7 @@ function plugin:init:abbr {
   # /var/folders/foo/bar/baz/zsh-abbr/global-user-abbreviations" error after long sleep of OS.
   export ABBR_TMPDIR="${XDG_CACHE_HOME:?}/zsh/abbr/"
 
-  # Instead of `$XDG_CONFIG_HOME/zsh/abbreviations`
+  # Instead of `${XDG_CONFIG_HOME}/zsh/abbreviations`
   export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CACHE_HOME:?}/zsh/abbreviations"
 }
 function plugin:setup:abbr {

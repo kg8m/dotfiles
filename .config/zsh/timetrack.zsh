@@ -60,26 +60,26 @@ function __my_preexec_start_timetrack() {
   local command=$1
 
   export __timetrack_start=$(date +%s)
-  export __timetrack_command="$command"
+  export __timetrack_command="${command}"
 }
 
 function __my_preexec_end_timetrack() {
   local last_status=$?
   local exec_time result title message
   local command="${__timetrack_command//'/'\\''}"
-  local notifier_options=(-group "TIMETRACK_${USER}@${HOST}_$(printf %q "$command")")
+  local notifier_options=(-group "TIMETRACK_${USER}@${HOST}_$(printf %q "${command}")")
 
   export __timetrack_end="$(date +%s)"
 
-  if [ -z "$__timetrack_start" ] || [ -z "$__timetrack_threshold" ]; then
+  if [ -z "${__timetrack_start}" ] || [ -z "${__timetrack_threshold}" ]; then
     return
   fi
 
-  # Don't use `[[ "$command" =~ $TIMETRACK_PATTERN ]]` because it doesn't work on Mac
-  if echo "$command" | grep -E -v "$TIMETRACK_IGNORE_PATTERN" | grep -E -q "$TIMETRACK_PATTERN"; then
+  # Don't use `[[ "${command}" =~ ${TIMETRACK_PATTERN} ]]` because it doesn't work on Mac
+  if echo "${command}" | grep -E -v "${TIMETRACK_IGNORE_PATTERN}" | grep -E -q "${TIMETRACK_PATTERN}"; then
     exec_time=$((__timetrack_end - __timetrack_start))
 
-    if [ "$last_status" = "0" ]; then
+    if [ "${last_status}" = "0" ]; then
       result="Command succeeded!!"
       title="👼 ${result}"
     else
@@ -87,31 +87,31 @@ function __my_preexec_end_timetrack() {
       title="👿 ${result}"
     fi
 
-    title+=" ($exec_time seconds)"
-    notifier_options+=(-title "$(printf %q "$title")")
-    message="Command: $command"
+    title+=" (${exec_time} seconds)"
+    notifier_options+=(-title "$(printf %q "${title}")")
+    message="Command: ${command}"
 
-    if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
+    if [ "${exec_time}" -ge "${__timetrack_threshold}" ]; then
       notifier_options+=(-sender TERMINAL_NOTIFIER_STAY)
     fi
 
     # `> /dev/null` for ignoring "Removing previously sent notification" message.
     # Throwing stderr away for ignoring "Connection to * closed." message.
-    ssh main -t "echo '[$(hostname)] $message' | /usr/local/bin/terminal-notifier ${notifier_options[*]}" > /dev/null 2>&1
+    ssh main -t "echo '[$(hostname)] ${message}' | /usr/local/bin/terminal-notifier ${notifier_options[*]}" > /dev/null 2>&1
 
-    if [ "$last_status" = "0" ]; then
-      title="${title//${result}/$(highlight:green "$result")}"
+    if [ "${last_status}" = "0" ]; then
+      title="${title//${result}/$(highlight:green "${result}")}"
     else
-      title="${title//${result}/$(highlight:red "$result")}"
+      title="${title//${result}/$(highlight:red "${result}")}"
     fi
 
-    if [ "$exec_time" -ge "$__timetrack_threshold" ]; then
+    if [ "${exec_time}" -ge "${__timetrack_threshold}" ]; then
       title="${title//${exec_time} seconds/$(highlight:yellow "${exec_time} seconds")}"
     fi
 
     printf "\n* * *\n"
-    echo "$title"
-    echo "$message"
+    echo "${title}"
+    echo "${message}"
 
     unset __timetrack_start
     unset __timetrack_command

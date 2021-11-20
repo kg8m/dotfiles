@@ -10,10 +10,10 @@ function plugin:setup:dircolors {
     #   export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
     #   export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
     #   zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
-    $dircolors dircolors.ansi-universal > "$KG8M_ZSH_CACHE_DIR/dircolors_ansi-universal"
-    zcompile "$KG8M_ZSH_CACHE_DIR/dircolors_ansi-universal"
+    $dircolors dircolors.ansi-universal > "${KG8M_ZSH_CACHE_DIR}/dircolors_ansi-universal"
+    zcompile "${KG8M_ZSH_CACHE_DIR}/dircolors_ansi-universal"
   fi
-  source "$KG8M_ZSH_CACHE_DIR/dircolors_ansi-universal"
+  source "${KG8M_ZSH_CACHE_DIR}/dircolors_ansi-universal"
   zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
 
   unset -f plugin:setup:dircolors

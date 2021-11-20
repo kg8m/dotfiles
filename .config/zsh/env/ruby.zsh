@@ -1,8 +1,8 @@
 function() {
   # Depend on rbenv
-  local shims="$HOME/.rbenv/shims"
+  local shims="${HOME}/.rbenv/shims"
 
-  if [ -d "$shims" ]; then
-    path=("$shims" "${path[@]}")
+  if [ -d "${shims}" ]; then
+    path=("${shims}" "${path[@]}")
   fi
 }

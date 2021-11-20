@@ -7,13 +7,13 @@ target_filepath="$1"
 err_temp_filepath="$(mktemp)"
 
 # shellcheck disable=SC2064
-trap "rm -f $err_temp_filepath" EXIT
+trap "rm -f ${err_temp_filepath}" EXIT
 
 if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
 
-if [ -n "$is_fixing" ] && [ -z "${VIM_FIX_ON_SAVE_JS:-}" ]; then
+if [ -n "${is_fixing}" ] && [ -z "${VIM_FIX_ON_SAVE_JS:-}" ]; then
   exit 1
 fi
 
@@ -26,11 +26,10 @@ function eslint_wrapper_options {
 }
 
 if [ -f .eslint_wrapper_extends.sh ]; then
-  # shellcheck disable=SC1091
   source .eslint_wrapper_extends.sh
 fi
 
-if [ ! "$(is_target_file "$target_filepath")" = "1" ]; then
+if [ ! "$(is_target_file "${target_filepath}")" = "1" ]; then
   exit 1
 fi
 
@@ -40,33 +39,33 @@ else
   executable=eslint
 fi
 
-options=(--format json --stdin --stdin-filename "$target_filepath")
+options=(--format json --stdin --stdin-filename "${target_filepath}")
 
-if [ -n "$is_fixing" ]; then
-  if [ "$executable" = "eslint_d" ]; then
+if [ -n "${is_fixing}" ]; then
+  if [ "${executable}" = "eslint_d" ]; then
     options+=(--fix-to-stdout)
   else
     options+=(--fix-dry-run)
   fi
 fi
 
-options+=("$(eslint_wrapper_options "$target_filepath")")
+options+=("$(eslint_wrapper_options "${target_filepath}")")
 
-out="$("$executable" "${options[@]}" 2> "$err_temp_filepath")"
-err="$(cat "$err_temp_filepath")"
+out="$("${executable}" "${options[@]}" 2> "${err_temp_filepath}")"
+err="$(cat "${err_temp_filepath}")"
 
-if [ -n "$out" ]; then
-  if [ -n "$is_fixing" ]; then
-    if [ "$executable" = "eslint_d" ]; then
-      echo "$out"
+if [ -n "${out}" ]; then
+  if [ -n "${is_fixing}" ]; then
+    if [ "${executable}" = "eslint_d" ]; then
+      echo "${out}"
       exit 0
     else
-      output="$(echo "$out" | jq --raw-output ".[0].output")"
+      output="$(echo "${out}" | jq --raw-output ".[0].output")"
 
-      if [ "$output" = "null" ]; then
+      if [ "${output}" = "null" ]; then
         exit 1
       else
-        echo "$output"
+        echo "${output}"
         exit 0
       fi
     fi
@@ -79,19 +78,19 @@ if [ -n "$out" ]; then
         '.ruleId' \
         '(.message | gsub("\n"; " "))'
     )"
-    echo "$out" | jq --raw-output ".[0].messages[] | $format"
+    echo "${out}" | jq --raw-output ".[0].messages[] | ${format}"
     exit 1
   fi
 fi
 
-if [ -n "$err" ]; then
-  detail="$(echo "$err" | grep -E -v '^Oops!|^ESLint:|^[ ]|^$')"
+if [ -n "${err}" ]; then
+  detail="$(echo "${err}" | grep -E -v '^Oops!|^ESLint:|^[ ]|^$')"
 
-  if [ -z "$detail" ]; then
-    detail="$err"
+  if [ -z "${detail}" ]; then
+    detail="${err}"
   fi
 
-  detail="$(echo "$detail" | tr '\n' ' ')"
-  printf "%s:%s:%s: [eslint] %s\n" "1" "1" "Error" "$detail"
+  detail="$(echo "${detail}" | tr '\n' ' ')"
+  printf "%s:%s:%s: [eslint] %s\n" "1" "1" "Error" "${detail}"
   exit 1
 fi

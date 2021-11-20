@@ -32,16 +32,16 @@ function plugin:setup:binary_releaseds {
   fi
 
   # Don't use zinit's options like `as"command" mv"${plugin}* -> ${plugin}" pick"${plugin}/${plugin}"` because it
-  # makes the `$PATH` longer and longer. Make symbolic links in `$HOME/bin` instead.
+  # makes the `$PATH` longer and longer. Make symbolic links in `${HOME}/bin` instead.
   function plugin:setup:binary_released {
     local plugin="$1"
 
-    case "$plugin" in
+    case "${plugin}" in
       actionlint | bat | delta | direnv | efm-langserver | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt | terraform-lsp | vim-startuptime | zabrze)
-        mv ./"${plugin}"* ./"$plugin"
+        mv ./"${plugin}"* ./"${plugin}"
         ;;
       cli)
-        mv ./gh* ./"$plugin"
+        mv ./gh* ./"${plugin}"
         ;;
       fzf | golangci-lint-langserver | nextword | sqls | tokei)
         # Do nothing
@@ -52,7 +52,7 @@ function plugin:setup:binary_releaseds {
         ;;
     esac
 
-    case "$plugin" in
+    case "${plugin}" in
       bat | delta | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
@@ -74,30 +74,30 @@ function plugin:setup:binary_releaseds {
         ;;
     esac
 
-    chmod +x "$binary"
+    chmod +x "${binary}"
 
-    local command="$(basename "$binary")"
+    local command="$(basename "${binary}")"
 
-    mkdir -p "$HOME/bin"
-    rm -f "$HOME/bin/$command"
-    execute_with_echo "ln -s '$PWD/$binary' '$HOME/bin/$command'"
-    execute_with_echo "which $command"
+    mkdir -p "${HOME}/bin"
+    rm -f "${HOME}/bin/${command}"
+    execute_with_echo "ln -s '${PWD}/${binary}' '${HOME}/bin/${command}'"
+    execute_with_echo "which ${command}"
 
-    case "$plugin" in
+    case "${plugin}" in
       bat | cli | delta | direnv | fzf | glab | hyperfine | mmv | ripgrep | shellcheck | tokei | zabrze)
-        execute_with_echo "$command --version"
+        execute_with_echo "${command} --version"
         ;;
       make2help)
-        execute_with_echo "$command -h"
+        execute_with_echo "${command} -h"
         ;;
       efm-langserver | nextword)
-        execute_with_echo "$command -v"
+        execute_with_echo "${command} -v"
         ;;
       actionlint | shfmt | sqls)
-        execute_with_echo "$command -version"
+        execute_with_echo "${command} -version"
         ;;
       ghch | golangci-lint)
-        execute_with_echo "$command version"
+        execute_with_echo "${command} version"
         ;;
       golangci-lint-langserver | terraform-lsp | vim-startuptime)
         echo >&2
@@ -109,7 +109,7 @@ function plugin:setup:binary_releaseds {
         ;;
     esac
 
-    case "$plugin" in
+    case "${plugin}" in
       bat)
         execute_with_echo "mv ./bat/autocomplete/{bat.zsh,_bat}"
         ;;
@@ -121,7 +121,7 @@ function plugin:setup:binary_releaseds {
         ;;
     esac
 
-    [ -n "$(find . -type f -name '_*')" ] && execute_with_echo "zinit creinstall '$PWD'"
+    [ -n "$(find . -type f -name '_*')" ] && execute_with_echo "zinit creinstall '${PWD}'"
 
     echo >&2
     echo:info "Done."
@@ -130,20 +130,20 @@ function plugin:setup:binary_releaseds {
   function plugin:setup:nextword {
     if command -v nextword > /dev/null; then
       if [ ! -d "${NEXTWORD_DATA_PATH:-}" ]; then
-        local current_dir="$PWD"
-        local parent_dir="$(dirname "$NEXTWORD_DATA_PATH")"
+        local current_dir="${PWD}"
+        local parent_dir="$(dirname "${NEXTWORD_DATA_PATH}")"
 
-        mkdir -p "$parent_dir"
-        cd "$parent_dir"
+        mkdir -p "${parent_dir}"
+        cd "${parent_dir}"
 
         local name=large
 
         execute_with_echo "wget https://github.com/high-moctane/nextword-data/archive/${name}.tar.gz"
         execute_with_echo "tar xzvf ${name}.tar.gz"
         execute_with_echo "rm -f ${name}.tar.gz"
-        execute_with_echo "mv nextword-data-${name} '$(basename "$NEXTWORD_DATA_PATH")'"
+        execute_with_echo "mv nextword-data-${name} '$(basename "${NEXTWORD_DATA_PATH}")'"
 
-        cd "$current_dir"
+        cd "${current_dir}"
       fi
     else
       echo:warn 'Command `nextword` not found.'
@@ -152,24 +152,24 @@ function plugin:setup:binary_releaseds {
 
   local repository
   for repository in "${repositories[@]}"; do
-    case "$repository" in
+    case "${repository}" in
       mvdan/sh)
         local plugin="shfmt"
         ;;
       *)
-        local plugin="$(basename "$repository")"
+        local plugin="$(basename "${repository}")"
         ;;
     esac
 
     local options=(
       from"gh-r"
       as"null"
-      id-as"$(dirname "$repository")---${plugin}-bin"
-      atclone"plugin:setup:binary_released $plugin"
+      id-as"$(dirname "${repository}")---${plugin}-bin"
+      atclone"plugin:setup:binary_released ${plugin}"
       atpull"%atclone"
     )
 
-    case "$plugin" in
+    case "${plugin}" in
       bat | delta | hyperfine | ripgrep | tokei)
         # Choose musl for legacy environments
         options+=(bpick"*musl*")
@@ -178,22 +178,22 @@ function plugin:setup:binary_releaseds {
         options+=(bpick"*.tar.gz")
         ;;
       sqls)
-        if [ -n "$SQLS_VERSION" ]; then
-          options+=(ver"$SQLS_VERSION")
+        if [ -n "${SQLS_VERSION}" ]; then
+          options+=(ver"${SQLS_VERSION}")
         fi
         ;;
     esac
 
     zinit ice lucid "${options[@]}"
-    zinit light "$repository"
+    zinit light "${repository}"
 
-    case "$plugin" in
+    case "${plugin}" in
       zabrze)
         if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init" ]; then
-          zabrze init --bind-keys > "$KG8M_ZSH_CACHE_DIR/zabrze_init"
-          zcompile "$KG8M_ZSH_CACHE_DIR/zabrze_init"
+          zabrze init --bind-keys > "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
+          zcompile "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
         fi
-        source "$KG8M_ZSH_CACHE_DIR/zabrze_init"
+        source "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
         ;;
     esac
   done

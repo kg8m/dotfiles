@@ -8,7 +8,6 @@ LF=$'\\\x0A'
 sed -ie "s/${SCISSORS_PATTERN}/\1${LF}${EXTRA_TEXT}/" "$1"
 
 if [ -f .git_templates/hooks/prepare-commit-msg ]; then
-  # shellcheck disable=SC1091
   source .git_templates/hooks/prepare-commit-msg
 else
   exit 0

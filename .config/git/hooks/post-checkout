@@ -5,7 +5,7 @@ BRANCH_SWITCH=$3
 Z40="0000000000000000000000000000000000000000"
 
 # Continue only when "git clone" has been executed.
-if [ "$PREVIOUS_HEAD" != "$Z40" ] || [ "$BRANCH_SWITCH" != "1" ]; then
+if [ "${PREVIOUS_HEAD}" != "${Z40}" ] || [ "${BRANCH_SWITCH}" != "1" ]; then
   exit
 fi
 
@@ -13,8 +13,7 @@ result=0
 source ~/.config/git/bin/set_user_info_depending_on_repository_url || result=$?
 
 if [ -f .git_templates/hooks/post-checkout ]; then
-  # shellcheck disable=SC1091
   source .git_templates/hooks/post-checkout || result=$?
 fi
 
-exit "$result"
+exit "${result}"
