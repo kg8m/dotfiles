@@ -143,7 +143,7 @@
 	# clone
 	clone-with-submodules = clone --recursive
 
-	shallow-clone = "!args=\"$@\"; git sh \"git:clone:shallow $args\""
+	shallow-clone = "!git sh \"git:clone:shallow $*\""
 
 	# switch
 	sw  = switch
@@ -192,7 +192,7 @@
 	bulk-commit = sh git:commit:bulk
 
 	# push
-	push-with-revision = "!revision=\"$1\"; git sh \"git:push:revision $revision\""
+	push-with-revision = "!git sh \"git:push:revision $1\""
 
 	# reset/revert
 	edit-commits      = rebase --interactive
@@ -230,12 +230,12 @@
 
 	diff-stat-branches = diff-branches --stat-width = 150
 
-	diff-branches      = "!args=\"$@\"; git sh \"git:diff:branch $args\""
-	diff-branch-from   = "!args=\"$@\"; git sh \"git:diff:branch:from $args\""
-	changed-files-from = "!args=\"$@\"; git sh \"git:diff:branch:from:nameonly $args\""
+	diff-branches      = "!git sh \"git:diff:branch $*\""
+	diff-branch-from   = "!git sh \"git:diff:branch:from $*\""
+	changed-files-from = "!git sh \"git:diff:branch:from:nameonly $*\""
 
 	# stash
-	stash-all-with-message = "!args=\"$@\"; git sh \"git:stash:all:with_message $args\""
+	stash-all-with-message = "!git sh \"git:stash:all:with_message $*\""
 
 	# show
 	show-without-diff = show -s
@@ -243,8 +243,8 @@
 	# status
 	st = status-with-color
 
-	status-with-filter = "!args=\"$@\"; git sh \"git:status:filter:all $args\""
-	status-with-color  = "!args=\"$@\"; git sh \"git:status:color $args\""
+	status-with-filter = "!git sh \"git:status:filter:all $*\""
+	status-with-color  = "!git sh \"git:status:color $*\""
 
 	# submodule
 	submodule-update-all = update-submodules
@@ -262,11 +262,11 @@
 
 	info = remote show origin
 
-	chmod = "!git sh \"git:utility:chmod '$1'\""
+	chmod       = "!git sh \"git:utility:chmod '$1'\""
 	diff-or-cat = "!git sh \"git:utility:diff_or_cat '$1'\""
-	cat = "!git sh \"git:utility:cat '$1'\""
+	cat         = "!git sh \"git:utility:cat '$1'\""
 
-	sh = "!zsh -c \"source ~/.config/git/aliases; $@\""
+	sh = "!zsh -c \"source ~/.config/git/aliases; $1\""
 
 [include]
 	path = ~/.config/git.local/config
