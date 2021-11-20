@@ -4,19 +4,19 @@ function execute_with_echo {
     local dryrun="1"
   fi
 
-  local cmd="${*// --dryrun/}"
+  local cmd=("${(R)@:#--dryrun}")
 
-  if [ -z "${cmd}" ]; then
+  if [ -z "${cmd[*]}" ]; then
     echo:warn "Specify command."
     return 1
   fi
 
   printf "\n$(highlight:cyan "Execute%s:")\e[0;1m \`%s\`\e[0m\n\n" \
     "$([ "${dryrun}" = "1" ] && echo " (dryrun)")" \
-    "${cmd}" >&2
+    "${cmd[*]}" >&2
 
   if [ ! "${dryrun}" = "1" ]; then
-    eval "$cmd"
+    eval "${cmd[*]}"
   fi
 }
 
@@ -40,7 +40,13 @@ function execute_commands_with_echo {
       horizontal_line
     fi
 
-    execute_with_echo "$cmd" "$([ "${dryrun}" = "1" ] && echo "--dryrun")" || result=$?
+    cmd=("${cmd}")
+
+    if [ "${dryrun}" = "1" ]; then
+      cmd+=(--dryrun)
+    fi
+
+    execute_with_echo "${cmd[@]}" || result=$?
   done
 
   if [ "${separate}" = "1" ]; then
