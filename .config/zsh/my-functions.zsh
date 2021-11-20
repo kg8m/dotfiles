@@ -6,6 +6,11 @@ function execute_with_echo {
 
   local cmd="${*// --dryrun/}"
 
+  if [ -z "${cmd}" ]; then
+    echo:warn "Specify command."
+    return 1
+  fi
+
   printf "\n$(highlight:cyan "Execute%s:")\e[0;1m \`%s\`\e[0m\n\n" \
     "$([ "${dryrun}" = "1" ] && echo " (dryrun)")" \
     "${cmd}" >&2
@@ -47,6 +52,11 @@ function execute_commands_with_echo {
 }
 
 function execute_with_confirm {
+  if [ -z "$*" ]; then
+    echo:warn "Specify command."
+    return 1
+  fi
+
   local response
 
   printf "\n$(highlight:cyan "Execute:")\e[0;1m \`%s\`\e[0m\n\n" "$*" >&2
