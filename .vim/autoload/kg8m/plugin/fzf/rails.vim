@@ -18,33 +18,29 @@ final s:type_names = []
 def kg8m#plugin#fzf#rails#run(type: string): void
   const type_spec = s:specs[type]
 
-  var command: string
+  var command = ["fd", "--hidden", "--no-ignore", "--full-path", "--type=f", "--color=always"]
 
-  if executable("gfind")
-    command = "gfind " .. type_spec.dir .. " -regextype posix-egrep"
-  elseif has("mac")
-    command = "find -E " .. type_spec.dir
-  else
-    command = "find " .. type_spec.dir .. " -regextype posix-egrep"
-  endif
+  # Sort results.
+  command += ["--threads=1"]
 
-  if has_key(type_spec, "pattern")
-    command ..= " \\( -regex '" .. type_spec.pattern .. "' \\)"
+  # Common excludes.
+  command += ["--exclude='.keep'"]
+
+  if has_key(type_spec, "dirs")
+    command += mapnew(type_spec.dirs, (_, dir) => printf("--search-path=%s", shellescape(dir)))
   endif
 
   if has_key(type_spec, "excludes")
-    const excludes = join(type_spec.excludes, " -not ")
-    command ..= " \\( -not " .. excludes .. " \\)"
+    command += mapnew(type_spec.excludes, (_, exclude) => printf("--exclude=%s", shellescape(exclude)))
   endif
 
-  command ..= " -type f -not -name '.keep'"
-
-  # Specify `LC_COLLATE=C` to sort files with underscore "_". Underscores are ignored without it.
-  command ..= " | LC_COLLATE=C sort"
+  if has_key(type_spec, "pattern")
+    command += [shellescape(type_spec.pattern)]
+  endif
 
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
-    "source":  command,
+    "source":  join(command, " "),
     "options": [
       "--prompt", "Rails/" .. type .. "> ",
       "--preview", "git cat {}",
@@ -68,75 +64,79 @@ enddef
 def s:setup(): void
   extend(s:specs, {
     assets: {
-      dir:      "{app/assets,app/javascripts,public}",
-      excludes: ["-path 'public/packs*'"],
+      dirs:     ["app/assets", "app/javascripts", "public"],
+      excludes: ["public/packs*"],
     },
     config: {
-      dir: "config",
+      dirs: ["config"],
+    },
+    environments: {
+      dirs:    ["config"],
+      pattern: '(/environment\.rb|/environments/.+\.rb)$',
     },
     gems: {
-      dir: kg8m#util#rubygems_path(),
+      dirs: [kg8m#util#rubygems_path()],
     },
     initializers: {
-      dir: "config/initializers",
+      dirs: ["config/initializers"],
     },
     javascripts: {
-      dir:      "{app,public}",
-      pattern:  '.*\.(jsx?|tsx?|vue)$',
-      excludes: ["-path 'public/packs*'"],
+      dirs:     ["app", "public"],
+      pattern:  '\.(jsx?|tsx?|vue)$',
+      excludes: ["public/packs*"],
     },
     lib: {
-      dir: "lib",
+      dirs: ["lib"],
     },
     locales: {
-      dir: "config/locales",
+      dirs: ["config/locales"],
     },
     public: {
-      dir:      "public",
-      excludes: ["-path 'public/packs*'"],
+      dirs:     ["public"],
+      excludes: ["public/packs*"],
     },
     routing: {
-      dir: "config",
-      pattern:  '.*/(routes\.rb|routes/.*\.rb)$',
+      dirs:    ["config"],
+      pattern: '/(routes\.rb|routes/.+\.rb)$',
     },
     script: {
-      dir: "script",
+      dirs: ["script"],
     },
     spec: {
-      dir: "{spec,test}",
+      dirs: ["spec", "test"],
     },
     stylesheets: {
-      dir:      "{app,public}",
-      pattern:  '.*\.(sass|s?css)$',
-      excludes: ["-path 'public/packs*'"],
+      dirs:     ["app", "public"],
+      pattern:  '\.(sass|s?css)$',
+      excludes: ["public/packs*"],
     },
     test: {
-      dir: "{spec,test}",
+      dirs: ["spec", "test"],
     },
   })
 
-  s:specs["db/migrates"] = { dir: "db/migrate" }
+  s:specs["db/migrates"] = { dirs: ["db/migrate"] }
 
   for app_dir in globpath("app", "*", 0, 1)
     if isdirectory(app_dir)
-      s:specs[app_dir] = { dir: app_dir }
+      s:specs[app_dir] = { dirs: [app_dir] }
 
       # e.g., `app/controllers` => `controllers`
       const alternative = fnamemodify(app_dir, ":t")
 
       if !has_key(s:specs, alternative)
-        s:specs[alternative] = { dir: app_dir }
+        s:specs[alternative] = { dirs: [app_dir] }
       endif
     endif
   endfor
 
   for test_dir in globpath("spec,test", "*", 0, 1)
     if isdirectory(test_dir)
-      s:specs[test_dir] = { dir: test_dir }
+      s:specs[test_dir] = { dirs: [test_dir] }
 
-      # e.g., `test/fixtures` => `fixtures_test`
-      const alternative = join(reverse(split(test_dir, "/")), "_")
-      s:specs[alternative] = { dir: test_dir }
+      # e.g., `test/fixtures` => `fixtures-of-test`
+      const alternative = join(reverse(split(test_dir, "/")), "-of-")
+      s:specs[alternative] = { dirs: [test_dir] }
     endif
   endfor
 
