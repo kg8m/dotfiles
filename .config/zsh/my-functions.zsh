@@ -166,6 +166,9 @@ function trash {
     filename=$(basename "${source}")
 
     if [ -f "${trash_path}/${filename}" ] || [ -d "${trash_path}/${filename}" ]; then
+      # foo         => foo 12.34.56.7890
+      # foo.bar     => foo 12.34.56.7890.bar
+      # foo.bar.baz => foo 12.34.56.7890.bar.baz
       sed_expr='s/^\(\.\?[^.]\+\)\(\.\?\)/\1 '"${timestamp}.${RANDOM}"'\2/'
       new_filename=$(echo "${filename}" | sed -e "${sed_expr}")
     else
@@ -254,7 +257,6 @@ function my_grep() {
   local args
 
   if [ -n "${RIPGREP_EXTRA_OPTIONS:-}" ]; then
-    # Split $RIPGREP_EXTRA_OPTIONS by whitespaces
     args=("${=RIPGREP_EXTRA_OPTIONS}" "$@")
   else
     args=("$@")
@@ -470,14 +472,14 @@ function update_zsh_plugins {
 
   local current_dir="${PWD}"
 
-  # Clean up the directory because enhancd makes it dirty when loaded
+  # Clean up the directory because enhancd makes it dirty when loaded.
   execute_with_echo "cd ${ENHANCD_ROOT:?}"
   execute_with_echo "git restore ."
   execute_with_echo "cd ${current_dir}"
 
   execute_with_echo "zinit update --all --parallel --quiet"
 
-  # Remote `_*.fish` files because they are treated as completions by zinit
+  # Remove `_*.fish` files because they are treated as completions by zinit.
   execute_with_echo "cd ${ENHANCD_ROOT:?}"
   execute_with_echo "rm -f ./**/_*.fish"
   execute_with_echo "cd ${current_dir}"

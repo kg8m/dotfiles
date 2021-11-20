@@ -1,34 +1,39 @@
-# '(' is invalid here. Did you forget to escape it?
-# This rule is invalid in zsh's `path=("/path/to/something"(N-/) ...)`
+# [SC1036] '(' is invalid here. Did you forget to escape it?
+# This rule is invalid in zsh's `path=("/path/to/something"(N-/) ...)`.
 disable=SC1036
 
-# Can't follow non-constant source. Use a directive to specify location.
+# [SC1090] Can't follow non-constant source. Use a directive to specify location.
+# This rule causes too many false positives, e.g., `source ~/.zshrc` is NG.
 disable=SC1090
 
-# Not following: /path/to/file: openBinaryFile: does not exist (No such file or directory)
+# [SC1091] Not following: /path/to/file: openBinaryFile: does not exist (No such file or directory)
 # This rule causes too many false positives, e.g., `[ -f /path/to/file ] && source "/path/to/file"` is NG.
 disable=SC1091
 
-# Expressions don't expand in single quotes, use double quotes for that.
+# [SC2016] Expressions don't expand in single quotes, use double quotes for that.
+# This rule doesn't allow codes like `echo 'Foo `bar` baz'`.
 disable=SC2016
 
-# Declare and assign separately to avoid masking return values.
+# [SC2155] Declare and assign separately to avoid masking return values.
+# This rule doesn't allow codes like `local foo="$(bar)"`.
 disable=SC2155
 
-# Use 'cd ... || exit' or 'cd ... || return' in case cd fails.
+# [SC2164] Use 'cd ... || exit' or 'cd ... || return' in case cd fails.
+# I don't care about it.
 disable=SC2164
 
-# Consider adding a default *) case, even if it just exits with error.
+# [SC2249] Consider adding a default *) case, even if it just exits with error.
+# I don't care about it.
 disable=SC2249
 
-# Prefer [[ ]] over [ ] for tests in Bash/Ksh.
+# [SC2292] Prefer [[ ]] over [ ] for tests in Bash/Ksh.
 # I use `[ ... ]` if `[[ ... ]]` is unnecessary.
 disable=SC2292
 
-# Parameter expansions can't start with (. Double check syntax.
+# [SC2296] Parameter expansions can't start with (. Double check syntax.
 # This rule is invalid in zsh's `"${(j:x:)foo}"`, `"${(s:y:)bar}"`, and so on.
 disable=SC2296
 
-# Consider invoking this command separately to avoid masking its return value (or use '|| true' to ignore).
+# [SC2312] Consider invoking this command separately to avoid masking its return value (or use '|| true' to ignore).
 # This rule doesn't allow codes like `if foo | bar > /dev/null; then ...; fi`.
 disable=SC2312
