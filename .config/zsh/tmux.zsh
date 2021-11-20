@@ -7,18 +7,9 @@ function plugin:setup:tmux_plugins {
 
     [ -d ~/.config/tmux ]                        || ln -s ~/dotfiles/.tmux ~/.config/tmux
     [ -d ~/.config/tmux/plugins/"${plugin_name}" ] || ln -s "${PWD}" ~/.config/tmux/plugins/"${plugin_name}"
-
-    __setup_done_my_tmux_plugins__+=("${plugin_name}")
-
-    if [ "${#__setup_done_my_tmux_plugins__[@]}" = "${#__my_tmux_plugins__[@]}" ]; then
-      unset __setup_done_my_tmux_plugins__
-      unset __my_tmux_plugins__
-      unset -f plugin:setup:tmux_plugin
-    fi
   }
 
-  export __setup_done_my_tmux_plugins__=()
-  export __my_tmux_plugins__=(
+  local plugins=(
     tmux-plugins/tpm
     tmux-plugins/tmux-resurrect
     tmux-plugins/tmux-continuum
@@ -26,7 +17,7 @@ function plugin:setup:tmux_plugins {
   )
 
   local plugin
-  for plugin in "${__my_tmux_plugins__[@]}"; do
+  for plugin in "${plugins[@]}"; do
     zinit ice lucid as"null" atclone"plugin:setup:tmux_plugin ${plugin}"
     zinit light "${plugin}"
   done
