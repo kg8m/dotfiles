@@ -79,7 +79,7 @@ tools:
     format-stdin: true
 
   sql-formatter: &sql-formatter
-    format-command: "sql-formatter --uppercase"
+    format-command: "$HOME/.config/efm-langserver/sql_formatter_wrapper.sh"
     format-stdin: true
 
   stylelint: &stylelint
