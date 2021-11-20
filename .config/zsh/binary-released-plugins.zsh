@@ -21,6 +21,7 @@ function plugin:setup:binary_releaseds {
       cli/cli
       dandavison/delta
       direnv/direnv
+      sharkdp/fd
       junegunn/fzf
       profclems/glab
       sharkdp/hyperfine
@@ -37,7 +38,7 @@ function plugin:setup:binary_releaseds {
     local plugin="$1"
 
     case "${plugin}" in
-      actionlint | bat | delta | direnv | efm-langserver | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt | terraform-lsp | vim-startuptime | zabrze)
+      actionlint | bat | delta | direnv | efm-langserver | fd | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt | terraform-lsp | vim-startuptime | zabrze)
         mv ./"${plugin}"* ./"${plugin}"
         ;;
       cli)
@@ -53,7 +54,7 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      bat | delta | efm-langserver | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck)
+      bat | delta | efm-langserver | fd | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
       actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | terraform-lsp | tokei | vim-startuptime | zabrze)
@@ -84,7 +85,7 @@ function plugin:setup:binary_releaseds {
     execute_with_echo "which ${command}"
 
     case "${plugin}" in
-      bat | cli | delta | direnv | fzf | glab | hyperfine | mmv | ripgrep | shellcheck | tokei | zabrze)
+      bat | cli | delta | direnv | fd | fzf | glab | hyperfine | mmv | ripgrep | shellcheck | tokei | zabrze)
         execute_with_echo "${command} --version"
         ;;
       make2help)
@@ -170,7 +171,7 @@ function plugin:setup:binary_releaseds {
     )
 
     case "${plugin}" in
-      bat | delta | hyperfine | ripgrep | tokei)
+      bat | delta | fd | hyperfine | ripgrep | tokei)
         # Choose musl for legacy environments
         options+=(bpick"*musl*")
         ;;
