@@ -69,12 +69,10 @@ function execute_with_confirm {
   read -r "response?Are you sure? [y/n]: "
 
   if [[ ${response} =~ ^y ]]; then
-    export __execute_with_confirm_executed="1"
     eval "$*"
   else
-    export __execute_with_confirm_executed=""
     echo "Canceled." >&2
-    return 1
+    return 255
   fi
 }
 
@@ -82,7 +80,7 @@ function retriable_execute_with_confirm {
   execute_with_confirm "$@"
   local result=$?
 
-  if [ "${__execute_with_confirm_executed}" = "1" ]; then
+  if [ ! "${result}" = "255" ]; then
     local message response
 
     if [ "${result}" = "0" ]; then
