@@ -282,43 +282,40 @@ function my_grep {
 function my_grep_with_filter {
   local options=()
   local non_options=()
-  local is_waiting_option_value=false
   local arg
+  local prev_arg
 
   for arg in "$@"; do
-    if [[ "${arg}" =~ ^-- ]]; then
-      is_waiting_option_value=false
-      options+=("${arg}")
-
-      if [[ ! "${arg}" =~ = ]]; then
-        is_waiting_option_value=true
-      fi
-    elif [[ "${arg}" =~ ^- ]]; then
-      is_waiting_option_value=false
-      options+=("${arg}")
-
-      if [[ "${arg}" =~ ^-.$ ]]; then
-        is_waiting_option_value=true
-      fi
-    else
-      if "${is_waiting_option_value}"; then
-        is_waiting_option_value=false
+    case "${arg}" in
+      --*)
         options+=("${arg}")
-      else
-        non_options+=("${arg}")
-      fi
-    fi
+        ;;
+      -*)
+        options+=("${arg}")
+        ;;
+      *)
+        if [[ "${prev_arg}" =~ ^-- ]] && [[ ! ${prev_arg} =~ = ]]; then
+          options+=("${arg}")
+        elif [[ "${prev_arg}" =~ ^-.$ ]]; then
+          options+=("${arg}")
+        else
+          non_options+=("${arg}")
+        fi
+        ;;
+    esac
+
+    prev_arg="${arg}"
   done
 
   if [ "${#non_options}" = "0" ] && [[ ! "${options[-1]}" =~ ^- ]]; then
-    non_options+=("${options[-1]}")
+    non_options=("${options[-1]}")
     options=("${options[1,-2]}")
   fi
 
   local query="${non_options[1]}"
   local results=("${(@f)$(
-    my_grep --column --line-number --no-heading --color=always --with-filename "$@" 2> /dev/null |
-      filter --header="Grep: $*" --delimiter=":" --preview-window="down:75%:wrap:nohidden:+{2}-/2" --preview="${FZF_VIM_PATH}/bin/preview.sh {}"
+    my_grep --column --line-number --no-heading --color always --with-filename "$@" 2> /dev/null |
+      filter --header "Grep: $*" --delimiter ":" --preview-window "down:75%:wrap:nohidden:+{2}-/2" --preview "${FZF_VIM_PATH}/bin/preview.sh {}"
   )}")
 
   if [ -z "${results[*]}" ]; then
