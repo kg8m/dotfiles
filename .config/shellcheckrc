@@ -5,6 +5,10 @@ disable=SC1036
 # Can't follow non-constant source. Use a directive to specify location.
 disable=SC1090
 
+# Not following: /path/to/file: openBinaryFile: does not exist (No such file or directory)
+# This rule causes too many false positives, e.g., `[ -f /path/to/file ] && source "/path/to/file"` is NG.
+disable=SC1091
+
 # Expressions don't expand in single quotes, use double quotes for that.
 disable=SC2016
 
@@ -17,5 +21,14 @@ disable=SC2164
 # Consider adding a default *) case, even if it just exits with error.
 disable=SC2249
 
-# Prefer putting braces around variable references even when not strictly required.
-disable=SC2250
+# Prefer [[ ]] over [ ] for tests in Bash/Ksh.
+# I use `[ ... ]` if `[[ ... ]]` is unnecessary.
+disable=SC2292
+
+# Parameter expansions can't start with (. Double check syntax.
+# This rule is invalid in zsh's `"${(j:x:)foo}"`, `"${(s:y:)bar}"`, and so on.
+disable=SC2296
+
+# Consider invoking this command separately to avoid masking its return value (or use '|| true' to ignore).
+# This rule doesn't allow codes like `if foo | bar > /dev/null; then ...; fi`.
+disable=SC2312
