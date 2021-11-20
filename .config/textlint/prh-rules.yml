@@ -51,6 +51,9 @@ rules:
   - expected: sh
     options:
       wordBoundary: true
+  - expected: ShellCheck
+    options:
+      wordBoundary: true
   - expected: textlint
     options:
       wordBoundary: true
