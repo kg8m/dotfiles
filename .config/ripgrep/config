@@ -17,10 +17,11 @@
 --sort=path
 
 # Colors
+# Use `0,0,0` instead of `black` because `black` is a little lighter.
 --colors=line:fg:blue
 --colors=line:style:bold
 --colors=match:bg:cyan
---colors=match:fg:black
+--colors=match:fg:0,0,0
 --colors=match:style:bold
 --colors=path:fg:yellow
 --colors=path:style:bold
