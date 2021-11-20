@@ -3,7 +3,6 @@
 .DS_Store
 .bundle/cache
 .bundle/config
-.envrc
 .vim-sessions
 node_modules
 tags
