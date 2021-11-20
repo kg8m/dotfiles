@@ -97,6 +97,7 @@ def s:on_source(): void
   g:lsp_diagnostics_echo_cursor                    = false
   g:lsp_diagnostics_float_cursor                   = true
   g:lsp_diagnostics_highlights_insert_mode_enabled = false
+  g:lsp_diagnostics_signs_insert_mode_enabled      = false
   g:lsp_fold_enabled                               = false
   g:lsp_semantic_enabled                           = true
 
