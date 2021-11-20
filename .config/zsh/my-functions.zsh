@@ -553,8 +553,8 @@ function benchmark_zsh {
 
 # https://stackoverflow.com/a/28044986
 function progressbar {
-  local current_index="${1:?}"
-  local total_count="${2:?}"
+  local current_index="$1"
+  local total_count="$2"
 
   if [[ ! "${current_index}" =~ ^[0-9]+$ ]] || [[ ! "${total_count}" =~ ^[0-9]+$ ]]; then
     echo "Usage: progressbar {current_index} {total_count}" >&2
