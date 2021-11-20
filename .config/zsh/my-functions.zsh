@@ -248,7 +248,7 @@ function attach_or_new_tmux {
 }
 
 # http://d.hatena.ne.jp/itchyny/20130227/1361933011
-function extract() {
+function extract {
   case "$1" in
     *.tar.gz | *.tgz) tar xzvf "$1" ;;
     *.tar.xz) tar Jxvf "$1" ;;
@@ -267,7 +267,7 @@ function extract() {
 # shellcheck disable=SC2139
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz,zst,zstd}=extract
 
-function my_grep() {
+function my_grep {
   local args
 
   if [ -n "${RIPGREP_EXTRA_OPTIONS:-}" ]; then
@@ -279,7 +279,7 @@ function my_grep() {
   rg "${args[@]}"
 }
 
-function my_grep_with_filter() {
+function my_grep_with_filter {
   local options=()
   local non_options=()
   local is_waiting_option_value=false
