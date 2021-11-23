@@ -19,6 +19,14 @@ def kg8m#plugin#lsp#document_format#run_on_save(): void
     return
   endif
 
+  if !s:is_available()
+    s:log_skipped(
+      "not_available",
+      "Document formatting is skipped because not available."
+    )
+    return
+  endif
+
   silent LspDocumentFormatSync
 enddef
 
@@ -42,6 +50,15 @@ def s:is_valid_filesize(): bool
   const max_byte = configs->mapnew(Mapper)->min()
 
   return wordcount().bytes <= max_byte
+enddef
+
+def s:is_available(): bool
+  const configs = kg8m#plugin#lsp#servers#configs(&filetype)
+
+  const Mapper         = (_, config) => get(config, "document_format_availability_checker", () => true)()
+  const availabilities = configs->mapnew(Mapper)
+
+  return !kg8m#util#list#includes(availabilities, false)
 enddef
 
 def s:log_skipped(type: string, message: string): void

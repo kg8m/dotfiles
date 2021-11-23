@@ -66,6 +66,8 @@ enddef
 def s:activate_clangd(): void
   s:activate("clangd", {
     cmd: (_) => ["clangd"],
+
+    document_format_availability_checker: () => $C_DOCUMENT_FORMAT_AVAILABLE ==# "1",
   })
 enddef
 
