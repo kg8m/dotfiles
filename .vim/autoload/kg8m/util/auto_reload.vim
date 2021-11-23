@@ -2,7 +2,7 @@ vim9script
 
 def kg8m#util#auto_reload#setup(): void
   augroup my_vimrc
-    autocmd VimEnter * timer_start(1000, (_) => s:checktime(), { repeat: -1 })
+    autocmd VimEnter * timer_start(3000, (_) => s:checktime(), { repeat: -1 })
   augroup END
 enddef
 
