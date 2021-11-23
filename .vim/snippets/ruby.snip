@@ -287,6 +287,11 @@ abbr    alias :new_name :old_name
 options head
 	alias :${1:#:new_name} :${0:#:old_name}
 
+snippet undef_method
+abbr    undef_method :name
+options head
+	undef_method :${1:#:name}
+
 snippet method_missing
 abbr    method_missing(method, *args, &block) ...
 regexp  'def [method_missing]*'
