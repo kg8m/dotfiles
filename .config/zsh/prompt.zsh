@@ -97,14 +97,12 @@ function() {
 
     function prompt:refresh:calculate_sleep {
       if [ -n "${TMUX:-}" ]; then
-        local tmux_format="#{session_attached}#{window_active}#{pane_active}#{pane_current_command}"
+        local tmux_format="#{session_attached}#{window_active}#{pane_current_command}"
         local tmux_filter="#{==:#{pane_id},${TMUX_PANE:-}}"
         local tmux_status="$(tmux list-panes -a -F "${tmux_format}" -f "${tmux_filter}")"
 
-        if [ "${tmux_status}" = "111zsh" ]; then
-          echo "0.3"
-        elif [ "${tmux_status}" = "110zsh" ]; then
-          echo "1"
+        if [ "${tmux_status}" = "11zsh" ]; then
+          echo "3"
         else
           echo "60"
         fi
