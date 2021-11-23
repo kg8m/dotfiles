@@ -16,7 +16,7 @@ def s:set_local_options(): void
   elseif &filetype =~# '\v^(javascript|typescript)$'
     b:argwrap_tail_comma_braces = "([{"
   elseif &filetype ==# "vim"
-    b:argwrap_tail_comma_braces = "([{"
+    b:argwrap_tail_comma_braces = "[{"
 
     if getline(1) ==# "vim9script"
       b:argwrap_line_prefix = ""
