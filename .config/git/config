@@ -249,6 +249,10 @@
 	status-with-filter = "!git sh \"git:status:filter:all $*\""
 	status-with-color  = "!git sh \"git:status:color $*\""
 
+	# cherry-pick
+	pick = cherry-pick
+	p    = cherry-pick
+
 	# submodule
 	submodule-update-all = update-submodules
 	submodule-remove     = remove-submodules

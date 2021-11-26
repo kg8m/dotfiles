@@ -27,6 +27,16 @@ abbrevs:
     snippet: checkout
     global: true
     context: '^git\s'
+  - name: git cherry-pick-pick
+    abbr: pick
+    snippet: cherry-pick
+    global: true
+    context: '^git\s'
+  - name: git cherry-pick-p
+    abbr: p
+    snippet: cherry-pick
+    global: true
+    context: '^git\s'
   - name: git commit
     abbr: ci
     snippet: commit
