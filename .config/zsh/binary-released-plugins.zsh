@@ -117,6 +117,10 @@ function plugin:setup:binary_releaseds {
       nextword)
         execute_with_echo "plugin:setup:nextword"
         ;;
+      zabrze)
+        execute_with_echo "plugin:setup:binary_releaseds:extra:zabrze:reset"
+        execute_with_echo "plugin:setup:binary_releaseds:extra:zabrze"
+        ;;
       *)
         # Do nothing.
         ;;
@@ -187,19 +191,23 @@ function plugin:setup:binary_releaseds {
 
     zinit ice lucid "${options[@]}"
     zinit light "${repository}"
-
-    case "${plugin}" in
-      zabrze)
-        if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init" ]; then
-          zabrze init --bind-keys > "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
-          zcompile "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
-        fi
-        source "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
-        ;;
-    esac
   done
 
   unset -f plugin:setup:binary_releaseds
 }
-zinit ice lucid nocd wait"0a" atload"plugin:setup:binary_releaseds"
+zinit ice lucid nocd wait"0c" atload"plugin:setup:binary_releaseds"
+zinit snippet /dev/null
+
+function plugin:setup:binary_releaseds:extra:zabrze:reset {
+  rm -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init"
+}
+
+function plugin:setup:binary_releaseds:extra:zabrze {
+  if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init" ]; then
+    zabrze init --bind-keys > "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
+    zcompile "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
+  fi
+  source "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
+}
+zinit ice lucid nocd wait"0a" has"zabrze" atload"plugin:setup:binary_releaseds:extra:zabrze"
 zinit snippet /dev/null
