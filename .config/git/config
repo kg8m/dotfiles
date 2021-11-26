@@ -77,6 +77,7 @@
 	colorMoved = plain
 	colorMovedWS = ignore-all-space
 	renames = true
+	submodule = diff
 
 	# Disable because some tools to apply patches don't work
 	noprefix = false
