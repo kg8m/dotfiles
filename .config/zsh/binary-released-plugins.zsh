@@ -43,11 +43,12 @@ function plugin:setup:binary_releaseds {
     local plugin="$1"
 
     case "${plugin}" in
-      actionlint | bat | delta | direnv | efm-langserver | fd | ghch | glab | golangci-lint | hyperfine | make2help | mmv | ripgrep | shellcheck | shfmt | terraform-lsp | vim-startuptime | zabrze)
+      actionlint | bat | delta | direnv | efm-langserver | fd | gh | ghch | glab | golangci-lint | hyperfine |\
+      make2help | mmv | shellcheck | shfmt | terraform-lsp | vim-startuptime | zabrze)
         mv ./"${plugin}"* ./"${plugin}"
         ;;
-      cli)
-        mv ./gh* ./"${plugin}"
+      rg)
+        mv ./ripgrep* ./"${plugin}"
         ;;
       fzf | golangci-lint-langserver | nextword | sqls | tokei)
         # Do nothing
@@ -59,17 +60,15 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      bat | delta | efm-langserver | fd | ghch | golangci-lint | hyperfine | make2help | mmv | shellcheck)
-        local binary="${plugin}/${plugin}"
-        ;;
-      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | terraform-lsp | tokei | vim-startuptime | zabrze)
+      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | terraform-lsp | tokei |\
+      vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
-      cli)
-        local binary="${plugin}/bin/gh"
+      bat | delta | efm-langserver | fd | ghch | golangci-lint | hyperfine | make2help | mmv | rg | shellcheck)
+        local binary="${plugin}/${plugin}"
         ;;
-      ripgrep)
-        local binary="${plugin}/rg"
+      gh)
+        local binary="${plugin}/bin/${plugin}"
         ;;
       glab)
         local binary="bin/${plugin}"
@@ -90,7 +89,7 @@ function plugin:setup:binary_releaseds {
     execute_with_echo "which ${command}"
 
     case "${plugin}" in
-      bat | cli | delta | direnv | fd | fzf | glab | hyperfine | mmv | ripgrep | shellcheck | tokei | zabrze)
+      bat | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | rg | shellcheck | tokei | zabrze)
         execute_with_echo "${command} --version"
         ;;
       make2help)
@@ -163,6 +162,12 @@ function plugin:setup:binary_releaseds {
   local repository
   for repository in "${repositories[@]}"; do
     case "${repository}" in
+      cli/cli)
+        local plugin="gh"
+        ;;
+      BurntSushi/ripgrep)
+        local plugin="rg"
+        ;;
       mvdan/sh)
         local plugin="shfmt"
         ;;
@@ -180,11 +185,11 @@ function plugin:setup:binary_releaseds {
     )
 
     case "${plugin}" in
-      bat | delta | fd | hyperfine | ripgrep | tokei)
+      bat | delta | fd | hyperfine | rg | tokei)
         # Choose musl for legacy environments
         options+=(bpick"*musl*")
         ;;
-      cli | glab | golangci-lint)
+      gh | glab | golangci-lint)
         options+=(bpick"*.tar.gz")
         ;;
       sqls)
