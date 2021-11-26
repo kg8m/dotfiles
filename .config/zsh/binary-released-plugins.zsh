@@ -141,6 +141,10 @@ function plugin:setup:binary_releaseds {
 
     echo >&2
     echo:info "Done."
+
+    # Echo empty lines because refreshing prompt by zinit clears the last few lines.
+    echo >&2
+    echo >&2
   }
 
   function plugin:setup:nextword {
