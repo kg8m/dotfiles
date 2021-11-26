@@ -33,8 +33,15 @@ function plugin:setup:binary_releaseds {
       itchyny/mmv
       BurntSushi/ripgrep
       koalaman/shellcheck
+      dbrgn/tealdeer
       XAMPPRocky/tokei
     )
+
+    if [ -z "${SD_UNAVAILABLE}" ]; then
+      repositories+=(
+        chmln/sd
+      )
+    fi
   fi
 
   # Don't use zinit's options like `as"command" mv"${plugin}* -> ${plugin}" pick"${plugin}/${plugin}"` because it
@@ -44,7 +51,7 @@ function plugin:setup:binary_releaseds {
 
     case "${plugin}" in
       actionlint | bat | delta | direnv | efm-langserver | fd | gh | ghch | glab | golangci-lint | hyperfine |\
-      make2help | mmv | shellcheck | shfmt | terraform-lsp | vim-startuptime | zabrze)
+      make2help | mmv | sd | shellcheck | shfmt | terraform-lsp | tldr | vim-startuptime | zabrze)
         mv ./"${plugin}"* ./"${plugin}"
         ;;
       rg)
@@ -60,8 +67,8 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      actionlint | direnv | fzf | golangci-lint-langserver | nextword | shfmt | sqls | terraform-lsp | tokei |\
-      vim-startuptime | zabrze)
+      actionlint | direnv | fzf | golangci-lint-langserver | nextword | sd | shfmt | sqls | terraform-lsp | tldr |\
+      tokei | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
       bat | delta | efm-langserver | fd | ghch | golangci-lint | hyperfine | make2help | mmv | rg | shellcheck)
@@ -89,7 +96,7 @@ function plugin:setup:binary_releaseds {
     execute_with_echo "which ${command}"
 
     case "${plugin}" in
-      bat | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | rg | shellcheck | tokei | zabrze)
+      bat | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | rg | sd | shellcheck | tldr | tokei | zabrze)
         execute_with_echo "${command} --version"
         ;;
       make2help)
@@ -171,6 +178,9 @@ function plugin:setup:binary_releaseds {
       mvdan/sh)
         local plugin="shfmt"
         ;;
+      dbrgn/tealdeer)
+        local plugin="tldr"
+        ;;
       *)
         local plugin="$(basename "${repository}")"
         ;;
@@ -185,7 +195,7 @@ function plugin:setup:binary_releaseds {
     )
 
     case "${plugin}" in
-      bat | delta | fd | hyperfine | rg | tokei)
+      bat | delta | fd | hyperfine | rg | sd | tldr | tokei)
         # Choose musl for legacy environments
         options+=(bpick"*musl*")
         ;;
@@ -223,3 +233,6 @@ if [ -z "${ZABRZE_UNAVAILABLE}" ]; then
   zinit ice lucid nocd wait"0a" has"zabrze" atload"plugin:setup:binary_releaseds:extra:zabrze"
   zinit snippet /dev/null
 fi
+
+zinit ice lucid as"completion" mv"zsh_tealdeer -> _tldr"
+zinit snippet https://github.com/dbrgn/tealdeer/blob/master/zsh_tealdeer
