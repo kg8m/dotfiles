@@ -33,9 +33,10 @@
 	old  = red
 	new  = green
 
-	# For delta
-	oldMoved = "white #050000"
-	newMoved = "white #000500"
+	# #2c0001 is 25% darker than #370001 (delta's original minus red).
+	# #001d00 is 25% darker than #002400 (delta's original plus green).
+	oldMoved = "white #2c0001 italic"
+	newMoved = "white #001d00 italic"
 
 [color "interactive"]
 	prompt = 236 yellow bold
@@ -68,7 +69,10 @@
 	hunk-header-style = "line-number syntax"
 	hunk-header-decoration-style = "#666666 box"
 
-	map-styles = "white #050000 => syntax, white #000500 => syntax"
+	minus-style = "syntax auto"
+
+	# cf. color.diff.oldMoved and color.diff.newMoved
+	map-styles = "white #2c0001 italic => syntax #2c0001 italic, white #001d00 italic => syntax italic"
 
 [diff]
 	algorithm = histogram
