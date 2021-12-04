@@ -5,7 +5,7 @@ function plugin:setup:tmux_plugins {
     remove_symlink ~/.config/tmux
     remove_symlink ~/.config/tmux/plugins/"${plugin_name}"
 
-    [ -d ~/.config/tmux ]                        || ln -s ~/dotfiles/.tmux ~/.config/tmux
+    [ -d ~/.config/tmux ]                          || ln -s ~/dotfiles/.tmux ~/.config/tmux
     [ -d ~/.config/tmux/plugins/"${plugin_name}" ] || ln -s "${PWD}" ~/.config/tmux/plugins/"${plugin_name}"
   }
 
@@ -24,7 +24,6 @@ function plugin:setup:tmux_plugins {
 
   unset -f plugin:setup:tmux_plugins
 }
-
 zinit ice lucid nocd wait"0c" atload"plugin:setup:tmux_plugins"
 zinit snippet /dev/null
 

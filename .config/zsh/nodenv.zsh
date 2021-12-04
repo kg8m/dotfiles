@@ -13,6 +13,5 @@ function plugin:setup:nodenv {
 
   unset -f plugin:setup:nodenv
 }
-
 zinit ice lucid nocd wait"0a" atload"plugin:setup:nodenv"
 zinit snippet /dev/null

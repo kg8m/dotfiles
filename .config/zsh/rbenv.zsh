@@ -55,6 +55,5 @@ function plugin:setup:rbenv {
 
   unset -f plugin:setup:rbenv
 }
-
 zinit ice lucid nocd wait"0a" atload"plugin:setup:rbenv"
 zinit snippet /dev/null

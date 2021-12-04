@@ -33,6 +33,7 @@ if [ -n "${ZABRZE_UNAVAILABLE}" ]; then
     # Instead of `${XDG_CONFIG_HOME}/zsh/abbreviations`
     export ABBR_USER_ABBREVIATIONS_FILE="${XDG_CACHE_HOME:?}/zsh/abbreviations"
   }
+
   function plugin:setup:abbr {
     abbr --session --force --global g="git"
     abbr --session --force --global v="vim"

@@ -20,7 +20,6 @@ function plugin:setup:others {
 
   unset -f plugin:setup:others
 }
-
 zinit ice lucid wait"0c" atload"plugin:setup:others"
 zinit snippet /dev/null
 
