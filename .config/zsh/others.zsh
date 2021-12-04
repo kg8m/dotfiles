@@ -12,7 +12,7 @@ function plugin:setup:others {
     mkdir -p "${HOME}/bin"
     ln -fs "${PWD}/${binary}" "${HOME}/bin/$(basename "${binary}")"
   }
-  zinit ice lucid wait"0c" as"null" atclone"plugin:setup:vim_themis"
+  zinit ice lucid as"null" atclone"plugin:setup:vim_themis"
   zinit light thinca/vim-themis
 
   mkdir -p "${XDG_DATA_HOME:?}/mysql"
