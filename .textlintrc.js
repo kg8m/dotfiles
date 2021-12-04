@@ -2,37 +2,19 @@ const path = require("path");
 const fs = require("fs");
 
 const homePath = process.env["HOME"];
+const configDirpath = path.join(homePath, ".config/textlint");
 const localConfigDirpath = path.join(homePath, ".config/textlint.local");
 
+const { deepmerge } = require(path.join(configDirpath, "util"));
+
+const fixableConfigPath = path.join(configDirpath, ".textlintrc.fixable.js");
+const fixableConfig = fs.existsSync(fixableConfigPath) ? require(fixableConfigPath) : {};
+
 const localConfigPath = path.join(localConfigDirpath, ".textlintrc.local.js");
-const localPrhConfigPath = path.join(localConfigDirpath, "prh-rules.local.yml");
-const localPrhConfigPaths = fs.existsSync(localPrhConfigPath) ? [localPrhConfigPath] : [];
-
 const localConfig = fs.existsSync(localConfigPath) ? require(localConfigPath) : {};
-
-// https://qiita.com/riversun/items/60307d58f9b2f461082a
-const deepmerge = (object1, object2) => {
-  const isObject = (object) => object && typeof object === "object" && !Array.isArray(object);
-  const resultObject = Object.assign({}, object1);
-
-  if (isObject(object1) && isObject(object2)) {
-    for (const [key, value2] of Object.entries(object2)) {
-      const value1 = object1[key];
-
-      if (isObject(value2) && object1.hasOwnProperty(key) && isObject(value1)) {
-        resultObject[key] = deepmerge(value1, value2);
-      } else {
-        Object.assign(resultObject, { [key]: value2 });
-      }
-    }
-  }
-
-  return resultObject;
-};
 
 const config = {
   filters: {
-    comments: true,
     allowlist: {
       allow: [
         // Ignore "方" because "ja-hiragana-keishikimeishi" shows too many false positives.
@@ -41,9 +23,6 @@ const config = {
         // Disable ja-unnatural-alphabet.
         "ｗｗｗ",
       ],
-    },
-    "node-types": {
-      nodeTypes: ["BlockQuote", "Code", "CodeBlock"],
     },
   },
   rules: {
@@ -120,14 +99,10 @@ const config = {
       "4.2.7.コロン(：)": false,                                // 4.2.7: コロン(：)を使用する場合は「全角」で表記します。 → 半角＋スペースが好み
       "4.3.1.丸かっこ（）": false,                              // 4.3.1: 半角のかっこ()が使用されています。全角のかっこ（）を使用してください。 → 使うことがある
     },
-    // For Japanese contents. Terminology doesn't work for Japanese.
-    "prh": {
-      rulePaths: ["~/.config/textlint/prh-rules.yml"].concat(localPrhConfigPaths),
-    },
-    "terminology": {
-      defaultTerms: true,
-    },
   },
 };
 
-module.exports = deepmerge(config, localConfig);
+module.exports = deepmerge(
+  deepmerge(config, fixableConfig),
+  localConfig,
+);

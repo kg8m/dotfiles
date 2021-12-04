@@ -93,6 +93,8 @@ tools:
     lint-stdin: true
     lint-formats:
       - "%l:%c:%t%*[a-z]: %m"
+    format-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}' --fix"
+    format-stdin: true
 
   vint: &vint
     lint-command: "vint -"

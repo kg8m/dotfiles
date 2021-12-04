@@ -108,9 +108,6 @@ enddef
 def s:activate_efm_langserver(): void
   s:activate("efm-langserver", {
     cmd: (_) => ["efm-langserver"],
-
-    # Document formatting for the filetypes is sometimes slow.
-    document_format_ignore_filetypes: ["gitcommit", "markdown"],
   })
 enddef
 
