@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+if ! command -v markuplint > /dev/null; then
+  exit 1
+fi
+
 target_filepath="$1"
 
 # markdownlint treats config file's path as relative even if an absolute path is given
