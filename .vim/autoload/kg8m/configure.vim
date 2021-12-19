@@ -140,7 +140,8 @@ def kg8m#configure#others(): void
   # s => Maximum size of an item in Kbyte.
   set viminfo='20,<20,h,s10
 
-  s:configure_markdown()
+  kg8m#configure#filetypes#go#run()
+  kg8m#configure#filetypes#markdown#run()
 
   augroup my_vimrc
     autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
@@ -195,23 +196,6 @@ def s:manage_ambiwidth(): void
     [0x2500, 0x257f, 1],  # Box Drawing
     [0x2580, 0x259f, 1],  # Block Elements
   ])
-enddef
-
-# https://github.com/tpope/vim-markdown
-def s:configure_markdown(): void
-  g:markdown_fenced_languages = [
-    "css",
-    "diff",
-    "html",
-    "javascript", "js=javascript",
-    "ruby", "rb=ruby",
-    "sh",
-    "sql",
-    "typescript", "ts=typescript",
-    "vim",
-  ]
-  g:markdown_syntax_conceal = false
-  g:markdown_minlines = g:kg8m#configure#colors#sync_minlines
 enddef
 
 # https://vim-jp.org/vim-users-jp/2011/02/20/Hack-202.html

@@ -8,19 +8,6 @@ def kg8m#plugin#go#configure(): void
   })
 enddef
 
-def s:setup_buffer(): void
-  setlocal foldmethod=syntax
-
-  nnoremap <buffer> <leader>r :call <SID>run_current()<CR>
-enddef
-
-def s:run_current(): void
-  write
-
-  const command = printf("go run -race %s", expand("%")->shellescape())
-  kg8m#util#terminal#execute_command(command)
-enddef
-
 def s:on_source(): void
   g:go_code_completion_enabled = false
   g:go_fmt_autosave            = false
@@ -47,6 +34,6 @@ def s:on_source(): void
   g:go_highlight_variable_assignments      = true
 
   augroup my_vimrc
-    autocmd FileType go s:setup_buffer()
+    autocmd FileType go setlocal foldmethod=syntax
   augroup END
 enddef
