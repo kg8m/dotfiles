@@ -64,6 +64,11 @@
 	line-numbers-zero-style = "#999999 auto"
 	line-numbers-plus-style = "green auto"
 
+	# Default: left = "{nm:^4}⋮", right = "{np:^4}│"
+	# `^` means center aligned but `>` means right aligned.
+	line-numbers-left-format = "{nm:>4} ⋮"
+	line-numbers-right-format = "{np:>4} │"
+
 	file-style = "yellow auto bold"
 	file-decoration-style = "yellow ul ol"
 	hunk-header-style = "line-number syntax"
