@@ -5,7 +5,6 @@ kg8m#plugin#ensure_sourced("fzf.vim")
 var s:raw_list: list<list<string>>
 var s:list: list<string>
 var s:max_label_length: number
-var s:is_initialized = false
 
 def kg8m#plugin#fzf#shortcuts#run(query: string): void
   # Use `final` instead of `const` because the variable will be changed by fzf
@@ -19,7 +18,6 @@ def kg8m#plugin#fzf#shortcuts#run(query: string): void
 enddef
 
 def s:candidates(): list<string>
-  s:setup_list()
   return s:list
 enddef
 
@@ -31,16 +29,10 @@ def s:handler(item: string): void
 enddef
 
 def s:setup_list(): void
-  if s:is_initialized
-    return
-  endif
-
   s:define_raw_list()
   s:count_max_label_length()
   s:make_groups()
   s:format_list()
-
-  s:is_initialized = true
 enddef
 
 def s:define_raw_list(): void
@@ -165,3 +157,5 @@ enddef
 def s:word_padding(item: string): string
   return repeat(" ", s:max_label_length - strlen(item))
 enddef
+
+s:setup_list()
