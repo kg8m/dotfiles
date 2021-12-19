@@ -14,18 +14,8 @@ def kg8m#plugin#matchup#configure(): void
     eruby: { tagnameonly: true },
   }
 
-  augroup my_vimrc
-    autocmd ColorScheme * s:overwrite_colors()
-  augroup END
-
   kg8m#plugin#configure({
     lazy:     true,
     on_start: true,
   })
-enddef
-
-def s:overwrite_colors(): void
-  # Original `highlight default link MatchParenCur MatchParen` is too confusing because current parenthesis looks as
-  # same as matched one.
-  highlight default link MatchParenCur Cursor
 enddef
