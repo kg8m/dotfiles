@@ -140,6 +140,7 @@ def kg8m#configure#others(): void
   # s => Maximum size of an item in Kbyte.
   set viminfo='20,<20,h,s10
 
+  kg8m#configure#filetypes#c#run()
   kg8m#configure#filetypes#go#run()
   kg8m#configure#filetypes#markdown#run()
 
