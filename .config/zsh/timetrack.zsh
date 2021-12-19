@@ -66,9 +66,8 @@ function __my_preexec_start_timetrack() {
 
 function __my_preexec_end_timetrack() {
   local last_status=$?
-  local exec_time result title message
+  local exec_time result title notifier_options message
   local command="${__timetrack_command//'/'\\''}"
-  local notifier_options=(-group "TIMETRACK_${USER}@${HOST}_$(printf %q "${command}")")
 
   export __timetrack_end="$(date +%s)"
 
@@ -89,16 +88,14 @@ function __my_preexec_end_timetrack() {
     fi
 
     title+=" (${exec_time} seconds)"
-    notifier_options+=(-title "$(printf %q "${title}")")
+    notifier_options=(--title "${title}")
     message="Command: ${command}"
 
-    if [ "${exec_time}" -ge "${__timetrack_threshold}" ]; then
-      notifier_options+=(-sender TERMINAL_NOTIFIER_STAY)
+    if [ "${exec_time}" -lt "${__timetrack_threshold}" ]; then
+      notifier_options+=(--nostay)
     fi
 
-    # `> /dev/null` for ignoring "Removing previously sent notification" message.
-    # Throwing stderr away for ignoring "Connection to * closed." message.
-    ssh main -t "echo '[$(hostname)] ${message}' | /usr/local/bin/terminal-notifier ${notifier_options[*]}" > /dev/null 2>&1
+    notify "${message}" "${notifier_options[@]}"
 
     if [ "${last_status}" = "0" ]; then
       title="${title//${result}/$(highlight:green "${result}")}"
