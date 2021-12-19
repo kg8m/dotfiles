@@ -16,3 +16,8 @@ def kg8m#plugin#fzf_tjump#configure()
     depends: "fzf.vim",
   })
 enddef
+
+def kg8m#plugin#fzf_tjump#run(): void
+  kg8m#plugin#ensure_sourced("vim-fzf-tjump")
+  fzf_tjump#jump()
+enddef
