@@ -2,11 +2,7 @@ vim9script
 
 final s:cache = {}
 
-# Manually source the plugin because dein.vim's `on_func` feature is not available.
-# Vim9 script doesn't support `FuncUndefined` event: https://github.com/vim/vim/issues/7501
-if !kg8m#plugin#is_sourced("fzf.vim")
-  kg8m#plugin#source("fzf.vim")
-endif
+kg8m#plugin#ensure_sourced("fzf.vim")
 
 # Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)
 command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#complete FzfGrep kg8m#plugin#fzf#grep#run(<q-args>)

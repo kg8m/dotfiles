@@ -17,11 +17,6 @@ enddef
 
 def s:definition_fallback(x: dict<any>): void
   # Use timer and delay execution because it is too early.
-  # Manually source vim-fzf-tjump because dein.vim's `on_func` feature is not available.
-  # Vim9 script doesn't support `FuncUndefined` event: https://github.com/vim/vim/issues/7501
-  if !kg8m#plugin#is_sourced("vim-fzf-tjump")
-    kg8m#plugin#source("vim-fzf-tjump")
-  endif
-
+  kg8m#plugin#ensure_sourced("vim-fzf-tjump")
   timer_start(0, (_) => fzf_tjump#jump())
 enddef

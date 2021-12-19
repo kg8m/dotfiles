@@ -1,10 +1,6 @@
 vim9script
 
-# Manually source the plugin because dein.vim's `on_func` feature is not available.
-# Vim9 script doesn't support `FuncUndefined` event: https://github.com/vim/vim/issues/7501
-if !kg8m#plugin#is_sourced("fzf.vim")
-  kg8m#plugin#source("fzf.vim")
-endif
+kg8m#plugin#ensure_sourced("fzf.vim")
 
 # https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
 # Also see configs for yankround.vim

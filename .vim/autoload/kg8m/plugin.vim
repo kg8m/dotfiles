@@ -150,6 +150,14 @@ def kg8m#plugin#is_sourced(plugin_name: string): bool
   return !!dein#is_sourced(plugin_name)
 enddef
 
+# Manually source a plugin because of some reasons, e.g., dein.vim's `on_func` feature is not available in Vim9 script.
+# Vim9 script doesn't support `FuncUndefined` event: https://github.com/vim/vim/issues/7501
+def kg8m#plugin#ensure_sourced(plugin_name: string): void
+  if !kg8m#plugin#is_sourced(plugin_name)
+    kg8m#plugin#source(plugin_name)
+  endif
+enddef
+
 def kg8m#plugin#all_runtimepath(): string
   const current = &runtimepath->split(",")
   const plugins = kg8m#plugin#get_info()
@@ -187,9 +195,6 @@ def s:dequeue_on_start(): void
 enddef
 
 def s:source_on_start(plugin_name: string): void
-  if !kg8m#plugin#is_sourced(plugin_name)
-    kg8m#plugin#source(plugin_name)
-  endif
-
+  kg8m#plugin#ensure_sourced(plugin_name)
   s:dequeue_on_start()
 enddef

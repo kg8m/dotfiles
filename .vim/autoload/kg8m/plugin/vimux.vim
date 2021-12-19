@@ -7,12 +7,8 @@ def kg8m#plugin#vimux#configure(): void
   })
 enddef
 
-# Wrap vimux's `VimuxRunCommand` because dein.vim's `on_func` feature is not available.
-# Vim9 script doesn't support `FuncUndefined` event: https://github.com/vim/vim/issues/7501
 def kg8m#plugin#vimux#run_command(command: string): void
-  if !kg8m#plugin#is_sourced("vimux")
-    kg8m#plugin#source("vimux")
-  endif
+  kg8m#plugin#ensure_sourced("vimux")
 
   s:calculate_runner_index()
   execute "VimuxRunCommand " .. string(command)
