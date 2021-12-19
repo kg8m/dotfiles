@@ -127,17 +127,19 @@ function highlight:gray {
 }
 
 function echo:error {
-  highlight:red "ERROR: " >&2
+  highlight:red "ERROR" >&2
+  printf " -- " >&2
   echo "$@" >&2
 }
 
 function echo:warn {
-  highlight:yellow "WARN: " >&2
+  highlight:yellow "WARN" >&2
+  printf " -- " >&2
   echo "$@" >&2
 }
 
 function echo:info {
-  printf "INFO: %s\n" "$*" >&2
+  printf "INFO -- %s\n" "$*" >&2
 }
 
 function notify {
