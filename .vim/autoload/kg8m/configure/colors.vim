@@ -1,5 +1,7 @@
 vim9script
 
+g:kg8m#configure#colors#sync_minlines = 1000
+
 def kg8m#configure#colors#terminal(): void
   set termguicolors
 
@@ -21,9 +23,10 @@ enddef
 
 def kg8m#configure#colors#performance(): void
   augroup my_vimrc
-    # Prevent syntax highlighting from being too slow
+    # minlines: Prevent broken syntax highlighting.
+    # maxlines: Prevent too slow syntax highlighting.
     # cf. `:h :syn-sync-maxlines` / `:h :syn-sync-minlines`
-    autocmd Syntax * syntax sync minlines=1000 maxlines=2000
+    execute "autocmd Syntax * syntax sync minlines=" .. g:kg8m#configure#colors#sync_minlines .. " maxlines=2000"
   augroup END
 
   set maxmempattern=5000

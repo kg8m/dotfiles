@@ -211,7 +211,7 @@ def s:configure_markdown(): void
     "vim",
   ]
   g:markdown_syntax_conceal = false
-  g:markdown_minlines = 300
+  g:markdown_minlines = g:kg8m#configure#colors#sync_minlines
 enddef
 
 # https://vim-jp.org/vim-users-jp/2011/02/20/Hack-202.html
