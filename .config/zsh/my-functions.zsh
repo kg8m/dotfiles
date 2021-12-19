@@ -178,9 +178,7 @@ function batch_move {
 }
 
 function trash {
-  local source
-  local filename
-  local new_filename
+  local source filename new_filename
   local timestamp=$(date +%H.%M.%S)
   local trash_path=${TRASH_PATH:-/tmp}
 
