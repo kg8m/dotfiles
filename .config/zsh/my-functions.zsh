@@ -313,52 +313,77 @@ function my_grep {
 }
 
 function my_grep_with_filter {
+  local query="${1:?}"
+  shift 1
+
   local options=()
   local non_options=()
-  local arg
-  local prev_arg
 
-  for arg in "$@"; do
-    case "${arg}" in
+  while [ "${#@}" -gt 0 ]; do
+    case "$1" in
       --*)
-        options+=("${arg}")
+        options+=("$1")
+
+        if ! [[ "$1" =~ = ]]; then
+          if [ "$#" -gt 1 ]; then
+            options+=("$2")
+            shift 2
+            continue
+          fi
+        fi
         ;;
       -*)
-        options+=("${arg}")
+        options+=("$1")
+
+        if [[ "$1" =~ ^-.$ ]] && [[ ! "$2" =~ ^- ]]; then
+          if [ "$#" -gt 1 ]; then
+            options+=("$2")
+            shift 2
+            continue
+          fi
+        fi
         ;;
       *)
-        if [[ "${prev_arg}" =~ ^-- ]] && [[ ! ${prev_arg} =~ = ]]; then
-          options+=("${arg}")
-        elif [[ "${prev_arg}" =~ ^-.$ ]]; then
-          options+=("${arg}")
-        else
-          non_options+=("${arg}")
-        fi
+        non_options+=("$1")
         ;;
     esac
 
-    prev_arg="${arg}"
+    shift 1
   done
 
-  if [ "${#non_options}" = "0" ] && [[ ! "${options[-1]}" =~ ^- ]]; then
-    non_options=("${options[-1]}")
-    options=("${options[1,-2]}")
+  local grep_args=(
+    "${query}"
+    --column
+    --line-number
+    --no-heading
+    --color always
+    --with-filename
+  )
+  local filter_args=(
+    --header "Grep: ${query} ${options[*]} ${non_options[*]}"
+    --delimiter ":"
+    --preview "${FZF_VIM_PATH}/bin/preview.sh {}"
+    --preview-window "down:75%:wrap:nohidden:+{2}-/2"
+  )
+
+  if [ -n "${options[*]}" ]; then
+    grep_args+=("${options[@]}")
   fi
 
-  local query="${non_options[1]}"
-  local results=("${(@f)$(
-    my_grep --column --line-number --no-heading --color always --with-filename "$@" 2> /dev/null |
-      filter --header "Grep: $*" --delimiter ":" --preview-window "down:75%:wrap:nohidden:+{2}-/2" --preview "${FZF_VIM_PATH}/bin/preview.sh {}"
-  )}")
+  if [ -n "${non_options[*]}" ]; then
+    grep_args+=("${non_options[@]}")
+  fi
+
+  local results=("${(@f)$(my_grep "${grep_args[@]}" | filter "${filter_args[@]}")}")
 
   if [ -z "${results[*]}" ]; then
     return
   fi
 
-  if [[ "${options[*]}" =~ --files ]]; then
-    echo "${(j:\n:)results[@]}" 2> /dev/null
-  else
+  if [ "${options[(I)--files]}" = "0" ]; then
     echo "${(j:\n:)results[@]}" | my_grep "${query}" "${options[@]}" 2> /dev/null
+  else
+    echo "${(j:\n:)results[@]}" 2> /dev/null
   fi
 
   # Check whether the output is on a terminal
@@ -369,12 +394,12 @@ function my_grep_with_filter {
     read -r "response?Open found files? [y/n]: "
 
     if [[ "${response}" =~ ^y ]]; then
-      if [[ "${options[*]}" =~ --files ]]; then
-        local filepaths=("${results[@]}")
-      else
+      if [ "${options[(I)--files]}" = "0" ]; then
         local filepaths=("${(@f)$(
           echo "${(j:\n:)results[@]}" | grep -E ':[0-9]+:[0-9]+:' | grep -E -o '^[^:]+:[0-9]+:[0-9]+' | sort -u
         )}")
+      else
+        local filepaths=("${results[@]}")
       fi
 
       execute_with_echo "vim ${filepaths[*]}"
