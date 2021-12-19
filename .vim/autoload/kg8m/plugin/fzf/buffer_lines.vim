@@ -9,5 +9,5 @@ def kg8m#plugin#fzf#buffer_lines#run(query: string = ""): void
     "--preview-window", "down:50%:wrap:nohidden:+{1}-/2",
   ]
 
-  fzf#vim#buffer_lines(query, { options: options })
+  kg8m#plugin#fzf#run(() => fzf#vim#buffer_lines(query, { options: options }))
 enddef

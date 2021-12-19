@@ -32,7 +32,7 @@ def kg8m#plugin#fzf#grep#run(args: string): void
     "--preview-window", "down:75%:wrap:nohidden:+{2}-/2",
   ]
 
-  fzf#vim#grep(grep_command, has_column, { options: fzf_options })
+  kg8m#plugin#fzf#run(() => fzf#vim#grep(grep_command, has_column, { options: fzf_options }))
 enddef
 
 def kg8m#plugin#fzf#grep#complete(arglead: string, _cmdline: string, _curpos: number): list<string>

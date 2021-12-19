@@ -15,7 +15,7 @@ def kg8m#plugin#fzf#shortcuts#run(query: string): void
     options: ["--no-multi", "--prompt", "Shortcuts> ", "--query", query],
   }
 
-  fzf#run(fzf#wrap("my-shortcuts", options))
+  kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("my-shortcuts", options)))
 enddef
 
 def s:candidates(): list<string>

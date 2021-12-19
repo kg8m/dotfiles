@@ -19,5 +19,5 @@ enddef
 
 def kg8m#plugin#fzf_tjump#run(): void
   kg8m#plugin#ensure_sourced("vim-fzf-tjump")
-  fzf_tjump#jump()
+  kg8m#plugin#fzf#run(() => fzf_tjump#jump())
 enddef

@@ -20,7 +20,7 @@ def kg8m#plugin#fzf#yank_history#run(): void
     ],
   }
 
-  fzf#run(fzf#wrap("yank-history", options))
+  kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("yank-history", options)))
 enddef
 
 def s:candidates(): list<string>

@@ -44,7 +44,7 @@ def kg8m#plugin#fzf#rails#run(type: string): void
     ],
   }
 
-  fzf#run(fzf#wrap("rails", options))
+  kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("rails", options)))
 enddef
 
 def kg8m#plugin#fzf#rails#type_names(arglead: string, _cmdline: string, _curpos: number): list<string>

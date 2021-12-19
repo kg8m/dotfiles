@@ -15,7 +15,7 @@ def kg8m#plugin#fzf#history#run(): void
     ],
   }
 
-  fzf#run(fzf#wrap("history-files", options))
+  kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("history-files", options)))
 enddef
 
 # `buffers` are for files not included in `mr#mru#list()`, e.g.,

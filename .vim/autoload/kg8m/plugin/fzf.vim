@@ -13,13 +13,13 @@ def kg8m#plugin#fzf#configure(): void
   g:fzf_action = { ctrl-o: "DWMOpen" }
 
   # See also vim-fzf-tjump's mappings
-  nnoremap <silent> <Leader><Leader>f :FzfFiles<CR>
+  nnoremap <silent> <Leader><Leader>f :call kg8m#plugin#fzf#run_command("FzfFiles")<CR>
   nnoremap <silent> <Leader><Leader>v :call kg8m#plugin#fzf#git_files#run()<CR>
   nnoremap <silent> <Leader><Leader>b :call kg8m#plugin#fzf#buffers#run()<CR>
   nnoremap <silent> <Leader><Leader>l :call kg8m#plugin#fzf#buffer_lines#run()<CR>
-  nnoremap <silent> <Leader><Leader>m :FzfMarks<CR>
+  nnoremap <silent> <Leader><Leader>m :call kg8m#plugin#fzf#run_command("FzfMarks")<CR>
   nnoremap <silent> <Leader><Leader>h :call kg8m#plugin#fzf#history#run()<CR>
-  nnoremap <silent> <Leader><Leader>H :FzfHelptags<CR>
+  nnoremap <silent> <Leader><Leader>H :call kg8m#plugin#fzf#run_command("FzfHelptags")<CR>
   nnoremap <silent> <Leader><Leader>y :call kg8m#plugin#fzf#yank_history#run()<CR>
   nnoremap <silent> <Leader><Leader>g :call kg8m#plugin#fzf#grep#enter_command()<CR>
   xnoremap <silent> <Leader><Leader>g "zy:call kg8m#plugin#fzf#grep#enter_command(@z)<CR>
@@ -63,6 +63,23 @@ def kg8m#plugin#fzf#configure(): void
   if kg8m#plugin#register("kg8m/vim-fzf-tjump")
     kg8m#plugin#fzf_tjump#configure()
   endif
+enddef
+
+# Temporarily set `ambiwidth` to `single` because fzf.vim doesn't use unicode characters for rendering borders when
+# `ambiwidth` is `double`.
+def kg8m#plugin#fzf#run(Callback: func): void
+  const original_ambiwidth = &ambiwidth
+
+  try
+    set ambiwidth=single
+    Callback()
+  finally
+    &ambiwidth = original_ambiwidth
+  endtry
+enddef
+
+def kg8m#plugin#fzf#run_command(command: string): void
+  kg8m#plugin#fzf#run(() => execute(command))
 enddef
 
 def s:setup_window(): void

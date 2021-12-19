@@ -50,7 +50,7 @@ def s:run(candidates: list<string>): void
     ],
   }
 
-  fzf#run(fzf#wrap("jumplist", options))
+  kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("jumplist", options)))
 enddef
 
 def s:jumplist_info(): dict<any>

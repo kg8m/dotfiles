@@ -15,7 +15,7 @@ def kg8m#plugin#fzf#buffers#run(): void
     ],
   }
 
-  fzf#run(fzf#wrap("buffer-files", options))
+  kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("buffer-files", options)))
 enddef
 
 def kg8m#plugin#fzf#buffers#list(options: dict<any> = {}): list<string>
