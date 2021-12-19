@@ -115,7 +115,7 @@ enddef
 def kg8m#configure#others(): void
   set fileformats=unix,dos,mac
 
-  s:manage_ambiwidth()
+  s:configure_ambiwidth()
 
   set belloff=all
   set diffopt+=algorithm:histogram
@@ -186,7 +186,7 @@ def kg8m#configure#conceal(): void
   s:cache.is_conceal_configured = true
 enddef
 
-def s:manage_ambiwidth(): void
+def s:configure_ambiwidth(): void
   # Basically treat ambiwidth characters as double width for basic text editing especially Japanese text. Make some
   # ambiwidth characters more readable. Prevent an ambiwidth character from being overlapped by its next character.
   set ambiwidth=double

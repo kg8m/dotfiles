@@ -18,7 +18,7 @@ def kg8m#configure#folding#local_options(): void
     autocmd FileType haml       setlocal foldmethod=indent
     autocmd FileType neosnippet setlocal foldmethod=marker
 
-    autocmd FileType * s:manage_foldenable()
+    autocmd FileType * s:configure_foldenable()
   augroup END
 enddef
 
@@ -37,7 +37,7 @@ def kg8m#configure#folding#mappings(): void
   nnoremap z] ]z
 enddef
 
-def s:manage_foldenable(): void
+def s:configure_foldenable(): void
   if s:should_disable()
     setlocal nofoldenable
   endif
