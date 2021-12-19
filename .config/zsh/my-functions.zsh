@@ -155,16 +155,23 @@ function notify {
   ssh main -t "echo '${message}' | /usr/local/bin/terminal-notifier ${notifier_options[*]}" > /dev/null
 }
 
+# cf. `man zshcontrib` for `zmv`
 function batch_move {
-  local response
+  local dryrun_result=("${(@f)$(zmv -n "$@")}")
 
-  zmv -n "$@" | less
+  if [ -z "${dryrun_result[*]}" ]; then
+    return 1
+  fi
+
+  echo "${(j:\n:)dryrun_result[@]}" | less
+
+  local response
   read -r "response?Execute? [y/n]: "
 
   if [[ "${response}" =~ ^y ]]; then
     zmv "$@"
   else
-    echo "Canceled." >&2
+    echo:info "Canceled."
   fi
 }
 alias bmv="batch_move"
