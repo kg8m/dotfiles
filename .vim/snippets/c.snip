@@ -47,3 +47,28 @@ options head
 	while (${1:#:condition}) {
 		${0}
 	}
+
+snippet do_while
+abbr    do { ... } while (...);
+options head
+	do {
+		${0}
+	} while (${1:#:condition});
+
+snippet main
+abbr    main(void) { ... }
+options word
+	main(void) {
+		${0}
+
+		return 0;
+	}
+
+snippet main_with_args
+abbr    main(int argc, char *argv[]) { ... }
+options word
+	main(int argc, char *argv[]) {
+		${0}
+
+		return 0;
+	}
