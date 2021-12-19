@@ -1,12 +1,5 @@
 vim9script
 
-def kg8m#plugin#gina#configure(): void
-  kg8m#plugin#configure({
-    lazy:   true,
-    on_cmd: "Gina",
-  })
-enddef
-
 def kg8m#plugin#gina#patch(filepath: string): void
   const original_diffopt = &diffopt
 

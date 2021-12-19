@@ -115,11 +115,17 @@ if kg8m#plugin#register("junegunn/fzf.vim", { if: executable("fzf") })
 endif
 
 if kg8m#plugin#register("lambdalisue/gina.vim", { if: !kg8m#util#is_git_tmp_edit() })
-  kg8m#plugin#gina#configure()
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_cmd: "Gina",
+  })
 endif
 
 if kg8m#plugin#register("tweekmonster/helpful.vim")
-  kg8m#plugin#helpful#configure()
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_cmd: "HelpfulVersion",
+  })
 endif
 
 if kg8m#plugin#register("Yggdroot/indentLine", { if: !kg8m#util#is_git_tmp_edit() })
@@ -203,11 +209,11 @@ endif
 
 # Legacy Vim script version for my development.
 if kg8m#plugin#register("kg8m/vim-simple-align", { name: "vim-simple-align-legacy", if: false })
-  kg8m#plugin#simple_align#configure()
+  xnoremap <Leader>a :SimpleAlign<Space>
 endif
 
 if kg8m#plugin#register("kg8m/vim-simple-align", { rev: "vim9" })
-  kg8m#plugin#simple_align#configure()
+  xnoremap <Leader>a :SimpleAlign<Space>
 endif
 
 if kg8m#plugin#register("FooSoft/vim-argwrap", { if: !kg8m#util#is_git_tmp_edit() })
@@ -374,7 +380,11 @@ if kg8m#plugin#register("monkoose/vim9-stargate")
 endif
 
 if kg8m#plugin#register("Shougo/vimproc")
-  kg8m#plugin#vimproc#configure()
+  kg8m#plugin#configure({
+    lazy:    true,
+    build:   "make",
+    on_func: "vimproc#",
+  })
 endif
 
 if kg8m#plugin#register("preservim/vimux", { if: kg8m#util#on_tmux() && !kg8m#util#is_git_tmp_edit() })
