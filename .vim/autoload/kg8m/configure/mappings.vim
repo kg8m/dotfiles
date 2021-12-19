@@ -2,7 +2,7 @@ vim9script
 
 augroup my_vimrc
   autocmd InsertEnter                  * timer_start(0, (_) => kg8m#plugin#mappings#i#define())
-  autocmd User insert_mode_plugin_loaded timer_start(0, (_) => kg8m#plugin#mappings#i#define())
+  autocmd User insert_mode_plugin_loaded timer_start(0, (_) => kg8m#plugin#mappings#i#define({ force: true }))
 augroup END
 
 def kg8m#configure#mappings#base(): void

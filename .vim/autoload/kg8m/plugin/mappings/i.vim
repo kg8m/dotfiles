@@ -1,6 +1,11 @@
 vim9script
 
-def kg8m#plugin#mappings#i#define(): void
+# Call this function multiple times for overwriting plugins' mappings.
+def kg8m#plugin#mappings#i#define(options: dict<bool> = {}): void
+  if has_key(b:, "is_defined") && get(options, "force", false)
+    return
+  endif
+
   if get(b:, "kg8m_custom_imaps_disabled", false)
     return
   endif
@@ -26,6 +31,8 @@ def kg8m#plugin#mappings#i#define(): void
 
   # <silent> for lexima#expand's echo
   imap     <silent><expr> <buffer> > <SID>gt_expr()
+
+  b:is_defined = true
 enddef
 
 def kg8m#plugin#mappings#i#disable(): void
