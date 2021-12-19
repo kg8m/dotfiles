@@ -6,7 +6,6 @@ abbrevs:
   - name: git
     abbr: g
     snippet: git
-    global: true
   - name: git aliases
     abbr: alias
     snippet: aliases
@@ -129,8 +128,6 @@ abbrevs:
   - name: vim
     abbr: v
     snippet: vim
-    global: true
   - name: vim2
     abbr: vi
     snippet: vim
-    global: true
