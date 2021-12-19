@@ -2,7 +2,7 @@ vim9script
 
 kg8m#plugin#ensure_sourced("fzf.vim")
 
-# Show preview of dirty files (Fzf's `:GFiles?` doesn't show preview)
+# Show preview of dirty files (fzf's `:GFiles?` doesn't show preview)
 def kg8m#plugin#fzf#git_files#run(): void
   const options = {
     options: [

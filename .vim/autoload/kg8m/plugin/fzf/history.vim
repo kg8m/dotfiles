@@ -2,7 +2,7 @@ vim9script
 
 kg8m#plugin#ensure_sourced("fzf.vim")
 
-# Ignore some files, e.g., `.git/COMMIT_EDITMSG` (Fzf's `:History` doesn't ignore them)
+# Ignore some files, e.g., `.git/COMMIT_EDITMSG` (fzf's `:History` doesn't ignore them)
 def kg8m#plugin#fzf#history#run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {

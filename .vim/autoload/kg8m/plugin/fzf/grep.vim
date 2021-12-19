@@ -4,7 +4,7 @@ final s:cache = {}
 
 kg8m#plugin#ensure_sourced("fzf.vim")
 
-# Respect `$RIPGREP_EXTRA_OPTIONS` (Fzf's `:Rg` doesn't respect it)
+# Respect `$RIPGREP_EXTRA_OPTIONS` (fzf's `:Rg` doesn't respect it)
 command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#complete FzfGrep kg8m#plugin#fzf#grep#run(<q-args>)
 
 def kg8m#plugin#fzf#grep#enter_command(preset: string = ""): void

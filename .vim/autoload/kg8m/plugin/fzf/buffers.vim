@@ -2,7 +2,7 @@ vim9script
 
 kg8m#plugin#ensure_sourced("fzf.vim")
 
-# Sort buffers in dictionary order (Fzf's `:Buffers` doesn't sort them)
+# Sort buffers in dictionary order (fzf's `:Buffers` doesn't sort them)
 def kg8m#plugin#fzf#buffers#run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {

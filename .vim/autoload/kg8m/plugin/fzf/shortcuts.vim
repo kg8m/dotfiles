@@ -24,8 +24,9 @@ def s:candidates(): list<string>
 enddef
 
 def s:handler(item: string): void
-  # Don't `execute substitute(...)` because it causes problem if the command is Fzf's
   const command = substitute(item, '\v.*--\s+`(.+)`$', '\1', "")
+
+  # Use `feedkeys` instead of `execute` because `execute` doesn't work if the command uses fzf.
   feedkeys(":" .. command .. "\<CR>")
 enddef
 
