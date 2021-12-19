@@ -529,8 +529,8 @@ function parallel {
 }
 
 function update_zsh_plugins {
-  trash "${KG8M_ZSH_CACHE_DIR:?}"
-  mkdir -p "${KG8M_ZSH_CACHE_DIR}"
+  execute_with_echo "trash '${KG8M_ZSH_CACHE_DIR:?}'"
+  execute_with_echo "mkdir -p '${KG8M_ZSH_CACHE_DIR}'"
 
   execute_with_echo "compile_zshrcs:cleanup"
 
