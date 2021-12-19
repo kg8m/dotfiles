@@ -1,7 +1,7 @@
 vim9script
 
 def kg8m#plugin#caw#configure(): void
-  map <expr> gc <SID>exec_with_setup()
+  map <expr> gc <SID>run()
 
   kg8m#plugin#configure({
     lazy: true,
@@ -9,7 +9,7 @@ def kg8m#plugin#caw#configure(): void
   })
 enddef
 
-def s:exec_with_setup(): string
+def s:run(): string
   if !kg8m#plugin#is_sourced("caw.vim")
     kg8m#plugin#source("caw.vim")
 
