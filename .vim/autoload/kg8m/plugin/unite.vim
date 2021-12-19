@@ -1,15 +1,10 @@
 vim9script
 
 def kg8m#plugin#unite#configure(): void
-  g:unite_winheight = "100%"
-
-  augroup my_vimrc
-    autocmd FileType unite s:setup_buffer()
-  augroup END
-
   kg8m#plugin#configure({
     lazy:   true,
     on_cmd: "Unite",
+    hook_source: () => s:on_source(),
   })
 enddef
 
@@ -26,4 +21,12 @@ def s:disable_default_mappings(): void
   if !!mapcheck("<S-n>", "n")
     nunmap <buffer> <S-n>
   endif
+enddef
+
+def s:on_source(): void
+  g:unite_winheight = "100%"
+
+  augroup my_vimrc
+    autocmd FileType unite s:setup_buffer()
+  augroup END
 enddef

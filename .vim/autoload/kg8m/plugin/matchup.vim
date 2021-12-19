@@ -1,6 +1,14 @@
 vim9script
 
 def kg8m#plugin#matchup#configure(): void
+  kg8m#plugin#configure({
+    lazy:     true,
+    on_start: true,
+    hook_source: () => s:on_source(),
+  })
+enddef
+
+def s:on_source(): void
   g:matchup_no_version_check = true
   g:matchup_transmute_enabled = true
   g:matchup_matchparen_status_offscreen = false
@@ -13,9 +21,4 @@ def kg8m#plugin#matchup#configure(): void
     html:  { tagnameonly: true },
     eruby: { tagnameonly: true },
   }
-
-  kg8m#plugin#configure({
-    lazy:     true,
-    on_start: true,
-  })
 enddef

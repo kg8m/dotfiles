@@ -1,17 +1,6 @@
 vim9script
 
 def kg8m#plugin#fzf#configure(): void
-  g:fzf_command_prefix = "Fzf"
-  g:fzf_buffers_jump   = true
-  g:fzf_layout         = { up: "~90%" }
-  g:fzf_files_options  = [
-    "--preview", "git diff-or-cat {1}",
-    "--preview-window", "down:75%:wrap:nohidden",
-  ]
-
-  # See dwm.vim
-  g:fzf_action = { ctrl-o: "DWMOpen" }
-
   # See also vim-fzf-tjump's mappings
   nnoremap <silent> <Leader><Leader>f :call kg8m#plugin#fzf#run_command("FzfFiles")<CR>
   nnoremap <silent> <Leader><Leader>v :call kg8m#plugin#fzf#git_files#run()<CR>
@@ -34,15 +23,12 @@ def kg8m#plugin#fzf#configure(): void
     nnoremap <silent> <Leader><Leader>r :call kg8m#plugin#fzf#rails#enter_command()<CR>
   endif
 
-  augroup my_vimrc
-    autocmd FileType fzf s:setup_window()
-  augroup END
-
   kg8m#plugin#configure({
     lazy:     true,
     on_cmd:   ["FzfFiles", "FzfLines", "FzfMarks", "FzfHelptags"],
     on_start: true,
     depends:  "fzf",
+    hook_source: () => s:on_source(),
   })
 
   # Add to runtimepath (and use its Vim scripts) but don't use its binary.
@@ -87,4 +73,21 @@ def s:setup_window(): void
   set winheight=999
   set winheight=1
   redraw
+enddef
+
+def s:on_source(): void
+  g:fzf_command_prefix = "Fzf"
+  g:fzf_buffers_jump   = true
+  g:fzf_layout         = { up: "~90%" }
+  g:fzf_files_options  = [
+    "--preview", "git diff-or-cat {1}",
+    "--preview-window", "down:75%:wrap:nohidden",
+  ]
+
+  # See dwm.vim
+  g:fzf_action = { ctrl-o: "DWMOpen" }
+
+  augroup my_vimrc
+    autocmd FileType fzf s:setup_window()
+  augroup END
 enddef

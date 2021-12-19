@@ -1,10 +1,6 @@
 vim9script
 
 def kg8m#plugin#sandwich#configure(): void
-  g:sandwich_no_default_key_mappings = true
-  g:operator_sandwich_no_default_key_mappings = true
-  g:textobj_sandwich_no_default_key_mappings = true
-
   xmap <Leader>sa <Plug>(operator-sandwich-add)
   nmap <Leader>sd <Plug>(operator-sandwich-delete)<Plug>(textobj-sandwich-query-a)
   nmap <Leader>sr <Plug>(operator-sandwich-replace)<Plug>(textobj-sandwich-query-a)
@@ -20,6 +16,7 @@ def kg8m#plugin#sandwich#configure(): void
   kg8m#plugin#configure({
     lazy:   true,
     on_map: { nx: "<Plug>(operator-sandwich-", xo: "<Plug>(textobj-sandwich-" },
+    hook_source:      () => s:on_source(),
     hook_post_source: () => s:on_post_source(),
   })
 enddef
@@ -45,6 +42,12 @@ enddef
 
 def s:common_options(): dict<any>
   return { nesting: true, match_syntax: true }
+enddef
+
+def s:on_source(): void
+  g:sandwich_no_default_key_mappings = true
+  g:operator_sandwich_no_default_key_mappings = true
+  g:textobj_sandwich_no_default_key_mappings = true
 enddef
 
 def s:on_post_source(): void
