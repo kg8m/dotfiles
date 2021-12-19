@@ -11,11 +11,14 @@ enddef
 def s:setup_buffer(): void
   setlocal foldmethod=syntax
 
-  if kg8m#util#on_tmux()
-    nnoremap <buffer> <leader>r :write<CR>:call kg8m#plugin#vimux#run_command("go run -race <C-r>%")<CR>
-  else
-    nnoremap <buffer> <leader>r :write<CR>:GoRun -race %<CR>
-  endif
+  nnoremap <buffer> <leader>r :call <SID>run_current()<CR>
+enddef
+
+def s:run_current(): void
+  write
+
+  const command = printf("go run -race %s", expand("%")->shellescape())
+  kg8m#util#terminal#execute_command(command)
 enddef
 
 def s:on_source(): void
