@@ -143,13 +143,40 @@ function echo:info {
 }
 
 function notify {
-  local options=("${(M)@:#-*}")
-  local non_options=("${(R)@:#-*}")
-  local message="[$(hostname)] ${non_options:-Command finished.}"
+  local message
+  local notifier_options=()
+  local is_stay="1"
 
-  local notifier_options=("-group \"NOTIFY_${message}\"")
+  while [ "${#@}" -gt 0 ]; do
+    case "$1" in
+      --title)
+        notifier_options+=("-title \"${2:?}\"")
+        shift 2
+        ;;
+      --nostay)
+        is_stay="0"
+        shift 1
+        ;;
+      *)
+        if [ -n "${message}" ]; then
+          echo:error "Message has been already defined: ${message}"
+          return 1
+        else
+          message="$1"
+          shift 1
+        fi
+        ;;
+    esac
+  done
 
-  if [ "${options[(I)--nostay]}" = "0" ]; then
+  if [ -z "${message}" ]; then
+    message="Command finished."
+  fi
+
+  message="[$(hostname)] ${message}"
+  notifier_options+=("-group \"NOTIFY_${message}\"")
+
+  if [ "${is_stay}" = "1" ]; then
     notifier_options+=("-sender TERMINAL_NOTIFIER_STAY")
   fi
 
