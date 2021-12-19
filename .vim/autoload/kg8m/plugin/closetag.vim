@@ -1,20 +1,16 @@
 vim9script
 
-const FILETYPES = ["eruby", "html", "javascript", "markdown", "typescript"]
+g:kg8m#plugin#closetag#filetypes = ["eruby", "html", "javascript", "markdown", "typescript"]
 
 def kg8m#plugin#closetag#configure(): void
-  g:closetag_filetypes = join(FILETYPES, ",")
+  g:closetag_filetypes = join(g:kg8m#plugin#closetag#filetypes, ",")
   g:closetag_shortcut  = "\\>"
 
   kg8m#plugin#configure({
     lazy:  true,
-    on_ft: FILETYPES,
+    on_ft: g:kg8m#plugin#closetag#filetypes,
     hook_post_source: () => s:on_post_source(),
   })
-enddef
-
-def kg8m#plugin#closetag#filetypes(): list<string>
-  return FILETYPES
 enddef
 
 def s:on_post_source(): void

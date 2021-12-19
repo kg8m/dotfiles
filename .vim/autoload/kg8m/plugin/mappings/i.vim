@@ -75,7 +75,7 @@ def s:gt_expr(): string
   if getline(".")->strpart(col(".") - 1, 1) ==# ">"
     return lexima#expand(">", "i")
   else
-    if kg8m#util#list#includes(kg8m#plugin#closetag#filetypes(), &filetype)
+    if kg8m#util#list#includes(g:kg8m#plugin#closetag#filetypes, &filetype)
       const leading_text = getline(".")->strpart(0, col(".") - 1)
 
       # Don't overwrite while writing blockquote markers
