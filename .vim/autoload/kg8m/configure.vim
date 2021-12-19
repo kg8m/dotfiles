@@ -96,8 +96,11 @@ def kg8m#configure#commands(): void
   command! -nargs=1 -complete=file Rename f <args> | delete(expand("#")) | write | edit
 
   # Show counts
-  # :h v_g_CTRL-G
-  command! -nargs=0 -range Stats feedkeys("g\<C-g>")
+  # :h g_CTRL-G
+  # <S-g>$: move to end of buffer
+  # g<C-g>: print stats information
+  # <C-o>:  go back to previous position
+  command! -nargs=0 -range Stats feedkeys("\<S-g>$g\<C-g>\<C-o>")
   command! -nargs=0 -range Counts Stats
 enddef
 
