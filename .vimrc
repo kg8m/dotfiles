@@ -414,8 +414,6 @@ if kg8m#plugin#register("LeafCage/yankround.vim")
   kg8m#plugin#yankround#configure()
 endif
 
-kg8m#plugin#register("zinit-zsh/zinit-vim-syntax")
-
 # Colorschemes
 if kg8m#plugin#register("tomasr/molokai")
   kg8m#plugin#molokai#configure()
