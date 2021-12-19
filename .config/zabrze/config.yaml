@@ -1,4 +1,7 @@
 abbrevs:
+  - name: batch_move
+    abbr: bmv
+    snippet: batch_move
   - name: cd-bookmark
     abbr: cdb
     snippet: cd-bookmark

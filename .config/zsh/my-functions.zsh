@@ -174,7 +174,6 @@ function batch_move {
     echo:info "Canceled."
   fi
 }
-alias bmv="batch_move"
 
 function trash {
   local source
