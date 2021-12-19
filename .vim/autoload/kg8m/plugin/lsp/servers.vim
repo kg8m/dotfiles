@@ -108,6 +108,10 @@ enddef
 def s:activate_efm_langserver(): void
   s:activate("efm-langserver", {
     cmd: (_) => ["efm-langserver"],
+
+    # Disable textlint's auto formatting because it fixes texts in node-types which should be ignored, for example, a
+    # command `vim` in a codeblock is fixed to `Vim`.
+    document_format_ignore_filetypes: ["gitcommit", "markdown"],
   })
 enddef
 
