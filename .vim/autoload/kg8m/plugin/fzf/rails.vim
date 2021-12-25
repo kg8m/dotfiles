@@ -2,7 +2,7 @@ vim9script
 
 kg8m#plugin#ensure_sourced("fzf.vim")
 
-command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#type_names FzfRails kg8m#plugin#fzf#rails#run(<q-args>)
+command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#complete FzfRails kg8m#plugin#fzf#rails#run(<q-args>)
 
 def kg8m#plugin#fzf#rails#enter_command(): void
   feedkeys(":FzfRails\<Space>", "t")
@@ -47,7 +47,7 @@ def kg8m#plugin#fzf#rails#run(type: string): void
   kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("rails", options)))
 enddef
 
-def kg8m#plugin#fzf#rails#type_names(arglead: string, _cmdline: string, _curpos: number): list<string>
+def kg8m#plugin#fzf#rails#complete(arglead: string, _cmdline: string, _curpos: number): list<string>
   if arglead ==# ""
     return s:type_names
   else
