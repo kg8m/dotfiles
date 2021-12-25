@@ -102,6 +102,11 @@ def kg8m#configure#commands(): void
   # <C-o>:  go back to previous position
   command! -nargs=0 -range Stats feedkeys("\<S-g>$g\<C-g>\<C-o>")
   command! -nargs=0 -range Counts Stats
+
+  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfSave   kg8m#util#qf#save(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfLoad   kg8m#util#qf#load(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfEdit   kg8m#util#qf#edit(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfDelete kg8m#util#qf#delete(<q-args>)
 enddef
 
 def kg8m#configure#mappings(): void
