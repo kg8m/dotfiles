@@ -14,23 +14,23 @@ def s:overwrite(): void
   highlight ColorColumn                  guibg=#1F1E19
   highlight CursorColumn                 guibg=#4B4A46
   highlight CursorLine                   guibg=#4B4A46
-  highlight DiffChange    guifg=#CCCCCC  guibg=#4C4745
-  highlight DiffFile      guifg=#A6E22E                 gui=bold       cterm=bold
+  highlight DiffChange    guifg=#CCCCCC
+  highlight DiffFile      guifg=#A6E22E                 gui=bold  cterm=bold
   highlight FoldColumn    guifg=#6A7678  guibg=NONE
   highlight Folded        guifg=#6A7678  guibg=NONE
-  highlight Ignore        guifg=#808080  guibg=NONE
+  highlight Ignore                       guibg=NONE
   highlight Incsearch     guifg=#FFFFFF  guibg=#F92672
-  highlight LineNr        guifg=#BCBCBC  guibg=#222222
+  highlight LineNr                       guibg=#222222
   highlight Normal        guifg=#F8F8F8  guibg=NONE
-  highlight Pmenu         guifg=#66D9EF  guibg=NONE
-  highlight QuickFixLine                                gui=bold       cterm=bold
+  highlight Pmenu                        guibg=NONE
+  highlight QuickFixLine                                gui=bold  cterm=bold
   highlight Search        guifg=#FFFFFF  guibg=#F92672
-  highlight SignColumn    guifg=#A6E22E  guibg=#111111
-  highlight Special       guifg=#66D9EF  guibg=NONE     gui=bold
-  highlight Todo          guifg=#FFFFFF  guibg=NONE     gui=bold
-  highlight Underlined    guifg=#AAAAAA                 gui=underline  cterm=underline
-  highlight Visual                       guibg=#403D3D  gui=bold       cterm=bold
-  highlight VisualNOS                    guibg=#403D3D  gui=bold       cterm=bold
+  highlight SignColumn                   guibg=#111111
+  highlight Special                      guibg=NONE     gui=bold
+  highlight Todo                         guibg=NONE
+  highlight Underlined    guifg=#AAAAAA
+  highlight Visual                                      gui=bold  cterm=bold
+  highlight VisualNOS                                   gui=bold  cterm=bold
 
   if has("gui_running")
     # `guibg=NONE` doesn't work in GUI Vim
