@@ -6,14 +6,13 @@ Z40="0000000000000000000000000000000000000000"
 
 # Continue only when "git clone" has been executed.
 if [ "${PREVIOUS_HEAD}" != "${Z40}" ] || [ "${BRANCH_SWITCH}" != "1" ]; then
-  exit
+  exit 0
 fi
 
-result=0
-source ~/.config/git/bin/set_user_info_depending_on_repository_url || result=$?
+source ~/.config/git/bin/set_user_info_depending_on_repository_url || exit 1
 
 if [ -f .git_templates/hooks/post-checkout ]; then
-  source .git_templates/hooks/post-checkout || result=$?
+  source .git_templates/hooks/post-checkout
+else
+  exit 0
 fi
-
-exit "${result}"

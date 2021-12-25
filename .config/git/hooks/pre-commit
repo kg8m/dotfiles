@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-result=0
-
 if [ -f .git_templates/hooks/pre-commit ]; then
-  source .git_templates/hooks/pre-commit || result=$?
+  source .git_templates/hooks/pre-commit
+else
+  exit 0
 fi
-
-exit "${result}"
