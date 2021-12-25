@@ -26,7 +26,7 @@ def s:overwrite(): void
   highlight QuickFixLine                                gui=bold  cterm=bold
   highlight Search        guifg=#EAEAEA  guibg=#F92672
   highlight SignColumn                   guibg=#111111
-  highlight Special                      guibg=NONE     gui=bold
+  highlight Special                      guibg=NONE     gui=bold  cterm=bold
   highlight Todo                         guibg=NONE
   highlight Underlined    guifg=#AAAAAA
   highlight Visual                                      gui=bold  cterm=bold
