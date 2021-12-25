@@ -327,12 +327,6 @@ function git:stash:all:with_message {
   execute_with_confirm "git add --all && git stash push --no-keep-index --message '$*'"
 }
 
-# SC2120: references arguments, but none are ever passed.
-# shellcheck disable=SC2120
-function git:status:filter:all {
-  git status --short "$@" | git:status:utility:filter
-}
-
 function git:status:color {
   local local_branch="$(git branch --show-current)"
   local local_branch_message_prefix="On branch"
@@ -353,6 +347,12 @@ function git:status:color {
       -e "s!${local_branch_pattern}!${local_branch_replace}!" \
       -e "s!${remote_branch_pattern}!${remote_branch_replace}!" \
       -e "s/${ok_pattern}/${ok_replace}/"
+}
+
+# SC2120: references arguments, but none are ever passed.
+# shellcheck disable=SC2120
+function git:status:filter:all {
+  git status --short "$@" | git:status:utility:filter
 }
 
 function git:status:filter:staged {
