@@ -15,16 +15,16 @@ def s:overwrite(): void
   highlight CursorColumn                 guibg=#4B4A46
   highlight CursorLine                   guibg=#4B4A46
   highlight DiffChange    guifg=#CCCCCC
-  highlight DiffFile      guifg=#A6E22E                 gui=bold  cterm=bold
+  highlight DiffFile      guifg=#EBCE00                 gui=bold  cterm=bold
   highlight FoldColumn    guifg=#6A7678  guibg=NONE
   highlight Folded        guifg=#6A7678  guibg=NONE
   highlight Ignore                       guibg=NONE
-  highlight Incsearch     guifg=#FFFFFF  guibg=#F92672
+  highlight Incsearch     guifg=#EAEAEA  guibg=#F92672
   highlight LineNr                       guibg=#222222
-  highlight Normal        guifg=#F8F8F8  guibg=NONE
-  highlight Pmenu                        guibg=NONE
+  highlight Normal        guifg=#EAEAEA  guibg=NONE
+  highlight Pmenu                        guibg=#00161C
   highlight QuickFixLine                                gui=bold  cterm=bold
-  highlight Search        guifg=#FFFFFF  guibg=#F92672
+  highlight Search        guifg=#EAEAEA  guibg=#F92672
   highlight SignColumn                   guibg=#111111
   highlight Special                      guibg=NONE     gui=bold
   highlight Todo                         guibg=NONE
@@ -38,7 +38,6 @@ def s:overwrite(): void
     highlight Folded      guibg=#000000
     highlight Ignore      guibg=#000000
     highlight Normal      guibg=#000000
-    highlight Pmenu       guibg=#000000
     highlight Special     guibg=#000000
     highlight Todo        guibg=#000000
   endif
