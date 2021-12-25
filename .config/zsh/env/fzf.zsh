@@ -28,7 +28,10 @@ function() {
   local options=(
     "--ansi"
     "--bind=${(j:,:)binds}"
+
+    # https://github.com/junegunn/fzf/wiki/Color-schemes
     "--color='fg+:bold:230'"
+
     "--exact"
     "--exit-0"
     "--info=inline"
