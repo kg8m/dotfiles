@@ -357,19 +357,19 @@ function git:status:filter:all {
 
 function git:status:filter:staged {
   # `^ A` for intent-to-add
-  git status --short | grep -E '^[^ ?]|^ A' | git:status:utility:filter
+  git status --short | grep -E '^[^ ?]|^ A' | git:status:utility:filter | git:status:utility:rename:only_removed
 }
 
 function git:status:filter:unstaged {
-  git status --short | grep -E '^[^?][^ A]' | git:status:utility:filter
+  git status --short | grep -E '^[^?][^ A]' | git:status:utility:filter | git:status:utility:rename:only_added
 }
 
 function git:status:filter:unstaged:with_intended_to_add {
-  git status --short | grep -E '^[^?][^ ]' | git:status:utility:filter
+  git status --short | grep -E '^[^?][^ ]' | git:status:utility:filter | git:status:utility:rename:only_added
 }
 
 function git:status:filter:unstaged:with_untracked {
-  git status --short | grep -E '^.[^ ]' | git:status:utility:filter
+  git status --short | grep -E '^.[^ ]' | git:status:utility:filter | git:status:utility:rename:only_added
 }
 
 function git:status:filter:untracked {
@@ -380,10 +380,18 @@ function git:status:utility:filter {
   local filter_options=(
     --prompt "Select files> "
     --preview-window "down:75%:wrap:nohidden"
-    --preview "git diff-or-cat '{2..}'"
+    --preview "git diff-or-cat {2}"
   )
 
   filter "${filter_options[@]}" | git:proxy:sed -e 's/^..\s//'
+}
+
+function git:status:utility:rename:only_added {
+  git:proxy:sed -e 's/^.\+ -> //'
+}
+
+function git:status:utility:rename:only_removed {
+  git:proxy:sed -e 's/ -> .\+$//'
 }
 
 function git:submodule:update {
@@ -452,15 +460,32 @@ function git:utility:diff_or_cat {
   local filepath="$1"
   local git_status="$(git status --short -- "${filepath}")"
 
+  if [[ "${git_status}" =~ ^D ]]; then
+    local renamed_status="$(git status --short | grep -E '^R' | grep -F " ${filepath} ->")"
+
+    if [ -n "${renamed_status}" ]; then
+      git_status="${renamed_status}"
+    fi
+  fi
+
   # Untracked files
   if [[ "${git_status}" =~ '^\?\?' ]]; then
     git:utility:cat "${filepath}"
   # Renamed files
-  elif [[ "${git_status}" =~ ^D ]] && git status --short | grep -F "R  ${filepath} ->" -q; then
+  elif [[ "${git_status}" =~ ^R ]]; then
     local removed="${filepath}"
-    local added="$(git status --short | grep -F "R  ${filepath} ->" | git:proxy:sed -e 's/^.* -> //')"
+    local added="${git_status#* -> }"
+    local renamed_diff="$(git:utility:diff --staged -- "${removed}" "${added}")"
 
-    git:utility:diff --staged -- "${removed}" "${added}"
+    if [[ "${git_status}" =~ ^R[A-Z] ]]; then
+      git:utility:header "Staged"
+      echo "${renamed_diff}"
+      echo
+      git:utility:header "Not Staged"
+      git:utility:diff -- "${added}"
+    else
+      echo "${renamed_diff}"
+    fi
   # Partially staged files
   elif [[ "${git_status}" =~ ^[A-Z]{2} ]]; then
     git:utility:header "Staged"
