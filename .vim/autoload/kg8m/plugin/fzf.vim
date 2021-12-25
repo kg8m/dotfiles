@@ -63,7 +63,8 @@ def kg8m#plugin#fzf#run(Callback: func): void
 enddef
 
 def kg8m#plugin#fzf#run_command(command: string): void
-  kg8m#plugin#fzf#run(() => execute(command))
+  # Use `feedkeys(...)` instead of `execute(command)` for preventing "E930: Cannot use :redir inside execute()".
+  kg8m#plugin#fzf#run(() => feedkeys(":" .. command .. "\<CR>"))
 enddef
 
 def s:setup_window(): void
