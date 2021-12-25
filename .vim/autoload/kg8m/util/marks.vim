@@ -11,7 +11,7 @@ const s:incremental_mark_keys_pattern = '^[A-Z]$'
 var s:is_initialized = false
 var s:incremental_mark_index = -1
 
-def kg8m#plugin#fzf#marks#increment(): void
+def kg8m#util#marks#increment(): void
   s:init()
 
   const incremental_mark_key = s:detect_key()

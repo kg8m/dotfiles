@@ -17,8 +17,6 @@ def kg8m#plugin#fzf#configure(): void
   nnoremap <silent> <Leader><Leader>[ :call kg8m#plugin#fzf#jumplist#back()<CR>
   nnoremap <silent> <Leader><Leader>] :call kg8m#plugin#fzf#jumplist#forward()<CR>
 
-  nnoremap <silent> m :call kg8m#plugin#fzf#marks#increment()<CR>
-
   if kg8m#util#on_rails_dir()
     nnoremap <silent> <Leader><Leader>r :call kg8m#plugin#fzf#rails#enter_command()<CR>
   endif
