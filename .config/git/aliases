@@ -269,7 +269,7 @@ function git:clean:bulk {
   local files=("${(@f)$(git:status:filter:untracked)}")
 
   if [ -n "${files[*]}" ]; then
-    git:proxy:cat:files "${files[@]}"
+    git:utility:cat      "${files[@]}"
     execute_with_confirm "git clean --force -- ${files[*]}"
     execute_with_echo    "git status-with-color"
   fi
@@ -488,7 +488,21 @@ function git:utility:header {
 }
 
 function git:utility:cat {
-  git:proxy:cat:files "$@"
+  local filepath
+  local filepaths=("$@")
+
+  if [ -z "${filepaths[*]}" ]; then
+    return 1
+  fi
+
+  local realpaths=()
+
+  for filepath in "${filepaths[@]}"; do
+    # Expand `~` because bat can't expand it.
+    realpaths+=("${filepath/\~/${HOME}}")
+  done
+
+  bat "${realpaths[@]}"
 }
 
 function git:utility:diff {
@@ -531,30 +545,5 @@ function git:proxy:wc {
     gwc "$@"
   else
     wc "$@"
-  fi
-}
-
-function git:proxy:cat:files {
-  local filepath
-  local filepaths=("$@")
-
-  if [ -z "${filepaths[*]}" ]; then
-    return 1
-  fi
-
-  local realpaths=()
-
-  for filepath in "${filepaths[@]}"; do
-    realpaths+=("${filepath/\~/${HOME}}")
-  done
-
-  if command -v bat > /dev/null; then
-    bat "${realpaths[@]}"
-  else
-    for filepath in "${realpaths[@]}"; do
-      printf "\n** File: %s\n\n" "${filepath}"
-      cat "${filepath}"
-      echo
-    done
   fi
 }
