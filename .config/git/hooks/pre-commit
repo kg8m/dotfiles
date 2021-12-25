@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 result=0
-source ~/.config/git/bin/set_user_info_depending_on_repository_url || result=$?
 
 if [ -f .git_templates/hooks/pre-commit ]; then
   source .git_templates/hooks/pre-commit || result=$?
