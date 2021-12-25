@@ -100,8 +100,12 @@ def kg8m#util#remote_copy(original_text: string): void
 
   var message = "Copied"
 
-  if &columns ># 50
-    const truncated = trim(text[0 : &columns / 2 - 5])
+  if v:echospace ># 50
+    var truncated = trim(text[0 : v:echospace - 20])
+
+    const linebreaks_count = split(truncated, "\n")->len() - 1
+    truncated = trim(truncated[0 : -1 - linebreaks_count])
+
     message ..= printf(": %s", truncated .. (truncated ==# trim(text) ? "" : "..."))
   endif
 
