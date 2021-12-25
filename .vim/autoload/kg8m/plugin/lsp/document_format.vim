@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#lsp#document_format#run_on_save(): void
+def kg8m#plugin#lsp#document_format#on_save(): void
   if !s:is_target_buffer_type()
     s:log_skipped("non_target_buffer_type", "Document formatting is skipped because it isn't target buffer type.")
     return

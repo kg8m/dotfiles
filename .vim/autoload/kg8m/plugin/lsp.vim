@@ -63,7 +63,7 @@ def s:on_lsp_buffer_enabled(): void
 
   augroup vimrc-plugin-lsp-on_lsp_buffer_enabled
     autocmd!
-    autocmd BufWritePre <buffer> kg8m#plugin#lsp#document_format#run_on_save()
+    autocmd BufWritePre <buffer> kg8m#plugin#lsp#document_format#on_save()
   augroup END
 
   kg8m#events#notify_after_lsp_buffer_enabled()
