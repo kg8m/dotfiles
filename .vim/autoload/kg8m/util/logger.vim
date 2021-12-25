@@ -2,16 +2,16 @@ vim9script
 
 def kg8m#util#logger#error(message: string): void
   echohl ErrorMsg
-  echomsg message
+  echomsg "ERROR -- " .. message
   echohl None
 enddef
 
 def kg8m#util#logger#warn(message: string): void
   echohl WarningMsg
-  echomsg message
+  echomsg "WARN -- " .. message
   echohl None
 enddef
 
 def kg8m#util#logger#info(message: string): void
-  echomsg message
+  echomsg "INFO -- " .. message
 enddef
