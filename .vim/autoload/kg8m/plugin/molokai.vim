@@ -19,6 +19,7 @@ def s:overwrite(): void
   highlight FoldColumn    guifg=#6A7678  guibg=NONE
   highlight Folded        guifg=#6A7678  guibg=NONE
   highlight Ignore                       guibg=NONE
+  highlight Identifier                                  gui=bold  cterm=bold
   highlight Incsearch     guifg=#EAEAEA  guibg=#F92672
   highlight LineNr                       guibg=#222222
   highlight Normal        guifg=#EAEAEA  guibg=NONE
