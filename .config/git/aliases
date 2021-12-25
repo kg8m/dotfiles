@@ -87,7 +87,7 @@ function git:update:with_log {
   if [ "$(git rev-parse HEAD)" = "$(git rev-parse '@{upstream}')" ]; then
     echo "Up to date."
   else
-    execute_with_echo "git --no-pager log --reverse HEAD.. ${remote_branch}"
+    execute_with_echo "git --no-pager log --reverse HEAD... ${remote_branch}"
     execute_with_echo "git pull --stat"
     execute_with_echo "git status-with-color"
   fi
