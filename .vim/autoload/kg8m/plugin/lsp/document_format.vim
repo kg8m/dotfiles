@@ -1,6 +1,54 @@
 vim9script
 
+final s:cache = {
+  timer: -1,
+  count: 0,
+  changedtick: -1,
+}
+
 def kg8m#plugin#lsp#document_format#on_save(): void
+  s:run({ sync: true })
+enddef
+
+def kg8m#plugin#lsp#document_format#on_insert_leave(): void
+  s:request_to_run()
+enddef
+
+def s:request_to_run(): void
+  timer_stop(s:cache.timer)
+
+  if s:cache.count ># 100
+    kg8m#util#logger#info("Abort to document format because of 100+ times retry.")
+    return
+  endif
+
+  s:cache.count += 1
+  s:cache.changedtick = b:changedtick
+  s:cache.timer = timer_start(200, (_) => s:try_to_run())
+enddef
+
+def s:try_to_run(): void
+  if b:changedtick !=# s:cache.changedtick
+    s:request_to_run()
+    return
+  endif
+
+  if mode() !=# "n"
+    s:request_to_run()
+    return
+  endif
+
+  s:run()
+enddef
+
+def s:teardown(): void
+  timer_stop(s:cache.timer)
+  s:cache.count = 0
+enddef
+
+def s:run(options: dict<bool> = {}): void
+  s:teardown()
+
   if !s:is_target_buffer_type()
     s:log_skipped("non_target_buffer_type", "Document formatting is skipped because it isn't target buffer type.")
     return
@@ -27,7 +75,11 @@ def kg8m#plugin#lsp#document_format#on_save(): void
     return
   endif
 
-  silent LspDocumentFormatSync
+  if get(options, "sync", false)
+    silent LspDocumentFormatSync
+  else
+    silent LspDocumentFormat
+  endif
 enddef
 
 def s:is_target_buffer_type(): bool
