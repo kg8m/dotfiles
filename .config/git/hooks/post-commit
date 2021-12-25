@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 if [ -f .git_templates/hooks/post-commit ]; then
   source .git_templates/hooks/post-commit
 else

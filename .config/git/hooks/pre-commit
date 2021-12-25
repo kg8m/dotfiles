@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 result=0
 source ~/.config/git/bin/set_user_info_depending_on_repository_url || result=$?
 

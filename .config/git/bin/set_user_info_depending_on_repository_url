@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # https://www.klab.com/jp/blog/tech/2015/1033121546.html
 
 origin_name="$(git remote | head -1)"

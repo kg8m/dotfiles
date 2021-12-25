@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 SCISSORS_PATTERN='\(# -\{1,\} >8 -\{1,\}\)'
 EXTRA_TEXT="# <!-- textlint-disable -->"
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 PREVIOUS_HEAD=$1
 # NEW_HEAD=$2
 BRANCH_SWITCH=$3
