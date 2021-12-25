@@ -47,7 +47,8 @@ def s:on_source(): void
   g:VimuxOrientation = "v"
   g:VimuxUseNearest  = false
 
-  augroup my_vimrc
+  augroup vimrc-plugin-vimux
+    autocmd!
     autocmd VimLeavePre * :VimuxCloseRunner
   augroup END
 enddef

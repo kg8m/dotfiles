@@ -28,7 +28,8 @@ def s:on_source(): void
   g:neosnippet#snippets_directory = [kg8m#plugin#neosnippet#snippets_dirpath()]
   g:neosnippet#disable_runtime_snippets = { _: true }
 
-  augroup my_vimrc
+  augroup vimrc-plugin-neosnippet
+    autocmd!
     autocmd InsertLeave * NeoSnippetClearMarkers
   augroup END
 

@@ -5,13 +5,14 @@ def kg8m#plugin#molder#configure(): void
 
   nmap <Leader>e :edit <C-r>=expand("%")->empty() ? "." : "%:h"<CR><CR>
 
-  augroup my_vimrc
-    # Cancel molder
+  augroup vimrc-plugin-molder
+    autocmd!
     autocmd FileType molder s:setup_buffer()
   augroup END
 enddef
 
 def s:setup_buffer(): void
+  # Cancel molder
   nnoremap <buffer> q     <C-o>
   nnoremap <buffer> <C-c> <C-o>
 enddef

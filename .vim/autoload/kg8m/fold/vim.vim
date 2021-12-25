@@ -9,7 +9,8 @@ def s:set_comment_char(): void
   b:vim_fold_comment_char = getline(1) ==# "vim9script" ? "#" : '"'
 enddef
 
-augroup my_vimrc
+augroup vimrc-fold-vim
+  autocmd!
   autocmd FileType vim s:set_comment_char()
 augroup END
 

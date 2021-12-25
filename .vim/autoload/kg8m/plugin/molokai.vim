@@ -3,7 +3,8 @@ vim9script
 def kg8m#plugin#molokai#configure(): void
   g:molokai_original = true
 
-  augroup my_vimrc
+  augroup vimrc-plugin-molokai
+    autocmd!
     autocmd ColorScheme molokai s:overwrite()
   augroup END
 enddef

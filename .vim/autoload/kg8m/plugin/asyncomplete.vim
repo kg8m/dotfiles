@@ -23,7 +23,8 @@ def s:on_source(): void
 
   g:asyncomplete_preprocessor = [function("kg8m#plugin#asyncomplete#preprocessor#callback")]
 
-  augroup my_vimrc
+  augroup vimrc-plugin-asyncomplete
+    autocmd!
     autocmd BufWinEnter                 * kg8m#plugin#completion#set_refresh_pattern()
     autocmd FileType                    * kg8m#plugin#completion#reset_refresh_pattern()
     autocmd User after_lsp_buffer_enabled kg8m#plugin#completion#reset_refresh_pattern()

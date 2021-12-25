@@ -1,7 +1,8 @@
 vim9script
 
 def kg8m#plugin#fetch#configure(): void
-  augroup my_vimrc
+  augroup vimrc-plugin-fetch
+    autocmd!
     autocmd VimEnter * s:disable_default_mappings()
   augroup END
 enddef

@@ -2,7 +2,8 @@ vim9script
 
 # http://d.hatena.ne.jp/tyru/touch/20130419/avoid_tyop
 def kg8m#util#check_typo#setup(): void
-  augroup my_vimrc
+  augroup vimrc-util-check_typo
+    autocmd!
     autocmd BufWriteCmd *[,*] s:check_typo(expand("<afile>"))
   augroup END
 enddef

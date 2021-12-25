@@ -27,7 +27,8 @@ def kg8m#configure#column(): void
 
   set wrap
 
-  augroup my_vimrc
+  augroup vimrc-configure-column
+    autocmd!
     autocmd FileType markdown,moin set colorcolumn=
   augroup END
 enddef
@@ -152,7 +153,8 @@ def kg8m#configure#others(): void
   kg8m#configure#filetypes#go#run()
   kg8m#configure#filetypes#markdown#run()
 
-  augroup my_vimrc
+  augroup vimrc-configure-others
+    autocmd!
     autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
     autocmd BufWritePre * s:mkdir_unless_exist()
 

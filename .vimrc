@@ -22,11 +22,6 @@ kg8m#plugin#disable_defaults()
 
 g:mapleader = ","
 # }}}
-
-# Reset my autocommands for reloading vimrc
-augroup my_vimrc
-  autocmd!
-augroup END
 # }}}
 
 # ----------------------------------------------

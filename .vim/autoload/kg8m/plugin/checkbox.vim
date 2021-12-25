@@ -1,7 +1,8 @@
 vim9script
 
 def kg8m#plugin#checkbox#configure(): void
-  augroup my_vimrc
+  augroup vimrc-plugin-checkbox
+    autocmd!
     autocmd FileType markdown,moin noremap <buffer> <Leader>c :call <SID>run()<CR>
   augroup END
 

@@ -1,7 +1,8 @@
 vim9script
 
 def kg8m#plugin#rainbow_csv#configure(): void
-  augroup my_vimrc
+  augroup vimrc-plugin-rainbow_csv
+    autocmd!
     autocmd BufNewFile,BufRead *.csv set filetype=csv
   augroup END
 

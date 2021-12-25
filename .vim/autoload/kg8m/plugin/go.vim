@@ -33,7 +33,8 @@ def s:on_source(): void
   g:go_highlight_variable_declarations     = true
   g:go_highlight_variable_assignments      = true
 
-  augroup my_vimrc
+  augroup vimrc-plugin-go
+    autocmd!
     autocmd FileType go setlocal foldmethod=syntax
   augroup END
 enddef

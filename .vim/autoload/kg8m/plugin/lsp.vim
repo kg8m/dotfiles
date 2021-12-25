@@ -61,7 +61,8 @@ def s:on_lsp_buffer_enabled(): void
     nmap <buffer> g] <Plug>(lsp-definition)
   endif
 
-  augroup my_vimrc
+  augroup vimrc-plugin-lsp-on_lsp_buffer_enabled
+    autocmd!
     autocmd BufWritePre <buffer> kg8m#plugin#lsp#document_format#run_on_save()
   augroup END
 
@@ -113,7 +114,8 @@ def s:on_source(): void
   # Usually disable vim-lsp's logging because it makes Vim slower.
   # g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
-  augroup my_vimrc
+  augroup vimrc-plugin-lsp
+    autocmd!
     autocmd User lsp_setup          kg8m#plugin#lsp#stream#subscribe()
     autocmd User lsp_buffer_enabled s:on_lsp_buffer_enabled()
     autocmd User lsp_server_exit    s:on_lsp_buffer_enabled()

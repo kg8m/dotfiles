@@ -1,7 +1,8 @@
 vim9script
 
 def kg8m#configure#filetypes#go#run(): void
-  augroup my_vimrc
+  augroup vimrc-configure-filetypes-go
+    autocmd!
     autocmd FileType go s:setup_buffer()
   augroup END
 enddef

@@ -1,7 +1,8 @@
 vim9script
 
 def kg8m#util#daemons#setup(): void
-  augroup my_vimrc
+  augroup vimrc-util-daemons
+    autocmd!
     autocmd BufWritePost .eslintrc.*,package.json,tsconfig.json s:restart_eslint_d()
     autocmd BufWritePost .rubocop.yml                           s:restart_rubocop_daemon()
   augroup END

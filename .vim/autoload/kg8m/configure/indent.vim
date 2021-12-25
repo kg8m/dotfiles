@@ -20,7 +20,8 @@ def kg8m#configure#indent#filetypes(): void
   # :h ft-vim-indent
   g:vim_indent_cont = 0
 
-  augroup my_vimrc
+  augroup vimrc-configure-indent-filetypes
+    autocmd!
     autocmd FileType gitconfig,neosnippet setlocal noexpandtab
     autocmd FileType text,markdown,moin setlocal cinkeys-=:
   augroup END

@@ -70,7 +70,8 @@ def s:setup(): void
     "",
   ]
 
-  augroup my_vimrc
+  augroup vimrc-plugin-startify
+    autocmd!
     autocmd FileType startify setlocal cursorline cursorlineopt=both
     autocmd ColorScheme  *    s:overwrite_colors()
     autocmd BufWritePost *    s:save_session()

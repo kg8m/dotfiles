@@ -1,6 +1,7 @@
 vim9script
 
-augroup my_vimrc
+augroup vimrc-events
+  autocmd!
   autocmd User search_start              silent
   autocmd User clear_search_highlight    silent
   autocmd User insert_mode_plugin_loaded silent

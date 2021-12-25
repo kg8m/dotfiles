@@ -10,7 +10,8 @@ def kg8m#plugin#hitspop#configure(): void
   g:hitspop_maxwidth   = 50
   g:hitspop_timeout    = 100
 
-  augroup my_vimrc
+  augroup vimrc-plugin-hitspop
+    autocmd!
     autocmd CmdlineChanged /            s:update_search_status()
     autocmd User search_start           hitspop#main()
     autocmd User clear_search_highlight hitspop#clean()

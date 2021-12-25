@@ -26,7 +26,8 @@ enddef
 def s:on_source(): void
   g:unite_winheight = "100%"
 
-  augroup my_vimrc
+  augroup vimrc-plugin-unite
+    autocmd!
     autocmd FileType unite s:setup_buffer()
   augroup END
 enddef

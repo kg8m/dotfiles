@@ -1,7 +1,9 @@
 vim9script
 
 def kg8m#configure#folding#manual#setup(): void
-  augroup my_vimrc
+  augroup vimrc-configure-folding-manual
+    autocmd!
+
     # https://vim.fandom.com/wiki/Keep_folds_closed_while_inserting_text
     autocmd InsertEnter * s:apply()
   augroup END

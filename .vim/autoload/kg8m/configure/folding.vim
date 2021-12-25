@@ -13,7 +13,8 @@ def kg8m#configure#folding#global_options(): void
 enddef
 
 def kg8m#configure#folding#local_options(): void
-  augroup my_vimrc
+  augroup vimrc-configure-folding-local_options
+    autocmd!
     autocmd FileType gitconfig  setlocal foldmethod=indent
     autocmd FileType haml       setlocal foldmethod=indent
     autocmd FileType neosnippet setlocal foldmethod=marker

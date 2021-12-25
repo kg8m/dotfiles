@@ -22,7 +22,9 @@ def kg8m#configure#colors#colorscheme(): void
 enddef
 
 def kg8m#configure#colors#performance(): void
-  augroup my_vimrc
+  augroup vimrc-configure-colors-performance
+    autocmd!
+
     # minlines: Prevent broken syntax highlighting.
     # maxlines: Prevent too slow syntax highlighting.
     # cf. `:h :syn-sync-maxlines` / `:h :syn-sync-minlines`

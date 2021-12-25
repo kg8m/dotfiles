@@ -31,7 +31,8 @@ def kg8m#plugin#lsp#servers#register(): void
   s:register_vue_language_server()
   s:register_yaml_language_server()
 
-  augroup my_vimrc
+  augroup vimrc-plugin-lsp-servers
+    autocmd!
     autocmd FileType * timer_start(100, (_) => s:activate_servers(&filetype))
 
     autocmd User lsp_register_server      timer_start(100, (_) => lsp#activate())

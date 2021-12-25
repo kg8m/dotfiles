@@ -25,7 +25,8 @@ def kg8m#plugin#lightline#lsp#configure(): void
     lazy: false,
   })
 
-  augroup my_vimrc
+  augroup vimrc-plugin-lightline-lsp
+    autocmd!
     autocmd User after_lsp_buffer_enabled lightline#update()
   augroup END
 enddef

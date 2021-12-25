@@ -36,7 +36,8 @@ def kg8m#configure#cursor#highlight(): void
   set cursorline
   set cursorlineopt=number
 
-  augroup my_vimrc
+  augroup vimrc-configure-cursor-highlight
+    autocmd!
     autocmd FileType qf set cursorlineopt=both
   augroup END
 enddef

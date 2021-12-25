@@ -3,7 +3,8 @@ vim9script
 var s:timer = -1
 
 def kg8m#util#dim_inactive_windows#setup(): void
-  augroup my_vimrc
+  augroup vimrc-util-dim_inactive_windows
+    autocmd!
     autocmd WinEnter        * s:trigger()
     autocmd SessionLoadPost * s:trigger()
     autocmd VimResized      * s:trigger({ force: true })

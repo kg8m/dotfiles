@@ -18,7 +18,9 @@ def s:on_post_source(): void
     priority: 3,
   }))
 
-  augroup my_vimrc
+  augroup vimrc-plugin-asyncomplete-tags
+    autocmd!
+
     # Forcefully refresh completion candidates after texts change because completion candidates are not refreshed after
     # updating tags file.
     autocmd TextChangedI * kg8m#plugin#completion#refresh(300)

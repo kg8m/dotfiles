@@ -29,7 +29,8 @@ enddef
 def s:on_source(): void
   g:argwrap_padded_braces = "{"
 
-  augroup my_vimrc
+  augroup vimrc-plugin-argwrap
+    autocmd!
     autocmd FileType * s:set_local_options()
   augroup END
 

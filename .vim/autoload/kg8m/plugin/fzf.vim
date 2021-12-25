@@ -85,7 +85,8 @@ def s:on_source(): void
   # See dwm.vim
   g:fzf_action = { ctrl-o: "DWMOpen" }
 
-  augroup my_vimrc
+  augroup vimrc-plugin-fzf
+    autocmd!
     autocmd FileType fzf s:setup_window()
   augroup END
 enddef

@@ -1,7 +1,9 @@
 vim9script
 
 def kg8m#configure#formatoptions#base(): void
-  augroup my_vimrc
+  augroup vimrc-configure-formatoptions
+    autocmd!
+
     # Lazily set formatoptions to overwrite others
     autocmd FileType * s:set()
     autocmd FileType * timer_start(300, (_) => s:set())

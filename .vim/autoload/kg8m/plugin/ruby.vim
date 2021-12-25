@@ -3,7 +3,9 @@ vim9script
 def kg8m#plugin#ruby#configure(): void
   g:no_ruby_maps = true
 
-  augroup my_vimrc
+  augroup vimrc-plugin-ruby
+    autocmd!
+
     # vim-ruby overwrites vim-gemfile's filetype detection
     autocmd BufEnter Gemfile set filetype=Gemfile
 

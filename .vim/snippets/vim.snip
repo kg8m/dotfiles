@@ -21,11 +21,12 @@ options head
 		autocmd ${2:#:EventName} ${3:#:filetype} ${0}
 	augroup END
 
-snippet augroup_my_vimrc
-abbr    augroup my_vimrc ... augroup END
+snippet augroup_vimrc
+abbr    augroup vimrc-foo ... augroup END
 options head
-	augroup my_vimrc
-		autocmd ${1:#:EventName} ${2:#:filetype} ${0}
+	augroup vimrc-${1:`expand("%") =~# '\<autoload/kg8m/' ? expand("%")->substitute('^.*\<autoload/kg8m/', "", "")->substitute('/', "-", "g")->substitute('\.vim$', "", "") : ""`}
+		autocmd!
+		autocmd ${2:#:EventName} ${3:#:filetype} ${0}
 	augroup END
 
 snippet autocmd

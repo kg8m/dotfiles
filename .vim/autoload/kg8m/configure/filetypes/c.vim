@@ -1,7 +1,8 @@
 vim9script
 
 def kg8m#configure#filetypes#c#run(): void
-  augroup my_vimrc
+  augroup vimrc-configure-filetypes-c
+    autocmd!
     autocmd FileType c s:setup_buffer()
   augroup END
 enddef

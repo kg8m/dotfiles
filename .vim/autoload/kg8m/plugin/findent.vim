@@ -4,7 +4,8 @@ def kg8m#plugin#findent#configure(): void
   g:findent#enable_messages = false
   g:findent#enable_warnings = false
 
-  augroup my_vimrc
+  augroup vimrc-plugin-findent
+    autocmd!
     autocmd FileType * s:run()
   augroup END
 

@@ -24,7 +24,9 @@ def s:on_source(): void
   g:JpAutoJoin = false
   g:JpAutoFormat = false
 
-  augroup my_vimrc
+  augroup vimrc-plugin-jpformat
+    autocmd!
+
     # Overwrite default/plugins' `formatexpr` especially configured when multiple files are opened same time
     autocmd BufEnter * timer_start(200, (_) => s:set_formatexpr())
   augroup END
