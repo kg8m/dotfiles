@@ -101,10 +101,10 @@ def kg8m#util#remote_copy(original_text: string): void
   var message = "Copied"
 
   if v:echospace ># 50
-    var truncated = trim(text[0 : v:echospace - 20])
+    const max_width = v:echospace - 25
 
-    const linebreaks_count = split(truncated, "\n")->len() - 1
-    truncated = trim(truncated[0 : -1 - linebreaks_count])
+    # Pass partial text to Vital's `truncate()` because the function is too heavy if the text is large.
+    const truncated = kg8m#util#string#vital().truncate(text[0 : max_width], max_width)->trim()
 
     message ..= printf(": %s", truncated .. (truncated ==# trim(text) ? "" : "..."))
   endif
