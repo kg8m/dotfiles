@@ -8,7 +8,7 @@ def kg8m#configure#filetypes#c#run(): void
 enddef
 
 def s:setup_buffer(): void
-  nnoremap <buffer> <leader>r :call <SID>run_current()<CR>
+  nnoremap <buffer> <Leader>r :call <SID>run_current()<CR>
 enddef
 
 def s:run_current(): void

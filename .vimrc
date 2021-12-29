@@ -370,7 +370,7 @@ endif
 if kg8m#plugin#register("monkoose/vim9-stargate")
   g:stargate_chars = "FKLASDHGUIONMREWCVTYBX,;J"
 
-  map <leader>f <Cmd>call stargate#ok_vim(2)<CR>
+  map <Leader>f <Cmd>call stargate#ok_vim(2)<CR>
   nmap <C-w>f :call stargate#galaxy()<CR>
 endif
 
