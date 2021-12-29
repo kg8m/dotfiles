@@ -9,6 +9,7 @@ def kg8m#plugin#molokai#configure(): void
   augroup END
 enddef
 
+# Special: Disable bold/italic for balance between `DiffAdded` (=> `Identifier`) and `DiffRemoved` (=> `Special`).
 def s:overwrite(): void
   highlight Comment       guifg=#AAAAAA
   highlight ColorColumn                  guibg=#1F1E19
@@ -19,7 +20,6 @@ def s:overwrite(): void
   highlight FoldColumn    guifg=#6A7678  guibg=NONE
   highlight Folded        guifg=#6A7678  guibg=NONE
   highlight Ignore                       guibg=NONE
-  highlight Identifier                                  gui=bold  cterm=bold
   highlight Incsearch     guifg=#EAEAEA  guibg=#F92672
   highlight LineNr                       guibg=#222222
   highlight Normal        guifg=#EAEAEA  guibg=NONE
@@ -27,7 +27,7 @@ def s:overwrite(): void
   highlight QuickFixLine                                gui=bold  cterm=bold
   highlight Search        guifg=#EAEAEA  guibg=#F92672
   highlight SignColumn                   guibg=#111111
-  highlight Special                      guibg=NONE     gui=bold  cterm=bold
+  highlight Special                      guibg=NONE     gui=NONE  cterm=NONE
   highlight Todo                         guibg=NONE
   highlight Underlined    guifg=#AAAAAA
   highlight Visual                                      gui=bold  cterm=bold
