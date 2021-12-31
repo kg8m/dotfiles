@@ -86,9 +86,25 @@ def s:overwrite_colors(): void
 enddef
 
 def s:save_session(): void
-  kg8m#configure#folding#manual#restore()
-  mkdir(g:startify_session_dir, "p")
-  execute "silent SSave! " .. s:session_name()
+  if s:session_savable()
+    kg8m#configure#folding#manual#restore()
+    mkdir(g:startify_session_dir, "p")
+    execute "silent SSave! " .. s:session_name()
+  endif
+enddef
+
+def s:session_savable(): bool
+  if &filetype ==# ""
+    const filename = expand("%")->fnamemodify(":t")
+
+    if kg8m#util#string#starts_with(filename, "mmv-")
+      return false
+    else
+      return true
+    endif
+  else
+    return true
+  endif
 enddef
 
 def s:session_name(): string
