@@ -7,3 +7,4 @@ pry-doc
 ruby_language_server
 solargraph
 steep
+typeprof

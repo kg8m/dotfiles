@@ -26,6 +26,7 @@ def kg8m#plugin#lsp#servers#register(): void
   s:register_sqls()
   s:register_steep()
   s:register_terraform_lsp()
+  s:register_typeprof()
   s:register_typescript_language_server()
   s:register_vim_language_server()
   s:register_vue_language_server()
@@ -305,6 +306,24 @@ enddef
 def s:activate_terraform_lsp(): void
   s:activate("terraform-lsp", {
     cmd: (_) => ["terraform-lsp"],
+  })
+enddef
+
+# gem install typeprof
+def s:register_typeprof(): void
+  s:register({
+    name: "typeprof",
+    allowlist: ["ruby"],
+  })
+enddef
+
+def s:activate_typeprof(): void
+  s:activate("typeprof", {
+    cmd: (_) => ["typeprof", "--lsp", "--stdio"],
+
+    initialization_options: {
+      diagnostics: true,
+    },
   })
 enddef
 
