@@ -597,9 +597,15 @@ enddef
 def s:check_exited_servers(): void
   for server_name in kg8m#plugin#lsp#servers#names(&filetype)
     if lsp#get_server_status(server_name) ==# "exited"
-      kg8m#util#logger#error(
-        printf("%s has been exited. Check %s.", server_name, g:lsp_log_file)
-      )
+      final messages = [printf("%s has been exited.", server_name)]
+
+      if empty(g:lsp_log_file)
+        add(messages, "Enable `g:lsp_log_file` and check logs.")
+      else
+        add(messages, printf(" Check logs in %s.", shellescape(g:lsp_log_file)))
+      endif
+
+      kg8m#util#logger#error(messages->join(" "))
     endif
   endfor
 enddef
