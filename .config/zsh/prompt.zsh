@@ -72,12 +72,21 @@ function() {
 
     function prompt:refresh:finish:with_trigger {
       prompt:refresh:finish
+
+      if [ -z "${TMUX:-}" ]; then
+        return
+      fi
+
       async_start_worker      "${PROMPT_REFRESHER_WORKER_NAME}"
       async_job               "${PROMPT_REFRESHER_WORKER_NAME}" "sleep \"$(prompt:refresh:calculate_sleep)\""
       async_register_callback "${PROMPT_REFRESHER_WORKER_NAME}" "prompt:refresh:trigger"
     }
 
     function prompt:refresh:git:trigger {
+      if [ -z "${TMUX:-}" ]; then
+        return
+      fi
+
       local sleep="$(prompt:refresh:calculate_sleep)"
 
       async_stop_worker       "${GIT_PROMPT_REFRESHER_WORKER_NAME}"
@@ -92,16 +101,12 @@ function() {
     }
 
     function prompt:refresh:calculate_sleep {
-      if [ -n "${TMUX:-}" ]; then
-        local tmux_format="#{session_attached}#{window_active}#{pane_current_command}"
-        local tmux_filter="#{==:#{pane_id},${TMUX_PANE:-}}"
-        local tmux_status="$(tmux list-panes -a -F "${tmux_format}" -f "${tmux_filter}")"
+      local tmux_format="#{session_attached}#{window_active}#{pane_current_command}"
+      local tmux_filter="#{==:#{pane_id},${TMUX_PANE:-}}"
+      local tmux_status="$(tmux list-panes -a -F "${tmux_format}" -f "${tmux_filter}")"
 
-        if [ "${tmux_status}" = "11zsh" ]; then
-          echo "3"
-        else
-          echo "60"
-        fi
+      if [ "${tmux_status}" = "11zsh" ]; then
+        echo "3"
       else
         echo "60"
       fi
