@@ -107,7 +107,7 @@ function() {
 
       async_stop_worker       "${GIT_PROMPT_REFRESHER_WORKER_NAME}"
       async_start_worker      "${GIT_PROMPT_REFRESHER_WORKER_NAME}"
-      async_job               "${GIT_PROMPT_REFRESHER_WORKER_NAME}" "sleep \"${sleep}\""
+      async_job               "${GIT_PROMPT_REFRESHER_WORKER_NAME}" "sleep \"$((sleep * 10))\""
       async_register_callback "${GIT_PROMPT_REFRESHER_WORKER_NAME}" "prompt:refresh:git:finish:with_trigger"
     }
 
@@ -122,7 +122,7 @@ function() {
       local tmux_status="$(tmux list-panes -F "${tmux_format}" -f "${tmux_filter}")"
 
       if [ "${tmux_status}" = "11zsh" ]; then
-        echo "3"
+        echo "0.3"
       else
         echo "-1"
       fi
