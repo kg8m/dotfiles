@@ -103,7 +103,7 @@ function() {
     function prompt:refresh:calculate_sleep {
       local tmux_format="#{session_attached}#{window_active}#{pane_current_command}"
       local tmux_filter="#{==:#{pane_id},${TMUX_PANE:-}}"
-      local tmux_status="$(tmux list-panes -a -F "${tmux_format}" -f "${tmux_filter}")"
+      local tmux_status="$(tmux list-panes -F "${tmux_format}" -f "${tmux_filter}")"
 
       if [ "${tmux_status}" = "11zsh" ]; then
         echo "3"
