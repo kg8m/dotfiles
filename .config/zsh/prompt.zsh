@@ -77,8 +77,20 @@ function() {
         return
       fi
 
+      local sleep="$(prompt:refresh:calculate_sleep)"
+
+      if [ "${sleep}" = "-1" ]; then
+        export PROMPT_REFRESHING_INACTIVE="1"
+        return
+      fi
+
+      if [ "${PROMPT_REFRESHING_INACTIVE}" = "1" ]; then
+        unset PROMPT_REFRESHING_INACTIVE
+        prompt:refresh:git:trigger
+      fi
+
       async_start_worker      "${PROMPT_REFRESHER_WORKER_NAME}"
-      async_job               "${PROMPT_REFRESHER_WORKER_NAME}" "sleep \"$(prompt:refresh:calculate_sleep)\""
+      async_job               "${PROMPT_REFRESHER_WORKER_NAME}" "sleep \"${sleep}\""
       async_register_callback "${PROMPT_REFRESHER_WORKER_NAME}" "prompt:refresh:trigger"
     }
 
@@ -88,6 +100,10 @@ function() {
       fi
 
       local sleep="$(prompt:refresh:calculate_sleep)"
+
+      if [ "${sleep}" = "-1" ]; then
+        return
+      fi
 
       async_stop_worker       "${GIT_PROMPT_REFRESHER_WORKER_NAME}"
       async_start_worker      "${GIT_PROMPT_REFRESHER_WORKER_NAME}"
@@ -108,7 +124,7 @@ function() {
       if [ "${tmux_status}" = "11zsh" ]; then
         echo "3"
       else
-        echo "60"
+        echo "-1"
       fi
     }
 
