@@ -51,7 +51,7 @@ function() {
               ;;
           esac
           ;;
-        _abbr_widget_expand_and_accept | accept-line)
+        __zabrze::expand-and-accept-line | _abbr_widget_expand_and_accept | accept-line)
           prompt:header:build
           prompt:refresh:finish
           return
