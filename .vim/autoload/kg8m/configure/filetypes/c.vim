@@ -18,7 +18,7 @@ def s:run_current(): void
   const executable = fnamemodify(current, ":r")
 
   const command = printf(
-    "gcc %s -o %s; %s",
+    "execute_commands_with_echo \"gcc %s -o %s\" \"%s\"",
     current->shellescape(),
     executable->shellescape(),
     ("./" .. executable)->shellescape()
