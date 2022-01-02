@@ -35,9 +35,9 @@ options head
 	}
 
 snippet for
-abbr    for (i = 0; i < argc; i++) { ... }
+abbr    for (int i = 0; i < argc; i++) { ... }
 options head
-	for (${1:i} = ${2:0}; $1${3: < argc}; $1++) {
+	for (int ${1:i} = ${2:0}; $1${3: < argc}; $1++) {
 		${0}
 	}
 
@@ -72,3 +72,21 @@ options word
 
 		return 0;
 	}
+
+snippet struct
+abbr    struct foo { ... };
+	struct ${1:#:name} {
+		${2:int} ${3:#:prop};
+	};
+
+snippet typedef_struct
+abbr    typedef struct { ... } foo
+	typedef struct {
+		${2:int} ${3:#:prop};
+	} ${1:#:name};
+
+snippet enum
+abbr    enum { ... };
+	enum {
+	  ${1:#:CONSTANT},
+	};
