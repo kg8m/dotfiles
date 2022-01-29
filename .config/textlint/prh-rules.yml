@@ -16,6 +16,12 @@ rules:
   - expected: Git
     options:
       wordBoundary: true
+  - expected: Homebrew
+    options:
+      wordBoundary: true
+  - expected: irb
+    options:
+      wordBoundary: true
   - expected: iTerm2
     pattern: /iterm2?/i
     options:
@@ -39,6 +45,9 @@ rules:
     options:
       wordBoundary: true
   - expected: PostgreSQL
+    options:
+      wordBoundary: true
+  - expected: Prettier
     options:
       wordBoundary: true
   - expected: ripgrep
