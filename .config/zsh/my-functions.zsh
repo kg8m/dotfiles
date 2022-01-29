@@ -608,7 +608,42 @@ function uninstall_go_library {
   fi
 }
 
-function benchmark_zsh {
+function benchmark_vim_startup {
+  local vim=${1:-vim}
+
+  execute_with_echo "${vim} --version | awk '/^VIM - Vi IMproved/,/Features included \\(\\+\\) or not \\(-\\):$/'"
+  execute_with_echo "${vim} -c 'call kg8m#plugin#recache_runtimepath() | q'"
+
+  local base_command="vim-startuptime -count 50 -warmup 1"
+
+  if [ ! "${vim}" = "vim" ]; then
+    base_command+=" -vimpath '${vim}'"
+  fi
+
+  local arg
+  local args=(
+    "-Nu NONE"
+    ""
+    # "foo.txt"
+    # "foo.md"
+    # ".git/COMMIT_EDITMSG -c 'qa'"
+  )
+
+  for arg in "${args[@]}"; do
+    sleep 1
+    local command="${base_command}"
+
+    if [ -n "${arg}" ]; then
+      command+=" -- ${arg}"
+    fi
+
+    command+=" | head -n15"
+
+    execute_with_echo "${command}"
+  done
+}
+
+function benchmark_zsh_startup {
   execute_with_echo "compile_zshrcs:cleanup"
   execute_with_echo "compile_zshrcs:run"
   execute_with_echo "hyperfine --warmup=1 'zsh --no-rcs -i -c exit' 'zsh -i -c exit'"
