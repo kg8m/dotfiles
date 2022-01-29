@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+filepaths=("$@")
+
+if [ -z "${filepaths[*]}" ]; then
+  return 1
+fi
+
+realpaths=()
+
+for filepath in "${filepaths[@]}"; do
+  # Expand `~` because bat can't expand it.
+  realpaths+=("${filepath/#\~/${HOME}}")
+done
+
+if [ "${#filepaths}" = "1" ]; then
+  parts=("${(s;:;)realpaths[1]}")
+  realpath="${parts[1]}"
+  lineno="${parts[2]}"
+
+  if [ -z "${lineno}" ]; then
+    lineno="0"
+  fi
+
+  bat "${realpath}" --highlight-line "${lineno}"
+else
+  bat "${realpaths[@]}"
+fi

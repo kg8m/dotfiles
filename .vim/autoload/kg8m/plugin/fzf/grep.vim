@@ -28,7 +28,7 @@ def kg8m#plugin#fzf#grep#run(args: string): void
   const fzf_options  = [
     "--header",         s:join_presences(["Grep:", s:grep_explicit_options(), args]),
     "--delimiter",      ":",
-    "--preview",        kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh {}",
+    "--preview",        "preview {}",
     "--preview-window", "down:75%:wrap:nohidden:+{2}-/2",
   ]
 

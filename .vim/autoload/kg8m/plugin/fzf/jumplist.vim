@@ -45,7 +45,7 @@ def s:run(candidates: list<string>): void
       "--nth", "2..",
       "--prompt", "Jumplist> ",
       "--delimiter", ":",
-      "--preview", "$FZF_VIM_PATH/bin/preview.sh {2..}",
+      "--preview", "preview {2..}",
       "--preview-window", "down:75%:wrap:nohidden:+{3}-/2",
     ],
   }

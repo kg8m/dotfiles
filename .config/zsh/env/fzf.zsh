@@ -46,6 +46,4 @@ function() {
 
   export FZF_DEFAULT_OPTS="${options[*]}"
   export FZF_DEFAULT_COMMAND="source ~/.config/zsh/my-functions.zsh; my_grep --files"
-
-  export FZF_VIM_PATH="${VIM_PLUGINS:?}/github.com/junegunn/fzf.vim"
 }

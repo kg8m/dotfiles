@@ -363,7 +363,7 @@ function my_grep_with_filter {
   local filter_args=(
     --header "Grep: ${query} ${options[*]} ${non_options[*]}"
     --delimiter ":"
-    --preview "${FZF_VIM_PATH}/bin/preview.sh {}"
+    --preview "preview {}"
     --preview-window "down:75%:wrap:nohidden:+{2}-/2"
   )
 

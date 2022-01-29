@@ -22,5 +22,5 @@ enddef
 
 def s:on_source(): void
   g:fzf_tjump_preview_options     = "down:75%:wrap:nohidden:+{3}-/2"
-  g:fzf_tjump_path_to_preview_bin = kg8m#plugin#get_info("fzf.vim").path .. "/bin/preview.sh"
+  g:fzf_tjump_path_to_preview_bin = "preview"
 enddef

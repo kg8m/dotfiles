@@ -51,7 +51,7 @@ enddef
 def kg8m#plugin#fzf#buffers#base_options(): list<any>
   return [
     "--header-lines", empty(kg8m#util#file#current_path()) ? 0 : 1,
-    "--preview", "git cat {}",
+    "--preview", "preview {}",
     "--preview-window", "down:75%:wrap:nohidden",
     "--expect", g:fzf_action->keys()->join(","),
   ]

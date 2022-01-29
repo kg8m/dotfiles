@@ -39,7 +39,7 @@ def kg8m#plugin#fzf#rails#run(type: string): void
     "source":  join(command, " "),
     "options": [
       "--prompt", "Rails/" .. type .. "> ",
-      "--preview", "git cat {}",
+      "--preview", "preview {}",
       "--preview-window", "down:75%:wrap:nohidden",
     ],
   }

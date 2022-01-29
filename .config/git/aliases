@@ -269,7 +269,7 @@ function git:clean:bulk {
   local files=("${(@f)$(git:status:filter:untracked)}")
 
   if [ -n "${files[*]}" ]; then
-    git:utility:cat      "${files[@]}"
+    preview "${files[@]}"
     execute_with_confirm "git clean --force -- ${files[*]}"
     execute_with_echo    "git status-with-color"
   fi
@@ -470,7 +470,7 @@ function git:utility:diff_or_cat {
 
   # Untracked files
   if [[ "${git_status}" =~ '^\?\?' ]]; then
-    git:utility:cat "${filepath}"
+    preview "${filepath}"
   # Renamed files
   elif [[ "${git_status}" =~ ^R ]]; then
     local removed="${filepath}"
@@ -510,24 +510,6 @@ function git:utility:header {
   printf "%s\n" "$@"
   printf "%s\n" "${border}"
   printf "\e[0m"
-}
-
-function git:utility:cat {
-  local filepath
-  local filepaths=("$@")
-
-  if [ -z "${filepaths[*]}" ]; then
-    return 1
-  fi
-
-  local realpaths=()
-
-  for filepath in "${filepaths[@]}"; do
-    # Expand `~` because bat can't expand it.
-    realpaths+=("${filepath/\~/${HOME}}")
-  done
-
-  bat "${realpaths[@]}"
 }
 
 function git:utility:diff {

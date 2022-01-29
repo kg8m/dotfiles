@@ -3,7 +3,7 @@ vim9script
 kg8m#plugin#ensure_sourced("fzf.vim")
 
 const s:common_fzf_options = [
-  "--preview", printf("git cat %s/{}.%s", shellescape(g:kg8m#util#qf#dirpath), kg8m#util#qf#extension),
+  "--preview", printf("preview %s/{}.%s", shellescape(g:kg8m#util#qf#dirpath), kg8m#util#qf#extension),
   "--preview-window", "down:75%:wrap:nohidden",
 ]
 
