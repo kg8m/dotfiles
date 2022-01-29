@@ -26,11 +26,11 @@ bind generic e scroll-line-down
 bind generic b scroll-page-up
 bind generic f scroll-page-down
 bind generic o edit
-bind generic c @bash -c "echo -n '%(commit)' | ssh main -t pbcopy; ssh main -t '/usr/local/bin/terminal-notifier -message \"Copied: %(commit)\" -group TIG_COPY'"
+bind generic c @bash -c "echo -n '%(commit)' | ssh main -t pbcopy; notify --nostay 'Copied: %(commit)'"
 
 bind main r !git rebase --autosquash --interactive %(commit)
 
-bind status c @bash -c "echo -n '%(file)' | ssh main -t pbcopy; ssh main -t '/usr/local/bin/terminal-notifier -message \"Copied: %(file)\" -group TIG_COPY'"
+bind status c @bash -c "echo -n '%(file)' | ssh main -t pbcopy; notify --nostay 'Copied: %(file)'"
 bind status C !git commit
 bind status i @git add --intent-to-add %(file)
 bind status p !git add --patch %(file)

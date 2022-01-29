@@ -106,18 +106,17 @@ def s:notify(message: string, options: dict<any> = {}): void
   const title    = "Updating Vim plugins"
 
   final notify_command = [
-    "/usr/local/bin/terminal-notifier",
-    "-title", title,
-    "-message", "\\[" .. hostname .. "] " .. message,
-    "-group", "UPDATING_VIM_PLUGINS_FINISHED_" .. hostname,
+    "notify",
+    "--title", title,
+    message,
   ]
 
-  if is_stay
-    extend(notify_command, ["-sender", "TERMINAL_NOTIFIER_STAY"])
+  if !is_stay
+    extend(notify_command, ["--nostay"])
   endif
 
   notify_command->map((_, command) => shellescape(command))
-  job_start(["ssh", "main", "-t", notify_command->join(" ")])
+  system(notify_command->join(" "))
 
   const message_with_title = title .. ": " .. message
 

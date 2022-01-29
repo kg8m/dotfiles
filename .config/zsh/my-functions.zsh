@@ -142,48 +142,6 @@ function echo:info {
   printf "INFO -- %s\n" "$*" >&2
 }
 
-function notify {
-  local message
-  local notifier_options=()
-  local is_stay="1"
-
-  while [ "${#@}" -gt 0 ]; do
-    case "$1" in
-      --title)
-        notifier_options+=("-title \"${2:?}\"")
-        shift 2
-        ;;
-      --nostay)
-        is_stay="0"
-        shift 1
-        ;;
-      *)
-        if [ -n "${message}" ]; then
-          echo:error "Message has been already defined: ${message}"
-          return 1
-        else
-          message="$1"
-          shift 1
-        fi
-        ;;
-    esac
-  done
-
-  if [ -z "${message}" ]; then
-    message="Command finished."
-  fi
-
-  message="[$(hostname)] ${message}"
-  notifier_options+=("-group \"NOTIFY_${message}\"")
-
-  if [ "${is_stay}" = "1" ]; then
-    notifier_options+=("-sender TERMINAL_NOTIFIER_STAY")
-  fi
-
-  # `> /dev/null` for ignoring "Removing previously sent notification" message
-  ssh main -t "echo '${message}' | /usr/local/bin/terminal-notifier ${notifier_options[*]}" > /dev/null
-}
-
 # cf. `man zshcontrib` for `zmv`
 function batch_move {
   local dryrun_result=("${(@f)$(zmv -n "$@")}")
