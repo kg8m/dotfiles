@@ -101,8 +101,6 @@ def s:define_raw_list(): void
     ["[LSP] CodeAction",                  "LspCodeAction"],
     ["[LSP] CodeAction: organizeImports", "LspCodeAction source.organizeImports"],
 
-    ["[Autoformat] Format Source Codes", "Autoformat"],
-
     ["[Diff] Linediff", "'<,'>Linediff"],
 
     ["[QuickFix] Replace", "Qfreplace"],

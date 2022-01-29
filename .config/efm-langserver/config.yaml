@@ -12,8 +12,8 @@ tools:
     lint-command: "checkmake"
     lint-stdin: true
 
+  # Always show errors on the first line because converted Ruby code doesn't match the original ERB code
   erb: &erb
-    # Always show errors on the first line because converted Ruby code doesn't match the original ERB code
     lint-command: "erb -x -T - -P | ruby -c 2>&1 1>/dev/null | sed -e 's/^-:/1:/'"
     lint-ignore-exit-code: true
     lint-stdin: true
@@ -53,6 +53,10 @@ tools:
     # lint-stdin: true
     lint-formats:
       - "%l:%c %m"
+
+  prettier: &prettier
+    format-command: "$HOME/.config/efm-langserver/prettier_wrapper.sh '${INPUT}'"
+    format-stdin: true
 
   rubocop: &rubocop
     lint-command: "$HOME/.config/efm-langserver/rubocop_wrapper.sh '${INPUT}'"
@@ -109,6 +113,7 @@ tools:
 languages:
   css:
     - <<: *stylelint
+    - <<: *prettier
 
   eruby:
     - <<: *erb
@@ -122,10 +127,15 @@ languages:
 
   html:
     - <<: *markuplint
+    - <<: *prettier
 
   javascript:
     - <<: *eslint
     - <<: *lit-analyzer
+    - <<: *prettier
+
+  json:
+    - <<: *prettier
 
   make:
     - <<: *checkmake
@@ -148,6 +158,7 @@ languages:
   typescript:
     - <<: *eslint
     - <<: *lit-analyzer
+    - <<: *prettier
 
   # Disable because modern syntaxes are not supported
   # vim:
@@ -156,6 +167,7 @@ languages:
   yaml:
     - <<: *actionlint
     - <<: *yamllint
+    - <<: *prettier
 
   zsh:
     - <<: *shellcheck

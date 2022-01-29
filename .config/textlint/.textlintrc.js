@@ -8,10 +8,14 @@ const localConfigDirpath = path.join(homePath, ".config/textlint.local");
 const { deepmerge } = require(path.join(configDirpath, "util"));
 
 const fixableConfigPath = path.join(configDirpath, ".textlintrc.fixable.js");
-const fixableConfig = fs.existsSync(fixableConfigPath) ? require(fixableConfigPath) : {};
+const fixableConfig = fs.existsSync(fixableConfigPath)
+  ? require(fixableConfigPath)
+  : {};
 
 const localConfigPath = path.join(localConfigDirpath, ".textlintrc.local.js");
-const localConfig = fs.existsSync(localConfigPath) ? require(localConfigPath) : {};
+const localConfig = fs.existsSync(localConfigPath)
+  ? require(localConfigPath)
+  : {};
 
 const config = {
   filters: {
@@ -77,32 +81,29 @@ const config = {
         severity: "warning",
         max: 100,
         exclusionPatterns: [
-          "/\\bhttps?:\\/\\/[^\\s)>]+/",  // URL
-          "/\\b[a-z\\d]{7,40}\\b/",       // commit hash
-          "/\\(.+?\\)/",                  // inside parentheses
-          "/\".+?\"/",                    // inside quotation marks
-          "/（.+?）/",                    // かっこ内
-          "/「.+?」/",                    // かぎかっこ内
-          "/『.+?』/",                    // 二重かぎかっこ内
-          "/“.+?”/",                    // 引用符内
+          "/\\bhttps?:\\/\\/[^\\s)>]+/", // URL
+          "/\\b[a-z\\d]{7,40}\\b/", // commit hash
+          "/\\(.+?\\)/", // inside parentheses
+          '/".+?"/', // inside quotation marks
+          "/（.+?）/", // かっこ内
+          "/「.+?」/", // かぎかっこ内
+          "/『.+?』/", // 二重かぎかっこ内
+          "/“.+?”/", // 引用符内
         ],
       },
     },
     "preset-jtf-style": {
-      "1.1.1.本文": false,                                      // 1.1.1: 本文を敬体(ですます調)に統一して下さい。 本文の文体は、敬体(ですます調)あるいは常体(である調)のどちらかで統一します。 → false positive
-      "3.1.1.全角文字と半角文字の間": false,                    // 3.1.1: 原則として、全角文字と半角文字の間にスペースを入れません。 → 入れることがある
-      "3.1.2.全角文字どうし": false,                            // 3.1.2: 原則として、全角文字どうしの間にスペースを入れません。 → 入れることがある
-      "3.3.かっこ類と隣接する文字の間のスペースの有無": false,  // 3.3:   かっこの外側、内側ともにスペースを入れません。 → 入れることがある
-      "4.2.1.感嘆符(！)": false,                                // 4.2.1: 感嘆符(！)を使用する場合は「全角」で表記します。 → 半角も使う
-      "4.2.2.疑問符(？)": false,                                // 4.2.2: 文末に疑問符を使用し、後に別の文が続く場合は、直後に全角スペースを挿入します。 → 半角スペースが好み
-      "4.2.6.ハイフン(-)": false,                               // 4.2.6: 原則として和文ではハイフン(-)を使用しません。 例外は、住所や電話番号の区切りに使う場合です。 → 使うことがある
-      "4.2.7.コロン(：)": false,                                // 4.2.7: コロン(：)を使用する場合は「全角」で表記します。 → 半角＋スペースが好み
-      "4.3.1.丸かっこ（）": false,                              // 4.3.1: 半角のかっこ()が使用されています。全角のかっこ（）を使用してください。 → 使うことがある
+      "1.1.1.本文": false, // 1.1.1: 本文を敬体(ですます調)に統一して下さい。 本文の文体は、敬体(ですます調)あるいは常体(である調)のどちらかで統一します。 → false positive
+      "3.1.1.全角文字と半角文字の間": false, // 3.1.1: 原則として、全角文字と半角文字の間にスペースを入れません。 → 入れることがある
+      "3.1.2.全角文字どうし": false, // 3.1.2: 原則として、全角文字どうしの間にスペースを入れません。 → 入れることがある
+      "3.3.かっこ類と隣接する文字の間のスペースの有無": false, // 3.3:   かっこの外側、内側ともにスペースを入れません。 → 入れることがある
+      "4.2.1.感嘆符(！)": false, // 4.2.1: 感嘆符(！)を使用する場合は「全角」で表記します。 → 半角も使う
+      "4.2.2.疑問符(？)": false, // 4.2.2: 文末に疑問符を使用し、後に別の文が続く場合は、直後に全角スペースを挿入します。 → 半角スペースが好み
+      "4.2.6.ハイフン(-)": false, // 4.2.6: 原則として和文ではハイフン(-)を使用しません。 例外は、住所や電話番号の区切りに使う場合です。 → 使うことがある
+      "4.2.7.コロン(：)": false, // 4.2.7: コロン(：)を使用する場合は「全角」で表記します。 → 半角＋スペースが好み
+      "4.3.1.丸かっこ（）": false, // 4.3.1: 半角のかっこ()が使用されています。全角のかっこ（）を使用してください。 → 使うことがある
     },
   },
 };
 
-module.exports = deepmerge(
-  deepmerge(config, fixableConfig),
-  localConfig,
-);
+module.exports = deepmerge(deepmerge(config, fixableConfig), localConfig);

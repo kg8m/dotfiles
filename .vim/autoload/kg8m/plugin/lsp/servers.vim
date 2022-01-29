@@ -100,7 +100,7 @@ def s:register_efm_langserver(): void
 
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
-      "css", "eruby", "gitcommit", "html", "make", "markdown", "ruby", "sql",
+      "css", "eruby", "gitcommit", "html", "json", "make", "markdown", "ruby", "sql",
     ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES,
   })
 enddef
@@ -190,7 +190,7 @@ def s:activate_json_language_server(): void
     config: { refresh_pattern: kg8m#plugin#completion#refresh_pattern("json") },
     workspace_config: {
       json: {
-        format: { enable: true },
+        format: { enable: false },
         schemas: s:schemas(),
       },
     },
@@ -433,7 +433,7 @@ def s:activate_yaml_language_server(): void
       yaml: {
         completion: true,
         customTags: [],
-        format: { enable: true },
+        format: { enable: false },
         hover: true,
         schemas: s:schemas(),
         validate: true,

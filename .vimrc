@@ -219,10 +219,6 @@ if kg8m#plugin#register("haya14busa/vim-asterisk")
   kg8m#plugin#asterisk#configure()
 endif
 
-if kg8m#plugin#register("Chiel92/vim-autoformat", { if: !kg8m#util#is_git_tmp_edit() })
-  g:formatdef_jsbeautify_javascript = '"js-beautify -f -s2 -"'
-endif
-
 kg8m#plugin#register("h1mesuke/vim-benchmark")
 
 if kg8m#plugin#register("jkramer/vim-checkbox", { if: !kg8m#util#is_git_tmp_edit() })
