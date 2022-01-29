@@ -312,6 +312,7 @@ function my_grep {
   rg "${args[@]}"
 }
 
+# cf. Vim's kg8m#util#grep#build_qflist_from_buffer()
 function my_grep_with_filter {
   local query="${1:?}"
   shift 1
@@ -395,14 +396,18 @@ function my_grep_with_filter {
 
     if [[ "${response}" =~ ^y ]]; then
       if [ "${options[(I)--files]}" = "0" ]; then
-        local filepaths=("${(@f)$(
-          echo "${(j:\n:)results[@]}" | grep -E ':[0-9]+:[0-9]+:' | grep -E -o '^[^:]+:[0-9]+:[0-9]+' | sort -u
-        )}")
-      else
-        local filepaths=("${results[@]}")
-      fi
+        local tempfile="$(mktemp --suffix .grep)"
 
-      execute_with_echo "vim ${filepaths[*]}"
+        # Don't execute `echo ... | vim ... -` because current command remains as zsh if so. So tmux's
+        # `pane_current_command` always returns "zsh" and automatic refreshing zsh prompt will be influenced.
+        echo "${(j:\n:)results[@]}" | grep -E '^.+?:[0-9]+:[0-9]+:.' > "${tempfile}"
+        execute_with_echo "vim -c 'call kg8m#util#grep#build_qflist_from_buffer()' '${tempfile}'"
+
+        rm -f "${tempfile}"
+      else
+        # shellcheck disable=SC2145
+        execute_with_echo "vim '${(j:' ':)results[@]}'"
+      fi
     fi
   fi
 }
