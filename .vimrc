@@ -52,11 +52,6 @@ if kg8m#plugin#register("high-moctane/asyncomplete-nextword.vim")
   kg8m#plugin#asyncomplete#nextword#configure()
 endif
 
-# Disable due to extremely high memory usage.
-if kg8m#plugin#register("kitagry/asyncomplete-tabnine.vim", { if: false, build: "./install.sh" })
-  kg8m#plugin#asyncomplete#tabnine#configure()
-endif
-
 if kg8m#plugin#register("prabirshrestha/asyncomplete-tags.vim")
   kg8m#plugin#asyncomplete#tags#configure()
 endif
@@ -178,10 +173,6 @@ endif
 
 kg8m#plugin#register("lambdalisue/readablefold.vim", { if: !kg8m#util#is_git_tmp_edit() })
 
-if kg8m#plugin#register("lambdalisue/reword.vim")
-  cnoreabbrev <expr> Reword reword#live#start()
-endif
-
 if kg8m#plugin#register("vim-scripts/sequence")
   kg8m#plugin#sequence#configure()
 endif
@@ -235,11 +226,6 @@ kg8m#plugin#register("hail2u/vim-css3-syntax", { if: !kg8m#util#is_git_tmp_edit(
 
 if kg8m#plugin#register("wsdjeg/vim-fetch")
   kg8m#plugin#fetch#configure()
-endif
-
-# Disable because findent sometimes detects wrong indentations
-if kg8m#plugin#register("lambdalisue/vim-findent", { if: false && !kg8m#util#is_git_tmp_edit() && !filereadable(".editorconfig") })
-  kg8m#plugin#findent#configure()
 endif
 
 kg8m#plugin#register("thinca/vim-ft-diff_fold")
@@ -394,10 +380,6 @@ endif
 
 kg8m#plugin#register("stephpy/vim-yaml", { if: !kg8m#util#is_git_tmp_edit() })
 kg8m#plugin#register("pedrohdz/vim-yaml-folds", { if: !kg8m#util#is_git_tmp_edit() })
-
-# Disable because yajs.vim conflicts with vim-html-template-literals.
-# Don't merge because some syntax files are duplicated.
-kg8m#plugin#register("othree/yajs.vim", { if: false, merged: false })
 
 if kg8m#plugin#register("jonsmithers/vim-html-template-literals", { if: !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#html_template_literals#configure()
