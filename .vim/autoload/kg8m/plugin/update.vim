@@ -1,7 +1,7 @@
 vim9script
 
 def kg8m#plugin#update#run(options: dict<any> = {}): void
-  timer_start(   0, (_) => s:run(options) )
+  timer_start(   0, (_) => s:_run(options) )
   timer_start( 200, (_) => s:remove_disused())
   timer_start(1000, (_) => kg8m#plugin#update#show_log())
 enddef
@@ -36,7 +36,7 @@ def kg8m#plugin#update#show_log(): void
   @/ = "\\v<(Error|Updated)>"
 enddef
 
-def s:run(options: dict<any> = {}): void
+def s:_run(options: dict<any> = {}): void
   # Clear messages because they will be used in `s:check_finished`
   messages clear
 

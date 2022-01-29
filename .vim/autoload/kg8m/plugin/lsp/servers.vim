@@ -46,7 +46,7 @@ enddef
 
 # yarn add bash-language-server
 def s:register_bash_language_server(): void
-  s:register({
+  s:_register({
     name: "bash-language-server",
     allowlist: SH_FILETYPES,
   })
@@ -59,7 +59,7 @@ def s:activate_bash_language_server(): void
 enddef
 
 def s:register_clangd(): void
-  s:register({
+  s:_register({
     name: "clangd",
     allowlist: ["c"],
   })
@@ -73,7 +73,7 @@ enddef
 
 # yarn add vscode-langservers-extracted
 def s:register_css_language_server(): void
-  s:register({
+  s:_register({
     name: "css-language-server",
     allowlist: ["css", "less", "scss"],
     executable: "vscode-css-language-server",
@@ -95,7 +95,7 @@ enddef
 
 # go install github.com/mattn/efm-langserver
 def s:register_efm_langserver(): void
-  s:register({
+  s:_register({
     name: "efm-langserver",
 
     # cf. .config/efm-langserver/config.yaml
@@ -113,7 +113,7 @@ enddef
 
 # go install github.com/nametake/golangci-lint-langserver
 def s:register_golangci_lint_langserver(): void
-  s:register({
+  s:_register({
     name: "golangci-lint-langserver",
     cmd: (_) => ["golangci-lint-langserver"],
     initialization_options: {
@@ -134,7 +134,7 @@ enddef
 
 # go install golang.org/x/tools/gopls
 def s:register_gopls(): void
-  s:register({
+  s:_register({
     name: "gopls",
     allowlist: ["go"],
   })
@@ -160,7 +160,7 @@ enddef
 
 # yarn add vscode-langservers-extracted
 def s:register_html_language_server(): void
-  s:register({
+  s:_register({
     name: "html-language-server",
     allowlist: ["eruby", "html"],
     executable: "vscode-html-language-server",
@@ -177,7 +177,7 @@ enddef
 
 # yarn add vscode-langservers-extracted
 def s:register_json_language_server(): void
-  s:register({
+  s:_register({
     name: "json-language-server",
     allowlist: ["json"],
     executable: "vscode-json-language-server",
@@ -199,7 +199,7 @@ enddef
 
 # gem install ruby_language_server
 def s:register_ruby_language_server(): void
-  s:register({
+  s:_register({
     name: "ruby_language_server",
     allowlist: ["ruby"],
   })
@@ -218,7 +218,7 @@ enddef
 
 # gem install solargraph
 def s:register_solargraph(): void
-  s:register({
+  s:_register({
     name: "solargraph",
     allowlist: ["ruby"],
   })
@@ -250,7 +250,7 @@ enddef
 
 # go install github.com/lighttiger2505/sqls
 def s:register_sqls(): void
-  s:register({
+  s:_register({
     name: "sqls",
     allowlist: ["sql"],
   })
@@ -273,7 +273,7 @@ enddef
 # gem install steep
 # Requires Steepfile.
 def s:register_steep(): void
-  s:register({
+  s:_register({
     name: "steep",
     allowlist: ["ruby"],
   })
@@ -291,7 +291,7 @@ enddef
 
 # Install from https://github.com/juliosueiras/terraform-lsp/releases
 def s:register_terraform_lsp(): void
-  s:register({
+  s:_register({
     name: "terraform-lsp",
     allowlist: ["terraform"],
   })
@@ -305,7 +305,7 @@ enddef
 
 # gem install typeprof
 def s:register_typeprof(): void
-  s:register({
+  s:_register({
     name: "typeprof",
     allowlist: ["ruby"],
   })
@@ -323,7 +323,7 @@ enddef
 
 # yarn add typescript-language-server typescript
 def s:register_typescript_language_server(): void
-  s:register({
+  s:_register({
     name: "typescript-language-server",
     allowlist: JS_FILETYPES,
   })
@@ -338,7 +338,7 @@ enddef
 
 # yarn add vim-language-server
 def s:register_vim_language_server(): void
-  s:register({
+  s:_register({
     name: "vim-language-server",
     allowlist: ["vim"],
   })
@@ -370,7 +370,7 @@ enddef
 
 # yarn add vue-language-server
 def s:register_vue_language_server(): void
-  s:register({
+  s:_register({
     name: "vue-language-server",
     allowlist: ["vue"],
     executable: "vls",
@@ -420,7 +420,7 @@ enddef
 
 # yarn add yaml-language-server
 def s:register_yaml_language_server(): void
-  s:register({
+  s:_register({
     name: "yaml-language-server",
     allowlist: YAML_FILETYPES,
   })
@@ -442,7 +442,7 @@ def s:activate_yaml_language_server(): void
   })
 enddef
 
-def s:register(config: dict<any>): void
+def s:_register(config: dict<any>): void
   var executable: string
 
   if has_key(config, "executable")
