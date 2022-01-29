@@ -83,7 +83,16 @@ enddef
 
 def s:add_rules_for_html(): void
   # JavaScript and TypeScript for html`...`
-  const filetypes = ["eruby", "html", "javascript", "markdown", "typescript", "vue"]
+  const filetypes = [
+    "eruby",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "markdown",
+    "typescript",
+    "typescriptreact",
+    "vue",
+  ]
 
   # `<CR>` when
   #
@@ -107,7 +116,7 @@ def s:add_rules_for_html(): void
 enddef
 
 def s:add_rules_for_js(): void
-  const filetypes = ["javascript", "typescript"]
+  const filetypes = ["javascript", "javascriptreact", "typescript", "typescriptreact"]
 
   # `<CR>` when
   #

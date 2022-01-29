@@ -6,7 +6,7 @@ final s:availabilities: dict<bool>               = {}
 
 final s:cache = {}
 
-const JS_FILETYPES   = ["javascript", "typescript"]
+const JS_FILETYPES   = ["javascript", "javascriptreact", "typescript", "typescriptreact"]
 const SH_FILETYPES   = ["sh", "zsh"]
 const YAML_FILETYPES = ["eruby.yaml", "yaml", "yaml.ansible"]
 

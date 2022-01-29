@@ -82,14 +82,28 @@ def s:gt_expr(): string
   if getline(".")->strpart(col(".") - 1, 1) ==# ">"
     return lexima#expand(">", "i")
   else
-    if kg8m#util#list#includes(g:kg8m#plugin#closetag#filetypes, &filetype)
+    if !kg8m#util#list#includes(g:kg8m#plugin#closetag#filetypes, &filetype)
+      return ">"
+    endif
+
+    if &filetype ==# "markdown"
+      # Don't overwrite while writing blockquote markers.
       const leading_text = getline(".")->strpart(0, col(".") - 1)
 
-      # Don't overwrite while writing blockquote markers
-      if &filetype ==# "markdown" && leading_text =~# '^\s*$'
+      if leading_text =~# '^\s*$'
         return ">"
       else
         return g:closetag_shortcut
+      endif
+    elseif context_filetype#get_filetype() ==# "html"
+      return g:closetag_shortcut
+    elseif &filetype =~# '\v^%(javascript|typescript)'
+      const syntax_name = synIDattr(synID(line("."), col(".") - 1, true), "name")
+
+      if syntax_name =~# '\v^jsx%(Braces|ComponentName|String|Tag|TagName)$'
+        return g:closetag_shortcut
+      else
+        return ">"
       endif
     else
       return ">"

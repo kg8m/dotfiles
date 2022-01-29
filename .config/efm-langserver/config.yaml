@@ -143,6 +143,11 @@ languages:
     - <<: *lit-analyzer
     - <<: *prettier
 
+  javascriptreact:
+    - <<: *eslint
+    - <<: *lit-analyzer
+    - <<: *prettier
+
   json:
     - <<: *prettier
 
@@ -165,6 +170,11 @@ languages:
     - <<: *sql-formatter
 
   typescript:
+    - <<: *eslint
+    - <<: *lit-analyzer
+    - <<: *prettier
+
+  typescriptreact:
     - <<: *eslint
     - <<: *lit-analyzer
     - <<: *prettier

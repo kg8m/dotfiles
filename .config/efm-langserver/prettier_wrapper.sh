@@ -11,7 +11,7 @@ options=(
 
 if command -v eslint > /dev/null; then
   case "${target_filepath}" in
-    *.js | *.ts)
+    *.js | *.jsx | *.ts | *.tsx)
       # Use ESLint as formatter.
       if [ "${ESLINT_AVAILABLE:-}" = "1" ]; then
         exit 1

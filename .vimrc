@@ -282,6 +282,8 @@ if kg8m#plugin#register("elzr/vim-json")
   g:vim_json_syntax_conceal = false
 endif
 
+kg8m#plugin#register("MaxMEllon/vim-jsx-pretty")
+
 if kg8m#plugin#register("andymass/vim-matchup")
   kg8m#plugin#matchup#configure()
 endif

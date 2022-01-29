@@ -1,6 +1,14 @@
 vim9script
 
-g:kg8m#plugin#closetag#filetypes = ["eruby", "html", "javascript", "markdown", "typescript"]
+g:kg8m#plugin#closetag#filetypes = [
+  "eruby",
+  "html",
+  "javascript",
+  "javascriptreact",
+  "markdown",
+  "typescript",
+  "typescriptreact",
+]
 
 def kg8m#plugin#closetag#configure(): void
   g:closetag_filetypes = join(g:kg8m#plugin#closetag#filetypes, ",")
