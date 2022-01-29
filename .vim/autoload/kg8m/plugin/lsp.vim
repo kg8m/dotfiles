@@ -61,11 +61,8 @@ def s:on_lsp_buffer_enabled(): void
     nmap <buffer> g] <Plug>(lsp-definition)
   endif
 
-  augroup vimrc-plugin-lsp-on_lsp_buffer_enabled
-    autocmd!
-  # autocmd BufWritePre <buffer> kg8m#plugin#lsp#document_format#on_save()
-    autocmd InsertLeave <buffer> kg8m#plugin#lsp#document_format#on_insert_leave()
-  augroup END
+# autocmd BufWritePre <buffer> kg8m#plugin#lsp#document_format#on_save()
+  autocmd InsertLeave <buffer> kg8m#plugin#lsp#document_format#on_insert_leave()
 
   kg8m#events#notify_after_lsp_buffer_enabled()
 enddef
