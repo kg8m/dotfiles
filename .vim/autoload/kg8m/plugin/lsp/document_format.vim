@@ -154,21 +154,21 @@ def s:is_target_buffer_type(): bool
 enddef
 
 def s:is_target_filetype(): bool
-  const configs = kg8m#plugin#lsp#servers#configs(&filetype)
+  const configs            = kg8m#plugin#lsp#servers#configs(&filetype)
+  const ShouldNotBeIgnored = (config) => {
+    const ignore_filetypes = get(config, "document_format_ignore_filetypes", [])
+    return !kg8m#util#list#includes(ignore_filetypes, &filetype)
+  }
 
-  const Mapper           = (_, config) => get(config, "document_format_ignore_filetypes", [])
-  const ignore_filetypes = configs->mapnew(Mapper)->flattennew()
-
-  return !kg8m#util#list#includes(ignore_filetypes, &filetype)
+  return kg8m#util#list#all(configs, ShouldNotBeIgnored)
 enddef
 
 def s:is_valid_filesize(): bool
-  const configs = kg8m#plugin#lsp#servers#configs(&filetype)
+  const current_byte         = wordcount().bytes
+  const configs              = kg8m#plugin#lsp#servers#configs(&filetype)
+  const IsSmallerThanMaxByte = (config) => current_byte <= get(config, "document_format_max_byte", 9'999'999)
 
-  const Mapper   = (_, config) => get(config, "document_format_max_byte", 9'999'999)
-  const max_byte = configs->mapnew(Mapper)->min()
-
-  return wordcount().bytes <= max_byte
+  return kg8m#util#list#all(configs, IsSmallerThanMaxByte)
 enddef
 
 def s:has_server_capability(): bool

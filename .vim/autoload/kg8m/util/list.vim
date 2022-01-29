@@ -25,6 +25,16 @@ def kg8m#util#list#any(list: list<any>, Callback: func): bool
   return false
 enddef
 
+def kg8m#util#list#all(list: list<any>, Callback: func): bool
+  for item in list
+    if !Callback(item)
+      return false
+    endif
+  endfor
+
+  return true
+enddef
+
 def kg8m#util#list#filter_map(list: list<any>, Callback: func): list<any>
   var result = []
 
