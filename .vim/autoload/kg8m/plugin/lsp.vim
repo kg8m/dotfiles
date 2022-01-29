@@ -61,8 +61,8 @@ def s:on_lsp_buffer_enabled(): void
     nmap <buffer> g] <Plug>(lsp-definition)
   endif
 
-# autocmd BufWritePre <buffer> kg8m#plugin#lsp#document_format#on_save()
   autocmd InsertLeave <buffer> kg8m#plugin#lsp#document_format#on_insert_leave()
+  autocmd TextChanged <buffer> kg8m#plugin#lsp#document_format#on_text_changed()
 
   kg8m#events#notify_after_lsp_buffer_enabled()
 enddef

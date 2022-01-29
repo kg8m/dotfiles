@@ -155,6 +155,8 @@ def s:activate_gopls(): void
       staticcheck: true,
       usePlaceholders: true,
     },
+
+    organize_imports: true,
   })
 enddef
 
@@ -332,7 +334,9 @@ enddef
 def s:activate_typescript_language_server(): void
   s:activate("typescript-language-server", {
     cmd: (_) => ["typescript-language-server", "--stdio"],
+
     document_format: false,
+    organize_imports: true,
   })
 enddef
 

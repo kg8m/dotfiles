@@ -28,3 +28,10 @@ def kg8m#util#file#format_path(filepath: string): string
 
   return fnamemodify(filepath, s:cache.regular_filepath_format)
 enddef
+
+def kg8m#util#file#is_descendant(filepath: string, base: string = getcwd()): bool
+  const absolute_filepath = fnamemodify(filepath, ":p")
+  const absolute_basepath = fnamemodify(base, ":p")
+
+  return kg8m#util#string#starts_with(absolute_filepath, absolute_basepath)
+enddef
