@@ -37,13 +37,6 @@ def kg8m#plugin#fzf#configure(): void
     })
   endif
 
-  if kg8m#plugin#register("thinca/vim-qfreplace")
-    kg8m#plugin#configure({
-      lazy:   true,
-      on_cmd: "Qfreplace",
-    })
-  endif
-
   if kg8m#plugin#register("kg8m/vim-fzf-tjump")
     kg8m#plugin#fzf_tjump#configure()
   endif

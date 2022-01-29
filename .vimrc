@@ -165,6 +165,13 @@ if kg8m#plugin#register("yssl/QFEnter")
   }
 endif
 
+if kg8m#plugin#register("stefandtw/quickfix-reflector.vim")
+  kg8m#plugin#configure({
+    lazy:  true,
+    on_ft: "qf",
+  })
+endif
+
 if kg8m#plugin#register("mechatroner/rainbow_csv", { if: !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#rainbow_csv#configure()
 endif

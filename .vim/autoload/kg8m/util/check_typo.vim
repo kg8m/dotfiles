@@ -10,12 +10,7 @@ enddef
 
 def s:check_typo(file: string): void
   const writecmd = "write" .. (v:cmdbang ? "!" : "") .. " " .. file
-
-  if file =~? '[qfreplace]'
-    return
-  endif
-
-  const prompt = "possible typo: really want to write to '" .. file .. "'? (y/n):"
+  const prompt = "possible typo: really want to write to '" .. file .. "'? (y/n): "
   const input = input(prompt)
 
   if input =~? '^y'

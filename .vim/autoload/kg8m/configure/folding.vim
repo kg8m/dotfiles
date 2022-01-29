@@ -55,9 +55,6 @@ def s:should_disable(): bool
     # For diffs of `git commit --verbose`
     &filetype ==# "gitcommit" ||
 
-    # For candidates of qfreplace
-    &filetype ==# "qfreplace" ||
-
     # For edit mode of `git add --patch`
     kg8m#util#file#current_name() ==# "addp-hunk-edit.diff"
   )
