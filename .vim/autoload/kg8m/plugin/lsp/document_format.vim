@@ -49,6 +49,11 @@ enddef
 def s:run(options: dict<bool> = {}): void
   s:teardown()
 
+  if !s:is_allowed()
+    s:log_skipped("not_allowed", "Document formatting is skipped because automatic formatting is not allowed.")
+    return
+  endif
+
   if !s:is_target_buffer_type()
     s:log_skipped("non_target_buffer_type", "Document formatting is skipped because it isn't target buffer type.")
     return
@@ -67,19 +72,15 @@ def s:run(options: dict<bool> = {}): void
     return
   endif
 
-  if !s:is_available()
-    s:log_skipped(
-      "not_available",
-      "Document formatting is skipped because not available."
-    )
-    return
-  endif
-
   if get(options, "sync", false)
     silent LspDocumentFormatSync
   else
     silent LspDocumentFormat
   endif
+enddef
+
+def s:is_allowed(): bool
+  return $AUTO_FORMATTING_AVAILABLE ==# "1"
 enddef
 
 def s:is_target_buffer_type(): bool
@@ -102,15 +103,6 @@ def s:is_valid_filesize(): bool
   const max_byte = configs->mapnew(Mapper)->min()
 
   return wordcount().bytes <= max_byte
-enddef
-
-def s:is_available(): bool
-  const configs = kg8m#plugin#lsp#servers#configs(&filetype)
-
-  const Mapper         = (_, config) => get(config, "document_format_availability_checker", () => true)()
-  const availabilities = configs->mapnew(Mapper)
-
-  return !kg8m#util#list#includes(availabilities, false)
 enddef
 
 def s:log_skipped(type: string, message: string): void

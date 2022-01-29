@@ -13,10 +13,6 @@ if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
 
-if [ -n "${is_fixing}" ] && [ -z "${VIM_FIX_ON_SAVE_RUBY:-}" ]; then
-  exit 1
-fi
-
 if command -v rubocop-daemon > /dev/null && command -v rubocop-daemon-wrapper > /dev/null; then
   executable="rubocop-daemon-wrapper"
 else
