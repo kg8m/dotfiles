@@ -9,6 +9,7 @@ function plugin:setup:binary_releaseds {
     lighttiger2505/sqls
     mvdan/sh
     juliosueiras/terraform-lsp
+    crate-ci/typos
     rhysd/vim-startuptime
   )
 
@@ -51,7 +52,7 @@ function plugin:setup:binary_releaseds {
 
     case "${plugin}" in
       actionlint | bat | delta | direnv | efm-langserver | fd | gh | ghch | glab | golangci-lint | hyperfine |\
-      make2help | mmv | sd | shellcheck | shfmt | terraform-lsp | tldr | vim-startuptime | zabrze)
+      make2help | mmv | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
         mv ./"${plugin}"* ./"${plugin}"
         ;;
       rg)
@@ -68,7 +69,7 @@ function plugin:setup:binary_releaseds {
 
     case "${plugin}" in
       actionlint | direnv | fzf | golangci-lint-langserver | nextword | sd | shfmt | sqls | terraform-lsp | tldr |\
-      tokei | vim-startuptime | zabrze)
+      tokei | typos | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
       bat | delta | efm-langserver | fd | ghch | golangci-lint | hyperfine | make2help | mmv | rg | shellcheck)
@@ -96,7 +97,7 @@ function plugin:setup:binary_releaseds {
     execute_with_echo "which ${command}"
 
     case "${plugin}" in
-      bat | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | rg | sd | shellcheck | tldr | tokei | zabrze)
+      bat | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | rg | sd | shellcheck | tldr | tokei | typos | zabrze)
         execute_with_echo "${command} --version"
         ;;
       make2help)

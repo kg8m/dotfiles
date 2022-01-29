@@ -100,6 +100,12 @@ tools:
     format-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}' --fix"
     format-stdin: true
 
+  typos: &typos
+    lint-command: "typos --format brief -"
+    lint-stdin: true
+    lint-formats:
+      - "-:%l:%c: %m"
+
   vint: &vint
     lint-command: "vint -"
     lint-stdin: true
@@ -111,6 +117,9 @@ tools:
       - "%f:%l:%c: [%t%*[a-z]] %m"
 
 languages:
+  =:
+    - <<: *typos
+
   css:
     - <<: *stylelint
     - <<: *prettier
