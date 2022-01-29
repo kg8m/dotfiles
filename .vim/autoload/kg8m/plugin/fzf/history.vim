@@ -7,11 +7,9 @@ def kg8m#plugin#fzf#history#run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  s:candidates(),
-    options: [
-      "--header-lines", empty(kg8m#util#file#current_path()) ? 0 : 1,
+    "sink*": function("kg8m#plugin#fzf#buffers#handler"),
+    options: kg8m#plugin#fzf#buffers#base_options() + [
       "--prompt", "History> ",
-      "--preview", "git cat {}",
-      "--preview-window", "down:75%:wrap:nohidden",
     ],
   }
 
