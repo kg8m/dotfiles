@@ -34,6 +34,7 @@ fi
 options=(
   --format json
   --stdin
+  --stdin-filename "$(format_target_filepath "${target_filepath}")"
 )
 
 if [ "${is_fixing}" = "1" ]; then
@@ -48,7 +49,6 @@ if [ "${is_fixing}" = "1" ]; then
   )
 else
   options+=(
-    --stdin-filename "$(format_target_filepath "${target_filepath}")"
     --config ~/.config/textlint/.textlintrc.js
   )
 fi
