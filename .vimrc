@@ -88,11 +88,6 @@ if kg8m#plugin#register("tyru/caw.vim", { if: !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#caw#configure()
 endif
 
-if kg8m#plugin#register("rhysd/clever-f.vim")
-  g:clever_f_smart_case = true
-  g:clever_f_use_migemo = true
-endif
-
 if kg8m#plugin#register("Shougo/context_filetype.vim")
   kg8m#plugin#context_filetype#configure()
 endif
@@ -367,9 +362,7 @@ endif
 
 if kg8m#plugin#register("monkoose/vim9-stargate")
   g:stargate_chars = "FKLASDHGUIONMREWCVTYBX,;J"
-
-  map <Leader>f <Cmd>call stargate#ok_vim(2)<CR>
-  nmap <C-w>f :call stargate#galaxy()<CR>
+  nnoremap <C-w>f :call stargate#galaxy()<CR>
 endif
 
 if kg8m#plugin#register("Shougo/vimproc")

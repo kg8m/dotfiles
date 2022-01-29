@@ -11,6 +11,32 @@ def kg8m#configure#mappings#base(): void
   nnoremap <Leader>v :vsplit<CR>
   nnoremap <Leader>h :split<CR>
 
+  # Overwrite default `f`/`F`/`t`/`T`.
+  nnoremap f <Cmd>call kg8m#util#f2#f()<CR>
+  xnoremap f <Cmd>call kg8m#util#f2#f()<CR>
+  onoremap f <Cmd>call kg8m#util#f2#f()<CR>
+  nnoremap F <Cmd>call kg8m#util#f2#F()<CR>
+  xnoremap F <Cmd>call kg8m#util#f2#F()<CR>
+  onoremap F <Cmd>call kg8m#util#f2#F()<CR>
+  nnoremap t <Cmd>call kg8m#util#f2#t()<CR>
+  xnoremap t <Cmd>call kg8m#util#f2#t()<CR>
+  onoremap t <Cmd>call kg8m#util#f2#t()<CR>
+  nnoremap T <Cmd>call kg8m#util#f2#T()<CR>
+  xnoremap T <Cmd>call kg8m#util#f2#T()<CR>
+  onoremap T <Cmd>call kg8m#util#f2#T()<CR>
+
+  nnoremap <Leader>f <Cmd>call kg8m#util#f2#multiline()<CR>
+  xnoremap <Leader>f <Cmd>call kg8m#util#f2#multiline()<CR>
+  onoremap <Leader>f <Cmd>call kg8m#util#f2#multiline()<CR>
+
+  # Overwrite default `;`/`,`.
+  nnoremap ; <Cmd>call kg8m#util#f2#semi()<CR>
+  xnoremap ; <Cmd>call kg8m#util#f2#semi()<CR>
+  onoremap ; <Cmd>call kg8m#util#f2#semi()<CR>
+  nnoremap , <Cmd>call kg8m#util#f2#comma()<CR>
+  xnoremap , <Cmd>call kg8m#util#f2#comma()<CR>
+  onoremap , <Cmd>call kg8m#util#f2#comma()<CR>
+
   # See also settings of vim-lsp and vim-fzf-tjump
   # <C-t>: Jump back
   nnoremap g[ <C-t>
