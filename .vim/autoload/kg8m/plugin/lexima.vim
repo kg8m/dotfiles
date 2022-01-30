@@ -1,7 +1,5 @@
 vim9script
 
-# Get syntax name by `synIDattr(synID(line("."), col("."), 1), "name")`.
-
 var s:queue_on_post_source: list<func>
 
 def kg8m#plugin#lexima#configure(): void

@@ -79,6 +79,8 @@ def s:define_raw_list(): void
 
     ["[Outline][Ruby][RSpec] Show Outline", "call kg8m#plugin#fzf#rspec#outline()"],
 
+    ["[Vim] Get syntax group name", "PP synIDattr(synID(line('.'), col('.'), 1), 'name')"],
+
     ["[SimpleAlign] \"=\"",          "'<,'>SimpleAlign = -count 1"],
     ["[SimpleAlign] \"=>\"",         "'<,'>SimpleAlign => -count 1"],
     ["[SimpleAlign] \"+=\"",         "'<,'>SimpleAlign [\\ +]= -count 1"],
