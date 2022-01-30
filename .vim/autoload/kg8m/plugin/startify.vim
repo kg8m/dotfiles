@@ -75,6 +75,7 @@ def s:setup(): void
     autocmd FileType startify setlocal cursorline cursorlineopt=both
     autocmd ColorScheme  *    s:overwrite_colors()
     autocmd BufWritePost *    s:save_session()
+    autocmd VimLeavePre  *    s:delete_last_session_link()
   augroup END
 enddef
 
@@ -113,6 +114,15 @@ def s:session_name(): string
     ->fnamemodify(":p")
     ->substitute("/", "+=", "g")
     ->substitute('^\.', "_", "")
+enddef
+
+def s:delete_last_session_link(): void
+  const filepath = printf("%s/__LAST__", g:startify_session_dir)
+
+  # Don't use `filereadable(filepath)` because it returns FALSE if the symlink is broken.
+  if !empty(glob(filepath, false, false, true))
+    delete(filepath)
+  endif
 enddef
 
 def s:on_source(): void
