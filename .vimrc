@@ -280,10 +280,6 @@ if kg8m#plugin#register("mattn/vim-molder", { if: !kg8m#util#is_git_tmp_edit() }
   kg8m#plugin#molder#configure()
 endif
 
-if kg8m#plugin#register("kana/vim-operator-replace")
-  kg8m#plugin#operator#replace#configure()
-endif
-
 kg8m#plugin#register("kana/vim-operator-user")
 
 if kg8m#plugin#register("kg8m/vim-parallel-auto-ctags", { if: kg8m#util#is_ctags_available() && !kg8m#util#is_git_tmp_edit() })

@@ -78,6 +78,11 @@ def kg8m#configure#mappings#base(): void
   cnoremap <C-a> <Home>
   cnoremap <C-e> <End>
 
+  # Replace selected text with unnamed register content without overwriting.
+  # :h visual-operators
+  #   v_P: put without unnamed register overwrite
+  xnoremap r P
+
   # v_o: Go to other end of highlighted text
   # Invert visual selection start and end => !
   xnoremap ! o
