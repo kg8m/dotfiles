@@ -100,7 +100,7 @@ enddef
 
 def s:notify(message: string, options: dict<any> = {}): void
   const is_stay = get(options, "stay", false)
-  const level   = get(options, "level", "warn")
+  const level   = get(options, "level", "info")
 
   const hostname = system("hostname")->trim()
   const title    = "Updating Vim plugins"
@@ -120,9 +120,14 @@ def s:notify(message: string, options: dict<any> = {}): void
 
   const message_with_title = title .. ": " .. message
 
-  if level ==# "warn"
+  if level ==# "info"
+    kg8m#util#logger#info(message_with_title)
+  elseif level ==# "warn"
     kg8m#util#logger#warn(message_with_title)
-  else
+  elseif level ==# "error"
     kg8m#util#logger#error(message_with_title)
+  else
+    kg8m#util#logger#error(printf("%s: unknown level (%s)", title, string(level)))
+    kg8m#util#logger#info(message_with_title)
   endif
 enddef
