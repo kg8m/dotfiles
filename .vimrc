@@ -83,6 +83,21 @@ if kg8m#plugin#register("tyru/caw.vim", { if: !kg8m#util#is_git_tmp_edit() })
   kg8m#plugin#caw#configure()
 endif
 
+if kg8m#plugin#register("rhysd/conflict-marker.vim")
+  augroup vimrc-plugin-conflict_marker
+    autocmd!
+    autocmd FileType diff nmap <buffer> <Leader>c <Plug>(conflict-marker-next-hunk)
+  augroup END
+
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_map: { n: "<Plug>(conflict-marker-" },
+    hook_source: () => {
+      g:conflict_marker_enable_mappings = false
+    },
+  })
+endif
+
 if kg8m#plugin#register("Shougo/context_filetype.vim")
   const for_js = [
     { start: '\<html`$', end: '\v^\s*%(//|/?\*)?\s*`', filetype: "html" },
@@ -447,7 +462,15 @@ kg8m#plugin#register("kana/vim-textobj-indent", { lazy: true, on_start: true })
 # Text object for last search pattern: /
 kg8m#plugin#register("kana/vim-textobj-lastpat", { lazy: true, on_start: true })
 
+# Text object for string: ,s
+if kg8m#plugin#register("rbtnn/vim-textobj-string", { lazy: true, on_start: true })
+  g:vim_textobj_string_mapping = ",s"
+endif
+
 kg8m#plugin#register("kana/vim-textobj-user")
+
+# Text object for word for human: ,w
+kg8m#plugin#register("h1mesuke/textobj-wiw", { lazy: true, on_start: true })
 
 # For syntaxes
 kg8m#plugin#register("thinca/vim-themis")
