@@ -60,16 +60,20 @@ end
 # http://d.hatena.ne.jp/LukeSilvia/20101023/p1
 # http://github.com/gmarik/dotfiles/blob/84073cf564b601c99dc4b3b7910bd91234ff94f5/.ruby/lib/gmarik/irb-1.8-history-fix.rb
 # http://stackoverflow.com/questions/2065923/irb-history-not-working
-require 'irb/ext/save-history'
-module IRB
-  # use at_exit hook instead finalizer to save history
-  # as finalizer is NOT guaranteed to run
-  def HistorySavingAbility.extended(obj); 
-    Kernel.at_exit{ HistorySavingAbility.create_finalizer.call }
-    obj.load_history #TODO: super?
-    obj
-  end
-end if IRB::HistorySavingAbility.respond_to?(:create_finalizer)
+begin
+  require "irb/ext/save-history"
+  module IRB
+    # use at_exit hook instead finalizer to save history
+    # as finalizer is NOT guaranteed to run
+    def HistorySavingAbility.extended(obj); 
+      Kernel.at_exit{ HistorySavingAbility.create_finalizer.call }
+      obj.load_history #TODO: super?
+      obj
+    end
+  end if IRB::HistorySavingAbility.respond_to?(:create_finalizer)
+rescue LoadError => e
+  $stderr.puts "ERROR -- #{e.inspect}"
+end
 
 # http://rvm.beginrescueend.com/workflow/irbrc/
 # for RVM
@@ -116,12 +120,22 @@ when ENV.include?("RAILS_ENV") && !Object.const_defined?("RAILS_DEFAULT_LOGGER")
   RAILS_DEFAULT_LOGGER = Logger.new($stdout)
 end
 
-require 'rubygems'
-require 'wirble'
-require 'hirb'
-require 'hirb-unicode'
+require "rubygems"
 
-Wirble.init
-Wirble.colorize
+begin
+  require "wirble"
 
-Hirb.enable
+  Wirble.init
+  Wirble.colorize
+rescue LoadError => e
+  $stderr.puts "ERROR -- #{e.inspect}"
+end
+
+begin
+  require "hirb"
+  require "hirb-unicode"
+
+  Hirb.enable
+rescue LoadError => e
+  $stderr.puts "ERROR -- #{e.inspect}"
+end
