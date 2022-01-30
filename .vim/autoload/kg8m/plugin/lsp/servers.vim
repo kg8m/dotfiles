@@ -114,10 +114,6 @@ enddef
 def s:register_golangci_lint_langserver(): void
   s:_register({
     name: "golangci-lint-langserver",
-    cmd: (_) => ["golangci-lint-langserver"],
-    initialization_options: {
-      command: ["golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json"],
-    },
     allowlist: ["go"],
   })
 enddef
