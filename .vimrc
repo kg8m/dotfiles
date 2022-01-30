@@ -84,7 +84,16 @@ if kg8m#plugin#register("tyru/caw.vim", { if: !kg8m#util#is_git_tmp_edit() })
 endif
 
 if kg8m#plugin#register("Shougo/context_filetype.vim")
-  kg8m#plugin#context_filetype#configure()
+  const for_js = [
+    { start: '\<html`$', end: '\v^\s*%(//|/?\*)?\s*`', filetype: "html" },
+    { start: '\<css`$',  end: '\v^\s*%(//|/?\*)?\s*`', filetype: "css" },
+  ]
+
+  # For caw.vim and so on
+  g:context_filetype#filetypes = {
+    javascript: for_js,
+    typescript: for_js,
+  }
 endif
 
 if kg8m#plugin#register("spolu/dwm.vim", { if: !kg8m#util#is_git_tmp_edit() })
@@ -134,7 +143,13 @@ if kg8m#plugin#register("itchyny/lightline.vim")
 endif
 
 if kg8m#plugin#register("AndrewRadev/linediff.vim")
-  kg8m#plugin#linediff#configure()
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_cmd: "Linediff",
+    hook_source: () => {
+      g:linediff_second_buffer_command = "rightbelow vertical new"
+    },
+  })
 endif
 
 kg8m#plugin#register("kg8m/moin.vim")
@@ -148,7 +163,13 @@ if kg8m#plugin#register("tyru/open-browser.vim")
 endif
 
 if kg8m#plugin#register("tyru/operator-camelize.vim")
-  kg8m#plugin#operator#camelize#configure()
+  xmap <Leader>C <Plug>(operator-camelize)
+  xmap <Leader>c <Plug>(operator-decamelize)
+
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_map: { x: ["<Plug>(operator-camelize)", "<Plug>(operator-decamelize)"] },
+  })
 endif
 
 if kg8m#plugin#register("yssl/QFEnter")
@@ -168,17 +189,43 @@ if kg8m#plugin#register("stefandtw/quickfix-reflector.vim")
 endif
 
 if kg8m#plugin#register("mechatroner/rainbow_csv", { if: !kg8m#util#is_git_tmp_edit() })
-  kg8m#plugin#rainbow_csv#configure()
+  augroup vimrc-plugin-rainbow_csv
+    autocmd!
+    autocmd BufNewFile,BufRead *.csv set filetype=csv
+  augroup END
+
+  kg8m#plugin#configure({
+    lazy:  true,
+    on_ft: "csv",
+  })
 endif
 
 kg8m#plugin#register("lambdalisue/readablefold.vim", { if: !kg8m#util#is_git_tmp_edit() })
 
 if kg8m#plugin#register("vim-scripts/sequence")
-  kg8m#plugin#sequence#configure()
+  map <Leader>+ <Plug>SequenceV_Increment
+  map <Leader>- <Plug>SequenceV_Decrement
+
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_map: { x: "<Plug>Sequence" },
+  })
 endif
 
 if kg8m#plugin#register("AndrewRadev/splitjoin.vim", { if: !kg8m#util#is_git_tmp_edit() })
-  kg8m#plugin#splitjoin#configure()
+  nnoremap <Leader>J :SplitjoinJoin<CR>
+  nnoremap <Leader>S :SplitjoinSplit<CR>
+
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_cmd: ["SplitjoinJoin", "SplitjoinSplit"],
+    hook_source: () => {
+      g:splitjoin_split_mapping       = ""
+      g:splitjoin_join_mapping        = ""
+      g:splitjoin_ruby_trailing_comma = true
+      g:splitjoin_ruby_hanging_args   = false
+    },
+  })
 endif
 
 kg8m#plugin#register("lambdalisue/suda.vim")
@@ -188,7 +235,18 @@ if kg8m#plugin#register("leafgarland/typescript-vim")
 endif
 
 if kg8m#plugin#register("mbbill/undotree")
-  kg8m#plugin#undotree#configure()
+  nnoremap <Leader>u :UndotreeToggle<CR>
+
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_cmd: "UndotreeToggle",
+    hook_source: () => {
+      g:undotree_WindowLayout = 2
+      g:undotree_SplitWidth = 50
+      g:undotree_DiffpanelHeight = 30
+      g:undotree_SetFocusWhenToggle = true
+    },
+  })
 endif
 
 if kg8m#plugin#register("Shougo/unite.vim", { if: !kg8m#util#is_git_tmp_edit() })
@@ -225,7 +283,14 @@ endif
 kg8m#plugin#register("hail2u/vim-css3-syntax", { if: !kg8m#util#is_git_tmp_edit() })
 
 if kg8m#plugin#register("wsdjeg/vim-fetch")
-  kg8m#plugin#fetch#configure()
+  augroup vimrc-plugin-fetch
+    autocmd!
+    autocmd VimEnter * {
+      # Disable vim-fetch's `gF` mappings because it conflicts with other plugins
+      nmap gF <Plug>(gf-user-gF)
+      xmap gF <Plug>(gf-user-gF)
+    }
+  augroup END
 endif
 
 kg8m#plugin#register("thinca/vim-ft-diff_fold")
@@ -234,7 +299,12 @@ kg8m#plugin#register("muz/vim-gemfile")
 kg8m#plugin#register("kana/vim-gf-user")
 
 if kg8m#plugin#register("tpope/vim-git", { if: kg8m#util#is_git_commit() })
-  kg8m#plugin#git#configure()
+  augroup vimrc-plugin-git
+    autocmd!
+
+    # Prevent vim-git from change options, e.g., formatoptions
+    autocmd FileType gitcommit b:did_ftplugin = true
+  augroup END
 endif
 
 # Use LSP for completion, linting/formatting codes, and jumping to definition.
@@ -254,16 +324,36 @@ if kg8m#plugin#register("obcat/vim-hitspop")
 endif
 
 if kg8m#plugin#register("git@github.com:kg8m/vim-hz_ja-extracted")
-  kg8m#plugin#hz_ja_extracted#configure()
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_cmd: ["Hankaku", "HzjaConvert", "Zenkaku"],
+    hook_source: () => {
+      g:hz_ja_extracted_default_commands = true
+      g:hz_ja_extracted_default_mappings = false
+    },
+  })
 endif
 
 # Text object for (Japanese) sentence: s
 if kg8m#plugin#register("deton/jasentence.vim")
-  kg8m#plugin#jasentence#configure()
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_map: { nv: ["(", ")"], o: "s" },
+    hook_source: () => {
+      g:jasentence_endpat = '[。．？！!?]\+'
+    },
+  })
 endif
 
 if kg8m#plugin#register("osyo-manga/vim-jplus")
-  kg8m#plugin#jplus#configure()
+  # Remove line-connectors with `J`
+  nmap <S-j> <Plug>(jplus)
+  xmap <S-j> <Plug>(jplus)
+
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_map: { nx: "<Plug>(jplus)" },
+  })
 endif
 
 if kg8m#plugin#register("elzr/vim-json")
@@ -294,7 +384,16 @@ if kg8m#plugin#register("thinca/vim-prettyprint", { if: !kg8m#util#is_git_tmp_ed
 endif
 
 if kg8m#plugin#register("lambdalisue/vim-protocol", { if: !kg8m#util#is_git_tmp_edit() })
-  kg8m#plugin#protocol#configure()
+  # Disable netrw.vim
+  g:loaded_netrw             = true
+  g:loaded_netrwPlugin       = true
+  g:loaded_netrwSettings     = true
+  g:loaded_netrwFileHandlers = true
+
+  kg8m#plugin#configure({
+    lazy:    true,
+    on_path: '^https\?://',
+  })
 endif
 
 if kg8m#plugin#register("tpope/vim-rails", { if: !kg8m#util#is_git_tmp_edit() && kg8m#util#on_rails_dir() })
@@ -304,7 +403,17 @@ endif
 kg8m#plugin#register("tpope/vim-repeat")
 
 if kg8m#plugin#register("vim-ruby/vim-ruby")
-  kg8m#plugin#ruby#configure()
+  g:no_ruby_maps = true
+
+  augroup vimrc-plugin-ruby
+    autocmd!
+
+    # vim-ruby overwrites vim-gemfile's filetype detection
+    autocmd BufEnter Gemfile set filetype=Gemfile
+
+    # Prevent vim-matchup from being wrong for Ruby's modifier `if`/`unless`
+    autocmd FileType ruby unlet! b:ruby_no_expensive
+  augroup END
 endif
 
 if kg8m#plugin#register("joker1007/vim-ruby-heredoc-syntax", { if: !kg8m#util#is_git_tmp_edit() })
@@ -323,7 +432,12 @@ if kg8m#plugin#register("mhinz/vim-startify", { if: !kg8m#util#is_git_tmp_edit()
 endif
 
 if kg8m#plugin#register("kopischke/vim-stay", { if: !kg8m#util#is_git_commit() })
-  kg8m#plugin#stay#configure()
+  set viewoptions=cursor,folds
+
+  augroup vimrc-plugin-stay
+    autocmd!
+    autocmd User BufStaySavePre kg8m#configure#folding#manual#restore()
+  augroup END
 endif
 
 kg8m#plugin#register("hashivim/vim-terraform")
@@ -371,14 +485,26 @@ endif
 kg8m#plugin#register("vim-jp/vital.vim", { merged: false })
 
 if kg8m#plugin#register("simeji/winresizer", { if: !kg8m#util#is_git_tmp_edit() })
-  kg8m#plugin#winresizer#configure()
+  g:winresizer_start_key = "<C-w><C-e>"
+
+  kg8m#plugin#configure({
+    lazy:   true,
+    on_map: { n: g:winresizer_start_key },
+  })
 endif
 
 kg8m#plugin#register("stephpy/vim-yaml", { if: !kg8m#util#is_git_tmp_edit() })
 kg8m#plugin#register("pedrohdz/vim-yaml-folds", { if: !kg8m#util#is_git_tmp_edit() })
 
 if kg8m#plugin#register("jonsmithers/vim-html-template-literals", { if: !kg8m#util#is_git_tmp_edit() })
-  kg8m#plugin#html_template_literals#configure()
+  g:htl_css_templates = true
+  g:htl_all_templates = false
+
+  kg8m#plugin#configure({
+    depends: "vim-javascript",
+  })
+
+  kg8m#plugin#register("pangloss/vim-javascript")
 endif
 
 if kg8m#plugin#register("LeafCage/yankround.vim")
