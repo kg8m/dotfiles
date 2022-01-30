@@ -12,38 +12,32 @@ const s:green      = [ "#a6e22e", 118 ]
 const s:orange     = [ "#fd971f", 208 ]
 const s:red        = [ "#f92672", 161 ]
 
+const s:base    = [ s:white, s:light_gray ]
+const s:error   = [ s:white, s:red ]
+const s:warning = [ s:black, s:white ]
+
 g:lightline#colorscheme#kg8m#palette = lightline#colorscheme#flatten({
   normal: {
-    left:    [ [ s:black, s:sand ], [ s:white, s:light_gray ] ],
-    middle:  [ [ s:white, s:light_gray ] ],
-    right:   [ [ s:white, s:light_gray ] ],
-    error:   [ [ s:white, s:red ] ],
-    warning: [ [ s:black, s:white ] ],
+    left:    [ [ s:black, s:sand ], s:base ],
+    middle:  [ s:base ],
+    right:   [ s:base ],
+    error:   [ s:error ],
+    warning: [ s:warning ],
   },
   inactive: {
-    left:   [ [ s:black, s:sand ], [ s:white, s:light_gray ] ],
-    middle: [ [ s:white, s:light_gray ] ],
-    right:  [ [ s:white, s:light_gray ] ],
+    left: [ [ s:black, s:sand ], s:base ],
   },
   insert: {
-    left:   [ [ s:black, s:blue ], [ s:white, s:light_gray ] ],
-    middle: [ [ s:white, s:light_gray ] ],
-    right:  [ [ s:white, s:light_gray ] ],
+    left: [ [ s:black, s:blue ], s:base ],
   },
   replace: {
-    left:   [ [ s:black, s:green ], [ s:white, s:light_gray ] ],
-    middle: [ [ s:white, s:light_gray ] ],
-    right:  [ [ s:white, s:light_gray ] ],
+    left: [ [ s:black, s:green ], s:base ],
   },
   visual: {
-    left:   [ [ s:black, s:orange ], [ s:white, s:light_gray ] ],
-    middle: [ [ s:white, s:light_gray ] ],
-    right:  [ [ s:white, s:light_gray ] ],
+    left: [ [ s:black, s:orange ], s:base ],
   },
   tabline: {
-    left:   [ [ s:white, s:light_gray ] ],
+    left:   [ s:base ],
     tabsel: [ [ s:black, s:sand ] ],
-    middle: [ [ s:white, s:light_gray ] ],
-    right:  [ [ s:white, s:light_gray ] ],
   },
 })
