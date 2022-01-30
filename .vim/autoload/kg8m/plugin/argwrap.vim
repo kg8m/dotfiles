@@ -11,9 +11,9 @@ def kg8m#plugin#argwrap#configure(): void
 enddef
 
 def s:set_local_options(): void
-  if &filetype =~# '\v^(eruby|ruby)$'
+  if &filetype =~# '\v^%(eruby|ruby)$'
     b:argwrap_tail_comma_braces = "([{"
-  elseif &filetype =~# '\v^(javascript|typescript)(react)?$'
+  elseif &filetype =~# '\v^%(javascript|typescript)%(react)?$'
     b:argwrap_tail_comma_braces = "([{"
   elseif &filetype ==# "vim"
     b:argwrap_tail_comma_braces = "[{"
