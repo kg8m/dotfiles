@@ -1,54 +1,12 @@
 vim9script
 
-const s:elements = {
-  left: [
-    ["mode", "paste"],
-    ["warning_filepath"], ["normal_filepath"],
-    ["separator"],
-    ["filetype"],
-    ["warning_fileencoding"], ["normal_fileencoding"],
-    ["fileformat"],
-    ["separator"],
-    ["cursor_position"],
-  ],
-  right: [
-    ["lsp_status"],
-  ],
-}
-
-final s:cache = {}
-
 def kg8m#plugin#lightline#configure(): void
-  # http://d.hatena.ne.jp/itchyny/20130828/1377653592
-  set laststatus=2
-
-  g:lightline = {
-    active: s:elements,
-    inactive: s:elements,
-    component: {
-      separator: "|",
-      cursor_position: "%l/%L:%v",
-    },
-    component_function: {
-      normal_filepath:     "kg8m#plugin#lightline#normal_filepath",
-      normal_fileencoding: "kg8m#plugin#lightline#normal_fileencoding",
-      lsp_status:          "kg8m#plugin#lightline#lsp_status",
-    },
-    component_expand: {
-      warning_filepath:     "kg8m#plugin#lightline#warning_filepath",
-      warning_fileencoding: "kg8m#plugin#lightline#warning_fileencoding",
-    },
-    component_type: {
-      warning_filepath:     "error",
-      warning_fileencoding: "error",
-    },
-    colorscheme: "kg8m",
-  }
-
-  augroup vimrc-plugin-lightline
-    autocmd!
-    autocmd User after_lsp_buffer_enabled lightline#update()
-  augroup END
+  kg8m#plugin#configure({
+    lazy:     true,
+    on_start: true,
+    hook_source:      () => s:on_source(),
+    hook_post_source: () => s:on_post_source(),
+  })
 enddef
 
 def kg8m#plugin#lightline#filepath(): string
@@ -151,4 +109,57 @@ def s:_lsp_status(): string
   else
     return join(mapped, " ")
   endif
+enddef
+
+def s:on_source(): void
+  # http://d.hatena.ne.jp/itchyny/20130828/1377653592
+  set laststatus=2
+
+  const elements = {
+    left: [
+      ["mode", "paste"],
+      ["warning_filepath"], ["normal_filepath"],
+      ["separator"],
+      ["filetype"],
+      ["warning_fileencoding"], ["normal_fileencoding"],
+      ["fileformat"],
+      ["separator"],
+      ["cursor_position"],
+    ],
+    right: [
+      ["lsp_status"],
+    ],
+  }
+
+  g:lightline = {
+    active: elements,
+    inactive: elements,
+    component: {
+      separator: "|",
+      cursor_position: "%l/%L:%v",
+    },
+    component_function: {
+      normal_filepath:     "kg8m#plugin#lightline#normal_filepath",
+      normal_fileencoding: "kg8m#plugin#lightline#normal_fileencoding",
+      lsp_status:          "kg8m#plugin#lightline#lsp_status",
+    },
+    component_expand: {
+      warning_filepath:     "kg8m#plugin#lightline#warning_filepath",
+      warning_fileencoding: "kg8m#plugin#lightline#warning_fileencoding",
+    },
+    component_type: {
+      warning_filepath:     "error",
+      warning_fileencoding: "error",
+    },
+    colorscheme: "kg8m",
+  }
+
+  augroup vimrc-plugin-lightline
+    autocmd!
+    autocmd User after_lsp_buffer_enabled lightline#update()
+  augroup END
+enddef
+
+def s:on_post_source(): void
+  lightline#update()
 enddef

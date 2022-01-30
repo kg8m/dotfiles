@@ -1,6 +1,15 @@
 vim9script
 
 def kg8m#plugin#parallel_auto_ctags#configure(): void
+  kg8m#plugin#configure({
+    lazy:     true,
+    on_start: true,
+    hook_source:      () => s:on_source(),
+    hook_post_source: () => s:on_post_source(),
+  })
+enddef
+
+def s:on_source(): void
   g:parallel_auto_ctags#entry_points = {
     pwd: {
       path:    ".",
@@ -20,4 +29,8 @@ def kg8m#plugin#parallel_auto_ctags#configure(): void
       silent:  false,
     }
   endif
+enddef
+
+def s:on_post_source(): void
+  parallel_auto_ctags#create_all()
 enddef

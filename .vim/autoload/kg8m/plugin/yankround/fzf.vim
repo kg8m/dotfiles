@@ -2,7 +2,7 @@ vim9script
 
 # https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
 def kg8m#plugin#yankround#fzf#list(): list<string>
-  return range(0, len(g:_yankround_cache) - 1)->mapnew((_, index) => s:format_list_item(index))
+  return range(0, len(kg8m#plugin#yankround#cache()) - 1)->mapnew((_, index) => s:format_list_item(index))
 enddef
 
 def kg8m#plugin#yankround#fzf#preview_command(): string
@@ -11,8 +11,8 @@ enddef
 
 # Overwrite current register `"`
 def kg8m#plugin#yankround#fzf#handler(yank_item: string): void
-  const index   = matchlist(yank_item, '\v^\s*(\d+)\t')[1]
-  const cache   = yankround#_get_cache_and_regtype(index)
+  const index   = matchlist(yank_item, '\v^\s*(\d+)\t')[1]->str2nr()
+  const cache   = kg8m#plugin#yankround#cache_and_regtype(index)
   const text    = cache[0]
   const regtype = cache[1]
 
@@ -21,7 +21,7 @@ def kg8m#plugin#yankround#fzf#handler(yank_item: string): void
 enddef
 
 def s:format_list_item(index: number): string
-  const text  = yankround#_get_cache_and_regtype(index)[0]
+  const text  = kg8m#plugin#yankround#cache_and_regtype(index)[0]
 
   # Avoid shell's syntax error in fzf's preview
   const sanitized_text = substitute(text, "\n", "\\\\n", "g")

@@ -1,6 +1,14 @@
 vim9script
 
 def kg8m#plugin#indent_line#configure(): void
+  kg8m#plugin#configure({
+    lazy:     true,
+    on_start: true,
+    hook_source: () => s:on_source(),
+  })
+enddef
+
+def s:on_source(): void
   kg8m#configure#conceal()
 
   g:indentLine_char            = "|"

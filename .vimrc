@@ -173,12 +173,7 @@ if kg8m#plugin#register("tyru/operator-camelize.vim")
 endif
 
 if kg8m#plugin#register("yssl/QFEnter")
-  g:qfenter_keymap = {
-    open: ["<CR>"],
-
-    # Disable other mappings.
-    vopen: [], hopen: [], topen: [],
-  }
+  kg8m#plugin#qfenter#configure()
 endif
 
 if kg8m#plugin#register("stefandtw/quickfix-reflector.vim")

@@ -3,19 +3,11 @@ vim9script
 final s:cache = {}
 
 def kg8m#plugin#hitspop#configure(): void
-  g:hitspop_line       = "winbot"
-  g:hitspop_line_mod   = -1
-  g:hitspop_column     = "winright"
-  g:hitspop_column_mod = -2
-  g:hitspop_maxwidth   = 50
-  g:hitspop_timeout    = 100
-
-  augroup vimrc-plugin-hitspop
-    autocmd!
-    autocmd CmdlineChanged /            s:update_search_status()
-    autocmd User search_start           hitspop#main()
-    autocmd User clear_search_highlight hitspop#clean()
-  augroup END
+  kg8m#plugin#configure({
+    lazy:     true,
+    on_start: true,
+    hook_source: () => s:on_source(),
+  })
 enddef
 
 def s:update_search_status(): void
@@ -37,4 +29,20 @@ def s:force_update_search_status(): void
     @/ = input
     hitspop#main()
   endif
+enddef
+
+def s:on_source(): void
+  g:hitspop_line       = "winbot"
+  g:hitspop_line_mod   = -1
+  g:hitspop_column     = "winright"
+  g:hitspop_column_mod = -2
+  g:hitspop_maxwidth   = 50
+  g:hitspop_timeout    = 100
+
+  augroup vimrc-plugin-hitspop
+    autocmd!
+    autocmd CmdlineChanged /            s:update_search_status()
+    autocmd User search_start           hitspop#main()
+    autocmd User clear_search_highlight hitspop#clean()
+  augroup END
 enddef
