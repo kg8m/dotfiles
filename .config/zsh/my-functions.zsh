@@ -103,43 +103,63 @@ function horizontal_line {
 }
 
 function highlight:red {
-  printf "\e[1;38;5;1m%s\e[0;0m" "${*:?}"
+  highlight:base "1" "$@"
 }
 
 function highlight:green {
-  printf "\e[1;38;5;2m%s\e[0;0m" "${*:?}"
+  highlight:base "2" "$@"
 }
 
 function highlight:yellow {
-  printf "\e[1;38;5;3m%s\e[0;0m" "${*:?}"
+  highlight:base "3" "$@"
 }
 
 function highlight:magenta {
-  printf "\e[1;38;5;5m%s\e[0;0m" "${*:?}"
+  highlight:base "5" "$@"
 }
 
 function highlight:cyan {
-  printf "\e[1;38;5;6m%s\e[0;0m" "${*:?}"
+  highlight:base "6" "$@"
 }
 
 function highlight:gray {
-  printf "\e[1;38;5;245m%s\e[0;0m" "${*:?}"
+  highlight:base "245" "$@"
+}
+
+function highlight:base {
+  local color="${1:?}"
+  shift 1
+
+  local style="1"
+  local args=()
+
+  local arg
+  for arg in "$@"; do
+    case "${arg}" in
+      --no-bold | --nobold)
+        style="0"
+        ;;
+      *)
+        args+=("${arg}")
+        ;;
+    esac
+
+    shift 1
+  done
+
+  printf "\e[%d;38;5;%dm%s\e[0;0m" "${style}" "${color}" "${args[*]}"
 }
 
 function echo:error {
-  highlight:red "ERROR" >&2
-  printf " -- " >&2
-  echo "$@" >&2
+  printf "%s\n" "$(highlight:red "ERROR -- $*")" >&2
 }
 
 function echo:warn {
-  highlight:yellow "WARN" >&2
-  printf " -- " >&2
-  echo "$@" >&2
+  printf "%s\n" "$(highlight:yellow "WARN -- $*")" >&2
 }
 
 function echo:info {
-  printf "INFO -- %s\n" "$*" >&2
+  printf "%s\n" "$(highlight:cyan "INFO -- $*" --nobold)" >&2
 }
 
 # cf. `man zshcontrib` for `zmv`
