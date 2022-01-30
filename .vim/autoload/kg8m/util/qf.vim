@@ -106,7 +106,7 @@ def kg8m#util#qf#delete(name: string = ""): void
   endif
 enddef
 
-def s:process(name: string, Callback: func): void
+def s:process(name: string, Callback: func(string)): void
   const filepath = s:name_to_filepath(name)
 
   if filereadable(filepath)
