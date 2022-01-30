@@ -77,7 +77,7 @@ def s:reset_target_buffer(): void
 enddef
 
 def s:set_omnifunc(): void
-  if &omnifunc !=# "lsp#complete" && kg8m#plugin#lsp#is_buffer_enabled()
+  if &omnifunc !=# "lsp#complete"
     setlocal omnifunc=lsp#complete
   endif
 enddef
