@@ -17,7 +17,7 @@ def s:run(): string
 enddef
 
 def s:on_source(): void
-  g:histexclude = { ":": '\v^[:[:space:]]*(\d+\s*$|w(rite)?!?$|wq!?$|q(uit)?!?$|qa(ll)?!?$)' }
+  g:histexclude = { ":": '\v^[:[:space:]]*%(\d+|b.|e|w?%[qa]?)!?\s*$' }
 
   # Disable because mappings like `q:` by vim-histexclude conflict with my mapping `q`
   g:histexclude_mappings = false
