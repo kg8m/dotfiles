@@ -19,8 +19,9 @@ def kg8m#plugin#yankround#cache_and_regtype(index: number): list<string>
 enddef
 
 def s:on_source(): void
-  g:yankround_dir         = $XDG_DATA_HOME .. "/vim/yankround"
-  g:yankround_max_history = 500
+  g:yankround_dir           = $XDG_DATA_HOME .. "/vim/yankround"
+  g:yankround_max_history   = 500
+  g:yankround_use_region_hl = true
 
   nmap p     <Plug>(yankround-p)
   xmap p     <Plug>(yankround-p)
