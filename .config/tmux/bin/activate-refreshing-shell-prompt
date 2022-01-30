@@ -6,6 +6,10 @@ zsh_pane_ids=("${(@f)$(
   tmux list-panes -F "#{pane_id}" -f "#{==:#{pane_current_command},zsh}"
 )}")
 
+if [ -z "${zsh_pane_ids[*]}" ]; then
+  exit
+fi
+
 for pane_id in "${zsh_pane_ids[@]}"; do
   # Input a dummy text and delete it for refreshing prompt.
   tmux send-keys -t "${pane_id}" _ BSpace
