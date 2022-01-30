@@ -25,14 +25,7 @@ enddef
 
 def kg8m#plugin#lsp#is_target_buffer(): bool
   if !has_key(b:, "lsp_target_buffer")
-    b:lsp_target_buffer = false
-
-    for filetype in kg8m#plugin#lsp#servers#filetypes()
-      if &filetype ==# filetype
-        b:lsp_target_buffer = true
-        break
-      endif
-    endfor
+    b:lsp_target_buffer = kg8m#util#list#includes(kg8m#plugin#lsp#servers#filetypes(), &filetype)
   endif
 
   return b:lsp_target_buffer
