@@ -13,8 +13,13 @@ setopt complete_in_word
 zinit ice lucid wait"0c" blockf atclone"zinit creinstall \${PWD}" atpull"%atclone"
 zinit light zsh-users/zsh-completions
 
-zinit ice lucid wait"0c" as"completion"
-zinit snippet https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker
+zinit ice lucid wait"0c" blockf atclone"zinit creinstall \${PWD}" atpull"%atclone"
+zinit light greymd/docker-zsh-completion
+
+# https://blog.n-z.jp/blog/2019-05-03-docker-zsh-completion.html
+# Enable completion after 1-char option without spaces, e.g., `docker run -i[TAB]`.
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=245,bold"
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
