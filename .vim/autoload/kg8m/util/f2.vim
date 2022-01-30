@@ -98,7 +98,7 @@ def s:run_singleline(): void
     endif
 
     const message = printf("There are no matches for %s", string(s:cache.input))
-    kg8m#util#logger#info(message)
+    kg8m#util#logger#info(message, { save_history: false })
     s:reset()
   else
     const line_number = position[0]
