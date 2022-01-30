@@ -19,15 +19,15 @@ def kg8m#plugin#mappings#i#define(options: dict<bool> = {}): void
   inoremap <buffer><expr><silent> <BS>  <SID>bs_expr()
   inoremap <buffer><expr><silent> <C-h> <SID>bs_expr()
 
-  inoremap <buffer><expr>         <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <buffer><expr>         <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <buffer><expr>         <Tab>   pumvisible() ? "<C-n>" : "<Tab>"
+  inoremap <buffer><expr>         <S-Tab> pumvisible() ? "<C-p>" : "<S-Tab>"
 
   # Insert selected completion candidate word via `<Up>`/`<Down>` keys like `<C-p>`/`<C-n>` keys.
   # <Up>:   Select the previous match, as if CTRL-P was used, but don't insert it.
   # <Down>: Select the next match, as if CTRL-N was used, but don't insert it.
   # :h popupmenu-keys
-  inoremap <buffer><expr>         <Up>   pumvisible() ? "\<C-p>" : "\<Up>"
-  inoremap <buffer><expr>         <Down> pumvisible() ? "\<C-n>" : "\<Down>"
+  inoremap <buffer><expr>         <Up>   pumvisible() ? "<C-p>" : "<Up>"
+  inoremap <buffer><expr>         <Down> pumvisible() ? "<C-n>" : "<Down>"
 
   # <silent> for lexima#expand's echo
   imap     <buffer><expr><silent> > <SID>gt_expr()
