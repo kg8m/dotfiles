@@ -1,6 +1,6 @@
 vim9script
 
-# Call this function multiple times for overwriting plugins' mappings.
+# This function can be called multiple times in order to overwrite plugins' mappings.
 def kg8m#plugin#mappings#i#define(options: dict<bool> = {}): void
   if has_key(b:, "is_defined") && get(options, "force", false)
     return
