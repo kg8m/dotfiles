@@ -517,7 +517,6 @@ function update_zsh_plugins {
 
   execute_with_echo "compile_zshrcs:cleanup"
 
-  execute_with_echo "zinit self-update"
   execute_with_echo "zinit delete --clean --yes"
   execute_with_echo "zinit cclear"
   execute_with_echo "find ${ZINIT[SNIPPETS_DIR]:?} -type d -empty -delete"
