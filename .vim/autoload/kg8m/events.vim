@@ -2,10 +2,10 @@ vim9script
 
 augroup vimrc-events
   autocmd!
-  autocmd User search_start              silent
-  autocmd User clear_search_highlight    silent
-  autocmd User insert_mode_plugin_loaded silent
-  autocmd User after_lsp_buffer_enabled  silent
+  autocmd User search_start              ++once silent
+  autocmd User clear_search_highlight    ++once silent
+  autocmd User insert_mode_plugin_loaded ++once silent
+  autocmd User after_lsp_buffer_enabled  ++once silent
 augroup END
 
 def kg8m#events#notify_search_start(): void
