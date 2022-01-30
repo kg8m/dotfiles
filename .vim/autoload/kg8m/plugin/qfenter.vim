@@ -15,4 +15,9 @@ def s:on_source(): void
     # Disable other mappings.
     vopen: [], hopen: [], topen: [],
   }
+
+  # default: "##cc"
+  # zv: Show cursor even if in fold.
+  # zz: Adjust cursor at center of window.
+  g:qfenter_cc_cmd = "##cc | normal! zvzz"
 enddef
