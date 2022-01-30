@@ -38,7 +38,7 @@ enddef
 def s:setup_refresh_keywords(): void
   var asyncomplete_buffer_sid = ""
 
-  for scriptname in split(execute("scriptnames"), '\n')
+  for scriptname in split(execute("scriptnames"), "\n")
     if scriptname =~# 'asyncomplete-buffer\.vim/autoload/asyncomplete/sources/buffer\.vim'
       asyncomplete_buffer_sid = matchstr(scriptname, '\v^ *(\d+)')
       break
