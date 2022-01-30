@@ -122,7 +122,7 @@ def s:activate_golangci_lint_langserver(): void
   s:activate("golangci-lint-langserver", {
     cmd: (_) => ["golangci-lint-langserver"],
     initialization_options: {
-      command: ["golangci-lint", "run", "--enable-all", "--disable", "lll", "--out-format", "json"],
+      command: ["golangci-lint", "run", "--enable-all", "--out-format", "json"],
     },
   })
 enddef
