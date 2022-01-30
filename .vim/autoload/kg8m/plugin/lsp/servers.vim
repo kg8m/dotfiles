@@ -2,7 +2,6 @@ vim9script
 
 final s:named_configs: dict<dict<any>>           = {}
 final s:filetyped_configs: dict<list<dict<any>>> = {}
-final s:availabilities: dict<bool>               = {}
 
 final s:cache = {}
 
@@ -456,9 +455,9 @@ def s:_register(config: dict<any>): void
     executable = config.name
   endif
 
-  if executable(executable)
-    s:named_configs[config.name] = config
+  s:named_configs[config.name] = config
 
+  if get(config, "available", true) && executable(executable)
     for filetype in config.allowlist
       if !has_key(s:filetyped_configs, filetype)
         s:filetyped_configs[filetype] = []
@@ -467,9 +466,9 @@ def s:_register(config: dict<any>): void
       add(s:filetyped_configs[filetype], config)
     endfor
 
-    s:availabilities[config.name] = true
+    config.available = true
   else
-    s:availabilities[config.name] = false
+    config.available = false
   endif
 enddef
 
@@ -549,7 +548,11 @@ def kg8m#plugin#lsp#servers#filetypes(): list<string>
 enddef
 
 def kg8m#plugin#lsp#servers#is_available(server_name: string): bool
-  return get(s:availabilities, server_name, false)
+  if has_key(s:named_configs, server_name)
+    return s:named_configs[server_name].available
+  else
+    return false
+  endif
 enddef
 
 def s:schemas(): list<any>
