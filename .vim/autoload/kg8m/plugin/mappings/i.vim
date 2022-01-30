@@ -10,27 +10,27 @@ def kg8m#plugin#mappings#i#define(options: dict<bool> = {}): void
     return
   endif
 
-  inoremap         <expr> <buffer> . <SID>dot_expr()
+  inoremap <buffer><expr>         . <SID>dot_expr()
 
   # <silent> for lexima#expand's echo
-  imap     <silent><expr> <buffer> <CR> <SID>cr_expr()
+  imap     <buffer><expr><silent> <CR> <SID>cr_expr()
 
   # <silent> for lexima#expand's echo
-  inoremap <silent><expr> <buffer> <BS>  <SID>bs_expr()
-  inoremap <silent><expr> <buffer> <C-h> <SID>bs_expr()
+  inoremap <buffer><expr><silent> <BS>  <SID>bs_expr()
+  inoremap <buffer><expr><silent> <C-h> <SID>bs_expr()
 
-  inoremap         <expr> <buffer> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap         <expr> <buffer> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <buffer><expr>         <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <buffer><expr>         <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
   # Insert selected completion candidate word via `<Up>`/`<Down>` keys like `<C-p>`/`<C-n>` keys.
   # <Up>:   Select the previous match, as if CTRL-P was used, but don't insert it.
   # <Down>: Select the next match, as if CTRL-N was used, but don't insert it.
   # :h popupmenu-keys
-  inoremap         <expr> <buffer> <Up>   pumvisible() ? "\<C-p>" : "\<Up>"
-  inoremap         <expr> <buffer> <Down> pumvisible() ? "\<C-n>" : "\<Down>"
+  inoremap <buffer><expr>         <Up>   pumvisible() ? "\<C-p>" : "\<Up>"
+  inoremap <buffer><expr>         <Down> pumvisible() ? "\<C-n>" : "\<Down>"
 
   # <silent> for lexima#expand's echo
-  imap     <silent><expr> <buffer> > <SID>gt_expr()
+  imap     <buffer><expr><silent> > <SID>gt_expr()
 
   b:is_defined = true
 enddef
