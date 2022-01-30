@@ -79,7 +79,9 @@ def s:bs_expr(): string
 enddef
 
 def s:gt_expr(): string
-  if getline(".")->strpart(col(".") - 1, 1) ==# ">"
+  const following_character = getline(".")->strpart(col(".") - 1, 1)
+
+  if following_character ==# ">"
     return lexima#expand(">", "i")
   else
     if !kg8m#util#list#includes(g:kg8m#plugin#closetag#filetypes, &filetype)
