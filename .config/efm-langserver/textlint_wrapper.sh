@@ -100,3 +100,8 @@ if [ -n "${err}" ]; then
   printf "%s:%s:%s: [textlint] %s\n" "1" "1" "Error" "${detail}"
   exit 1
 fi
+
+if [ "${is_fixing}" = "1" ]; then
+  # Treat as failure if both stdout and stderr are empty in order to avoid unintended formatting.
+  exit 1
+fi
