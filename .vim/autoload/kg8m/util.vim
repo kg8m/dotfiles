@@ -99,10 +99,9 @@ def kg8m#util#remote_copy(original_text: string): void
   system("ssh main -t 'LC_CTYPE=UTF-8 pbcopy'", text)
 
   var message = "Copied"
+  const max_width = v:echospace - 60
 
-  if v:echospace ># 50
-    const max_width = v:echospace - 25
-
+  if max_width ># 10
     # Pass partial text to Vital's `truncate()` because the function is too heavy if the text is large.
     const truncated = kg8m#util#string#vital().truncate(text[0 : max_width], max_width)->trim()
 
