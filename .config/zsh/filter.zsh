@@ -18,5 +18,5 @@ function plugin:setup:anyframe {
   bindkey "^R" anyframe-widget-put-history
   unset -f plugin:setup:anyframe
 }
-zinit ice lucid wait"0c" atload"plugin:setup:anyframe"
+zinit ice lucid wait"0c" blockf atload"plugin:setup:anyframe"
 zinit light mollifier/anyframe
