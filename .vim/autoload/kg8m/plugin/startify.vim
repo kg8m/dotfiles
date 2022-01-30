@@ -96,7 +96,7 @@ enddef
 
 def s:session_savable(): bool
   if &filetype ==# ""
-    const filename = expand("%")->fnamemodify(":t")
+    const filename = expand("%:t")
 
     if kg8m#util#string#starts_with(filename, "mmv-")
       return false
@@ -109,9 +109,8 @@ def s:session_savable(): bool
 enddef
 
 def s:session_name(): string
-  return "%"
+  return "%:p"
     ->expand()
-    ->fnamemodify(":p")
     ->substitute("/", "+=", "g")
     ->substitute('^\.', "_", "")
 enddef

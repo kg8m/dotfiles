@@ -12,13 +12,11 @@ def kg8m#util#file#current_path(): string
 enddef
 
 def kg8m#util#file#current_relative_path(): string
-  const raw_filepath = expand("%")
-  return empty(raw_filepath) ? "" : raw_filepath->fnamemodify(":~:.")
+  return expand("%:~:.")
 enddef
 
 def kg8m#util#file#current_absolute_path(): string
-  const raw_filepath = expand("%")
-  return empty(raw_filepath) ? "" : raw_filepath->fnamemodify(":~")
+  return expand("%:~")
 enddef
 
 def kg8m#util#file#format_path(filepath: string): string
