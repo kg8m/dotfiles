@@ -7,15 +7,41 @@ options word
 
 snippet doctype_HTML5
 abbr    <!DOCTYPE HTML>
+options word
+regexp  '<!d\%[octype]*'
+	DOCTYPE HTML>
+
+snippet doctype_HTML5_with_bang
+abbr    <!DOCTYPE HTML>
+options word
+regexp  '<d\%[octype]*'
+	!DOCTYPE HTML>
+
+snippet doctype_HTML5_with_tag
+abbr    <!DOCTYPE HTML>
 options head
+regexp  '^\s*d\%[octype]*'
 	<!DOCTYPE HTML>
 # }}}
 
 # Details, Summary  {{{
 snippet details_summary
-alias   summary_details
 abbr    <details><summary>...</summary> ... </details>
 options word
+regexp  '<\%[details]*'
+	details>
+		<summary>
+			<strong>${1:#:summary}</strong>
+		</summary>
+		
+		${2:#:details}
+	</details>
+
+snippet details_summary_with_tag
+alias   summary_details_with_tag
+abbr    <details><summary>...</summary> ... </details>
+options head
+regexp  '^\s*\%(d\%[etails]*\|s\%[ummary]*\)'
 	<details>
 		<summary>
 			<strong>${1:#:summary}</strong>
@@ -29,7 +55,7 @@ options word
 snippet script
 abbr    <script> ... </script>
 options word
-regexp  '<[script]*'
+regexp  '<\%[script]*'
 	script>
 		${0}
 	</script>
@@ -37,7 +63,7 @@ regexp  '<[script]*'
 snippet script_charset
 abbr    <script charset="utf-8"> ... </script>
 options word
-regexp  '<[script_charset]*'
+regexp  '<\%[script]*'
 	script charset="utf-8">
 		${0}
 	</script>
@@ -45,6 +71,14 @@ regexp  '<[script_charset]*'
 snippet script_src
 abbr    <script src="{source}"></script>
 options word
-regexp  '<[script_src]*'
+regexp  '<\%[script]*'
 	script src="${1:#:source}"></script>
+# }}}
+
+# Others  {{{
+snippet ruby
+abbr    <ruby>{word}<rp> (</rp><rt>{ruby}</rt><rp>) </rp></ruby>
+options word
+regexp  '<\%[ruby]*'
+	ruby>${1:#:word}<rp> (</rp><rt>${2:#:ruby}</rt><rp>) </rp></ruby>${0}
 # }}}

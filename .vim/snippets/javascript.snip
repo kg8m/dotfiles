@@ -33,6 +33,18 @@ options head
 	} else if () {
 	} else {
 	}
+
+snippet switch_case
+alias   case_switch
+alias   switch
+abbr    switch (foo) { case bar: { ...; break } }
+options head
+	switch (${1}) {
+		case ${2}: {
+			${3}
+			break;
+		}
+	}
 # }}}
 
 # Loop  {{{
@@ -149,4 +161,11 @@ snippet removeEventListener
 abbr    removeEventListener({event}, () => { ... }
 options word
 	removeEventListener("${1:#:event}", ${2:#:listenerFunction})
+# }}}
+
+# Module  {{{
+snippet import
+abbr    import foo from "bar";
+options head
+	import ${2} from "${1}";
 # }}}
