@@ -82,12 +82,16 @@ IRB.conf[:PROMPT_MODE] = :SIMPLE
 # ヒストリーを有効にする
 IRB.conf[:EVAL_HISTORY] = 1000
 IRB.conf[:SAVE_HISTORY] = 100
-HISTFILE = "~/.irb_history"
 MAXHISTSIZE = 300
+
+require "fileutils"
+FileUtils.mkdir_p(File.join(ENV["XDG_DATA_HOME"], "irb"))
+
+IRB.conf[:HISTORY_FILE] = File.join(ENV["XDG_DATA_HOME"], "irb/history")
 
 begin
   if defined? Readline::HISTORY
-    histfile = File::expand_path( HISTFILE )
+    histfile = File::expand_path(IRB.conf[:HISTORY_FILE])
 
     if File::exists?( histfile )
       lines = IO::readlines( histfile ).collect {|line| line.chomp}
