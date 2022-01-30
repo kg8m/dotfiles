@@ -2,16 +2,16 @@ set nocompatible
 
 let s:PLUGINS_DIRPATH = "/tmp/vim.minimal.dein"
 let s:DEIN_REPOSITORY = "Shougo/dein.vim"
-let s:DEIN_DIRPATH    = s:PLUGINS_DIRPATH .. "/repos/github.com/" .. s:DEIN_REPOSITORY
+let s:DEIN_DIRPATH    = printf("%s/repos/github.com/%s", s:PLUGINS_DIRPATH, s:DEIN_REPOSITORY)
 
 if !isdirectory(s:DEIN_DIRPATH)
-  call system("git clone https://github.com/" .. s:DEIN_REPOSITORY .. " " .. s:DEIN_DIRPATH)
+  call system(printf("git clone https://github.com/%s %s", s:DEIN_REPOSITORY, s:DEIN_DIRPATH))
 endif
 
-let &runtimepath ..= "," .. s:DEIN_DIRPATH
+let &runtimepath ..= printf(",%s", s:DEIN_DIRPATH)
 call dein#begin(s:PLUGINS_DIRPATH)
 
-" call dein#add(...)
+" call dein#add("kg8m/vim-simple-align")
 
 call dein#end()
 
