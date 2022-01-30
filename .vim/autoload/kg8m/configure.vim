@@ -14,7 +14,6 @@ enddef
 
 def kg8m#configure#colors(): void
   kg8m#configure#colors#terminal()
-  kg8m#configure#colors#colorscheme()
   kg8m#configure#colors#performance()
 enddef
 

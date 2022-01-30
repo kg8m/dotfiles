@@ -17,10 +17,6 @@ def kg8m#configure#colors#terminal(): void
   ]
 enddef
 
-def kg8m#configure#colors#colorscheme(): void
-  colorscheme molokai
-enddef
-
 def kg8m#configure#colors#performance(): void
   augroup vimrc-configure-colors-performance
     autocmd!

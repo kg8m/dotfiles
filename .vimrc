@@ -411,6 +411,8 @@ endif
 # }}}
 # }}}
 
+colorscheme molokai
+
 kg8m#configure#backup()
 kg8m#configure#colors()
 kg8m#configure#column()
