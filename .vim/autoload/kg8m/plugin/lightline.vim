@@ -9,7 +9,7 @@ const s:elements = {
     ["warning_fileencoding"], ["normal_fileencoding"],
     ["fileformat"],
     ["separator"],
-    ["lineinfo_with_percent"],
+    ["cursor_position"],
   ],
   right: [
     ["lsp_status"],
@@ -27,7 +27,7 @@ def kg8m#plugin#lightline#configure(): void
     inactive: s:elements,
     component: {
       separator: "|",
-      lineinfo_with_percent: "%l/%L(%p%%) : %v",
+      cursor_position: "%l/%L:%v",
     },
     component_function: {
       normal_filepath:     "kg8m#plugin#lightline#normal_filepath",
@@ -116,7 +116,7 @@ def s:current_filepath(): string
 enddef
 
 def s:truncate_filepath(filepath: string): string
-  const max    = winwidth(0) - 80
+  const max    = winwidth(0) - 50
   const length = len(filepath)
 
   if length <= max
