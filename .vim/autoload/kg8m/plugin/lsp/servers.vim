@@ -285,7 +285,6 @@ enddef
 def s:activate_steep(): void
   s:activate("steep", {
     cmd: (_) => ["steep", "langserver"],
-
     initialization_options: {
       diagnostics: true,
     },
@@ -319,7 +318,6 @@ enddef
 def s:activate_typeprof(): void
   s:activate("typeprof", {
     cmd: (_) => ["typeprof", "--lsp", "--stdio"],
-
     initialization_options: {
       diagnostics: true,
     },
