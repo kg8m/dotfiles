@@ -58,6 +58,9 @@ function plugin:setup:binary_releaseds {
       rg)
         mv ./ripgrep* ./"${plugin}"
         ;;
+      tldr)
+        mv ./tealdeer* ./"${plugin}"
+        ;;
       fzf | golangci-lint-langserver | nextword | sqls | tokei)
         # Do nothing
         ;;
@@ -240,4 +243,4 @@ if [ -z "${ZABRZE_UNAVAILABLE}" ]; then
 fi
 
 zinit ice lucid as"completion" mv"zsh_tealdeer -> _tldr"
-zinit snippet https://github.com/dbrgn/tealdeer/blob/master/zsh_tealdeer
+zinit snippet https://github.com/dbrgn/tealdeer/blob/main/zsh_tealdeer
