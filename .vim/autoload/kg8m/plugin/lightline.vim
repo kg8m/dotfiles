@@ -1,7 +1,6 @@
 vim9script
 
-# Use `final` instead of `const` because this will be overwritten by `kg8m#plugin#lightline#lsp#configure`
-final s:elements = {
+const s:elements = {
   left: [
     ["mode", "paste"],
     ["warning_filepath"], ["normal_filepath"],
@@ -46,16 +45,10 @@ def kg8m#plugin#lightline#configure(): void
     colorscheme: "kg8m",
   }
 
-  if kg8m#plugin#register("tsuyoshicho/lightline-lsp")
-    kg8m#plugin#lightline#lsp#configure()
-    s:cache.lsp_status_buffer_enabled_function = function("kg8m#plugin#lightline#lsp#status")
-  else
-    s:cache.lsp_status_buffer_enabled_function = function("s:lsp_status_buffer_enabled")
-  endif
-enddef
-
-def kg8m#plugin#lightline#elements(): dict<any>
-  return s:elements
+  augroup vimrc-plugin-lightline
+    autocmd!
+    autocmd User after_lsp_buffer_enabled lightline#update()
+  augroup END
 enddef
 
 def kg8m#plugin#lightline#filepath(): string
@@ -97,9 +90,9 @@ enddef
 def kg8m#plugin#lightline#lsp_status(): string
   if kg8m#plugin#lsp#is_target_buffer()
     if kg8m#plugin#lsp#is_buffer_enabled()
-      return s:cache.lsp_status_buffer_enabled_function()
+      return s:_lsp_status()
     else
-      return "[LSP] Loading..."
+      return g:kg8m#plugin#lsp#icons.loading
     endif
   else
     return ""
@@ -141,6 +134,21 @@ def s:is_readonly(): bool
   return &filetype !=# "help" && !!&readonly
 enddef
 
-def s:lsp_status_buffer_enabled(): string
-  return "[LSP] Active"
+def s:_lsp_status(): string
+  const counts = lsp#get_buffer_diagnostics_counts()
+  const types  = ["error", "warning", "information", "hint"]
+
+  const mapped = kg8m#util#list#filter_map(types, (type: string): any => {
+    if counts[type] ==# 0
+      return false
+    else
+      return printf("%s %d", g:kg8m#plugin#lsp#icons[type], counts[type])
+    endif
+  })
+
+  if empty(mapped)
+    return g:kg8m#plugin#lsp#icons.ok
+  else
+    return join(mapped, " ")
+  endif
 enddef

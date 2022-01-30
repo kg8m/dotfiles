@@ -1,5 +1,15 @@
 vim9script
 
+g:kg8m#plugin#lsp#icons = {
+  loading:     "⌛",
+  ok:          "✔ ",
+  error:       "❌",
+  warning:     "⚠️ ",
+  information: "ℹ️ ",
+  hint:        "💡",
+  action:      "🔧",
+}
+
 def kg8m#plugin#lsp#configure(): void
   kg8m#plugin#lsp#servers#register()
 
@@ -99,6 +109,12 @@ def s:on_source(): void
   g:lsp_diagnostics_signs_insert_mode_enabled      = false
   g:lsp_fold_enabled                               = false
   g:lsp_semantic_enabled                           = true
+
+  g:lsp_diagnostics_signs_error         = { text: g:kg8m#plugin#lsp#icons.error }
+  g:lsp_diagnostics_signs_warning       = { text: g:kg8m#plugin#lsp#icons.warning }
+  g:lsp_diagnostics_signs_information   = { text: g:kg8m#plugin#lsp#icons.information }
+  g:lsp_diagnostics_signs_hint          = { text: g:kg8m#plugin#lsp#icons.hint }
+  g:lsp_document_code_action_signs_hint = { text: g:kg8m#plugin#lsp#icons.action }
 
   # Prevent signs for code actions from hiding error/warning signs.
   g:lsp_diagnostics_signs_priority     = 10  # (Default)
