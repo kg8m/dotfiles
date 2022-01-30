@@ -97,14 +97,14 @@ def s:add_rules_for_html(): void
   #   </foo>
   lexima#add_rule({ char: "<CR>", at: '>\%#</', input_after: "<CR>", filetype: filetypes })
 
-  # `!` when
+  # `-` when
   #
-  #   <|
+  #   <!-|
   #
   # then
   #
   #   <!-- | -->
-  lexima#add_rule({ char: "!", at: '<\%#', input: "!--<Space>", input_after: "<Space>-->", filetype: filetypes })
+  lexima#add_rule({ char: "-", at: '<!-\%#', input: "-<Space>", input_after: "<Space>-->", filetype: filetypes })
 enddef
 
 def s:add_rules_for_js(): void
