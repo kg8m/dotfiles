@@ -26,6 +26,7 @@ def s:on_source(): void
   nmap p <Plug>(yankround-p)
   xmap p <Plug>(yankround-p)
   nmap P <Plug>(yankround-P)
-  nmap <C-p> <Plug>(yankround-prev)
-  nmap <C-n> <Plug>(yankround-next)
+
+  nmap <expr> <C-p> yankround#is_active() ? "<Plug>(yankround-prev)" : "<C-p>"
+  nmap <expr> <C-n> yankround#is_active() ? "<Plug>(yankround-next)" : "<C-n>"
 enddef
