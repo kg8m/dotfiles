@@ -22,7 +22,7 @@ const EMPTY_STRING = ""
 
 const HEREDOC_START_PATTERN = '\v\=\<\<\s+(trim\s+)?\zs\S+'
 
-const START_KEYWORD_PATTERN = '\v^%(fu%[nction]|def|if|for)>|^aug%[roup]\s+(END)@!'
+const START_KEYWORD_PATTERN = '\v^%(fu%[nction]|%(export\s+)?def|if|for)>|^aug%[roup]\s+(END)@!'
 const END_KEYWORD_PATTERN   = '\v^%(endf%[unction]|enddef|endif|endfor|aug%[roup]\s+END)>'
 const ONE_LINER_PATTERN     = '\v<%(endf%[unction]|enddef|endif|endfor|aug%[roup]\s+END)>'
 
