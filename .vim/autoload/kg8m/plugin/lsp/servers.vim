@@ -199,6 +199,8 @@ def s:register_ruby_language_server(): void
   s:_register({
     name: "ruby_language_server",
     allowlist: ["ruby"],
+
+    available: empty($RUBY_LANGUAGE_SERVER_UNAVAILABLE),
   })
 enddef
 
@@ -218,6 +220,8 @@ def s:register_solargraph(): void
   s:_register({
     name: "solargraph",
     allowlist: ["ruby"],
+
+    available: empty($SOLARGRAPH_UNAVAILABLE),
   })
 enddef
 
@@ -273,6 +277,8 @@ def s:register_steep(): void
   s:_register({
     name: "steep",
     allowlist: ["ruby"],
+
+    available: empty($STEEP_UNAVAILABLE),
   })
 enddef
 
@@ -305,6 +311,8 @@ def s:register_typeprof(): void
   s:_register({
     name: "typeprof",
     allowlist: ["ruby"],
+
+    available: empty($TYPEPROF_UNAVAILABLE),
   })
 enddef
 
