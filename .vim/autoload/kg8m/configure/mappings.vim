@@ -64,10 +64,11 @@ def kg8m#configure#mappings#base(): void
   # nnoremap ]<S-p> <S-p>
 
   # Moving in INSERT mode
+  # <C-g>U: don't break undo with next left/right cursor movement, if the cursor stays within the same line
   inoremap <C-k> <Up>
-  inoremap <C-f> <Right>
+  inoremap <C-f> <C-g>U<Right>
   inoremap <C-j> <Down>
-  inoremap <C-b> <Left>
+  inoremap <C-b> <C-g>U<Left>
   inoremap <C-a> <Home>
   inoremap <C-e> <End>
   cnoremap <C-k> <Up>

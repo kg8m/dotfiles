@@ -151,7 +151,7 @@ def s:add_rules_for_ts(): void
   #   Foo<|
   #
   # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
-  lexima#add_rule({ char: "<", at: '\w\%#<', input: "<Right>", filetype: filetypes })
+  lexima#add_rule({ char: "<", at: '\w\%#<', input: "<C-g>U<Right>", filetype: filetypes })
 
   # `<` when
   #
@@ -171,7 +171,7 @@ def s:add_rules_for_ts(): void
   #   <foo>|
   #
   # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
-  lexima#add_rule({ char: ">", at: '\%#>', input: "<Right>", filetype: filetypes })
+  lexima#add_rule({ char: ">", at: '\%#>', input: "<C-g>U<Right>", filetype: filetypes })
 enddef
 
 def s:add_rules_for_markdown(): void
@@ -188,7 +188,7 @@ def s:add_rules_for_markdown(): void
   #   - [ ] |
   #   * [ ] |
   #   1. [ ] |
-  lexima#add_rule({ char: "<Space>", at: '^\s*\%([-*]\|\d\+\.\)\+\s\+\[\%#\]', input: "<Space><Right><Space>", filetype: filetypes })
+  lexima#add_rule({ char: "<Space>", at: '^\s*\%([-*]\|\d\+\.\)\+\s\+\[\%#\]', input: "<Space><C-g>U<Right><Space>", filetype: filetypes })
 
   # `<CR>` when
   #
