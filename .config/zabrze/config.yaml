@@ -6,6 +6,23 @@ abbrevs:
     abbr: cdb
     snippet: cd-bookmark
 
+  - name: docker
+    abbr: d
+    snippet: docker
+  - name: docker-compose
+    abbr: dc
+    snippet: docker-compose
+  - name: docker compose
+    abbr: c
+    snippet: compose
+    global: true
+    context: '^docker\s'
+  - name: docker exec
+    abbr: e
+    snippet: exec
+    global: true
+    context: '^docker\s'
+
   - name: git
     abbr: g
     snippet: git
