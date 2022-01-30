@@ -19,14 +19,15 @@ set log-view   = line-number:yes,interval=1 text
 set pager-view = line-number:yes,interval=1 text
 set stage-view = line-number:yes,interval=1 text
 
-bind generic g move-first-line
-bind generic G move-last-line
-bind generic y scroll-line-up
-bind generic e scroll-line-down
-bind generic b scroll-page-up
-bind generic f scroll-page-down
-bind generic o edit
-bind generic c @bash -c "echo -n '%(commit)' | ssh main -t pbcopy; notify --nostay 'Copied: %(commit)'"
+bind generic g        move-first-line
+bind generic G        move-last-line
+bind generic y        scroll-line-up
+bind generic e        scroll-line-down
+bind generic b        scroll-page-up
+bind generic f        scroll-page-down
+bind generic <Ctrl-L> refresh
+bind generic o        edit
+bind generic c        @bash -c "echo -n '%(commit)' | ssh main -t pbcopy; notify --nostay 'Copied: %(commit)'"
 
 bind main r !git rebase --autosquash --interactive %(commit)
 
