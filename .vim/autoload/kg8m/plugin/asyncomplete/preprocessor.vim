@@ -33,8 +33,10 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
       endif
     endfor
 
-    s:select_items(items)
-    s:decorate_items(items, context)
+    if !empty(items)
+      s:select_items(items)
+      s:decorate_items(items, context)
+    endif
   endif
 
   # https://github.com/prabirshrestha/asyncomplete.vim/blob/1f8d8ed26acd23d6bf8102509aca1fc99130087d/autoload/asyncomplete.vim#L474
