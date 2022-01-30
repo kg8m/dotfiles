@@ -593,6 +593,7 @@ def s:overwrite_capabilities(): void
 
     if has_key(capabilities, "documentFormattingProvider")
       capabilities.documentFormattingProvider = false
+      kg8m#util#logger#info(config.name .. "'s documentFormattingProvider got forced to be disabled.")
     endif
   endfor
 enddef
