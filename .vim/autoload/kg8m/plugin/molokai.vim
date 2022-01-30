@@ -32,6 +32,7 @@ def s:overwrite(): void
   highlight Underlined    guifg=#AAAAAA
   highlight Visual                                      gui=bold  cterm=bold
   highlight VisualNOS                                   gui=bold  cterm=bold
+  highlight WarningMsg    guifg=#E6DB74
 
   if has("gui_running")
     # `guibg=NONE` doesn't work in GUI Vim
