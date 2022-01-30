@@ -23,9 +23,9 @@ def s:on_source(): void
   g:yankround_max_history   = 500
   g:yankround_use_region_hl = true
 
-  nmap p     <Plug>(yankround-p)
-  xmap p     <Plug>(yankround-p)
-  nmap <S-p> <Plug>(yankround-P)
+  nmap p <Plug>(yankround-p)
+  xmap p <Plug>(yankround-p)
+  nmap P <Plug>(yankround-P)
   nmap <C-p> <Plug>(yankround-prev)
   nmap <C-n> <Plug>(yankround-next)
 enddef
