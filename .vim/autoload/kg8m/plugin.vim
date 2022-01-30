@@ -54,6 +54,9 @@ def kg8m#plugin#init_manager(): void
   g:dein#install_max_processes = 1
 
   g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
+
+  # Default: "pull --ff --ff-only"
+  g:dein#types#git#pull_command = "pull"
 enddef
 
 def kg8m#plugin#finish_setup(): void
