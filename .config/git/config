@@ -58,6 +58,9 @@
 	hooksPath = ~/.config/git/hooks
 	pager = git-pager
 
+	# Avoid broken filepaths which contain multibyte characters.
+	quotepath = false
+
 [delta]
 	line-numbers = true
 	line-numbers-minus-style = "red auto"
