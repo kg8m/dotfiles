@@ -100,7 +100,13 @@ def s:gt_expr(): string
     endif
   endif
 
-  if context_filetype#get_filetype() ==# "html"
+  const context_filetype = context_filetype#get_filetype()
+
+  if context_filetype ==# "html"
+    return g:closetag_shortcut
+  endif
+
+  if context_filetype ==# "eruby" && kg8m#util#string#ends_with(bufname(), ".html.erb")
     return g:closetag_shortcut
   endif
 
