@@ -71,8 +71,6 @@ begin
       obj
     end
   end if IRB::HistorySavingAbility.respond_to?(:create_finalizer)
-rescue LoadError => e
-  $stderr.puts "ERROR -- #{e.inspect}"
 end
 
 # http://rvm.beginrescueend.com/workflow/irbrc/
@@ -131,8 +129,6 @@ begin
 
   Wirble.init
   Wirble.colorize
-rescue LoadError => e
-  $stderr.puts "ERROR -- #{e.inspect}"
 end
 
 begin
@@ -140,6 +136,4 @@ begin
   require "hirb-unicode"
 
   Hirb.enable
-rescue LoadError => e
-  $stderr.puts "ERROR -- #{e.inspect}"
 end
