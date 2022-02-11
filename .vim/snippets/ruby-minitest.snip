@@ -1,3 +1,13 @@
+snippet require_test_unit
+abbr    require "test/unit" ... class FooTest < Test::Unit::TestCase ...
+options head
+	require "test/unit"
+	require_relative "./${1}"
+
+	class ${2} < Test::Unit::TestCase
+		${3}
+	end
+
 snippet def_test
 alias   deft
 abbr    def test_{testcase} ... end

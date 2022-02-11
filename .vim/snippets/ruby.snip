@@ -123,13 +123,13 @@ options word
 snippet ->
 abbr    -> { ... }
 options word
-	-> { ${0} }
+	> { ${0} }
 
 snippet ->a
 alias   ->v
 abbr    ->(args) { ... }
 options word
-	->(${1:#:args}) { ${0} }
+	>(${1:#:args}) { ${0} }
 
 snippet proc
 abbr    proc { ... }
