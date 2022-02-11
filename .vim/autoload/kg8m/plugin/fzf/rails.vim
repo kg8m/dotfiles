@@ -66,6 +66,9 @@ def Setup(): void
     config: {
       dirs: ["config"],
     },
+    db: {
+      dirs: ["db"],
+    },
     environments: {
       dirs:    ["config"],
       pattern: '(/environment\.rb|/environments/.+\.rb)$',
@@ -110,8 +113,6 @@ def Setup(): void
       dirs: ["spec", "test"],
     },
   })
-
-  s:specs["db/migrates"] = { dirs: ["db/migrate"] }
 
   for app_dir in globpath("app", "*", 0, 1)
     if isdirectory(app_dir)
