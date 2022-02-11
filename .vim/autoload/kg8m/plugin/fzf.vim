@@ -6,7 +6,7 @@ export def Configure(): void
   nnoremap <silent> <Leader><Leader>v :call kg8m#plugin#fzf#git_files#Run()<CR>
   nnoremap <silent> <Leader><Leader>b :call kg8m#plugin#fzf#buffers#Run()<CR>
   nnoremap <silent> <Leader><Leader>l :call kg8m#plugin#fzf#buffer_lines#Run()<CR>
-  nnoremap <silent> <Leader><Leader>m :call kg8m#plugin#fzf#RunCommand("FzfMarks")<CR>
+  nnoremap <silent> <Leader><Leader>m :call kg8m#plugin#fzf#marks#Run()<CR>
   nnoremap <silent> <Leader><Leader>h :call kg8m#plugin#fzf#history#Run()<CR>
   nnoremap <silent> <Leader><Leader>H :call kg8m#plugin#fzf#RunCommand("FzfHelptags")<CR>
   nnoremap <silent> <Leader><Leader>y :call kg8m#plugin#fzf#yank_history#Run()<CR>
@@ -23,7 +23,7 @@ export def Configure(): void
 
   kg8m#plugin#Configure({
     lazy:     true,
-    on_cmd:   ["FzfFiles", "FzfLines", "FzfMarks", "FzfHelptags"],
+    on_cmd:   ["FzfFiles", "FzfLines", "FzfHelptags"],
     on_start: true,
     depends:  "fzf",
     hook_source: () => OnSource(),

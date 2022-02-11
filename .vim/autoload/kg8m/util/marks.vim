@@ -8,12 +8,11 @@ const s:incremental_mark_keys = [
 ]
 const s:incremental_mark_keys_pattern = '^[A-Z]$'
 
-var s:is_initialized = false
 var s:incremental_mark_index = -1
 
-export def Increment(): void
-  Init()
+execute "delmarks " .. join(s:incremental_mark_keys, "")
 
+export def Increment(): void
   const incremental_mark_key = DetectKey()
 
   if incremental_mark_key =~# s:incremental_mark_keys_pattern
@@ -25,15 +24,6 @@ export def Increment(): void
 
   execute "mark " .. s:incremental_mark_keys[s:incremental_mark_index]
   printf("Marked to %s", s:incremental_mark_keys[s:incremental_mark_index])->kg8m#util#logger#Info()
-enddef
-
-def Init(): void
-  if s:is_initialized
-    return
-  endif
-
-  execute "delmarks " .. join(s:incremental_mark_keys, "")
-  s:is_initialized = true
 enddef
 
 def DetectKey(): string
