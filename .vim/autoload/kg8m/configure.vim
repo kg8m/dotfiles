@@ -100,7 +100,7 @@ export def Commands(): void
   # <S-g>$: move to end of buffer
   # g<C-g>: print stats information
   # <C-o>:  go back to previous position
-  command! -nargs=0 -range Stats feedkeys("\<S-g>$g\<C-g>\<C-o>")
+  command! -nargs=0 -range Stats feedkeys(<range> ==# 0 ? "\<S-g>$g\<C-g>\<C-o>" : "\<Esc>gvg\<C-g>")
   command! -nargs=0 -range Counts Stats
 
   command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfSave   kg8m#util#qf#Save(<q-args>)
