@@ -36,6 +36,7 @@ if [ -n "${ZABRZE_UNAVAILABLE}" ]; then
 
   function plugin:setup:abbr {
     abbr --session --force --global g="git"
+    abbr --session --force --global r="rails"
     abbr --session --force --global v="vim"
 
     # Use `--quieter` option to silence "`vi` will now expand as an abbreviation" warning when overwriting system `vi`
