@@ -9,7 +9,7 @@ const MANAGER_REPOSITORY = "Shougo/dein.vim"
 
 final s:on_start_queue = []
 
-def kg8m#plugin#disable_defaults(): void
+export def DisableDefaults(): void
   g:no_vimrc_example         = true
   g:no_gvimrc_example        = true
   g:loaded_gzip              = true
@@ -33,7 +33,7 @@ def kg8m#plugin#disable_defaults(): void
   # g:did_install_default_menus = true
 enddef
 
-def kg8m#plugin#init_manager(): void
+export def InitManager(): void
   const manager_path = expand(PLUGINS_DIRPATH .. "/repos/github.com/" .. MANAGER_REPOSITORY)
 
   if !isdirectory(manager_path)
@@ -43,11 +43,11 @@ def kg8m#plugin#init_manager(): void
 
   &runtimepath ..= "," .. manager_path
   dein#begin(PLUGINS_DIRPATH)
-  kg8m#plugin#register(MANAGER_REPOSITORY, { if: false })
+  Register(MANAGER_REPOSITORY, { if: false })
 
   augroup kg8m-plugin
     autocmd!
-    autocmd VimEnter * timer_start(100, (_) => s:dequeue_on_start())
+    autocmd VimEnter * timer_start(100, (_) => DequeueOnStart())
   augroup END
 
   # Decrease max processes because too many processes sometimes get refused
@@ -59,16 +59,16 @@ def kg8m#plugin#init_manager(): void
   g:dein#types#git#pull_command = "pull"
 enddef
 
-def kg8m#plugin#finish_setup(): void
+export def FinishSetup(): void
   dein#end()
 enddef
 
-def kg8m#plugin#register(repository: string, options: dict<any> = {}): bool
+export def Register(repository: string, options: dict<any> = {}): bool
   var enabled = true
 
   if has_key(options, "merged")
     if options.merged && has_key(options, "if")
-      kg8m#util#logger#warn("Don't use `merged: true` with `if` option because merged plugins are always loaded")
+      kg8m#util#logger#Warn("Don't use `merged: true` with `if` option because merged plugins are always loaded")
     endif
   else
     options.merged = !has_key(options, "if")
@@ -104,7 +104,7 @@ def kg8m#plugin#register(repository: string, options: dict<any> = {}): bool
   return dein#tap(options.normalized_name) && enabled
 enddef
 
-def kg8m#plugin#configure(config: dict<any>): dict<any>
+export def Configure(config: dict<any>): dict<any>
   if get(config, "lazy", false)
     config.merged = false
   endif
@@ -117,11 +117,11 @@ def kg8m#plugin#configure(config: dict<any>): dict<any>
   return dein#config(config)
 enddef
 
-def kg8m#plugin#unregister(plugin_name_or_names: any): void
+export def Unregister(plugin_name_or_names: any): void
   dein#disable(plugin_name_or_names)
 enddef
 
-def kg8m#plugin#get_info(plugin_name: string = ""): any
+export def GetInfo(plugin_name: string = ""): any
   if empty(plugin_name)
     return dein#get()
   else
@@ -129,7 +129,7 @@ def kg8m#plugin#get_info(plugin_name: string = ""): any
   endif
 enddef
 
-def kg8m#plugin#installable_exists(plugin_names: list<string> = []): bool
+export def InstallableExists(plugin_names: list<string> = []): bool
   if empty(plugin_names)
     return !!dein#check_install()
   else
@@ -137,7 +137,7 @@ def kg8m#plugin#installable_exists(plugin_names: list<string> = []): bool
   endif
 enddef
 
-def kg8m#plugin#install(plugin_names: list<string> = []): void
+export def Install(plugin_names: list<string> = []): void
   if empty(plugin_names)
     dein#install()
   else
@@ -145,59 +145,59 @@ def kg8m#plugin#install(plugin_names: list<string> = []): void
   endif
 enddef
 
-def kg8m#plugin#source(plugin_name: string): void
+export def Source(plugin_name: string): void
   dein#source(plugin_name)
 enddef
 
-def kg8m#plugin#is_sourced(plugin_name: string): bool
+export def IsSourced(plugin_name: string): bool
   return !!dein#is_sourced(plugin_name)
 enddef
 
 # Manually source a plugin because of some reasons, e.g., dein.vim's `on_func` feature is not available in Vim9 script.
 # Vim9 script doesn't support `FuncUndefined` event: https://github.com/vim/vim/issues/7501
-def kg8m#plugin#ensure_sourced(plugin_name: string): void
-  if !kg8m#plugin#is_sourced(plugin_name)
-    kg8m#plugin#source(plugin_name)
+export def EnsureSourced(plugin_name: string): void
+  if !IsSourced(plugin_name)
+    Source(plugin_name)
   endif
 enddef
 
-def kg8m#plugin#all_runtimepath(): string
+export def AllRuntimepath(): string
   const current = &runtimepath->split(",")
-  const plugins = kg8m#plugin#get_info()
+  const plugins = GetInfo()
     ->values()
-    ->kg8m#util#list#filter_map((plugin) => empty(plugin.rtp) ? false : plugin.rtp)
+    ->kg8m#util#list#FilterMap((plugin) => empty(plugin.rtp) ? false : plugin.rtp)
 
-  return kg8m#util#list#vital().uniq(current + plugins)->join(",")
+  return kg8m#util#list#Vital().uniq(current + plugins)->join(",")
 enddef
 
-def kg8m#plugin#recache_runtimepath(): void
-  kg8m#plugin#enable_disabled_plugins()
+export def RecacheRuntimepath(): void
+  EnableDisabledPlugins()
   dein#recache_runtimepath()
 enddef
 
-def kg8m#plugin#enable_disabled_plugins(): void
-  for plugin in kg8m#plugin#disabled_plugins()
+export def EnableDisabledPlugins(): void
+  for plugin in DisabledPlugins()
     final options = copy(plugin.orig_opts)
     remove(options, "rtp")
 
-    kg8m#plugin#unregister(plugin.name)
-    kg8m#plugin#register(plugin.repo, options)
+    Unregister(plugin.name)
+    Register(plugin.repo, options)
   endfor
 enddef
 
-def kg8m#plugin#disabled_plugins(): list<dict<any>>
-  return kg8m#plugin#get_info()->values()->filter((_, plugin) => empty(plugin.rtp))
+export def DisabledPlugins(): list<dict<any>>
+  return GetInfo()->values()->filter((_, plugin) => empty(plugin.rtp))
 enddef
 
 # Source lazily but early to optimize sourcing many plugins
-def s:dequeue_on_start(): void
+def DequeueOnStart(): void
   if !empty(s:on_start_queue)
     const plugin_name = remove(s:on_start_queue, 0)
-    timer_start(100, (_) => s:source_on_start(plugin_name))
+    timer_start(100, (_) => SourceOnStart(plugin_name))
   endif
 enddef
 
-def s:source_on_start(plugin_name: string): void
-  kg8m#plugin#ensure_sourced(plugin_name)
-  s:dequeue_on_start()
+def SourceOnStart(plugin_name: string): void
+  EnsureSourced(plugin_name)
+  DequeueOnStart()
 enddef

@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#gina#patch(filepath: string): void
+export def Patch(filepath: string): void
   const original_diffopt = &diffopt
 
   try

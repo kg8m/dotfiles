@@ -1,15 +1,15 @@
 vim9script
 
-def kg8m#plugin#indent_line#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:     true,
     on_start: true,
-    hook_source: () => s:on_source(),
+    hook_source: () => OnSource(),
   })
 enddef
 
-def s:on_source(): void
-  kg8m#configure#conceal()
+def OnSource(): void
+  kg8m#configure#Conceal()
 
   g:indentLine_char            = "|"
   g:indentLine_faster          = true

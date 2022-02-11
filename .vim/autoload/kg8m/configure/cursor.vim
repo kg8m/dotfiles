@@ -5,7 +5,7 @@ final s:cache = {}
 const s:vertical_line_code      = "\e[6 q"
 const s:vertical_bold_line_code = "\e[2 q"
 
-def kg8m#configure#cursor#base(): void
+export def Base(): void
   set backspace=indent,eol,start
   set nostartofline
   set whichwrap=b,s,h,l,<,>,[,],~
@@ -18,11 +18,11 @@ def kg8m#configure#cursor#base(): void
   set virtualedit=block
 enddef
 
-def kg8m#configure#cursor#match(): void
+export def Match(): void
   set showmatch
   set matchtime=1
 
-  const japanese_matchpairs = kg8m#util#japanese_matchpairs()->mapnew((_, pair) => join(pair, ":"))->join(",")
+  const japanese_matchpairs = kg8m#util#JapaneseMatchpairs()->mapnew((_, pair) => join(pair, ":"))->join(",")
 
   if has_key(s:cache, "original_matchpairs")
     &matchpairs = s:cache.original_matchpairs .. "," .. japanese_matchpairs
@@ -32,7 +32,7 @@ def kg8m#configure#cursor#match(): void
   endif
 enddef
 
-def kg8m#configure#cursor#highlight(): void
+export def Highlight(): void
   set cursorline
   set cursorlineopt=number
 
@@ -42,12 +42,12 @@ def kg8m#configure#cursor#highlight(): void
   augroup END
 enddef
 
-def kg8m#configure#cursor#shape(): void
-  if !kg8m#util#string#includes(&t_SI, s:vertical_line_code)
+export def Shape(): void
+  if !kg8m#util#string#Includes(&t_SI, s:vertical_line_code)
     &t_SI ..= s:vertical_line_code
   endif
 
-  if !kg8m#util#string#includes(&t_EI, s:vertical_bold_line_code)
+  if !kg8m#util#string#Includes(&t_EI, s:vertical_bold_line_code)
     &t_EI ..= s:vertical_bold_line_code
   endif
 enddef

@@ -10,80 +10,80 @@ g:kg8m#plugin#lsp#icons = {
   action:      "🔧",
 }
 
-def kg8m#plugin#lsp#configure(): void
-  kg8m#plugin#lsp#servers#register()
+export def Configure(): void
+  kg8m#plugin#lsp#servers#Register()
 
-  kg8m#plugin#configure({
+  kg8m#plugin#Configure({
     lazy:  true,
-    on_ft: kg8m#plugin#lsp#servers#filetypes(),
-    hook_source: () => s:on_source(),
+    on_ft: kg8m#plugin#lsp#servers#Filetypes(),
+    hook_source: () => OnSource(),
   })
 
-  kg8m#plugin#register("mattn/vim-lsp-settings", { if: false, merged: false })
-  kg8m#plugin#register("tsuyoshicho/vim-efm-langserver-settings", { if: false, merged: false })
+  kg8m#plugin#Register("mattn/vim-lsp-settings", { if: false, merged: false })
+  kg8m#plugin#Register("tsuyoshicho/vim-efm-langserver-settings", { if: false, merged: false })
 enddef
 
-def kg8m#plugin#lsp#is_target_buffer(): bool
+export def IsTargetBuffer(): bool
   if !has_key(b:, "lsp_target_buffer")
-    b:lsp_target_buffer = kg8m#util#list#includes(kg8m#plugin#lsp#servers#filetypes(), &filetype)
+    b:lsp_target_buffer = kg8m#util#list#Includes(kg8m#plugin#lsp#servers#Filetypes(), &filetype)
   endif
 
   return b:lsp_target_buffer
 enddef
 
-# cf. s:on_lsp_buffer_enabled()
-def kg8m#plugin#lsp#is_buffer_enabled(): bool
+# cf. OnLspBufferEnabled()
+export def IsBufferEnabled(): bool
   if has_key(b:, "lsp_buffer_enabled")
     return true
   else
-    return kg8m#plugin#lsp#servers#are_all_running_or_exited()
+    return kg8m#plugin#lsp#servers#AreAllRunningOrExited()
   endif
 enddef
 
-def s:on_lsp_buffer_enabled(): void
+def OnLspBufferEnabled(): void
   if get(b:, "lsp_buffer_enabled", false)
     return
   endif
 
-  if !kg8m#plugin#lsp#servers#are_all_running_or_exited()
+  if !kg8m#plugin#lsp#servers#AreAllRunningOrExited()
     return
   endif
 
-  # cf. kg8m#plugin#lsp#is_buffer_enabled()
+  # cf. IsBufferEnabled()
   b:lsp_buffer_enabled = true
 
   # Lazily set omnifunc to overwrite plugins' configurations.
-  s:set_omnifunc()
-  timer_start(200, (_) => s:set_omnifunc())
+  SetOmnifunc()
+  timer_start(200, (_) => SetOmnifunc())
 
   nmap <buffer> gd <Plug>(lsp-next-diagnostic)
   nmap <buffer> ge <Plug>(lsp-next-error)
   nmap <buffer> <S-h> <Plug>(lsp-hover)
 
-  if s:is_definition_supported()
+  if IsDefinitionSupported()
     nmap <buffer> g] <Plug>(lsp-definition)
   endif
 
-  autocmd InsertLeave <buffer> kg8m#plugin#lsp#document_format#on_insert_leave()
-  autocmd TextChanged <buffer> kg8m#plugin#lsp#document_format#on_text_changed()
+  autocmd InsertLeave <buffer> kg8m#plugin#lsp#document_format#OnInsertLeave()
+  autocmd TextChanged <buffer> kg8m#plugin#lsp#document_format#OnTextChanged()
 
-  kg8m#events#notify_after_lsp_buffer_enabled()
+  kg8m#events#NotifyAfterLspBufferEnabled()
 enddef
 
-def s:reset_target_buffer(): void
+def ResetTargetBuffer(): void
   if has_key(b:, "lsp_target_buffer")
     unlet b:lsp_target_buffer
   endif
 enddef
 
-def s:set_omnifunc(): void
+def SetOmnifunc(): void
   if &omnifunc !=# "lsp#complete"
     setlocal omnifunc=lsp#complete
   endif
 enddef
 
-def s:is_definition_supported(): bool
-  for server_name in kg8m#plugin#lsp#servers#names(&filetype)
+def IsDefinitionSupported(): bool
+  for server_name in kg8m#plugin#lsp#servers#Names(&filetype)
     var capabilities = lsp#get_server_capabilities(server_name)
 
     if get(capabilities, "definitionProvider", false)
@@ -94,7 +94,7 @@ def s:is_definition_supported(): bool
   return false
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:lsp_diagnostics_enabled                        = true
   g:lsp_diagnostics_echo_cursor                    = false
   g:lsp_diagnostics_float_cursor                   = true
@@ -123,13 +123,13 @@ def s:on_source(): void
 
   augroup vimrc-plugin-lsp
     autocmd!
-    autocmd User lsp_setup          kg8m#plugin#lsp#stream#subscribe()
-    autocmd User lsp_buffer_enabled s:on_lsp_buffer_enabled()
-    autocmd User lsp_server_exit    s:on_lsp_buffer_enabled()
+    autocmd User lsp_setup          kg8m#plugin#lsp#stream#Subscribe()
+    autocmd User lsp_buffer_enabled OnLspBufferEnabled()
+    autocmd User lsp_server_exit    OnLspBufferEnabled()
 
-    autocmd FileType * s:reset_target_buffer()
+    autocmd FileType * ResetTargetBuffer()
 
-    autocmd FileType lsp-quickpick-filter kg8m#plugin#completion#disable()
-    autocmd FileType lsp-quickpick-filter kg8m#plugin#mappings#i#disable()
+    autocmd FileType lsp-quickpick-filter kg8m#plugin#completion#Disable()
+    autocmd FileType lsp-quickpick-filter kg8m#plugin#mappings#i#Disable()
   augroup END
 enddef

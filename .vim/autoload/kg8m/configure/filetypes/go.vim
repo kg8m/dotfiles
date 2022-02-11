@@ -1,19 +1,19 @@
 vim9script
 
-def kg8m#configure#filetypes#go#run(): void
+export def Run(): void
   augroup vimrc-configure-filetypes-go
     autocmd!
-    autocmd FileType go s:setup_buffer()
+    autocmd FileType go SetupBuffer()
   augroup END
 enddef
 
-def s:setup_buffer(): void
-  nnoremap <buffer> <Leader>r :call <SID>run_current()<CR>
+def SetupBuffer(): void
+  nnoremap <buffer> <Leader>r :call <SID>RunCurrent()<CR>
 enddef
 
-def s:run_current(): void
+def RunCurrent(): void
   write
 
   const command = printf("go run -race %s", expand("%")->shellescape())
-  kg8m#util#terminal#execute_command(command)
+  kg8m#util#terminal#ExecuteCommand(command)
 enddef

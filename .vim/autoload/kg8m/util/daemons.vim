@@ -1,20 +1,20 @@
 vim9script
 
-def kg8m#util#daemons#setup(): void
+export def Setup(): void
   augroup vimrc-util-daemons
     autocmd!
-    autocmd BufWritePost .eslintrc.*,package.json,tsconfig.json s:restart_eslint_d()
-    autocmd BufWritePost .rubocop.yml                           s:restart_rubocop_daemon()
+    autocmd BufWritePost .eslintrc.*,package.json,tsconfig.json RestartEslintD()
+    autocmd BufWritePost .rubocop.yml                           RestartRubocopDaemon()
   augroup END
 enddef
 
-def s:restart_eslint_d(): void
+def RestartEslintD(): void
   if executable("eslint_d")
     job_start(["eslint_d", "restart"])
   endif
 enddef
 
-def s:restart_rubocop_daemon(): void
+def RestartRubocopDaemon(): void
   if executable("rubocop-daemon")
     job_start(["rubocop-daemon", "restart"])
   endif

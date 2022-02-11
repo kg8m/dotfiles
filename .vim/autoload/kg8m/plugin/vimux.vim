@@ -1,21 +1,21 @@
 vim9script
 
-def kg8m#plugin#vimux#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy: true,
-    hook_source: () => s:on_source(),
+    hook_source: () => OnSource(),
   })
 enddef
 
-def kg8m#plugin#vimux#run_command(command: string): void
-  kg8m#plugin#ensure_sourced("vimux")
+export def RunCommand(command: string): void
+  kg8m#plugin#EnsureSourced("vimux")
 
-  s:calculate_runner_index()
+  CalculateRunnerIndex()
   execute "VimuxRunCommand " .. string(command)
 enddef
 
 # Always use current pane's next one.
-def s:calculate_runner_index(): void
+def CalculateRunnerIndex(): void
   if has_key(g:, "VimuxRunnerIndex")
     # Reset every time because panes sometimes change
     unlet g:VimuxRunnerIndex
@@ -30,7 +30,7 @@ def s:calculate_runner_index(): void
     const view = views[index]
 
     # `pane_active` is `1` if the pane is active
-    if kg8m#util#string#starts_with(view, "1")
+    if kg8m#util#string#StartsWith(view, "1")
       if index !=# views_length - 1
         g:VimuxRunnerIndex = split(views[index + 1], ":")[1]
       endif
@@ -42,7 +42,7 @@ def s:calculate_runner_index(): void
   endwhile
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:VimuxHeight      = 30
   g:VimuxOrientation = "v"
   g:VimuxUseNearest  = false

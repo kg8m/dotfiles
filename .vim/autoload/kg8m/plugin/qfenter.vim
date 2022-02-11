@@ -1,14 +1,14 @@
 vim9script
 
-def kg8m#plugin#qfenter#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:  true,
     on_ft: "qf",
-    hook_source: () => s:on_source(),
+    hook_source: () => OnSource(),
   })
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:qfenter_keymap = {
     open: ["<CR>"],
 

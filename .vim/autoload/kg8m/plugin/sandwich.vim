@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#plugin#sandwich#configure(): void
+export def Configure(): void
   xmap <Leader>sa <Plug>(operator-sandwich-add)
   nmap <Leader>sd <Plug>(operator-sandwich-delete)<Plug>(textobj-sandwich-query-a)
   nmap <Leader>sr <Plug>(operator-sandwich-replace)<Plug>(textobj-sandwich-query-a)
@@ -13,17 +13,17 @@ def kg8m#plugin#sandwich#configure(): void
 
   nmap . <Plug>(operator-sandwich-dot)
 
-  kg8m#plugin#configure({
+  kg8m#plugin#Configure({
     lazy:   true,
     on_map: { nx: "<Plug>(operator-sandwich-", xo: "<Plug>(textobj-sandwich-" },
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    hook_source:      () => OnSource(),
+    hook_post_source: () => OnPostSource(),
   })
 enddef
 
-def s:surround_like_recipes(): list<dict<any>>
-  const add_options    = extendnew({ kind: ["add", "replace"], action: ["add"] }, s:common_options())
-  const delete_options = extendnew({ kind: ["delete", "replace", "textobj"], action: ["delete"], regex: true }, s:common_options())
+def SurroundLikeRecipes(): list<dict<any>>
+  const add_options    = extendnew({ kind: ["add", "replace"], action: ["add"] }, CommonOptions())
+  const delete_options = extendnew({ kind: ["delete", "replace", "textobj"], action: ["delete"], regex: true }, CommonOptions())
 
   return [
     extendnew({ buns: ["( ", " )"], input: ["("] }, add_options),
@@ -35,21 +35,21 @@ def s:surround_like_recipes(): list<dict<any>>
   ]
 enddef
 
-def s:zenkaku_recipes(): list<dict<any>>
-  const options = extendnew({ kind: ["add", "delete", "replace", "textobj"], action: ["add", "delete"] }, s:common_options())
-  return kg8m#util#japanese_matchpairs()->mapnew((_, pair) => extendnew({ buns: pair, input: pair }, options))
+def ZenkakuRecipes(): list<dict<any>>
+  const options = extendnew({ kind: ["add", "delete", "replace", "textobj"], action: ["add", "delete"] }, CommonOptions())
+  return kg8m#util#JapaneseMatchpairs()->mapnew((_, pair) => extendnew({ buns: pair, input: pair }, options))
 enddef
 
-def s:common_options(): dict<any>
+def CommonOptions(): dict<any>
   return { nesting: true, match_syntax: true }
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:sandwich_no_default_key_mappings = true
   g:operator_sandwich_no_default_key_mappings = true
   g:textobj_sandwich_no_default_key_mappings = true
 enddef
 
-def s:on_post_source(): void
-  g:sandwich#recipes = deepcopy(g:sandwich#default_recipes) + s:surround_like_recipes() + s:zenkaku_recipes()
+def OnPostSource(): void
+  g:sandwich#recipes = deepcopy(g:sandwich#default_recipes) + SurroundLikeRecipes() + ZenkakuRecipes()
 enddef

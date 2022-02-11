@@ -11,23 +11,23 @@ const s:incremental_mark_keys_pattern = '^[A-Z]$'
 var s:is_initialized = false
 var s:incremental_mark_index = -1
 
-def kg8m#util#marks#increment(): void
-  s:init()
+export def Increment(): void
+  Init()
 
-  const incremental_mark_key = s:detect_key()
+  const incremental_mark_key = DetectKey()
 
   if incremental_mark_key =~# s:incremental_mark_keys_pattern
-    printf("Already marked to %s", incremental_mark_key)->kg8m#util#logger#error()
+    printf("Already marked to %s", incremental_mark_key)->kg8m#util#logger#Error()
     return
   endif
 
   s:incremental_mark_index = (s:incremental_mark_index + 1) % len(s:incremental_mark_keys)
 
   execute "mark " .. s:incremental_mark_keys[s:incremental_mark_index]
-  printf("Marked to %s", s:incremental_mark_keys[s:incremental_mark_index])->kg8m#util#logger#info()
+  printf("Marked to %s", s:incremental_mark_keys[s:incremental_mark_index])->kg8m#util#logger#Info()
 enddef
 
-def s:init(): void
+def Init(): void
   if s:is_initialized
     return
   endif
@@ -36,7 +36,7 @@ def s:init(): void
   s:is_initialized = true
 enddef
 
-def s:detect_key(): string
+def DetectKey(): string
   var detected_mark_key = ""
 
   const current_filepath    = expand("%")

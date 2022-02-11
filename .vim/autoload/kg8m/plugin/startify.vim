@@ -1,22 +1,22 @@
 vim9script
 
-def kg8m#plugin#startify#configure(): void
+export def Configure(): void
   if argc() ># 0
     # `on_event: "BufWritePre"` for `s:save_session`: Load startify before writing buffer (on `BufWritePre`) and
     # register autocmd for `BufWritePost`
-    kg8m#plugin#configure({
+    kg8m#plugin#Configure({
       lazy:     true,
       on_cmd:   "Startify",
       on_event: "BufWritePre",
-      hook_source:      () => s:on_source(),
-      hook_post_source: () => s:on_post_source(),
+      hook_source:      () => OnSource(),
+      hook_post_source: () => OnPostSource(),
     })
   else
-    s:setup()
+    Setup()
   endif
 enddef
 
-def s:setup(): void
+def Setup(): void
   set sessionoptions=buffers,folds
 
   g:startify_session_autoload    = false
@@ -36,8 +36,8 @@ def s:setup(): void
     { type: "dir",       header: ["Recently modified files in the current directory:"] },
   ]
   g:startify_commands = [
-    { p: "call kg8m#plugin#update#run()" },
-    { P: "call kg8m#plugin#update#run(#{ bulk: v:false })" },
+    { p: "call kg8m#plugin#update#Run()" },
+    { P: "call kg8m#plugin#update#Run(#{ bulk: v:false })" },
   ]
 
   # https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
@@ -73,32 +73,32 @@ def s:setup(): void
   augroup vimrc-plugin-startify
     autocmd!
     autocmd FileType startify setlocal cursorline cursorlineopt=both
-    autocmd ColorScheme  *    s:overwrite_colors()
-    autocmd BufWritePost *    s:save_session()
-    autocmd VimLeavePre  *    s:delete_last_session_link()
+    autocmd ColorScheme  *    OverwriteColors()
+    autocmd BufWritePost *    SaveSession()
+    autocmd VimLeavePre  *    DeleteLastSessionLink()
   augroup END
 enddef
 
-def s:overwrite_colors(): void
+def OverwriteColors(): void
   highlight StartifyFile   guifg=#FFFFFF
   highlight StartifyHeader guifg=#FFFFFF
   highlight StartifyPath   guifg=#777777
   highlight StartifySlash  guifg=#777777
 enddef
 
-def s:save_session(): void
-  if s:session_savable()
-    kg8m#configure#folding#manual#restore()
+def SaveSession(): void
+  if SessionSavable()
+    kg8m#configure#folding#manual#Restore()
     mkdir(g:startify_session_dir, "p")
-    execute "silent SSave! " .. s:session_name()
+    execute "silent SSave! " .. SessionName()
   endif
 enddef
 
-def s:session_savable(): bool
+def SessionSavable(): bool
   if &filetype ==# ""
     const filename = expand("%:t")
 
-    if kg8m#util#string#starts_with(filename, "mmv-")
+    if kg8m#util#string#StartsWith(filename, "mmv-")
       return false
     else
       return true
@@ -108,14 +108,14 @@ def s:session_savable(): bool
   endif
 enddef
 
-def s:session_name(): string
+def SessionName(): string
   return "%:p"
     ->expand()
     ->substitute("/", "+=", "g")
     ->substitute('^\.', "_", "")
 enddef
 
-def s:delete_last_session_link(): void
+def DeleteLastSessionLink(): void
   const filepath = printf("%s/__LAST__", g:startify_session_dir)
 
   # Don't use `filereadable(filepath)` because it returns FALSE if the symlink is broken.
@@ -124,10 +124,10 @@ def s:delete_last_session_link(): void
   endif
 enddef
 
-def s:on_source(): void
-  s:setup()
+def OnSource(): void
+  Setup()
 enddef
 
-def s:on_post_source(): void
-  s:overwrite_colors()
+def OnPostSource(): void
+  OverwriteColors()
 enddef

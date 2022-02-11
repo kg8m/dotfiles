@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#configure#folding#global_options(): void
+export def GlobalOptions(): void
   set foldmethod=marker
   set foldopen=hor
   set foldminlines=1
@@ -12,18 +12,18 @@ def kg8m#configure#folding#global_options(): void
   set fillchars+=diff:/
 enddef
 
-def kg8m#configure#folding#local_options(): void
+export def LocalOptions(): void
   augroup vimrc-configure-folding-local_options
     autocmd!
     autocmd FileType gitconfig  setlocal foldmethod=indent
     autocmd FileType haml       setlocal foldmethod=indent
     autocmd FileType neosnippet setlocal foldmethod=marker
 
-    autocmd FileType * s:configure_foldenable()
+    autocmd FileType * ConfigureFoldenable()
   augroup END
 enddef
 
-def kg8m#configure#folding#mappings(): void
+export def Mappings(): void
   # Frequently used keys:
   #   zo: Open current fold
   #   zc: Close current fold
@@ -38,24 +38,24 @@ def kg8m#configure#folding#mappings(): void
   nnoremap z] ]z
 enddef
 
-def s:configure_foldenable(): void
-  if s:should_disable()
+def ConfigureFoldenable(): void
+  if ShouldDisable()
     setlocal nofoldenable
   endif
 enddef
 
-def s:should_disable(): bool
+def ShouldDisable(): bool
   return (
     # For vimdiff
     &diff ||
 
     # For auto-git-diff
-    (&filetype ==# "diff" && kg8m#util#is_git_rebase()) ||
+    (&filetype ==# "diff" && kg8m#util#IsGitRebase()) ||
 
     # For diffs of `git commit --verbose`
     &filetype ==# "gitcommit" ||
 
     # For edit mode of `git add --patch`
-    kg8m#util#file#current_name() ==# "addp-hunk-edit.diff"
+    kg8m#util#file#CurrentName() ==# "addp-hunk-edit.diff"
   )
 enddef

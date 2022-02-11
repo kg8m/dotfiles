@@ -1,9 +1,9 @@
 vim9script
 
-kg8m#plugin#ensure_sourced("fzf.vim")
+kg8m#plugin#EnsureSourced("fzf.vim")
 
 # Show preview of dirty files (fzf's `:GFiles?` doesn't show preview)
-def kg8m#plugin#fzf#git_files#run(): void
+export def Run(): void
   const options = {
     options: [
       "--preview", "git diff-or-cat {2}",
@@ -11,5 +11,5 @@ def kg8m#plugin#fzf#git_files#run(): void
     ],
   }
 
-  kg8m#plugin#fzf#run(() => fzf#vim#gitfiles("?", options))
+  kg8m#plugin#fzf#Run(() => fzf#vim#gitfiles("?", options))
 enddef

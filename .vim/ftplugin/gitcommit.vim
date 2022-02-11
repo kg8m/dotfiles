@@ -1,6 +1,6 @@
 vim9script
 
-def s:open_diff_window(): void
+def OpenDiffWindow(): void
   if has_key(b:, "diff_window_opened")
     return
   endif
@@ -32,5 +32,5 @@ enddef
 
 set nowarn
 
-s:open_diff_window()
+OpenDiffWindow()
 set nowritebackup

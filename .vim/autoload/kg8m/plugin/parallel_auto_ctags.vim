@@ -1,15 +1,15 @@
 vim9script
 
-def kg8m#plugin#parallel_auto_ctags#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:     true,
     on_start: true,
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    hook_source:      () => OnSource(),
+    hook_post_source: () => OnPostSource(),
   })
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:parallel_auto_ctags#entry_points = {
     pwd: {
       path:    ".",
@@ -19,11 +19,11 @@ def s:on_source(): void
     },
   }
 
-  if kg8m#util#on_rails_dir()
-    &tags ..= "," .. kg8m#util#rubygems_path() .. "/../tags"
+  if kg8m#util#OnRailsDir()
+    &tags ..= "," .. kg8m#util#RubygemsPath() .. "/../tags"
 
     g:parallel_auto_ctags#entry_points.gems = {
-      path:    kg8m#util#rubygems_path() .. "/..",
+      path:    kg8m#util#RubygemsPath() .. "/..",
       options: ["--exclude=test", "--exclude=spec", "--languages=Ruby"],
       events:  ["VimEnter"],
       silent:  false,
@@ -31,6 +31,6 @@ def s:on_source(): void
   endif
 enddef
 
-def s:on_post_source(): void
+def OnPostSource(): void
   parallel_auto_ctags#create_all()
 enddef

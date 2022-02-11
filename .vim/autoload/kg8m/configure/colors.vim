@@ -2,7 +2,7 @@ vim9script
 
 g:kg8m#configure#colors#sync_minlines = 1000
 
-def kg8m#configure#colors#terminal(): void
+export def Terminal(): void
   set termguicolors
 
   g:terminal_ansi_colors = [
@@ -17,7 +17,7 @@ def kg8m#configure#colors#terminal(): void
   ]
 enddef
 
-def kg8m#configure#colors#performance(): void
+export def Performance(): void
   augroup vimrc-configure-colors-performance
     autocmd!
 

@@ -12,75 +12,75 @@ final s:cache = {
 }
 
 # 2-stroke `f` with migemo
-def kg8m#util#f2#f(): void
-  s:prepare("f")
-  s:run_singleline()
+export def LowerF(): void
+  Prepare("f")
+  RunSingleline()
 enddef
 
 # 2-stroke `F` with migemo
-def kg8m#util#f2#F(): void
-  s:prepare("F")
-  s:run_singleline()
+export def UpperF(): void
+  Prepare("F")
+  RunSingleline()
 enddef
 
 # 2-stroke `t` with migemo
-def kg8m#util#f2#t(): void
-  s:prepare("t")
-  s:run_singleline()
+export def LowerT(): void
+  Prepare("t")
+  RunSingleline()
 enddef
 
 # 2-stroke `T` with migemo
-def kg8m#util#f2#T(): void
-  s:prepare("T")
-  s:run_singleline()
+export def UpperT(): void
+  Prepare("T")
+  RunSingleline()
 enddef
 
 # `stargate#ok_vim()` with migemo
-def kg8m#util#f2#multiline(): void
-  s:prepare("multiline")
-  s:run_multiline()
+export def Multiline(): void
+  Prepare("multiline")
+  RunMultiline()
 enddef
 
-def kg8m#util#f2#semi(): void
+export def Semi(): void
   if empty(s:cache.type)
     feedkeys(";", "n")
   else
-    s:repeat()
+    Repeat()
   endif
 enddef
 
-def kg8m#util#f2#comma(): void
+export def Comma(): void
   if empty(s:cache.type)
     feedkeys(",", "n")
   else
-    s:repeat()
+    Repeat()
   endif
 enddef
 
-def s:repeat(): void
+def Repeat(): void
   if s:cache.type ==# "multiline"
-    s:run_multiline()
+    RunMultiline()
   else
-    s:run_singleline()
+    RunSingleline()
   endif
 enddef
 
-def s:prepare(type: string): void
-  s:reset()
+def Prepare(type: string): void
+  Reset()
   s:cache.type = type
 enddef
 
-def s:reset(): void
+def Reset(): void
   s:cache.type    = ""
   s:cache.input   = ""
   s:cache.pattern = ""
 enddef
 
-def s:run_singleline(): void
+def RunSingleline(): void
   const forward = s:cache.type =~# '\l'
   const cursor_position = getcurpos()
 
-  const pattern  = s:build_pattern()
+  const pattern  = BuildPattern()
   const flags    = (forward ? "" : "b") .. "n"
   const stopline = line(".")
 
@@ -98,8 +98,8 @@ def s:run_singleline(): void
     endif
 
     const message = printf("There are no matches for %s", string(s:cache.input))
-    kg8m#util#logger#info(message, { save_history: false })
-    s:reset()
+    kg8m#util#logger#Info(message, { save_history: false })
+    Reset()
   else
     const line_number = position[0]
     var column_number = position[1]
@@ -113,22 +113,22 @@ def s:run_singleline(): void
     endif
 
     cursor(line_number, column_number)
-    s:blink_cursor()
+    BlinkCursor()
   endif
 enddef
 
-def s:run_multiline(): void
+def RunMultiline(): void
   const cursor_position = getcurpos()
 
-  const pattern = s:build_pattern()
+  const pattern = BuildPattern()
   stargate#ok_vim(pattern)
 
   if getcurpos() !=# cursor_position
-    s:blink_cursor()
+    BlinkCursor()
   endif
 enddef
 
-def s:build_pattern(): string
+def BuildPattern(): string
   if !empty(s:cache.pattern)
     return s:cache.pattern
   endif
@@ -139,17 +139,17 @@ def s:build_pattern(): string
   # Don't check whether multibyte characters are contained in searching text. Always use migemo if available. Because
   # migemo targets are not only multibyte characters. For example, "do" matches with ".". It is too confusing if
   # searching behavior varies depending on multibyte characters existence.
-  s:setup_migemo()
+  SetupMigemo()
 
   if empty(s:cache.migemo.dictionary_path)
     if !s:cache.migemo.warned
-      kg8m#util#logger#warn("migemo isn't available. Check if migemo is executable and its dictionary exists.")
+      kg8m#util#logger#Warn("migemo isn't available. Check if migemo is executable and its dictionary exists.")
       s:cache.migemo.warned = true
     endif
 
-    s:cache.pattern = s:input_to_smartcase_pattern(input)
+    s:cache.pattern = InputToSmartcasePattern(input)
   else
-    const smartcase_pattern = s:input_to_smartcase_pattern(input)
+    const smartcase_pattern = InputToSmartcasePattern(input)
     const migemo_pattern    = printf(
       "cmigemo -d %s -v -w %s",
       shellescape(s:cache.migemo.dictionary_path),
@@ -163,7 +163,7 @@ def s:build_pattern(): string
   return s:cache.pattern
 enddef
 
-def s:input_to_smartcase_pattern(input: string): string
+def InputToSmartcasePattern(input: string): string
   return printf(
     '\V%s%s\m',
     input[0] =~# '\l' ? printf('\[%s%s]', input[0], toupper(input[0])) : input[0],
@@ -171,7 +171,7 @@ def s:input_to_smartcase_pattern(input: string): string
   )
 enddef
 
-def s:setup_migemo(): void
+def SetupMigemo(): void
   if s:cache.migemo.setup_done
     return
   endif
@@ -198,7 +198,7 @@ def s:setup_migemo(): void
   s:cache.migemo.setup_done = true
 enddef
 
-def s:blink_cursor(): void
+def BlinkCursor(): void
   if &cursorcolumn
     return
   endif

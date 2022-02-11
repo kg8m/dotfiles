@@ -1,32 +1,32 @@
 vim9script
 
-kg8m#plugin#ensure_sourced("fzf.vim")
+kg8m#plugin#EnsureSourced("fzf.vim")
 
 # Ignore some files, e.g., `.git/COMMIT_EDITMSG` (fzf's `:History` doesn't ignore them)
-def kg8m#plugin#fzf#history#run(): void
+export def Run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
-    source:  s:candidates(),
-    "sink*": function("kg8m#plugin#fzf#buffers#handler"),
-    options: kg8m#plugin#fzf#buffers#base_options() + [
+    source:  Candidates(),
+    "sink*": function("kg8m#plugin#fzf#buffers#Handler"),
+    options: kg8m#plugin#fzf#buffers#BaseOptions() + [
       "--prompt", "History> ",
     ],
   }
 
-  kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("history-files", options)))
+  kg8m#plugin#fzf#Run(() => fzf#run(fzf#wrap("history-files", options)))
 enddef
 
 # `buffers` are for files not included in `mr#mru#list()`, e.g.,
 #   - renamed files by `:Rename`
 #   - opened files by `vim foo bar baz`
-def s:candidates(): list<string>
-  const buffers  = kg8m#plugin#fzf#buffers#list({ sorter: function("s:buffers_sorter") })
-  const oldfiles = s:get_oldfiles()
+def Candidates(): list<string>
+  const buffers  = kg8m#plugin#fzf#buffers#List({ sorter: function("s:BuffersSorter") })
+  const oldfiles = GetOldfiles()
 
-  return kg8m#util#list#vital().uniq(buffers + oldfiles)
+  return kg8m#util#list#Vital().uniq(buffers + oldfiles)
 enddef
 
-def s:buffers_sorter(lhs: dict<any>, rhs: dict<any>): number
+def BuffersSorter(lhs: dict<any>, rhs: dict<any>): number
   if lhs.lastused ==# rhs.lastused
     return lhs.name <# rhs.name ? 1 : -1
   else
@@ -34,7 +34,7 @@ def s:buffers_sorter(lhs: dict<any>, rhs: dict<any>): number
   endif
 enddef
 
-def s:get_oldfiles(): list<string>
-  const MapperCallback = (filepath) => filereadable(filepath) ? kg8m#util#file#format_path(filepath) : false
-  return mr#mru#list()->kg8m#util#list#filter_map(MapperCallback)
+def GetOldfiles(): list<string>
+  const MapperCallback = (filepath) => filereadable(filepath) ? kg8m#util#file#FormatPath(filepath) : false
+  return mr#mru#list()->kg8m#util#list#FilterMap(MapperCallback)
 enddef

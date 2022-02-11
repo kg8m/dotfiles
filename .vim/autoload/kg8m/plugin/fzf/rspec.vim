@@ -2,11 +2,11 @@ vim9script
 
 const PATTERN = '^\s*\(context\|describe\|it\)\>'
 
-def kg8m#plugin#fzf#rspec#outline(): void
+export def Outline(): void
   if expand("%") !~# '\w_spec\.rb$'
-    kg8m#util#logger#error("Not an RSpec file.")
+    kg8m#util#logger#Error("Not an RSpec file.")
     return
   endif
 
-  kg8m#plugin#fzf#buffer_lines#run(PATTERN)
+  kg8m#plugin#fzf#buffer_lines#Run(PATTERN)
 enddef

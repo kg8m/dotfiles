@@ -1,22 +1,22 @@
 vim9script
 
-def kg8m#plugin#asyncomplete#nextword#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:     true,
     on_event: ["InsertEnter"],
     on_start: true,
     depends:  ["async.vim", "asyncomplete.vim"],
-    hook_post_source: () => s:on_post_source(),
+    hook_post_source: () => OnPostSource(),
   })
 
-  if kg8m#plugin#register("prabirshrestha/async.vim")
-    kg8m#plugin#configure({
+  if kg8m#plugin#Register("prabirshrestha/async.vim")
+    kg8m#plugin#Configure({
       lazy: true,
     })
   endif
 enddef
 
-def s:on_post_source(): void
+def OnPostSource(): void
   # Should specify filetypes? `allowlist: ["gitcommit", "markdown", "moin", "text"],`
   asyncomplete#register_source(asyncomplete#sources#nextword#get_source_options({
     name: "nextword",

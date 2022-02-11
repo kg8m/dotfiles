@@ -1,41 +1,41 @@
 vim9script
 
-kg8m#plugin#ensure_sourced("fzf.vim")
+kg8m#plugin#EnsureSourced("fzf.vim")
 
 # Sort buffers in dictionary order (fzf's `:Buffers` doesn't sort them)
-def kg8m#plugin#fzf#buffers#run(): void
+export def Run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
-    source:  kg8m#plugin#fzf#buffers#list(),
-    "sink*": function("kg8m#plugin#fzf#buffers#handler"),
-    options: kg8m#plugin#fzf#buffers#base_options() + [
+    source:  kg8m#plugin#fzf#buffers#List(),
+    "sink*": function("kg8m#plugin#fzf#buffers#Handler"),
+    options: kg8m#plugin#fzf#buffers#BaseOptions() + [
       "--prompt", "Buffers> ",
     ],
   }
 
-  kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("buffer-files", options)))
+  kg8m#plugin#fzf#Run(() => fzf#run(fzf#wrap("buffer-files", options)))
 enddef
 
-def kg8m#plugin#fzf#buffers#list(options: dict<any> = {}): list<string>
-  const sorter = get(options, "sorter") ?? function("s:default_sorter")
+export def List(options: dict<any> = {}): list<string>
+  const sorter = get(options, "sorter") ?? function("s:DefaultSorter")
 
-  const current = [kg8m#util#file#current_path()]->filter((_, filepath) => !empty(filepath))
-  const buffers = s:bufinfo_list()->sort(sorter)->mapnew((_, bufinfo) => kg8m#util#file#format_path(bufinfo.name))
+  const current = [kg8m#util#file#CurrentPath()]->filter((_, filepath) => !empty(filepath))
+  const buffers = BufinfoList()->sort(sorter)->mapnew((_, bufinfo) => kg8m#util#file#FormatPath(bufinfo.name))
 
-  return kg8m#util#list#vital().uniq(current + buffers)
+  return kg8m#util#list#Vital().uniq(current + buffers)
 enddef
 
-def s:bufinfo_list(): list<dict<any>>
+def BufinfoList(): list<dict<any>>
   const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : bufinfo
-  return getbufinfo({ buflisted: true })->kg8m#util#list#filter_map(MapperCallback)
+  return getbufinfo({ buflisted: true })->kg8m#util#list#FilterMap(MapperCallback)
 enddef
 
-def s:default_sorter(lhs: dict<any>, rhs: dict<any>): number
+def DefaultSorter(lhs: dict<any>, rhs: dict<any>): number
   return lhs.name <# rhs.name ? 1 : -1
 enddef
 
 # Don't use fzf.vim's default handler because it can't open non-persisted, e.g., `buftype=nofile` set, buffers.
-def kg8m#plugin#fzf#buffers#handler(lines: list<string>): void
+export def Handler(lines: list<string>): void
   if empty(lines)
     return
   endif
@@ -48,9 +48,9 @@ def kg8m#plugin#fzf#buffers#handler(lines: list<string>): void
   endfor
 enddef
 
-def kg8m#plugin#fzf#buffers#base_options(): list<any>
+export def BaseOptions(): list<any>
   return [
-    "--header-lines", empty(kg8m#util#file#current_path()) ? 0 : 1,
+    "--header-lines", empty(kg8m#util#file#CurrentPath()) ? 0 : 1,
     "--preview", "preview {}",
     "--preview-window", "down:75%:wrap:nohidden",
     "--expect", g:fzf_action->keys()->join(","),

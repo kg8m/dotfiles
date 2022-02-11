@@ -1,25 +1,25 @@
 vim9script
 
-def kg8m#plugin#test#configure(): void
+export def Configure(): void
   nnoremap <Leader>T :write<CR>:TestFile<CR>
   nnoremap <Leader>t :write<CR>:TestNearest<CR>
 
-  kg8m#plugin#configure({
+  kg8m#plugin#Configure({
     lazy:   true,
     on_cmd: ["TestFile", "TestNearest"],
-    hook_source: () => s:on_source(),
+    hook_source: () => OnSource(),
   })
 enddef
 
-def s:vimux_strategy(command: string): void
+def VimuxStrategy(command: string): void
   # Just execute the command without echo it
-  kg8m#plugin#vimux#run_command(command)
+  kg8m#plugin#vimux#RunCommand(command)
 enddef
 
-def s:on_source(): void
-  if kg8m#util#on_tmux()
+def OnSource(): void
+  if kg8m#util#OnTmux()
     g:test#custom_strategies = get(g:, "test#custom_strategies", {})
-    g:test#custom_strategies.vimux = function("s:vimux_strategy")
+    g:test#custom_strategies.vimux = function("s:VimuxStrategy")
     g:test#strategy = "vimux"
   endif
 

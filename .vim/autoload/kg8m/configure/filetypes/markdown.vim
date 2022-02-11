@@ -1,7 +1,7 @@
 vim9script
 
 # https://github.com/tpope/vim-markdown
-def kg8m#configure#filetypes#markdown#run(): void
+export def Run(): void
   g:markdown_fenced_languages = [
     "css",
     "diff",

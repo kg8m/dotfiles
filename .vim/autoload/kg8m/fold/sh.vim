@@ -1,7 +1,7 @@
 vim9script
 
 # Syntax-based folding gets broken depending on syntax-brokenness.
-# This `kg8m#fold#sh#expr` is based on some keywords and symbols instead.
+# This `kg8m#fold#sh#Expr` is based on some keywords and symbols instead.
 #   - keywords: `if`, `fi`, `case`, `esac`, `for`, done, and so on
 #   - other supports:
 #     - here-documents: `<< FOO ... FOO`
@@ -16,49 +16,49 @@ const FOLD_START_PATTERN = '\v^%(if|case|for|while)>|\|\s*while>|\{$'
 const FOLD_END_PATTERN   = '\v^%(%(fi|esac|done)>|\})'
 const ONE_LINER_PATTERN  = '\v<%(fi|esac|done)>'
 
-def kg8m#fold#sh#expr(lnum: number): string
+export def Expr(lnum: number): string
   const line = getline(lnum)->trim()
 
-  if s:is_heredoc_end(line)
+  if IsHeredocEnd(line)
     unlet! b:sh_fold_heredoc_key
     return "s1"
-  elseif s:is_in_heredoc(line)
+  elseif IsInHeredoc(line)
     return "="
-  elseif s:is_no_content(line)
+  elseif IsNoContent(line)
     return "="
-  elseif s:is_fold_end(line)
+  elseif IsFoldEnd(line)
     return "s1"
-  elseif s:is_heredoc_start(line)
+  elseif IsHeredocStart(line)
     b:sh_fold_heredoc_key = matchstr(line, HEREDOC_START_PATTERN)
     return "a1"
-  elseif s:is_fold_start(line)
+  elseif IsFoldStart(line)
     return "a1"
   else
     return "="
   endif
 enddef
 
-def s:is_no_content(line: string): bool
-  return line ==# EMPTY_STRING || kg8m#util#string#starts_with(line, COMMENT_CHAR)
+def IsNoContent(line: string): bool
+  return line ==# EMPTY_STRING || kg8m#util#string#StartsWith(line, COMMENT_CHAR)
 enddef
 
-def s:is_fold_start(line: string): bool
+def IsFoldStart(line: string): bool
   return !!(line =~# FOLD_START_PATTERN && line !~# ONE_LINER_PATTERN)
 enddef
 
-def s:is_fold_end(line: string): bool
+def IsFoldEnd(line: string): bool
   return !!(line =~# FOLD_END_PATTERN)
 enddef
 
-def s:is_heredoc_start(line: string): bool
+def IsHeredocStart(line: string): bool
   return !!(line =~# HEREDOC_START_PATTERN)
 enddef
 
-def s:is_heredoc_end(line: string): bool
+def IsHeredocEnd(line: string): bool
   return !!has_key(b:, "sh_fold_heredoc_key") && line ==# b:sh_fold_heredoc_key
 enddef
 
-# Call this only if `s:is_heredoc_end()` returns `false`
-def s:is_in_heredoc(line: string): bool
+# Call this only if `IsHeredocEnd()` returns `false`
+def IsInHeredoc(line: string): bool
   return !!has_key(b:, "sh_fold_heredoc_key")
 enddef

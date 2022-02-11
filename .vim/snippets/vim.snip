@@ -7,9 +7,9 @@ options head
 	endfunction
 
 snippet def
-abbr    def {function_name}(): {return_type} ... enddef
-options head
-	def ${1:`expand("%") =~# '\<autoload/' ? expand("%")->substitute('^.*\<autoload/', "", "")->substitute('/', "#", "g")->substitute('\.vim$', "#", "") : ""`}(): ${2:#:return_type}
+abbr    def {FunctionName}(): {return_type} ... enddef
+options word
+	def ${1:#:FunctionName}(): ${2:#:return_type}
 		${0}
 	enddef
 

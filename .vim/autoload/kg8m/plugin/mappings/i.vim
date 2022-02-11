@@ -1,7 +1,7 @@
 vim9script
 
 # This function can be called multiple times in order to overwrite plugins' mappings.
-def kg8m#plugin#mappings#i#define(options: dict<bool> = {}): void
+export def Define(options: dict<bool> = {}): void
   if has_key(b:, "is_defined") && get(options, "force", false)
     return
   endif
@@ -10,14 +10,14 @@ def kg8m#plugin#mappings#i#define(options: dict<bool> = {}): void
     return
   endif
 
-  inoremap <buffer><expr>         . <SID>dot_expr()
+  inoremap <buffer><expr>         . <SID>DotExpr()
 
   # <silent> for lexima#expand's echo
-  imap     <buffer><expr><silent> <CR> <SID>cr_expr()
+  imap     <buffer><expr><silent> <CR> <SID>CrExpr()
 
   # <silent> for lexima#expand's echo
-  inoremap <buffer><expr><silent> <BS>  <SID>bs_expr()
-  inoremap <buffer><expr><silent> <C-h> <SID>bs_expr()
+  inoremap <buffer><expr><silent> <BS>  <SID>BsExpr()
+  inoremap <buffer><expr><silent> <C-h> <SID>BsExpr()
 
   inoremap <buffer><expr>         <Tab>   pumvisible() ? "<C-n>" : "<Tab>"
   inoremap <buffer><expr>         <S-Tab> pumvisible() ? "<C-p>" : "<S-Tab>"
@@ -30,16 +30,16 @@ def kg8m#plugin#mappings#i#define(options: dict<bool> = {}): void
   inoremap <buffer><expr>         <Down> pumvisible() ? "<C-n>" : "<Down>"
 
   # <silent> for lexima#expand's echo
-  imap     <buffer><expr><silent> > <SID>gt_expr()
+  imap     <buffer><expr><silent> > <SID>GtExpr()
 
   b:is_defined = true
 enddef
 
-def kg8m#plugin#mappings#i#disable(): void
+export def Disable(): void
   b:kg8m_custom_imaps_disabled = true
 enddef
 
-def s:dot_expr(): string
+def DotExpr(): string
   if &omnifunc ==# "lsp#complete"
     return ".\<C-x>\<C-o>"
   else
@@ -47,7 +47,7 @@ def s:dot_expr(): string
   endif
 enddef
 
-def s:cr_expr(): string
+def CrExpr(): string
   if neosnippet#expandable_or_jumpable()
     return "\<Plug>(neosnippet_expand_or_jump)"
   elseif vsnip#available(1)
@@ -62,7 +62,7 @@ def s:cr_expr(): string
   endif
 enddef
 
-def s:bs_expr(): string
+def BsExpr(): string
   const base = lexima#expand("<BS>", "i")
 
   if &omnifunc ==# ""
@@ -78,14 +78,14 @@ def s:bs_expr(): string
   endif
 enddef
 
-def s:gt_expr(): string
+def GtExpr(): string
   const following_character = getline(".")->strpart(col(".") - 1, 1)
 
   if following_character ==# ">"
     return lexima#expand(">", "i")
   endif
 
-  if !kg8m#util#list#includes(g:kg8m#plugin#closetag#filetypes, &filetype)
+  if !kg8m#util#list#Includes(g:kg8m#plugin#closetag#filetypes, &filetype)
     return ">"
   endif
 
@@ -106,7 +106,7 @@ def s:gt_expr(): string
     return g:closetag_shortcut
   endif
 
-  if context_filetype ==# "eruby" && kg8m#util#string#ends_with(bufname(), ".html.erb")
+  if context_filetype ==# "eruby" && kg8m#util#string#EndsWith(bufname(), ".html.erb")
     return g:closetag_shortcut
   endif
 

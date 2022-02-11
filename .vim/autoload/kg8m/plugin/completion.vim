@@ -2,14 +2,14 @@ vim9script
 
 final s:cache = {}
 
-def kg8m#plugin#completion#disable(): void
+export def Disable(): void
   b:asyncomplete_enable = false
 enddef
 
-def kg8m#plugin#completion#refresh_pattern(filetype: string): string
+export def RefreshPattern(filetype: string): string
   if !has_key(s:cache, "completion_refresh_patterns")
     const css_pattern  = '\v([.#a-zA-Z0-9_-]+)$'
-    const ruby_pattern = kg8m#plugin#lsp#servers#is_available("solargraph") ? '\v(\@?\@\k*|(:)@<!:\k*|\k+)$' : '\v(\k+)$'
+    const ruby_pattern = kg8m#plugin#lsp#servers#IsAvailable("solargraph") ? '\v(\@?\@\k*|(:)@<!:\k*|\k+)$' : '\v(\k+)$'
     const sh_pattern   = '\v((\k|-)+)$'
 
     s:cache.completion_refresh_patterns = {
@@ -31,32 +31,32 @@ def kg8m#plugin#completion#refresh_pattern(filetype: string): string
   return get(s:cache.completion_refresh_patterns, filetype) ?? get(s:cache.completion_refresh_patterns, "_")
 enddef
 
-def kg8m#plugin#completion#set_refresh_pattern(): void
+export def SetRefreshPattern(): void
   if !has_key(b:, "asyncomplete_refresh_pattern")
-    const filetype = kg8m#plugin#lsp#is_target_buffer() && kg8m#plugin#lsp#is_buffer_enabled() ? &filetype : "_"
-    b:asyncomplete_refresh_pattern = kg8m#plugin#completion#refresh_pattern(filetype)
+    const filetype = kg8m#plugin#lsp#IsTargetBuffer() && kg8m#plugin#lsp#IsBufferEnabled() ? &filetype : "_"
+    b:asyncomplete_refresh_pattern = RefreshPattern(filetype)
   endif
 enddef
 
-def kg8m#plugin#completion#reset_refresh_pattern(): void
+export def ResetRefreshPattern(): void
   unlet! b:asyncomplete_refresh_pattern
-  kg8m#plugin#completion#set_refresh_pattern()
+  SetRefreshPattern()
 enddef
 
-def kg8m#plugin#completion#refresh(wait: number = 200): void
-  s:stop_refresh_timer()
-  s:start_refresh_timer(wait)
+export def Refresh(wait: number = 200): void
+  StopRefreshTimer()
+  StartRefreshTimer(wait)
 enddef
 
-def kg8m#plugin#completion#force_refresh(): void
+def ForceRefresh(): void
   asyncomplete#_force_refresh()
-  s:stop_refresh_timer()
+  StopRefreshTimer()
 enddef
 
-def s:start_refresh_timer(wait: number): void
-  s:cache.refresh_timer = timer_start(wait, (_) => kg8m#plugin#completion#force_refresh())
+def StartRefreshTimer(wait: number): void
+  s:cache.refresh_timer = timer_start(wait, (_) => ForceRefresh())
 enddef
 
-def s:stop_refresh_timer(): void
+def StopRefreshTimer(): void
   timer_stop(get(s:cache, "refresh_timer", -1))
 enddef

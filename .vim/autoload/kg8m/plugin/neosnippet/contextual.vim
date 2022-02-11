@@ -2,22 +2,22 @@ vim9script
 
 final s:contexts: dict<list<dict<any>>> = {}
 
-def kg8m#plugin#neosnippet#contextual#setup(): void
+export def Setup(): void
   augroup vimrc-plugin-neosnippet-contextual
     autocmd!
-    autocmd FileType * timer_start(50, (_) => kg8m#plugin#neosnippet#contextual#source())
+    autocmd FileType * timer_start(50, (_) => kg8m#plugin#neosnippet#contextual#Source())
   augroup END
 enddef
 
-def kg8m#plugin#neosnippet#contextual#source(): void
-  s:setup_contexts()
+export def Source(): void
+  SetupContexts()
 
-  const current_path = kg8m#util#file#current_relative_path()
+  const current_path = kg8m#util#file#CurrentRelativePath()
 
   for context in get(s:contexts, &filetype, [])
     if current_path =~# context.pattern
       for snippet in context.snippets
-        s:source_snippet(snippet)
+        SourceSnippet(snippet)
       endfor
 
       break
@@ -25,26 +25,26 @@ def kg8m#plugin#neosnippet#contextual#source(): void
   endfor
 enddef
 
-def s:source_snippet(filename: string): void
-  const filepath = printf("%s/%s", kg8m#plugin#neosnippet#snippets_dirpath(), filename)
+def SourceSnippet(filename: string): void
+  const filepath = printf("%s/%s", kg8m#plugin#neosnippet#SnippetsDirpath(), filename)
 
   if filereadable(filepath)
     execute printf("NeoSnippetSource %s", filepath)
   endif
 enddef
 
-def s:setup_contexts(): void
+def SetupContexts(): void
   if has_key(s:contexts, &filetype)
     return
   endif
 
   if &filetype ==# "ruby"
-    s:setup_contexts_for_ruby()
+    SetupContextsForRuby()
   endif
 enddef
 
-def s:setup_contexts_for_ruby(): void
-  if kg8m#util#on_rails_dir()
+def SetupContextsForRuby(): void
+  if kg8m#util#OnRailsDir()
     const common = ["ruby-rails.snip"]
     s:contexts.ruby = [
       { pattern: '^app/controllers', snippets: common + ["ruby-rails-controller.snip"] },

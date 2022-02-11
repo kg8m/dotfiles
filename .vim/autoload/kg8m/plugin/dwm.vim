@@ -1,19 +1,19 @@
 vim9script
 
-def kg8m#plugin#dwm#configure(): void
+export def Configure(): void
   nnoremap <C-w>n       :call DWM_New()<CR>
   nnoremap <C-w><Space> :call DWM_AutoEnter()<CR>
 
-  kg8m#plugin#configure({
+  kg8m#plugin#Configure({
     lazy:    true,
     on_cmd:  ["DWMOpen"],
     on_func: ["DWM_New", "DWM_AutoEnter", "DWM_Stack"],
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    hook_source:      () => OnSource(),
+    hook_post_source: () => OnPostSource(),
   })
 enddef
 
-def s:open(filepath: string): void
+def Open(filepath: string): void
   if bufexists(filepath)
     const winnr = bufwinnr(filepath)
 
@@ -35,14 +35,14 @@ def s:open(filepath: string): void
   endif
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:dwm_map_keys = false
 
   # For fzf.vim
-  command! -nargs=1 -complete=file DWMOpen s:open(<q-args>)
+  command! -nargs=1 -complete=file DWMOpen Open(<q-args>)
 enddef
 
-def s:on_post_source(): void
+def OnPostSource(): void
   # Disable DWM's default behavior on buffer loaded
   augroup dwm
     autocmd!

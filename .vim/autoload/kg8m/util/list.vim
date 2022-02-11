@@ -2,7 +2,7 @@ vim9script
 
 final s:cache = {}
 
-def kg8m#util#list#vital(): dict<func>
+export def Vital(): dict<func>
   if has_key(s:cache, "vital")
     return s:cache.vital
   endif
@@ -11,11 +11,11 @@ def kg8m#util#list#vital(): dict<func>
   return s:cache.vital
 enddef
 
-def kg8m#util#list#includes(list: list<any>, item: any): bool
+export def Includes(list: list<any>, item: any): bool
   return index(list, item) >=# 0
 enddef
 
-def kg8m#util#list#any(list: list<any>, Callback: func(any): bool): bool
+export def Any(list: list<any>, Callback: func(any): bool): bool
   for item in list
     if Callback(item)
       return true
@@ -25,7 +25,7 @@ def kg8m#util#list#any(list: list<any>, Callback: func(any): bool): bool
   return false
 enddef
 
-def kg8m#util#list#all(list: list<any>, Callback: func(any): bool): bool
+export def All(list: list<any>, Callback: func(any): bool): bool
   for item in list
     if !Callback(item)
       return false
@@ -35,7 +35,7 @@ def kg8m#util#list#all(list: list<any>, Callback: func(any): bool): bool
   return true
 enddef
 
-def kg8m#util#list#filter_map(list: list<any>, Callback: func(any): any): list<any>
+export def FilterMap(list: list<any>, Callback: func(any): any): list<any>
   var result = []
 
   for item in list

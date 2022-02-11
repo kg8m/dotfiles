@@ -1,23 +1,23 @@
 vim9script
 
-def kg8m#configure#filetypes#c#run(): void
+export def Run(): void
   augroup vimrc-configure-filetypes-c
     autocmd!
-    autocmd FileType c s:setup_buffer()
+    autocmd FileType c SetupBuffer()
   augroup END
 enddef
 
-def s:setup_buffer(): void
-  nnoremap <buffer> <Leader>r :call <SID>run_current()<CR>
+def SetupBuffer(): void
+  nnoremap <buffer> <Leader>r :call <SID>RunCurrent()<CR>
 enddef
 
-def s:run_current(): void
+def RunCurrent(): void
   write
 
-  const current    = kg8m#util#file#current_relative_path()
+  const current    = kg8m#util#file#CurrentRelativePath()
   const executable = fnamemodify(current, ":r")
 
-  const included_files = getline(1, "$")->kg8m#util#list#filter_map((line): any => {
+  const included_files = getline(1, "$")->kg8m#util#list#FilterMap((line): any => {
     if line =~# '\v^#include ".+\.h"$'
       return matchstr(line, '\v"\zs.+\ze"')->fnamemodify(":r") .. ".c"
     else
@@ -32,5 +32,5 @@ def s:run_current(): void
     executable->shellescape(),
     ("./" .. executable)->shellescape()
   )
-  kg8m#util#terminal#execute_command(command)
+  kg8m#util#terminal#ExecuteCommand(command)
 enddef

@@ -1,6 +1,6 @@
 vim9script
 
-def kg8m#configure#indent#base(): void
+export def Base(): void
   set expandtab
   set noshiftround
   set shiftwidth=2
@@ -13,7 +13,7 @@ def kg8m#configure#indent#base(): void
   set fixendofline
 enddef
 
-def kg8m#configure#indent#filetypes(): void
+export def Filetypes(): void
   g:html_indent_script1 = "inc"
   g:html_indent_style1  = "inc"
 

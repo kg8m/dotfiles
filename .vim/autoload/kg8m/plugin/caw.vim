@@ -1,17 +1,17 @@
 vim9script
 
-def kg8m#plugin#caw#configure(): void
-  map <expr> gc <SID>run()
+export def Configure(): void
+  map <expr> gc <SID>Run()
 
-  kg8m#plugin#configure({
+  kg8m#plugin#Configure({
     lazy: true,
-    hook_source: () => s:on_source(),
+    hook_source: () => OnSource(),
   })
 enddef
 
-def s:run(): string
-  if !kg8m#plugin#is_sourced("caw.vim")
-    kg8m#plugin#source("caw.vim")
+def Run(): string
+  if !kg8m#plugin#IsSourced("caw.vim")
+    kg8m#plugin#Source("caw.vim")
 
     if mode() ==? "v"
       # Retry because `line("'<")` and `line("'>")` don't work just after sourcing.
@@ -19,25 +19,25 @@ def s:run(): string
     endif
   endif
 
-  s:setup_filetype()
+  SetupFiletype()
 
   const base         = "\<Plug>(caw:hatpos:toggle)"
-  const teardown     = ":call kg8m#plugin#caw#teardown()\<CR>"
+  const teardown     = ":call kg8m#plugin#caw#Teardown()\<CR>"
   const clear_status = ":echo ''\<CR>"
   return base .. teardown .. clear_status
 enddef
 
-def s:setup_filetype(): void
+def SetupFiletype(): void
   if &filetype ==# "eruby"
-    s:setup_eruby()
+    SetupEruby()
   elseif &filetype ==# "Gemfile"
-    s:setup_gemfile()
+    SetupGemfile()
   elseif &filetype ==# "vim"
-    s:setup_vim()
+    SetupVim()
   endif
 enddef
 
-def s:setup_eruby(): void
+def SetupEruby(): void
   caw#load_ftplugin("eruby")
 
   const startline = line(mode() ==? "v" ? "'<" : ".")
@@ -80,17 +80,17 @@ def s:setup_eruby(): void
   endif
 enddef
 
-def s:setup_gemfile(): void
+def SetupGemfile(): void
   caw#load_ftplugin("ruby")
 enddef
 
 # Overwrite caw.vim's default: https://github.com/tyru/caw.vim/blob/41be34ca231c97d6be6c05e7ecb5b020f79cd37f/after/ftplugin/vim/caw.vim#L5-L9
-def s:setup_vim(): void
+def SetupVim(): void
   b:caw_hatpos_sp  = " "
   b:caw_zeropos_sp = " "
 enddef
 
-def kg8m#plugin#caw#teardown(): void
+export def Teardown(): void
   if has_key(b:, "caw_context_filetype_original_filetypes")
     unlet b:context_filetype_filetypes
 
@@ -102,7 +102,7 @@ def kg8m#plugin#caw#teardown(): void
   endif
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:caw_no_default_keymappings = true
   g:caw_hatpos_skip_blank_line = true
 enddef

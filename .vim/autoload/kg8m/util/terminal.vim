@@ -1,8 +1,8 @@
 vim9script
 
-def kg8m#util#terminal#execute_command(command: string): void
-  if kg8m#util#on_tmux()
-    kg8m#plugin#vimux#run_command(command)
+export def ExecuteCommand(command: string): void
+  if kg8m#util#OnTmux()
+    kg8m#plugin#vimux#RunCommand(command)
   else
     if len(term_list()) ==# 0
       terminal

@@ -1,12 +1,12 @@
 vim9script
 
-def kg8m#plugin#update#run(options: dict<any> = {}): void
-  timer_start(   0, (_) => s:_run(options) )
-  timer_start( 200, (_) => s:remove_disused())
-  timer_start(1000, (_) => kg8m#plugin#update#show_log())
+export def Run(options: dict<any> = {}): void
+  timer_start(   0, (_) => Main(options) )
+  timer_start( 200, (_) => RemoveDisused())
+  timer_start(1000, (_) => kg8m#plugin#update#ShowLog())
 enddef
 
-def kg8m#plugin#update#show_log(): void
+export def ShowLog(): void
   const initial_input =
     '!Same\\ revision'
     .. '\ !Current\\ branch\\ *\\ is\\ up\\ to\\ date.'
@@ -36,12 +36,12 @@ def kg8m#plugin#update#show_log(): void
   @/ = "\\v<(Error|Updated)>"
 enddef
 
-def s:_run(options: dict<any> = {}): void
+def Main(options: dict<any> = {}): void
   # Clear messages because they will be used in `s:check_finished`
   messages clear
 
   # Re-register disabled plugins before update because dein.vim doesn't make helptags for them
-  kg8m#plugin#enable_disabled_plugins()
+  kg8m#plugin#EnableDisabledPlugins()
 
   if get(options, "bulk", true)
     const force_update = true
@@ -50,17 +50,17 @@ def s:_run(options: dict<any> = {}): void
     dein#update()
   endif
 
-  s:check_finished()
+  CheckFinished()
 enddef
 
-def s:remove_disused(): void
+def RemoveDisused(): void
   for dirpath in dein#check_clean()
-    kg8m#util#logger#warn("Remove " .. dirpath)
+    kg8m#util#logger#Warn("Remove " .. dirpath)
     delete(dirpath, "rf")
   endfor
 enddef
 
-def s:check_finished(options: dict<any> = {}): void
+def CheckFinished(options: dict<any> = {}): void
   final options_cache = copy(options)
 
   if !has_key(options_cache, "start_time")
@@ -69,7 +69,7 @@ def s:check_finished(options: dict<any> = {}): void
 
   if execute("messages") =~# '\v\[dein\] Done:'
     const should_stay = (localtime() - options_cache.start_time) > 30
-    s:notify("Finished.", { stay: should_stay })
+    Notify("Finished.", { stay: should_stay })
   else
     const progress      = dein#install#_get_progress()
     const prev_progress = get(options_cache, "prev_progress", v:null)
@@ -85,7 +85,7 @@ def s:check_finished(options: dict<any> = {}): void
       retry_count += 1
 
       if retry_count > 100
-        s:notify("Something is wrong.", { stay: true, level: "error" })
+        Notify("Something is wrong.", { stay: true, level: "error" })
         return
       endif
     else
@@ -94,11 +94,11 @@ def s:check_finished(options: dict<any> = {}): void
 
     options_cache.prev_progress = progress
     options_cache.retry_count   = retry_count
-    timer_start(300, (_) => s:check_finished(options_cache))
+    timer_start(300, (_) => CheckFinished(options_cache))
   endif
 enddef
 
-def s:notify(message: string, options: dict<any> = {}): void
+def Notify(message: string, options: dict<any> = {}): void
   const is_stay = get(options, "stay", false)
   const level   = get(options, "level", "info")
 
@@ -121,13 +121,13 @@ def s:notify(message: string, options: dict<any> = {}): void
   const message_with_title = title .. ": " .. message
 
   if level ==# "info"
-    kg8m#util#logger#info(message_with_title)
+    kg8m#util#logger#Info(message_with_title)
   elseif level ==# "warn"
-    kg8m#util#logger#warn(message_with_title)
+    kg8m#util#logger#Warn(message_with_title)
   elseif level ==# "error"
-    kg8m#util#logger#error(message_with_title)
+    kg8m#util#logger#Error(message_with_title)
   else
-    kg8m#util#logger#error(printf("%s: unknown level (%s)", title, string(level)))
-    kg8m#util#logger#info(message_with_title)
+    kg8m#util#logger#Error(printf("%s: unknown level (%s)", title, string(level)))
+    kg8m#util#logger#Info(message_with_title)
   endif
 enddef

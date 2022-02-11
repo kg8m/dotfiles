@@ -1,23 +1,23 @@
 vim9script
 
-def kg8m#configure#folding#manual#setup(): void
+export def Setup(): void
   augroup vimrc-configure-folding-manual
     autocmd!
 
     # https://vim.fandom.com/wiki/Keep_folds_closed_while_inserting_text
-    autocmd InsertEnter * s:apply()
+    autocmd InsertEnter * Apply()
   augroup END
 enddef
 
 # Call this before saving session
-def kg8m#configure#folding#manual#restore(): void
+export def Restore(): void
   if has_key(w:, "original_foldmethod")
     &l:foldmethod = w:original_foldmethod
     unlet w:original_foldmethod
   endif
 enddef
 
-def s:apply(): void
+def Apply(): void
   if !has_key(w:, "original_foldmethod")
     w:original_foldmethod = &foldmethod
     setlocal foldmethod=manual

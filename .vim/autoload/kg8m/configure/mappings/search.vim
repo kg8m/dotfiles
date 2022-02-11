@@ -1,31 +1,31 @@
 vim9script
 
-def kg8m#configure#mappings#search#define(): void
-  nnoremap <expr> <Leader>/ <SID>clear_hlsearch()
-  nnoremap <expr> /         <SID>enter_search()
-  cnoremap <expr> <C-c>     <SID>exit_cmdline()
+export def Define(): void
+  nnoremap <expr> <Leader>/ <SID>ClearHlsearch()
+  nnoremap <expr> /         <SID>EnterSearch()
+  cnoremap <expr> <C-c>     <SID>ExitCmdline()
 enddef
 
-def s:clear_hlsearch(): string
+def ClearHlsearch(): string
   const clear    = ":nohlsearch\<CR>"
-  const notify   = ":call kg8m#events#notify_clear_search_highlight()\<CR>"
+  const notify   = ":call kg8m#events#NotifyClearSearchHighlight()\<CR>"
   const teardown = ":echo ''\<CR>"
 
   return clear .. notify .. teardown
 enddef
 
-def s:enter_search(): string
+def EnterSearch(): string
   const enable_highlight      = ":set hlsearch\<CR>"
   const enter_with_very_magic = "/\\v"
 
   return enable_highlight .. enter_with_very_magic
 enddef
 
-def s:exit_cmdline(): string
+def ExitCmdline(): string
   const original = "\<C-c>"
 
   if getcmdtype() ==# "/"
-    return original .. s:clear_hlsearch()
+    return original .. ClearHlsearch()
   else
     return original
   endif

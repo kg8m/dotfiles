@@ -1,20 +1,20 @@
 vim9script
 
-def kg8m#plugin#vsnip#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy: true,
     on_event: ["InsertEnter"],
-    hook_post_source: () => s:on_post_source(),
+    hook_post_source: () => OnPostSource(),
   })
 
-  if kg8m#plugin#register("hrsh7th/vim-vsnip-integ")
-    kg8m#plugin#configure({
+  if kg8m#plugin#Register("hrsh7th/vim-vsnip-integ")
+    kg8m#plugin#Configure({
       lazy:      true,
       on_source: "vim-vsnip",
     })
   endif
 enddef
 
-def s:on_post_source(): void
-  timer_start(0, (_) => kg8m#events#notify_insert_mode_plugin_loaded())
+def OnPostSource(): void
+  timer_start(0, (_) => kg8m#events#NotifyInsertModePluginLoaded())
 enddef

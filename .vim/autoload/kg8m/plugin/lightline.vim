@@ -1,54 +1,54 @@
 vim9script
 
-def kg8m#plugin#lightline#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:     true,
     on_start: true,
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    hook_source:      () => OnSource(),
+    hook_post_source: () => OnPostSource(),
   })
 enddef
 
-def kg8m#plugin#lightline#filepath(): string
-  return (s:is_readonly() ? "X " : "")
-    .. s:current_filepath()
+export def Filepath(): string
+  return (IsReadonly() ? "X " : "")
+    .. CurrentFilepath()
     .. (&modified ? " +" : (&modifiable ? "" : " -"))
 enddef
 
-def kg8m#plugin#lightline#fileencoding(): string
+export def Fileencoding(): string
   return &fileencoding
 enddef
 
-def kg8m#plugin#lightline#normal_filepath(): string
-  return kg8m#plugin#lightline#is_irregular_filepath() ? "" : kg8m#plugin#lightline#filepath()
+export def NormalFilepath(): string
+  return kg8m#plugin#lightline#IsIrregularFilepath() ? "" : kg8m#plugin#lightline#Filepath()
 enddef
 
-def kg8m#plugin#lightline#normal_fileencoding(): string
-  return kg8m#plugin#lightline#is_irregular_fileencoding() ? "" : kg8m#plugin#lightline#fileencoding()
+export def NormalFileencoding(): string
+  return kg8m#plugin#lightline#IsIrregularFileencoding() ? "" : kg8m#plugin#lightline#Fileencoding()
 enddef
 
-def kg8m#plugin#lightline#warning_filepath(): string
+export def WarningFilepath(): string
   # Use `%{...}` because component-expansion result is shared with other windows/buffers
-  return "%{kg8m#plugin#lightline#is_irregular_filepath() ? kg8m#plugin#lightline#filepath() : ''}"
+  return "%{kg8m#plugin#lightline#IsIrregularFilepath() ? kg8m#plugin#lightline#Filepath() : ''}"
 enddef
 
-def kg8m#plugin#lightline#warning_fileencoding(): string
+export def WarningFileencoding(): string
   # Use `%{...}` because component-expansion result is shared with other windows/buffers
-  return "%{kg8m#plugin#lightline#is_irregular_fileencoding() ? kg8m#plugin#lightline#fileencoding() : ''}"
+  return "%{kg8m#plugin#lightline#IsIrregularFileencoding() ? kg8m#plugin#lightline#Fileencoding() : ''}"
 enddef
 
-def kg8m#plugin#lightline#is_irregular_filepath(): bool
-  return s:is_readonly() || !!(expand("%") =~# '^suda://')
+export def IsIrregularFilepath(): bool
+  return IsReadonly() || !!(expand("%") =~# '^suda://')
 enddef
 
-def kg8m#plugin#lightline#is_irregular_fileencoding(): bool
+export def IsIrregularFileencoding(): bool
   return !empty(&fileencoding) && &fileencoding !=# "utf-8"
 enddef
 
-def kg8m#plugin#lightline#lsp_status(): string
-  if kg8m#plugin#lsp#is_target_buffer()
-    if kg8m#plugin#lsp#is_buffer_enabled()
-      return s:_lsp_status()
+export def LspStatus(): string
+  if kg8m#plugin#lsp#IsTargetBuffer()
+    if kg8m#plugin#lsp#IsBufferEnabled()
+      return LspStatusAfterEnabled()
     else
       return g:kg8m#plugin#lsp#icons.loading
     endif
@@ -57,7 +57,7 @@ def kg8m#plugin#lightline#lsp_status(): string
   endif
 enddef
 
-def s:current_filepath(): string
+def CurrentFilepath(): string
   if &filetype ==# "unite"
     return unite#get_status_string()
   endif
@@ -66,14 +66,14 @@ def s:current_filepath(): string
     return w:quickfix_title
   endif
 
-  if kg8m#util#file#current_name() ==# ""
+  if kg8m#util#file#CurrentName() ==# ""
     return "[No Name]"
   else
-    return s:truncate_filepath(kg8m#util#file#current_path())
+    return TruncateFilepath(kg8m#util#file#CurrentPath())
   endif
 enddef
 
-def s:truncate_filepath(filepath: string): string
+def TruncateFilepath(filepath: string): string
   const max    = winwidth(0) - 50
   const length = len(filepath)
 
@@ -84,19 +84,19 @@ def s:truncate_filepath(filepath: string): string
     const footer_width = length - strridx(filepath, "/")
     const separator    = "..."
 
-    return kg8m#util#string#vital().truncate_skipping(filepath, max, footer_width, separator)
+    return kg8m#util#string#Vital().truncate_skipping(filepath, max, footer_width, separator)
   endif
 enddef
 
-def s:is_readonly(): bool
+def IsReadonly(): bool
   return &filetype !=# "help" && !!&readonly
 enddef
 
-def s:_lsp_status(): string
+def LspStatusAfterEnabled(): string
   const counts = lsp#get_buffer_diagnostics_counts()
   const types  = ["error", "warning", "information", "hint"]
 
-  const mapped = kg8m#util#list#filter_map(types, (type: string): any => {
+  const mapped = kg8m#util#list#FilterMap(types, (type: string): any => {
     if counts[type] ==# 0
       return false
     else
@@ -111,7 +111,7 @@ def s:_lsp_status(): string
   endif
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   # http://d.hatena.ne.jp/itchyny/20130828/1377653592
   set laststatus=2
 
@@ -139,13 +139,13 @@ def s:on_source(): void
       cursor_position: "%l/%L:%v",
     },
     component_function: {
-      normal_filepath:     "kg8m#plugin#lightline#normal_filepath",
-      normal_fileencoding: "kg8m#plugin#lightline#normal_fileencoding",
-      lsp_status:          "kg8m#plugin#lightline#lsp_status",
+      normal_filepath:     "kg8m#plugin#lightline#NormalFilepath",
+      normal_fileencoding: "kg8m#plugin#lightline#NormalFileencoding",
+      lsp_status:          "kg8m#plugin#lightline#LspStatus",
     },
     component_expand: {
-      warning_filepath:     "kg8m#plugin#lightline#warning_filepath",
-      warning_fileencoding: "kg8m#plugin#lightline#warning_fileencoding",
+      warning_filepath:     "kg8m#plugin#lightline#WarningFilepath",
+      warning_fileencoding: "kg8m#plugin#lightline#WarningFileencoding",
     },
     component_type: {
       warning_filepath:     "error",
@@ -160,6 +160,6 @@ def s:on_source(): void
   augroup END
 enddef
 
-def s:on_post_source(): void
+def OnPostSource(): void
   lightline#update()
 enddef

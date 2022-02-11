@@ -1,33 +1,33 @@
 vim9script
 
-def kg8m#plugin#unite#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:   true,
     on_cmd: "Unite",
-    hook_source: () => s:on_source(),
+    hook_source: () => OnSource(),
   })
 enddef
 
-def s:setup_buffer(): void
-  s:enable_highlighting_cursorline()
-  s:disable_default_mappings()
+def SetupBuffer(): void
+  EnableHighlightingCursorline()
+  DisableDefaultMappings()
 enddef
 
-def s:enable_highlighting_cursorline(): void
+def EnableHighlightingCursorline(): void
   setlocal cursorlineopt=both
 enddef
 
-def s:disable_default_mappings(): void
+def DisableDefaultMappings(): void
   if !!mapcheck("<S-n>", "n")
     nunmap <buffer> <S-n>
   endif
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:unite_winheight = "100%"
 
   augroup vimrc-plugin-unite
     autocmd!
-    autocmd FileType unite s:setup_buffer()
+    autocmd FileType unite SetupBuffer()
   augroup END
 enddef

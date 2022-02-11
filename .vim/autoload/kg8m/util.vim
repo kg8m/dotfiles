@@ -2,7 +2,7 @@ vim9script
 
 final s:cache = {}
 
-def kg8m#util#source_local_vimrc(): void
+export def SourceLocalVimrc(): void
   const filepath = expand("~/.config/vim.local/.vimrc.local")
 
   if filereadable(filepath)
@@ -10,11 +10,11 @@ def kg8m#util#source_local_vimrc(): void
   endif
 enddef
 
-def kg8m#util#on_tmux(): bool
+export def OnTmux(): bool
   return !!exists("$TMUX")
 enddef
 
-def kg8m#util#on_rails_dir(): bool
+export def OnRailsDir(): bool
   if has_key(s:cache, "on_rails_dir")
     return s:cache.on_rails_dir
   endif
@@ -23,7 +23,7 @@ def kg8m#util#on_rails_dir(): bool
   return s:cache.on_rails_dir
 enddef
 
-def kg8m#util#is_ctags_available(): bool
+export def IsCtagsAvailable(): bool
   if has_key(s:cache, "is_ctags_available")
     return s:cache.is_ctags_available
   endif
@@ -32,11 +32,11 @@ def kg8m#util#is_ctags_available(): bool
   return s:cache.is_ctags_available
 enddef
 
-def kg8m#util#is_git_tmp_edit(): bool
-  return kg8m#util#is_git_commit() || kg8m#util#is_git_hunk_edit() || kg8m#util#is_git_rebase()
+export def IsGitTmpEdit(): bool
+  return kg8m#util#IsGitCommit() || kg8m#util#IsGitHunkEdit() || kg8m#util#IsGitRebase()
 enddef
 
-def kg8m#util#is_git_commit(): bool
+export def IsGitCommit(): bool
   if has_key(s:cache, "is_git_commit")
     return s:cache.is_git_commit
   endif
@@ -45,7 +45,7 @@ def kg8m#util#is_git_commit(): bool
   return s:cache.is_git_commit
 enddef
 
-def kg8m#util#is_git_hunk_edit(): bool
+export def IsGitHunkEdit(): bool
   if has_key(s:cache, "is_git_hunk_edit")
     return s:cache.is_git_hunk_edit
   endif
@@ -54,7 +54,7 @@ def kg8m#util#is_git_hunk_edit(): bool
   return s:cache.is_git_hunk_edit
 enddef
 
-def kg8m#util#is_git_rebase(): bool
+export def IsGitRebase(): bool
   if has_key(s:cache, "is_git_rebase")
     return s:cache.is_git_rebase
   endif
@@ -63,7 +63,7 @@ def kg8m#util#is_git_rebase(): bool
   return s:cache.is_git_rebase
 enddef
 
-def kg8m#util#rubygems_path(): string
+export def RubygemsPath(): string
   if has_key(s:cache, "rubygems_path")
     return s:cache.rubygems_path
   endif
@@ -94,7 +94,7 @@ def kg8m#util#rubygems_path(): string
   return s:cache.rubygems_path
 enddef
 
-def kg8m#util#remote_copy(original_text: string): void
+export def RemoteCopy(original_text: string): void
   const text = original_text->substitute('\n$', "", "")
   system("ssh main -t 'LC_CTYPE=UTF-8 pbcopy'", text)
 
@@ -103,21 +103,21 @@ def kg8m#util#remote_copy(original_text: string): void
 
   if max_width ># 10
     # Pass partial text to Vital's `truncate()` because the function is too heavy if the text is large.
-    const truncated = kg8m#util#string#vital().truncate(text[0 : max_width], max_width)->trim()
+    const truncated = kg8m#util#string#Vital().truncate(text[0 : max_width], max_width)->trim()
 
     message ..= printf(": %s", truncated .. (truncated ==# trim(text) ? "" : "..."))
   endif
 
-  kg8m#util#logger#info(message)
+  kg8m#util#logger#Info(message)
 enddef
 
-def kg8m#util#remove_trailing_whitespaces()
+export def RemoveTrailingWhitespaces()
   const position = getpos(".")
   keeppatterns :'<,'>s/\s\+$//ge
   setpos(".", position)
 enddef
 
-def kg8m#util#japanese_matchpairs(): list<list<string>>
+export def JapaneseMatchpairs(): list<list<string>>
   return [
     ["（", "）"],
     ["「", "」"],
@@ -133,7 +133,7 @@ def kg8m#util#japanese_matchpairs(): list<list<string>>
   ]
 enddef
 
-def kg8m#util#convert_to_vim9script(): void
+export def ConvertToVim9script(): void
   if getline(1) !=# "vim9script"
     append(0, ["vim9script", ""])
   endif
@@ -200,7 +200,7 @@ def kg8m#util#convert_to_vim9script(): void
   echomsg "  - string[-i : -j] => strpart(string, len(string) - i, i - j + 1)"
 enddef
 
-def kg8m#util#setup_demo(): void
+export def SetupDemo(): void
   set foldcolumn=0
   set signcolumn=no
   lightline#disable()

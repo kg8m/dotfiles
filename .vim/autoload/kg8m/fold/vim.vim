@@ -5,17 +5,17 @@ vim9script
 #   - markers: `{{{ ... }}}`
 #   - here-documents: `let foo =<< FOO ... FOO`
 
-def s:set_comment_char(): void
+def SetCommentChar(): void
   b:vim_fold_comment_char = getline(1) ==# "vim9script" ? "#" : '"'
 enddef
 
 augroup vimrc-fold-vim
   autocmd!
-  autocmd FileType vim s:set_comment_char()
+  autocmd FileType vim SetCommentChar()
 augroup END
 
 if &filetype ==# "vim" && !has_key(b:, "vim_fold_comment_char")
-  s:set_comment_char()
+  SetCommentChar()
 endif
 
 const EMPTY_STRING = ""
@@ -29,63 +29,63 @@ const ONE_LINER_PATTERN     = '\v<%(endf%[unction]|enddef|endif|endfor|aug%[roup
 const START_MARKER_PATTERN = '\v["#].*\{{3}'
 const END_MARKER_PATTERN   = '\v["#].*\}{3}'
 
-def kg8m#fold#vim#expr(lnum: number): string
+export def Expr(lnum: number): string
   const line = getline(lnum)->trim()
 
-  if s:is_heredoc_end(line)
+  if IsHeredocEnd(line)
     unlet! b:vim_fold_heredoc_key
     return "s1"
-  elseif s:is_in_heredoc(line)
+  elseif IsInHeredoc(line)
     return "="
-  elseif s:is_no_content(line)
-    if s:contains_start_marker(line)
+  elseif IsNoContent(line)
+    if ContainsStartMarker(line)
       return "a1"
-    elseif s:contains_end_marker(line)
+    elseif ContainsEndMarker(line)
       return "s1"
     else
       return "="
     endif
-  elseif s:contains_end_keywords(line) || s:contains_end_marker(line)
+  elseif ContainsEndKeywords(line) || ContainsEndMarker(line)
     return "s1"
-  elseif s:is_heredoc_start(line)
+  elseif IsHeredocStart(line)
     b:vim_fold_heredoc_key = matchstr(line, HEREDOC_START_PATTERN)
     return "a1"
-  elseif s:contains_start_keywords(line) || s:contains_start_marker(line)
+  elseif ContainsStartKeywords(line) || ContainsStartMarker(line)
     return "a1"
   else
     return "="
   endif
 enddef
 
-def s:is_no_content(line: string): bool
-  return line ==# EMPTY_STRING || kg8m#util#string#starts_with(line, b:vim_fold_comment_char)
+def IsNoContent(line: string): bool
+  return line ==# EMPTY_STRING || kg8m#util#string#StartsWith(line, b:vim_fold_comment_char)
 enddef
 
-def s:contains_start_keywords(line: string): bool
+def ContainsStartKeywords(line: string): bool
   return !!(line =~# START_KEYWORD_PATTERN && line !~# ONE_LINER_PATTERN)
 enddef
 
-def s:contains_end_keywords(line: string): bool
+def ContainsEndKeywords(line: string): bool
   return !!(line =~# END_KEYWORD_PATTERN)
 enddef
 
-def s:contains_start_marker(line: string): bool
+def ContainsStartMarker(line: string): bool
   return !!(line =~# START_MARKER_PATTERN && line !~# END_MARKER_PATTERN)
 enddef
 
-def s:contains_end_marker(line: string): bool
+def ContainsEndMarker(line: string): bool
   return !!(line =~# END_MARKER_PATTERN && line !~# START_MARKER_PATTERN)
 enddef
 
-def s:is_heredoc_start(line: string): bool
+def IsHeredocStart(line: string): bool
   return !!(line =~# HEREDOC_START_PATTERN)
 enddef
 
-def s:is_heredoc_end(line: string): bool
+def IsHeredocEnd(line: string): bool
   return !!has_key(b:, "vim_fold_heredoc_key") && line ==# b:vim_fold_heredoc_key
 enddef
 
-# Call this only if `s:is_heredoc_end()` returns `false`
-def s:is_in_heredoc(line: string): bool
+# Call this only if `IsHeredocEnd()` returns `false`
+def IsInHeredoc(line: string): bool
   return !!has_key(b:, "vim_fold_heredoc_key")
 enddef

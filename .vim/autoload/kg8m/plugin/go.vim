@@ -1,14 +1,14 @@
 vim9script
 
-def kg8m#plugin#go#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:  true,
     on_ft: "go",
-    hook_source: () => s:on_source(),
+    hook_source: () => OnSource(),
   })
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:go_code_completion_enabled = false
   g:go_fmt_autosave            = false
   g:go_doc_keywordprg_enabled  = false

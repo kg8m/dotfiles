@@ -5,7 +5,7 @@ g:kg8m#util#qf#extension = "json"
 
 mkdir(g:kg8m#util#qf#dirpath, "p")
 
-def kg8m#util#qf#list(): list<string>
+export def List(): list<string>
   const command = [
     "fd",
     "--hidden",
@@ -22,8 +22,8 @@ def kg8m#util#qf#list(): list<string>
     ->map((_, filepath) => fnamemodify(filepath, ":t:r"))
 enddef
 
-def kg8m#util#qf#complete(arglead: string, _cmdline: string, _curpos: number): list<string>
-  const all = kg8m#util#qf#list()
+export def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
+  const all = kg8m#util#qf#List()
 
   if empty(arglead)
     return all
@@ -34,15 +34,15 @@ def kg8m#util#qf#complete(arglead: string, _cmdline: string, _curpos: number): l
   endif
 enddef
 
-def kg8m#util#qf#save(name: string = ""): void
+export def Save(name: string = ""): void
   const raw_list = getqflist()
 
   if empty(raw_list)
-    kg8m#util#logger#error("Quickfix list is empty. Do nothing.")
+    kg8m#util#logger#Error("Quickfix list is empty. Do nothing.")
     return
   endif
 
-  const filepath = s:name_to_filepath(
+  const filepath = NameToFilepath(
     empty(name) ? strftime("%Y-%m-%dT%H:%M:%S") : name
   )
 
@@ -58,19 +58,19 @@ def kg8m#util#qf#save(name: string = ""): void
     endif
   endif
 
-  const encoded_list = s:encode_list(raw_list)
+  const encoded_list = EncodeList(raw_list)
   writefile(encoded_list, filepath)
 
-  printf("Quickfix list is saved to %s.", shellescape(filepath))->kg8m#util#logger#info()
+  printf("Quickfix list is saved to %s.", shellescape(filepath))->kg8m#util#logger#Info()
 enddef
 
-def kg8m#util#qf#load(name: string = ""): void
+export def Load(name: string = ""): void
   if empty(name)
-    kg8m#plugin#fzf#qf#load()
+    kg8m#plugin#fzf#qf#Load()
   else
-    s:process(name, (filepath) => {
+    Process(name, (filepath) => {
       const encoded_list = readfile(filepath)
-      const decoded_list = s:decode_list(encoded_list)
+      const decoded_list = DecodeList(encoded_list)
 
       setqflist(decoded_list)
       copen
@@ -78,49 +78,49 @@ def kg8m#util#qf#load(name: string = ""): void
   endif
 enddef
 
-def kg8m#util#qf#edit(name: string = ""): void
+export def Edit(name: string = ""): void
   if empty(name)
-    kg8m#plugin#fzf#qf#edit()
+    kg8m#plugin#fzf#qf#Edit()
   else
-    s:process(name, (filepath) => {
+    Process(name, (filepath) => {
       execute "edit " .. fnameescape(filepath)
     })
   endif
 enddef
 
-def kg8m#util#qf#delete(name: string = ""): void
+export def Delete(name: string = ""): void
   if empty(name)
-    kg8m#plugin#fzf#qf#delete()
+    kg8m#plugin#fzf#qf#Delete()
   else
-    s:process(name, (filepath) => {
+    Process(name, (filepath) => {
       const escaped_filepath = shellescape(filepath)
       const prompt = printf("Sure to delete %s? (y/n): ", escaped_filepath)
 
       if input(prompt) =~? '^y'
         delete(filepath)
-        printf("%s has been deleted.", escaped_filepath)->kg8m#util#logger#info()
+        printf("%s has been deleted.", escaped_filepath)->kg8m#util#logger#Info()
       else
-        printf("%s remains.", escaped_filepath)->kg8m#util#logger#info()
+        printf("%s remains.", escaped_filepath)->kg8m#util#logger#Info()
       endif
     })
   endif
 enddef
 
-def s:process(name: string, Callback: func(string)): void
-  const filepath = s:name_to_filepath(name)
+def Process(name: string, Callback: func(string)): void
+  const filepath = NameToFilepath(name)
 
   if filereadable(filepath)
     Callback(filepath)
   else
-    printf("%s doesn't exist.", shellescape(filepath))->kg8m#util#logger#error()
+    printf("%s doesn't exist.", shellescape(filepath))->kg8m#util#logger#Error()
   endif
 enddef
 
-def s:name_to_filepath(name: string): string
+def NameToFilepath(name: string): string
   return printf("%s/%s.%s", g:kg8m#util#qf#dirpath, name, kg8m#util#qf#extension)
 enddef
 
-def s:encode_list(raw_list: list<dict<any>>): list<string>
+def EncodeList(raw_list: list<dict<any>>): list<string>
   return mapnew(raw_list, (_, original_item) => {
     final item = copy(original_item)
 
@@ -131,6 +131,6 @@ def s:encode_list(raw_list: list<dict<any>>): list<string>
   })
 enddef
 
-def s:decode_list(encoded_list: list<string>): list<dict<any>>
+def DecodeList(encoded_list: list<string>): list<dict<any>>
   return mapnew(encoded_list, (_, item) => json_decode(item))
 enddef

@@ -2,40 +2,40 @@ vim9script
 
 augroup vimrc-configure-mappings
   autocmd!
-  autocmd InsertEnter                  * timer_start(0, (_) => kg8m#plugin#mappings#i#define())
-  autocmd User insert_mode_plugin_loaded timer_start(0, (_) => kg8m#plugin#mappings#i#define({ force: true }))
+  autocmd InsertEnter                  * timer_start(0, (_) => kg8m#plugin#mappings#i#Define())
+  autocmd User insert_mode_plugin_loaded timer_start(0, (_) => kg8m#plugin#mappings#i#Define({ force: true }))
 augroup END
 
-def kg8m#configure#mappings#base(): void
+export def Base(): void
   # Split window
   nnoremap <Leader>v :vsplit<CR>
   nnoremap <Leader>h :split<CR>
 
   # Overwrite default `f`/`F`/`t`/`T`.
-  nnoremap f <Cmd>call kg8m#util#f2#f()<CR>
-  xnoremap f <Cmd>call kg8m#util#f2#f()<CR>
-  onoremap f <Cmd>call kg8m#util#f2#f()<CR>
-  nnoremap F <Cmd>call kg8m#util#f2#F()<CR>
-  xnoremap F <Cmd>call kg8m#util#f2#F()<CR>
-  onoremap F <Cmd>call kg8m#util#f2#F()<CR>
-  nnoremap t <Cmd>call kg8m#util#f2#t()<CR>
-  xnoremap t <Cmd>call kg8m#util#f2#t()<CR>
-  onoremap t <Cmd>call kg8m#util#f2#t()<CR>
-  nnoremap T <Cmd>call kg8m#util#f2#T()<CR>
-  xnoremap T <Cmd>call kg8m#util#f2#T()<CR>
-  onoremap T <Cmd>call kg8m#util#f2#T()<CR>
+  nnoremap f <Cmd>call kg8m#util#f2#LowerF()<CR>
+  xnoremap f <Cmd>call kg8m#util#f2#LowerF()<CR>
+  onoremap f <Cmd>call kg8m#util#f2#LowerF()<CR>
+  nnoremap F <Cmd>call kg8m#util#f2#UpperF()<CR>
+  xnoremap F <Cmd>call kg8m#util#f2#UpperF()<CR>
+  onoremap F <Cmd>call kg8m#util#f2#UpperF()<CR>
+  nnoremap t <Cmd>call kg8m#util#f2#LowerT()<CR>
+  xnoremap t <Cmd>call kg8m#util#f2#LowerT()<CR>
+  onoremap t <Cmd>call kg8m#util#f2#LowerT()<CR>
+  nnoremap T <Cmd>call kg8m#util#f2#UpperT()<CR>
+  xnoremap T <Cmd>call kg8m#util#f2#UpperT()<CR>
+  onoremap T <Cmd>call kg8m#util#f2#UpperT()<CR>
 
-  nnoremap <Leader>f <Cmd>call kg8m#util#f2#multiline()<CR>
-  xnoremap <Leader>f <Cmd>call kg8m#util#f2#multiline()<CR>
-  onoremap <Leader>f <Cmd>call kg8m#util#f2#multiline()<CR>
+  nnoremap <Leader>f <Cmd>call kg8m#util#f2#Multiline()<CR>
+  xnoremap <Leader>f <Cmd>call kg8m#util#f2#Multiline()<CR>
+  onoremap <Leader>f <Cmd>call kg8m#util#f2#Multiline()<CR>
 
   # Overwrite default `;`/`,`.
-  nnoremap ; <Cmd>call kg8m#util#f2#semi()<CR>
-  xnoremap ; <Cmd>call kg8m#util#f2#semi()<CR>
-  onoremap ; <Cmd>call kg8m#util#f2#semi()<CR>
-  nnoremap , <Cmd>call kg8m#util#f2#comma()<CR>
-  xnoremap , <Cmd>call kg8m#util#f2#comma()<CR>
-  onoremap , <Cmd>call kg8m#util#f2#comma()<CR>
+  nnoremap ; <Cmd>call kg8m#util#f2#Semi()<CR>
+  xnoremap ; <Cmd>call kg8m#util#f2#Semi()<CR>
+  onoremap ; <Cmd>call kg8m#util#f2#Semi()<CR>
+  nnoremap , <Cmd>call kg8m#util#f2#Comma()<CR>
+  xnoremap , <Cmd>call kg8m#util#f2#Comma()<CR>
+  onoremap , <Cmd>call kg8m#util#f2#Comma()<CR>
 
   # See also settings of vim-lsp and vim-fzf-tjump
   # <C-t>: Jump back
@@ -97,15 +97,15 @@ def kg8m#configure#mappings#base(): void
   onoremap a` 2i`
 enddef
 
-def kg8m#configure#mappings#utils(): void
-  xnoremap <silent> <Leader>y "zy:call kg8m#util#remote_copy(@z)<CR>
-  xnoremap <silent> <Leader>w :call kg8m#util#remove_trailing_whitespaces()<CR>
+export def Utils(): void
+  xnoremap <silent> <Leader>y "zy:call kg8m#util#RemoteCopy(@z)<CR>
+  xnoremap <silent> <Leader>w :call kg8m#util#RemoveTrailingWhitespaces()<CR>
 
-  nnoremap <silent> m :call kg8m#util#marks#increment()<CR>
+  nnoremap <silent> m :call kg8m#util#marks#Increment()<CR>
 enddef
 
 # <Nul> == <C-Space>
-def kg8m#configure#mappings#prevent_unconscious_operation(): void
+export def PreventUnconsciousOperation(): void
   inoremap <C-w> <Esc><C-w>
   inoremap <Nul> <C-Space>
   tnoremap <Nul> <C-Space>

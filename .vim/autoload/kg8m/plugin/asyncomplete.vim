@@ -1,16 +1,16 @@
 vim9script
 
-def kg8m#plugin#asyncomplete#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:     true,
     on_event: ["InsertEnter"],
     on_start: true,
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    hook_source:      () => OnSource(),
+    hook_post_source: () => OnPostSource(),
   })
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:asyncomplete_auto_popup = true
   g:asyncomplete_popup_delay = 50
   g:asyncomplete_auto_completeopt = false
@@ -21,19 +21,19 @@ def s:on_source(): void
   # Hide messages like "Pattern not found" or "Match 1 of <N>"
   set shortmess+=c
 
-  g:asyncomplete_preprocessor = [function("kg8m#plugin#asyncomplete#preprocessor#callback")]
+  g:asyncomplete_preprocessor = [function("kg8m#plugin#asyncomplete#preprocessor#Callback")]
 
   augroup vimrc-plugin-asyncomplete
     autocmd!
-    autocmd BufWinEnter                 * kg8m#plugin#completion#set_refresh_pattern()
-    autocmd FileType                    * kg8m#plugin#completion#reset_refresh_pattern()
-    autocmd User after_lsp_buffer_enabled kg8m#plugin#completion#reset_refresh_pattern()
+    autocmd BufWinEnter                 * kg8m#plugin#completion#SetRefreshPattern()
+    autocmd FileType                    * kg8m#plugin#completion#ResetRefreshPattern()
+    autocmd User after_lsp_buffer_enabled kg8m#plugin#completion#ResetRefreshPattern()
   augroup END
 enddef
 
-def s:on_post_source(): void
-  timer_start(0, (_) => kg8m#events#notify_insert_mode_plugin_loaded())
-  timer_start(0, (_) => kg8m#plugin#completion#set_refresh_pattern())
+def OnPostSource(): void
+  timer_start(0, (_) => kg8m#events#NotifyInsertModePluginLoaded())
+  timer_start(0, (_) => kg8m#plugin#completion#SetRefreshPattern())
 
   if get(b:, "asyncomplete_enable", true)
     asyncomplete#enable_for_buffer()

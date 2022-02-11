@@ -2,23 +2,23 @@ vim9script
 
 const FORMATEXPR = "jpfmt#formatexpr()"
 
-def kg8m#plugin#jpformat#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:   true,
     on_map: { x: "gq" },
-    hook_source: () => s:on_source(),
+    hook_source: () => OnSource(),
   })
 enddef
 
-def s:set_formatexpr(): void
+def SetFormatexpr(): void
   if &l:formatexpr !=# FORMATEXPR
     # Replace built-in `jq` operator
     &l:formatexpr = FORMATEXPR
   endif
 enddef
 
-def s:on_source(): void
-  s:set_formatexpr()
+def OnSource(): void
+  SetFormatexpr()
 
   g:JpFormatCursorMovedI = false
   g:JpAutoJoin = false
@@ -28,6 +28,6 @@ def s:on_source(): void
     autocmd!
 
     # Overwrite default/plugins' `formatexpr` especially configured when multiple files are opened same time
-    autocmd BufEnter * timer_start(200, (_) => s:set_formatexpr())
+    autocmd BufEnter * timer_start(200, (_) => SetFormatexpr())
   augroup END
 enddef

@@ -2,24 +2,24 @@ vim9script
 
 final s:cache = {}
 
-def kg8m#util#file#current_name(): string
+export def CurrentName(): string
   return expand("%:t")
 enddef
 
-def kg8m#util#file#current_path(): string
+export def CurrentPath(): string
   const raw_filepath = expand("%")
-  return empty(raw_filepath) ? "" : raw_filepath->kg8m#util#file#format_path()
+  return empty(raw_filepath) ? "" : raw_filepath->kg8m#util#file#FormatPath()
 enddef
 
-def kg8m#util#file#current_relative_path(): string
+export def CurrentRelativePath(): string
   return expand("%:~:.")
 enddef
 
-def kg8m#util#file#current_absolute_path(): string
+export def CurrentAbsolutePath(): string
   return expand("%:~")
 enddef
 
-def kg8m#util#file#format_path(filepath: string): string
+export def FormatPath(filepath: string): string
   if !has_key(s:cache, "regular_filepath_format")
     s:cache.regular_filepath_format = getcwd() ==# expand("~") ? ":~" : ":~:."
   endif
@@ -27,9 +27,9 @@ def kg8m#util#file#format_path(filepath: string): string
   return fnamemodify(filepath, s:cache.regular_filepath_format)
 enddef
 
-def kg8m#util#file#is_descendant(filepath: string, base: string = getcwd()): bool
+export def IsDescendant(filepath: string, base: string = getcwd()): bool
   const absolute_filepath = fnamemodify(filepath, ":p")
   const absolute_basepath = fnamemodify(base, ":p")
 
-  return kg8m#util#string#starts_with(absolute_filepath, absolute_basepath)
+  return kg8m#util#string#StartsWith(absolute_filepath, absolute_basepath)
 enddef

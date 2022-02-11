@@ -1,16 +1,16 @@
 vim9script
 
-def kg8m#plugin#molokai#configure(): void
+export def Configure(): void
   g:molokai_original = true
 
   augroup vimrc-plugin-molokai
     autocmd!
-    autocmd ColorScheme molokai s:overwrite()
+    autocmd ColorScheme molokai Overwrite()
   augroup END
 enddef
 
 # Special: Disable bold/italic for balance between `DiffAdded` (=> `Identifier`) and `DiffRemoved` (=> `Special`).
-def s:overwrite(): void
+def Overwrite(): void
   highlight Comment       guifg=#AAAAAA
   highlight ColorColumn                  guibg=#1F1E19
   highlight CursorColumn                 guibg=#4B4A46

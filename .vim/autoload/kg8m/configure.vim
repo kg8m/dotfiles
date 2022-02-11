@@ -2,7 +2,7 @@ vim9script
 
 final s:cache = {}
 
-def kg8m#configure#backup(): void
+export def Backup(): void
   set nobackup
 
   # Double slash:    fullpath like `%home%admin%.vimrc.swp`
@@ -12,12 +12,12 @@ def kg8m#configure#backup(): void
   &directory = swapdir
 enddef
 
-def kg8m#configure#colors(): void
-  kg8m#configure#colors#terminal()
-  kg8m#configure#colors#performance()
+export def Colors(): void
+  kg8m#configure#colors#Terminal()
+  kg8m#configure#colors#Performance()
 enddef
 
-def kg8m#configure#column(): void
+export def Column(): void
   set number
   set signcolumn=number
 
@@ -32,7 +32,7 @@ def kg8m#configure#column(): void
   augroup END
 enddef
 
-def kg8m#configure#completion(): void
+export def Completion(): void
   set completeopt=menu,menuone,popup,noinsert,noselect
   set pumheight=20
 
@@ -40,35 +40,35 @@ def kg8m#configure#completion(): void
   set wildmode=list:longest,full
 enddef
 
-def kg8m#configure#cursor(): void
-  kg8m#configure#cursor#base()
-  kg8m#configure#cursor#match()
-  kg8m#configure#cursor#highlight()
-  kg8m#configure#cursor#shape()
+export def Cursor(): void
+  kg8m#configure#cursor#Base()
+  kg8m#configure#cursor#Match()
+  kg8m#configure#cursor#Highlight()
+  kg8m#configure#cursor#Shape()
 enddef
 
-def kg8m#configure#folding(): void
-  kg8m#configure#folding#global_options()
-  kg8m#configure#folding#local_options()
-  kg8m#configure#folding#mappings()
-  kg8m#configure#folding#manual#setup()
+export def Folding(): void
+  kg8m#configure#folding#GlobalOptions()
+  kg8m#configure#folding#LocalOptions()
+  kg8m#configure#folding#Mappings()
+  kg8m#configure#folding#manual#Setup()
 enddef
 
-def kg8m#configure#formatoptions(): void
-  kg8m#configure#formatoptions#base()
+export def Formatoptions(): void
+  kg8m#configure#formatoptions#Base()
 enddef
 
-def kg8m#configure#indent(): void
-  kg8m#configure#indent#base()
-  kg8m#configure#indent#filetypes()
+export def Indent(): void
+  kg8m#configure#indent#Base()
+  kg8m#configure#indent#Filetypes()
 enddef
 
-def kg8m#configure#scroll(): void
+export def Scroll(): void
   set diffopt+=context:10
   set scrolloff=15
 enddef
 
-def kg8m#configure#search(): void
+export def Search(): void
   set hlsearch
   set incsearch
 
@@ -76,13 +76,13 @@ def kg8m#configure#search(): void
   set smartcase
 enddef
 
-def kg8m#configure#statusline(): void
+export def Statusline(): void
   set display+=lastline
   set noshowmode
   set showcmd
 enddef
 
-def kg8m#configure#undo(): void
+export def Undo(): void
   set undofile
 
   const undodir = expand("~/tmp/.vimundo")
@@ -90,7 +90,7 @@ def kg8m#configure#undo(): void
   &undodir = undodir
 enddef
 
-def kg8m#configure#commands(): void
+export def Commands(): void
   # http://vim-users.jp/2009/05/hack17/
   # Execute `:edit` to record as a MRU file
   command! -nargs=1 -complete=file Rename f <args> | delete(expand("#")) | write | edit
@@ -103,27 +103,27 @@ def kg8m#configure#commands(): void
   command! -nargs=0 -range Stats feedkeys("\<S-g>$g\<C-g>\<C-o>")
   command! -nargs=0 -range Counts Stats
 
-  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfSave   kg8m#util#qf#save(<q-args>)
-  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfLoad   kg8m#util#qf#load(<q-args>)
-  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfEdit   kg8m#util#qf#edit(<q-args>)
-  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfDelete kg8m#util#qf#delete(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfSave   kg8m#util#qf#Save(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfLoad   kg8m#util#qf#Load(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfEdit   kg8m#util#qf#Edit(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfDelete kg8m#util#qf#Delete(<q-args>)
 enddef
 
-def kg8m#configure#mappings(): void
+export def Mappings(): void
   # Time to wait for a key code or mapped key sequence
   set timeoutlen=3000
 
-  kg8m#configure#mappings#base()
-  kg8m#configure#mappings#utils()
-  kg8m#configure#mappings#prevent_unconscious_operation()
-  kg8m#configure#mappings#batch_cursor_move#define()
-  kg8m#configure#mappings#search#define()
+  kg8m#configure#mappings#Base()
+  kg8m#configure#mappings#Utils()
+  kg8m#configure#mappings#PreventUnconsciousOperation()
+  kg8m#configure#mappings#batch_cursor_move#Define()
+  kg8m#configure#mappings#search#Define()
 enddef
 
-def kg8m#configure#others(): void
+export def Others(): void
   set fileformats=unix,dos,mac
 
-  s:configure_ambiwidth()
+  ConfigureAmbiwidth()
 
   set belloff=all
   set diffopt+=algorithm:histogram
@@ -148,21 +148,21 @@ def kg8m#configure#others(): void
   # s => Maximum size of an item in Kbyte.
   set viminfo='20,<20,h,s10
 
-  kg8m#configure#filetypes#c#run()
-  kg8m#configure#filetypes#go#run()
-  kg8m#configure#filetypes#markdown#run()
+  kg8m#configure#filetypes#c#Run()
+  kg8m#configure#filetypes#go#Run()
+  kg8m#configure#filetypes#markdown#Run()
 
   augroup vimrc-configure-others
     autocmd!
     autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
-    autocmd BufWritePre * s:mkdir_unless_exist()
+    autocmd BufWritePre * MkdirUnlessExist()
 
-    autocmd BufNewFile,BufRead *.csv          kg8m#util#encoding#edit_with_cp932()
-    autocmd BufNewFile,BufRead COMMIT_EDITMSG kg8m#util#encoding#edit_with_utf8()
+    autocmd BufNewFile,BufRead *.csv          kg8m#util#encoding#EditWithCp932()
+    autocmd BufNewFile,BufRead COMMIT_EDITMSG kg8m#util#encoding#EditWithUtf8()
   augroup END
 enddef
 
-def kg8m#configure#gui(): void
+export def Gui(): void
   set guioptions=none
 
   # set guifont=Osaka-Mono:h14
@@ -182,7 +182,7 @@ def kg8m#configure#gui(): void
 enddef
 
 # Called from configurations for some plugins
-def kg8m#configure#conceal(): void
+export def Conceal(): void
   if get(s:cache, "is_conceal_configured", false)
     return
   endif
@@ -195,7 +195,7 @@ def kg8m#configure#conceal(): void
   s:cache.is_conceal_configured = true
 enddef
 
-def s:configure_ambiwidth(): void
+def ConfigureAmbiwidth(): void
   # Basically treat ambiwidth characters as double width for basic text editing especially Japanese text. Make some
   # ambiwidth characters more readable. Prevent an ambiwidth character from being overlapped by its next character.
   set ambiwidth=double
@@ -209,10 +209,10 @@ def s:configure_ambiwidth(): void
 enddef
 
 # https://vim-jp.org/vim-users-jp/2011/02/20/Hack-202.html
-def s:mkdir_unless_exist(): void
+def MkdirUnlessExist(): void
   const dirpath = expand("%:p:h")
 
-  if kg8m#util#string#starts_with(dirpath, "suda://")
+  if kg8m#util#string#StartsWith(dirpath, "suda://")
     return
   endif
 

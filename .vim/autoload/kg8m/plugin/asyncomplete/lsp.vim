@@ -1,7 +1,7 @@
 vim9script
 
-def kg8m#plugin#asyncomplete#lsp#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:     true,
     on_event: ["InsertEnter"],
     on_start: true,

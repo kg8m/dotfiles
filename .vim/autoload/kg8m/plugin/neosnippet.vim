@@ -4,19 +4,19 @@ const s:script_filepath = expand("<sfile>")
 
 var s:snippets_dirpath: string
 
-def kg8m#plugin#neosnippet#configure(): void
+export def Configure(): void
   # `on_ft` for Syntaxes
-  kg8m#plugin#configure({
+  kg8m#plugin#Configure({
     lazy:     true,
     on_event: ["InsertEnter"],
     on_ft:    ["snippet", "neosnippet"],
     on_start: true,
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    hook_source:      () => OnSource(),
+    hook_post_source: () => OnPostSource(),
   })
 enddef
 
-def kg8m#plugin#neosnippet#snippets_dirpath(): string
+export def SnippetsDirpath(): string
   if empty(s:snippets_dirpath)
     s:snippets_dirpath = fnamemodify(s:script_filepath, ":h:h:h:h") .. "/snippets"
   endif
@@ -24,8 +24,8 @@ def kg8m#plugin#neosnippet#snippets_dirpath(): string
   return s:snippets_dirpath
 enddef
 
-def s:on_source(): void
-  g:neosnippet#snippets_directory = [kg8m#plugin#neosnippet#snippets_dirpath()]
+def OnSource(): void
+  g:neosnippet#snippets_directory = [kg8m#plugin#neosnippet#SnippetsDirpath()]
   g:neosnippet#disable_runtime_snippets = { _: true }
 
   augroup vimrc-plugin-neosnippet
@@ -33,10 +33,10 @@ def s:on_source(): void
     autocmd InsertLeave * NeoSnippetClearMarkers
   augroup END
 
-  kg8m#plugin#neosnippet#contextual#setup()
+  kg8m#plugin#neosnippet#contextual#Setup()
 enddef
 
-def s:on_post_source(): void
-  timer_start(0, (_) => kg8m#events#notify_insert_mode_plugin_loaded())
-  timer_start(0, (_) => kg8m#plugin#neosnippet#contextual#source())
+def OnPostSource(): void
+  timer_start(0, (_) => kg8m#events#NotifyInsertModePluginLoaded())
+  timer_start(0, (_) => kg8m#plugin#neosnippet#contextual#Source())
 enddef

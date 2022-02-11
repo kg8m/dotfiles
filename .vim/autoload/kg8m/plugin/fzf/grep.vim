@@ -2,12 +2,12 @@ vim9script
 
 final s:cache = {}
 
-kg8m#plugin#ensure_sourced("fzf.vim")
+kg8m#plugin#EnsureSourced("fzf.vim")
 
 # Respect `$RIPGREP_EXTRA_OPTIONS` (fzf's `:Rg` doesn't respect it)
-command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#complete FzfGrep kg8m#plugin#fzf#grep#run(<q-args>)
+command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#complete FzfGrep kg8m#plugin#fzf#grep#Run(<q-args>)
 
-def kg8m#plugin#fzf#grep#enter_command(preset: string = ""): void
+export def EnterCommand(preset: string = ""): void
   const hint =<< trim HINT
     Hint:
       - :FzfGrep '{PATTERN}'                        # Search the current directory
@@ -22,23 +22,23 @@ def kg8m#plugin#fzf#grep#enter_command(preset: string = ""): void
   feedkeys(":\<C-u>FzfGrep\<Space>'" .. preset .. "'\<Left>", "t")
 enddef
 
-def kg8m#plugin#fzf#grep#run(args: string): void
-  const grep_command = ["rg", s:grep_full_options(), args]->join(" ")
+export def Run(args: string): void
+  const grep_command = ["rg", GrepFullOptions(), args]->join(" ")
   const has_column   = true
   const fzf_options  = [
-    "--header",         s:join_presences(["Grep:", s:grep_explicit_options(), args]),
+    "--header",         JoinPresences(["Grep:", GrepExplicitOptions(), args]),
     "--delimiter",      ":",
     "--preview",        "preview {}",
     "--preview-window", "down:75%:wrap:nohidden:+{2}-/2",
   ]
 
-  kg8m#plugin#fzf#run(() => fzf#vim#grep(grep_command, has_column, { options: fzf_options }))
+  kg8m#plugin#fzf#Run(() => fzf#vim#grep(grep_command, has_column, { options: fzf_options }))
 enddef
 
-def kg8m#plugin#fzf#grep#complete(arglead: string, _cmdline: string, _curpos: number): list<string>
+export def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
   if empty(arglead) || arglead =~# '^-'
     if !has_key(s:cache, "grep_option_candidates")
-      s:cache.grep_option_candidates = system(s:command_to_show_grep_option_candidates())->split("\n")
+      s:cache.grep_option_candidates = system(CommandToShowGrepOptionCandidates())->split("\n")
     endif
 
     const pattern = "^" .. arglead
@@ -63,15 +63,15 @@ def kg8m#plugin#fzf#grep#complete(arglead: string, _cmdline: string, _curpos: nu
   endif
 enddef
 
-def s:grep_full_options(): string
-  return s:join_presences([s:grep_implicit_options(), s:grep_explicit_options()])
+def GrepFullOptions(): string
+  return JoinPresences([GrepImplicitOptions(), GrepExplicitOptions()])
 enddef
 
-def s:grep_implicit_options(): string
+def GrepImplicitOptions(): string
   return "--column --line-number --no-heading --with-filename --color always"
 enddef
 
-def s:grep_explicit_options(): string
+def GrepExplicitOptions(): string
   if has_key(s:cache, "grep_explicit_options")
     return s:cache.grep_explicit_options
   endif
@@ -88,7 +88,7 @@ def s:grep_explicit_options(): string
   return s:cache.grep_explicit_options
 enddef
 
-def s:command_to_show_grep_option_candidates(): string
+def CommandToShowGrepOptionCandidates(): string
   const show_help           = "rg --help"
   const filter_option_lines = "grep -E '^\\s*-'"
   const extract_options     = "grep -E '\\-[.0-9a-zA-Z]\\b|--[-0-9a-zA-Z]+' -o"
@@ -97,7 +97,7 @@ def s:command_to_show_grep_option_candidates(): string
   return [show_help, filter_option_lines, extract_options, sort_and_uniquify]->join(" | ")
 enddef
 
-def s:join_presences(list: list<string>): string
+def JoinPresences(list: list<string>): string
   const Mapper = (item) => empty(item) ? false : item
-  return list->kg8m#util#list#filter_map(Mapper)->join(" ")
+  return list->kg8m#util#list#FilterMap(Mapper)->join(" ")
 enddef

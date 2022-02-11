@@ -1,16 +1,16 @@
 vim9script
 
-kg8m#plugin#ensure_sourced("fzf.vim")
+kg8m#plugin#EnsureSourced("fzf.vim")
 
-def kg8m#plugin#fzf#jumplist#back(): void
-  const info = s:jumplist_info()
+export def Back(): void
+  const info = JumplistInfo()
 
   if info.current_position <# 1
-    kg8m#util#logger#warn("Cannot jump.")
+    kg8m#util#logger#Warn("Cannot jump.")
     return
   endif
 
-  const candidates = s:jumplist_to_candidates(
+  const candidates = JumplistToCandidates(
     reverse(info.jumplist[0 : info.current_position]),
     {
       direction:    -1,
@@ -18,27 +18,27 @@ def kg8m#plugin#fzf#jumplist#back(): void
     }
   )
 
-  s:run(candidates)
+  Run(candidates)
 enddef
 
-def kg8m#plugin#fzf#jumplist#forward(): void
-  const info = s:jumplist_info()
+export def Forward(): void
+  const info = JumplistInfo()
 
   if info.current_position >=# len(info.jumplist)
-    kg8m#util#logger#warn("Cannot jump.")
+    kg8m#util#logger#Warn("Cannot jump.")
     return
   endif
 
-  const candidates = s:jumplist_to_candidates(info.jumplist[info.current_position : -1])
+  const candidates = JumplistToCandidates(info.jumplist[info.current_position : -1])
 
-  s:run(candidates)
+  Run(candidates)
 enddef
 
-def s:run(candidates: list<string>): void
+def Run(candidates: list<string>): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  candidates,
-    sink:    function("s:handler"),
+    sink:    function("s:Handler"),
     options: [
       "--no-multi",
       "--header-lines", match(candidates[0], '\v^\s*0') ==# -1 ? 0 : 1,
@@ -50,26 +50,26 @@ def s:run(candidates: list<string>): void
     ],
   }
 
-  kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("jumplist", options)))
+  kg8m#plugin#fzf#Run(() => fzf#run(fzf#wrap("jumplist", options)))
 enddef
 
-def s:jumplist_info(): dict<any>
+def JumplistInfo(): dict<any>
   const info = getjumplist()
   return { jumplist: info[0], current_position: info[1] }
 enddef
 
-def s:jumplist_to_candidates(jumplist: list<dict<any>>, options: dict<any> = {}): list<string>
+def JumplistToCandidates(jumplist: list<dict<any>>, options: dict<any> = {}): list<string>
   const direction    = get(options, "direction", 1)
   const index_offset = get(options, "index_offset", 0)
   const index_width  = len(len(jumplist) - 1) + (direction <# 0 ? 1 : 0)
   const format       = "%" .. string(index_width) .. "d:%s:%d:%d"
 
   return jumplist->mapnew((i, bufinfo) => (
-    printf(format, (i + index_offset) * direction, s:bufnr_to_filepath(bufinfo.bufnr), bufinfo.lnum, bufinfo.col)
+    printf(format, (i + index_offset) * direction, BufnrToFilepath(bufinfo.bufnr), bufinfo.lnum, bufinfo.col)
   ))
 enddef
 
-def s:bufnr_to_filepath(bufnr: number): string
+def BufnrToFilepath(bufnr: number): string
   const filepath = bufname(bufnr)
 
   if empty(filepath)
@@ -82,7 +82,7 @@ def s:bufnr_to_filepath(bufnr: number): string
   endif
 enddef
 
-def s:handler(candidate: string): void
+def Handler(candidate: string): void
   const index = candidate->trim()->matchstr('\v^-?\d+')->str2nr()
 
   if index <# 0

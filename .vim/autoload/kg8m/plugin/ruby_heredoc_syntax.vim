@@ -1,14 +1,14 @@
 vim9script
 
-def kg8m#plugin#ruby_heredoc_syntax#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:  true,
     on_ft: "ruby",
-    hook_source: () => s:on_source(),
+    hook_source: () => OnSource(),
   })
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   # Default: JS, SQL, HTML
   g:ruby_heredoc_syntax_filetypes = {
     haml: { start: "HAML" },

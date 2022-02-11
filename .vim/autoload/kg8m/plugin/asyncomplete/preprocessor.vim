@@ -3,7 +3,7 @@ vim9script
 # Sort items by their each priority and filter them that fuzzy match.
 # Omit items with lower priority.
 # Remove characters overlapping with following text.
-def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: dict<any>): void
+export def Callback(options: dict<any>, matches: dict<any>): void
   const base_matcher = matchstr(options.base, b:asyncomplete_refresh_pattern)
 
   var items     = []
@@ -25,7 +25,7 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
 
       items += matchfuzzy(
         source_matches.items, context.matcher,
-        { text_cb: (item) => s:matchfuzzy_text_cb(item, context) },
+        { text_cb: (item) => MatchfuzzyTextCb(item, context) },
       )
 
       if len(items) !=# original_length
@@ -34,8 +34,8 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
     endfor
 
     if !empty(items)
-      s:select_items(items)
-      s:decorate_items(items, context)
+      SelectItems(items)
+      DecorateItems(items, context)
     endif
   endif
 
@@ -45,27 +45,27 @@ def kg8m#plugin#asyncomplete#preprocessor#callback(options: dict<any>, matches: 
   asyncomplete#preprocess_complete(options, items)
 enddef
 
-def s:matchfuzzy_text_cb(item: dict<any>, context: dict<any>): string
+def MatchfuzzyTextCb(item: dict<any>, context: dict<any>): string
   if !has_key(item, "priority")
-    item.priority = s:word_priority(item.word, context)
+    item.priority = WordPriority(item.word, context)
   endif
 
   return item.word
 enddef
 
-def s:sort_items(items: list<dict<any>>): void
+def SortItems(items: list<dict<any>>): void
   sort(items, (lhs, rhs) => lhs.priority - rhs.priority)
 enddef
 
-def s:select_items(items: list<dict<any>>): void
-  s:sort_items(items)
+def SelectItems(items: list<dict<any>>): void
+  SortItems(items)
 
   if len(items) ># 30
     remove(items, 30, -1)
   endif
 enddef
 
-def s:decorate_items(items: list<dict<any>>, context: dict<any>): void
+def DecorateItems(items: list<dict<any>>, context: dict<any>): void
   var priority_changed = false
 
   for item in items
@@ -74,7 +74,7 @@ def s:decorate_items(items: list<dict<any>>, context: dict<any>): void
       # item.word: the text that will be inserted, mandatory
       # item.abbr: abbreviation of "word"; when not empty it is used in the menu instead of "word"
       item.abbr = item.word
-      item.word = s:remove_overlap_with_following_text(item.word, context.following_text)
+      item.word = RemoveOverlapWithFollowingText(item.word, context.following_text)
 
       # The item may have higher score when overlap has been removed.
       if item.word !=# item.abbr
@@ -87,18 +87,18 @@ def s:decorate_items(items: list<dict<any>>, context: dict<any>): void
   endfor
 
   if priority_changed
-    s:sort_items(items)
+    SortItems(items)
   endif
 enddef
 
-def s:remove_overlap_with_following_text(original_text: string, following_text: string): string
+def RemoveOverlapWithFollowingText(original_text: string, following_text: string): string
   const max_index = len(original_text) - 1
   var i = 0
 
   while i <=# max_index
     const tail = strpart(original_text, i)
 
-    if kg8m#util#string#starts_with(following_text, tail)
+    if kg8m#util#string#StartsWith(following_text, tail)
       return strpart(original_text, 0, i)
     endif
 
@@ -108,7 +108,7 @@ def s:remove_overlap_with_following_text(original_text: string, following_text: 
   return original_text
 enddef
 
-def s:word_priority(word: string, context: dict<any>): number
+def WordPriority(word: string, context: dict<any>): number
   if !has_key(context.cache, word)
     const target = matchstr(word, '\v\w+.*')
     const lower_target  = tolower(target)
@@ -119,13 +119,13 @@ def s:word_priority(word: string, context: dict<any>): number
       context.cache[word] = 999
     elseif lower_target ==# lower_matcher
       context.cache[word] = 2
-    elseif kg8m#util#string#starts_with(target, context.matcher)
+    elseif kg8m#util#string#StartsWith(target, context.matcher)
       context.cache[word] = 3
-    elseif kg8m#util#string#starts_with(lower_target, lower_matcher)
+    elseif kg8m#util#string#StartsWith(lower_target, lower_matcher)
       context.cache[word] = 5
-    elseif kg8m#util#string#includes(target, context.matcher)
+    elseif kg8m#util#string#Includes(target, context.matcher)
       context.cache[word] = 8
-    elseif kg8m#util#string#includes(lower_target, lower_matcher)
+    elseif kg8m#util#string#Includes(lower_target, lower_matcher)
       context.cache[word] = 13
     else
       context.cache[word] = 21

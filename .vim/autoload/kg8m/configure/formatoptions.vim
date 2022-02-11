@@ -1,16 +1,16 @@
 vim9script
 
-def kg8m#configure#formatoptions#base(): void
+export def Base(): void
   augroup vimrc-configure-formatoptions
     autocmd!
 
     # Lazily set formatoptions to overwrite others
-    autocmd FileType * s:set()
-    autocmd FileType * timer_start(300, (_) => s:set())
+    autocmd FileType * Set()
+    autocmd FileType * timer_start(300, (_) => Set())
   augroup END
 enddef
 
-def s:set(): void
+def Set(): void
   # Formatoptions:
   #   t: Auto-wrap text using textwidth.
   #   c: Auto-wrap comments using textwidth, inserting the current comment leader automatically.

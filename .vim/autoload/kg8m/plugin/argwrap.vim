@@ -1,16 +1,16 @@
 vim9script
 
-def kg8m#plugin#argwrap#configure(): void
+export def Configure(): void
   nnoremap <Leader>a :ArgWrap<CR>
 
-  kg8m#plugin#configure({
+  kg8m#plugin#Configure({
     lazy:   true,
     on_cmd: "ArgWrap",
-    hook_source: () => s:on_source(),
+    hook_source: () => OnSource(),
   })
 enddef
 
-def s:set_local_options(): void
+def SetLocalOptions(): void
   if &filetype =~# '\v^%(eruby|ruby)$'
     b:argwrap_tail_comma_braces = "([{"
   elseif &filetype =~# '\v^%(javascript|typescript)%(react)?$'
@@ -26,13 +26,13 @@ def s:set_local_options(): void
   endif
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:argwrap_padded_braces = "{"
 
   augroup vimrc-plugin-argwrap
     autocmd!
-    autocmd FileType * s:set_local_options()
+    autocmd FileType * SetLocalOptions()
   augroup END
 
-  s:set_local_options()
+  SetLocalOptions()
 enddef

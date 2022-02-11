@@ -2,18 +2,18 @@ vim9script
 
 var s:queue_on_post_source: list<func>
 
-def kg8m#plugin#lexima#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:     true,
     on_event: ["InsertEnter"],
     on_start: true,
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    hook_source:      () => OnSource(),
+    hook_post_source: () => OnPostSource(),
   })
 enddef
 
-def s:add_common_rules(): void
-  for pair in kg8m#util#japanese_matchpairs()
+def AddCommonRules(): void
+  for pair in kg8m#util#JapaneseMatchpairs()
     # `「` when
     #
     #   |
@@ -62,7 +62,7 @@ def s:add_common_rules(): void
   lexima#add_rule({ char: "'", except: "\\%#'", syntax: "String" })
 enddef
 
-def s:add_rules_for_eruby(): void
+def AddRulesForEruby(): void
   # `%` when
   #
   #   <|
@@ -73,7 +73,7 @@ def s:add_rules_for_eruby(): void
   lexima#add_rule({ char: "%", at: '<\%#', input_after: "<Space>%>", filetype: "eruby" })
 enddef
 
-def s:add_rules_for_html(): void
+def AddRulesForHtml(): void
   # JavaScript and TypeScript for html`...`
   const filetypes = [
     "eruby",
@@ -107,7 +107,7 @@ def s:add_rules_for_html(): void
   lexima#add_rule({ char: "-", at: '<!-\%#', input: "-<Space>", input_after: "<Space>-->", filetype: filetypes })
 enddef
 
-def s:add_rules_for_js(): void
+def AddRulesForJs(): void
   const filetypes = ["javascript", "javascriptreact", "typescript", "typescriptreact"]
 
   # `<CR>` when
@@ -122,7 +122,7 @@ def s:add_rules_for_js(): void
   lexima#add_rule({ char: "<CR>", at: '`\%#`', input_after: "<CR>", filetype: filetypes })
 enddef
 
-def s:add_rules_for_ts(): void
+def AddRulesForTs(): void
   const filetypes = ["typescript"]
 
   # `<` when
@@ -166,7 +166,7 @@ def s:add_rules_for_ts(): void
   lexima#add_rule({ char: ">", at: '\%#>', input: "<C-g>U<Right>", filetype: filetypes })
 enddef
 
-def s:add_rules_for_markdown(): void
+def AddRulesForMarkdown(): void
   const filetypes = ["gitcommit", "markdown"]
 
   # `<Space>` when
@@ -214,7 +214,7 @@ def s:add_rules_for_markdown(): void
   lexima#add_rule({ char: "`", except: '\%#`\|``\%#', syntax: ["mkdCode", "mkdInlineCodeDelimiter"] })
 enddef
 
-def s:add_rules_for_vim(): void
+def AddRulesForVim(): void
   # `"` when
   #
   #   ...|
@@ -236,36 +236,36 @@ def s:add_rules_for_vim(): void
   lexima#add_rule({ char: '"', at: '\%#"', leave: 1, filetype: "vim" })
 enddef
 
-def s:dequeue_on_post_source(): void
+def DequeueOnPostSource(): void
   if !empty(s:queue_on_post_source)
     const Callback = remove(s:queue_on_post_source, 0)
-    timer_start(50, (_) => s:callback_proxy_on_post_source(Callback))
+    timer_start(50, (_) => CallbackProxyOnPostSource(Callback))
   endif
 enddef
 
-def s:callback_proxy_on_post_source(Callback: func): void
+def CallbackProxyOnPostSource(Callback: func): void
   Callback()
-  s:dequeue_on_post_source()
+  DequeueOnPostSource()
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:lexima_enable_endwise_rules = false
 enddef
 
-def s:on_post_source(): void
+def OnPostSource(): void
   s:queue_on_post_source = [
     # Delay for performance.
-    () => s:add_common_rules(),
-    () => s:add_rules_for_eruby(),
-    () => s:add_rules_for_html(),
-    () => s:add_rules_for_js(),
-    () => s:add_rules_for_ts(),
-    () => s:add_rules_for_markdown(),
-    () => s:add_rules_for_vim(),
+    () => AddCommonRules(),
+    () => AddRulesForEruby(),
+    () => AddRulesForHtml(),
+    () => AddRulesForJs(),
+    () => AddRulesForTs(),
+    () => AddRulesForMarkdown(),
+    () => AddRulesForVim(),
 
     # Overwrite lexima.vim's default mapping.
-    () => kg8m#events#notify_insert_mode_plugin_loaded(),
+    () => kg8m#events#NotifyInsertModePluginLoaded(),
   ]
 
-  s:dequeue_on_post_source()
+  DequeueOnPostSource()
 enddef

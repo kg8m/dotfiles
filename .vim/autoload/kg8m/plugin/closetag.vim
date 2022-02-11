@@ -10,20 +10,20 @@ g:kg8m#plugin#closetag#filetypes = [
   "typescriptreact",
 ]
 
-def kg8m#plugin#closetag#configure(): void
-  kg8m#plugin#configure({
+export def Configure(): void
+  kg8m#plugin#Configure({
     lazy:  true,
     on_ft: g:kg8m#plugin#closetag#filetypes,
-    hook_source:      () => s:on_source(),
-    hook_post_source: () => s:on_post_source(),
+    hook_source:      () => OnSource(),
+    hook_post_source: () => OnPostSource(),
   })
 enddef
 
-def s:on_source(): void
+def OnSource(): void
   g:closetag_filetypes = join(g:kg8m#plugin#closetag#filetypes, ",")
   g:closetag_shortcut  = "\\>"
 enddef
 
-def s:on_post_source(): void
-  timer_start(0, (_) => kg8m#events#notify_insert_mode_plugin_loaded())
+def OnPostSource(): void
+  timer_start(0, (_) => kg8m#events#NotifyInsertModePluginLoaded())
 enddef

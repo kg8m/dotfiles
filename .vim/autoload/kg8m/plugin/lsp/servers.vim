@@ -11,79 +11,81 @@ const YAML_FILETYPES = ["eruby.yaml", "yaml", "yaml.ansible"]
 
 var s:is_ready = false
 
-def kg8m#plugin#lsp#servers#register(): void
-  s:register_bash_language_server()
-  s:register_clangd()
-  s:register_css_language_server()
-  s:register_efm_langserver()
-  s:register_golangci_lint_langserver()
-  s:register_gopls()
-  s:register_html_language_server()
-  s:register_json_language_server()
-  s:register_ruby_language_server()
-  s:register_solargraph()
-  s:register_sqls()
-  s:register_steep()
-  s:register_terraform_lsp()
-  s:register_typeprof()
-  s:register_typescript_language_server()
-  s:register_vim_language_server()
-  s:register_vue_language_server()
-  s:register_yaml_language_server()
+export def Register(): void
+  RegisterBashLanguageServer()
+  RegisterClangd()
+  RegisterCssLanguageServer()
+  RegisterEfmLangserver()
+  RegisterGolangciLintLangserver()
+  RegisterGopls()
+  RegisterHtmlLanguageServer()
+  RegisterJsonLanguageServer()
+  RegisterRubyLanguageServer()
+  RegisterSolargraph()
+  RegisterSqls()
+  RegisterSteep()
+  RegisterTerraformLsp()
+  RegisterTypeprof()
+  RegisterTypescriptLanguageServer()
+  RegisterVimLanguageServer()
+  RegisterVueLanguageServer()
+  RegisterYamlLanguageServer()
 
   augroup vimrc-plugin-lsp-servers
     autocmd!
-    autocmd FileType * timer_start(100, (_) => s:activate_servers(&filetype))
+    autocmd FileType * timer_start(100, (_) => ActivateServers(&filetype))
 
     autocmd User lsp_register_server      timer_start(100, (_) => lsp#activate())
-    autocmd User after_lsp_buffer_enabled s:overwrite_capabilities()
-    autocmd User after_lsp_buffer_enabled s:check_exited_servers()
+    autocmd User after_lsp_buffer_enabled OverwriteCapabilities()
+    autocmd User after_lsp_buffer_enabled CheckExitedServers()
   augroup END
 
-  timer_start(1000, (_) => s:ready())
+  timer_start(1000, (_) => Ready())
 enddef
 
 # yarn add bash-language-server
-def s:register_bash_language_server(): void
-  s:_register({
-    name: "bash-language-server",
+def RegisterBashLanguageServer(): void
+  RegisterServer({
+    name: "BashLanguageServer",
     allowlist: SH_FILETYPES,
+    executable: "bash-language-server",
   })
 enddef
 
-def s:activate_bash_language_server(): void
-  s:activate("bash-language-server", {
+def ActivateBashLanguageServer(): void
+  Activate("BashLanguageServer", {
     cmd: (_) => ["bash-language-server", "start"],
   })
 enddef
 
-def s:register_clangd(): void
-  s:_register({
-    name: "clangd",
+def RegisterClangd(): void
+  RegisterServer({
+    name: "Clangd",
     allowlist: ["c"],
+    executable: "clangd",
   })
 enddef
 
-def s:activate_clangd(): void
-  s:activate("clangd", {
+def ActivateClangd(): void
+  Activate("Clangd", {
     cmd: (_) => ["clangd"],
   })
 enddef
 
 # yarn add vscode-langservers-extracted
-def s:register_css_language_server(): void
-  s:_register({
-    name: "css-language-server",
+def RegisterCssLanguageServer(): void
+  RegisterServer({
+    name: "CssLanguageServer",
     allowlist: ["css", "less", "scss"],
     executable: "vscode-css-language-server",
   })
 enddef
 
-def s:activate_css_language_server(): void
+def ActivateCssLanguageServer(): void
   # css-language-server doesn't work when editing `.sass` file.
-  s:activate("css-language-server", {
+  Activate("CssLanguageServer", {
     cmd: (_) => ["vscode-css-language-server", "--stdio"],
-    config: { refresh_pattern: kg8m#plugin#completion#refresh_pattern("css") },
+    config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("css") },
     workspace_config: {
       css:  { lint: { validProperties: [] } },
       less: { lint: { validProperties: [] } },
@@ -93,33 +95,36 @@ def s:activate_css_language_server(): void
 enddef
 
 # go install github.com/mattn/efm-langserver
-def s:register_efm_langserver(): void
-  s:_register({
-    name: "efm-langserver",
+def RegisterEfmLangserver(): void
+  RegisterServer({
+    name: "EfmLangserver",
 
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
       "css", "eruby", "gitcommit", "html", "json", "make", "markdown", "ruby", "sql",
     ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES,
+
+    executable: "efm-langserver",
   })
 enddef
 
-def s:activate_efm_langserver(): void
-  s:activate("efm-langserver", {
+def ActivateEfmLangserver(): void
+  Activate("EfmLangserver", {
     cmd: (_) => ["efm-langserver"],
   })
 enddef
 
 # go install github.com/nametake/golangci-lint-langserver
-def s:register_golangci_lint_langserver(): void
-  s:_register({
-    name: "golangci-lint-langserver",
+def RegisterGolangciLintLangserver(): void
+  RegisterServer({
+    name: "GolangciLintLangserver",
     allowlist: ["go"],
+    executable: "golangci-lint-langserver",
   })
 enddef
 
-def s:activate_golangci_lint_langserver(): void
-  s:activate("golangci-lint-langserver", {
+def ActivateGolangciLintLangserver(): void
+  Activate("GolangciLintLangserver", {
     cmd: (_) => ["golangci-lint-langserver"],
     initialization_options: {
       command: ["golangci-lint", "run", "--enable-all", "--out-format", "json"],
@@ -128,15 +133,16 @@ def s:activate_golangci_lint_langserver(): void
 enddef
 
 # go install golang.org/x/tools/gopls
-def s:register_gopls(): void
-  s:_register({
-    name: "gopls",
+def RegisterGopls(): void
+  RegisterServer({
+    name: "Gopls",
     allowlist: ["go"],
+    executable: "gopls",
   })
 enddef
 
-def s:activate_gopls(): void
-  s:activate("gopls", {
+def ActivateGopls(): void
+  Activate("Gopls", {
     cmd: (_) => ["gopls", "-mode", "stdio"],
     initialization_options: {
       analyses: {
@@ -156,56 +162,57 @@ def s:activate_gopls(): void
 enddef
 
 # yarn add vscode-langservers-extracted
-def s:register_html_language_server(): void
-  s:_register({
-    name: "html-language-server",
+def RegisterHtmlLanguageServer(): void
+  RegisterServer({
+    name: "HtmlLanguageServer",
     allowlist: ["eruby", "html"],
     executable: "vscode-html-language-server",
   })
 enddef
 
-def s:activate_html_language_server(): void
-  s:activate("html-language-server", {
+def ActivateHtmlLanguageServer(): void
+  Activate("HtmlLanguageServer", {
     cmd: (_) => ["vscode-html-language-server", "--stdio"],
     initialization_options: { embeddedLanguages: { css: true, javascript: true } },
-    config: { refresh_pattern: kg8m#plugin#completion#refresh_pattern("html") },
+    config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("html") },
   })
 enddef
 
 # yarn add vscode-langservers-extracted
-def s:register_json_language_server(): void
-  s:_register({
-    name: "json-language-server",
+def RegisterJsonLanguageServer(): void
+  RegisterServer({
+    name: "JsonLanguageServer",
     allowlist: ["json"],
     executable: "vscode-json-language-server",
   })
 enddef
 
-def s:activate_json_language_server(): void
-  s:activate("json-language-server", {
+def ActivateJsonLanguageServer(): void
+  Activate("JsonLanguageServer", {
     cmd: (_) => ["vscode-json-language-server", "--stdio"],
-    config: { refresh_pattern: kg8m#plugin#completion#refresh_pattern("json") },
+    config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("json") },
     workspace_config: {
       json: {
         format: { enable: false },
-        schemas: s:schemas(),
+        schemas: Schemas(),
       },
     },
   })
 enddef
 
 # gem install ruby_language_server
-def s:register_ruby_language_server(): void
-  s:_register({
-    name: "ruby_language_server",
+def RegisterRubyLanguageServer(): void
+  RegisterServer({
+    name: "RubyLanguageServer",
     allowlist: ["ruby"],
+    executable: "ruby_language_server",
 
     available: empty($RUBY_LANGUAGE_SERVER_UNAVAILABLE),
   })
 enddef
 
-def s:activate_ruby_language_server(): void
-  s:activate("ruby_language_server", {
+def ActivateRubyLanguageServer(): void
+  Activate("RubyLanguageServer", {
     cmd: (_) => ["ruby_language_server"],
     initialization_options: {
       diagnostics: "false",
@@ -216,17 +223,18 @@ def s:activate_ruby_language_server(): void
 enddef
 
 # gem install solargraph
-def s:register_solargraph(): void
-  s:_register({
-    name: "solargraph",
+def RegisterSolargraph(): void
+  RegisterServer({
+    name: "Solargraph",
     allowlist: ["ruby"],
+    executable: "solargraph",
 
     available: empty($SOLARGRAPH_UNAVAILABLE),
   })
 enddef
 
-def s:activate_solargraph(): void
-  s:activate("solargraph", {
+def ActivateSolargraph(): void
+  Activate("Solargraph", {
     cmd: (_) => ["solargraph", "stdio"],
 
     # cf. https://github.com/castwide/vscode-solargraph/blob/master/package.json
@@ -250,15 +258,16 @@ def s:activate_solargraph(): void
 enddef
 
 # go install github.com/lighttiger2505/sqls
-def s:register_sqls(): void
-  s:_register({
-    name: "sqls",
+def RegisterSqls(): void
+  RegisterServer({
+    name: "Sqls",
     allowlist: ["sql"],
+    executable: "sqls",
   })
 enddef
 
-def s:activate_sqls(): void
-  s:activate("sqls", {
+def ActivateSqls(): void
+  Activate("Sqls", {
     cmd: (_) => ["sqls"],
     workspace_config: {
       sqls: {
@@ -273,17 +282,18 @@ enddef
 
 # gem install steep
 # Requires Steepfile.
-def s:register_steep(): void
-  s:_register({
-    name: "steep",
+def RegisterSteep(): void
+  RegisterServer({
+    name: "Steep",
     allowlist: ["ruby"],
+    executable: "steep",
 
     available: empty($STEEP_UNAVAILABLE),
   })
 enddef
 
-def s:activate_steep(): void
-  s:activate("steep", {
+def ActivateSteep(): void
+  Activate("Steep", {
     cmd: (_) => ["steep", "langserver"],
     initialization_options: {
       diagnostics: true,
@@ -292,31 +302,33 @@ def s:activate_steep(): void
 enddef
 
 # Install from https://github.com/juliosueiras/terraform-lsp/releases
-def s:register_terraform_lsp(): void
-  s:_register({
-    name: "terraform-lsp",
+def RegisterTerraformLsp(): void
+  RegisterServer({
+    name: "TerraformLsp",
     allowlist: ["terraform"],
+    executable: "terraform-lsp",
   })
 enddef
 
-def s:activate_terraform_lsp(): void
-  s:activate("terraform-lsp", {
+def ActivateTerraformLsp(): void
+  Activate("TerraformLsp", {
     cmd: (_) => ["terraform-lsp"],
   })
 enddef
 
 # gem install typeprof
-def s:register_typeprof(): void
-  s:_register({
-    name: "typeprof",
+def RegisterTypeprof(): void
+  RegisterServer({
+    name: "Typeprof",
     allowlist: ["ruby"],
+    executable: "typeprof",
 
     available: empty($TYPEPROF_UNAVAILABLE),
   })
 enddef
 
-def s:activate_typeprof(): void
-  s:activate("typeprof", {
+def ActivateTypeprof(): void
+  Activate("Typeprof", {
     cmd: (_) => ["typeprof", "--lsp", "--stdio"],
     initialization_options: {
       diagnostics: true,
@@ -325,15 +337,16 @@ def s:activate_typeprof(): void
 enddef
 
 # yarn add typescript-language-server typescript
-def s:register_typescript_language_server(): void
-  s:_register({
-    name: "typescript-language-server",
+def RegisterTypescriptLanguageServer(): void
+  RegisterServer({
+    name: "TypescriptLanguageServer",
     allowlist: JS_FILETYPES,
+    executable: "typescript-language-server",
   })
 enddef
 
-def s:activate_typescript_language_server(): void
-  s:activate("typescript-language-server", {
+def ActivateTypescriptLanguageServer(): void
+  Activate("TypescriptLanguageServer", {
     cmd: (_) => ["typescript-language-server", "--stdio"],
 
     document_format: false,
@@ -342,22 +355,23 @@ def s:activate_typescript_language_server(): void
 enddef
 
 # yarn add vim-language-server
-def s:register_vim_language_server(): void
-  s:_register({
-    name: "vim-language-server",
+def RegisterVimLanguageServer(): void
+  RegisterServer({
+    name: "VimLanguageServer",
     allowlist: ["vim"],
+    executable: "vim-language-server",
   })
 enddef
 
-def s:activate_vim_language_server(): void
-  s:activate("vim-language-server", {
+def ActivateVimLanguageServer(): void
+  Activate("VimLanguageServer", {
     cmd: (_) => ["vim-language-server", "--stdio"],
     initialization_options: {
       # vim-language-server uses only `:`.
       iskeyword: ":",
 
       vimruntime: $VIMRUNTIME,
-      runtimepath: kg8m#plugin#all_runtimepath(),
+      runtimepath: kg8m#plugin#AllRuntimepath(),
       diagnostic: { enable: true },
       indexes: {
         runtimepath: true,
@@ -374,16 +388,16 @@ def s:activate_vim_language_server(): void
 enddef
 
 # yarn add vue-language-server
-def s:register_vue_language_server(): void
-  s:_register({
-    name: "vue-language-server",
+def RegisterVueLanguageServer(): void
+  RegisterServer({
+    name: "VueLanguageServer",
     allowlist: ["vue"],
     executable: "vls",
   })
 enddef
 
-def s:activate_vue_language_server(): void
-  s:activate("vue-language-server", {
+def ActivateVueLanguageServer(): void
+  Activate("VueLanguageServer", {
     cmd: (_) => ["vls"],
 
     # cf. https://github.com/sublimelsp/LSP-vue/blob/master/LSP-vue.sublime-settings
@@ -424,15 +438,16 @@ def s:activate_vue_language_server(): void
 enddef
 
 # yarn add yaml-language-server
-def s:register_yaml_language_server(): void
-  s:_register({
-    name: "yaml-language-server",
+def RegisterYamlLanguageServer(): void
+  RegisterServer({
+    name: "YamlLanguageServer",
     allowlist: YAML_FILETYPES,
+    executable: "yaml-language-server",
   })
 enddef
 
-def s:activate_yaml_language_server(): void
-  s:activate("yaml-language-server", {
+def ActivateYamlLanguageServer(): void
+  Activate("YamlLanguageServer", {
     cmd: (_) => ["yaml-language-server", "--stdio"],
     workspace_config: {
       yaml: {
@@ -440,22 +455,16 @@ def s:activate_yaml_language_server(): void
         customTags: [],
         format: { enable: false },
         hover: true,
-        schemas: s:schemas(),
+        schemas: Schemas(),
         validate: true,
       },
     },
   })
 enddef
 
-def s:_register(config: dict<any>): void
-  var executable: string
-
-  if has_key(config, "executable")
-    executable = config.executable
-    remove(config, "executable")
-  else
-    executable = config.name
-  endif
+def RegisterServer(config: dict<any>): void
+  const executable = config.executable
+  remove(config, "executable")
 
   s:named_configs[config.name] = config
 
@@ -474,7 +483,7 @@ def s:_register(config: dict<any>): void
   endif
 enddef
 
-def s:activate_servers(filetype: string): void
+def ActivateServers(filetype: string): void
   if !has_key(s:filetyped_configs, filetype)
     return
   endif
@@ -492,17 +501,17 @@ def s:activate_servers(filetype: string): void
   # https://github.com/prabirshrestha/vim-lsp/blob/e2a052acce38bd0ae25e57fff734a14a9e2c9ef7/plugin/lsp.vim#L52
   lsp#enable()
 
-  for config in kg8m#plugin#lsp#servers#configs(filetype)
+  for config in Configs(filetype)
     if has_key(config, "activated")
       continue
     endif
 
-    # Call `s:activate_gopls`, `s:activate_solargraph`, `s:activate_typescript_language_server`, and so on.
-    execute printf("s:activate_%s()", substitute(config.name, '-', "_", "g"))
+    # Call `ActivateGopls`, `ActivateSolargraph`, `ActivateTypescriptLanguageServer`, and so on.
+    execute printf("Activate%s()", config.name)
   endfor
 enddef
 
-def s:activate(name: string, extra_config: dict<any>): void
+def Activate(name: string, extra_config: dict<any>): void
   final base_config = s:named_configs[name]
   base_config.activated = true
 
@@ -525,11 +534,11 @@ def s:activate(name: string, extra_config: dict<any>): void
   timer_start(delay, (_) => lsp#register_server(config))
 enddef
 
-def s:ready(): void
+def Ready(): void
   s:is_ready = true
 enddef
 
-def kg8m#plugin#lsp#servers#configs(filetype: string = ""): list<dict<any>>
+export def Configs(filetype: string = ""): list<dict<any>>
   if filetype ==# ""
     return values(s:named_configs)
   else
@@ -537,7 +546,7 @@ def kg8m#plugin#lsp#servers#configs(filetype: string = ""): list<dict<any>>
   endif
 enddef
 
-def kg8m#plugin#lsp#servers#names(filetype: string = ""): list<string>
+export def Names(filetype: string = ""): list<string>
   if filetype ==# ""
     return keys(s:named_configs)
   else
@@ -545,11 +554,11 @@ def kg8m#plugin#lsp#servers#names(filetype: string = ""): list<string>
   endif
 enddef
 
-def kg8m#plugin#lsp#servers#filetypes(): list<string>
+export def Filetypes(): list<string>
   return keys(s:filetyped_configs)
 enddef
 
-def kg8m#plugin#lsp#servers#is_available(server_name: string): bool
+export def IsAvailable(server_name: string): bool
   if has_key(s:named_configs, server_name)
     return s:named_configs[server_name].available
   else
@@ -557,9 +566,9 @@ def kg8m#plugin#lsp#servers#is_available(server_name: string): bool
   endif
 enddef
 
-def s:schemas(): list<any>
+def Schemas(): list<any>
   if !has_key(s:cache, "lsp_schemas_json")
-    const filepath = kg8m#plugin#get_info("vim-lsp-settings").path .. "/data/catalog.json"
+    const filepath = kg8m#plugin#GetInfo("vim-lsp-settings").path .. "/data/catalog.json"
     const json     = filepath->readfile()->join("\n")->json_decode()
 
     s:cache.lsp_schemas_json = json.schemas
@@ -568,8 +577,8 @@ def s:schemas(): list<any>
   return s:cache.lsp_schemas_json
 enddef
 
-def kg8m#plugin#lsp#servers#are_all_running_or_exited(): bool
-  for server_name in kg8m#plugin#lsp#servers#names(&filetype)
+export def AreAllRunningOrExited(): bool
+  for server_name in Names(&filetype)
     if lsp#get_server_status(server_name) !=# "running" &&
        lsp#get_server_status(server_name) !=# "exited"
       return false
@@ -583,8 +592,8 @@ enddef
 # formatting from language servers which have capability of document formatting. I want to do formatting by
 # efm-langserver but vim-lsp sometimes doesn't select it. efm-langserver is always selected if it is the only 1
 # language server which has capability of document formatting.
-def s:overwrite_capabilities(): void
-  for config in kg8m#plugin#lsp#servers#configs(&filetype)
+def OverwriteCapabilities(): void
+  for config in Configs(&filetype)
     if get(config, "document_format", true) !=# false
       continue
     endif
@@ -593,13 +602,13 @@ def s:overwrite_capabilities(): void
 
     if has_key(capabilities, "documentFormattingProvider")
       capabilities.documentFormattingProvider = false
-      kg8m#util#logger#info(config.name .. "'s documentFormattingProvider got forced to be disabled.")
+      kg8m#util#logger#Info(config.name .. "'s documentFormattingProvider got forced to be disabled.")
     endif
   endfor
 enddef
 
-def s:check_exited_servers(): void
-  for server_name in kg8m#plugin#lsp#servers#names(&filetype)
+def CheckExitedServers(): void
+  for server_name in Names(&filetype)
     if lsp#get_server_status(server_name) ==# "exited"
       final messages = [printf("%s has been exited.", server_name)]
 
@@ -609,7 +618,7 @@ def s:check_exited_servers(): void
         add(messages, printf(" Check logs in %s.", shellescape(g:lsp_log_file)))
       endif
 
-      kg8m#util#logger#error(messages->join(" "))
+      kg8m#util#logger#Error(messages->join(" "))
     endif
   endfor
 enddef

@@ -1,17 +1,17 @@
 vim9script
 
-kg8m#plugin#ensure_sourced("fzf.vim")
+kg8m#plugin#EnsureSourced("fzf.vim")
 
-command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#complete FzfRails kg8m#plugin#fzf#rails#run(<q-args>)
+command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#complete FzfRails kg8m#plugin#fzf#rails#Run(<q-args>)
 
-def kg8m#plugin#fzf#rails#enter_command(): void
+export def EnterCommand(): void
   feedkeys(":FzfRails\<Space>", "t")
 enddef
 
 final s:specs: dict<dict<any>> = {}
 final s:type_names = []
 
-def kg8m#plugin#fzf#rails#run(type: string): void
+export def Run(type: string): void
   const type_spec = s:specs[type]
 
   var command = ["fd", "--hidden", "--no-ignore", "--full-path", "--type=f", "--color=always"]
@@ -44,10 +44,10 @@ def kg8m#plugin#fzf#rails#run(type: string): void
     ],
   }
 
-  kg8m#plugin#fzf#run(() => fzf#run(fzf#wrap("rails", options)))
+  kg8m#plugin#fzf#Run(() => fzf#run(fzf#wrap("rails", options)))
 enddef
 
-def kg8m#plugin#fzf#rails#complete(arglead: string, _cmdline: string, _curpos: number): list<string>
+export def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
   if arglead ==# ""
     return s:type_names
   else
@@ -57,7 +57,7 @@ def kg8m#plugin#fzf#rails#complete(arglead: string, _cmdline: string, _curpos: n
   endif
 enddef
 
-def s:setup(): void
+def Setup(): void
   extend(s:specs, {
     assets: {
       dirs:     ["app/assets", "app/javascripts", "public"],
@@ -71,7 +71,7 @@ def s:setup(): void
       pattern: '(/environment\.rb|/environments/.+\.rb)$',
     },
     gems: {
-      dirs: [kg8m#util#rubygems_path()],
+      dirs: [kg8m#util#RubygemsPath()],
     },
     initializers: {
       dirs: ["config/initializers"],
@@ -157,4 +157,4 @@ def s:setup(): void
 
   extend(s:type_names, s:specs->keys()->sort())
 enddef
-s:setup()
+Setup()

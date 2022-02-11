@@ -2,31 +2,31 @@ vim9script
 
 var s:timer = -1
 
-def kg8m#util#dim_inactive_windows#setup(): void
+export def Setup(): void
   augroup vimrc-util-dim_inactive_windows
     autocmd!
-    autocmd WinEnter        * s:trigger()
-    autocmd SessionLoadPost * s:trigger()
-    autocmd VimResized      * s:trigger({ force: true })
+    autocmd WinEnter        * Trigger()
+    autocmd SessionLoadPost * Trigger()
+    autocmd VimResized      * Trigger({ force: true })
   augroup END
 enddef
 
-def kg8m#util#dim_inactive_windows#reset()
-  bufdo if has_key(b:, "original_colorcolumn") | s:reset_buffer() | endif
+export def Reset()
+  bufdo if has_key(b:, "original_colorcolumn") | ResetBuffer() | endif
 enddef
 
-def s:trigger(options = {}): void
+def Trigger(options = {}): void
   timer_stop(s:timer)
-  s:timer = timer_start(50, (_) => s:apply(options))
+  s:timer = timer_start(50, (_) => Apply(options))
 enddef
 
-def s:apply(options = {}): void
+def Apply(options = {}): void
   const current_winnr = winnr()
   const last_winnr    = winnr("$")
   const colorcolumns  = range(1, &columns)->join(",")
 
   if has_key(b:, "original_colorcolumn")
-    s:reset_buffer()
+    ResetBuffer()
   else
     b:original_colorcolumn = &colorcolumn
   endif
@@ -53,6 +53,6 @@ def s:apply(options = {}): void
   endfor
 enddef
 
-def s:reset_buffer(): void
+def ResetBuffer(): void
   &l:colorcolumn = b:original_colorcolumn
 enddef

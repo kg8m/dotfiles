@@ -1,1 +1,1 @@
-setlocal foldmethod=expr foldexpr=kg8m#fold#markdown#expr(v:lnum)
+setlocal foldmethod=expr foldexpr=kg8m#fold#markdown#Expr(v:lnum)

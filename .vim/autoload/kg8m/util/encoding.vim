@@ -1,30 +1,30 @@
 vim9script
 
-def kg8m#util#encoding#edit_with_cp932(options: dict<any> = {}): void
-  s:edit_with("cp932", options)
+export def EditWithCp932(options: dict<any> = {}): void
+  EditWith("cp932", options)
 enddef
 
-def kg8m#util#encoding#edit_with_eucjp(options: dict<any> = {}): void
-  s:edit_with("euc-jp", options)
+export def EditWithEucjp(options: dict<any> = {}): void
+  EditWith("euc-jp", options)
 enddef
 
-def kg8m#util#encoding#edit_with_iso2022jp(options: dict<any> = {}): void
-  s:edit_with("iso-2022-jp", options)
+export def EditWithIso2022jp(options: dict<any> = {}): void
+  EditWith("iso-2022-jp", options)
 enddef
 
-def kg8m#util#encoding#edit_with_latin1(options: dict<any> = {}): void
-  s:edit_with("latin1", options)
+export def EditWithLatin1(options: dict<any> = {}): void
+  EditWith("latin1", options)
 enddef
 
-def kg8m#util#encoding#edit_with_shiftjis(options: dict<any> = {}): void
-  s:edit_with("shift-jis", options)
+export def EditWithShiftjis(options: dict<any> = {}): void
+  EditWith("shift-jis", options)
 enddef
 
-def kg8m#util#encoding#edit_with_utf8(options: dict<any> = {}): void
-  s:edit_with("utf-8", options)
+export def EditWithUtf8(options: dict<any> = {}): void
+  EditWith("utf-8", options)
 enddef
 
-def s:edit_with(encoding: string, options: dict<any> = {}): void
+def EditWith(encoding: string, options: dict<any> = {}): void
   if get(b:, "encoding_configured", false) && !get(options, "force", false)
     return
   endif

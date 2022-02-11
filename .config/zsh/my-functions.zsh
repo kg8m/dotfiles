@@ -290,7 +290,7 @@ function my_grep {
   rg "${args[@]}"
 }
 
-# cf. Vim's kg8m#util#grep#build_qflist_from_buffer()
+# cf. Vim's kg8m#util#grep#BuildQflistFromBuffer()
 function my_grep_with_filter {
   local query="${1:?}"
   shift 1
@@ -379,7 +379,7 @@ function my_grep_with_filter {
         # Don't execute `echo ... | vim ... -` because current command remains as zsh if so. So tmux's
         # `pane_current_command` always returns "zsh" and automatic refreshing zsh prompt will be influenced.
         echo "${(j:\n:)results[@]}" | grep -E '^.+?:[0-9]+:[0-9]+:.' > "${tempfile}"
-        execute_with_echo "vim -c 'call kg8m#util#grep#build_qflist_from_buffer()' '${tempfile}'"
+        execute_with_echo "vim -c 'call kg8m#util#grep#BuildQflistFromBuffer()' '${tempfile}'"
 
         rm -f "${tempfile}"
       else
@@ -589,7 +589,7 @@ function benchmark_vim_startup {
   local vim=${1:-vim}
 
   execute_with_echo "${vim} --version | awk '/^VIM - Vi IMproved/,/Features included \\(\\+\\) or not \\(-\\):$/'"
-  execute_with_echo "${vim} -c 'call kg8m#plugin#recache_runtimepath() | q'"
+  execute_with_echo "${vim} -c 'call kg8m#plugin#RecacheRuntimepath() | q'"
 
   local base_command="vim-startuptime -count 50 -warmup 1"
 

@@ -1,7 +1,7 @@
 vim9script
 
 # Syntax-based folding gets broken depending on syntax-brokenness.
-# This `kg8m#fold#ruby#expr` is based on keywords and each line indent instead.
+# This `kg8m#fold#ruby#Expr` is based on keywords and each line indent instead.
 #   - keywords: `class`, `def`, `end`, and so on
 #   - other supports:
 #     - here-documents: `<<FOO ... FOO`
@@ -21,57 +21,57 @@ const FOLD_START_PATTERN =
 const FOLD_END_PATTERN = '\v^%(end>|\}|\])'
 const ONE_LINER_PATTERN = '\v<end>'
 
-def kg8m#fold#ruby#expr(lnum: number): string
+export def Expr(lnum: number): string
   const line = getline(lnum)->trim()
 
-  if s:is_heredoc_end(line)
+  if IsHeredocEnd(line)
     const indent = b:ruby_fold_heredoc_indent
     unlet! b:ruby_fold_heredoc_key
     unlet! b:ruby_fold_heredoc_indent
     return "<" .. string(indent)
-  elseif s:is_in_heredoc(line)
+  elseif IsInHeredoc(line)
     return "="
-  elseif s:is_no_content(line)
+  elseif IsNoContent(line)
     return "="
-  elseif s:is_fold_end(line)
-    return "<" .. string(s:indent_level(lnum))
-  elseif s:is_heredoc_start(line)
+  elseif IsFoldEnd(line)
+    return "<" .. string(IndentLevel(lnum))
+  elseif IsHeredocStart(line)
     b:ruby_fold_heredoc_key    = matchstr(line, HEREDOC_START_PATTERN)
-    b:ruby_fold_heredoc_indent = s:indent_level(lnum)
+    b:ruby_fold_heredoc_indent = IndentLevel(lnum)
     return ">" .. string(b:ruby_fold_heredoc_indent)
-  elseif s:is_fold_start(line)
-    return ">" .. string(s:indent_level(lnum))
+  elseif IsFoldStart(line)
+    return ">" .. string(IndentLevel(lnum))
   else
     # Return stringified number because Vim9 script currenty doesn't support `string | number` return type
-    return string(s:indent_level(lnum) - 1)
+    return string(IndentLevel(lnum) - 1)
   endif
 enddef
 
-def s:indent_level(lnum: number): number
+def IndentLevel(lnum: number): number
   return indent(lnum) / &shiftwidth + 1
 enddef
 
-def s:is_no_content(line: string): bool
-  return line ==# EMPTY_STRING || kg8m#util#string#starts_with(line, COMMENT_CHAR)
+def IsNoContent(line: string): bool
+  return line ==# EMPTY_STRING || kg8m#util#string#StartsWith(line, COMMENT_CHAR)
 enddef
 
-def s:is_fold_start(line: string): bool
+def IsFoldStart(line: string): bool
   return !!(line =~# FOLD_START_PATTERN && line !~# ONE_LINER_PATTERN)
 enddef
 
-def s:is_fold_end(line: string): bool
+def IsFoldEnd(line: string): bool
   return !!(line =~# FOLD_END_PATTERN)
 enddef
 
-def s:is_heredoc_start(line: string): bool
+def IsHeredocStart(line: string): bool
   return !!(line =~# HEREDOC_START_PATTERN)
 enddef
 
-def s:is_heredoc_end(line: string): bool
+def IsHeredocEnd(line: string): bool
   return !!has_key(b:, "ruby_fold_heredoc_key") && line ==# b:ruby_fold_heredoc_key
 enddef
 
-# Call this only if `s:is_heredoc_end()` returns `false`
-def s:is_in_heredoc(line: string): bool
+# Call this only if `IsHeredocEnd()` returns `false`
+def IsInHeredoc(line: string): bool
   return !!has_key(b:, "ruby_fold_heredoc_key")
 enddef
