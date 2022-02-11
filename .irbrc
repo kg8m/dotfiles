@@ -96,7 +96,7 @@ begin
       puts "Read %d saved history commands from %s." % [ lines.select{|line| line }.size, histfile ] if $DEBUG || $VERBOSE
       Readline::HISTORY.push( *lines )
     else
-      puts "History file '%s' was empty or non-existant." % histfile if $DEBUG || $VERBOSE
+      puts "History file '%s' was empty or non-existent." % histfile if $DEBUG || $VERBOSE
     end
 
     Kernel::at_exit {
