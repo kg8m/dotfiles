@@ -251,9 +251,9 @@ if kg8m#plugin#Register("mbbill/undotree")
     lazy:   true,
     on_cmd: "UndotreeToggle",
     hook_source: () => {
-      g:undotree_WindowLayout = 2
-      g:undotree_SplitWidth = 50
-      g:undotree_DiffpanelHeight = 30
+      g:undotree_WindowLayout       = 2
+      g:undotree_SplitWidth         = 50
+      g:undotree_DiffpanelHeight    = 30
       g:undotree_SetFocusWhenToggle = true
     },
   })
