@@ -12,9 +12,8 @@ tools:
     lint-command: "checkmake"
     lint-stdin: true
 
-  # Always show errors on the first line because converted Ruby code doesn't match the original ERB code
   erb: &erb
-    lint-command: "erb -x -T - -P | ruby -c 2>&1 1>/dev/null | sed -e 's/^-:/1:/'"
+    lint-command: "$HOME/.config/efm-langserver/erb_wrapper.sh"
     lint-ignore-exit-code: true
     lint-stdin: true
     lint-formats:
