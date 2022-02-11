@@ -83,32 +83,36 @@ def s:gt_expr(): string
 
   if following_character ==# ">"
     return lexima#expand(">", "i")
-  else
-    if !kg8m#util#list#includes(g:kg8m#plugin#closetag#filetypes, &filetype)
+  endif
+
+  if !kg8m#util#list#includes(g:kg8m#plugin#closetag#filetypes, &filetype)
+    return ">"
+  endif
+
+  if &filetype ==# "markdown"
+    # Don't overwrite while writing blockquote markers.
+    const leading_text = getline(".")->strpart(0, col(".") - 1)
+
+    if leading_text =~# '^\s*$'
       return ">"
-    endif
-
-    if &filetype ==# "markdown"
-      # Don't overwrite while writing blockquote markers.
-      const leading_text = getline(".")->strpart(0, col(".") - 1)
-
-      if leading_text =~# '^\s*$'
-        return ">"
-      else
-        return g:closetag_shortcut
-      endif
-    elseif context_filetype#get_filetype() ==# "html"
+    else
       return g:closetag_shortcut
-    elseif &filetype =~# '\v^%(javascript|typescript)'
-      const syntax_name = synIDattr(synID(line("."), col(".") - 1, true), "name")
+    endif
+  endif
 
-      if syntax_name =~# '\v^jsx%(Braces|ComponentName|String|Tag|TagName)$'
-        return g:closetag_shortcut
-      else
-        return ">"
-      endif
+  if context_filetype#get_filetype() ==# "html"
+    return g:closetag_shortcut
+  endif
+
+  if &filetype =~# '\v^%(javascript|typescript)'
+    const syntax_name = synIDattr(synID(line("."), col(".") - 1, true), "name")
+
+    if syntax_name =~# '\v^jsx%(Braces|ComponentName|String|Tag|TagName)$'
+      return g:closetag_shortcut
     else
       return ">"
     endif
   endif
+
+  return ">"
 enddef
