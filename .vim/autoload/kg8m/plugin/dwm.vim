@@ -18,17 +18,17 @@ def Open(filepath: string): void
     const winnr = bufwinnr(filepath)
 
     if winnr ==# -1
-      DWM_Stack(1)
+      g:DWM_Stack(1)
       split
       execute "edit " .. filepath
-      DWM_AutoEnter()
+      g:DWM_AutoEnter()
     else
       execute printf(":%dwincmd w", winnr)
-      DWM_AutoEnter()
+      g:DWM_AutoEnter()
     endif
   else
     if bufname("%") !=# ""
-      DWM_New()
+      g:DWM_New()
     endif
 
     execute "edit " .. filepath
