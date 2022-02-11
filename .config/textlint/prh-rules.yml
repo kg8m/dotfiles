@@ -7,6 +7,10 @@ rules:
   - expected: Bash
     options:
       wordBoundary: true
+  - expected: ERB Lint
+    pattern: /erb ?lint/i
+    options:
+      wordBoundary: true
   - expected: ESLint
     options:
       wordBoundary: true
