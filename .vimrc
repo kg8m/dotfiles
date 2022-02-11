@@ -306,7 +306,10 @@ endif
 kg8m#plugin#Register("thinca/vim-ft-diff_fold")
 kg8m#plugin#Register("thinca/vim-ft-help_fold")
 kg8m#plugin#Register("muz/vim-gemfile")
-kg8m#plugin#Register("kana/vim-gf-user")
+
+if kg8m#plugin#Register("kana/vim-gf-user")
+  kg8m#plugin#gf_user#Configure()
+endif
 
 if kg8m#plugin#Register("tpope/vim-git", { if: kg8m#util#IsGitCommit() })
   augroup vimrc-plugin-git
