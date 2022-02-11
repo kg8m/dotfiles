@@ -37,7 +37,7 @@ export def Completion(): void
   set pumheight=20
 
   set wildmenu
-  set wildmode=list:longest,full
+  set wildoptions=pum
 enddef
 
 export def Cursor(): void

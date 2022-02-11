@@ -56,6 +56,10 @@ export def Base(): void
   cnoremap <Up>   <C-p>
   cnoremap <Down> <C-n>
 
+  # For Cmdline popupmenu (`set wildoptions=pum`). Don't do `cnoremap <expr> <Esc> pumvisible() ? "<C-e> : "<Esc>"`
+  # because the mapping to `<Esc>` breaks some operations in Cmdline mode, e.g., pasting from clipboard.
+  cnoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
+
   # Swap pasting with adjusting indentations or not
   # Disable exchanging because indentation is sometimes bad
   # nnoremap p ]p
