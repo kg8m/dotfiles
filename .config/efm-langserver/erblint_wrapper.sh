@@ -11,4 +11,4 @@ else
   config="${HOME}/.config/erb-lint/.erb-lint.yml"
 fi
 
-erblint --config "${config}" --format compact --enable-all-linters --stdin "${target_filepath}"
+erblint --config "${config}" --format compact --stdin "${target_filepath}"
