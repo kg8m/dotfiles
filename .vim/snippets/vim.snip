@@ -1,3 +1,13 @@
+snippet import
+abbr    import "path/to/script.vim"
+options head
+	import "${1:#:path/to/script}.vim"
+
+snippet import_autoload
+abbr    import autoload "path/to/script/under/autoload.vim"
+options head
+	import autoload "${1:#:path/to/script/under/autoload}.vim"
+
 # Deprecated: for Vim8
 snippet function
 abbr    function {function_name}() abort ... endfunction
