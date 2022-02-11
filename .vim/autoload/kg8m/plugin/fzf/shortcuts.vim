@@ -45,11 +45,11 @@ def DefineRawList(): void
     ["[Hankaku/Zenkaku] Kana to Zenkaku",          "'<,'>HzjaConvert zen_kana"],
 
     ["[Reload with Encoding] latin1",      "call kg8m#util#encoding#EditWithLatin1(#{ force: v:true })"],
-    ["[Reload with Encoding] cp932",       "call kg8m#util#encoding#EditWithCp932(#{ force: v:true })"],
-    ["[Reload with Encoding] shift-jis",   "call kg8m#util#encoding#EditWithShiftjis(#{ force: v:true })"],
-    ["[Reload with Encoding] iso-2022-jp", "call kg8m#util#encoding#EditWithIso2022jp(#{ force: v:true })"],
-    ["[Reload with Encoding] euc-jp",      "call kg8m#util#encoding#EditWithEucjp(#{ force: v:true })"],
-    ["[Reload with Encoding] utf-8",       "call kg8m#util#encoding#EditWithUtf8(#{ force: v:true })"],
+    ["[Reload with Encoding] CP932",       "call kg8m#util#encoding#EditWithCP932(#{ force: v:true })"],
+    ["[Reload with Encoding] Shift_JIS",   "call kg8m#util#encoding#EditWithShiftJIS(#{ force: v:true })"],
+    ["[Reload with Encoding] ISO-2022-JP", "call kg8m#util#encoding#EditWithISO2022JP(#{ force: v:true })"],
+    ["[Reload with Encoding] EUC-JP",      "call kg8m#util#encoding#EditWithEUCJP(#{ force: v:true })"],
+    ["[Reload with Encoding] UTF-8",       "call kg8m#util#encoding#EditWithUTF8(#{ force: v:true })"],
 
     ["[Reload by Sudo]",     "SudaRead"],
     ["[Write/save by Sudo]", "SudaWrite"],

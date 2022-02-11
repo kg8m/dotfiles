@@ -1,14 +1,14 @@
 vim9script
 
-export def EditWithCp932(options: dict<any> = {}): void
+export def EditWithCP932(options: dict<any> = {}): void
   EditWith("cp932", options)
 enddef
 
-export def EditWithEucjp(options: dict<any> = {}): void
+export def EditWithEUCJP(options: dict<any> = {}): void
   EditWith("euc-jp", options)
 enddef
 
-export def EditWithIso2022jp(options: dict<any> = {}): void
+export def EditWithISO2022JP(options: dict<any> = {}): void
   EditWith("iso-2022-jp", options)
 enddef
 
@@ -16,11 +16,11 @@ export def EditWithLatin1(options: dict<any> = {}): void
   EditWith("latin1", options)
 enddef
 
-export def EditWithShiftjis(options: dict<any> = {}): void
+export def EditWithShiftJIS(options: dict<any> = {}): void
   EditWith("shift-jis", options)
 enddef
 
-export def EditWithUtf8(options: dict<any> = {}): void
+export def EditWithUTF8(options: dict<any> = {}): void
   EditWith("utf-8", options)
 enddef
 

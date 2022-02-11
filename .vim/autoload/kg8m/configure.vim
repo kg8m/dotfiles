@@ -157,8 +157,8 @@ export def Others(): void
     autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
     autocmd BufWritePre * MkdirUnlessExist()
 
-    autocmd BufNewFile,BufRead *.csv          kg8m#util#encoding#EditWithCp932()
-    autocmd BufNewFile,BufRead COMMIT_EDITMSG kg8m#util#encoding#EditWithUtf8()
+    autocmd BufNewFile,BufRead *.csv          kg8m#util#encoding#EditWithCP932()
+    autocmd BufNewFile,BufRead COMMIT_EDITMSG kg8m#util#encoding#EditWithUTF8()
   augroup END
 enddef
 
