@@ -21,7 +21,7 @@ tools:
       - "%l:%m"
 
   erb-lint: &erb-lint
-    lint-command: "erblint --config $HOME/.erb-lint.yml --format compact --enable-all-linters --stdin '${INPUT}'"
+    lint-command: "erblint --config $HOME/.config/erb-lint/.erb-lint.yml --format compact --enable-all-linters --stdin '${INPUT}'"
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %m"
