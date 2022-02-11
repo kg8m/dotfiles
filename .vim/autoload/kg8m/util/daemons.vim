@@ -8,13 +8,13 @@ export def Setup(): void
   augroup END
 enddef
 
-def RestartEslintD(): void
+export def RestartEslintD(): void
   if executable("eslint_d")
     job_start(["eslint_d", "restart"])
   endif
 enddef
 
-def RestartRubocopDaemon(): void
+export def RestartRubocopDaemon(): void
   if executable("rubocop-daemon")
     job_start(["rubocop-daemon", "restart"])
   endif
