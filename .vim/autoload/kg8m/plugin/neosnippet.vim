@@ -1,8 +1,8 @@
 vim9script
 
-const s:script_filepath = expand("<sfile>")
+const script_filepath = expand("<sfile>")
 
-var s:snippets_dirpath: string
+var snippets_dirpath: string
 
 export def Configure(): void
   # `on_ft` for Syntaxes
@@ -17,11 +17,11 @@ export def Configure(): void
 enddef
 
 export def SnippetsDirpath(): string
-  if empty(s:snippets_dirpath)
-    s:snippets_dirpath = fnamemodify(s:script_filepath, ":h:h:h:h") .. "/snippets"
+  if empty(snippets_dirpath)
+    snippets_dirpath = fnamemodify(script_filepath, ":h:h:h:h") .. "/snippets"
   endif
 
-  return s:snippets_dirpath
+  return snippets_dirpath
 enddef
 
 def OnSource(): void

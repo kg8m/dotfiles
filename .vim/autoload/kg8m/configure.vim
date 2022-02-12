@@ -1,6 +1,6 @@
 vim9script
 
-final s:cache = {}
+final cache = {}
 
 export def Backup(): void
   set nobackup
@@ -183,7 +183,7 @@ enddef
 
 # Called from configurations for some plugins
 export def Conceal(): void
-  if get(s:cache, "is_conceal_configured", false)
+  if get(cache, "is_conceal_configured", false)
     return
   endif
 
@@ -192,7 +192,7 @@ export def Conceal(): void
 
   g:vim_json_conceal = false
 
-  s:cache.is_conceal_configured = true
+  cache.is_conceal_configured = true
 enddef
 
 def ConfigureAmbiwidth(): void

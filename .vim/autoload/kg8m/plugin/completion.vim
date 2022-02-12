@@ -1,18 +1,18 @@
 vim9script
 
-final s:cache = {}
+final cache = {}
 
 export def Disable(): void
   b:asyncomplete_enable = false
 enddef
 
 export def RefreshPattern(filetype: string): string
-  if !has_key(s:cache, "completion_refresh_patterns")
+  if !has_key(cache, "completion_refresh_patterns")
     const css_pattern  = '\v([.#a-zA-Z0-9_-]+)$'
     const ruby_pattern = kg8m#plugin#lsp#servers#IsAvailable("solargraph") ? '\v(\@?\@\k*|(:)@<!:\k*|\k+)$' : '\v(\k+)$'
     const sh_pattern   = '\v((\k|-)+)$'
 
-    s:cache.completion_refresh_patterns = {
+    cache.completion_refresh_patterns = {
       _:    '\v(\k+)$',
       css:  css_pattern,
       html: '\v(/|\k+)$',
@@ -28,7 +28,7 @@ export def RefreshPattern(filetype: string): string
     }
   endif
 
-  return get(s:cache.completion_refresh_patterns, filetype) ?? get(s:cache.completion_refresh_patterns, "_")
+  return get(cache.completion_refresh_patterns, filetype) ?? get(cache.completion_refresh_patterns, "_")
 enddef
 
 export def SetRefreshPattern(): void
@@ -54,9 +54,9 @@ def ForceRefresh(): void
 enddef
 
 def StartRefreshTimer(wait: number): void
-  s:cache.refresh_timer = timer_start(wait, (_) => ForceRefresh())
+  cache.refresh_timer = timer_start(wait, (_) => ForceRefresh())
 enddef
 
 def StopRefreshTimer(): void
-  timer_stop(get(s:cache, "refresh_timer", -1))
+  timer_stop(get(cache, "refresh_timer", -1))
 enddef

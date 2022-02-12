@@ -1,6 +1,6 @@
 vim9script
 
-final s:cache = {}
+final cache = {}
 
 export def SourceLocalVimrc(): void
   const filepath = expand("~/.config/vim.local/.vimrc.local")
@@ -15,21 +15,21 @@ export def OnTmux(): bool
 enddef
 
 export def OnRailsDir(): bool
-  if has_key(s:cache, "on_rails_dir")
-    return s:cache.on_rails_dir
+  if has_key(cache, "on_rails_dir")
+    return cache.on_rails_dir
   endif
 
-  s:cache.on_rails_dir = isdirectory("./app") && filereadable("./config/environment.rb")
-  return s:cache.on_rails_dir
+  cache.on_rails_dir = isdirectory("./app") && filereadable("./config/environment.rb")
+  return cache.on_rails_dir
 enddef
 
 export def IsCtagsAvailable(): bool
-  if has_key(s:cache, "is_ctags_available")
-    return s:cache.is_ctags_available
+  if has_key(cache, "is_ctags_available")
+    return cache.is_ctags_available
   endif
 
-  s:cache.is_ctags_available = !empty($CTAGS_AVAILABLE)
-  return s:cache.is_ctags_available
+  cache.is_ctags_available = !empty($CTAGS_AVAILABLE)
+  return cache.is_ctags_available
 enddef
 
 export def IsGitTmpEdit(): bool
@@ -37,39 +37,39 @@ export def IsGitTmpEdit(): bool
 enddef
 
 export def IsGitCommit(): bool
-  if has_key(s:cache, "is_git_commit")
-    return s:cache.is_git_commit
+  if has_key(cache, "is_git_commit")
+    return cache.is_git_commit
   endif
 
-  s:cache.is_git_commit = argc() ==# 1 && !!(argv()[0] =~# '\v\.git%(/.*)?/COMMIT_EDITMSG$')
-  return s:cache.is_git_commit
+  cache.is_git_commit = argc() ==# 1 && !!(argv()[0] =~# '\v\.git%(/.*)?/COMMIT_EDITMSG$')
+  return cache.is_git_commit
 enddef
 
 export def IsGitHunkEdit(): bool
-  if has_key(s:cache, "is_git_hunk_edit")
-    return s:cache.is_git_hunk_edit
+  if has_key(cache, "is_git_hunk_edit")
+    return cache.is_git_hunk_edit
   endif
 
-  s:cache.is_git_hunk_edit = argc() ==# 1 && !!(argv()[0] =~# '\v\.git%(/.*)?/addp-hunk-edit\.diff$')
-  return s:cache.is_git_hunk_edit
+  cache.is_git_hunk_edit = argc() ==# 1 && !!(argv()[0] =~# '\v\.git%(/.*)?/addp-hunk-edit\.diff$')
+  return cache.is_git_hunk_edit
 enddef
 
 export def IsGitRebase(): bool
-  if has_key(s:cache, "is_git_rebase")
-    return s:cache.is_git_rebase
+  if has_key(cache, "is_git_rebase")
+    return cache.is_git_rebase
   endif
 
-  s:cache.is_git_rebase = argc() ==# 1 && !!(argv()[0] =~# '\v\.git%(/.*)?/rebase-merge/git-rebase-todo$')
-  return s:cache.is_git_rebase
+  cache.is_git_rebase = argc() ==# 1 && !!(argv()[0] =~# '\v\.git%(/.*)?/rebase-merge/git-rebase-todo$')
+  return cache.is_git_rebase
 enddef
 
 export def RubygemsPath(): string
-  if has_key(s:cache, "rubygems_path")
-    return s:cache.rubygems_path
+  if has_key(cache, "rubygems_path")
+    return cache.rubygems_path
   endif
 
   if exists("$RUBYGEMS_PATH")
-    s:cache.rubygems_path = $RUBYGEMS_PATH
+    cache.rubygems_path = $RUBYGEMS_PATH
   else
     const command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
     const command = command_prefix .. " -e 'print Gem.path.join(\"\\n\")'"
@@ -85,13 +85,13 @@ export def RubygemsPath(): string
     endfor
 
     if rubygems_path !=# ""
-      s:cache.rubygems_path = rubygems_path
+      cache.rubygems_path = rubygems_path
     else
       throw "Path to Ruby Gems not found. Candidates: " .. string(dirpaths)
     endif
   endif
 
-  return s:cache.rubygems_path
+  return cache.rubygems_path
 enddef
 
 export def RemoteCopy(original_text: string): void

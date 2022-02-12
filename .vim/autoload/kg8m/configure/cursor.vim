@@ -1,9 +1,9 @@
 vim9script
 
-final s:cache = {}
+final cache = {}
 
-const s:vertical_line_code      = "\e[6 q"
-const s:vertical_bold_line_code = "\e[2 q"
+const vertical_line_code      = "\e[6 q"
+const vertical_bold_line_code = "\e[2 q"
 
 export def Base(): void
   set backspace=indent,eol,start
@@ -24,10 +24,10 @@ export def Match(): void
 
   const japanese_matchpairs = kg8m#util#JapaneseMatchpairs()->mapnew((_, pair) => join(pair, ":"))->join(",")
 
-  if has_key(s:cache, "original_matchpairs")
-    &matchpairs = s:cache.original_matchpairs .. "," .. japanese_matchpairs
+  if has_key(cache, "original_matchpairs")
+    &matchpairs = cache.original_matchpairs .. "," .. japanese_matchpairs
   else
-    s:cache.original_matchpairs = &matchpairs
+    cache.original_matchpairs = &matchpairs
     &matchpairs ..= "," .. japanese_matchpairs
   endif
 enddef
@@ -43,11 +43,11 @@ export def Highlight(): void
 enddef
 
 export def Shape(): void
-  if !kg8m#util#string#Includes(&t_SI, s:vertical_line_code)
-    &t_SI ..= s:vertical_line_code
+  if !kg8m#util#string#Includes(&t_SI, vertical_line_code)
+    &t_SI ..= vertical_line_code
   endif
 
-  if !kg8m#util#string#Includes(&t_EI, s:vertical_bold_line_code)
-    &t_EI ..= s:vertical_bold_line_code
+  if !kg8m#util#string#Includes(&t_EI, vertical_bold_line_code)
+    &t_EI ..= vertical_bold_line_code
   endif
 enddef

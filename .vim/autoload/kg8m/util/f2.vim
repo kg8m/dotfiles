@@ -1,6 +1,6 @@
 vim9script
 
-final s:cache = {
+final cache = {
   migemo: {
     setup_done: false,
     dictionary_path: "",
@@ -42,7 +42,7 @@ export def Multiline(): void
 enddef
 
 export def Semi(): void
-  if empty(s:cache.type)
+  if empty(cache.type)
     feedkeys(";", "n")
   else
     Repeat()
@@ -50,7 +50,7 @@ export def Semi(): void
 enddef
 
 export def Comma(): void
-  if empty(s:cache.type)
+  if empty(cache.type)
     feedkeys(",", "n")
   else
     Repeat()
@@ -58,7 +58,7 @@ export def Comma(): void
 enddef
 
 def Repeat(): void
-  if s:cache.type ==# "multiline"
+  if cache.type ==# "multiline"
     RunMultiline()
   else
     RunSingleline()
@@ -67,26 +67,26 @@ enddef
 
 def Prepare(type: string): void
   Reset()
-  s:cache.type = type
+  cache.type = type
 enddef
 
 def Reset(): void
-  s:cache.type    = ""
-  s:cache.input   = ""
-  s:cache.pattern = ""
+  cache.type    = ""
+  cache.input   = ""
+  cache.pattern = ""
 enddef
 
 def RunSingleline(): void
-  const forward = s:cache.type =~# '\l'
+  const forward = cache.type =~# '\l'
   const cursor_position = getcurpos()
 
   const pattern  = BuildPattern()
   const flags    = (forward ? "" : "b") .. "n"
   const stopline = line(".")
 
-  if s:cache.type ==# "t"
+  if cache.type ==# "t"
     cursor(cursor_position[1], cursor_position[2] + 1)
-  elseif s:cache.type ==# "T"
+  elseif cache.type ==# "T"
     cursor(cursor_position[1], cursor_position[2] - 1)
   endif
 
@@ -97,18 +97,18 @@ def RunSingleline(): void
       cursor(cursor_position[1], cursor_position[2])
     endif
 
-    const message = printf("There are no matches for %s", string(s:cache.input))
+    const message = printf("There are no matches for %s", string(cache.input))
     kg8m#util#logger#Info(message, { save_history: false })
     Reset()
   else
     const line_number = position[0]
     var column_number = position[1]
 
-    if s:cache.type ==# "f" && mode(1) =~# '^no'
+    if cache.type ==# "f" && mode(1) =~# '^no'
       column_number += 1
-    elseif s:cache.type ==# "t" && mode(1) !~# '^no'
+    elseif cache.type ==# "t" && mode(1) !~# '^no'
       column_number -= 1
-    elseif s:cache.type ==# "T"
+    elseif cache.type ==# "T"
       column_number += 1
     endif
 
@@ -129,38 +129,38 @@ def RunMultiline(): void
 enddef
 
 def BuildPattern(): string
-  if !empty(s:cache.pattern)
-    return s:cache.pattern
+  if !empty(cache.pattern)
+    return cache.pattern
   endif
 
   const input = getcharstr() .. getcharstr()
-  s:cache.input = input
+  cache.input = input
 
   # Don't check whether multibyte characters are contained in searching text. Always use migemo if available. Because
   # migemo targets are not only multibyte characters. For example, "do" matches with ".". It is too confusing if
   # searching behavior varies depending on multibyte characters existence.
   SetupMigemo()
 
-  if empty(s:cache.migemo.dictionary_path)
-    if !s:cache.migemo.warned
+  if empty(cache.migemo.dictionary_path)
+    if !cache.migemo.warned
       kg8m#util#logger#Warn("migemo isn't available. Check if migemo is executable and its dictionary exists.")
-      s:cache.migemo.warned = true
+      cache.migemo.warned = true
     endif
 
-    s:cache.pattern = InputToSmartcasePattern(input)
+    cache.pattern = InputToSmartcasePattern(input)
   else
     const smartcase_pattern = InputToSmartcasePattern(input)
     const migemo_pattern    = printf(
       "cmigemo -d %s -v -w %s",
-      shellescape(s:cache.migemo.dictionary_path),
+      shellescape(cache.migemo.dictionary_path),
       shellescape(input)
     )->system()
 
-    s:cache.pattern = printf('\C\%(%s\|%s\)', smartcase_pattern, migemo_pattern)
-    g:pattern = s:cache.pattern
+    cache.pattern = printf('\C\%(%s\|%s\)', smartcase_pattern, migemo_pattern)
+    g:pattern = cache.pattern
   endif
 
-  return s:cache.pattern
+  return cache.pattern
 enddef
 
 def InputToSmartcasePattern(input: string): string
@@ -172,7 +172,7 @@ def InputToSmartcasePattern(input: string): string
 enddef
 
 def SetupMigemo(): void
-  if s:cache.migemo.setup_done
+  if cache.migemo.setup_done
     return
   endif
 
@@ -189,13 +189,13 @@ def SetupMigemo(): void
       const filepath = printf("%s/utf-8/migemo-dict", directory)
 
       if filereadable(filepath)
-        s:cache.migemo.dictionary_path = filepath
+        cache.migemo.dictionary_path = filepath
         break
       endif
     endfor
   endif
 
-  s:cache.migemo.setup_done = true
+  cache.migemo.setup_done = true
 enddef
 
 def BlinkCursor(): void

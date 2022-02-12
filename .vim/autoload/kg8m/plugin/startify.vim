@@ -2,7 +2,7 @@ vim9script
 
 export def Configure(): void
   if argc() ># 0
-    # `on_event: "BufWritePre"` for `s:save_session`: Load startify before writing buffer (on `BufWritePre`) and
+    # `on_event: "BufWritePre"` for `SaveSession()`: Load startify before writing buffer (on `BufWritePre`) and
     # register autocmd for `BufWritePost`
     kg8m#plugin#Configure({
       lazy:     true,

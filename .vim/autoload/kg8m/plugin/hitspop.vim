@@ -1,6 +1,6 @@
 vim9script
 
-final s:cache = {}
+final cache = {}
 
 export def Configure(): void
   kg8m#plugin#Configure({
@@ -11,8 +11,8 @@ export def Configure(): void
 enddef
 
 def UpdateSearchStatus(): void
-  timer_stop(get(s:cache, "timer", -1))
-  s:cache.timer = timer_start(100, (_) => ForceUpdateSearchStatus())
+  timer_stop(get(cache, "timer", -1))
+  cache.timer = timer_start(100, (_) => ForceUpdateSearchStatus())
 enddef
 
 def ForceUpdateSearchStatus(): void

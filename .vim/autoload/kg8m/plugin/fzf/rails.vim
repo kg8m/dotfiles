@@ -8,11 +8,11 @@ export def EnterCommand(): void
   feedkeys(":FzfRails\<Space>", "t")
 enddef
 
-final s:specs: dict<dict<any>> = {}
-final s:type_names = []
+final specs: dict<dict<any>> = {}
+final type_names = []
 
 export def Run(type: string): void
-  const type_spec = s:specs[type]
+  const type_spec = specs[type]
 
   var command = ["fd", "--hidden", "--no-ignore", "--full-path", "--type=f", "--color=always"]
 
@@ -49,16 +49,16 @@ enddef
 
 export def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
   if arglead ==# ""
-    return s:type_names
+    return type_names
   else
-    return s:type_names
+    return type_names
       ->copy()
       ->filter((_, type_name) => type_name =~# "^" .. arglead)
   endif
 enddef
 
 def Setup(): void
-  extend(s:specs, {
+  extend(specs, {
     assets: {
       dirs:     ["app/assets", "app/javascripts", "public"],
       excludes: ["public/packs*"],
@@ -116,46 +116,46 @@ def Setup(): void
 
   for app_dir in globpath("app", "*", 0, 1)
     if isdirectory(app_dir)
-      s:specs[app_dir] = { dirs: [app_dir] }
+      specs[app_dir] = { dirs: [app_dir] }
 
       # e.g., `app/controllers` => `controllers`
       const alternative = fnamemodify(app_dir, ":t")
 
-      if !has_key(s:specs, alternative)
-        s:specs[alternative] = { dirs: [app_dir] }
+      if !has_key(specs, alternative)
+        specs[alternative] = { dirs: [app_dir] }
       endif
     endif
   endfor
 
   for test_dir in globpath("spec,test", "*", 0, 1)
     if isdirectory(test_dir)
-      s:specs[test_dir] = { dirs: [test_dir] }
+      specs[test_dir] = { dirs: [test_dir] }
 
       # e.g., `test/fixtures` => `fixtures-of-test`
       const alternative = join(reverse(split(test_dir, "/")), "-of-")
-      s:specs[alternative] = { dirs: [test_dir] }
+      specs[alternative] = { dirs: [test_dir] }
     endif
   endfor
 
   if has_key(g:, "fzf#rails#extra_specs")
     for name in keys(g:fzf#rails#extra_specs)
-      if has_key(s:specs, name)
+      if has_key(specs, name)
         extend(
-          s:specs[name],
+          specs[name],
           g:fzf#rails#extra_specs[name]
         )
       else
-        s:specs[name] = g:fzf#rails#extra_specs[name]
+        specs[name] = g:fzf#rails#extra_specs[name]
       endif
     endfor
   endif
 
   if has_key(g:, "fzf#rails#specs_formatters")
     for Formatter in g:fzf#rails#specs_formatters
-      Formatter(s:specs)
+      Formatter(specs)
     endfor
   endif
 
-  extend(s:type_names, s:specs->keys()->sort())
+  extend(type_names, specs->keys()->sort())
 enddef
 Setup()

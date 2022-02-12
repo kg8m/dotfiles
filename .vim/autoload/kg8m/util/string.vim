@@ -1,14 +1,14 @@
 vim9script
 
-final s:cache = {}
+final cache = {}
 
 export def Vital(): dict<func>
-  if has_key(s:cache, "vital")
-    return s:cache.vital
+  if has_key(cache, "vital")
+    return cache.vital
   endif
 
-  s:cache.vital = vital#vital#import("Data.String")
-  return s:cache.vital
+  cache.vital = vital#vital#import("Data.String")
+  return cache.vital
 enddef
 
 # https://github.com/vim-jp/vital.vim/blob/5828301d6bae0858e9ea21012913544f5ef8e375/autoload/vital/__vital__/Data/String.vim#L48-L50

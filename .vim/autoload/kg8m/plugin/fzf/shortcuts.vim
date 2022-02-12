@@ -2,15 +2,15 @@ vim9script
 
 kg8m#plugin#EnsureSourced("fzf.vim")
 
-var s:raw_list: list<list<string>>
-var s:list: list<string>
-var s:max_label_length: number
+var raw_list: list<list<string>>
+var list: list<string>
+var max_label_length: number
 
 export def Run(query: string): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  Candidates(),
-    sink:    function("s:Handler"),
+    sink:    funcref("Handler"),
     options: ["--no-multi", "--prompt", "Shortcuts> ", "--query", query],
   }
 
@@ -18,7 +18,7 @@ export def Run(query: string): void
 enddef
 
 def Candidates(): list<string>
-  return s:list
+  return list
 enddef
 
 def Handler(item: string): void
@@ -37,7 +37,7 @@ enddef
 
 def DefineRawList(): void
   # Hankaku/Zenkaku: http://nanasi.jp/articles/vim/hz_ja_vim.html
-  s:raw_list = [
+  raw_list = [
     ["[Hankaku/Zenkaku] All to Hankaku",           "'<,'>Hankaku"],
     ["[Hankaku/Zenkaku] Alphanumerics to Hankaku", "'<,'>HzjaConvert han_eisu"],
     ["[Hankaku/Zenkaku] ASCII to Hankaku",         "'<,'>HzjaConvert han_ascii"],
@@ -108,7 +108,7 @@ def DefineRawList(): void
 enddef
 
 def CountMaxLabelLength(): void
-  s:max_label_length = s:raw_list->mapnew((_, item) => ItemLabelLength(item[0]))->max()
+  max_label_length = raw_list->mapnew((_, item) => ItemLabelLength(item[0]))->max()
 enddef
 
 def ItemLabelLength(item_label: string): number
@@ -119,7 +119,7 @@ def MakeGroups(): void
   var prev_prefix = ""
   final new_list = []
 
-  for candidate in s:raw_list
+  for candidate in raw_list
     const current_prefix = GroupName(candidate[0])
 
     if !empty(new_list) && current_prefix !=# prev_prefix
@@ -130,7 +130,7 @@ def MakeGroups(): void
     prev_prefix = current_prefix
   endfor
 
-  s:raw_list = new_list
+  raw_list = new_list
 enddef
 
 def GroupName(item: string): string
@@ -138,7 +138,7 @@ def GroupName(item: string): string
 enddef
 
 def FormatList(): void
-  s:list = s:raw_list->mapnew((_, item) => FormatItem(item))
+  list = raw_list->mapnew((_, item) => FormatItem(item))
 enddef
 
 def FormatItem(item: list<string>): string
@@ -153,7 +153,7 @@ def FormatItem(item: list<string>): string
 enddef
 
 def WordPadding(item: string): string
-  return repeat(" ", s:max_label_length - strlen(item))
+  return repeat(" ", max_label_length - strlen(item))
 enddef
 
 SetupList()

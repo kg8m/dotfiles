@@ -2,7 +2,7 @@ vim9script
 
 kg8m#plugin#EnsureSourced("fzf.vim")
 
-const s:common_fzf_options = [
+const common_fzf_options = [
   "--preview", printf("preview %s/{}.%s", shellescape(g:kg8m#util#qf#dirpath), kg8m#util#qf#extension),
   "--preview-window", "down:75%:wrap:nohidden",
 ]
@@ -12,7 +12,7 @@ export def Load(): void
   final options = {
     source:  kg8m#util#qf#List(),
     sink:    function("kg8m#util#qf#Load"),
-    options: s:common_fzf_options + [
+    options: common_fzf_options + [
       "--prompt", "Quickfix file to load> ",
       "--no-multi",
     ],
@@ -26,7 +26,7 @@ export def Edit(): void
   final options = {
     source:  kg8m#util#qf#List(),
     sink:    function("kg8m#util#qf#Edit"),
-    options: s:common_fzf_options + [
+    options: common_fzf_options + [
       "--prompt", "Quickfix file to edit> ",
       "--no-multi",
     ],
@@ -40,7 +40,7 @@ export def Delete(): void
   final options = {
     source:  kg8m#util#qf#List(),
     sink:    function("kg8m#util#qf#Delete"),
-    options: s:common_fzf_options + [
+    options: common_fzf_options + [
       "--prompt", "Quickfix files to DELETE> ",
       "--no-exit-0",
       "--no-select-1",

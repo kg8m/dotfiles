@@ -1,15 +1,15 @@
 vim9script
 
-final s:named_configs: dict<dict<any>>           = {}
-final s:filetyped_configs: dict<list<dict<any>>> = {}
+final named_configs: dict<dict<any>>           = {}
+final filetyped_configs: dict<list<dict<any>>> = {}
 
-final s:cache = {}
+final cache = {}
 
 const JS_FILETYPES   = ["javascript", "javascriptreact", "typescript", "typescriptreact"]
 const SH_FILETYPES   = ["sh", "zsh"]
 const YAML_FILETYPES = ["eruby.yaml", "yaml", "yaml.ansible"]
 
-var s:is_ready = false
+var is_ready = false
 
 export def Register(): void
   RegisterBashLanguageServer()
@@ -466,15 +466,15 @@ def RegisterServer(config: dict<any>): void
   const executable = config.executable
   remove(config, "executable")
 
-  s:named_configs[config.name] = config
+  named_configs[config.name] = config
 
   if get(config, "available", true) && executable(executable)
     for filetype in config.allowlist
-      if !has_key(s:filetyped_configs, filetype)
-        s:filetyped_configs[filetype] = []
+      if !has_key(filetyped_configs, filetype)
+        filetyped_configs[filetype] = []
       endif
 
-      add(s:filetyped_configs[filetype], config)
+      add(filetyped_configs[filetype], config)
     endfor
 
     config.available = true
@@ -484,19 +484,19 @@ def RegisterServer(config: dict<any>): void
 enddef
 
 def ActivateServers(filetype: string): void
-  if !has_key(s:filetyped_configs, filetype)
+  if !has_key(filetyped_configs, filetype)
     return
   endif
 
-  if !has_key(s:cache, "activated")
-    s:cache.activated = {}
+  if !has_key(cache, "activated")
+    cache.activated = {}
   endif
 
-  if has_key(s:cache.activated, filetype)
+  if has_key(cache.activated, filetype)
     return
   endif
 
-  s:cache.activated[filetype] = true
+  cache.activated[filetype] = true
 
   # https://github.com/prabirshrestha/vim-lsp/blob/e2a052acce38bd0ae25e57fff734a14a9e2c9ef7/plugin/lsp.vim#L52
   lsp#enable()
@@ -512,7 +512,7 @@ def ActivateServers(filetype: string): void
 enddef
 
 def Activate(name: string, extra_config: dict<any>): void
-  final base_config = s:named_configs[name]
+  final base_config = named_configs[name]
   base_config.activated = true
 
   final config = extend(base_config, extra_config)->copy()
@@ -529,52 +529,52 @@ def Activate(name: string, extra_config: dict<any>): void
 
   # Delay because some servers don't work just after Vim starts with editing files. For example, no completion
   # candidates are provided.
-  const delay = s:is_ready ? 0 : 1000
+  const delay = is_ready ? 0 : 1000
 
   timer_start(delay, (_) => lsp#register_server(config))
 enddef
 
 def Ready(): void
-  s:is_ready = true
+  is_ready = true
 enddef
 
 export def Configs(filetype: string = ""): list<dict<any>>
   if filetype ==# ""
-    return values(s:named_configs)
+    return values(named_configs)
   else
-    return get(s:filetyped_configs, filetype, [])
+    return get(filetyped_configs, filetype, [])
   endif
 enddef
 
 export def Names(filetype: string = ""): list<string>
   if filetype ==# ""
-    return keys(s:named_configs)
+    return keys(named_configs)
   else
-    return get(s:filetyped_configs, filetype, [])->mapnew((_, config) => config.name)
+    return get(filetyped_configs, filetype, [])->mapnew((_, config) => config.name)
   endif
 enddef
 
 export def Filetypes(): list<string>
-  return keys(s:filetyped_configs)
+  return keys(filetyped_configs)
 enddef
 
 export def IsAvailable(server_name: string): bool
-  if has_key(s:named_configs, server_name)
-    return s:named_configs[server_name].available
+  if has_key(named_configs, server_name)
+    return named_configs[server_name].available
   else
     return false
   endif
 enddef
 
 def Schemas(): list<any>
-  if !has_key(s:cache, "lsp_schemas_json")
+  if !has_key(cache, "lsp_schemas_json")
     const filepath = kg8m#plugin#GetInfo("vim-lsp-settings").path .. "/data/catalog.json"
     const json     = filepath->readfile()->join("\n")->json_decode()
 
-    s:cache.lsp_schemas_json = json.schemas
+    cache.lsp_schemas_json = json.schemas
   endif
 
-  return s:cache.lsp_schemas_json
+  return cache.lsp_schemas_json
 enddef
 
 export def AreAllRunningOrExited(): bool

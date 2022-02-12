@@ -1,6 +1,6 @@
 vim9script
 
-var s:queue_on_post_source: list<func>
+var queue_on_post_source: list<func>
 
 export def Configure(): void
   kg8m#plugin#Configure({
@@ -237,8 +237,8 @@ def AddRulesForVim(): void
 enddef
 
 def DequeueOnPostSource(): void
-  if !empty(s:queue_on_post_source)
-    const Callback = remove(s:queue_on_post_source, 0)
+  if !empty(queue_on_post_source)
+    const Callback = remove(queue_on_post_source, 0)
     timer_start(50, (_) => CallbackProxyOnPostSource(Callback))
   endif
 enddef
@@ -253,7 +253,7 @@ def OnSource(): void
 enddef
 
 def OnPostSource(): void
-  s:queue_on_post_source = [
+  queue_on_post_source = [
     # Delay for performance.
     () => AddCommonRules(),
     () => AddRulesForEruby(),

@@ -7,7 +7,7 @@ endif
 const PLUGINS_DIRPATH    = fnamemodify($VIM_PLUGINS, ":h")
 const MANAGER_REPOSITORY = "Shougo/dein.vim"
 
-final s:on_start_queue = []
+final on_start_queue = []
 
 export def DisableDefaults(): void
   g:no_vimrc_example         = true
@@ -97,7 +97,7 @@ export def Register(repository: string, options: dict<any> = {}): bool
 
   if get(options, "on_start", false)
     remove(options, "on_start")
-    add(s:on_start_queue, options.name)
+    add(on_start_queue, options.name)
   endif
 
   dein#add(repository, options)
@@ -111,7 +111,7 @@ export def Configure(config: dict<any>): dict<any>
 
   if get(config, "on_start", false)
     remove(config, "on_start")
-    add(s:on_start_queue, g:dein#plugin.name)
+    add(on_start_queue, g:dein#plugin.name)
   endif
 
   return dein#config(config)
@@ -191,8 +191,8 @@ enddef
 
 # Source lazily but early to optimize sourcing many plugins
 def DequeueOnStart(): void
-  if !empty(s:on_start_queue)
-    const plugin_name = remove(s:on_start_queue, 0)
+  if !empty(on_start_queue)
+    const plugin_name = remove(on_start_queue, 0)
     timer_start(100, (_) => SourceOnStart(plugin_name))
   endif
 enddef

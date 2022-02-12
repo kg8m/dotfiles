@@ -14,9 +14,9 @@ vim9script
 # ----------------------------------------------
 # Initialize  # {{{
 # Set initial variables/options  # {{{
-const s:utility_path = expand("~/dotfiles/.vim")
-&runtimepath ..= "," .. s:utility_path
-&runtimepath ..= "," .. s:utility_path .. "/after"
+const utility_path = expand("~/dotfiles/.vim")
+&runtimepath ..= "," .. utility_path
+&runtimepath ..= "," .. utility_path .. "/after"
 
 kg8m#plugin#DisableDefaults()
 

@@ -1,6 +1,6 @@
 vim9script
 
-final s:cache = {}
+final cache = {}
 
 kg8m#plugin#EnsureSourced("fzf.vim")
 
@@ -37,12 +37,12 @@ enddef
 
 export def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
   if empty(arglead) || arglead =~# '^-'
-    if !has_key(s:cache, "grep_option_candidates")
-      s:cache.grep_option_candidates = system(CommandToShowGrepOptionCandidates())->split("\n")
+    if !has_key(cache, "grep_option_candidates")
+      cache.grep_option_candidates = system(CommandToShowGrepOptionCandidates())->split("\n")
     endif
 
     const pattern = "^" .. arglead
-    return s:cache.grep_option_candidates->copy()->filter((_, item) => item =~# pattern)
+    return cache.grep_option_candidates->copy()->filter((_, item) => item =~# pattern)
   else
     var pattern = arglead
 
@@ -72,20 +72,20 @@ def GrepImplicitOptions(): string
 enddef
 
 def GrepExplicitOptions(): string
-  if has_key(s:cache, "grep_explicit_options")
-    return s:cache.grep_explicit_options
+  if has_key(cache, "grep_explicit_options")
+    return cache.grep_explicit_options
   endif
 
   if empty($RIPGREP_EXTRA_OPTIONS)
-    s:cache.grep_explicit_options = ""
+    cache.grep_explicit_options = ""
   else
     final splitted = split($RIPGREP_EXTRA_OPTIONS, " ")
     const escaped  = map(splitted, (_, option) => shellescape(option))
 
-    s:cache.grep_explicit_options = join(escaped, " ")
+    cache.grep_explicit_options = join(escaped, " ")
   endif
 
-  return s:cache.grep_explicit_options
+  return cache.grep_explicit_options
 enddef
 
 def CommandToShowGrepOptionCandidates(): string

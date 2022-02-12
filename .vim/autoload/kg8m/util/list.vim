@@ -1,14 +1,14 @@
 vim9script
 
-final s:cache = {}
+final cache = {}
 
 export def Vital(): dict<func>
-  if has_key(s:cache, "vital")
-    return s:cache.vital
+  if has_key(cache, "vital")
+    return cache.vital
   endif
 
-  s:cache.vital = vital#vital#import("Data.List")
-  return s:cache.vital
+  cache.vital = vital#vital#import("Data.List")
+  return cache.vital
 enddef
 
 export def Includes(list: list<any>, item: any): bool

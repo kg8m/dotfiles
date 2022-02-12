@@ -1,43 +1,43 @@
 vim9script
 
-const s:true_black = [ "#000000",   0 ]
-const s:black      = [ "#121212", 233 ]
-const s:dark_gray  = [ "#1c1c1c", 234 ]
-const s:gray       = [ "#262626", 235 ]
-const s:light_gray = [ "#444444", 242 ]
-const s:white      = [ "#ffffff", 255 ]
-const s:sand       = [ "#e6db74", 144 ]
-const s:blue       = [ "#66d9ef",  81 ]
-const s:green      = [ "#a6e22e", 118 ]
-const s:orange     = [ "#fd971f", 208 ]
-const s:red        = [ "#f92672", 161 ]
+const true_black = [ "#000000",   0 ]
+const black      = [ "#121212", 233 ]
+const dark_gray  = [ "#1c1c1c", 234 ]
+const gray       = [ "#262626", 235 ]
+const light_gray = [ "#444444", 242 ]
+const white      = [ "#ffffff", 255 ]
+const sand       = [ "#e6db74", 144 ]
+const blue       = [ "#66d9ef",  81 ]
+const green      = [ "#a6e22e", 118 ]
+const orange     = [ "#fd971f", 208 ]
+const red        = [ "#f92672", 161 ]
 
-const s:base    = [ s:white, s:light_gray ]
-const s:error   = [ s:white, s:red ]
-const s:warning = [ s:black, s:white ]
+const base    = [ white, light_gray ]
+const error   = [ white, red ]
+const warning = [ black, white ]
 
 g:lightline#colorscheme#kg8m#palette = lightline#colorscheme#flatten({
   normal: {
-    left:    [ [ s:black, s:sand ], s:base ],
-    middle:  [ s:base ],
-    right:   [ s:base ],
-    error:   [ s:error ],
-    warning: [ s:warning ],
+    left:    [ [ black, sand ], base ],
+    middle:  [ base ],
+    right:   [ base ],
+    error:   [ error ],
+    warning: [ warning ],
   },
   inactive: {
-    left: [ [ s:black, s:sand ], s:base ],
+    left: [ [ black, sand ], base ],
   },
   insert: {
-    left: [ [ s:black, s:blue ], s:base ],
+    left: [ [ black, blue ], base ],
   },
   replace: {
-    left: [ [ s:black, s:green ], s:base ],
+    left: [ [ black, green ], base ],
   },
   visual: {
-    left: [ [ s:black, s:orange ], s:base ],
+    left: [ [ black, orange ], base ],
   },
   tabline: {
-    left:   [ s:base ],
-    tabsel: [ [ s:black, s:sand ] ],
+    left:   [ base ],
+    tabsel: [ [ black, sand ] ],
   },
 })

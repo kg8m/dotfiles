@@ -2,28 +2,28 @@ vim9script
 
 # http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
 
-const s:incremental_mark_keys = [
+const incremental_mark_keys = [
   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 ]
-const s:incremental_mark_keys_pattern = '^[A-Z]$'
+const incremental_mark_keys_pattern = '^[A-Z]$'
 
-var s:incremental_mark_index = -1
+var incremental_mark_index = -1
 
-execute "delmarks " .. join(s:incremental_mark_keys, "")
+execute "delmarks " .. join(incremental_mark_keys, "")
 
 export def Increment(): void
   const incremental_mark_key = DetectKey()
 
-  if incremental_mark_key =~# s:incremental_mark_keys_pattern
+  if incremental_mark_key =~# incremental_mark_keys_pattern
     printf("Already marked to %s", incremental_mark_key)->kg8m#util#logger#Error()
     return
   endif
 
-  s:incremental_mark_index = (s:incremental_mark_index + 1) % len(s:incremental_mark_keys)
+  incremental_mark_index = (incremental_mark_index + 1) % len(incremental_mark_keys)
 
-  execute "mark " .. s:incremental_mark_keys[s:incremental_mark_index]
-  printf("Marked to %s", s:incremental_mark_keys[s:incremental_mark_index])->kg8m#util#logger#Info()
+  execute "mark " .. incremental_mark_keys[incremental_mark_index]
+  printf("Marked to %s", incremental_mark_keys[incremental_mark_index])->kg8m#util#logger#Info()
 enddef
 
 def DetectKey(): string
@@ -32,7 +32,7 @@ def DetectKey(): string
   const current_filepath    = expand("%")
   const current_line_number = line(".")
 
-  for mark_key in s:incremental_mark_keys
+  for mark_key in incremental_mark_keys
     const position = getpos("'" .. mark_key)
 
     if position[0] !=# 0

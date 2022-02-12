@@ -17,7 +17,7 @@ export def Run(): void
 enddef
 
 export def List(options: dict<any> = {}): list<string>
-  const sorter = get(options, "sorter") ?? function("s:DefaultSorter")
+  const sorter = get(options, "sorter") ?? funcref("DefaultSorter")
 
   const current = [kg8m#util#file#CurrentPath()]->filter((_, filepath) => !empty(filepath))
   const buffers = BufinfoList()->sort(sorter)->mapnew((_, bufinfo) => kg8m#util#file#FormatPath(bufinfo.name))

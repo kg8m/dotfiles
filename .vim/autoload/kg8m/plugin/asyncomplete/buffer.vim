@@ -1,6 +1,6 @@
 vim9script
 
-final s:cache = {}
+final cache = {}
 
 export def Configure(): void
   kg8m#plugin#Configure({
@@ -14,11 +14,11 @@ enddef
 
 # https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
 def OnEvent(): void
-  if !get(s:cache, "is_refresh_keywords_defined", false)
+  if !get(cache, "is_refresh_keywords_defined", false)
     SetupRefreshKeywords()
   endif
 
-  s:cache.refresh_keywords()
+  cache.refresh_keywords()
   StopRefreshTimer()
 enddef
 
@@ -28,11 +28,11 @@ def OnEventAsync(): void
 enddef
 
 def StartRefreshTimer(): void
-  s:cache.refresh_timer = timer_start(200, (_) => OnEvent())
+  cache.refresh_timer = timer_start(200, (_) => OnEvent())
 enddef
 
 def StopRefreshTimer(): void
-  timer_stop(get(s:cache, "refresh_timer", -1))
+  timer_stop(get(cache, "refresh_timer", -1))
 enddef
 
 def SetupRefreshKeywords(): void
@@ -46,12 +46,12 @@ def SetupRefreshKeywords(): void
   endfor
 
   if empty(asyncomplete_buffer_sid)
-    s:cache.refresh_keywords = function("s:CannotRefreshKeywords")
+    cache.refresh_keywords = funcref("CannotRefreshKeywords")
   else
-    s:cache.refresh_keywords = function("<SNR>" .. asyncomplete_buffer_sid .. "_refresh_keywords")
+    cache.refresh_keywords = function("<SNR>" .. asyncomplete_buffer_sid .. "_refresh_keywords")
   endif
 
-  s:cache.is_refresh_keywords_defined = true
+  cache.is_refresh_keywords_defined = true
 enddef
 
 def CannotRefreshKeywords(): void
@@ -63,7 +63,7 @@ def Activate(): void
 enddef
 
 def OnPostSource(): void
-  # Call asyncomplete-buffer.vim's function to refresh keywords (`s:cache.refresh_keywords`) on some events not only
+  # Call asyncomplete-buffer.vim's function to refresh keywords (`cache.refresh_keywords`) on some events not only
   # `BufWinEnter` in order to include keywords added after `BufWinEnter` in completion candidates
   # https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
   const events = [

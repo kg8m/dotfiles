@@ -1,6 +1,6 @@
 vim9script
 
-var s:timer = -1
+var timer = -1
 
 export def Setup(): void
   augroup vimrc-util-dim_inactive_windows
@@ -16,8 +16,8 @@ export def Reset()
 enddef
 
 def Trigger(options = {}): void
-  timer_stop(s:timer)
-  s:timer = timer_start(50, (_) => Apply(options))
+  timer_stop(timer)
+  timer = timer_start(50, (_) => Apply(options))
 enddef
 
 def Apply(options = {}): void

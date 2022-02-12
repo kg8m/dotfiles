@@ -1,6 +1,6 @@
 vim9script
 
-final s:cache = {
+final cache = {
   sid: expand("<SID>"),
   timer: -1,
   original_format_next: (..._) => {
@@ -17,8 +17,8 @@ export def OnTextChanged(): void
 enddef
 
 def LazyRun(delay: number): void
-  timer_stop(s:cache.timer)
-  s:cache.timer = timer_start(delay, (_) => TryToRun())
+  timer_stop(cache.timer)
+  cache.timer = timer_start(delay, (_) => TryToRun())
 enddef
 
 def TryToRun(): void
@@ -76,7 +76,7 @@ enddef
 
 def OriginalFormatNext(x: any): void
   TemporarilyDisableOnTextChanged()
-  s:cache.original_format_next(x)
+  cache.original_format_next(x)
 enddef
 
 # Avoid duplicated or infinitely repeated `LspDocumentFormat`.
@@ -234,9 +234,9 @@ def Overwrite(): void
     const new_definition =
       new_definition_template->join("\n")
         ->substitute('{{ function_name }}', function_name, "")
-        ->substitute('{{ SID }}', s:cache.sid, "g")
+        ->substitute('{{ SID }}', cache.sid, "g")
 
-    s:cache.original_format_next = funcref(function_name)
+    cache.original_format_next = funcref(function_name)
 
     execute("delfunction " .. function_name)
     execute(new_definition)

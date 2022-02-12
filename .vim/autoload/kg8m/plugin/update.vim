@@ -37,7 +37,7 @@ export def ShowLog(): void
 enddef
 
 def Main(options: dict<any> = {}): void
-  # Clear messages because they will be used in `s:check_finished`
+  # Clear messages because they will be used in `CheckFinished()`.
   messages clear
 
   # Re-register disabled plugins before update because dein.vim doesn't make helptags for them

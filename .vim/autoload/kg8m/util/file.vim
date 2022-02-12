@@ -1,6 +1,6 @@
 vim9script
 
-final s:cache = {}
+final cache = {}
 
 export def CurrentName(): string
   return expand("%:t")
@@ -20,11 +20,11 @@ export def CurrentAbsolutePath(): string
 enddef
 
 export def FormatPath(filepath: string): string
-  if !has_key(s:cache, "regular_filepath_format")
-    s:cache.regular_filepath_format = getcwd() ==# expand("~") ? ":~" : ":~:."
+  if !has_key(cache, "regular_filepath_format")
+    cache.regular_filepath_format = getcwd() ==# expand("~") ? ":~" : ":~:."
   endif
 
-  return fnamemodify(filepath, s:cache.regular_filepath_format)
+  return fnamemodify(filepath, cache.regular_filepath_format)
 enddef
 
 export def IsDescendant(filepath: string, base: string = getcwd()): bool
