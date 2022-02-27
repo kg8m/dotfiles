@@ -21,7 +21,11 @@ if [ "${#filepaths}" = "1" ]; then
     lineno="0"
   fi
 
-  bat "${realpath}" --highlight-line "${lineno}"
+  if command -v nkf > /dev/null; then
+    nkf "${realpath}" | bat --file-name "${realpath}" --highlight-line "${lineno}"
+  else
+    bat "${realpath}" --highlight-line "${lineno}"
+  fi
 else
   bat "${realpaths[@]}"
 fi
