@@ -18,7 +18,11 @@ alias rm="rm -i"
 # `xterm-256color-italic` is set in tmux.
 alias ssh="TERM=xterm-256color ssh"
 
-alias sudo='sudo env PATH=${PATH}'
+# Specify PATH because sudo sometimes doesn't know my special paths.
+# End with a whitespace in order to expand my aliases via sudo.
+#   cf. https://qiita.com/homoluctus/items/ba1a6d03df85e65fc85a
+alias sudo='sudo env PATH=${PATH} '
+
 alias watch="watch --color"
 
 if [ -n "${ZABRZE_UNAVAILABLE}" ]; then
