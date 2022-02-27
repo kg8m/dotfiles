@@ -13,6 +13,8 @@ export def ShowLog(): void
     .. '\ !^$'
     .. '\ !(*/*)\\ [+'
     .. '\ !(*/*)\\ [-'
+    .. '\ !:\\ pushed_time='
+    .. '\ !:\\ remote='
     .. '\ !Created\\ autostash'
     .. '\ !Applied\\ autostash'
     .. '\ !HEAD\\ is\\ now'
