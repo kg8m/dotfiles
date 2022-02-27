@@ -7,6 +7,9 @@ endif
 const PLUGINS_DIRPATH    = fnamemodify($VIM_PLUGINS, ":h")
 const MANAGER_REPOSITORY = "Shougo/dein.vim"
 
+# Check remote if the repository is updated within 2 days.
+const CHECK_REMOTE_THRESHOLD = 2 * 24 * 60 * 60
+
 final on_start_queue = []
 
 export def DisableDefaults(): void
@@ -50,10 +53,11 @@ export def InitManager(): void
     autocmd VimEnter * timer_start(100, (_) => DequeueOnStart())
   augroup END
 
+  g:dein#install_check_remote_threshold = CHECK_REMOTE_THRESHOLD
+  g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
+
   # Decrease max processes because too many processes sometimes get refused
   g:dein#install_max_processes = 1
-
-  g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
 
   # Default: "pull --ff --ff-only"
   g:dein#types#git#pull_command = "pull"
