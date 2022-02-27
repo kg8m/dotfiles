@@ -55,5 +55,9 @@ def FallbackForVimAutoloadFunction(): void
 
     execute printf("edit %s", filepath)
     cursor([line_number, column_number])
+
+    # zv: Show cursor even if in fold.
+    # zz: Adjust cursor at center of window.
+    normal! zvzz
   endif
 enddef
