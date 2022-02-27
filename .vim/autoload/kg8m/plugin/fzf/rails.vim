@@ -2,7 +2,7 @@ vim9script
 
 kg8m#plugin#EnsureSourced("fzf.vim")
 
-command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#complete FzfRails kg8m#plugin#fzf#rails#Run(<q-args>)
+command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#Complete FzfRails kg8m#plugin#fzf#rails#Run(<q-args>)
 
 export def EnterCommand(): void
   feedkeys(":FzfRails\<Space>", "t")

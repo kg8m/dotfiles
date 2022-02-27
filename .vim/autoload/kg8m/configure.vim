@@ -103,10 +103,10 @@ export def Commands(): void
   command! -nargs=0 -range Stats feedkeys(<range> ==# 0 ? "\<S-g>$g\<C-g>\<C-o>" : "\<Esc>gvg\<C-g>")
   command! -nargs=0 -range Counts Stats
 
-  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfSave   kg8m#util#qf#Save(<q-args>)
-  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfLoad   kg8m#util#qf#Load(<q-args>)
-  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfEdit   kg8m#util#qf#Edit(<q-args>)
-  command! -nargs=? -complete=customlist,kg8m#util#qf#complete QfDelete kg8m#util#qf#Delete(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#Complete QfSave   kg8m#util#qf#Save(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#Complete QfLoad   kg8m#util#qf#Load(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#Complete QfEdit   kg8m#util#qf#Edit(<q-args>)
+  command! -nargs=? -complete=customlist,kg8m#util#qf#Complete QfDelete kg8m#util#qf#Delete(<q-args>)
 enddef
 
 export def Mappings(): void
