@@ -2,10 +2,10 @@ vim9script
 
 augroup vimrc-events
   autocmd!
-  autocmd User search_start              ++once silent
-  autocmd User clear_search_highlight    ++once silent
-  autocmd User insert_mode_plugin_loaded ++once silent
-  autocmd User after_lsp_buffer_enabled  ++once silent
+  autocmd User search_start              ++once :
+  autocmd User clear_search_highlight    ++once :
+  autocmd User insert_mode_plugin_loaded ++once :
+  autocmd User after_lsp_buffer_enabled  ++once :
 augroup END
 
 export def NotifySearchStart(): void
