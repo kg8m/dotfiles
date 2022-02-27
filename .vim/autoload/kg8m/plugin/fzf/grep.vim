@@ -16,6 +16,7 @@ export def EnterCommand(preset: string = ""): void
       - :FzfGrep '{PATTERN}' -s                     # Search case sensitively (--case-sensitive)
       - :FzfGrep '{PATTERN}' -o                     # Print only the matched parts of a matching line (--only-matching)
       - :FzfGrep '{PATTERN}' -v                     # Invert matching (--invert-match)
+      - :FzfGrep '{PATTERN}' -E {ENCODING}          # Specify the text encoding, e.g., shift-jis (--encoding)
   HINT
 
   echo hint->join("\n") .. "\n\n"
