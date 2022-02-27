@@ -361,17 +361,6 @@ if kg8m#plugin#Register("deton/jasentence.vim")
   })
 endif
 
-if kg8m#plugin#Register("osyo-manga/vim-jplus")
-  # Remove line-connectors with `J`
-  nmap <S-j> <Plug>(jplus)
-  xmap <S-j> <Plug>(jplus)
-
-  kg8m#plugin#Configure({
-    lazy:   true,
-    on_map: { nx: "<Plug>(jplus)" },
-  })
-endif
-
 if kg8m#plugin#Register("elzr/vim-json")
   g:vim_json_syntax_conceal = false
 endif
