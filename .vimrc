@@ -170,7 +170,10 @@ endif
 kg8m#plugin#Register("kg8m/moin.vim")
 
 if kg8m#plugin#Register("lambdalisue/mr.vim", { if: !kg8m#util#IsGitTmpEdit() })
-  g:mr#threshold = 10000
+  g:mr_mrw_disabled = true
+  g:mr_mrr_disabled = true
+  g:mr#threshold = 10'000
+  g:mr#mru#filename = printf("%s/vim/mr/mru", $XDG_DATA_HOME)
 endif
 
 if kg8m#plugin#Register("tyru/open-browser.vim")
