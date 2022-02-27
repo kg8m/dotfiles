@@ -53,6 +53,7 @@ def FallbackForVimAutoloadFunction(): void
     const line_number   = matchstr(result, '\v\d+')->str2nr()
     const column_number = matchstrpos(result, '\v<export def \zs')[1] - len(line_number)
 
-    execute printf("edit %s:%d:%d", filepath, line_number, column_number)
+    execute printf("edit %s", filepath)
+    cursor([line_number, column_number])
   endif
 enddef
