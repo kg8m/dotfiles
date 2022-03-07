@@ -15,6 +15,7 @@ export def Register(): void
   RegisterBashLanguageServer()
   RegisterClangd()
   RegisterCssLanguageServer()
+  RegisterDeno()
   RegisterEfmLangserver()
   RegisterGolangciLintLangserver()
   RegisterGopls()
@@ -91,6 +92,51 @@ def ActivateCssLanguageServer(): void
       less: { lint: { validProperties: [] } },
       scss: { lint: { validProperties: [] } },
     },
+  }
+enddef
+
+def RegisterDeno(): void
+  RegisterServer({
+    name: "Deno",
+    allowlist: JS_FILETYPES,
+
+    available: !empty($DENO_AVAILABLE),
+  })
+enddef
+
+def ActivateDeno(): void
+  Activate("Deno", {
+    cmd: (_) => ["deno", "lsp"],
+    initialization_options: {
+      enable: true,
+      lint: true,
+      unstable: true,
+      importMap: filereadable("import_map.json") ? "import_map.json" : v:null,
+      codeLens: {
+        implementations: true,
+        references: true,
+        referencesAllFunctions: true,
+        test: true,
+        testArgs: ["--allow-all"],
+      },
+      suggest: {
+        autoImports: true,
+        completeFunctionCalls: true,
+        names: true,
+        paths: true,
+        imports: {
+          autoDiscover: false,
+          hosts: {
+            "https://deno.land/": true,
+          },
+        },
+      },
+      config: filereadable("tsconfig.json") ? "tsconfig.json" : v:null,
+      internalDebug: false,
+    },
+
+    document_format: true,
+    organize_imports: true,
   })
 enddef
 
