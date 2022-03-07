@@ -122,6 +122,11 @@ export def Mappings(): void
 enddef
 
 export def Others(): void
+  # Specify `$TMPDIR` for Vim because macOS sometimes deletes temporary directories (original `$TMPDIR`) even if Vim is
+  # using them and breaks Vim.
+  $TMPDIR = expand("~/tmp/.vimtmp")
+  mkdir($TMPDIR, "p")
+
   set fileformats=unix,dos,mac
 
   ConfigureAmbiwidth()
