@@ -47,44 +47,45 @@ enddef
 # yarn add bash-language-server
 def RegisterBashLanguageServer(): void
   RegisterServer({
-    name: "BashLanguageServer",
+    name: "bash-language-server",
     allowlist: SH_FILETYPES,
-    executable: "bash-language-server",
+    extra_config: function("ExtraConfigForBashLanguageServer"),
   })
 enddef
 
-def ActivateBashLanguageServer(): void
-  Activate("BashLanguageServer", {
+def ExtraConfigForBashLanguageServer(): dict<any>
+  return {
     cmd: (_) => ["bash-language-server", "start"],
-  })
+  }
 enddef
 
 def RegisterClangd(): void
   RegisterServer({
-    name: "Clangd",
+    name: "clangd",
     allowlist: ["c"],
-    executable: "clangd",
+    extra_config: function("ExtraConfigForClangd"),
   })
 enddef
 
-def ActivateClangd(): void
-  Activate("Clangd", {
+def ExtraConfigForClangd(): dict<any>
+  return {
     cmd: (_) => ["clangd"],
-  })
+  }
 enddef
 
 # yarn add vscode-langservers-extracted
 def RegisterCssLanguageServer(): void
   RegisterServer({
-    name: "CssLanguageServer",
+    name: "css-language-server",
     allowlist: ["css", "less", "scss"],
     executable: "vscode-css-language-server",
+    extra_config: function("ExtraConfigForCssLanguageServer"),
   })
 enddef
 
-def ActivateCssLanguageServer(): void
+def ExtraConfigForCssLanguageServer(): dict<any>
   # css-language-server doesn't work when editing `.sass` file.
-  Activate("CssLanguageServer", {
+  return {
     cmd: (_) => ["vscode-css-language-server", "--stdio"],
     config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("css") },
     workspace_config: {
@@ -97,15 +98,16 @@ enddef
 
 def RegisterDeno(): void
   RegisterServer({
-    name: "Deno",
+    name: "deno",
     allowlist: JS_FILETYPES,
+    extra_config: function("ExtraConfigForDeno"),
 
     available: !empty($DENO_AVAILABLE),
   })
 enddef
 
-def ActivateDeno(): void
-  Activate("Deno", {
+def ExtraConfigForDeno(): dict<any>
+  return {
     cmd: (_) => ["deno", "lsp"],
     initialization_options: {
       enable: true,
@@ -137,58 +139,58 @@ def ActivateDeno(): void
 
     document_format: true,
     organize_imports: true,
-  })
+  }
 enddef
 
 # go install github.com/mattn/efm-langserver
 def RegisterEfmLangserver(): void
   RegisterServer({
-    name: "EfmLangserver",
+    name: "efm-langserver",
 
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
       "css", "eruby", "gitcommit", "html", "json", "make", "markdown", "ruby", "sql",
     ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES,
 
-    executable: "efm-langserver",
+    extra_config: function("ExtraConfigForEfmLangserver"),
   })
 enddef
 
-def ActivateEfmLangserver(): void
-  Activate("EfmLangserver", {
+def ExtraConfigForEfmLangserver(): dict<any>
+  return {
     cmd: (_) => ["efm-langserver"],
-  })
+  }
 enddef
 
 # go install github.com/nametake/golangci-lint-langserver
 def RegisterGolangciLintLangserver(): void
   RegisterServer({
-    name: "GolangciLintLangserver",
+    name: "golangci-lint-langserver",
     allowlist: ["go"],
-    executable: "golangci-lint-langserver",
+    extra_config: function("ExtraConfigForGolangciLintLangserver"),
   })
 enddef
 
-def ActivateGolangciLintLangserver(): void
-  Activate("GolangciLintLangserver", {
+def ExtraConfigForGolangciLintLangserver(): dict<any>
+  return {
     cmd: (_) => ["golangci-lint-langserver"],
     initialization_options: {
       command: ["golangci-lint", "run", "--enable-all", "--out-format", "json"],
     },
-  })
+  }
 enddef
 
 # go install golang.org/x/tools/gopls
 def RegisterGopls(): void
   RegisterServer({
-    name: "Gopls",
+    name: "gopls",
     allowlist: ["go"],
-    executable: "gopls",
+    extra_config: function("ExtraConfigForGopls"),
   })
 enddef
 
-def ActivateGopls(): void
-  Activate("Gopls", {
+def ExtraConfigForGopls(): dict<any>
+  return {
     cmd: (_) => ["gopls", "-mode", "stdio"],
     initialization_options: {
       analyses: {
@@ -204,37 +206,39 @@ def ActivateGopls(): void
     },
 
     organize_imports: true,
-  })
+  }
 enddef
 
 # yarn add vscode-langservers-extracted
 def RegisterHtmlLanguageServer(): void
   RegisterServer({
-    name: "HtmlLanguageServer",
+    name: "html-language-server",
     allowlist: ["eruby", "html"],
     executable: "vscode-html-language-server",
+    extra_config: function("ExtraConfigForHtmlLanguageServer"),
   })
 enddef
 
-def ActivateHtmlLanguageServer(): void
-  Activate("HtmlLanguageServer", {
+def ExtraConfigForHtmlLanguageServer(): dict<any>
+  return {
     cmd: (_) => ["vscode-html-language-server", "--stdio"],
     initialization_options: { embeddedLanguages: { css: true, javascript: true } },
     config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("html") },
-  })
+  }
 enddef
 
 # yarn add vscode-langservers-extracted
 def RegisterJsonLanguageServer(): void
   RegisterServer({
-    name: "JsonLanguageServer",
+    name: "json-language-server",
     allowlist: ["json"],
     executable: "vscode-json-language-server",
+    extra_config: function("ExtraConfigForJsonLanguageServer"),
   })
 enddef
 
-def ActivateJsonLanguageServer(): void
-  Activate("JsonLanguageServer", {
+def ExtraConfigForJsonLanguageServer(): dict<any>
+  return {
     cmd: (_) => ["vscode-json-language-server", "--stdio"],
     config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("json") },
     workspace_config: {
@@ -243,44 +247,44 @@ def ActivateJsonLanguageServer(): void
         schemas: Schemas(),
       },
     },
-  })
+  }
 enddef
 
 # gem install ruby_language_server
 def RegisterRubyLanguageServer(): void
   RegisterServer({
-    name: "RubyLanguageServer",
+    name: "ruby_language_server",
     allowlist: ["ruby"],
-    executable: "ruby_language_server",
+    extra_config: function("ExtraConfigForRubyLanguageServer"),
 
     available: empty($RUBY_LANGUAGE_SERVER_UNAVAILABLE),
   })
 enddef
 
-def ActivateRubyLanguageServer(): void
-  Activate("RubyLanguageServer", {
+def ExtraConfigForRubyLanguageServer(): dict<any>
+  return {
     cmd: (_) => ["ruby_language_server"],
     initialization_options: {
       diagnostics: "false",
     },
 
     document_format: false,
-  })
+  }
 enddef
 
 # gem install solargraph
 def RegisterSolargraph(): void
   RegisterServer({
-    name: "Solargraph",
+    name: "solargraph",
     allowlist: ["ruby"],
-    executable: "solargraph",
+    extra_config: function("ExtraConfigForSolargraph"),
 
     available: empty($SOLARGRAPH_UNAVAILABLE),
   })
 enddef
 
-def ActivateSolargraph(): void
-  Activate("Solargraph", {
+def ExtraConfigForSolargraph(): dict<any>
+  return {
     cmd: (_) => ["solargraph", "stdio"],
 
     # cf. https://github.com/castwide/vscode-solargraph/blob/master/package.json
@@ -300,20 +304,20 @@ def ActivateSolargraph(): void
     },
 
     document_format: false,
-  })
+  }
 enddef
 
 # go install github.com/lighttiger2505/sqls
 def RegisterSqls(): void
   RegisterServer({
-    name: "Sqls",
+    name: "sqls",
     allowlist: ["sql"],
-    executable: "sqls",
+    extra_config: function("ExtraConfigForSqls"),
   })
 enddef
 
-def ActivateSqls(): void
-  Activate("Sqls", {
+def ExtraConfigForSqls(): dict<any>
+  return {
     cmd: (_) => ["sqls"],
     workspace_config: {
       sqls: {
@@ -323,94 +327,94 @@ def ActivateSqls(): void
 
     # sqls' document formatting is buggy.
     document_format: false,
-  })
+  }
 enddef
 
 # gem install steep
 # Requires Steepfile.
 def RegisterSteep(): void
   RegisterServer({
-    name: "Steep",
+    name: "steep",
     allowlist: ["ruby"],
-    executable: "steep",
+    extra_config: function("ExtraConfigForSteep"),
 
     available: empty($STEEP_UNAVAILABLE),
   })
 enddef
 
-def ActivateSteep(): void
-  Activate("Steep", {
+def ExtraConfigForSteep(): dict<any>
+  return {
     cmd: (_) => ["steep", "langserver"],
     initialization_options: {
       diagnostics: true,
     },
-  })
+  }
 enddef
 
 # Install from https://github.com/juliosueiras/terraform-lsp/releases
 def RegisterTerraformLsp(): void
   RegisterServer({
-    name: "TerraformLsp",
+    name: "terraform-lsp",
     allowlist: ["terraform"],
-    executable: "terraform-lsp",
+    extra_config: function("ExtraConfigForTerraformLsp"),
   })
 enddef
 
-def ActivateTerraformLsp(): void
-  Activate("TerraformLsp", {
+def ExtraConfigForTerraformLsp(): dict<any>
+  return {
     cmd: (_) => ["terraform-lsp"],
-  })
+  }
 enddef
 
 # gem install typeprof
 def RegisterTypeprof(): void
   RegisterServer({
-    name: "Typeprof",
+    name: "typeprof",
     allowlist: ["ruby"],
-    executable: "typeprof",
+    extra_config: function("ExtraConfigForTypeprof"),
 
     available: empty($TYPEPROF_UNAVAILABLE),
   })
 enddef
 
-def ActivateTypeprof(): void
-  Activate("Typeprof", {
+def ExtraConfigForTypeprof(): dict<any>
+  return {
     cmd: (_) => ["typeprof", "--lsp", "--stdio"],
     initialization_options: {
       diagnostics: true,
     },
-  })
+  }
 enddef
 
 # yarn add typescript-language-server typescript
 def RegisterTypescriptLanguageServer(): void
   RegisterServer({
-    name: "TypescriptLanguageServer",
+    name: "typescript-language-server",
     allowlist: JS_FILETYPES,
-    executable: "typescript-language-server",
+    extra_config: function("ExtraConfigForTypescriptLanguageServer"),
   })
 enddef
 
-def ActivateTypescriptLanguageServer(): void
-  Activate("TypescriptLanguageServer", {
+def ExtraConfigForTypescriptLanguageServer(): dict<any>
+  return {
     cmd: (_) => ["typescript-language-server", "--stdio"],
 
     document_format: false,
     organize_imports: true,
-  })
+  }
 enddef
 
 # yarn add vim-language-server
 def RegisterVimLanguageServer(): void
   RegisterServer({
-    name: "VimLanguageServer",
+    name: "vim-language-server",
     allowlist: ["vim"],
-    executable: "vim-language-server",
+    extra_config: function("ExtraConfigForVimLanguageServer"),
   })
 enddef
 
-def ActivateVimLanguageServer(): void
-  Activate("VimLanguageServer", {
+def ExtraConfigForVimLanguageServer(): dict<any>
+  return {
     cmd: (_) => ["vim-language-server", "--stdio"],
     initialization_options: {
       # vim-language-server uses only `:`.
@@ -430,20 +434,20 @@ def ActivateVimLanguageServer(): void
       },
     },
     root_uri: (_) => lsp#utils#path_to_uri(expand("~")),
-  })
+  }
 enddef
 
-# yarn add vue-language-server
+# yarn add vls
 def RegisterVueLanguageServer(): void
   RegisterServer({
-    name: "VueLanguageServer",
+    name: "vls",
     allowlist: ["vue"],
-    executable: "vls",
+    extra_config: function("ExtraConfigForVueLanguageServer"),
   })
 enddef
 
-def ActivateVueLanguageServer(): void
-  Activate("VueLanguageServer", {
+def ExtraConfigForVueLanguageServer(): dict<any>
+  return {
     cmd: (_) => ["vls"],
 
     # cf. https://github.com/sublimelsp/LSP-vue/blob/master/LSP-vue.sublime-settings
@@ -480,20 +484,20 @@ def ActivateVueLanguageServer(): void
         typescript: { format: {} },
       },
     },
-  })
+  }
 enddef
 
 # yarn add yaml-language-server
 def RegisterYamlLanguageServer(): void
   RegisterServer({
-    name: "YamlLanguageServer",
+    name: "yaml-language-server",
     allowlist: YAML_FILETYPES,
-    executable: "yaml-language-server",
+    extra_config: function("ExtraConfigForYamlLanguageServer"),
   })
 enddef
 
-def ActivateYamlLanguageServer(): void
-  Activate("YamlLanguageServer", {
+def ExtraConfigForYamlLanguageServer(): dict<any>
+  return {
     cmd: (_) => ["yaml-language-server", "--stdio"],
     workspace_config: {
       yaml: {
@@ -505,12 +509,11 @@ def ActivateYamlLanguageServer(): void
         validate: true,
       },
     },
-  })
+  }
 enddef
 
 def RegisterServer(config: dict<any>): void
-  const executable = config.executable
-  remove(config, "executable")
+  const executable = get(config, "executable", config.name)
 
   named_configs[config.name] = config
 
@@ -552,8 +555,7 @@ def ActivateServers(filetype: string): void
       continue
     endif
 
-    # Call `ActivateGopls`, `ActivateSolargraph`, `ActivateTypescriptLanguageServer`, and so on.
-    execute printf("Activate%s()", config.name)
+    Activate(config.name, config.extra_config())
   endfor
 enddef
 
