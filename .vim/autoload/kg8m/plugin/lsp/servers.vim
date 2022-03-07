@@ -159,6 +159,8 @@ enddef
 def ExtraConfigForEfmLangserver(): dict<any>
   return {
     cmd: (_) => ["efm-langserver"],
+
+    document_format: $DENO_AVAILABLE !=# "1",
   }
 enddef
 
@@ -392,6 +394,8 @@ def RegisterTypescriptLanguageServer(): void
     name: "typescript-language-server",
     allowlist: JS_FILETYPES,
     extra_config: function("ExtraConfigForTypescriptLanguageServer"),
+
+    available: $DENO_AVAILABLE !=# "1",
   })
 enddef
 
