@@ -102,7 +102,7 @@ def RegisterDeno(): void
     allowlist: JS_FILETYPES,
     extra_config: function("ExtraConfigForDeno"),
 
-    available: !empty($DENO_AVAILABLE),
+    available: $DENO_AVAILABLE ==# "1",
   })
 enddef
 
@@ -257,7 +257,7 @@ def RegisterRubyLanguageServer(): void
     allowlist: ["ruby"],
     extra_config: function("ExtraConfigForRubyLanguageServer"),
 
-    available: empty($RUBY_LANGUAGE_SERVER_UNAVAILABLE),
+    available: $RUBY_LANGUAGE_SERVER_AVAILABLE ==# "1",
   })
 enddef
 
@@ -279,7 +279,7 @@ def RegisterSolargraph(): void
     allowlist: ["ruby"],
     extra_config: function("ExtraConfigForSolargraph"),
 
-    available: empty($SOLARGRAPH_UNAVAILABLE),
+    available: $SOLARGRAPH_AVAILABLE !=# "0",
   })
 enddef
 
@@ -338,7 +338,7 @@ def RegisterSteep(): void
     allowlist: ["ruby"],
     extra_config: function("ExtraConfigForSteep"),
 
-    available: empty($STEEP_UNAVAILABLE),
+    available: $STEEP_AVAILABLE ==# "1",
   })
 enddef
 
@@ -373,7 +373,7 @@ def RegisterTypeprof(): void
     allowlist: ["ruby"],
     extra_config: function("ExtraConfigForTypeprof"),
 
-    available: empty($TYPEPROF_UNAVAILABLE),
+    available: $TYPEPROF_AVAILABLE ==# "1",
   })
 enddef
 

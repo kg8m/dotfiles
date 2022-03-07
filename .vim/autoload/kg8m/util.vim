@@ -28,7 +28,7 @@ export def IsCtagsAvailable(): bool
     return cache.is_ctags_available
   endif
 
-  cache.is_ctags_available = !empty($CTAGS_AVAILABLE)
+  cache.is_ctags_available = ($CTAGS_AVAILABLE ==# "1")
   return cache.is_ctags_available
 enddef
 
