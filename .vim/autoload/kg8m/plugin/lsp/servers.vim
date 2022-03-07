@@ -645,6 +645,16 @@ enddef
 # efm-langserver but vim-lsp sometimes doesn't select it. efm-langserver is always selected if it is the only 1
 # language server which has capability of document formatting.
 def OverwriteCapabilities(): void
+  if !has_key(cache, "capabilities_overwritten")
+    cache.capabilities_overwritten = {}
+  endif
+
+  if has_key(cache.capabilities_overwritten, &filetype)
+    return
+  endif
+
+  cache.capabilities_overwritten[&filetype] = true
+
   for config in Configs(&filetype)
     if get(config, "document_format", true) !=# false
       continue
