@@ -35,7 +35,7 @@ export def UpperT(): void
   RunSingleline()
 enddef
 
-# `stargate#ok_vim()` with migemo
+# `stargate#OKvim()` with migemo
 export def Multiline(): void
   Prepare("multiline")
   RunMultiline()
@@ -121,7 +121,7 @@ def RunMultiline(): void
   const cursor_position = getcurpos()
 
   const pattern = BuildPattern()
-  stargate#ok_vim(pattern)
+  stargate#OKvim(pattern)
 
   if getcurpos() !=# cursor_position
     BlinkCursor()

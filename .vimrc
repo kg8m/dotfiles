@@ -478,7 +478,7 @@ endif
 
 if kg8m#plugin#Register("monkoose/vim9-stargate")
   g:stargate_chars = "FKLASDHGUIONMREWCVTYBX,;J"
-  nnoremap <C-w>f :call stargate#galaxy()<CR>
+  nnoremap <C-w>f :call stargate#Galaxy()<CR>
 endif
 
 if kg8m#plugin#Register("Shougo/vimproc")
