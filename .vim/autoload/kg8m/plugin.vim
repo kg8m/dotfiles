@@ -53,6 +53,7 @@ export def InitManager(): void
     autocmd VimEnter * timer_start(100, (_) => DequeueOnStart())
   augroup END
 
+  g:dein#install_check_diff = true
   g:dein#install_check_remote_threshold = CHECK_REMOTE_THRESHOLD
   g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
 
