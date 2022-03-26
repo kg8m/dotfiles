@@ -209,6 +209,7 @@ function remove_symlink {
   local filepath="${1:?}"
 
   if [ -L "${filepath}" ]; then
+    echo:info "Remove a symlink ${filepath}."
     rm "${filepath}"
   else
     echo:warn "${filepath} is not a symbolic link."
