@@ -243,4 +243,4 @@ if [ -z "${ZABRZE_UNAVAILABLE}" ]; then
 fi
 
 zinit ice lucid as"completion" mv"zsh_tealdeer -> _tldr"
-zinit snippet https://github.com/dbrgn/tealdeer/blob/main/zsh_tealdeer
+zinit snippet https://github.com/dbrgn/tealdeer/blob/main/completion/zsh_tealdeer
