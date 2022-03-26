@@ -1,12 +1,12 @@
 function plugin:setup:tmux_plugins {
   function plugin:setup:tmux_plugin {
     local plugin_name="$(basename "$1")"
+    local tmux_dirpath="${XDG_CONFIG_HOME:?}/tmux"
+    local plugins_dirpath="${tmux_dirpath}/plugins"
 
-    remove_symlink ~/.config/tmux
-    remove_symlink ~/.config/tmux/plugins/"${plugin_name}"
-
-    [ -d ~/.config/tmux ]                          || ln -s ~/dotfiles/.config/tmux ~/.config/tmux
-    [ -d ~/.config/tmux/plugins/"${plugin_name}" ] || ln -s "${PWD}" ~/.config/tmux/plugins/"${plugin_name}"
+    [ -d "${tmux_dirpath}" ] || ln -s ~/dotfiles/.config/tmux "${tmux_dirpath}"
+    mkdir -p "${plugins_dirpath}"
+    [ -d "${plugins_dirpath}/${plugin_name}" ] || ln -s "${PWD}" "${plugins_dirpath}/${plugin_name}"
   }
 
   local plugins=(
