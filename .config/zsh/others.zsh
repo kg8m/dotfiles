@@ -1,9 +1,4 @@
 function plugin:setup:others {
-  if [ "$(uname)" = "Darwin" ]; then
-    zinit ice lucid as"null" from"gh-r" bpick"tbkeys.xpi" atclone"execute_with_echo 'open .'" atpull"%atclone"
-    zinit light wshanks/tbkeys
-  fi
-
   # Don't use zinit's options like `as"command" pick"bin/themis"` because it makes the `$PATH` longer and longer. Make
   # symbolic links in `${HOME}/bin` instead.
   function plugin:setup:vim_themis {
