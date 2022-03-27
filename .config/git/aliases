@@ -403,23 +403,27 @@ function git:submodule:remove:bulk {
   local targets=("${(@f)$(git submodule | filter | awk '{ print $2 }')}")
   local target
 
-  for target in "${targets[@]}"; do
-    execute_with_confirm "git submodule deinit ${target}"
-    execute_with_confirm "git rm ${target}"
-    execute_with_confirm "trash ${target}"
-  done
+  if [ -n "${targets[*]}" ]; then
+    for target in "${targets[@]}"; do
+      execute_with_confirm "git submodule deinit ${target}"
+      execute_with_confirm "git rm ${target}"
+      execute_with_confirm "trash ${target}"
+    done
+  fi
 }
 
 function git:submodule:deinit:bulk {
   local targets=("${(@f)$(git submodule | filter | awk '{ print $2 }')}")
   local target
 
-  for target in "${targets[@]}"; do
-    execute_with_confirm "git submodule deinit -f ${target}"
-    execute_with_confirm "rm -r ./git/modules/${target}"
-    execute_with_confirm "trash ${target}/*"
-    execute_with_confirm "trash ${target}/.*"
-  done
+  if [ -n "${targets[*]}" ]; then
+    for target in "${targets[@]}"; do
+      execute_with_confirm "git submodule deinit -f ${target}"
+      execute_with_confirm "rm -r ./git/modules/${target}"
+      execute_with_confirm "trash ${target}/*"
+      execute_with_confirm "trash ${target}/.*"
+    done
+  fi
 }
 
 function git:alias:list {
