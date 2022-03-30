@@ -123,10 +123,11 @@ if kg8m#plugin#Register("junegunn/fzf.vim", { if: executable("fzf") })
   kg8m#plugin#fzf#Configure()
 endif
 
-if kg8m#plugin#Register("lambdalisue/gina.vim", { if: !kg8m#util#IsGitTmpEdit() })
+if kg8m#plugin#Register("lambdalisue/gin.vim", { if: !kg8m#util#IsGitTmpEdit() })
   kg8m#plugin#Configure({
-    lazy:   true,
-    on_cmd: "Gina",
+    lazy:    true,
+    on_cmd:  "GinPatch",
+    depends: ["denops.vim"],
   })
 endif
 
@@ -294,6 +295,14 @@ if kg8m#plugin#Register("alvan/vim-closetag")
 endif
 
 kg8m#plugin#Register("hail2u/vim-css3-syntax", { if: !kg8m#util#IsGitTmpEdit() })
+
+if kg8m#plugin#Register("vim-denops/denops.vim", { lazy: true, on_start: true })
+  if $DENOPS_DEBUG ==# "1"
+    g:denops#debug      = true
+    g:denops#trace      = true
+    g:denops#type_check = true
+  endif
+endif
 
 if kg8m#plugin#Register("wsdjeg/vim-fetch")
   augroup vimrc-plugin-fetch

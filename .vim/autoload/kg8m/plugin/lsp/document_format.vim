@@ -150,7 +150,7 @@ def IsForceTargetFilepath(): bool
 enddef
 
 def IsTargetBufferType(): bool
-  return !kg8m#util#string#StartsWith(bufname(), "gina://")
+  return !kg8m#util#string#StartsWith(bufname(), "ginedit://")
 enddef
 
 def IsTargetFiletype(): bool
