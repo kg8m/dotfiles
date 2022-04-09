@@ -449,6 +449,7 @@ if kg8m#plugin#Register("machakann/vim-sandwich")
 endif
 
 kg8m#plugin#Register("arzg/vim-sh")
+kg8m#plugin#Register("slim-template/vim-slim")
 
 if kg8m#plugin#Register("mhinz/vim-startify", { if: !kg8m#util#IsGitTmpEdit() })
   kg8m#plugin#startify#Configure()
