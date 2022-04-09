@@ -122,6 +122,8 @@ export def Mappings(): void
 enddef
 
 export def Others(): void
+  language en_US.UTF-8
+
   # Specify `$TMPDIR` for Vim because macOS sometimes deletes temporary directories (original `$TMPDIR`) even if Vim is
   # using them and breaks Vim.
   $TMPDIR = expand("~/tmp/.vimtmp")
