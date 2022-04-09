@@ -105,7 +105,7 @@ function git:update:main {
   if [[ "$(git branch --show-current)" =~ ^(main|master)$ ]]; then
     execute_with_echo "git update"
     execute_with_echo "git switch ${current_branch}"
-    execute_with_echo "git branches"
+    execute_with_echo "git branches | head -n15"
   else
     echo:error "Switching branch failed."
     return 1
@@ -129,7 +129,7 @@ function git:branch:create:with_set_upstream {
     "execute_with_echo 'git push --set-upstream origin ${branch_name}'"
   )
 
-  execute_with_confirm "${(j: && :)commands}; execute_with_echo 'git branches'"
+  execute_with_confirm "${(j: && :)commands}; execute_with_echo 'git branches | head -n15'"
 }
 
 function git:branch:delete:bulk:local {
@@ -141,7 +141,7 @@ function git:branch:delete:bulk:local {
 
   if [ -n "${branches[*]}" ]; then
     execute_with_confirm "git branch --delete --force ${branches[*]}"
-    execute_with_echo    "git branches"
+    execute_with_echo    "git branches | head -n15"
   else
     echo "No target branches."
   fi
@@ -156,7 +156,7 @@ function git:branch:delete:bulk:remote {
 
   if [ -n "${branches[*]}" ]; then
     execute_with_confirm "git push --delete origin ${branches[*]}"
-    execute_with_echo    "git branches"
+    execute_with_echo    "git branches | head -n15"
   else
     echo "No target branches."
   fi
