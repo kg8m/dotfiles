@@ -79,6 +79,9 @@ rules:
   - expected: tmux
     options:
       wordBoundary: true
+  - expected: TypeProf
+    options:
+      wordBoundary: true
   - expected: vanilla-extract
     pattern: /vanilla[- ]?extract/i
     options:
