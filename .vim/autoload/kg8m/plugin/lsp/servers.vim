@@ -375,7 +375,7 @@ def RegisterTypeprof(): void
     allowlist: ["ruby"],
     extra_config: function("ExtraConfigForTypeprof"),
 
-    available: $TYPEPROF_AVAILABLE ==# "1",
+    available: $TYPEPROF_AVAILABLE !=# "0",
   })
 enddef
 
