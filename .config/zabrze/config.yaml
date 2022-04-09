@@ -144,32 +144,32 @@ abbrevs:
     abbr: c
     snippet: console
     global: true
-    context: '^rails\s'
+    context: '^(bin/|bundle exec )?rails\s'
   - name: rails dbconsole
     abbr: db
     snippet: dbconsole
     global: true
-    context: '^rails\s'
+    context: '^(bin/|bundle exec )?rails\s'
   - name: rails generate
     abbr: g
     snippet: generate
     global: true
-    context: '^rails\s'
+    context: '^(bin/|bundle exec )?rails\s'
   - name: rails runner
     abbr: r
     snippet: runner
     global: true
-    context: '^rails\s'
+    context: '^(bin/|bundle exec )?rails\s'
   - name: rails server
     abbr: s
     snippet: server
     global: true
-    context: '^rails\s'
+    context: '^(bin/|bundle exec )?rails\s'
   - name: rails test
     abbr: t
     snippet: test
     global: true
-    context: '^rails\s'
+    context: '^(bin/|bundle exec )?rails\s'
 
   - name: my_grep_with_filter
     abbr: gr
