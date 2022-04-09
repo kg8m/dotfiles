@@ -157,7 +157,6 @@ def BuildPattern(): string
     )->system()
 
     cache.pattern = printf('\C\%(%s\|%s\)', smartcase_pattern, migemo_pattern)
-    g:pattern = cache.pattern
   endif
 
   return cache.pattern
