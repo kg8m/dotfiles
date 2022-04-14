@@ -5,7 +5,8 @@ final filetyped_configs: dict<list<dict<any>>> = {}
 
 final cache = {}
 
-const JS_FILETYPES   = ["javascript", "javascriptreact", "typescript", "typescriptreact"]
+const JS_FILETYPES   = ["javascript", "javascriptreact"]
+const TS_FILETYPES   = ["typescript", "typescriptreact"]
 const SH_FILETYPES   = ["sh", "zsh"]
 const YAML_FILETYPES = ["eruby.yaml", "yaml", "yaml.ansible"]
 
@@ -99,7 +100,7 @@ enddef
 def RegisterDeno(): void
   RegisterServer({
     name: "deno",
-    allowlist: JS_FILETYPES,
+    allowlist: TS_FILETYPES,
     extra_config: function("ExtraConfigForDeno"),
 
     available: $DENO_AVAILABLE ==# "1",
@@ -150,7 +151,9 @@ def RegisterEfmLangserver(): void
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
       "css", "eruby", "gitcommit", "html", "json", "make", "markdown", "ruby", "sql",
-    ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES,
+    ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES + (
+      $DENO_AVAILABLE ==# "1" ? [] : TS_FILETYPES
+    ),
 
     extra_config: function("ExtraConfigForEfmLangserver"),
   })
@@ -159,8 +162,6 @@ enddef
 def ExtraConfigForEfmLangserver(): dict<any>
   return {
     cmd: (_) => ["efm-langserver"],
-
-    document_format: $DENO_AVAILABLE !=# "1",
   }
 enddef
 
@@ -392,7 +393,7 @@ enddef
 def RegisterTypescriptLanguageServer(): void
   RegisterServer({
     name: "typescript-language-server",
-    allowlist: JS_FILETYPES,
+    allowlist: JS_FILETYPES + TS_FILETYPES,
     extra_config: function("ExtraConfigForTypescriptLanguageServer"),
 
     available: $DENO_AVAILABLE !=# "1",
