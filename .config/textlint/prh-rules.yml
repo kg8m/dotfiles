@@ -7,6 +7,9 @@ rules:
   - expected: Bash
     options:
       wordBoundary: true
+  - expected: Deno
+    options:
+      wordBoundary: true
   - expected: ERB Lint
     pattern: /erb ?lint/i
     options:
@@ -80,6 +83,9 @@ rules:
     options:
       wordBoundary: true
   - expected: TypeProf
+    options:
+      wordBoundary: true
+  - expected: TypeScript
     options:
       wordBoundary: true
   - expected: vanilla-extract
