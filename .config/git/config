@@ -12,6 +12,9 @@
 [url "git@gitlab.com:"]
 	pushInsteadOf = https://gitlab.com/
 
+[init]
+	defaultBranch = main
+
 [branch]
 	autosetupmerge = true
 	sort = -authordate
