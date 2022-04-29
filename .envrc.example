@@ -1,1 +1,1 @@
-export PATH="bin:vendor/bundle/bin:${PATH}"
+export PATH="${PWD}/bin:${PWD}/vendor/bundle/bin:${PATH}"
