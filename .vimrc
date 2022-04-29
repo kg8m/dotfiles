@@ -105,13 +105,16 @@ endif
 if kg8m#plugin#Register("Shougo/context_filetype.vim")
   const for_js = [
     { start: '\<html`$', end: '\v^\s*%(//|/?\*)?\s*`', filetype: "html" },
-    { start: '\<css`$',  end: '\v^\s*%(//|/?\*)?\s*`', filetype: "css" },
+    { start: '\<css`$', end: '\v^\s*%(//|/?\*)?\s*`', filetype: "css" },
+    { start: '\v<styled%(\(.+\)|\.\w+)`$',  end: '\v^\s*%(//|/?\*)?\s*`', filetype: "css" },
   ]
 
   # For caw.vim and so on
   g:context_filetype#filetypes = {
     javascript: for_js,
     typescript: for_js,
+    javascriptreact: for_js,
+    typescriptreact: for_js,
   }
 endif
 
