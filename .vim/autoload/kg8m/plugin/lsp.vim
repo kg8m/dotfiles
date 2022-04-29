@@ -54,7 +54,7 @@ def OnLspBufferEnabled(): void
 
   # Lazily set omnifunc to overwrite plugins' configurations.
   SetOmnifunc()
-  timer_start(200, (_) => SetOmnifunc())
+  autocmd InsertEnter <buffer> timer_start(100, (_) => SetOmnifunc())
 
   nmap <buffer> gd <Plug>(lsp-next-diagnostic)
   nmap <buffer> ge <Plug>(lsp-next-error)
@@ -77,7 +77,8 @@ def ResetTargetBuffer(): void
 enddef
 
 def SetOmnifunc(): void
-  if &omnifunc !=# "lsp#complete"
+  # Check whether setup of all servers is done or not because this function can be called for a non-target buffer.
+  if &omnifunc !=# "lsp#complete" && kg8m#plugin#lsp#servers#AreAllRunningOrExited()
     setlocal omnifunc=lsp#complete
   endif
 enddef
