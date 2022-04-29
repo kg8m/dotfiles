@@ -23,6 +23,10 @@ abbrevs:
     global: true
     context: '^docker\s'
 
+  - name: filter
+    abbr: f
+    snippet: filter
+
   - name: git
     abbr: g
     snippet: git
