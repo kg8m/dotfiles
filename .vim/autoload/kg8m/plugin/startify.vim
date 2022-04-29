@@ -87,8 +87,9 @@ def OverwriteColors(): void
 enddef
 
 def SaveSession(): void
+  kg8m#configure#folding#manual#Restore()
+
   if SessionSavable()
-    kg8m#configure#folding#manual#Restore()
     mkdir(g:startify_session_dir, "p")
     execute "silent SSave! " .. SessionName()
   endif
