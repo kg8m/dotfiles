@@ -5,9 +5,10 @@ options head
 	EXPLAIN ${0}
 
 snippet SELECT_FROM
-abbr    SELECT * FROM ...
+alias   SELECT
+abbr    SELECT ... FROM ...
 options head
-	SELECT * FROM ${1:#:table_name}
+	SELECT ${0} FROM ${1:#:table_name}
 
 snippet CROSS_JOIN
 abbr    CROSS JOIN {table_name} ON ...
@@ -72,9 +73,10 @@ options head
 	explain ${0}
 
 snippet select_from
-abbr    select * from ...
+alias   select
+abbr    select ... from ...
 options head
-	select * from ${1:#:table_name}
+	select ${0} from ${1:#:table_name}
 
 snippet cross_join
 abbr    cross join {table_name} on ...
