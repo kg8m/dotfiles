@@ -49,7 +49,11 @@ function plugin:setup:binary_releaseds {
   # Don't use zinit's options like `as"command" mv"${plugin}* -> ${plugin}" pick"${plugin}/${plugin}"` because it
   # makes the `$PATH` longer and longer. Make symbolic links in `${HOME}/bin` instead.
   function plugin:setup:binary_released {
-    local plugin="$1"
+    local repository="${1:?}"
+    local plugin="${2:?}"
+
+    echo:info "URL: https://github.com/${repository}"
+    echo >&2
 
     case "${plugin}" in
       actionlint | bat | delta | direnv | efm-langserver | fd | gh | ghch | glab | golangci-lint | hyperfine |\
@@ -200,7 +204,7 @@ function plugin:setup:binary_releaseds {
       from"gh-r"
       as"null"
       id-as"$(dirname "${repository}")---${plugin}-bin"
-      atclone"plugin:setup:binary_released ${plugin}"
+      atclone"plugin:setup:binary_released ${repository} ${plugin}"
       atpull"%atclone"
     )
 
