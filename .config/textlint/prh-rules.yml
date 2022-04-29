@@ -51,6 +51,9 @@ rules:
     pattern: /neo ?vim/i
     options:
       wordBoundary: true
+  - expected: ngrok
+    options:
+      wordBoundary: true
   - expected: PostgreSQL
     options:
       wordBoundary: true
@@ -71,6 +74,9 @@ rules:
     options:
       wordBoundary: true
   - expected: ShellCheck
+    options:
+      wordBoundary: true
+  - expected: Surfingkeys
     options:
       wordBoundary: true
   - expected: textlint
