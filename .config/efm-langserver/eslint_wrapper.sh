@@ -51,6 +51,9 @@ fi
 
 options+=("$(eslint_wrapper_options "${target_filepath}")")
 
+# Kill existing processes because too many processes run and they cause high CPU usage.
+pkill -f ".*${executable} .* ${options[*]}"
+
 out="$("${executable}" "${options[@]}" 2> "${err_temp_filepath}")"
 err="$(cat "${err_temp_filepath}")"
 
