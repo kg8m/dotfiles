@@ -1,5 +1,15 @@
 vim9script
 
+const INVALID_REASONS = {
+  servers_not_enabled:  "servers aren't enabled",
+  not_allowed:          "automatic formatting isn't allowed",
+  non_target_filepath:  "the filepath isn't target",
+  non_target_buftype:   "the buffer type isn't target",
+  non_target_filetype:  "the filetype isn't target",
+  too_large_filesize:   "the buffer is too large",
+  no_server_capability: "servers don't have capability",
+}
+
 final cache = {
   sid: expand("<SID>"),
   timer: -1,
@@ -89,39 +99,39 @@ def ValidateToRun(): dict<any>
   final result = { valid: false, invalid_reason: "" }
 
   if !AreServersEnabled()
-    result.invalid_reason = "non-enabled server"
+    result.invalid_reason = INVALID_REASONS.servers_not_enabled
     return result
   endif
 
   if IsAllowed()
     if !IsTargetFilepath() && !IsForceTargetFilepath()
-      result.invalid_reason = "non target filepath"
+      result.invalid_reason = INVALID_REASONS.non_target_filepath
       return result
     endif
   else
     if !IsForceTargetFilepath()
-      result.invalid_reason = "not allowed automatic formatting"
+      result.invalid_reason = INVALID_REASONS.not_allowed
       return result
     endif
   endif
 
   if !IsTargetBufferType()
-    result.invalid_reason = "non target buffer type"
+    result.invalid_reason = INVALID_REASONS.non_target_buftype
     return result
   endif
 
   if !IsTargetFiletype()
-    result.invalid_reason = "non target filetype"
+    result.invalid_reason = INVALID_REASONS.non_target_filetype
     return result
   endif
 
   if !IsValidFilesize()
-    result.invalid_reason = "too large filesize"
+    result.invalid_reason = INVALID_REASONS.too_large_filesize
     return result
   endif
 
   if !HasServerCapability()
-    result.invalid_reason = "no server capability"
+    result.invalid_reason = INVALID_REASONS.no_server_capability
     return result
   endif
 
@@ -185,7 +195,7 @@ def LogSkipped(invalid_reason: string): void
   if b:lsp_document_format_cache.skipped_by !=# invalid_reason
     b:lsp_document_format_cache.skipped_by = invalid_reason
 
-    const message = printf("Automatic document formatting is skipped due to %s.", invalid_reason)
+    const message = printf("Automatic document formatting is skipped because %s.", invalid_reason)
     kg8m#util#logger#Info(message)
   endif
 enddef
