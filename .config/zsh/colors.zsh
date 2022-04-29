@@ -12,7 +12,9 @@ function plugin:setup:dircolors {
 
       # green: editable text
       ".diff 32"
+      ".jb 32"
       ".json 32"
+      ".slim 32"
       ".toml 32"
       ".ts 32"
       ".vimrc 32"
@@ -20,7 +22,9 @@ function plugin:setup:dircolors {
       ".yaml 32"
       ".yml 32"
       ".zshenv 32"
+      ".zshenv.local 32"
       ".zshrc 32"
+      ".zshrc.local 32"
     )
 
     echo "${(j:\n:)overwrites}" >> "${tempfile}"
