@@ -1,3 +1,6 @@
+# Use UTF-8 as default because ripgrep's automatic encoding detection sometimes causes errors against other encodings
+--encoding=utf-8
+
 # Dynamically choose between supported regex engines depending on the features used in the pattern
 --engine=auto
 
