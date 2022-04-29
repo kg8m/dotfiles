@@ -48,8 +48,8 @@ def Run(): void
     return
   endif
 
-  UseCache("count", 0)
-  UseCache("changedtick", -1)
+  UseBufferCache("count", 0)
+  UseBufferCache("changedtick", -1)
 
   if IsOrganizeImportsAvailable()
     if b:changedtick !=# b:lsp_document_format_cache.changedtick
@@ -74,7 +74,7 @@ def Teardown(): void
   b:lsp_document_format_cache.count = 0
 enddef
 
-def UseCache(key: string, initial_value: any): void
+def UseBufferCache(key: string, initial_value: any): void
   if !has_key(b:, "lsp_document_format_cache")
     b:lsp_document_format_cache = {}
   endif
@@ -190,7 +190,7 @@ def HasServerCapability(): bool
 enddef
 
 def LogSkipped(invalid_reason: string): void
-  UseCache("skipped_by", "")
+  UseBufferCache("skipped_by", "")
 
   if b:lsp_document_format_cache.skipped_by !=# invalid_reason
     b:lsp_document_format_cache.skipped_by = invalid_reason
