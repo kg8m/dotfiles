@@ -10,8 +10,6 @@ function() {
 
   # shellcheck disable=SC2034
   local binds=(
-    "change:top"
-
     "${alt_f}:page-down"
     "${alt_b}:page-up"
 
