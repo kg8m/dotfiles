@@ -1,6 +1,10 @@
 #!/usr/bin/env zsh
 if command -v fzf > /dev/null; then
-  fzf "$@"
+  if [ -n "$*" ]; then
+    fzf "$@"
+  else
+    fzf --preview "preview {}" --preview-window "down:75%:wrap:nohidden"
+  fi
 else
   echo "Any filter is not found." >&2
   cat
