@@ -21,10 +21,26 @@ if [ "${#filepaths}" = "1" ]; then
     lineno="0"
   fi
 
+  bat_options=(
+    --highlight-line "${lineno}"
+  )
+
+  case "${realpath}" in
+    *Gemfile.local | *.jb | *.pryrc)
+      bat_options+=(--language "ruby")
+      ;;
+    *.vimrc.local)
+      bat_options+=(--language "vim")
+      ;;
+    *.zshenv.local | *.zshenv.local.* | *.zshrc.local | *.zshrc.local.*)
+      bat_options+=(--language "zsh")
+      ;;
+  esac
+
   if command -v nkf > /dev/null; then
-    nkf "${realpath}" | bat --file-name "${realpath}" --highlight-line "${lineno}"
+    nkf "${realpath}" | bat "${bat_options[@]}" --file-name "${realpath}"
   else
-    bat "${realpath}" --highlight-line "${lineno}"
+    bat "${realpath}" "${bat_options[@]}"
   fi
 else
   bat "${realpaths[@]}"
