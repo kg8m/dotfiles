@@ -331,6 +331,17 @@ function my_grep_with_filter {
     shift 1
   done
 
+  local filter_header=(
+    "${query}"
+  )
+
+  # cf. `my_grep`
+  if [ -n "${RIPGREP_EXTRA_OPTIONS:-}" ]; then
+    filter_header+=("${=RIPGREP_EXTRA_OPTIONS}")
+  fi
+
+  filter_header+=("${options[*]}" "${non_options[*]}")
+
   local grep_args=(
     "${query}"
     --column
@@ -340,7 +351,7 @@ function my_grep_with_filter {
     --with-filename
   )
   local filter_args=(
-    --header "Grep: ${query} ${options[*]} ${non_options[*]}"
+    --header "Grep: ${filter_header[*]}"
     --delimiter ":"
     --preview "preview {}"
     --preview-window "down:75%:wrap:nohidden:+{2}-/2"
