@@ -5,6 +5,7 @@ function plugin:setup:binary_releaseds {
     golangci/golangci-lint
     nametake/golangci-lint-langserver
     Songmu/make2help
+    high-moctane/mocword
     high-moctane/nextword
     lighttiger2505/sqls
     mvdan/sh
@@ -52,7 +53,7 @@ function plugin:setup:binary_releaseds {
 
     case "${plugin}" in
       actionlint | bat | delta | direnv | efm-langserver | fd | gh | ghch | glab | golangci-lint | hyperfine |\
-      make2help | mmv | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
+      make2help | mmv | mocword | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
         mv ./"${plugin}"* ./"${plugin}"
         ;;
       rg)
@@ -71,8 +72,8 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      actionlint | direnv | fzf | golangci-lint-langserver | nextword | sd | shfmt | sqls | terraform-lsp | tldr |\
-      tokei | typos | vim-startuptime | zabrze)
+      actionlint | direnv | fzf | golangci-lint-langserver | mocword | nextword | sd | shfmt | sqls | terraform-lsp |\
+      tldr | tokei | typos | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
       bat | delta | efm-langserver | fd | ghch | golangci-lint | hyperfine | make2help | mmv | rg | shellcheck)
@@ -100,7 +101,8 @@ function plugin:setup:binary_releaseds {
     execute_with_echo "which ${command}"
 
     case "${plugin}" in
-      bat | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | rg | sd | shellcheck | tldr | tokei | typos | zabrze)
+      bat | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | mocword | rg | sd | shellcheck | tldr | tokei |\
+      typos | zabrze)
         execute_with_echo "${command} --version"
         ;;
       make2help)
@@ -224,6 +226,18 @@ function plugin:setup:binary_releaseds {
   unset -f plugin:setup:binary_releaseds
 }
 zinit ice lucid nocd wait"0c" atload"plugin:setup:binary_releaseds"
+zinit snippet /dev/null
+
+function plugin:setup:binary_releaseds:extra:mocword {
+  function plugin:setup:binary_releaseds:extra:mocword:data {
+    # cf. exporting MOCWORD_DATA in .zshenv
+    mkdir -p "$(dirname "${MOCWORD_DATA:?}")"
+    ln -fs "${PWD}/mocword.sqlite" "${MOCWORD_DATA}"
+  }
+  zinit ice lucid from"gh-r" as"null" bpick"mocword.sqlite.gz" atclone"plugin:setup:binary_releaseds:extra:mocword:data"
+  zinit light high-moctane/mocword-data
+}
+zinit ice lucid nocd wait"0c" has"mocword" atload"plugin:setup:binary_releaseds:extra:mocword"
 zinit snippet /dev/null
 
 if [ -z "${ZABRZE_UNAVAILABLE}" ]; then

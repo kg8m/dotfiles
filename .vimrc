@@ -44,6 +44,10 @@ if kg8m#plugin#Register("prabirshrestha/asyncomplete-file.vim")
   kg8m#plugin#asyncomplete#file#Configure()
 endif
 
+if kg8m#plugin#Register("kg8m/asyncomplete-mocword.vim")
+  kg8m#plugin#asyncomplete#mocword#Configure()
+endif
+
 if kg8m#plugin#Register("prabirshrestha/asyncomplete-neosnippet.vim")
   kg8m#plugin#asyncomplete#neosnippet#Configure()
 endif
