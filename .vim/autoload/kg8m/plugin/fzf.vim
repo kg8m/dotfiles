@@ -73,7 +73,7 @@ def OnSource(): void
   g:fzf_buffers_jump   = true
   g:fzf_layout         = { up: "~90%" }
   g:fzf_files_options  = [
-    "--preview", "git diff-or-cat {1}",
+    "--preview", "preview {}",
     "--preview-window", "down:75%:wrap:nohidden",
   ]
 
