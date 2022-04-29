@@ -39,6 +39,34 @@ export VIM_PLUGINS="${HOME}/.vim/plugins/repos"
 
 export KG8M_ZSH_CACHE_DIR="${XDG_CACHE_HOME}/zsh"
 
+export FD_DEFAULT_OPTIONS=(
+  # Include hidden files and directories
+  --hidden
+
+  # Show search results from files and directories that would otherwise be ignored by VCS ignore files
+  --no-ignore-vcs
+
+  # Remove './' prefixes of relative paths
+  --strip-cwd-prefix
+
+  # Exclude files/directories
+  # cf. configs for ripgrep
+  --exclude "*.zwc"
+  --exclude ".cache/"
+  --exclude ".git/"
+  --exclude ".hg/"
+  --exclude ".svn/"
+  --exclude ".vim-sessions/"
+  --exclude "cache/"
+  --exclude "log/"
+  --exclude "node_modules/"
+  --exclude "tmp/"
+  --exclude "vendor/bundle/"
+
+  # Sort search results
+  --threads 1
+)
+
 if [[ -o interactive ]]; then
   # https://github.com/sharkdp/bat/blob/ed3246c423932561435d45c50fd8cd9e06add7f5/README.md?plain=1#L171
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"

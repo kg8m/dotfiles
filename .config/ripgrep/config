@@ -17,7 +17,7 @@
 --sort=path
 
 # Colors
-# Use `0,0,0` instead of `black` because `black` is a little lighter.
+# Use `0,0,0` instead of `black` because `black` is a little lighter
 --colors=line:fg:blue
 --colors=line:style:bold
 --colors=match:bg:cyan
@@ -27,6 +27,7 @@
 --colors=path:style:bold
 
 # Exclude directories
+# cf. $FD_DEFAULT_OPTIONS
 --glob=!.cache/
 --glob=!.git/
 --glob=!.hg/

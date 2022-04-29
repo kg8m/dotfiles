@@ -6,7 +6,7 @@ final cache = {
 }
 
 export def FindAutoloadFile(autoload_filepath: string): string
-  final base_command = ["fd", "--hidden", "--no-ignore", "--fixed-strings", "--full-path", "--max-results", "1"]
+  final base_command = ["fd", $FD_DEFAULT_OPTIONS, "--fixed-strings", "--full-path", "--max-results", "1"]
 
   if &runtimepath !=# cache.runtimepath
     cache.runtimepath = &runtimepath

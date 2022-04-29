@@ -45,5 +45,5 @@ function() {
   )
 
   export FZF_DEFAULT_OPTS="${options[*]}"
-  export FZF_DEFAULT_COMMAND="source ~/.config/zsh/my-functions.zsh; my_grep --files"
+  export FZF_DEFAULT_COMMAND="fd \${FD_DEFAULT_OPTIONS[@]} --type file --color always"
 }
