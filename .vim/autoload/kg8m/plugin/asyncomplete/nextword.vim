@@ -10,12 +10,11 @@ export def Configure(): void
     hook_post_source: () => OnPostSource(),
   })
 
-  # Skip because async.vim has been registered with mocword.
-  # if kg8m#plugin#Register("prabirshrestha/async.vim")
-  #   kg8m#plugin#Configure({
-  #     lazy: true,
-  #   })
-  # endif
+  if kg8m#plugin#Register("prabirshrestha/async.vim")
+    kg8m#plugin#Configure({
+      lazy: true,
+    })
+  endif
 enddef
 
 def OnPostSource(): void

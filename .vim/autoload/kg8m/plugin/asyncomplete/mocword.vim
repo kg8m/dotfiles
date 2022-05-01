@@ -5,15 +5,9 @@ export def Configure(): void
     lazy:     true,
     on_event: ["InsertEnter"],
     on_start: true,
-    depends:  ["async.vim", "asyncomplete.vim"],
+    depends:  ["asyncomplete.vim"],
     hook_post_source: () => OnPostSource(),
   })
-
-  if kg8m#plugin#Register("prabirshrestha/async.vim")
-    kg8m#plugin#Configure({
-      lazy: true,
-    })
-  endif
 enddef
 
 def OnPostSource(): void
