@@ -232,7 +232,10 @@ def Overwrite(): void
     const function_name = "<SNR>" .. lsp_document_formatting_sid .. "_format_next"
     const new_definition_template =<< trim VIM
       function {{ function_name }}(x) abort
-        if b:changedtick ==# b:lsp_document_format_cache.changedtick
+        let cache = get(b:, "lsp_document_format_cache", {})
+        let cached_changedtick = get(cache, "changedtick", b:changedtick)
+
+        if b:changedtick ==# cached_changedtick
           call {{ SID }}OriginalFormatNext(a:x)
           call {{ SID }}Teardown()
         else
