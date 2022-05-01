@@ -5,7 +5,7 @@ final cache = {}
 kg8m#plugin#EnsureSourced("fzf.vim")
 
 # Respect `$RIPGREP_EXTRA_OPTIONS` (fzf's `:Rg` doesn't respect it)
-command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#complete FzfGrep kg8m#plugin#fzf#grep#Run(<q-args>)
+command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#Complete FzfGrep kg8m#plugin#fzf#grep#Run(<q-args>)
 
 export def EnterCommand(preset: string = ""): void
   const hint =<< trim HINT
