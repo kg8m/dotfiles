@@ -225,7 +225,9 @@ def MkdirUnlessExist(): void
   endif
 
   if !isdirectory(dirpath)
-    if input(printf("`%s` doesn't exist. Create? [y/n] ", dirpath)) =~? '^y'
+    const prompt = printf("`%s` doesn't exist. Create? [y/n]: ", dirpath)
+
+    if kg8m#util#input#Confirm(prompt)
       mkdir(dirpath, "p")
     endif
   endif

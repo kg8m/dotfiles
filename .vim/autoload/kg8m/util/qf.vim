@@ -47,9 +47,9 @@ export def Save(name: string = ""): void
   )
 
   if filereadable(filepath)
-    const prompt = printf("%s exists. Overwrite it? (y/n): ", shellescape(filepath))
+    const prompt = printf("%s exists. Overwrite it? [y/n]: ", shellescape(filepath))
 
-    if input(prompt) =~? '^y'
+    if kg8m#util#input#Confirm(prompt)
       redraw
     else
       redraw
@@ -94,9 +94,9 @@ export def Delete(name: string = ""): void
   else
     Process(name, (filepath) => {
       const escaped_filepath = shellescape(filepath)
-      const prompt = printf("Sure to delete %s? (y/n): ", escaped_filepath)
+      const prompt = printf("Sure to delete %s? [y/n]: ", escaped_filepath)
 
-      if input(prompt) =~? '^y'
+      if kg8m#util#input#Confirm(prompt)
         delete(filepath)
         printf("%s has been deleted.", escaped_filepath)->kg8m#util#logger#Info()
       else
