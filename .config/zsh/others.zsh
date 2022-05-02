@@ -13,6 +13,8 @@ function plugin:setup:others {
   mkdir -p "${XDG_DATA_HOME:?}/mysql"
   export MYSQL_HISTFILE="${XDG_DATA_HOME:?}/mysql/history"
 
+  mkdir -p "${XDG_DATA_HOME:?}/tig"
+
   unset -f plugin:setup:others
 }
 zinit ice lucid wait"0c" atload"plugin:setup:others"

@@ -175,6 +175,12 @@ abbrevs:
     global: true
     context: '^(bin/|bundle exec )?rails\s'
 
+  - name: tig status
+    abbr: st
+    snippet: status
+    global: true
+    context: '^tig\s'
+
   - name: my_grep_with_filter
     abbr: gr
     snippet: my_grep_with_filter

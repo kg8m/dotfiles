@@ -402,26 +402,6 @@ function my_grep_with_filter {
   fi
 }
 
-function tig {
-  mkdir -p "${XDG_DATA_HOME:?}/tig"
-
-  case "$1" in
-    bl*)
-      shift
-      execute_with_echo "command tig blame $*"
-      ;;
-    stash)
-      execute_with_echo "command tig stash"
-      ;;
-    st*)
-      execute_with_echo "command tig status"
-      ;;
-    *)
-      execute_with_echo "command tig $*"
-      ;;
-  esac
-}
-
 function parallel {
   local commands=("$@")
 
