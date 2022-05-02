@@ -1,5 +1,6 @@
 function plugin:setup:binary_releaseds {
   local repositories=(
+    mrtazz/checkmake
     mattn/efm-langserver
     golangci/golangci-lint
     nametake/golangci-lint-langserver
@@ -54,8 +55,8 @@ function plugin:setup:binary_releaseds {
     echo >&2
 
     case "${plugin}" in
-      actionlint | bat | delta | direnv | efm-langserver | fd | gh | glab | golangci-lint | hyperfine | mmv |\
-      mocword | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
+      actionlint | bat | checkmake | delta | direnv | efm-langserver | fd | gh | glab | golangci-lint | hyperfine |\
+      mmv | mocword | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
         mv ./"${plugin}"* ./"${plugin}"
         ;;
       rg)
@@ -74,8 +75,8 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      actionlint | direnv | fzf | golangci-lint-langserver | mocword | nextword | sd | shfmt | sqls | terraform-lsp |\
-      tldr | tokei | typos | vim-startuptime | zabrze)
+      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mocword | nextword | sd | shfmt | sqls |\
+      terraform-lsp | tldr | tokei | typos | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
       bat | delta | efm-langserver | fd | golangci-lint | hyperfine | mmv | rg | shellcheck)
@@ -103,8 +104,8 @@ function plugin:setup:binary_releaseds {
     execute_with_echo "which ${command}"
 
     case "${plugin}" in
-      bat | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | mocword | rg | sd | shellcheck | tldr | tokei |\
-      typos | zabrze)
+      bat | checkmake | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | mocword | rg | sd | shellcheck |\
+      tldr | tokei | typos | zabrze)
         execute_with_echo "${command} --version"
         ;;
       efm-langserver | nextword)
