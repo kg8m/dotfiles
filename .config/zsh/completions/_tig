@@ -1,0 +1,42 @@
+#compdef tig
+
+# Simple completion for tig.
+#   - Complete subcommands and options
+#   - Complete paths if the 1st argument is a subcommand
+#   - Don't complete any more if the 1st argument is an option
+#   - Not supported:
+#     - Git options and revisions for subcommands
+#     - `tig < {Git command output}`
+#     - `tig +{number}`
+#     - `tig -C {path}`
+_tig() {
+  local subcommands=("${(@f)$(tig --help | grep -E '\btig [a-z]+' -o | awk '{ print $NF }')}")
+  local options=(-v --version -h --help)
+
+  # Assign to ignore ShellCheck's SC2154.
+  local CURRENT="${CURRENT}"
+
+  if ((CURRENT == 2)); then
+    _values "all" "${subcommands[@]}" "${options[@]}"
+  else
+    local arguments=()
+
+    local option
+    for option in "${options[@]}"; do
+      arguments+=("${option}: :->options")
+    done
+
+    _arguments "${arguments[@]}"
+
+    # Assign to ignore ShellCheck's SC2154.
+    local state="${state}"
+
+    case "${state}" in
+      options)
+        # Don't complete any more
+        ;;
+      *)
+        _files
+    esac
+  fi
+}
