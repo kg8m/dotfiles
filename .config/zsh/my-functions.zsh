@@ -402,6 +402,79 @@ function my_grep:with_filter {
   fi
 }
 
+function docker:containers:delete {
+  local container_names=("${(@f)$(
+    docker container ls --all |
+      filter --header-lines 1 |
+      awk '{ print $NF }'
+  )}")
+
+  if [ -n "${container_names[*]}" ]; then
+    local container_name
+    for container_name in "${container_names[@]}"; do
+      execute_with_confirm "docker container rm ${container_name}"
+    done
+  else
+    echo:info "There are no containers."
+  fi
+
+  execute_with_echo "docker container ls --all"
+}
+
+function docker:images:delete {
+  local image_names=("${(@f)$(
+    docker images --all |
+      filter --header-lines 1 |
+
+      # Use image ID if the repository name is `<none>`. Otherwise, use image repository with tag.
+      #   $1: image repository, e.g., postgres
+      #   $2: image tag, e.g., 14.2
+      #   $3: image ID (random characters)
+      awk '{ if ($1 == "<none>") { print $3 } else { print $1":"$2 } }'
+  )}")
+
+  if [ -n "${image_names[*]}" ]; then
+    local image_name
+    for image_name in "${image_names[@]}"; do
+      execute_with_confirm "docker rmi ${image_name}"
+    done
+  else
+    echo:info "There are no images."
+  fi
+
+  execute_with_echo "docker images --all"
+}
+
+function docker:volumes:delete {
+  local volume_names=("${(@f)$(
+    docker volume ls |
+      filter --header-lines 1 |
+      awk '{ print $2 }'
+  )}")
+
+  if [ -n "${volume_names[*]}" ]; then
+    local volume_name
+    for volume_name in "${volume_names[@]}"; do
+      execute_with_confirm "docker volume rm ${volume_name}"
+    done
+  else
+    echo:info "There are no volumes."
+  fi
+
+  execute_with_echo "docker volume ls"
+}
+
+function docker:clear_all {
+  local commands=(
+    "docker:containers:delete"
+    "docker:images:delete"
+    "docker:volumes:delete"
+    "docker builder prune"
+  )
+
+  execute_commands_with_echo "${commands[@]}" --separate
+}
+
 function zsh:plugins:update {
   execute_with_echo "trash '${KG8M_ZSH_CACHE_DIR:?}'"
   execute_with_echo "mkdir -p '${KG8M_ZSH_CACHE_DIR}'"
