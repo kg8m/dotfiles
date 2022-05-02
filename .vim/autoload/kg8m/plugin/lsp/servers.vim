@@ -546,14 +546,21 @@ def ActivateServers(filetype: string): void
     cache.activated = {}
   endif
 
+  if empty(cache.activated)
+    # https://github.com/prabirshrestha/vim-lsp/blob/e2a052acce38bd0ae25e57fff734a14a9e2c9ef7/plugin/lsp.vim#L52
+    lsp#enable()
+
+    # Clear vim-lsp's `CompleteDone` autocommand because it inserts characters like "<SNR>123_on_complete_done_after()".
+    # https://github.com/prabirshrestha/vim-lsp/blob/3d0fc4072bef08b578d4a4aa4a6f91de571e99e4/autoload/lsp.vim#L63
+    # https://github.com/prabirshrestha/vim-lsp/blob/3d0fc4072bef08b578d4a4aa4a6f91de571e99e4/autoload/lsp/ui/vim/completion.vim#L5-L10
+    autocmd! lsp_ui_vim_completion
+  endif
+
   if has_key(cache.activated, filetype)
     return
   endif
 
   cache.activated[filetype] = true
-
-  # https://github.com/prabirshrestha/vim-lsp/blob/e2a052acce38bd0ae25e57fff734a14a9e2c9ef7/plugin/lsp.vim#L52
-  lsp#enable()
 
   for config in Configs(filetype)
     if has_key(config, "activated")
