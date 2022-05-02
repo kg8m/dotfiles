@@ -1,10 +1,8 @@
 function plugin:setup:binary_releaseds {
   local repositories=(
     mattn/efm-langserver
-    Songmu/ghch
     golangci/golangci-lint
     nametake/golangci-lint-langserver
-    Songmu/make2help
     high-moctane/mocword
     high-moctane/nextword
     lighttiger2505/sqls
@@ -56,8 +54,8 @@ function plugin:setup:binary_releaseds {
     echo >&2
 
     case "${plugin}" in
-      actionlint | bat | delta | direnv | efm-langserver | fd | gh | ghch | glab | golangci-lint | hyperfine |\
-      make2help | mmv | mocword | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
+      actionlint | bat | delta | direnv | efm-langserver | fd | gh | glab | golangci-lint | hyperfine | mmv |\
+      mocword | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
         mv ./"${plugin}"* ./"${plugin}"
         ;;
       rg)
@@ -80,7 +78,7 @@ function plugin:setup:binary_releaseds {
       tldr | tokei | typos | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
-      bat | delta | efm-langserver | fd | ghch | golangci-lint | hyperfine | make2help | mmv | rg | shellcheck)
+      bat | delta | efm-langserver | fd | golangci-lint | hyperfine | mmv | rg | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
       gh)
@@ -109,16 +107,13 @@ function plugin:setup:binary_releaseds {
       typos | zabrze)
         execute_with_echo "${command} --version"
         ;;
-      make2help)
-        execute_with_echo "${command} -h"
-        ;;
       efm-langserver | nextword)
         execute_with_echo "${command} -v"
         ;;
       actionlint | shfmt | sqls)
         execute_with_echo "${command} -version"
         ;;
-      ghch | golangci-lint)
+      golangci-lint)
         execute_with_echo "${command} version"
         ;;
       golangci-lint-langserver | terraform-lsp | vim-startuptime)

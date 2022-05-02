@@ -1,15 +1,6 @@
 vim9script
 
 export def Configure(): void
-  if !has_key(g:, "rails_projections")
-    g:rails_projections = {}
-  endif
-
-  g:rails_projections["script/*.rb"] = { test: ["test/script/{}_test.rb", "spec/script/{}_spec.rb"] }
-  g:rails_projections["script/*"]    = { test: ["test/script/{}_test.rb", "spec/script/{}_spec.rb"] }
-  g:rails_projections["test/script/*_test.rb"] = { alternate: ["script/{}", "script/{}.rb"] }
-  g:rails_projections["spec/script/*_spec.rb"] = { alternate: ["script/{}", "script/{}.rb"] }
-
   if !has_key(g:, "rails_path_additions")
     g:rails_path_additions = []
   endif
