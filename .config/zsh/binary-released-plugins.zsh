@@ -156,20 +156,20 @@ function plugin:setup:binary_releaseds {
   function plugin:setup:nextword {
     if command -v nextword > /dev/null; then
       if [ ! -d "${NEXTWORD_DATA_PATH:-}" ]; then
-        local current_dir="${PWD}"
         local parent_dir="$(dirname "${NEXTWORD_DATA_PATH}")"
-
         mkdir -p "${parent_dir}"
-        cd "${parent_dir}"
 
-        local name=large
+        # Use subshell to restore pwd.
+        (
+          cd "${parent_dir}"
 
-        execute_with_echo "wget https://github.com/high-moctane/nextword-data/archive/${name}.tar.gz"
-        execute_with_echo "tar xzvf ${name}.tar.gz"
-        execute_with_echo "rm -f ${name}.tar.gz"
-        execute_with_echo "mv nextword-data-${name} '$(basename "${NEXTWORD_DATA_PATH}")'"
+          local name=large
 
-        cd "${current_dir}"
+          execute_with_echo "wget https://github.com/high-moctane/nextword-data/archive/${name}.tar.gz"
+          execute_with_echo "tar xzvf ${name}.tar.gz"
+          execute_with_echo "rm -f ${name}.tar.gz"
+          execute_with_echo "mv nextword-data-${name} '$(basename "${NEXTWORD_DATA_PATH}")'"
+        )
       fi
     else
       echo:warn 'Command `nextword` not found.'

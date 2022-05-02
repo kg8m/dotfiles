@@ -412,19 +412,21 @@ function zsh:plugins:update {
   execute_with_echo "zinit cclear"
   execute_with_echo "find ${ZINIT[SNIPPETS_DIR]:?} -type d -empty -delete"
 
-  local current_dir="${PWD}"
-
-  # Clean up the directory because enhancd makes it dirty when loaded.
-  execute_with_echo "cd ${ENHANCD_ROOT:?}"
-  execute_with_echo "git restore ."
-  execute_with_echo "cd ${current_dir}"
+  # Use subshell to restore pwd.
+  (
+    # Clean up the directory because enhancd makes it dirty when loaded.
+    execute_with_echo "cd ${ENHANCD_ROOT:?}"
+    execute_with_echo "git restore ."
+  )
 
   execute_with_echo "zinit update --all --parallel --quiet"
 
-  # Remove `_*.fish` files because they are treated as completions by zinit.
-  execute_with_echo "cd ${ENHANCD_ROOT:?}"
-  execute_with_echo "rm -f ./**/_*.fish"
-  execute_with_echo "cd ${current_dir}"
+  # Use subshell to restore pwd.
+  (
+    # Remove `_*.fish` files because they are treated as completions by zinit.
+    execute_with_echo "cd ${ENHANCD_ROOT:?}"
+    execute_with_echo "rm -f ./**/_*.fish"
+  )
 
   execute_with_echo "zinit creinstall ${ZINIT[BIN_DIR]}"
   execute_with_echo "zinit csearch"
