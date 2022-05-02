@@ -8,13 +8,10 @@ mkdir(g:kg8m#util#qf#dirpath, "p")
 export def List(): list<string>
   const command = [
     "fd",
-    "--hidden",
+    $FD_DEFAULT_OPTIONS,
     "--type", "f",
     "--base-directory", shellescape(g:kg8m#util#qf#dirpath),
     "--extension", kg8m#util#qf#extension,
-
-    # Sort results.
-    "--threads", "1",
   ]->join(" ")
 
   return system(command)
