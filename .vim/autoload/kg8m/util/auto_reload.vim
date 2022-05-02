@@ -14,7 +14,7 @@ def Checktime(): void
       return
     endif
 
-    :checktime
+    checktime
   # Sometimes `checktime` raise an error
   #   - e.g., E565: "Not allowed to change text or change window" when using vim-sandwich
   catch /^Vim\%((\a\+)\)\=:E565:/
