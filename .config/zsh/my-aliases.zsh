@@ -49,8 +49,8 @@ if [ -n "${ZABRZE_UNAVAILABLE}" ]; then
 
     abbr --session --force bmv="batch_move"
     abbr --session --force cdb="cd-bookmark"
-    abbr --session --force gr="my_grep_with_filter"
-    abbr --session --force t="attach_or_new_tmux"
+    abbr --session --force gr="my_grep:with_filter"
+    abbr --session --force t="tmux:attach_or_new"
 
     unset -f plugin:setup:abbr
   }

@@ -1,6 +1,6 @@
 vim9script
 
-# cf. zsh's my_grep_with_filter
+# cf. zsh's my_grep:with_filter
 export def BuildQflistFromBuffer(): void
   const filename = expand("%:t")
 

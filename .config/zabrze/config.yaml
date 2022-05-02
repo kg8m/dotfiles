@@ -181,13 +181,13 @@ abbrevs:
     global: true
     context: '^tig\s'
 
-  - name: my_grep_with_filter
+  - name: my_grep:with_filter
     abbr: gr
-    snippet: my_grep_with_filter
+    snippet: my_grep:with_filter
 
-  - name: attach_or_new_tmux
+  - name: tmux:attach_or_new
     abbr: t
-    snippet: attach_or_new_tmux
+    snippet: tmux:attach_or_new
 
   - name: vim
     abbr: v

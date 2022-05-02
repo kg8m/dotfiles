@@ -216,7 +216,7 @@ function remove_symlink {
   fi
 }
 
-function tmux_setup_default {
+function tmux:setup_default {
   tmux new-session -d -s default
   tmux new-window -t default:2
   tmux new-window -t default:3
@@ -234,7 +234,7 @@ function tmux_setup_default {
   tmux attach-session -t default
 }
 
-function attach_or_new_tmux {
+function tmux:attach_or_new {
   local session_name="${1:-default}"
 
   if ! tmux has-session -t "${session_name}" > /dev/null 2>&1; then
@@ -243,7 +243,7 @@ function attach_or_new_tmux {
 
     if [[ "${response}" =~ ^y ]]; then
       if [ "${session_name}" = "default" ]; then
-        tmux_setup_default
+        tmux:setup_default
       else
         tmux new-session -d -s "${session_name}"
 
@@ -292,7 +292,7 @@ function my_grep {
 }
 
 # cf. Vim's kg8m#util#grep#BuildQflistFromBuffer()
-function my_grep_with_filter {
+function my_grep:with_filter {
   local query="${1:?}"
   shift 1
 
@@ -402,11 +402,11 @@ function my_grep_with_filter {
   fi
 }
 
-function update_zsh_plugins {
+function zsh:plugins:update {
   execute_with_echo "trash '${KG8M_ZSH_CACHE_DIR:?}'"
   execute_with_echo "mkdir -p '${KG8M_ZSH_CACHE_DIR}'"
 
-  execute_with_echo "compile_zshrcs:cleanup"
+  execute_with_echo "zsh:rcs:compile:clear"
 
   execute_with_echo "zinit delete --clean --yes"
   execute_with_echo "zinit cclear"
@@ -429,12 +429,12 @@ function update_zsh_plugins {
   execute_with_echo "zinit creinstall ${ZINIT[BIN_DIR]}"
   execute_with_echo "zinit csearch"
 
-  execute_with_echo "compile_zshrcs:run"
+  execute_with_echo "zsh:rcs:compile"
 
   execute_with_echo "exec zsh"
 }
 
-function compile_zshrcs:run {
+function zsh:rcs:compile {
   local zshrc
   for zshrc in ~/.config/zsh/*.zsh ~/.config/zsh.local/.z* ~/.zshenv* ~/.zshrc*; do
     if [ -f "${zshrc}" ] && [[ ! "${zshrc}" =~ \.zwc$ ]]; then
@@ -443,7 +443,7 @@ function compile_zshrcs:run {
   done
 }
 
-function compile_zshrcs:cleanup {
+function zsh:rcs:compile:clear {
   local zwc
   for zwc in ~/.config/zsh/*.zsh.zwc ~/.config/zsh.local/.z*.zwc ~/.zshenv*.zwc ~/.zshrc*.zwc; do
     if [ -f "${zwc}" ]; then
@@ -452,7 +452,7 @@ function compile_zshrcs:cleanup {
   done
 }
 
-function uninstall_go_library {
+function libs:go:uninstall {
   local library="${1:?}"
   local libpaths=("${(@f)$(find ~/go "${GOENV_ROOT:?}" -maxdepth 5 -path "*${library}*")}")
 
@@ -476,7 +476,7 @@ function uninstall_go_library {
   fi
 }
 
-function benchmark_vim_startup {
+function benchmark:vim {
   local vim=${1:-vim}
 
   execute_with_echo "${vim} --version | awk '/^VIM - Vi IMproved/,/Features included \\(\\+\\) or not \\(-\\):$/'"
@@ -511,9 +511,9 @@ function benchmark_vim_startup {
   done
 }
 
-function benchmark_zsh_startup {
-  execute_with_echo "compile_zshrcs:cleanup"
-  execute_with_echo "compile_zshrcs:run"
+function benchmark:zsh {
+  execute_with_echo "zsh:rcs:compile:clear"
+  execute_with_echo "zsh:rcs:compile"
   execute_with_echo "hyperfine --warmup=1 'zsh --no-rcs -i -c exit' 'zsh -i -c exit'"
 }
 
