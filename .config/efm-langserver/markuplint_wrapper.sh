@@ -10,7 +10,7 @@ absolute_config_filepath="${HOME}/markuplintrc.js"
 relative_config_filepath="$(realpath --relative-to "${PWD}" "${absolute_config_filepath}")"
 
 options=(
-  --config-file "${relative_config_filepath}"
+  --config "${relative_config_filepath}"
   --format Simple
   --no-color
 )
