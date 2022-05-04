@@ -15,7 +15,10 @@ export def Run(): void
       "--nth", "2..",
       "--prompt", "Yank> ",
       "--tabstop", "1",
-      "--preview", "echo {} | sed -e 's/^ *[0-9]\\{1,\\}\t//' -e 's/\\\\/\\\\\\\\/g'",
+
+      # Use `echo -E` to show backslashes.
+      "--preview", "echo -E {} | sd '^ *[0-9]+\t' '' | sd '\\\\n' '\n'",
+
       "--preview-window", "down:10:wrap:nohidden",
     ],
   }
