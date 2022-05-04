@@ -15,15 +15,10 @@ options=(
   --no-color
 )
 
-if command -v gsed > /dev/null; then
-  sed="gsed"
-else
-  sed="sed"
-fi
-
 out="$(
   markuplint "${target_filepath}" "${options[@]}" 2>&1 |
-    "${sed}" -e 's/^ *//' -e 's/  */ /g'
+    sd '^ *' '' |
+    sd '  *' ' '
 )"
 
 if [ -n "${out}" ]; then

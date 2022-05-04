@@ -18,7 +18,7 @@ if [ -n "${current_remote_url}" ]; then
     *:*)
       # Convert scp-style URL to normal-form
       #   e.g. "user@host:path/" ==> "ssh://user@host/path/"
-      current_remote_url=$(echo "${current_remote_url}" | sed 's/\(.*\):/ssh:\/\/\1\//')
+      current_remote_url=$(echo "${current_remote_url}" | sd '(.*):' 'ssh://$1/')
       ;;
   esac
   if [ -z "${local_name}" ]; then

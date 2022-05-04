@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
-SCISSORS_PATTERN='\(# -\{1,\} >8 -\{1,\}\)'
+SCISSORS_PATTERN='(# -+ >8 -+)'
 EXTRA_TEXT="# <!-- textlint-disable -->"
 
-# https://rcmdnk.com/blog/2014/09/21/computer-bash/#bsd-sed-1
-LF=$'\\\x0A'
-
-sed -ie "s/${SCISSORS_PATTERN}/\1${LF}${EXTRA_TEXT}/" "$1"
+sd "${SCISSORS_PATTERN}" "\$1\n${EXTRA_TEXT}" "$1"
 
 if [ -f .git_templates/hooks/prepare-commit-msg ]; then
   source .git_templates/hooks/prepare-commit-msg

@@ -24,23 +24,16 @@ options=(--force-exclusion --format simple --no-color --stdin "${target_filepath
 if [ -n "${is_fixing}" ]; then
   "${executable}" "${options[@]}" --auto-correct | awk '/^=+$/,eof' | awk 'NR > 1 { print }'
 else
-  if command -v gsed > /dev/null; then
-    sed="gsed"
-  else
-    sed="sed"
-  fi
-
   out="$(
     "${executable}" "${options[@]}" |
-      "${sed}" \
-        -e 's/^C:/Convention:/' \
-        -e 's/^E:/Error:/' \
-        -e 's/^F:/Fatal:/' \
-        -e 's/^R:/Refactor:/' \
-        -e 's/^W:/Warning:/' \
-        -e 's/^\([A-Z]\)\([a-z]\+\): *\([0-9]\+\): *\([0-9]\+\): */\1:\3:\4: [RuboCop][\1\2] /' \
-        -e 's/^[CR]:/W:/' \
-        -e 's/^F:/E:/'
+        sd '^C:' 'Convention:' |
+        sd '^E:' 'Error:' |
+        sd '^F:' 'Fatal:' |
+        sd '^R:' 'Refactor:' |
+        sd '^W:' 'Warning:' |
+        sd '^([A-Z])([a-z]+): *([0-9]+): *([0-9]+): *' '$1:$3:$4: [RuboCop][$1$2] ' |
+        sd '^[CR]:' 'W:' |
+        sd '^F:' 'E:'
   )"
 
   if echo "${out}" | grep -E -q '^[A-Z]:[0-9]+:[0-9]+:'; then

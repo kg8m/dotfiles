@@ -194,8 +194,7 @@ function trash {
       # foo         => foo 12.34.56.7890
       # foo.bar     => foo 12.34.56.7890.bar
       # foo.bar.baz => foo 12.34.56.7890.bar.baz
-      sed_expr='s/^\(\.\?[^.]\+\)\(\.\?\)/\1 '"${timestamp}.${RANDOM}"'\2/'
-      new_filename=$(echo "${filename}" | sed -e "${sed_expr}")
+      new_filename=$(echo "${filename}" | sd '^(\.?[^.]+)(\.?)' "\$1 ${timestamp}.${RANDOM}\$2")
     else
       new_filename="${filename}"
     fi

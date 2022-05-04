@@ -9,4 +9,4 @@ if [ -d "app" ] && [ -f "config/environment.rb" ]; then
 fi
 
 # Always show errors on the first line because converted Ruby code doesn't match the original ERB code.
-erb -x -T - -P | ruby -c 2>&1 1> /dev/null | sed -e 's/^-:/1:/'
+erb -x -T - -P | ruby -c 2>&1 1> /dev/null | sd '^-:' '1:'

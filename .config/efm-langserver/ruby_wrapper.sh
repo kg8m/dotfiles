@@ -14,7 +14,7 @@ fi
 out="$(
   ruby "${options[@]}" "${target_filepath}" 2>&1 1> /dev/null |
     grep -E -o '[0-9]+: (warning:)?.*$' |
-    sed -e 's/^\([0-9]\{1,\}\): */\1: [Ruby] /'
+    sd '^([0-9]+): *' '$1: [Ruby] '
 )"
 
 if [ -n "${out}" ]; then

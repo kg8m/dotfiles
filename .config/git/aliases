@@ -190,7 +190,8 @@ function git:branch:list {
   local SEP="$(git:branch:list_format_separator)"
 
   git branch --format "$(git:branch:list_format)" "$@" |
-    git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" -e 's/^origin\///' |
+    sd "\s*${SEP}\s*" "${SEP}" |
+    sd '^origin/' '' |
     grep -E -v "^HEAD${SEP}" |
     grep -E "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
     git:proxy:column "${SEP}" |
@@ -202,7 +203,7 @@ function git:branch:list:all {
   local SEP="$(git:branch:list_format_separator)"
 
   git branch --all --format "%(HEAD) $(git:branch:list_format)" "$@" |
-    git:proxy:sed -e "s/\s*${SEP}\s*/${SEP}/g" |
+    sd "\s*${SEP}\s*" "${SEP}" |
     grep -E -v "^\s+origin/HEAD${SEP}" |
     git:proxy:column "${SEP}" |
     git:branch:colorize
@@ -231,11 +232,10 @@ function git:branch:colorize {
   local ESC="$(printf '\e')"
   local USER_NAME="$(git config user.name)"
 
-  git:proxy:sed \
-    -e "s/\b\(${USER_NAME}\)/${ESC}[1;38;5;219m\1${ESC}[0m/" \
-    -e "s/\b\(origin\/[^ ]\+\)/${ESC}[0;38;5;10m\1${ESC}[0m/" \
-    -e "s/^\(\s\+\)\([^ ]\+\)/\1${ESC}[0;38;5;11m\2${ESC}[0m/" \
-    -e "s/^\* \([^ ]\+\)/* ${ESC}[1;48;5;1m\1${ESC}[0m/"
+  sd "\b(${USER_NAME})" "${ESC}[1;38;5;219m\$1${ESC}[0m" |   # Highlight my names
+    sd '\b(origin/[^ ]+)' "${ESC}[0;38;5;10m\$1${ESC}[0m" |  # Highlight remote branches
+    sd '^(\s+)([^ ]+)' "\$1${ESC}[0;38;5;11m\$2${ESC}[0m" |  # Highlight local branches
+    sd '^\* ([^ ]+)' "* ${ESC}[1;48;5;1m\$1${ESC}[0m"        # Highlight the current branch
 }
 
 function git:clone:shallow {
@@ -335,18 +335,17 @@ function git:status:color {
 
   local remote_branch="$(git rev-parse --abbrev-ref --symbolic-full-name "@{u}")"
   local remote_branch_message_prefix="Your branch is"
-  local remote_branch_pattern="^\\(${remote_branch_message_prefix} .\\+\\) '${remote_branch}'\\(.\\+\\)$"
-  local remote_branch_replace="\\1 '$(highlight:magenta "${remote_branch}")'\\2"
+  local remote_branch_pattern="^(${remote_branch_message_prefix} .+) '${remote_branch}'(.+)$"
+  local remote_branch_replace="\$1 '$(highlight:magenta "${remote_branch}")'\$2"
 
   local ok_message="nothing to commit, working tree clean"
   local ok_pattern="^${ok_message}$"
   local ok_replace="$(highlight:green "${ok_message}")"
 
   git -c color.status=always status "$@" |
-    git:proxy:sed \
-      -e "s!${local_branch_pattern}!${local_branch_replace}!" \
-      -e "s!${remote_branch_pattern}!${remote_branch_replace}!" \
-      -e "s/${ok_pattern}/${ok_replace}/"
+    sd "${local_branch_pattern}" "${local_branch_replace}" |
+    sd "${remote_branch_pattern}" "${remote_branch_replace}" |
+    sd "${ok_pattern}" "${ok_replace}"
 }
 
 # SC2120: references arguments, but none are ever passed.
@@ -383,15 +382,15 @@ function git:status:utility:filter {
     --preview "git diff-or-cat {2}"
   )
 
-  filter "${filter_options[@]}" | git:proxy:sed -e 's/^..\s//'
+  filter "${filter_options[@]}" | sd '^..\s' ''
 }
 
 function git:status:utility:rename:only_added {
-  git:proxy:sed -e 's/^.\+ -> //'
+  sd '^.+ -> ' ''
 }
 
 function git:status:utility:rename:only_removed {
-  git:proxy:sed -e 's/ -> .\+$//'
+  sd ' -> .+$' ''
 }
 
 function git:submodule:update {
@@ -428,7 +427,7 @@ function git:submodule:deinit:bulk {
 
 function git:alias:list {
   git config --get-regexp '^alias\.' |
-    git:proxy:sed -e 's/alias\.\([^ ]*\) \(.*\)/\1\t => \2/'
+    sd 'alias\.([^ ]*) (.*)' '$1\t => $2'
 }
 
 function git:alias:which {
@@ -439,7 +438,7 @@ function git:alias:which {
     return 1
   fi
 
-  local result="$(git:alias:list | grep -E "^${command}\s+" | git:proxy:sed -e 's/\s\+/ /')"
+  local result="$(git:alias:list | grep -E "^${command}\s+" | sd '\s+' ' ')"
   echo "${result}"
 
   if [[ "${result}" =~ \ sh\ [\"\']?git:[a-z_:]+ ]]; then
@@ -447,7 +446,7 @@ function git:alias:which {
     # shellcheck disable=SC2230
     which "$(echo "${result}" | grep -E -o '\bgit:[a-z_:]+')"
   else
-    local original="$(echo "${result}" | grep -E -o '=> [-a-z]+' | sed -e 's/=> //')"
+    local original="$(echo "${result}" | grep -E -o '=> [-a-z]+' | sd '=> ' '')"
 
     if git:alias:list | grep -q -E "^${original}\s+"; then
       echo
@@ -538,17 +537,9 @@ function git:proxy:column {
   local separator="${1:?}"
   local dummy="@"
 
-  git:proxy:sed -e "s/^/${dummy}/" |
+  sd '^' "${dummy}" |
     column -t -s "${separator}" |
-    git:proxy:sed -e "s/^${dummy}//"
-}
-
-function git:proxy:sed {
-  if command -v gsed > /dev/null; then
-    gsed "$@"
-  else
-    sed "$@"
-  fi
+    sd "^${dummy}" ''
 }
 
 function git:proxy:wc {

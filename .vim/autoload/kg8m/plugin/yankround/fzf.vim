@@ -6,7 +6,7 @@ export def List(): list<string>
 enddef
 
 export def PreviewCommand(): string
-  return "echo {} | sed -e 's/^ *[0-9]\\{1,\\}\t//' -e 's/\\\\/\\\\\\\\/g'"
+  return "echo {} | sd '^ *[0-9]+\t' '' | sd '\\\\' '\\\\\\\\'"
 enddef
 
 # Overwrite current register `"`
