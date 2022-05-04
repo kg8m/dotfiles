@@ -23,7 +23,7 @@ def Candidates(): list<string>
   const buffers  = kg8m#plugin#fzf#buffers#List({ sorter: funcref("BuffersSorter") })
   const oldfiles = Oldfiles()
 
-  return kg8m#util#list#Union(buffers, oldfiles)
+  return kg8m#util#list#Union(buffers, oldfiles, funcref("kg8m#plugin#fzf#buffers#RemoveExtraInfo"))
 enddef
 
 def BuffersSorter(lhs: dict<any>, rhs: dict<any>): number

@@ -114,6 +114,10 @@ function highlight:yellow {
   highlight:base "3" "$@"
 }
 
+function highlight:blue {
+  highlight:base "4" "$@"
+}
+
 function highlight:magenta {
   highlight:base "5" "$@"
 }
@@ -130,6 +134,7 @@ function highlight:gray {
   highlight:base "245" "$@"
 }
 
+# cf. Vim's `kg8m#util#string#colors#Red()` and so on
 function highlight:base {
   local color="${1:?}"
   shift 1
