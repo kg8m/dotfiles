@@ -141,7 +141,7 @@ function highlight:base {
   local arg
   for arg in "$@"; do
     case "${arg}" in
-      --no-bold | --nobold)
+      --no-bold)
         style="0"  # non-bold
         ;;
       --bg)
@@ -167,7 +167,7 @@ function echo:warn {
 }
 
 function echo:info {
-  printf "%s\n" "$(highlight:cyan "INFO -- $*" --nobold)" >&2
+  printf "%s\n" "$(highlight:cyan "INFO -- $*" --no-bold)" >&2
 }
 
 # cf. `man zshcontrib` for `zmv`
