@@ -199,9 +199,10 @@ function trash {
     filename=$(basename "${source}")
 
     if [ -f "${trash_path}/${filename}" ] || [ -d "${trash_path}/${filename}" ]; then
-      # foo         => foo 12.34.56.7890
-      # foo.bar     => foo 12.34.56.7890.bar
-      # foo.bar.baz => foo 12.34.56.7890.bar.baz
+      # Rename to preventing duplication.
+      #   - foo         => foo 12.34.56.7890
+      #   - foo.bar     => foo 12.34.56.7890.bar
+      #   - foo.bar.baz => foo 12.34.56.7890.bar.baz
       new_filename=$(echo "${filename}" | tr -d "\n" | sd '^(\.?[^.]+)(\.?)' "\$1 ${timestamp}.${RANDOM}\$2")
     else
       new_filename="${filename}"
