@@ -122,6 +122,10 @@ function highlight:cyan {
   highlight:base "6" "$@"
 }
 
+function highlight:pink {
+  highlight:base "219" "$@"
+}
+
 function highlight:gray {
   highlight:base "245" "$@"
 }
@@ -130,14 +134,18 @@ function highlight:base {
   local color="${1:?}"
   shift 1
 
-  local style="1"
+  local style="1"  # bold
+  local fgbg="38"  # fg
   local args=()
 
   local arg
   for arg in "$@"; do
     case "${arg}" in
       --no-bold | --nobold)
-        style="0"
+        style="0"  # non-bold
+        ;;
+      --bg)
+        fgbg="48"  # bg
         ;;
       *)
         args+=("${arg}")
@@ -147,7 +155,7 @@ function highlight:base {
     shift 1
   done
 
-  printf "\e[%d;38;5;%dm%s\e[0;0m" "${style}" "${color}" "${args[*]}"
+  printf "\e[%d;%d;5;%dm%s\e[0;0m" "${style}" "${fgbg}" "${color}" "${args[*]}"
 }
 
 function echo:error {
