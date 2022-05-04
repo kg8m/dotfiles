@@ -35,6 +35,6 @@ def BuffersSorter(lhs: dict<any>, rhs: dict<any>): number
 enddef
 
 def GetOldfiles(): list<string>
-  const MapperCallback = (filepath) => filereadable(filepath) ? kg8m#util#file#FormatPath(filepath) : false
+  const MapperCallback = (filepath) => filereadable(filepath) ? kg8m#util#file#NormalizePath(filepath) : false
   return mr#mru#list()->kg8m#util#list#FilterMap(MapperCallback)
 enddef

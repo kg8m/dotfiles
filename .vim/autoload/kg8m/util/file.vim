@@ -8,7 +8,7 @@ enddef
 
 export def CurrentPath(): string
   const raw_filepath = expand("%")
-  return empty(raw_filepath) ? "" : raw_filepath->kg8m#util#file#FormatPath()
+  return empty(raw_filepath) ? "" : raw_filepath->kg8m#util#file#NormalizePath()
 enddef
 
 export def CurrentRelativePath(): string
@@ -19,7 +19,7 @@ export def CurrentAbsolutePath(): string
   return expand("%:~")
 enddef
 
-export def FormatPath(filepath: string): string
+export def NormalizePath(filepath: string): string
   if !has_key(cache, "regular_filepath_format")
     cache.regular_filepath_format = getcwd() ==# expand("~") ? ":~" : ":~:."
   endif
