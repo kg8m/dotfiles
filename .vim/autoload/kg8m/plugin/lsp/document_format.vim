@@ -156,7 +156,8 @@ def IsForceTargetFilepath(): bool
     return false
   endif
 
-  return expand("%:p") =~# g:kg8m#plugin#lsp#document_format#force_target_pattern
+  # Use `getbufinfo()` to get the buffer's absolute path event if it isn't saved.
+  return getbufinfo("%")[0].name =~# g:kg8m#plugin#lsp#document_format#force_target_pattern
 enddef
 
 def IsTargetBufferType(): bool
