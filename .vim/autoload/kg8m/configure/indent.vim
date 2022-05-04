@@ -10,6 +10,9 @@ export def Base(): void
   set autoindent
   set smartindent
 
+  set nobreakindent
+  &showbreak = "↪ "
+
   set fixendofline
 enddef
 
