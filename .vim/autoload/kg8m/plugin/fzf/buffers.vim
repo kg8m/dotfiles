@@ -22,7 +22,7 @@ export def List(options: dict<any> = {}): list<string>
   const current = [kg8m#util#file#CurrentPath()]->filter((_, filepath) => !empty(filepath))
   const buffers = BufinfoList()->sort(sorter)->mapnew((_, bufinfo) => kg8m#util#file#FormatPath(bufinfo.name))
 
-  return kg8m#util#list#Vital().uniq(current + buffers)
+  return kg8m#util#list#Union(current, buffers)
 enddef
 
 def BufinfoList(): list<dict<any>>

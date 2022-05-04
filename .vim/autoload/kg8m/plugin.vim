@@ -172,7 +172,7 @@ export def AllRuntimepath(): string
     ->values()
     ->kg8m#util#list#FilterMap((plugin) => empty(plugin.rtp) ? false : plugin.rtp)
 
-  return kg8m#util#list#Vital().uniq(current + plugins)->join(",")
+  return kg8m#util#list#Union(current, plugins)->join(",")
 enddef
 
 export def RecacheRuntimepath(): void
