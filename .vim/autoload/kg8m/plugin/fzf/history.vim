@@ -21,7 +21,7 @@ enddef
 #   - opened files by `vim foo bar baz`
 def Candidates(): list<string>
   const buffers  = kg8m#plugin#fzf#buffers#List({ sorter: funcref("BuffersSorter") })
-  const oldfiles = GetOldfiles()
+  const oldfiles = Oldfiles()
 
   return kg8m#util#list#Union(buffers, oldfiles)
 enddef
@@ -34,7 +34,7 @@ def BuffersSorter(lhs: dict<any>, rhs: dict<any>): number
   endif
 enddef
 
-def GetOldfiles(): list<string>
+def Oldfiles(): list<string>
   const MapperCallback = (filepath) => filereadable(filepath) ? kg8m#util#file#NormalizePath(filepath) : false
   return mr#mru#list()->kg8m#util#list#FilterMap(MapperCallback)
 enddef
