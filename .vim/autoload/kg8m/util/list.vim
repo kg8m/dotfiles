@@ -15,7 +15,7 @@ export def Includes(list: list<any>, item: any): bool
   return index(list, item) >=# 0
 enddef
 
-export def Any(list: list<any>, Callback: func(any): bool): bool
+export def Any(list: list<any>, Callback: func(any): bool = (item) => !!item): bool
   for item in list
     if Callback(item)
       return true
@@ -25,7 +25,7 @@ export def Any(list: list<any>, Callback: func(any): bool): bool
   return false
 enddef
 
-export def All(list: list<any>, Callback: func(any): bool): bool
+export def All(list: list<any>, Callback: func(any): bool = (item) => !!item): bool
   for item in list
     if !Callback(item)
       return false
