@@ -496,6 +496,7 @@ kg8m#plugin#Register("h1mesuke/textobj-wiw", { lazy: true, on_start: true })
 # For syntaxes
 kg8m#plugin#Register("thinca/vim-themis")
 
+kg8m#plugin#Register("mattn/vim-treesitter", { if: false })
 kg8m#plugin#Register("posva/vim-vue")
 
 if kg8m#plugin#Register("thinca/vim-zenspace")
