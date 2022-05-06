@@ -42,7 +42,7 @@ if defined?(Rails)
   end
 end
 
-local_path = File.expand_path("~/.pryrc.local")
+local_path = File.join(ENV.fetch("XDG_CONFIG_HOME"), "pry.local/pryrc")
 if File.exist?(local_path)
   load local_path
 end
