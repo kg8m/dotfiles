@@ -27,6 +27,32 @@ abbrevs:
     abbr: f
     snippet: filter
 
+  - name: gem help
+    abbr: h
+    snippet: help
+    global: true
+    context: '^gem\s'
+  - name: gem install
+    abbr: i
+    snippet: install
+    global: true
+    context: '^gem\s'
+  - name: gem list
+    abbr: li
+    snippet: list
+    global: true
+    context: '^gem\s'
+  - name: gem uninstall
+    abbr: uni
+    snippet: uninstall
+    global: true
+    context: '^gem\s'
+  - name: gem update
+    abbr: up
+    snippet: update
+    global: true
+    context: '^gem\s'
+
   - name: git
     abbr: g
     snippet: git
