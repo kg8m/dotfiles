@@ -14,9 +14,9 @@ vim9script
 # ----------------------------------------------
 # Initialize  # {{{
 # Set initial variables/options  # {{{
-const utility_path = expand("~/dotfiles/.vim")
-&runtimepath ..= "," .. utility_path
-&runtimepath ..= "," .. utility_path .. "/after"
+const my_config_dirpath = printf("%s/vim", $XDG_CONFIG_HOME)
+&runtimepath ..= "," .. my_config_dirpath
+&runtimepath ..= "," .. my_config_dirpath .. "/after"
 
 kg8m#plugin#DisableDefaults()
 
