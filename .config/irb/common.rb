@@ -83,15 +83,6 @@ if defined?(Rails)
   ActiveRecord::Base.logger = Rails.logger
   ActiveSupport::Deprecation.behavior = :stderr
 
-  require "rubygems"
-
-  begin
-    require "wirble"
-
-    Wirble.init
-    Wirble.colorize
-  end
-
   begin
     require "hirb"
     require "hirb-unicode"
