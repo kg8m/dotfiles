@@ -2,7 +2,7 @@ vim9script
 
 kg8m#plugin#EnsureSourced("fzf.vim")
 
-# Wrapper function to show preview around each line (fzf's `:BLines` doesn't show preview)
+# Wrapper function to show preview around each line (fzf's `:BLines` doesn't)
 export def Run(query: string = ""): void
   const options = [
     "--preview", printf("preview %s:{1}", expand("%")->shellescape()),

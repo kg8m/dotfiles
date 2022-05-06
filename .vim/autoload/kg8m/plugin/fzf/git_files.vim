@@ -2,7 +2,7 @@ vim9script
 
 kg8m#plugin#EnsureSourced("fzf.vim")
 
-# Show preview of dirty files (fzf's `:GFiles?` doesn't show preview)
+# Show better preview of dirty files (fzf's `:GFiles?` doesn't)
 export def Run(): void
   const options = {
     options: [
