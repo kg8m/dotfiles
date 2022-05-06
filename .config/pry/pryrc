@@ -2,6 +2,8 @@
 
 load File.join(ENV.fetch("XDG_CONFIG_HOME"), "irb/common.rb")
 
+Pry.config.should_load_local_rc = false
+
 prompt_procs = [proc { ">> " }, proc { "++ " }]
 
 if Pry::Prompt.respond_to?(:new)
