@@ -22,7 +22,7 @@ def OnPostSource(): void
   asyncomplete#register_source(asyncomplete#sources#nextword#get_source_options({
     name: "nextword",
     allowlist: ["*"],
-    args: ["-n", "100"],
+    args: ["-n", "10"],
     completor: function("asyncomplete#sources#nextword#completor"),
     priority: 5,
   }))

@@ -15,7 +15,7 @@ def OnPostSource(): void
   asyncomplete#register_source(asyncomplete#sources#mocword#get_source_options({
     name: "mocword",
     allowlist: ["*"],
-    args: ["--limit", "100"],
+    args: ["--limit", "10"],
     completor: function("asyncomplete#sources#mocword#completor"),
     priority: 4,
   }))
