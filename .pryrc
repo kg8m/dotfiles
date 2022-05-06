@@ -14,15 +14,9 @@ else
 end
 
 # Log to STDOUT if in Rails
-case
-when defined?(Rails) && Rails.respond_to?(:logger=)
-  Rails.logger              = Logger.new($stdout)
-  ActiveRecord::Base.logger = Rails.logger
-  ActiveSupport::Deprecation.behavior = :stderr
-when ENV.include?("RAILS_ENV") && !Object.const_defined?("RAILS_DEFAULT_LOGGER")
-  require "logger"
-  RAILS_DEFAULT_LOGGER = Logger.new($stdout)
-end
+Rails.logger = Logger.new($stdout)
+ActiveRecord::Base.logger = Rails.logger
+ActiveSupport::Deprecation.behavior = :stderr
 
 begin
   require "hirb"
@@ -50,7 +44,7 @@ rescue LoadError => e
   warn "WARN -- #{e.class.name}: #{e.message} (#{e.backtrace.detect(&/\.pryrc/.method(:===))})"
 end
 
-def __benchmark__(n = nil, **labels_and_procs)
+def __benchmark__(n = nil, **cases_map)
   if defined?(Rails)
     original_log_level = Rails.logger.level
     Rails.logger.level = Rails.logger.class::UNKNOWN
@@ -59,19 +53,19 @@ def __benchmark__(n = nil, **labels_and_procs)
   if n
     require "benchmark"
 
-    max_label_width = labels_and_procs.keys.map(&:to_s).map(&:length).max
+    max_label_width = cases_map.keys.map(&:to_s).map(&:length).max
 
     Benchmark.bm(max_label_width + 1) do |x|
-      labels_and_procs.each do |label, _proc|
-        x.report("#{label}:"){ n.times(&_proc) }
+      cases_map.each do |label, procedure|
+        x.report("#{label}:"){ n.times(&procedure) }
       end
     end
   else
     require "benchmark/ips"
 
     Benchmark.ips do |x|
-      labels_and_procs.each do |label, _proc|
-        x.report("#{label}:", _proc)
+      cases_map.each do |label, procedure|
+        x.report("#{label}:", procedure)
       end
       x.compare!
     end
@@ -82,9 +76,9 @@ ensure
   end
 end
 
-def __benchmark_with_export__(labels_and_procs)
+def __benchmark_with_export__(cases_map)
   output_path = "/tmp/benchmark_ips_report.#{Time.now.strftime("%Y%m%d-%H%M%S")}.txt"
-  report = __benchmark__(labels_and_procs)
+  report = __benchmark__(cases_map)
   report.generate_json(output_path)
   puts "reported to #{output_path}"
   report
