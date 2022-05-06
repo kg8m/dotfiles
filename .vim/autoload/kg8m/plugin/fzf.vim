@@ -2,13 +2,13 @@ vim9script
 
 export def Configure(): void
   # See also vim-fzf-tjump's mappings
-  nnoremap <silent> <Leader><Leader>f :call kg8m#plugin#fzf#RunCommand("FzfFiles")<CR>
+  nnoremap <silent> <Leader><Leader>f :call kg8m#plugin#fzf#files#Run()<CR>
   nnoremap <silent> <Leader><Leader>v :call kg8m#plugin#fzf#git_files#Run()<CR>
   nnoremap <silent> <Leader><Leader>b :call kg8m#plugin#fzf#buffers#Run()<CR>
   nnoremap <silent> <Leader><Leader>l :call kg8m#plugin#fzf#buffer_lines#Run()<CR>
   nnoremap <silent> <Leader><Leader>m :call kg8m#plugin#fzf#marks#Run()<CR>
   nnoremap <silent> <Leader><Leader>h :call kg8m#plugin#fzf#history#Run()<CR>
-  nnoremap <silent> <Leader><Leader>H :call kg8m#plugin#fzf#RunCommand("FzfHelptags")<CR>
+  nnoremap <silent> <Leader><Leader>H :call kg8m#plugin#fzf#helptags#Run()<CR>
   nnoremap <silent> <Leader><Leader>y :call kg8m#plugin#fzf#yank_history#Run()<CR>
   nnoremap <silent> <Leader><Leader>g :call kg8m#plugin#fzf#grep#EnterCommand()<CR>
   xnoremap <silent> <Leader><Leader>g "zy:call kg8m#plugin#fzf#grep#EnterCommand(@z)<CR>
@@ -24,7 +24,6 @@ export def Configure(): void
 
   kg8m#plugin#Configure({
     lazy:     true,
-    on_cmd:   ["FzfFiles", "FzfLines", "FzfHelptags"],
     on_start: true,
     depends:  "fzf",
     hook_source: () => OnSource(),
@@ -54,11 +53,6 @@ export def Run(Callback: func): void
   finally
     &ambiwidth = original_ambiwidth
   endtry
-enddef
-
-export def RunCommand(command: string): void
-  # Use `feedkeys(...)` instead of `execute(command)` for preventing "E930: Cannot use :redir inside execute()".
-  kg8m#plugin#fzf#Run(() => feedkeys(":" .. command .. "\<CR>"))
 enddef
 
 def SetupWindow(): void
