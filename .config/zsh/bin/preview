@@ -26,7 +26,7 @@ if [ "${#filepaths}" = "1" ]; then
   )
 
   case "${realpath}" in
-    *Gemfile.local* | *.jb | *.pryrc)
+    *Gemfile.local* | *.jb | *.pryrc | */pryrc)
       bat_options+=(--language "ruby")
       ;;
     *.vimrc.local)

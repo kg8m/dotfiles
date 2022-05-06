@@ -9,6 +9,7 @@ require:
 AllCops:
   EnabledByDefault: true
   Include:
+    - ".*/**/pryrc"
     - "Gemfile.local.example"
 
 Bundler/GemComment:
