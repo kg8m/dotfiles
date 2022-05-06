@@ -4,6 +4,9 @@ erb_lint
 pry
 pry-byebug
 pry-doc
+rubocop
+rubocop-performance
+rubocop-daemon
 ruby_language_server
 solargraph
 steep

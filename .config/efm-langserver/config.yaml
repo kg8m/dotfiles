@@ -119,6 +119,10 @@ languages:
   =:
     - <<: *typos
 
+  Gemfile:
+    - <<: *rubocop
+    - <<: *ruby
+
   css:
     - <<: *stylelint
     - <<: *prettier

@@ -1,4 +1,6 @@
-load File.join(ENV["XDG_CONFIG_HOME"], "irb/common.rb")
+# frozen_string_literal: true
+
+load File.join(ENV.fetch("XDG_CONFIG_HOME"), "irb/common.rb")
 
 IRB.conf[:PROMPT_MODE] = :SIMPLE
 
@@ -13,7 +15,7 @@ FileUtils.mkdir_p(HISTORY_DIRPATH)
 IRB.conf[:HISTORY_FILE] = HISTORY_FILEPATH
 
 # Save history at exit and restore it at start because irb doesn't automatically save/restore history.
-if File.exists?(HISTORY_FILEPATH)
+if File.exist?(HISTORY_FILEPATH)
   File.foreach(HISTORY_FILEPATH) do |line|
     Readline::HISTORY.push(line.chomp)
   end

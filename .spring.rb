@@ -1,5 +1,7 @@
-local_gemfile_path = File.join(ENV["PWD"], "Gemfile.local")
+# frozen_string_literal: true
 
-if File.exists?(local_gemfile_path)
+local_gemfile_path = File.join(ENV.fetch("PWD", nil), "Gemfile.local")
+
+if File.exist?(local_gemfile_path)
   ENV["BUNDLE_GEMFILE"] = "Gemfile.local"
 end

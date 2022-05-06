@@ -1,9 +1,8 @@
+# frozen_string_literal: true
+
 load File.join(ENV.fetch("XDG_CONFIG_HOME"), "irb/common.rb")
 
-prompt_procs = [
-  proc { ">> " },
-  proc { "++ " },
-]
+prompt_procs = [proc { ">> " }, proc { "++ " }]
 
 if Pry::Prompt.respond_to?(:new)
   begin
@@ -23,9 +22,10 @@ if defined?(Rails)
       def enable_output_method
         @output_method = true
         @old_print = Pry.config.print
-        Pry.config.print = proc do |*args|
-          Hirb::View.view_or_page_output(args[1]) || @old_print.call(*args)
-        end
+        Pry.config.print =
+          proc do |*args|
+            Hirb::View.view_or_page_output(args[1]) || @old_print.call(*args)
+          end
       end
 
       def disable_output_method
@@ -36,11 +36,11 @@ if defined?(Rails)
 
     Hirb.enable
   rescue LoadError, NameError => e
-    warn "WARN -- #{e.class.name}: #{e.message} (#{e.backtrace.detect(&/\.pryrc/.method(:===))})"
+    warn "WARN -- #{e.class.name}: #{e.message} (#{e.backtrace.detect {|item| item.include?(".pryrc") }})"
   end
 end
 
 local_path = File.expand_path("~/.pryrc.local")
-if File.exists?(local_path)
+if File.exist?(local_path)
   load local_path
 end

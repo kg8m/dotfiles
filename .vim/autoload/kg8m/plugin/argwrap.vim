@@ -12,9 +12,9 @@ enddef
 
 def SetLocalOptions(): void
   if &filetype =~# '\v^%(eruby|ruby)$'
-    b:argwrap_tail_comma_braces = "([{"
+    b:argwrap_tail_comma_braces = "[{"
   elseif &filetype =~# '\v^%(javascript|typescript)%(react)?$'
-    b:argwrap_tail_comma_braces = "([{"
+    b:argwrap_tail_comma_braces = "[{"
   elseif &filetype ==# "vim"
     b:argwrap_tail_comma_braces = "[{"
 
