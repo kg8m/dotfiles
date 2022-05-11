@@ -4,7 +4,7 @@ if git log --format='%s' --right-only origin/HEAD... | grep -E '^fixup\b' -q; th
   exit 1
 fi
 
-if [ -f .git_templates/hooks/pre-push ]; then
+if [ "${GIT_LOCAL_TEMPLATE_HOOKS_AVAILABLE:-}" = "1" ] && [ -f .git_templates/hooks/pre-push ]; then
   source .git_templates/hooks/pre-push
 else
   exit 0

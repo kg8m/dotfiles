@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if [ -f .git_templates/hooks/post-commit ]; then
+if [ "${GIT_LOCAL_TEMPLATE_HOOKS_AVAILABLE:-}" = "1" ] && [ -f .git_templates/hooks/post-commit ]; then
   source .git_templates/hooks/post-commit
 else
   exit 0
