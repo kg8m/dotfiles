@@ -87,6 +87,12 @@ if defined?(Rails)
     require "hirb"
     require "hirb-unicode"
 
+    if defined?(HirbExt)
+      HirbExt.override
+    end
+
     Hirb.enable
+  rescue LoadError, NameError => e
+    warn "WARN -- #{e.class.name}: #{e.message} (#{e.backtrace.join(", ")})"
   end
 end
