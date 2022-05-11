@@ -67,10 +67,20 @@ abbr    expect(...).to ...
 options head
 	expect(${1:#:subject}).to ${0}
 
+snippet expect_to_not
+abbr    expect(...).to_not ...
+options head
+	expect(${1:#:subject}).to_not ${0}
+
 snippet expect_block_to
 abbr    expect { ... }.to ...
 options head
 	expect { ${1:#:subject} }.to ${0}
+
+snippet expect_block_to_not
+abbr    expect { ... }.to_not ...
+options head
+	expect { ${1:#:subject} }.to_not ${0}
 
 snippet describe
 abbr    describe ... do ... end
