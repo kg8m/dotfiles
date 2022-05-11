@@ -15,7 +15,7 @@ FileUtils.mkdir_p(HISTORY_DIRPATH)
 IRB.conf[:HISTORY_FILE] = HISTORY_FILEPATH
 
 # Save history at exit and restore it at start because irb doesn't automatically save/restore history.
-if File.exist?(HISTORY_FILEPATH)
+if File.exist?(HISTORY_FILEPATH) && defined?(Readline::HISTORY)
   File.foreach(HISTORY_FILEPATH) do |line|
     Readline::HISTORY.push(line.chomp)
   end
