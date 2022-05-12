@@ -4,13 +4,7 @@ if ! command -v sql-formatter > /dev/null; then
 fi
 
 options=(
-  --uppercase
-)
-
-# Specify `mysql` as default language because formatted query gets invalid if it contains backticks.
-# cf. https://github.com/zeroturnaround/sql-formatter/issues/139
-options+=(
-  --language "${SQL_LANGUAGE:-mysql}"
+  --config "${XDG_CONFIG_HOME:?}/sql-formatter/config.json"
 )
 
 sql-formatter "${options[@]}"
