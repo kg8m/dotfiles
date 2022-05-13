@@ -64,7 +64,7 @@ export def Handler(lines: list<string>): void
 
   for line in lines[1 : -1]
     const filepath = RemoveExtraInfo(line)
-    execute printf("%s %s", command, fnameescape(filepath))
+    execute command fnameescape(filepath)
   endfor
 enddef
 

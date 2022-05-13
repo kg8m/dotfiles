@@ -29,7 +29,7 @@ def SourceSnippet(filename: string): void
   const filepath = printf("%s/%s", kg8m#plugin#neosnippet#SnippetsDirpath(), filename)
 
   if filereadable(filepath)
-    execute printf("NeoSnippetSource %s", filepath)
+    execute "NeoSnippetSource" filepath
   endif
 enddef
 

@@ -33,7 +33,7 @@ export def BuildQflistFromBuffer(): void
   setlocal nomodifiable
   setlocal nomodified
 
-  execute "edit " .. fnameescape(contents[0].filename)
+  execute "edit" fnameescape(contents[0].filename)
   cursor(contents[0].lnum, contents[0].col)
 
   # zv: Show cursor even if in fold.

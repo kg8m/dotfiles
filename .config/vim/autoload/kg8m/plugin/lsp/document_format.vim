@@ -247,8 +247,8 @@ def Overwrite(): void
 
     cache.original_format_next = funcref(function_name)
 
-    execute("delfunction " .. function_name)
-    execute(new_definition)
+    execute "delfunction" function_name
+    execute new_definition
   endif
 enddef
 Overwrite()

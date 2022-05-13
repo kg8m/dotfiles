@@ -80,7 +80,7 @@ export def Edit(name: string = ""): void
     kg8m#plugin#fzf#qf#Edit()
   else
     Process(name, (filepath) => {
-      execute "edit " .. fnameescape(filepath)
+      execute "edit" fnameescape(filepath)
     })
   endif
 enddef

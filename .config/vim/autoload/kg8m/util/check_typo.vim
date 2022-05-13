@@ -9,10 +9,10 @@ export def Setup(): void
 enddef
 
 def CheckTypo(file: string): void
-  const writecmd = "write" .. (v:cmdbang ? "!" : "") .. " " .. file
   const prompt = $"possible typo: really want to write to `{file}`? [y/n]: "
 
   if kg8m#util#input#Confirm(prompt)
-    execute writecmd
+    const write_command = v:cmdbang ? "write!" : "write"
+    execute write_command file
   endif
 enddef

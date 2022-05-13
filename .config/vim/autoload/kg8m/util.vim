@@ -6,7 +6,7 @@ export def SourceLocalVimrc(): void
   const filepath = expand("~/.config/vim.local/.vimrc.local")
 
   if filereadable(filepath)
-    execute "source " .. filepath
+    execute "source" filepath
   endif
 enddef
 

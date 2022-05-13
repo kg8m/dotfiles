@@ -20,7 +20,7 @@ def Open(filepath: string): void
     if winnr ==# -1
       g:DWM_Stack(1)
       split
-      execute "edit " .. filepath
+      execute "edit" filepath
       g:DWM_AutoEnter()
     else
       execute $":{winnr}wincmd w"
@@ -31,7 +31,7 @@ def Open(filepath: string): void
       g:DWM_New()
     endif
 
-    execute "edit " .. filepath
+    execute "edit" filepath
   endif
 enddef
 

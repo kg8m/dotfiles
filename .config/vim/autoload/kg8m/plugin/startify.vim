@@ -91,7 +91,7 @@ def SaveSession(): void
 
   if SessionSavable()
     mkdir(g:startify_session_dir, "p")
-    execute "silent SSave! " .. SessionName()
+    execute "silent SSave!" SessionName()
   endif
 enddef
 

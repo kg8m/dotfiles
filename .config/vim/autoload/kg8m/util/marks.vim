@@ -10,7 +10,7 @@ const incremental_mark_keys_pattern = '^[A-Z]$'
 
 var incremental_mark_index = -1
 
-execute "delmarks " .. join(incremental_mark_keys, "")
+execute "delmarks" join(incremental_mark_keys, "")
 
 export def Increment(): void
   const incremental_mark_key = DetectKey()
@@ -22,7 +22,7 @@ export def Increment(): void
 
   incremental_mark_index = (incremental_mark_index + 1) % len(incremental_mark_keys)
 
-  execute "mark " .. incremental_mark_keys[incremental_mark_index]
+  execute "mark" incremental_mark_keys[incremental_mark_index]
   kg8m#util#logger#Info($"Marked to {incremental_mark_keys[incremental_mark_index]}")
 enddef
 
