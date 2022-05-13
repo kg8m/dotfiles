@@ -53,7 +53,7 @@ def FallbackForVimAutoloadFunction(): void
     const line_number   = matchstr(result, '\v\d+')->str2nr()
     const column_number = matchstrpos(result, '\v<export def \zs')[1] - len(line_number)
 
-    execute "edit" filepath
+    execute "edit" fnameescape(filepath)
     cursor([line_number, column_number])
 
     # zv: Show cursor even if in fold.

@@ -13,6 +13,6 @@ def CheckTypo(file: string): void
 
   if kg8m#util#input#Confirm(prompt)
     const write_command = v:cmdbang ? "write!" : "write"
-    execute write_command file
+    execute write_command fnameescape(file)
   endif
 enddef
