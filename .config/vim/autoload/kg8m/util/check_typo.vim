@@ -8,11 +8,11 @@ export def Setup(): void
   augroup END
 enddef
 
-def CheckTypo(file: string): void
-  const prompt = $"possible typo: really want to write to `{file}`? [y/n]: "
+def CheckTypo(filepath: string): void
+  const prompt = $"possible typo: really want to write to `{filepath}`? [y/n]: "
 
   if kg8m#util#input#Confirm(prompt)
     const write_command = v:cmdbang ? "write!" : "write"
-    execute write_command fnameescape(file)
+    execute write_command fnameescape(filepath)
   endif
 enddef
