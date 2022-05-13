@@ -30,7 +30,7 @@ def AddCommonRules(): void
     # then
     #
     #   」|
-    lexima#add_rule({ char: pair[1], at: '\%#' .. pair[1], leave: 1 })
+    lexima#add_rule({ char: pair[1], at: $'\%#{pair[1]}', leave: 1 })
 
     # `<BS>` when
     #

@@ -8,6 +8,6 @@ export def ExecuteCommand(command: string): void
       terminal
     endif
 
-    term_sendkeys(term_list()[0], command .. "\<CR>")
+    term_sendkeys(term_list()[0], $"{command}\<CR>")
   endif
 enddef

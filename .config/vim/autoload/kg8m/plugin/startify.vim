@@ -20,7 +20,7 @@ def Setup(): void
   set sessionoptions=buffers,folds
 
   g:startify_session_autoload    = false
-  g:startify_session_dir         = getcwd() .. "/.vim-sessions"
+  g:startify_session_dir         = $"{getcwd()}/.vim-sessions"
   g:startify_session_number      = 10
   g:startify_session_persistence = false
   g:startify_session_sort        = true
@@ -117,7 +117,7 @@ def SessionName(): string
 enddef
 
 def DeleteLastSessionLink(): void
-  const filepath = printf("%s/__LAST__", g:startify_session_dir)
+  const filepath = $"{g:startify_session_dir}/__LAST__"
 
   # Don't use `filereadable(filepath)` because it returns FALSE if the symlink is broken.
   if !empty(glob(filepath, false, false, true))

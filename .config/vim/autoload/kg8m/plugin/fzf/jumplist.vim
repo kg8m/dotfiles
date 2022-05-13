@@ -62,7 +62,7 @@ def JumplistToCandidates(jumplist: list<dict<any>>, options: dict<any> = {}): li
   const direction    = get(options, "direction", 1)
   const index_offset = get(options, "index_offset", 0)
   const index_width  = len(len(jumplist) - 1) + (direction <# 0 ? 1 : 0)
-  const format       = "%" .. string(index_width) .. "d:%s:%d:%d"
+  const format       = $"%{index_width}d:%s:%d:%d"
 
   return jumplist->mapnew((i, bufinfo) => (
     printf(format, (i + index_offset) * direction, BufnrToFilepath(bufinfo.bufnr), bufinfo.lnum, bufinfo.col)
@@ -86,8 +86,8 @@ def Handler(candidate: string): void
   const index = candidate->trim()->matchstr('\v^-?\d+')->str2nr()
 
   if index <# 0
-    printf("%d\<C-o>", index * -1)->feedkeys()
+    feedkeys($"{index * -1}\<C-o>")
   else
-    printf("%d\<C-i>", index)->feedkeys()
+    feedkeys($"{index}\<C-i>")
   endif
 enddef

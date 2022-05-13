@@ -32,7 +32,7 @@ export def ShowLog(): void
     .. '\ !from\\ the\\ remote,\\ but\\ no\\ such\\ ref\\ was\\ fetched.'
     .. '\ !git\\ -c\\ credential.helper'
 
-  execute "Unite dein/log -buffer-name=update_plugins -input=" .. initial_input
+  execute $"Unite dein/log -buffer-name=update_plugins -input={initial_input}"
 
   # Press `n` key to search.
   @/ = "\\v<(Error|Updated)>"
@@ -57,7 +57,7 @@ enddef
 
 def RemoveDisused(): void
   for dirpath in dein#check_clean()
-    kg8m#util#logger#Warn("Remove " .. dirpath)
+    kg8m#util#logger#Warn($"Remove {dirpath}")
     delete(dirpath, "rf")
   endfor
 enddef
@@ -81,7 +81,7 @@ def CheckFinished(options: dict<any> = {}): void
     redraw
 
     # Respect dein.vim's original message
-    echo "[dein] " .. progress
+    echo $"[dein] {progress}"
 
     if progress ==# prev_progress
       retry_count += 1
@@ -120,7 +120,7 @@ def Notify(message: string, options: dict<any> = {}): void
   notify_command->map((_, command) => shellescape(command))
   system(notify_command->join(" "))
 
-  const message_with_title = title .. ": " .. message
+  const message_with_title = $"{title}: {message}"
 
   if level ==# "info"
     kg8m#util#logger#Info(message_with_title)
@@ -129,7 +129,7 @@ def Notify(message: string, options: dict<any> = {}): void
   elseif level ==# "error"
     kg8m#util#logger#Error(message_with_title)
   else
-    kg8m#util#logger#Error(printf("%s: unknown level (%s)", title, string(level)))
+    kg8m#util#logger#Error($"{title}: unknown level ({string(level)})")
     kg8m#util#logger#Info(message_with_title)
   endif
 enddef

@@ -1,6 +1,6 @@
 vim9script
 
-g:kg8m#util#qf#dirpath   = $XDG_DATA_HOME .. "/vim/qf"
+g:kg8m#util#qf#dirpath   = $"{$XDG_DATA_HOME}/vim/qf"
 g:kg8m#util#qf#extension = "json"
 
 mkdir(g:kg8m#util#qf#dirpath, "p")
@@ -27,7 +27,7 @@ export def Complete(arglead: string, _cmdline: string, _curpos: number): list<st
   else
     return all
       ->copy()
-      ->filter((_, name) => name =~# "^" .. arglead)
+      ->filter((_, name) => name =~# $"^{arglead}")
   endif
 enddef
 
@@ -44,7 +44,7 @@ export def Save(name: string = ""): void
   )
 
   if filereadable(filepath)
-    const prompt = printf("%s exists. Overwrite it? [y/n]: ", shellescape(filepath))
+    const prompt = $"{shellescape(filepath)} exists. Overwrite it? [y/n]: "
 
     if kg8m#util#input#Confirm(prompt)
       redraw
@@ -58,7 +58,7 @@ export def Save(name: string = ""): void
   const encoded_list = EncodeList(raw_list)
   writefile(encoded_list, filepath)
 
-  printf("Quickfix list is saved to %s.", shellescape(filepath))->kg8m#util#logger#Info()
+  kg8m#util#logger#Info($"Quickfix list is saved to {shellescape(filepath)}.")
 enddef
 
 export def Load(name: string = ""): void
@@ -91,13 +91,13 @@ export def Delete(name: string = ""): void
   else
     Process(name, (filepath) => {
       const escaped_filepath = shellescape(filepath)
-      const prompt = printf("Sure to delete %s? [y/n]: ", escaped_filepath)
+      const prompt = $"Sure to delete {escaped_filepath}? [y/n]: "
 
       if kg8m#util#input#Confirm(prompt)
         delete(filepath)
-        printf("%s has been deleted.", escaped_filepath)->kg8m#util#logger#Info()
+        kg8m#util#logger#Info($"{escaped_filepath} has been deleted.")
       else
-        printf("%s remains.", escaped_filepath)->kg8m#util#logger#Info()
+        kg8m#util#logger#Info($"{escaped_filepath} remains.")
       endif
     })
   endif
@@ -109,12 +109,12 @@ def Process(name: string, Callback: func(string)): void
   if filereadable(filepath)
     Callback(filepath)
   else
-    printf("%s doesn't exist.", shellescape(filepath))->kg8m#util#logger#Error()
+    kg8m#util#logger#Error($"{shellescape(filepath)} doesn't exist.")
   endif
 enddef
 
 def NameToFilepath(name: string): string
-  return printf("%s/%s.%s", g:kg8m#util#qf#dirpath, name, kg8m#util#qf#extension)
+  return $"{g:kg8m#util#qf#dirpath}/{name}.{kg8m#util#qf#extension}"
 enddef
 
 def EncodeList(raw_list: list<dict<any>>): list<string>

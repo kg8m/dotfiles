@@ -28,7 +28,7 @@ def Log(level: string, message: string, options: dict<bool> = {}): void
     execute "echohl" HIGHLIGHTS_MAP[level]
 
     const timestamp = strftime("%Y/%m/%d %H:%M:%S")
-    const formatted_message = printf("%s %s -- %s", timestamp, level, message)
+    const formatted_message = $"{timestamp} {level} -- {message}"
 
     if get(options, "save_history", true)
       echomsg message

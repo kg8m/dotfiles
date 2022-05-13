@@ -672,7 +672,7 @@ def OverwriteCapabilities(): void
 
     if has_key(capabilities, "documentFormattingProvider")
       capabilities.documentFormattingProvider = false
-      kg8m#util#logger#Info(config.name .. "'s documentFormattingProvider got forced to be disabled.")
+      kg8m#util#logger#Info($"{config.name}'s documentFormattingProvider got forced to be disabled.")
     endif
   endfor
 enddef
@@ -680,12 +680,12 @@ enddef
 def CheckExitedServers(): void
   for server_name in Names(&filetype)
     if lsp#get_server_status(server_name) ==# "exited"
-      final messages = [printf("%s has been exited.", server_name)]
+      final messages = [$"{server_name} has been exited."]
 
       if empty(g:lsp_log_file)
         add(messages, "Enable `g:lsp_log_file` and check logs.")
       else
-        add(messages, printf(" Check logs in %s.", shellescape(g:lsp_log_file)))
+        add(messages, $" Check logs in {shellescape(g:lsp_log_file)}.")
       endif
 
       kg8m#util#logger#Error(messages->join(" "))

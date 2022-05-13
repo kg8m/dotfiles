@@ -5,12 +5,12 @@ export def BuildQflistFromBuffer(): void
   const filename = expand("%:t")
 
   if !empty(filename) && filename !~# '\v^tmp\.\w+\.grep$'
-    kg8m#util#logger#Error("The buffer may not be for grep: " .. filename)
+    kg8m#util#logger#Error($"The buffer may not be for grep: {filename}")
     return
   endif
 
   if &filetype !=# ""
-    kg8m#util#logger#Error("The buffer has filetype: " .. &filetype)
+    kg8m#util#logger#Error($"The buffer has filetype: {&filetype}")
     return
   endif
 
@@ -51,7 +51,7 @@ def LineToQfContent(line: string): any
   const matches = matchlist(line, '\v(.{-1,}):(\d+):(\d+):(.+)')
 
   if len(matches) <# 5
-    kg8m#util#logger#Warn("Ignored invalid line: " .. string(line))
+    kg8m#util#logger#Warn($"Ignored invalid line: {string(line)}")
     return false
   else
     return {

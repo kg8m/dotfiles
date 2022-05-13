@@ -20,10 +20,11 @@ def OnSource(): void
   }
 
   if kg8m#util#OnRailsDir()
-    &tags ..= "," .. kg8m#util#RubygemsPath() .. "/../tags"
+    const rubygems_path = kg8m#util#RubygemsPath()
+    &tags ..= $",{rubygems_path}/../tags"
 
     g:parallel_auto_ctags#entry_points.gems = {
-      path:    kg8m#util#RubygemsPath() .. "/..",
+      path:    $"{rubygems_path}/..",
       options: ["--exclude=test", "--exclude=spec", "--languages=Ruby"],
       events:  ["VimEnter"],
       silent:  false,

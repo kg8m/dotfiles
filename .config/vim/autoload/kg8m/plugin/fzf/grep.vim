@@ -20,7 +20,7 @@ export def EnterCommand(preset: string = ""): void
   HINT
 
   echo hint->join("\n") .. "\n\n"
-  feedkeys(":\<C-u>FzfGrep\<Space>'" .. preset .. "'\<Left>", "t")
+  feedkeys($":\<C-u>FzfGrep\<Space>'{preset}'\<Left>", "t")
 enddef
 
 export def Run(args: string): void
@@ -42,7 +42,7 @@ export def Complete(arglead: string, _cmdline: string, _curpos: number): list<st
       cache.grep_option_candidates = system(CommandToShowGrepOptionCandidates())->split("\n")
     endif
 
-    const pattern = "^" .. arglead
+    const pattern = $"^{arglead}"
     return cache.grep_option_candidates->copy()->filter((_, item) => item =~# pattern)
   else
     var pattern = arglead

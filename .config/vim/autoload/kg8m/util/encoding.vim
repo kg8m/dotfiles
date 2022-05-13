@@ -29,6 +29,6 @@ def EditWith(encoding: string, options: dict<any> = {}): void
     return
   endif
 
-  execute("edit ++encoding=" .. encoding .. " +set\\ noreadonly")
+  execute $"edit ++encoding={encoding} +set\\ noreadonly"
   b:encoding_configured = true
 enddef

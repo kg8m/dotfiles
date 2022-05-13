@@ -3,7 +3,7 @@ vim9script
 kg8m#plugin#EnsureSourced("fzf.vim")
 
 const EXTRA_INFO_SEPARATOR = repeat(" ", 10)
-const EXTRA_INFO_PATTERN = printf('%s.*$', EXTRA_INFO_SEPARATOR)
+const EXTRA_INFO_PATTERN = $'{EXTRA_INFO_SEPARATOR}.*$'
 
 # Sort buffers in dictionary order (fzf's `:Buffers` doesn't sort them)
 export def Run(): void

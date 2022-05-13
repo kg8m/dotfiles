@@ -72,14 +72,14 @@ export def RubygemsPath(): string
     cache.rubygems_path = $RUBYGEMS_PATH
   else
     const command_prefix = (filereadable("./Gemfile") ? "bundle exec ruby" : "ruby -r rubygems")
-    const command = command_prefix .. " -e 'print Gem.path.join(\"\\n\")'"
+    const command = $"{command_prefix} -e 'print Gem.path.join(\"\\n\")'"
     const dirpaths = split(system(command), '\n')
 
     var rubygems_path = ""
 
     for dirpath in dirpaths
       if isdirectory(dirpath)
-        rubygems_path = dirpath .. "/gems"
+        rubygems_path = $"{dirpath}/gems"
         break
       endif
     endfor
@@ -87,7 +87,7 @@ export def RubygemsPath(): string
     if rubygems_path !=# ""
       cache.rubygems_path = rubygems_path
     else
-      throw "Path to Ruby Gems not found. Candidates: " .. string(dirpaths)
+      throw $"Path to Ruby Gems not found. Candidates: {string(dirpaths)}"
     endif
   endif
 

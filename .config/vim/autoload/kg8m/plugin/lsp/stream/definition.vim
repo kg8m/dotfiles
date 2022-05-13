@@ -45,7 +45,7 @@ def FallbackForVimAutoloadFunction(): void
   endif
 
   const funcname = matchstr(autoload_funcname, '\v#\zs\w+\ze$')
-  const pattern  = printf('export def %s(', funcname)
+  const pattern  = $'export def {funcname}('
   const command  = ["rg", "--fixed-strings", "--line-number", "--no-filename", pattern, filepath]
   const result   = command->mapnew((_, item) => shellescape(item))->join(" ")->system()->trim()
 

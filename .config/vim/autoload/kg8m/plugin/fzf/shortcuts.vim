@@ -25,7 +25,7 @@ def Handler(item: string): void
   const command = substitute(item, '\v.*--\s+`(.+)`$', '\1', "")
 
   # Use `feedkeys` instead of `execute` because `execute` doesn't work if the command uses fzf.
-  feedkeys(":" .. command .. "\<CR>")
+  feedkeys($":{command}\<CR>")
 enddef
 
 def SetupList(): void
@@ -148,7 +148,7 @@ def FormatItem(item: list<string>): string
   if empty(description)
     return ""
   else
-    return description .. WordPadding(description) .. "  --  `" .. command .. "`"
+    return $"{description}{WordPadding(description)}  --  `{command}`"
   endif
 enddef
 

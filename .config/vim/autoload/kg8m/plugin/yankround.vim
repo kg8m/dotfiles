@@ -19,7 +19,7 @@ export def CacheAndRegtype(index: number): list<string>
 enddef
 
 def OnSource(): void
-  g:yankround_dir           = $XDG_DATA_HOME .. "/vim/yankround"
+  g:yankround_dir           = $"{$XDG_DATA_HOME}/vim/yankround"
   g:yankround_max_history   = 500
   g:yankround_use_region_hl = true
 

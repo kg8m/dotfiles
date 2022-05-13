@@ -195,9 +195,7 @@ def LogSkipped(invalid_reason: string): void
 
   if b:lsp_document_format_cache.skipped_by !=# invalid_reason
     b:lsp_document_format_cache.skipped_by = invalid_reason
-
-    const message = printf("Automatic document formatting is skipped because %s.", invalid_reason)
-    kg8m#util#logger#Info(message)
+    kg8m#util#logger#Info($"Automatic document formatting is skipped because {invalid_reason}.")
   endif
 enddef
 
@@ -230,25 +228,22 @@ def Overwrite(): void
   if empty(lsp_document_formatting_sid)
     kg8m#util#logger#Warn("Failed to detect vim-lsp's document_formatting script.")
   else
-    const function_name = "<SNR>" .. lsp_document_formatting_sid .. "_format_next"
-    const new_definition_template =<< trim VIM
-      function {{ function_name }}(x) abort
-        let cache = get(b:, "lsp_document_format_cache", {})
+    const function_name = $"<SNR>{lsp_document_formatting_sid}_format_next"
+    const new_definition_template =<< trim eval VIM
+      function {function_name}(x) abort
+        let cache = get(b:, "lsp_document_format_cache", {{}})
         let cached_changedtick = get(cache, "changedtick", b:changedtick)
 
         if b:changedtick ==# cached_changedtick
-          call {{ SID }}OriginalFormatNext(a:x)
-          call {{ SID }}Teardown()
+          call {cache.sid}OriginalFormatNext(a:x)
+          call {cache.sid}Teardown()
         else
           call kg8m#util#logger#Info("Retry :LspDocumentFormat because the buffer contents changed.")
-          call {{ SID }}TryToRun()
+          call {cache.sid}TryToRun()
         endif
       endfunction
     VIM
-    const new_definition =
-      new_definition_template->join("\n")
-        ->substitute('{{ function_name }}', function_name, "")
-        ->substitute('{{ SID }}', cache.sid, "g")
+    const new_definition = new_definition_template->join("\n")
 
     cache.original_format_next = funcref(function_name)
 

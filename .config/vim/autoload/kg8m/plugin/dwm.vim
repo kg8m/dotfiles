@@ -23,7 +23,7 @@ def Open(filepath: string): void
       execute "edit " .. filepath
       g:DWM_AutoEnter()
     else
-      execute printf(":%dwincmd w", winnr)
+      execute $":{winnr}wincmd w"
       g:DWM_AutoEnter()
     endif
   else

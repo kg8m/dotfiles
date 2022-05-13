@@ -25,10 +25,10 @@ export def Match(): void
   const japanese_matchpairs = kg8m#util#JapaneseMatchpairs()->mapnew((_, pair) => join(pair, ":"))->join(",")
 
   if has_key(cache, "original_matchpairs")
-    &matchpairs = cache.original_matchpairs .. "," .. japanese_matchpairs
+    &matchpairs = $"{cache.original_matchpairs},{japanese_matchpairs}"
   else
     cache.original_matchpairs = &matchpairs
-    &matchpairs ..= "," .. japanese_matchpairs
+    &matchpairs ..= $",{japanese_matchpairs}"
   endif
 enddef
 

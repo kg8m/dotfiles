@@ -24,7 +24,7 @@ export def Performance(): void
     # minlines: Prevent broken syntax highlighting.
     # maxlines: Prevent too slow syntax highlighting.
     # cf. `:h :syn-sync-maxlines` / `:h :syn-sync-minlines`
-    execute "autocmd Syntax * syntax sync minlines=" .. g:kg8m#configure#colors#sync_minlines .. " maxlines=2000"
+    execute $"autocmd Syntax * syntax sync minlines={g:kg8m#configure#colors#sync_minlines} maxlines=2000"
   augroup END
 
   set maxmempattern=5000

@@ -16,14 +16,14 @@ export def Increment(): void
   const incremental_mark_key = DetectKey()
 
   if incremental_mark_key =~# incremental_mark_keys_pattern
-    printf("Already marked to %s", incremental_mark_key)->kg8m#util#logger#Error()
+    kg8m#util#logger#Error($"Already marked to {incremental_mark_key}")
     return
   endif
 
   incremental_mark_index = (incremental_mark_index + 1) % len(incremental_mark_keys)
 
   execute "mark " .. incremental_mark_keys[incremental_mark_index]
-  printf("Marked to %s", incremental_mark_keys[incremental_mark_index])->kg8m#util#logger#Info()
+  kg8m#util#logger#Info($"Marked to {incremental_mark_keys[incremental_mark_index]}")
 enddef
 
 def DetectKey(): string
@@ -33,7 +33,7 @@ def DetectKey(): string
   const current_line_number = line(".")
 
   for mark_key in incremental_mark_keys
-    const position = getpos("'" .. mark_key)
+    const position = getpos($"'{mark_key}")
 
     if position[0] !=# 0
       const filepath    = bufname(position[0])

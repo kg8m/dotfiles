@@ -20,11 +20,11 @@ export def Run(type: string): void
   command += ["--exclude='.keep'"]
 
   if has_key(type_spec, "dirs")
-    command += mapnew(type_spec.dirs, (_, dir) => printf("--search-path=%s", shellescape(dir)))
+    command += mapnew(type_spec.dirs, (_, dir) => $"--search-path={shellescape(dir)}")
   endif
 
   if has_key(type_spec, "excludes")
-    command += mapnew(type_spec.excludes, (_, exclude) => printf("--exclude=%s", shellescape(exclude)))
+    command += mapnew(type_spec.excludes, (_, exclude) => $"--exclude={shellescape(exclude)}")
   endif
 
   if has_key(type_spec, "pattern")
@@ -35,7 +35,7 @@ export def Run(type: string): void
   final options = {
     "source":  join(command, " "),
     "options": [
-      "--prompt", "Rails/" .. type .. "> ",
+      "--prompt", $"Rails/{type}> ",
       "--preview", "preview {}",
       "--preview-window", "down:75%:wrap:nohidden",
     ],
@@ -50,7 +50,7 @@ export def Complete(arglead: string, _cmdline: string, _curpos: number): list<st
   else
     return type_names
       ->copy()
-      ->filter((_, type_name) => type_name =~# "^" .. arglead)
+      ->filter((_, type_name) => type_name =~# $"^{arglead}")
   endif
 enddef
 

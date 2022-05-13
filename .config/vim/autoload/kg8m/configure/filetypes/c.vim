@@ -19,7 +19,8 @@ def RunCurrent(): void
 
   const included_files = getline(1, "$")->kg8m#util#list#FilterMap((line): any => {
     if line =~# '\v^#include ".+\.h"$'
-      return matchstr(line, '\v"\zs.+\ze"')->fnamemodify(":r") .. ".c"
+      const filepath_without_extension = matchstr(line, '\v"\zs.+\ze"')->fnamemodify(":r")
+      return $"{filepath_without_extension}.c"
     else
       return false
     endif
@@ -30,7 +31,7 @@ def RunCurrent(): void
     current->shellescape(),
     included_files->mapnew((_, file) => shellescape(file))->join(" "),
     executable->shellescape(),
-    ("./" .. executable)->shellescape()
+    $"./{executable}"->shellescape()
   )
   kg8m#util#terminal#ExecuteCommand(command)
 enddef

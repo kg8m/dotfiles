@@ -37,14 +37,14 @@ export def DisableDefaults(): void
 enddef
 
 export def InitManager(): void
-  const manager_path = expand(PLUGINS_DIRPATH .. "/repos/github.com/" .. MANAGER_REPOSITORY)
+  const manager_path = $"{PLUGINS_DIRPATH}/repos/github.com/{MANAGER_REPOSITORY}"
 
   if !isdirectory(manager_path)
     echo "Installing plugin manager..."
-    system("git clone https://github.com/" .. MANAGER_REPOSITORY .. " " .. manager_path)
+    system($"git clone https://github.com/{MANAGER_REPOSITORY} {manager_path}")
   endif
 
-  &runtimepath ..= "," .. manager_path
+  &runtimepath ..= $",{manager_path}"
   dein#begin(PLUGINS_DIRPATH)
   Register(MANAGER_REPOSITORY, { if: false })
 

@@ -49,5 +49,5 @@ def WithColorSequence(color_name: string, string: string, options: dict<any> = {
   const style = get(options, "bold", true) ? 1 : 0
   const fgbg  = get(options, "bg", false) ? 48 : 38
 
-  return printf("\e[%d;%d;5;%dm%s\e[0;0m", style, fgbg, color, string)
+  return $"\e[{style};{fgbg};5;{color}m{string}\e[0;0m"
 enddef

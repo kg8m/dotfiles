@@ -97,7 +97,7 @@ def RunSingleline(): void
       cursor(cursor_position[1], cursor_position[2])
     endif
 
-    const message = printf("There are no matches for %s", string(cache.input))
+    const message = $"There are no matches for {string(cache.input)}"
     kg8m#util#logger#Info(message, { save_history: false })
     Reset()
   else
@@ -156,7 +156,7 @@ def BuildPattern(): string
       shellescape(input)
     )->system()
 
-    cache.pattern = printf('\C\%(%s\|%s\)', smartcase_pattern, migemo_pattern)
+    cache.pattern = $'\C\%({smartcase_pattern}\|{migemo_pattern}\)'
   endif
 
   return cache.pattern
@@ -185,7 +185,7 @@ def SetupMigemo(): void
     ]
 
     for directory in directories
-      const filepath = printf("%s/utf-8/migemo-dict", directory)
+      const filepath = $"{directory}/utf-8/migemo-dict"
 
       if filereadable(filepath)
         cache.migemo.dictionary_path = filepath

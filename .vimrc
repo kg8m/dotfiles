@@ -14,9 +14,9 @@ vim9script
 # ----------------------------------------------
 # Initialize  # {{{
 # Set initial variables/options  # {{{
-const my_config_dirpath = printf("%s/vim", $XDG_CONFIG_HOME)
-&runtimepath ..= "," .. my_config_dirpath
-&runtimepath ..= "," .. my_config_dirpath .. "/after"
+const my_config_dirpath = $"{$XDG_CONFIG_HOME}/vim"
+&runtimepath ..= $",{my_config_dirpath}"
+&runtimepath ..= $",{my_config_dirpath}/after"
 
 kg8m#plugin#DisableDefaults()
 
@@ -181,7 +181,7 @@ if kg8m#plugin#Register("lambdalisue/mr.vim", { if: !kg8m#util#IsGitTmpEdit() })
   g:mr_mrw_disabled = true
   g:mr_mrr_disabled = true
   g:mr#threshold = 10'000
-  g:mr#mru#filename = printf("%s/vim/mr/mru", $XDG_DATA_HOME)
+  g:mr#mru#filename = $"{$XDG_DATA_HOME}/vim/mr/mru"
 endif
 
 if kg8m#plugin#Register("tyru/open-browser.vim")
