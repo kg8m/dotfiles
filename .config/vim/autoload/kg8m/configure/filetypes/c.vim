@@ -28,10 +28,10 @@ def RunCurrent(): void
 
   const command = printf(
     "execute_commands_with_echo \"gcc %s %s -o %s\" \"%s\"",
-    current->shellescape(),
+    shellescape(current),
     included_files->mapnew((_, file) => shellescape(file))->join(" "),
-    executable->shellescape(),
-    $"./{executable}"->shellescape()
+    shellescape(executable),
+    shellescape($"./{executable}")
   )
   kg8m#util#terminal#ExecuteCommand(command)
 enddef
