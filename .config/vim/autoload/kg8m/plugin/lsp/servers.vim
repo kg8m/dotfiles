@@ -628,7 +628,7 @@ enddef
 
 def Schemas(): list<any>
   if !has_key(cache, "lsp_schemas_json")
-    const filepath = kg8m#plugin#GetInfo("vim-lsp-settings").path .. "/data/catalog.json"
+    const filepath = printf("%s/data/catalog.json", kg8m#plugin#GetInfo("vim-lsp-settings").path)
     const json     = filepath->readfile()->join("\n")->json_decode()
 
     cache.lsp_schemas_json = json.schemas
