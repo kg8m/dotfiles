@@ -42,7 +42,7 @@ def FormatBufname(bufname: string, modified: bool): string
   const normalized_bufname = kg8m#util#file#NormalizePath(bufname)
   const modified_symbol    = modified ? kg8m#util#string#colors#Yellow("[+]") : ""
 
-  return printf("%s%s%s", normalized_bufname, EXTRA_INFO_SEPARATOR, modified_symbol)
+  return normalized_bufname .. EXTRA_INFO_SEPARATOR .. modified_symbol
 enddef
 
 export def RemoveExtraInfo(bufname: string): string
