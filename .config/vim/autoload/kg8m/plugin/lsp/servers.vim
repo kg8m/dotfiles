@@ -685,7 +685,7 @@ def CheckExitedServers(): void
       if empty(g:lsp_log_file)
         add(messages, "Enable `g:lsp_log_file` and check logs.")
       else
-        add(messages, $" Check logs in {shellescape(g:lsp_log_file)}.")
+        add(messages, $" Check logs in `{g:lsp_log_file}`.")
       endif
 
       kg8m#util#logger#Error(messages->join(" "))

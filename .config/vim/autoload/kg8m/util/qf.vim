@@ -44,7 +44,7 @@ export def Save(name: string = ""): void
   )
 
   if filereadable(filepath)
-    const prompt = $"{shellescape(filepath)} exists. Overwrite it? [y/n]: "
+    const prompt = $"`{filepath}` exists. Overwrite it? [y/n]: "
 
     if kg8m#util#input#Confirm(prompt)
       redraw
@@ -58,7 +58,7 @@ export def Save(name: string = ""): void
   const encoded_list = EncodeList(raw_list)
   writefile(encoded_list, filepath)
 
-  kg8m#util#logger#Info($"Quickfix list is saved to {shellescape(filepath)}.")
+  kg8m#util#logger#Info($"Quickfix list is saved to `{filepath}`.")
 enddef
 
 export def Load(name: string = ""): void
@@ -90,14 +90,13 @@ export def Delete(name: string = ""): void
     kg8m#plugin#fzf#qf#Delete()
   else
     Process(name, (filepath) => {
-      const escaped_filepath = shellescape(filepath)
-      const prompt = $"Sure to delete {escaped_filepath}? [y/n]: "
+      const prompt = $"Sure to delete `{filepath}`? [y/n]: "
 
       if kg8m#util#input#Confirm(prompt)
         delete(filepath)
-        kg8m#util#logger#Info($"{escaped_filepath} has been deleted.")
+        kg8m#util#logger#Info($"`{filepath}` has been deleted.")
       else
-        kg8m#util#logger#Info($"{escaped_filepath} remains.")
+        kg8m#util#logger#Info($"`{filepath}` remains.")
       endif
     })
   endif
@@ -109,7 +108,7 @@ def Process(name: string, Callback: func(string)): void
   if filereadable(filepath)
     Callback(filepath)
   else
-    kg8m#util#logger#Error($"{shellescape(filepath)} doesn't exist.")
+    kg8m#util#logger#Error($"`{filepath}` doesn't exist.")
   endif
 enddef
 

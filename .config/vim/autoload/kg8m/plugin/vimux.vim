@@ -11,7 +11,7 @@ export def RunCommand(command: string): void
   kg8m#plugin#EnsureSourced("vimux")
 
   CalculateRunnerIndex()
-  execute "VimuxRunCommand" string(command)
+  execute "VimuxRunCommand" shellescape(command)
 enddef
 
 # Always use current pane's next one.
