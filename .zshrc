@@ -124,7 +124,7 @@ source ~/.config/zsh/others.zsh
 
 try_to_source ~/.config/zsh.local/.zshrc.local
 
-zinit ice lucid nocd wait"!0c" compinit atload"echo"
+zinit ice lucid nocd wait"!0c" pick"/dev/null" compinit atload"echo"
 zinit snippet /dev/null
 
 # Notes

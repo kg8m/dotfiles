@@ -20,5 +20,5 @@ function plugin:setup:direnv {
 
   unset -f plugin:setup:direnv
 }
-zinit ice lucid nocd wait"0b" atload"plugin:setup:direnv"
+zinit ice lucid nocd wait"0b" pick"/dev/null" atload"plugin:setup:direnv"
 zinit snippet /dev/null

@@ -225,7 +225,7 @@ function plugin:setup:binary_releaseds {
 
   unset -f plugin:setup:binary_releaseds
 }
-zinit ice lucid nocd wait"0c" atload"plugin:setup:binary_releaseds"
+zinit ice lucid pick"/dev/null" nocd wait"0c" atload"plugin:setup:binary_releaseds"
 zinit snippet /dev/null
 
 function plugin:setup:binary_releaseds:extra:mocword {
@@ -237,7 +237,7 @@ function plugin:setup:binary_releaseds:extra:mocword {
   zinit ice lucid from"gh-r" as"null" bpick"mocword.sqlite.gz" atclone"plugin:setup:binary_releaseds:extra:mocword:data"
   zinit light high-moctane/mocword-data
 }
-zinit ice lucid nocd wait"0c" has"mocword" atload"plugin:setup:binary_releaseds:extra:mocword"
+zinit ice lucid pick"/dev/null" nocd wait"0c" has"mocword" atload"plugin:setup:binary_releaseds:extra:mocword"
 zinit snippet /dev/null
 
 if [ -z "${ZABRZE_UNAVAILABLE}" ]; then
@@ -252,7 +252,7 @@ if [ -z "${ZABRZE_UNAVAILABLE}" ]; then
     fi
     source "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
   }
-  zinit ice lucid nocd wait"0a" has"zabrze" atload"plugin:setup:binary_releaseds:extra:zabrze"
+  zinit ice lucid nocd wait"0a" pick"/dev/null" has"zabrze" atload"plugin:setup:binary_releaseds:extra:zabrze"
   zinit snippet /dev/null
 fi
 

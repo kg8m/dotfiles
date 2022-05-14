@@ -138,7 +138,7 @@ function() {
 
     unset -f setup:prompt:refresh
   }
-  zinit ice lucid wait"command -v async_start_worker > /dev/null" atload"setup:prompt:refresh"
+  zinit ice lucid wait"command -v async_start_worker > /dev/null" pick"/dev/null" atload"setup:prompt:refresh"
   zinit snippet /dev/null
 }
 

@@ -17,7 +17,7 @@ function plugin:setup:others {
 
   unset -f plugin:setup:others
 }
-zinit ice lucid wait"0c" atload"plugin:setup:others"
+zinit ice lucid wait"0c" pick"/dev/null" atload"plugin:setup:others"
 zinit snippet /dev/null
 
 # cf. async_start_worker, async_stop_worker, async_job, and so on
