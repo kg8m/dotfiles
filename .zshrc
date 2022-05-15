@@ -102,6 +102,7 @@ autoload -U _zinit
 source ~/.config/zsh/my-aliases.zsh
 source ~/.config/zsh/my-functions.zsh
 
+source ~/.config/zsh/asdf.zsh
 source ~/.config/zsh/binary-released-plugins.zsh
 source ~/.config/zsh/cd-bookmark.zsh
 source ~/.config/zsh/colors.zsh
@@ -110,11 +111,8 @@ source ~/.config/zsh/direnv.zsh
 source ~/.config/zsh/enhancd.zsh
 source ~/.config/zsh/filter.zsh
 source ~/.config/zsh/git.zsh
-source ~/.config/zsh/goenv.zsh
 source ~/.config/zsh/history-search.zsh
-source ~/.config/zsh/nodenv.zsh
 source ~/.config/zsh/prompt.zsh
-source ~/.config/zsh/rbenv.zsh
 source ~/.config/zsh/rubocop.zsh
 source ~/.config/zsh/syntax-highlighting.zsh
 source ~/.config/zsh/timetrack.zsh

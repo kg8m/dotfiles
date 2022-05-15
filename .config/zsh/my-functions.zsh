@@ -542,7 +542,15 @@ function zsh:rcs:compile:clear {
 
 function libs:go:uninstall {
   local library="${1:?}"
-  local libpaths=("${(@f)$(find ~/go "${GOENV_ROOT:?}" -maxdepth 5 -path "*${library}*")}")
+
+  local fd_args=(
+    "${FD_DEFAULT_OPTIONS[@]}"
+    --type d --type x
+    "${library}"
+    "${ASDF_DATA_DIR?:}/shims" "${ASDF_DATA_DIR?:}/installs/golang"
+  )
+
+  local libpaths=("${(@f)$(fd "${fd_args[@]}")}")
 
   if [ -z "${libpaths[*]}" ]; then
     echo:error "No library files/directories found for ${library}."

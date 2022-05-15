@@ -33,6 +33,21 @@ path=(
 
 export COLORTERM=truecolor
 
+# https://github.com/asdf-vm/asdf/blob/788ccab5971cb828cf25364b0df5ed6f5e9e713d/asdf.sh#L17
+ASDF_ROOT="${XDG_DATA_HOME}/zsh/asdf"
+export ASDF_DIR="${ASDF_ROOT}/src"
+export ASDF_DATA_DIR="${ASDF_ROOT}/data"
+unset ASDF_ROOT
+
+export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
+
+# https://github.com/asdf-vm/asdf/blob/788ccab5971cb828cf25364b0df5ed6f5e9e713d/asdf.sh#L25-26
+path=(
+  "${ASDF_DATA_DIR}/shims"
+  "${ASDF_DIR}/bin"
+  "${path[@]}"
+)
+
 # cf. data setup in .config/zsh/binary-released-plugins.zsh
 export MOCWORD_DATA="${HOME}/.local/share/mocword/mocword.sqlite"
 
@@ -75,8 +90,6 @@ if [[ -o interactive ]]; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 else
   source ~/.config/zsh/env/fzf.zsh
-  source ~/.config/zsh/env/go.zsh
-  source ~/.config/zsh/env/ruby.zsh
 fi
 
 try_to_source ~/.config/zsh.local/.zshenv.local
