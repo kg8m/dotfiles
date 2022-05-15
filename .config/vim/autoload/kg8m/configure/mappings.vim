@@ -110,7 +110,9 @@ enddef
 
 # <Nul> == <C-Space>
 export def PreventUnconsciousOperation(): void
-  inoremap <C-w> <Esc><C-w>
+  # Break undo sequence with `<C-g>u` when a word is deleted with `<C-w>`.
+  inoremap <C-w> <C-g>u<C-w>
+
   inoremap <Nul> <C-Space>
   tnoremap <Nul> <C-Space>
   noremap <F1> <Nop>
