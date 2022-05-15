@@ -1,11 +1,5 @@
-const path = require("path");
-const dataHomePath = process.env["XDG_DATA_HOME"];
-const modulesPath = path.join(dataHomePath, "yarn/global/node_modules");
-
 module.exports = {
-  extends: [
-    path.join(modulesPath, "stylelint-config-standard"),
-  ],
+  extends: ["stylelint-config-standard"],
   rules: {
     "color-hex-length": "long",
     "comment-empty-line-before": null,

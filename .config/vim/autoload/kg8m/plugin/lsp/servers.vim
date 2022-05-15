@@ -45,7 +45,7 @@ export def Register(): void
   timer_start(1000, (_) => Ready())
 enddef
 
-# yarn add bash-language-server
+# npm install bash-language-server
 def RegisterBashLanguageServer(): void
   RegisterServer({
     name: "bash-language-server",
@@ -74,7 +74,7 @@ def ExtraConfigForClangd(): dict<any>
   }
 enddef
 
-# yarn add vscode-langservers-extracted
+# npm install vscode-langservers-extracted
 def RegisterCssLanguageServer(): void
   RegisterServer({
     name: "css-language-server",
@@ -212,7 +212,7 @@ def ExtraConfigForGopls(): dict<any>
   }
 enddef
 
-# yarn add vscode-langservers-extracted
+# npm install vscode-langservers-extracted
 def RegisterHtmlLanguageServer(): void
   RegisterServer({
     name: "html-language-server",
@@ -230,7 +230,7 @@ def ExtraConfigForHtmlLanguageServer(): dict<any>
   }
 enddef
 
-# yarn add vscode-langservers-extracted
+# npm install vscode-langservers-extracted
 def RegisterJsonLanguageServer(): void
   RegisterServer({
     name: "json-language-server",
@@ -389,7 +389,7 @@ def ExtraConfigForTypeprof(): dict<any>
   }
 enddef
 
-# yarn add typescript-language-server typescript
+# npm install typescript-language-server typescript
 def RegisterTypescriptLanguageServer(): void
   RegisterServer({
     name: "typescript-language-server",
@@ -409,7 +409,7 @@ def ExtraConfigForTypescriptLanguageServer(): dict<any>
   }
 enddef
 
-# yarn add vim-language-server
+# npm install vim-language-server
 def RegisterVimLanguageServer(): void
   RegisterServer({
     name: "vim-language-server",
@@ -442,7 +442,7 @@ def ExtraConfigForVimLanguageServer(): dict<any>
   }
 enddef
 
-# yarn add vls
+# npm install vls
 def RegisterVueLanguageServer(): void
   RegisterServer({
     name: "vls",
@@ -492,7 +492,7 @@ def ExtraConfigForVueLanguageServer(): dict<any>
   }
 enddef
 
-# yarn add yaml-language-server
+# npm install yaml-language-server
 def RegisterYamlLanguageServer(): void
   RegisterServer({
     name: "yaml-language-server",

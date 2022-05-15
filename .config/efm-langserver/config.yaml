@@ -86,7 +86,7 @@ tools:
     format-stdin: true
 
   stylelint: &stylelint
-    lint-command: "stylelint --stdin --stdin-filename /dummy.css --formatter unix --no-color"
+    lint-command: "$HOME/.config/efm-langserver/stylelint_wrapper.sh"
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %m [%t%*[a-z]]"
