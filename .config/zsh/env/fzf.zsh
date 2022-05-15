@@ -43,5 +43,5 @@ function() {
   )
 
   export FZF_DEFAULT_OPTS="${options[*]}"
-  export FZF_DEFAULT_COMMAND="fd \${FD_DEFAULT_OPTIONS[@]} --type file --color always"
+  export FZF_DEFAULT_COMMAND="fd \${FD_DEFAULT_OPTIONS[@]} --strip-cwd-prefix --type file --color always"
 }

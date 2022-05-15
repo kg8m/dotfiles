@@ -9,6 +9,7 @@ export def List(): list<string>
   const command = [
     "fd",
     $FD_DEFAULT_OPTIONS,
+    "--strip-cwd-prefix",
     "--type", "f",
     "--base-directory", shellescape(g:kg8m#util#qf#dirpath),
     "--extension", kg8m#util#qf#extension,

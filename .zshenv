@@ -65,7 +65,8 @@ export FD_DEFAULT_OPTIONS=(
   --no-ignore-vcs
 
   # Remove './' prefixes of relative paths
-  --strip-cwd-prefix
+  # Don't set as default because this option can't be used with paths or `--search-path` options.
+  # --strip-cwd-prefix
 
   # Exclude files/directories
   # cf. configs for ripgrep
