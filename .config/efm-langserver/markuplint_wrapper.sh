@@ -3,6 +3,9 @@ if ! command -v markuplint > /dev/null; then
   exit 1
 fi
 
+# Always use system Node.js version for markuplint.
+export ASDF_NODEJS_VERSION="system"
+
 target_filepath="$1"
 
 # markdownlint treats config file's path as relative even if an absolute path is given
