@@ -541,30 +541,30 @@ function zsh:rcs:compile:clear {
 }
 
 function libs:go:uninstall {
-  local library="${1:?}"
+  local pkg="${1:?}"
 
   local fd_args=(
     "${FD_DEFAULT_OPTIONS[@]}"
     --type d --type x
-    "${library}"
+    "${pkg}"
     "${ASDF_DATA_DIR?:}/shims" "${ASDF_DATA_DIR?:}/installs/golang"
   )
 
-  local libpaths=("${(@f)$(fd "${fd_args[@]}")}")
+  local pkg_paths=("${(@f)$(fd "${fd_args[@]}")}")
 
-  if [ -z "${libpaths[*]}" ]; then
-    echo:error "No library files/directories found for ${library}."
+  if [ -z "${pkg_paths[*]}" ]; then
+    echo:error "No pkg files/directories found for ${pkg}."
     return 1
   fi
 
   # shellcheck disable=SC2145
-  echo -e "${(j:\n:)libpaths[@]}\n"
+  echo -e "${(j:\n:)pkg_paths[@]}\n"
 
   local response
   read -r "response?Remove found files/directories? [y/n]: "
 
   if [[ "${response}" =~ ^y ]]; then
-    echo "${(j:\n:)libpaths[@]}" | while read -r libpath; do
+    echo "${(j:\n:)pkg_paths[@]}" | while read -r libpath; do
       trash "${libpath}"
     done
   else
