@@ -37,11 +37,17 @@ if [ "${#filepaths}" = "1" ]; then
       ;;
   esac
 
-  if command -v nkf > /dev/null; then
-    nkf "${realpath}" | bat "${bat_options[@]}" --file-name "${realpath}"
-  else
-    bat "${realpath}" "${bat_options[@]}"
-  fi
+  case "${realpath}" in
+    *.csv)
+      if command -v nkf > /dev/null; then
+        nkf "${realpath}" | bat "${bat_options[@]}" --file-name "${realpath}"
+      else
+        bat "${realpath}" "${bat_options[@]}"
+      fi
+      ;;
+    *)
+      bat "${realpath}" "${bat_options[@]}"
+  esac
 else
   bat "${realpaths[@]}"
 fi
