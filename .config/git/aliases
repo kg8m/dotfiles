@@ -179,7 +179,7 @@ function git:branch:filter:single {
     git:branch:filter --no-multi --prompt="Select a branch> " "${options[@]}"
   )}")
 
-  if [ ${#branches[@]} -ne 1 ] || [ -z "${branches[1]}" ]; then
+  if [ ${#branches} -ne 1 ] || [ -z "${branches[1]}" ]; then
     echo:error "Select a branch."; exit 1
   else
     echo "${branches[1]}"
@@ -303,7 +303,7 @@ function git:diff:branch:from {
 
     local item
     for item in "${@[2,-1]}"; do
-      if [ "${item}" = "--" ] || [ "${#pathspecs[@]}" -gt 0 ]; then
+      if [ "${item}" = "--" ] || [ "${#pathspecs}" -gt 0 ]; then
         pathspecs+=("${item}")
       else
         options+=("${item}")
