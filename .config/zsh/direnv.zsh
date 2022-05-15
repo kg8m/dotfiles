@@ -20,5 +20,15 @@ function plugin:setup:direnv {
 
   unset -f plugin:setup:direnv
 }
-zinit ice lucid nocd wait"0b" pick"/dev/null" atload"plugin:setup:direnv"
-zinit snippet /dev/null
+
+function() {
+  local ice_options=(lucid nocd pick"/dev/null" atload"plugin:setup:direnv")
+
+  # immediately load direnv and, reflect envs if `.envrc` exists.
+  if [ ! -f ".envrc" ]; then
+    ice_options+=(wait"0b")
+  fi
+
+  zinit ice "${ice_options[@]}"
+  zinit snippet /dev/null
+}
