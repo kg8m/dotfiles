@@ -34,7 +34,7 @@ tools:
     format-stdin: true
 
   lit-analyzer: &lit-analyzer
-    lint-command: "lit-analyzer '${INPUT}' --format list --noColor --strict ${LIT_ANALYZER_EXTRA_OPTIONS}"
+    lint-command: "$HOME/.config/efm-langserver/lit_analyzer_wrapper.sh '${INPUT}'"
     lint-formats:
       - "%*[ ]%l:%c%*[ ]%t%*[a-z]%*[ ]%m"
 
