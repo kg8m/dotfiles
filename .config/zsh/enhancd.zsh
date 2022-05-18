@@ -1,4 +1,4 @@
-function plugin:enhancd:with_mkdir() {
+function plugin:enhancd:with_mkdir {
   if [[ ! "$*" =~ ^$\|^-$ ]] && [ ! -d "$*" ]; then
     echo "$* not exists"
     execute_with_confirm "mkdir -p \"$*\""
