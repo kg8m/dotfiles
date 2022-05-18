@@ -78,7 +78,7 @@ def Setup(): void
     },
     javascripts: {
       dirs:     ["app", "public"],
-      pattern:  '\.(jsx?|tsx?|vue)$',
+      pattern:  '\.(jsx?|tsx?|vue)(\.erb)?$',
       excludes: ["public/packs*"],
     },
     lib: {
