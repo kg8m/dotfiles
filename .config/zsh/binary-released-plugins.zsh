@@ -11,13 +11,8 @@ function plugin:setup:binary_releaseds {
     juliosueiras/terraform-lsp
     crate-ci/typos
     rhysd/vim-startuptime
+    Ryooooooga/zabrze
   )
-
-  if [ -z "${ZABRZE_UNAVAILABLE}" ]; then
-    repositories+=(
-      Ryooooooga/zabrze
-    )
-  fi
 
   # Use `brew` command if available to detect that zinit gets broken or something is wrong
   if ! command -v brew > /dev/null; then
@@ -240,21 +235,20 @@ function plugin:setup:binary_releaseds:extra:mocword {
 zinit ice lucid pick"/dev/null" nocd wait"0c" has"mocword" atload"plugin:setup:binary_releaseds:extra:mocword"
 zinit snippet /dev/null
 
-if [ -z "${ZABRZE_UNAVAILABLE}" ]; then
-  function plugin:setup:binary_releaseds:extra:zabrze:reset {
-    rm -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init"
-  }
 
-  function plugin:setup:binary_releaseds:extra:zabrze {
-    if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init" ]; then
-      zabrze init --bind-keys > "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
-      zcompile "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
-    fi
-    source "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
-  }
-  zinit ice lucid nocd wait"0a" pick"/dev/null" has"zabrze" atload"plugin:setup:binary_releaseds:extra:zabrze"
-  zinit snippet /dev/null
-fi
+function plugin:setup:binary_releaseds:extra:zabrze:reset {
+  rm -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init"
+}
+
+function plugin:setup:binary_releaseds:extra:zabrze {
+  if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init" ]; then
+    zabrze init --bind-keys > "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
+    zcompile "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
+  fi
+  source "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
+}
+zinit ice lucid nocd wait"0a" pick"/dev/null" has"zabrze" atload"plugin:setup:binary_releaseds:extra:zabrze"
+zinit snippet /dev/null
 
 zinit ice lucid as"completion" mv"zsh_tealdeer -> _tldr"
 zinit snippet https://github.com/dbrgn/tealdeer/blob/main/completion/zsh_tealdeer
