@@ -14,7 +14,7 @@ final type_names = []
 export def Run(type: string): void
   const type_spec = specs[type]
 
-  var command = ["fd", $FD_DEFAULT_OPTIONS, "--full-path", "--strip-cwd-prefix", "--type", "f", "--color", "always"]
+  var command = ["fd", $FD_DEFAULT_OPTIONS, "--full-path", "--type", "f", "--color", "always"]
 
   # Common excludes.
   command += ["--exclude='.keep'"]
