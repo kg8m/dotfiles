@@ -7,10 +7,18 @@ function plugin:asdf:atclone {
     ln -s "${PWD}" "${ASDF_DIR}"
   fi
 
-  local plugins=(golang nodejs ruby)
+  local plugins=(golang nodejs python ruby)
   local plugin
   for plugin in "${plugins[@]}"; do
     execute_with_echo "asdf plugin add ${plugin}"
+
+    case "${plugin}" in
+      python)
+        if ! command -v python2 > /dev/null; then
+          echo:info 'Install Python 2.x.y and setup with `asdf global latest 2.x.y`'
+        fi
+        ;;
+    esac
   done
 
   execute_with_echo "asdf plugin-list"
