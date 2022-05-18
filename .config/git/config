@@ -105,6 +105,7 @@
 
 [merge]
 	tool = vimdiff
+	conflictStyle = diff3
 
 [mergetool]
 	keepBackup = false
