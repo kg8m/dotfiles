@@ -167,6 +167,27 @@ abbrevs:
     global: true
     context: '^git\s'
 
+  - name: npm install
+    abbr: i
+    snippet: install
+    global: true
+    context: '^npm\s'
+  - name: npm list
+    abbr: li
+    snippet: list
+    global: true
+    context: '^npm\s'
+  - name: npm uninstall
+    abbr: uni
+    snippet: uninstall
+    global: true
+    context: '^npm\s'
+  - name: npm update
+    abbr: up
+    snippet: update
+    global: true
+    context: '^npm\s'
+
   - name: rails
     abbr: r
     snippet: rails
