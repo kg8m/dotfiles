@@ -37,7 +37,7 @@ function() {
   }
 
   # Refresh prompt at any widget triggered/executed
-  function setup:prompt:refresh {
+  function prompt:refresh:setup {
     export PROMPT_REFRESHER_WORKER_NAME="PROMPT_REFRESHER_$$"
     export GIT_PROMPT_REFRESHER_WORKER_NAME="GIT_PROMPT_REFRESHER_$$"
 
@@ -136,9 +136,9 @@ function() {
     prompt:refresh:trigger
     prompt:refresh:git:trigger
 
-    unset -f setup:prompt:refresh
+    unset -f prompt:refresh:setup
   }
-  zinit ice lucid wait"command -v async_start_worker > /dev/null" pick"/dev/null" atload"setup:prompt:refresh"
+  zinit ice lucid wait"command -v async_start_worker > /dev/null" pick"/dev/null" atload"prompt:refresh:setup"
   zinit snippet /dev/null
 }
 

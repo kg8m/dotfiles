@@ -1,13 +1,13 @@
-function plugin:setup:others {
+function plugin:others:setup {
   # Don't use zinit's options like `as"command" pick"bin/themis"` because it makes the `$PATH` longer and longer. Make
   # symbolic links in `${HOME}/bin` instead.
-  function plugin:setup:vim_themis {
+  function plugin:vim:themis:atclone {
     local binary="bin/themis"
 
     mkdir -p "${HOME}/bin"
     ln -fs "${PWD}/${binary}" "${HOME}/bin/$(basename "${binary}")"
   }
-  zinit ice lucid as"null" atclone"plugin:setup:vim_themis"
+  zinit ice lucid as"null" atclone"plugin:vim:themis:atclone"
   zinit light thinca/vim-themis
 
   mkdir -p "${XDG_DATA_HOME:?}/mysql"
@@ -15,9 +15,9 @@ function plugin:setup:others {
 
   mkdir -p "${XDG_DATA_HOME:?}/tig"
 
-  unset -f plugin:setup:others
+  unset -f plugin:others:setup
 }
-zinit ice lucid wait"0c" pick"/dev/null" atload"plugin:setup:others"
+zinit ice lucid wait"0c" pick"/dev/null" atload"plugin:others:setup"
 zinit snippet /dev/null
 
 # cf. async_start_worker, async_stop_worker, async_job, and so on

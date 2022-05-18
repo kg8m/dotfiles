@@ -1,4 +1,4 @@
-function plugin:setup:direnv {
+function plugin:direnv:atload {
   if command -v direnv > /dev/null; then
     if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/direnv_hook" ]; then
       direnv hook zsh > "${KG8M_ZSH_CACHE_DIR}/direnv_hook"
@@ -10,19 +10,19 @@ function plugin:setup:direnv {
     # https://github.com/direnv/direnv/blob/a4632773637ee1a6b08fa81043cacd24ea941489/shell_zsh.go#L12
     eval "$(direnv export zsh)"
   else
-    function error_for_envrc {
+    function plugin:direnv:not_installed_error {
       if [ -f .envrc ]; then
         echo:warn ".envrc exists but direnv isn't installed."
       fi
     }
-    add-zsh-hook chpwd error_for_envrc
+    add-zsh-hook chpwd plugin:direnv:not_installed_error
   fi
 
-  unset -f plugin:setup:direnv
+  unset -f plugin:direnv:atload
 }
 
 function() {
-  local ice_options=(lucid nocd pick"/dev/null" atload"plugin:setup:direnv")
+  local ice_options=(lucid nocd pick"/dev/null" atload"plugin:direnv:atload")
 
   # immediately load direnv and, reflect envs if `.envrc` exists.
   if [ ! -f ".envrc" ]; then

@@ -60,14 +60,14 @@ __timetrack_threshold=30
 
 export __timetrack_threshold
 
-function __my_preexec_start_timetrack() {
+function timetrack:start {
   local command=$1
 
   export __timetrack_start=$(date +%s)
   export __timetrack_command="${command}"
 }
 
-function __my_preexec_end_timetrack() {
+function timetrack:end {
   local last_status=$?
   local exec_time result title notifier_options message
   local command="${__timetrack_command//'/'\\''}"
@@ -121,5 +121,5 @@ function __my_preexec_end_timetrack() {
   fi
 }
 
-add-zsh-hook preexec __my_preexec_start_timetrack
-add-zsh-hook precmd __my_preexec_end_timetrack
+add-zsh-hook preexec timetrack:start
+add-zsh-hook precmd timetrack:end

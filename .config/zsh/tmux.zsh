@@ -1,5 +1,5 @@
-function plugin:setup:tmux_plugins {
-  function plugin:setup:tmux_plugin {
+function plugin:tmux:plugins {
+  function plugin:tmux:plugins:atclone {
     local plugin_name="$(basename "$1")"
     local tmux_dirpath="${XDG_CONFIG_HOME:?}/tmux"
     local plugins_dirpath="${tmux_dirpath}/plugins"
@@ -18,11 +18,11 @@ function plugin:setup:tmux_plugins {
 
   local plugin
   for plugin in "${plugins[@]}"; do
-    zinit ice lucid as"null" atclone"plugin:setup:tmux_plugin ${plugin}"
+    zinit ice lucid as"null" atclone"plugin:tmux:plugins:atclone ${plugin}"
     zinit light "${plugin}"
   done
 
-  unset -f plugin:setup:tmux_plugins
+  unset -f plugin:tmux:plugins
 }
-zinit ice lucid nocd wait"0c" pick"/dev/null" atload"plugin:setup:tmux_plugins"
+zinit ice lucid nocd wait"0c" pick"/dev/null" atload"plugin:tmux:plugins"
 zinit snippet /dev/null

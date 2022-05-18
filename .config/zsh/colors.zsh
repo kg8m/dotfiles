@@ -1,4 +1,4 @@
-function plugin:setup:dircolors {
+function plugin:dircolors:atload {
   if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/dircolors_ansi-universal" ]; then
     local tempfile="$(mktemp)"
 
@@ -43,13 +43,13 @@ function plugin:setup:dircolors {
   source "${KG8M_ZSH_CACHE_DIR}/dircolors_ansi-universal"
   zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
 
-  unset -f plugin:setup:dircolors
+  unset -f plugin:dircolors:atload
 }
 
-function plugin:setup:dircolors:reset {
+function plugin:dircolors:atclone {
   echo -e "\n$(highlight:yellow "Reset colors, so check updates and fix my overwrites if needed.")\n"
   trash "${KG8M_ZSH_CACHE_DIR:?}/dircolors_ansi-universal"
 }
 
-zinit ice lucid wait"0c" atclone="plugin:setup:dircolors:reset" atpull="%atclone" atload"plugin:setup:dircolors"
+zinit ice lucid wait"0c" atclone="plugin:dircolors:atclone" atpull="%atclone" atload"plugin:dircolors:atload"
 zinit light seebi/dircolors-solarized

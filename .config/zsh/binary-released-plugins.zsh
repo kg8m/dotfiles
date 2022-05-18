@@ -42,10 +42,11 @@ function plugin:setup:binary_releaseds {
 
   # Don't use zinit's options like `as"command" mv"${plugin}* -> ${plugin}" pick"${plugin}/${plugin}"` because it
   # makes the `$PATH` longer and longer. Make symbolic links in `${HOME}/bin` instead.
-  function plugin:setup:binary_released {
+  function plugin:binary_released:atclone {
     local repository="${1:?}"
     local plugin="${2:?}"
 
+    echo >&2
     echo:info "URL: https://github.com/${repository}"
     echo >&2
 
@@ -127,11 +128,11 @@ function plugin:setup:binary_releaseds {
         execute_with_echo "mv ./bat/autocomplete/{bat.zsh,_bat}"
         ;;
       nextword)
-        execute_with_echo "plugin:setup:nextword"
+        execute_with_echo "plugin:nextword:after_update"
         ;;
       zabrze)
-        execute_with_echo "plugin:setup:binary_releaseds:extra:zabrze:reset"
-        execute_with_echo "plugin:setup:binary_releaseds:extra:zabrze"
+        execute_with_echo "plugin:zabrze:reset"
+        execute_with_echo "plugin:zabrze:init"
         ;;
       *)
         # Do nothing.
@@ -148,7 +149,7 @@ function plugin:setup:binary_releaseds {
     echo >&2
   }
 
-  function plugin:setup:nextword {
+  function plugin:nextword:after_update {
     if command -v nextword > /dev/null; then
       if [ ! -d "${NEXTWORD_DATA_PATH:-}" ]; then
         local parent_dir="$(dirname "${NEXTWORD_DATA_PATH}")"
@@ -195,7 +196,7 @@ function plugin:setup:binary_releaseds {
       from"gh-r"
       as"null"
       id-as"$(dirname "${repository}")---${plugin}-bin"
-      atclone"plugin:setup:binary_released ${repository} ${plugin}"
+      atclone"plugin:binary_released:atclone ${repository} ${plugin}"
       atpull"%atclone"
     )
 
@@ -223,31 +224,30 @@ function plugin:setup:binary_releaseds {
 zinit ice lucid pick"/dev/null" nocd wait"0c" atload"plugin:setup:binary_releaseds"
 zinit snippet /dev/null
 
-function plugin:setup:binary_releaseds:extra:mocword {
-  function plugin:setup:binary_releaseds:extra:mocword:data {
+function plugin:mocword:atload {
+  function plugin:mocword:data:atclone {
     # cf. exporting MOCWORD_DATA in .zshenv
     mkdir -p "$(dirname "${MOCWORD_DATA:?}")"
     ln -fs "${PWD}/mocword.sqlite" "${MOCWORD_DATA}"
   }
-  zinit ice lucid from"gh-r" as"null" bpick"mocword.sqlite.gz" atclone"plugin:setup:binary_releaseds:extra:mocword:data"
+  zinit ice lucid from"gh-r" as"null" bpick"mocword.sqlite.gz" atclone"plugin:mocword:data:atclone"
   zinit light high-moctane/mocword-data
 }
-zinit ice lucid pick"/dev/null" nocd wait"0c" has"mocword" atload"plugin:setup:binary_releaseds:extra:mocword"
+zinit ice lucid pick"/dev/null" nocd wait"0c" has"mocword" atload"plugin:mocword:atload"
 zinit snippet /dev/null
 
-
-function plugin:setup:binary_releaseds:extra:zabrze:reset {
+function plugin:zabrze:reset {
   rm -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init"
 }
 
-function plugin:setup:binary_releaseds:extra:zabrze {
+function plugin:zabrze:init {
   if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init" ]; then
     zabrze init --bind-keys > "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
     zcompile "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
   fi
   source "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
 }
-zinit ice lucid nocd wait"0a" pick"/dev/null" has"zabrze" atload"plugin:setup:binary_releaseds:extra:zabrze"
+zinit ice lucid nocd wait"0a" pick"/dev/null" has"zabrze" atload"plugin:zabrze:init"
 zinit snippet /dev/null
 
 zinit ice lucid as"completion" mv"zsh_tealdeer -> _tldr"
