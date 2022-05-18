@@ -221,8 +221,8 @@ function plugin:setup:binary_releaseds {
 
   unset -f plugin:setup:binary_releaseds
 }
-zinit ice lucid pick"/dev/null" nocd wait"0c" atload"plugin:setup:binary_releaseds"
-zinit snippet /dev/null
+zinit ice lucid nocd wait"0c" atload"plugin:setup:binary_releaseds"
+zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-setup-binary_releaseds"
 
 function plugin:mocword:atload {
   function plugin:mocword:data:atclone {
@@ -233,8 +233,8 @@ function plugin:mocword:atload {
   zinit ice lucid from"gh-r" as"null" bpick"mocword.sqlite.gz" atclone"plugin:mocword:data:atclone"
   zinit light high-moctane/mocword-data
 }
-zinit ice lucid pick"/dev/null" nocd wait"0c" has"mocword" atload"plugin:mocword:atload"
-zinit snippet /dev/null
+zinit ice lucid nocd wait"0c" has"mocword" atload"plugin:mocword:atload"
+zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-mocword-atload"
 
 function plugin:zabrze:reset {
   rm -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init"
@@ -247,8 +247,8 @@ function plugin:zabrze:init {
   fi
   source "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
 }
-zinit ice lucid nocd wait"0a" pick"/dev/null" has"zabrze" atload"plugin:zabrze:init"
-zinit snippet /dev/null
+zinit ice lucid nocd wait"0a" has"zabrze" atload"plugin:zabrze:init"
+zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-zabrze-init"
 
 zinit ice lucid as"completion" mv"zsh_tealdeer -> _tldr"
 zinit snippet https://github.com/dbrgn/tealdeer/blob/main/completion/zsh_tealdeer

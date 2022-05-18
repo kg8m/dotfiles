@@ -24,5 +24,5 @@ function plugin:tmux:plugins {
 
   unset -f plugin:tmux:plugins
 }
-zinit ice lucid nocd wait"0c" pick"/dev/null" atload"plugin:tmux:plugins"
-zinit snippet /dev/null
+zinit ice lucid nocd wait"0c" atload"plugin:tmux:plugins"
+zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-tmux-plugins"

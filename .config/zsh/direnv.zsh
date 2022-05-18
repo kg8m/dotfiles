@@ -22,7 +22,7 @@ function plugin:direnv:atload {
 }
 
 function() {
-  local ice_options=(lucid nocd pick"/dev/null" atload"plugin:direnv:atload")
+  local ice_options=(lucid nocd atload"plugin:direnv:atload")
 
   # immediately load direnv and, reflect envs if `.envrc` exists.
   if [ ! -f ".envrc" ]; then
@@ -30,5 +30,5 @@ function() {
   fi
 
   zinit ice "${ice_options[@]}"
-  zinit snippet /dev/null
+  zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-direnv-atload"
 }

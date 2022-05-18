@@ -138,8 +138,8 @@ function() {
 
     unset -f prompt:refresh:setup
   }
-  zinit ice lucid wait"command -v async_start_worker > /dev/null" pick"/dev/null" atload"prompt:refresh:setup"
-  zinit snippet /dev/null
+  zinit ice lucid wait"command -v async_start_worker > /dev/null" atload"prompt:refresh:setup"
+  zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/prompt-refresh-setup"
 }
 
 export ZSH_THEME_GIT_PROMPT_PREFIX="["

@@ -17,8 +17,8 @@ function plugin:others:setup {
 
   unset -f plugin:others:setup
 }
-zinit ice lucid wait"0c" pick"/dev/null" atload"plugin:others:setup"
-zinit snippet /dev/null
+zinit ice lucid wait"0c" atload"plugin:others:setup"
+zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-others-setup"
 
 # cf. async_start_worker, async_stop_worker, async_job, and so on
 zinit ice lucid wait"0c"
