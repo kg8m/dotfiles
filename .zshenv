@@ -18,10 +18,7 @@ typeset -U path
 
 # (N-/): Ignore unless exists
 path=(
-  "${HOME}/.config/git/bin"
-  "${HOME}/.config/zsh/bin"
   "${HOME}/.local/bin"
-  "${HOME}/bin"
   "/usr/local/bin"(N-/)
   "/usr/bin"(N-/)
   "/bin"(N-/)
@@ -84,6 +81,13 @@ export FD_DEFAULT_OPTIONS=(
 
   # Sort search results
   --threads 1
+)
+
+path=(
+  "${HOME}/.config/git/bin"
+  "${HOME}/.config/zsh/bin"
+  "${HOME}/bin"
+  "${path[@]}"
 )
 
 if [[ -o interactive ]]; then
