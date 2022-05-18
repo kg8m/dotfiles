@@ -56,8 +56,8 @@ fi
 # Kill existing processes because too many processes run and they cause high CPU usage.
 pkill -f ".*textlint.* ${options[*]}"
 
-# Prevent "text.matchAll(...) is not a function or its return value is not iterable" error with older Node.js.
-export ASDF_NODEJS_VERSION="system"
+# Prevent "text.matchAll(...) is not a function or its return value is not iterable" error caused by older Node.js.
+export ASDF_NODEJS_VERSION="$(asdf list nodejs | tail -n1)"
 
 out="$(textlint "${options[@]}" 2> "${err_temp_filepath}")"
 err="$(cat "${err_temp_filepath}")"

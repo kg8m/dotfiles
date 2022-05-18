@@ -7,8 +7,8 @@ if [ ! "${LIT_ANALYZER_AVAILABLE:-}" = "1" ]; then
   exit 1
 fi
 
-# Always use system Node.js version for lit-analyzer.
-export ASDF_NODEJS_VERSION="system"
+# Always use the latest Node.js version for lit-analyzer.
+export ASDF_NODEJS_VERSION="$(asdf list nodejs | tail -n1)"
 
 filepath="${1:?}"
 args=(

@@ -3,8 +3,8 @@ if ! command -v markuplint > /dev/null; then
   exit 1
 fi
 
-# Always use system Node.js version for markuplint.
-export ASDF_NODEJS_VERSION="system"
+# Always use the latest Node.js version for markuplint.
+export ASDF_NODEJS_VERSION="$(asdf list nodejs | tail -n1)"
 
 target_filepath="$1"
 
