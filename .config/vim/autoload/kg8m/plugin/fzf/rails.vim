@@ -118,6 +118,11 @@ def Setup(): void
       # e.g., `app/controllers` => `controllers`
       const alternative = fnamemodify(app_dir, ":t")
 
+      # Skip singular name if its plural name is already defined.
+      if has_key(specs, $"{alternative}s")
+        continue
+      endif
+
       if !has_key(specs, alternative)
         specs[alternative] = { dirs: [app_dir] }
       endif
@@ -126,11 +131,16 @@ def Setup(): void
 
   for test_dir in globpath("spec,test", "*", 0, 1)
     if isdirectory(test_dir)
-      specs[test_dir] = { dirs: [test_dir] }
+      if !has_key(specs, test_dir)
+        specs[test_dir] = { dirs: [test_dir] }
+      endif
 
       # e.g., `test/fixtures` => `fixtures-of-test`
       const alternative = join(reverse(split(test_dir, "/")), "-of-")
-      specs[alternative] = { dirs: [test_dir] }
+
+      if !has_key(specs, alternative)
+        specs[alternative] = { dirs: [test_dir] }
+      endif
     endif
   endfor
 
