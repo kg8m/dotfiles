@@ -113,18 +113,16 @@ def Setup(): void
 
   for app_dir in globpath("app", "*", 0, 1)
     if isdirectory(app_dir)
-      specs[app_dir] = { dirs: [app_dir] }
-
       # e.g., `app/controllers` => `controllers`
-      const alternative = fnamemodify(app_dir, ":t")
+      const name = fnamemodify(app_dir, ":t")
 
       # Skip singular name if its plural name is already defined.
-      if has_key(specs, $"{alternative}s")
+      if has_key(specs, $"{name}s")
         continue
       endif
 
-      if !has_key(specs, alternative)
-        specs[alternative] = { dirs: [app_dir] }
+      if !has_key(specs, name)
+        specs[name] = { dirs: [app_dir] }
       endif
     endif
   endfor
