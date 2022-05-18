@@ -57,6 +57,7 @@ enddef
 def ExtraConfigForBashLanguageServer(): dict<any>
   return {
     cmd: (_) => ["bash-language-server", "start"],
+    env: NodeToolsEnv(),
   }
 enddef
 
@@ -88,6 +89,7 @@ def ExtraConfigForCssLanguageServer(): dict<any>
   # css-language-server doesn't work when editing `.sass` file.
   return {
     cmd: (_) => ["vscode-css-language-server", "--stdio"],
+    env: NodeToolsEnv(),
     config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("css") },
     workspace_config: {
       css:  { lint: { validProperties: [] } },
@@ -225,6 +227,7 @@ enddef
 def ExtraConfigForHtmlLanguageServer(): dict<any>
   return {
     cmd: (_) => ["vscode-html-language-server", "--stdio"],
+    env: NodeToolsEnv(),
     initialization_options: { embeddedLanguages: { css: true, javascript: true } },
     config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("html") },
   }
@@ -243,6 +246,7 @@ enddef
 def ExtraConfigForJsonLanguageServer(): dict<any>
   return {
     cmd: (_) => ["vscode-json-language-server", "--stdio"],
+    env: NodeToolsEnv(),
     config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("json") },
     workspace_config: {
       json: {
@@ -403,6 +407,7 @@ enddef
 def ExtraConfigForTypescriptLanguageServer(): dict<any>
   return {
     cmd: (_) => ["typescript-language-server", "--stdio"],
+    env: NodeToolsEnv(),
 
     document_format: false,
     organize_imports: true,
@@ -421,6 +426,7 @@ enddef
 def ExtraConfigForVimLanguageServer(): dict<any>
   return {
     cmd: (_) => ["vim-language-server", "--stdio"],
+    env: NodeToolsEnv(),
     initialization_options: {
       # vim-language-server uses only `:`.
       iskeyword: ":",
@@ -454,6 +460,7 @@ enddef
 def ExtraConfigForVueLanguageServer(): dict<any>
   return {
     cmd: (_) => ["vls"],
+    env: NodeToolsEnv(),
 
     # cf. https://github.com/sublimelsp/LSP-vue/blob/master/LSP-vue.sublime-settings
     initialization_options: {
@@ -504,6 +511,7 @@ enddef
 def ExtraConfigForYamlLanguageServer(): dict<any>
   return {
     cmd: (_) => ["yaml-language-server", "--stdio"],
+    env: NodeToolsEnv(),
     workspace_config: {
       yaml: {
         completion: true,
@@ -691,4 +699,18 @@ def CheckExitedServers(): void
       kg8m#util#logger#Error(messages->join(" "))
     endif
   endfor
+enddef
+
+def NodeToolsEnv(): dict<any>
+  if has_key(cache, "node_tools_env")
+    return cache.node_tools_env
+  endif
+
+  const latest_node_version = system("asdf list nodejs | tail -n1")
+
+  cache.node_tools_env = {
+    ASDF_NODEJS_VERSION: latest_node_version,
+  }
+
+  return cache.node_tools_env
 enddef
