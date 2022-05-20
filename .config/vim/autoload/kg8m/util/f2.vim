@@ -85,16 +85,16 @@ def RunSingleline(): void
   const stopline = line(".")
 
   if cache.type ==# "t"
-    cursor(cursor_position[1], cursor_position[2] + 1)
+    kg8m#util#cursor#Move(cursor_position[1], cursor_position[2] + 1)
   elseif cache.type ==# "T"
-    cursor(cursor_position[1], cursor_position[2] - 1)
+    kg8m#util#cursor#Move(cursor_position[1], cursor_position[2] - 1)
   endif
 
   const position = searchpos(pattern, flags, stopline)
 
   if position ==# [0, 0]
     if getcurpos() !=# cursor_position
-      cursor(cursor_position[1], cursor_position[2])
+      kg8m#util#cursor#Move(cursor_position[1], cursor_position[2])
     endif
 
     const message = $"There are no matches for {string(cache.input)}"
@@ -112,7 +112,7 @@ def RunSingleline(): void
       column_number += 1
     endif
 
-    cursor(line_number, column_number)
+    kg8m#util#cursor#Move(line_number, column_number)
     BlinkCursor()
   endif
 enddef

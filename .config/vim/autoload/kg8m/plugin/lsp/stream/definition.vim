@@ -54,7 +54,7 @@ def FallbackForVimAutoloadFunction(): void
     const column_number = matchstrpos(result, '\v<export def \zs')[1] - len(line_number)
 
     execute "edit" fnameescape(filepath)
-    cursor([line_number, column_number])
+    kg8m#util#cursor#Move(line_number, column_number)
 
     # zv: Show cursor even if in fold.
     # zz: Adjust cursor at center of window.

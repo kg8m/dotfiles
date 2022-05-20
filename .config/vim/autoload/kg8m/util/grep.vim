@@ -34,7 +34,7 @@ export def BuildQflistFromBuffer(): void
   setlocal nomodified
 
   execute "edit" fnameescape(contents[0].filename)
-  cursor(contents[0].lnum, contents[0].col)
+  kg8m#util#cursor#Move(contents[0].lnum, contents[0].col)
 
   # zv: Show cursor even if in fold.
   # zz: Adjust cursor at center of window.
