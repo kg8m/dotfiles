@@ -99,8 +99,8 @@ autoload -U _zinit
 # shellcheck disable=SC2034,SC2154
 ((${+_comps})) && _comps[zinit]=_zinit
 
-source ~/.config/zsh/my-aliases.zsh
-source ~/.config/zsh/my-functions.zsh
+source ~/.config/zsh/aliases.zsh
+source ~/.config/zsh/utility-functions.zsh
 
 source ~/.config/zsh/asdf.zsh
 source ~/.config/zsh/binary-released-plugins.zsh
