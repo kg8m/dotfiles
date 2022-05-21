@@ -50,7 +50,7 @@ export def RemoveExtraInfo(bufname: string): string
 enddef
 
 def DefaultSorter(lhs: dict<any>, rhs: dict<any>): number
-  return lhs.name <# rhs.name ? 1 : -1
+  return lhs.name <# rhs.name ? -1 : 1
 enddef
 
 # Don't use fzf.vim's default handler because it can't open non-persisted, e.g., `buftype=nofile` set, buffers.
