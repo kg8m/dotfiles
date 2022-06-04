@@ -10,6 +10,8 @@ if crontab -i > /dev/null 2>&1; then
 fi
 
 alias diff="diff -U 10 -b -B"
+# shellcheck disable=SC2154
+alias fd="fd \${FD_DEFAULT_OPTIONS:?[@]}"
 alias ls="ls --color --almost-all"
 alias ll="ls -l --time-style=long-iso"
 alias rm="rm -i"
