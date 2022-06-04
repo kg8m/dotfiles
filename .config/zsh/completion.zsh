@@ -9,7 +9,11 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 setopt complete_in_word
 
-fpath=("${XDG_CONFIG_HOME}/zsh/completions" "${fpath[@]}")
+fpath=(
+  "${XDG_CONFIG_HOME:?}/zsh/completions"
+  "${HOMEBREW_PREFIX:?}/share/zsh/site-functions"(N-/)
+  "${fpath[@]}"
+)
 
 # https://zdharma.org/zinit/wiki/Example-Minimal-Setup/
 zinit ice lucid wait"0c" blockf atclone"zinit creinstall \${PWD}" atpull"%atclone"

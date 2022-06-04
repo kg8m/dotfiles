@@ -19,9 +19,11 @@ typeset -U path
 # (N-/): Ignore unless exists
 path=(
   "${HOME}/.local/bin"
+  "/opt/homebrew/bin"(N-/)
   "/usr/local/bin"(N-/)
   "/usr/bin"(N-/)
   "/bin"(N-/)
+  "/opt/homebrew/sbin"(N-/)
   "/usr/local/sbin"(N-/)
   "/usr/sbin"(N-/)
   "/sbin"(N-/)
@@ -51,6 +53,12 @@ export MOCWORD_DATA="${HOME}/.local/share/mocword/mocword.sqlite"
 export NEXTWORD_DATA_PATH="${HOME}/.local/share/nextword/nextword-data"
 export RIPGREP_CONFIG_PATH="${HOME}/.config/ripgrep/config"
 export VIM_PLUGINS="${HOME}/.vim/plugins/repos"
+
+if [ -d "/opt/homebrew" ]; then
+  export HOMEBREW_PREFIX="/opt/homebrew"
+else
+  export HOMEBREW_PREFIX="/usr/local"
+fi
 
 export KG8M_ZSH_CACHE_DIR="${XDG_CACHE_HOME}/zsh"
 

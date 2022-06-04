@@ -615,3 +615,13 @@ function progressbar {
 
   printf "\r[%s%s] %3d%%" "${fill_chars}" "${empty_chars}" "${progress}"
 }
+
+function is_m1_mac {
+  local uname="$(uname -a)"
+
+  if [[ "${uname}" =~ ^Darwin ]] && [[ "${uname}" =~ arm64$ ]]; then
+    echo 1
+  else
+    echo 0
+  fi
+}

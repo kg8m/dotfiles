@@ -177,9 +177,9 @@ def SetupMigemo(): void
 
   if executable("cmigemo")
     const directories = [
-      "/usr/local/share/migemo/",
-      "/usr/local/share/cmigemo/",
-      "/usr/local/share/",
+      $"{$HOMEBREW_PREFIX}/share/migemo/",
+      $"{$HOMEBREW_PREFIX}/share/cmigemo/",
+      $"{$HOMEBREW_PREFIX}/share/",
       "/usr/share/cmigemo/",
       "/usr/share/",
     ]
