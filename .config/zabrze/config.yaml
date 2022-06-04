@@ -1,7 +1,54 @@
 abbrevs:
+  - name: asdf install
+    abbr: i
+    snippet: install
+    global: true
+    context: '^asdf\s'
+  - name: asdf list
+    abbr: li
+    snippet: list
+    global: true
+    context: '^asdf\s'
+
   - name: batch_move
     abbr: bmv
     snippet: batch_move
+
+  - name: brew install
+    abbr: i
+    snippet: install
+    global: true
+    context: '^brew\s'
+  - name: brew list
+    abbr: li
+    snippet: list
+    global: true
+    context: '^brew\s'
+  - name: brew uninstall
+    abbr: uni
+    snippet: uninstall
+    global: true
+    context: '^brew\s'
+
+  - name: bundle
+    abbr: b
+    snippet: bundle
+  - name: bundle exec
+    abbr: e
+    snippet: exec
+    global: true
+    context: '^bundle\s'
+  - name: bundle install
+    abbr: i
+    snippet: install
+    global: true
+    context: '^bundle\s'
+  - name: bundle update
+    abbr: up
+    snippet: update
+    global: true
+    context: '^bundle\s'
+
   - name: cd-bookmark
     abbr: cdb
     snippet: cd-bookmark
@@ -119,11 +166,6 @@ abbrevs:
   - name: git diff-local-without-space-changes
     abbr: dl
     snippet: diff-local-without-space-changes
-    global: true
-    context: '^git\s'
-  - name: git _
-    abbr: _
-    snippet: _
     global: true
     context: '^git\s'
   - name: git fetch
