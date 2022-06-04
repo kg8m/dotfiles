@@ -1,5 +1,7 @@
 vim9script
 
+const SECONDS_AS_OLDFILE = 5 * 60
+
 export def Configure(): void
   kg8m#plugin#Configure({
     lazy:     true,
@@ -7,6 +9,22 @@ export def Configure(): void
     hook_source:      () => OnSource(),
     hook_post_source: () => OnPostSource(),
   })
+enddef
+
+def CleanUpOldLockfiles(): void
+  for name in keys(g:parallel_auto_ctags#entry_points)
+    const config = g:parallel_auto_ctags#entry_points[name]
+    const lockpath = $"{config.path}/tags.lock"
+
+    if !filereadable(lockpath)
+      continue
+    endif
+
+    if localtime() - getftime(lockpath) ># SECONDS_AS_OLDFILE
+      delete(lockpath)
+      kg8m#util#logger#Info("[ctags] The lock file `${lockpath}` has been deleted because too old.")
+    endif
+  endfor
 enddef
 
 def OnSource(): void
@@ -33,5 +51,7 @@ def OnSource(): void
 enddef
 
 def OnPostSource(): void
+  CleanUpOldLockfiles()
   parallel_auto_ctags#create_all()
+  timer_start(SECONDS_AS_OLDFILE * 1000, (_) => CleanUpOldLockfiles(), { repeat: -1 })
 enddef
