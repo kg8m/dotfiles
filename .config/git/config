@@ -247,7 +247,7 @@
 	diff-local                       = diff --no-index
 	diff-local-without-space-changes = diff-without-space-changes --no-index
 
-	diff-stat-branches = diff-branches --stat-width = 150
+	diff-stat-branches = diff-branches --stat-width 150
 
 	diff-branches      = "!git sh \"git:diff:branch $*\""
 	diff-branch-from   = "!git sh \"git:diff:branch:from $*\""
