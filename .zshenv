@@ -62,6 +62,8 @@ fi
 
 export KG8M_ZSH_CACHE_DIR="${XDG_CACHE_HOME}/zsh"
 
+mkdir -p "${VIM_PLUGINS}"
+
 export FD_DEFAULT_OPTIONS=(
   # Include hidden files and directories
   --hidden
