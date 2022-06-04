@@ -167,6 +167,8 @@ export def Others(): void
 
     autocmd BufNewFile,BufRead *.csv          kg8m#util#encoding#EditWithCP932()
     autocmd BufNewFile,BufRead COMMIT_EDITMSG kg8m#util#encoding#EditWithUTF8()
+
+    autocmd VimResized * wincmd =
   augroup END
 enddef
 
