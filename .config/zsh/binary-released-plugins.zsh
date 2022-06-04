@@ -139,7 +139,7 @@ function plugin:setup:binary_releaseds {
         ;;
     esac
 
-    [ -n "$(find . -type f -name '_*')" ] && execute_with_echo "zinit creinstall '${PWD}'"
+    [ -n "$(find . -type f -name '_*')" ] && execute_with_echo "zinit creinstall ${repository}"
 
     echo >&2
     echo:info "Done."
