@@ -91,6 +91,7 @@ if kg8m#plugin#Register("rhysd/conflict-marker.vim", { if: &diff })
   augroup vimrc-plugin-conflict_marker
     autocmd!
     autocmd FileType * nmap <buffer> <Leader>c <Plug>(conflict-marker-next-hunk)
+    autocmd User all_on_start_plugins_sourced kg8m#util#logger#Info("Press `<Leader>c` to move to next conflict hunk.")
   augroup END
 
   kg8m#plugin#Configure({

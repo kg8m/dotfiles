@@ -12,6 +12,11 @@ const CHECK_REMOTE_THRESHOLD = 2 * 24 * 60 * 60
 
 final on_start_queue = []
 
+augroup vimrc-plugin
+  autocmd!
+  autocmd User all_on_start_plugins_sourced ++once :
+augroup END
+
 export def DisableDefaults(): void
   g:no_vimrc_example         = true
   g:no_gvimrc_example        = true
@@ -196,7 +201,9 @@ enddef
 
 # Source lazily but early to optimize sourcing many plugins
 def DequeueOnStart(): void
-  if !empty(on_start_queue)
+  if empty(on_start_queue)
+    doautocmd <nomodeline> User all_on_start_plugins_sourced
+  else
     const plugin_name = remove(on_start_queue, 0)
     timer_start(100, (_) => SourceOnStart(plugin_name))
   endif
