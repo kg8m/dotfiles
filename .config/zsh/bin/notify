@@ -2,6 +2,7 @@
 source ~/.config/zsh/utility-functions.zsh
 
 message=""
+host=""
 notifier_options=()
 is_stay="1"
 
@@ -9,6 +10,10 @@ while [ "${#@}" -gt 0 ]; do
   case "$1" in
     --title)
       notifier_options+=("-title \"${2:?}\"")
+      shift 2
+      ;;
+    --host)
+      host="${${2:?}}"
       shift 2
       ;;
     --nostay)
@@ -31,7 +36,11 @@ if [ -z "${message}" ]; then
   message="Command finished."
 fi
 
-message="[$(hostname)] ${message}"
+if [ -z "${host}" ]; then
+  host="$(hostname)"
+fi
+
+message="[${host}] ${message}"
 notifier_options+=("-group \"NOTIFY_${message}\"")
 
 if [ "${is_stay}" = "1" ]; then
