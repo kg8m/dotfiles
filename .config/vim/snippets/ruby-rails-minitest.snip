@@ -1,12 +1,12 @@
-snippet assert_raise
-abbr    assert_raise({Exception}) { ... }
+snippet assert_raises
+abbr    assert_raises({Exception}) { ... }
 options head
-	assert_raise(${1:#:Exception}) { ${0} }
+	assert_raises(${1:#:Exception}) { ${0} }
 
-snippet assert_raise_block
-abbr    assert_raise {Exception} do ... end
+snippet assert_raises_block
+abbr    assert_raises {Exception} do ... end
 options head
-	assert_raise ${1:#:Exception} do
+	assert_raises ${1:#:Exception} do
 		${0}
 	end
 

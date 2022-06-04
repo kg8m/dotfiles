@@ -1,2 +1,3 @@
 syntax keyword rubyAssertion assert_changes assert_no_changes assert_difference assert_no_difference
 syntax keyword rubyAssertion assert_predicate assert_not_predicate
+syntax keyword rubyAssertion assert_raises assert_nothing_raised
