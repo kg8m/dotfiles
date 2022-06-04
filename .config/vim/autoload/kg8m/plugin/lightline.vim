@@ -152,6 +152,22 @@ def OnSource(): void
       warning_fileencoding: "error",
     },
     colorscheme: "kg8m",
+
+    # Use same width for all modes to prevent unstable positions.
+    # :h g:lightline.mode_map
+    mode_map: {
+      n:        " NORMAL ",
+      i:        " INSERT ",
+      R:        "REPLACE ",
+      v:        " VISUAL ",
+      V:        " V-LINE ",
+      "\<C-v>": "V-BLOCK ",
+      c:        "COMMAND ",
+      s:        " SELECT ",
+      S:        " S-LINE ",
+      "\<C-s>": "S-BLOCK ",
+      t:        "TERMINAL",
+    },
   }
 
   augroup vimrc-plugin-lightline
