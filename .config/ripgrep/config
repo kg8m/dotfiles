@@ -42,6 +42,10 @@
 --glob=!tmp/
 --glob=!vendor/bundle/
 
+# For Mac (currently not working)
+--glob=!/System/Volumes/
+--glob=!/Volumes/
+
 # Exclude files by filetype: see by `rg --type-list`
 --type-not=lock
 --type-not=minified

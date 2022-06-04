@@ -79,6 +79,10 @@ export FD_DEFAULT_OPTIONS=(
   --exclude "tmp/"
   --exclude "vendor/bundle/"
 
+  # For Mac
+  --exclude "/System/Volumes/"
+  --exclude "/Volumes/"
+
   # Sort search results
   --threads 1
 )
