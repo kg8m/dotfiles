@@ -37,6 +37,9 @@ Lint/NumberConversion:
 Metrics/MethodLength:
   Max: 15
 
+Naming/BlockForwarding:
+  # Disable because syntax errors occur on older Ruby.
+  Enabled: false
 Naming/FileName:
   Exclude:
     - "Gemfile.local.example"
@@ -66,6 +69,8 @@ Style/FormatString:
   Enabled: false
 Style/GuardClause:
   Enabled: false
+Style/HashSyntax:
+  EnforcedShorthandSyntax: either
 Style/IfUnlessModifier:
   Enabled: false
 Style/ImplicitRuntimeError:
