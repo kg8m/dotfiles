@@ -71,7 +71,19 @@ const config = {
       "no-doubled-joshi": {
         severity: "warning",
         allow: ["か", "とか", "とも", "にも", "も"],
-        commaCharacters: ["、", "，", "「", "」", "（", "）", "/", "→", "←"],
+        commaCharacters: [
+          "、",
+          "，",
+          "「",
+          "」",
+          "“",
+          "”",
+          "（",
+          "）",
+          "/",
+          "→",
+          "←",
+        ],
       },
 
       // Use exclamation marks and question marks.
