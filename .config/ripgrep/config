@@ -42,9 +42,11 @@
 --glob=!tmp/
 --glob=!vendor/bundle/
 
-# For Mac (currently not working)
---glob=!/System/Volumes/
---glob=!/Volumes/
+# For Mac
+# Use `**` because ripgrep doesn't support absolute paths for `--glob`.
+# cf. https://github.com/BurntSushi/ripgrep/issues/973
+--glob=!**/System/Volumes/
+--glob=!**/Volumes/
 
 # Exclude files by filetype: see by `rg --type-list`
 --type-not=lock
