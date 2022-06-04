@@ -87,10 +87,10 @@ if kg8m#plugin#Register("tyru/caw.vim", { if: !kg8m#util#IsGitTmpEdit() })
   kg8m#plugin#caw#Configure()
 endif
 
-if kg8m#plugin#Register("rhysd/conflict-marker.vim")
+if kg8m#plugin#Register("rhysd/conflict-marker.vim", { if: &diff })
   augroup vimrc-plugin-conflict_marker
     autocmd!
-    autocmd FileType diff nmap <buffer> <Leader>c <Plug>(conflict-marker-next-hunk)
+    autocmd FileType * nmap <buffer> <Leader>c <Plug>(conflict-marker-next-hunk)
   augroup END
 
   kg8m#plugin#Configure({
