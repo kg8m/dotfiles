@@ -43,6 +43,7 @@
 --glob=!vendor/bundle/
 
 # Exclude files by filetype: see by `rg --type-list`
+--type-not=lock
 --type-not=minified
 
 --type-add=dat:*.dat
