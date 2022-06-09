@@ -157,7 +157,7 @@ function plugin:setup:binary_releaseds {
 
         # Use subshell to restore pwd.
         (
-          cd "${parent_dir}"
+          builtin cd "${parent_dir}"
 
           local name=large
 

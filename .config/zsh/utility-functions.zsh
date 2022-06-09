@@ -481,7 +481,7 @@ function zsh:plugins:update {
   # Use subshell to restore pwd.
   (
     # Clean up the directory because enhancd makes it dirty when loaded.
-    execute_with_echo "cd ${ENHANCD_ROOT:?}"
+    execute_with_echo "builtin cd ${ENHANCD_ROOT:?}"
     execute_with_echo "git restore ."
   )
 
@@ -490,7 +490,7 @@ function zsh:plugins:update {
   # Use subshell to restore pwd.
   (
     # Remove `_*.fish` files because they are treated as completions by zinit.
-    execute_with_echo "cd ${ENHANCD_ROOT:?}"
+    execute_with_echo "builtin cd ${ENHANCD_ROOT:?}"
     execute_with_echo "rm -f ./**/_*.fish"
   )
 
