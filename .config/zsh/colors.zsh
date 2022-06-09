@@ -6,9 +6,9 @@ function plugin:dircolors:atload {
 
     # shellcheck disable=SC2034
     local overwrites=(
-      # bright black (gray)
-      ".DS_Store 01;30"
-      ".example 01;30"
+      # gray
+      ".DS_Store 38;5;245"
+      ".example 38;5;245"
 
       # green: editable text
       ".diff 32"
