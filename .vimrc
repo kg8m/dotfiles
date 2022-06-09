@@ -431,6 +431,10 @@ kg8m#plugin#Register("tpope/vim-repeat")
 if kg8m#plugin#Register("vim-ruby/vim-ruby")
   g:no_ruby_maps = true
 
+  # For performance: vim-ruby searches Ruby directories and sets the `path` option but the feature is a bit slow and
+  # unnecessary for me.
+  g:ruby_path = ""
+
   augroup vimrc-plugin-ruby
     autocmd!
 
