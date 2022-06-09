@@ -117,7 +117,6 @@ export def Mappings(): void
   kg8m#configure#mappings#Base()
   kg8m#configure#mappings#Utils()
   kg8m#configure#mappings#PreventUnconsciousOperation()
-  kg8m#configure#mappings#batch_cursor_move#Define()
   kg8m#configure#mappings#search#Define()
 enddef
 
