@@ -1,10 +1,10 @@
 vim9script
 
 export def Configure(): void
-  map <expr> *  <SID>WithNotify("<Plug>(asterisk-z*)")
-  map <expr> #  <SID>WithNotify("<Plug>(asterisk-z#)")
-  map <expr> g* <SID>WithNotify("<Plug>(asterisk-gz*)")
-  map <expr> g# <SID>WithNotify("<Plug>(asterisk-gz#)")
+  map <expr> *  WithNotify("<Plug>(asterisk-z*)")
+  map <expr> #  WithNotify("<Plug>(asterisk-z#)")
+  map <expr> g* WithNotify("<Plug>(asterisk-gz*)")
+  map <expr> g# WithNotify("<Plug>(asterisk-gz#)")
 
   kg8m#plugin#Configure({
     lazy:   true,

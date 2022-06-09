@@ -10,14 +10,14 @@ export def Define(options: dict<bool> = {}): void
     return
   endif
 
-  inoremap <buffer><expr>         . <SID>DotExpr()
+  inoremap <buffer><expr>         . DotExpr()
 
   # <silent> for lexima#expand's echo
-  imap     <buffer><expr><silent> <CR> <SID>CrExpr()
+  imap     <buffer><expr><silent> <CR> CrExpr()
 
   # <silent> for lexima#expand's echo
-  inoremap <buffer><expr><silent> <BS>  <SID>BsExpr()
-  inoremap <buffer><expr><silent> <C-h> <SID>BsExpr()
+  inoremap <buffer><expr><silent> <BS>  BsExpr()
+  inoremap <buffer><expr><silent> <C-h> BsExpr()
 
   inoremap <buffer><expr>         <Tab>   pumvisible() ? "<C-n>" : "<Tab>"
   inoremap <buffer><expr>         <S-Tab> pumvisible() ? "<C-p>" : "<S-Tab>"
@@ -30,7 +30,7 @@ export def Define(options: dict<bool> = {}): void
   inoremap <buffer><expr>         <Down> pumvisible() ? "<C-n>" : "<Down>"
 
   # <silent> for lexima#expand's echo
-  imap     <buffer><expr><silent> > <SID>GtExpr()
+  imap     <buffer><expr><silent> > GtExpr()
 
   b:is_defined = true
 enddef

@@ -1,7 +1,7 @@
 vim9script
 
 export def Configure(): void
-  map <expr> gc <SID>Run()
+  map <expr> gc Run()
 
   kg8m#plugin#Configure({
     lazy: true,

@@ -1,9 +1,9 @@
 vim9script
 
 export def Define(): void
-  nnoremap <expr> <Leader>/ <SID>ClearHlsearch()
-  nnoremap <expr> /         <SID>EnterSearch()
-  cnoremap <expr> <C-c>     <SID>ExitCmdline()
+  nnoremap <expr> <Leader>/ ClearHlsearch()
+  nnoremap <expr> /         EnterSearch()
+  cnoremap <expr> <C-c>     ExitCmdline()
 enddef
 
 def ClearHlsearch(): string

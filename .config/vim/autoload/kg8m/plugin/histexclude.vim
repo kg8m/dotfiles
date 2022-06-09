@@ -1,7 +1,7 @@
 vim9script
 
 export def Configure(): void
-  nnoremap <expr> : <SID>Run()
+  nnoremap <expr> : Run()
 
   kg8m#plugin#Configure({
     lazy: true,
