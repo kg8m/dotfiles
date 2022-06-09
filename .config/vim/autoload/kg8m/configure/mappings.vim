@@ -99,6 +99,17 @@ export def Base(): void
   onoremap a" 2i"
   onoremap a' 2i'
   onoremap a` 2i`
+
+  # Enter Insert mode with indentation if the line is empty.
+  # :h inserting
+  #   a: Append text after the cursor [count] times.
+  #   A: Append text at the end of the line [count] times.
+  #   i: Insert text before the cursor [count] times.
+  #   I: Insert text before the first non-blank in the line [count] times.
+  nnoremap <expr> a ExprToEnterIWithIndentation("a")
+  nnoremap <expr> A ExprToEnterIWithIndentation("A")
+  nnoremap <expr> i ExprToEnterIWithIndentation("i")
+  nnoremap <expr> I ExprToEnterIWithIndentation("I")
 enddef
 
 export def Utils(): void
@@ -116,4 +127,12 @@ export def PreventUnconsciousOperation(): void
   inoremap <Nul> <C-Space>
   tnoremap <Nul> <C-Space>
   noremap <F1> <Nop>
+enddef
+
+def ExprToEnterIWithIndentation(original_key: string): string
+  if empty(getline("."))
+    return '"_cc'
+  else
+    return original_key
+  endif
 enddef
