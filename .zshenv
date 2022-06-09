@@ -94,7 +94,8 @@ export FD_DEFAULT_OPTIONS=(
   --exclude "/Volumes/"
 
   # Sort search results
-  --threads 1
+  # Comment out because `fd` doesn't sort the result even with this option.
+  # --threads 1
 )
 
 path=(

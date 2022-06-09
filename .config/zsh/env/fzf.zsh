@@ -43,5 +43,7 @@ function() {
   )
 
   export FZF_DEFAULT_OPTS="${options[*]}"
-  export FZF_DEFAULT_COMMAND="fd \${FD_DEFAULT_OPTIONS[@]} --strip-cwd-prefix --type file --color always"
+
+  # Specify `--color never` because `fd` doesn't sort the result and `sort` command doesn't work with color sequences.
+  export FZF_DEFAULT_COMMAND="fd \${FD_DEFAULT_OPTIONS[@]} --strip-cwd-prefix --type file --color never | sort -V | xargs -I{} gls --color {}"
 }
