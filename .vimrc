@@ -347,12 +347,7 @@ if kg8m#plugin#Register("fatih/vim-go", { if: !kg8m#util#IsGitTmpEdit() })
 endif
 
 if kg8m#plugin#Register("gamoutatsumi/dps-ghosttext.vim", { if: $GHOST_TEXT_AVAILABLE ==# "1" })
-  g:dps_ghosttext#enable_autostart = false
-
-  kg8m#plugin#Configure({
-    lazy:   true,
-    on_cmd: ["GhostStart"],
-  })
+  kg8m#plugin#ghosttext#Configure()
 endif
 
 kg8m#plugin#Register("tpope/vim-haml")
