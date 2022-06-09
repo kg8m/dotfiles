@@ -51,6 +51,11 @@ if [ -z "${host}" ]; then
 fi
 
 command+=("-group" "NOTIFY_${title}_${host}_${message}")
+
+if (($#host > 10)); then
+  host="${host[1,10]}..."
+fi
+
 command+=("-message" "\\[${host}] ${message}")
 
 if [ "${is_stay}" = "1" ]; then
