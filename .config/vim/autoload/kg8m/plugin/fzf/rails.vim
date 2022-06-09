@@ -111,6 +111,8 @@ def Setup(): void
     },
   })
 
+  specs.js = specs.javascripts
+
   for app_dir in globpath("app", "*", 0, 1)
     if isdirectory(app_dir)
       # e.g., `app/controllers` => `controllers`
