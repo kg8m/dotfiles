@@ -228,7 +228,7 @@ function plugin:mocword:atload {
   function plugin:mocword:data:atclone {
     # cf. exporting MOCWORD_DATA in .zshenv
     mkdir -p "$(dirname "${MOCWORD_DATA:?}")"
-    ln -fs "${PWD}/mocword.sqlite" "${MOCWORD_DATA}"
+    execute_with_echo "ln -fs '${PWD}/mocword.sqlite' '${MOCWORD_DATA}'"
   }
   zinit ice lucid from"gh-r" as"null" bpick"mocword.sqlite.gz" atclone"plugin:mocword:data:atclone"
   zinit light high-moctane/mocword-data
