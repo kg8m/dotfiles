@@ -19,8 +19,8 @@ export def Define(options: dict<bool> = {}): void
   inoremap <buffer><expr><silent> <BS>  BsExpr()
   inoremap <buffer><expr><silent> <C-h> BsExpr()
 
-  inoremap <buffer><expr>         <Tab>   pumvisible() ? "<C-n>" : "<Tab>"
-  inoremap <buffer><expr>         <S-Tab> pumvisible() ? "<C-p>" : "<S-Tab>"
+  inoremap <buffer><expr>         <Tab>   TabExpr()
+  inoremap <buffer><expr>         <S-Tab> ShiftTabExpr()
 
   # Insert selected completion candidate word via `<Up>`/`<Down>` keys like `<C-p>`/`<C-n>` keys.
   # <Up>:   Select the previous match, as if CTRL-P was used, but don't insert it.
@@ -121,4 +121,30 @@ def GtExpr(): string
   endif
 
   return ">"
+enddef
+
+def TabExpr(): string
+  if pumvisible()
+    return "\<C-n>"
+  elseif IsMarkdownListItem()
+    # <C-t>: increase indentation
+    return "\<C-t>"
+  else
+    return "\<Tab>"
+  endif
+enddef
+
+def ShiftTabExpr(): string
+  if pumvisible()
+    return "\<C-p>"
+  elseif IsMarkdownListItem()
+    # <C-d>: decrease indentation
+    return "\<C-d>"
+  else
+    return "\<S-Tab>"
+  endif
+enddef
+
+def IsMarkdownListItem(): bool
+  return !!(&filetype =~# '\v^(gitcommit|markdown)$' && getline(".")->trim() =~# '\v^([-*+]|[0-9]+\.)')
 enddef
