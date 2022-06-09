@@ -89,7 +89,7 @@ def GtExpr(): string
     return ">"
   endif
 
-  if &filetype ==# "markdown"
+  if &filetype =~# '\v^(gitcommit|markdown)$'
     # Don't overwrite while writing blockquote markers.
     const leading_text = getline(".")->strpart(0, col(".") - 1)
 

@@ -26,6 +26,6 @@ export def Filetypes(): void
   augroup vimrc-configure-indent-filetypes
     autocmd!
     autocmd FileType gitconfig,neosnippet setlocal noexpandtab
-    autocmd FileType text,markdown,moin setlocal cinkeys-=:
+    autocmd FileType gitcommit,markdown,moin,text setlocal cinkeys-=:
   augroup END
 enddef
