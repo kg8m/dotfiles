@@ -23,6 +23,7 @@ export def Register(): void
   RegisterHtmlLanguageServer()
   RegisterJsonLanguageServer()
   RegisterRubyLanguageServer()
+  RegisterRubyLsp()
   RegisterSolargraph()
   RegisterSqls()
   RegisterSteep()
@@ -276,6 +277,26 @@ def ExtraConfigForRubyLanguageServer(): dict<any>
     },
 
     document_format: false,
+  }
+enddef
+
+# gem install ruby-lsp
+def RegisterRubyLsp(): void
+  RegisterServer({
+    name: "ruby-lsp",
+    allowlist: ["ruby"],
+    extra_config: function("ExtraConfigForRubyLsp"),
+
+    available: $RUBY_LSP_AVAILABLE ==# "1",
+  })
+enddef
+
+def ExtraConfigForRubyLsp(): dict<any>
+  return {
+    cmd: (_) => ["ruby-lsp", "stdio"],
+    initialization_options: {
+      diagnostics: true,
+    },
   }
 enddef
 
