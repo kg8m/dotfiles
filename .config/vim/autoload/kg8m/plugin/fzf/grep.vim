@@ -8,6 +8,10 @@ kg8m#plugin#EnsureSourced("fzf.vim")
 command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#Complete FzfGrep kg8m#plugin#fzf#grep#Run(<q-args>)
 
 export def EnterCommand(preset: string = ""): void
+  const escaped_preset =
+    substitute(preset, '^-', '\\-', "")
+      ->substitute('\v([.?*+^$()[\]{}\\])', '\\\1', "g")
+      ->substitute("'", "'\\\\''", "g")
   const hint =<< trim HINT
     Hint:
       - :FzfGrep '{PATTERN}'                        # Search the current directory
@@ -20,7 +24,7 @@ export def EnterCommand(preset: string = ""): void
   HINT
 
   echo hint->join("\n") .. "\n\n"
-  feedkeys($":\<C-u>FzfGrep\<Space>'{preset}'\<Left>", "t")
+  feedkeys($":\<C-u>FzfGrep\<Space>'{escaped_preset}'\<Left>", "t")
 enddef
 
 export def Run(args: string): void
