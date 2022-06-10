@@ -46,7 +46,7 @@ def SetupRefreshKeywords(): void
   endfor
 
   if empty(asyncomplete_buffer_sid)
-    cache.refresh_keywords = funcref("CannotRefreshKeywords")
+    cache.refresh_keywords = CannotRefreshKeywords
   else
     cache.refresh_keywords = function($"<SNR>{asyncomplete_buffer_sid}_refresh_keywords")
   endif

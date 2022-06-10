@@ -9,7 +9,7 @@ export def Run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  Candidates(),
-    sink:    funcref("Handler"),
+    sink:    Handler,
     options: [
       "--no-multi",
       "--nth", "2..",

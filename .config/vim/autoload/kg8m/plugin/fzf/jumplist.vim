@@ -38,7 +38,7 @@ def Run(candidates: list<string>): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  candidates,
-    sink:    funcref("Handler"),
+    sink:    Handler,
     options: [
       "--no-multi",
       "--header-lines", match(candidates[0], '\v^\s*0') ==# -1 ? 0 : 1,

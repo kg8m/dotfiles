@@ -19,7 +19,7 @@ enddef
 def OnSource(): void
   if kg8m#util#OnTmux()
     g:test#custom_strategies = get(g:, "test#custom_strategies", {})
-    g:test#custom_strategies.vimux = funcref("VimuxStrategy")
+    g:test#custom_strategies.vimux = VimuxStrategy
     g:test#strategy = "vimux"
   endif
 

@@ -10,7 +10,7 @@ export def Run(query: string): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  Candidates(),
-    sink:    funcref("Handler"),
+    sink:    Handler,
     options: ["--no-multi", "--prompt", "Shortcuts> ", "--query", query],
   }
 
