@@ -31,6 +31,11 @@ function execute_commands_with_echo {
     local dryrun="1"
   fi
 
+  # shellcheck disable=SC2198
+  if [ ! "${@[(I)--ignore-failure]}" = "0" ]; then
+    local ignore_failure="1"
+  fi
+
   local cmd
   local result=0
 
@@ -47,6 +52,10 @@ function execute_commands_with_echo {
     fi
 
     execute_with_echo "${cmd[@]}" || result=$?
+
+    if [ ! "${ignore_failure}" = "1" ] && [ ! "${result}" = "0" ]; then
+      return 1
+    fi
   done
 
   if [ "${separate}" = "1" ]; then
