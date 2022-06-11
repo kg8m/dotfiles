@@ -88,6 +88,15 @@ autoload -U add-zsh-hook
 
 mkdir -p "${KG8M_ZSH_CACHE_DIR:?}"
 
+# Remove duplicated paths
+typeset -U fpath
+
+# Set Homebrew completion paths before zinit setup.
+fpath=(
+  "${HOMEBREW_PREFIX:?}/share/zsh/site-functions"(N-/)
+  "${fpath[@]}"
+)
+
 # Setup zinit
 typeset -gAH ZINIT
 ZINIT[HOME_DIR]="${XDG_DATA_HOME}/zsh/zinit"
@@ -119,6 +128,12 @@ source ~/.config/zsh/timetrack.zsh
 source ~/.config/zsh/tmux.zsh
 
 source ~/.config/zsh/others.zsh
+
+# Set my completion paths after other setups.
+fpath=(
+  "${XDG_CONFIG_HOME:?}/zsh/completions"
+  "${fpath[@]}"
+)
 
 try_to_source ~/.config/zsh.local/.zshrc.local
 
