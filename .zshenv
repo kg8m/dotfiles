@@ -62,6 +62,13 @@ fi
 
 export KG8M_ZSH_CACHE_DIR="${XDG_CACHE_HOME}/zsh"
 
+DIFF_HIGHLIGHT_DIRPATH_CACHE="${KG8M_ZSH_CACHE_DIR}/diff-highlight-dirpath"
+if [ ! -f "${DIFF_HIGHLIGHT_DIRPATH_CACHE}" ]; then
+  dirname "$(find "${HOMEBREW_PREFIX}" -type f -name diff-highlight)" > "${DIFF_HIGHLIGHT_DIRPATH_CACHE}"
+fi
+path+=("$(cat "${DIFF_HIGHLIGHT_DIRPATH_CACHE}")"(N-/))
+unset DIFF_HIGHLIGHT_DIRPATH_CACHE
+
 mkdir -p "${VIM_PLUGINS}"
 
 export FD_DEFAULT_OPTIONS=(
