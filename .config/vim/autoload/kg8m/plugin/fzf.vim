@@ -12,7 +12,7 @@ export def Configure(): void
   nnoremap <silent> <Leader><Leader>y :call kg8m#plugin#fzf#yank_history#Run()<CR>
   nnoremap <silent> <Leader><Leader>g :call kg8m#plugin#fzf#grep#EnterCommand()<CR>
   xnoremap <silent> <Leader><Leader>g "zy:call kg8m#plugin#fzf#grep#EnterCommand(@z)<CR>
-  xnoremap <silent> <Leader><Leader>G "zy:call kg8m#plugin#fzf#grep#EnterCommand($'\b{@z}\b')<CR>
+  xnoremap <silent> <Leader><Leader>G "zy:call kg8m#plugin#fzf#grep#EnterCommand(@z, #{ word_boundary: v:true })<CR>
   noremap  <silent> <Leader><Leader>s <Cmd>call kg8m#plugin#fzf#shortcuts#Run("")<CR>
   noremap  <silent> <Leader><Leader>a <Cmd>call kg8m#plugin#fzf#shortcuts#Run("SimpleAlign ")<CR>
   nnoremap <silent> <Leader><Leader>[ :call kg8m#plugin#fzf#jumplist#Back()<CR>

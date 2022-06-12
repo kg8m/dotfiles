@@ -7,11 +7,14 @@ kg8m#plugin#EnsureSourced("fzf.vim")
 # Respect `$RIPGREP_EXTRA_OPTIONS` (fzf's `:Rg` doesn't respect it)
 command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#Complete FzfGrep kg8m#plugin#fzf#grep#Run(<q-args>)
 
-export def EnterCommand(preset: string = ""): void
+export def EnterCommand(preset: string = "", options = {}): void
   const escaped_preset =
     substitute(preset, '^-', '\\-', "")
       ->substitute('\v([.?*+^$()[\]{}\\])', '\\\1', "g")
       ->substitute("'", "'\\\\''", "g")
+  const preset_prefix = get(options, "word_boundary", false) ? '\b' : ""
+  const preset_suffix = get(options, "word_boundary", false) ? '\b' : ""
+
   const hint =<< trim HINT
     Hint:
       - :FzfGrep '{PATTERN}'                        # Search the current directory
@@ -24,7 +27,7 @@ export def EnterCommand(preset: string = ""): void
   HINT
 
   echo hint->join("\n") .. "\n\n"
-  feedkeys($":\<C-u>FzfGrep\<Space>'{escaped_preset}'\<Left>", "t")
+  feedkeys($":\<C-u>FzfGrep\<Space>'{preset_prefix}{escaped_preset}{preset_suffix}'\<Left>", "t")
 enddef
 
 export def Run(args: string): void
