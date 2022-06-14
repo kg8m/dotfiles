@@ -31,9 +31,9 @@ def Log(level: string, message: string, options: dict<bool> = {}): void
     const formatted_message = $"{timestamp} {level} -- {message}"
 
     if get(options, "save_history", true)
-      echomsg message
+      echomsg formatted_message
     else
-      echo message
+      echo formatted_message
     endif
   finally
     echohl None
