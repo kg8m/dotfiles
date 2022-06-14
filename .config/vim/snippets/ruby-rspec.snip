@@ -22,18 +22,6 @@ options head
 		${0}
 	end
 
-snippet it_should
-alias   itshould
-abbr    it { should ... }
-options head
-	it { should ${0} }
-
-snippet it_should_not
-alias   itshould_not
-abbr    it { should_not ... }
-options head
-	it { should_not ${0} }
-
 snippet it_is_expected_to
 abbr    it { is_expected.to ... }
 options head
@@ -55,12 +43,6 @@ options head
 	specify "${1:#:description}" do
 		${0}
 	end
-
-snippet specify_should
-alias   specifyshould
-abbr    specify { should ... }
-options head
-	specify { ${0} }
 
 snippet expect_to
 abbr    expect(...).to ...
@@ -163,11 +145,6 @@ snippet it_behaves_like
 abbr    it_behaves_like ...
 options head
 	it_behaves_like "${0:#:shared examples name}"
-
-snippet it_should_behave_like
-abbr    it_should_behave_like ...
-options head
-	it_should_behave_like "${0:#:shared examples name}"
 
 snippet change_by
 abbr    change({receiver}, :{method}).by({difference})
