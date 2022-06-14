@@ -146,6 +146,13 @@ abbr    it_behaves_like ...
 options head
 	it_behaves_like "${0:#:shared examples name}"
 
+snippet contain_exactly
+alias   match_array
+alias   match_array_ignoring_order
+abbr    contain_exactly(item1, item2, ...)
+options word
+	contain_exactly(${1:#:item1})
+
 snippet change_by
 abbr    change({receiver}, :{method}).by({difference})
 options word
