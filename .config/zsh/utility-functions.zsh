@@ -636,3 +636,21 @@ function is_m1_mac {
     echo 0
   fi
 }
+
+# https://gist.github.com/tobym/648188
+function pwdx {
+  local pids=("$@")
+
+  if [ -z "${pids[*]}" ]; then
+    info:error "Specify PIDs."
+    return 1
+  fi
+
+  local lsof_args=(-a -d cwd -n)
+  local pid
+  for pid in "${pids[@]}"; do
+    lsof_args+=(-p "${pid}")
+  done
+
+  lsof "${lsof_args[@]}"
+}
