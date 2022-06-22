@@ -227,7 +227,7 @@ def Overwrite(): void
   endfor
 
   if empty(lsp_document_formatting_sid)
-    kg8m#util#logger#Warn("Failed to detect vim-lsp's document_formatting script.")
+    kg8m#util#logger#Warn("Failed to detect vim-lsp's document_formatting.vim script.")
   else
     const function_name = $"<SNR>{lsp_document_formatting_sid}_format_next"
     const new_definition_template =<< trim eval VIM
