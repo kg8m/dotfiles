@@ -51,12 +51,13 @@ def Run(): void
   UseBufferCache("count", 0)
   UseBufferCache("changedtick", -1)
 
-  if IsOrganizeImportsAvailable()
-    if b:changedtick !=# b:lsp_document_format_cache.changedtick
-      TemporarilyDisableOnTextChanged()
-      LspCodeActionSync source.organizeImports
-    endif
-  endif
+  # Disable because organizeImports is sometimes annoying to me.
+  # if IsOrganizeImportsAvailable()
+  #   if b:changedtick !=# b:lsp_document_format_cache.changedtick
+  #     TemporarilyDisableOnTextChanged()
+  #     LspCodeActionSync source.organizeImports
+  #   endif
+  # endif
 
   b:lsp_document_format_cache.count += 1
   b:lsp_document_format_cache.changedtick = b:changedtick
