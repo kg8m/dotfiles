@@ -480,21 +480,21 @@ function git:utility:diff_or_cat {
     local renamed_diff="$(git:utility:diff --staged -- "${removed}" "${added}")"
 
     if [[ "${git_status}" =~ ^R[A-Z] ]]; then
-      git:utility:header "Staged"
-      echo "${renamed_diff}"
-      echo
       git:utility:header "Not Staged"
       git:utility:diff -- "${added}"
+      echo
+      git:utility:header "Staged"
+      echo "${renamed_diff}"
     else
       echo "${renamed_diff}"
     fi
   # Partially staged files
   elif [[ "${git_status}" =~ ^[A-Z]{2} ]]; then
-    git:utility:header "Staged"
-    git:utility:diff --staged -- "${filepath}"
-    echo
     git:utility:header "Not Staged"
     git:utility:diff -- "${filepath}"
+    echo
+    git:utility:header "Staged"
+    git:utility:diff --staged -- "${filepath}"
   # Staged files
   elif [[ "${git_status}" =~ ^[A-Z] ]]; then
     git:utility:diff --staged -- "${filepath}"
