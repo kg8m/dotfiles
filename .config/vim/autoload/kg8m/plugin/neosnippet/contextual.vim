@@ -47,6 +47,8 @@ def SetupContextsForRuby(): void
   if kg8m#util#OnRailsDir()
     const common = ["ruby-rails.snip"]
     contexts.ruby = [
+      { pattern: '\.html\.erb$',     snippets: common + ["html.snip", "javascript.snip"] },
+      { pattern: '\.js\.erb$',       snippets: common + ["javascript.snip"] },
       { pattern: '^app/controllers', snippets: common + ["ruby-rails-controller.snip"] },
       { pattern: '^app/models',      snippets: common + ["ruby-rails-model.snip"] },
       { pattern: '^db/migrate',      snippets: common + ["ruby-rails-migration.snip"] },
