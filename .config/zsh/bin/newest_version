@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+asdf list "${1:?}" | tail -n1 | sd '^\s*\*' ''

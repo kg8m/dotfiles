@@ -57,7 +57,7 @@ fi
 pkill -f ".*textlint.* ${options[*]}"
 
 # Prevent "text.matchAll(...) is not a function or its return value is not iterable" error caused by older Node.js.
-export ASDF_NODEJS_VERSION="$(asdf list nodejs | tail -n1)"
+export ASDF_NODEJS_VERSION="$(newest_version nodejs)"
 
 out="$(textlint "${options[@]}" 2> "${err_temp_filepath}")"
 err="$(cat "${err_temp_filepath}")"

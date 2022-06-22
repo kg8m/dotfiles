@@ -4,7 +4,7 @@ if ! command -v markuplint > /dev/null; then
 fi
 
 # Always use the latest Node.js version for markuplint.
-export ASDF_NODEJS_VERSION="$(asdf list nodejs | tail -n1)"
+export ASDF_NODEJS_VERSION="$(newest_version nodejs)"
 
 target_filepath="$1"
 

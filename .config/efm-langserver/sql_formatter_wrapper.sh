@@ -4,7 +4,7 @@ if ! command -v sql-formatter > /dev/null; then
 fi
 
 # Always use the latest Node.js version for sql-formatter.
-export ASDF_NODEJS_VERSION="$(asdf list nodejs | tail -n1)"
+export ASDF_NODEJS_VERSION="$(newest_version nodejs)"
 
 options=(
   --config "${XDG_CONFIG_HOME:?}/sql-formatter/config.json"

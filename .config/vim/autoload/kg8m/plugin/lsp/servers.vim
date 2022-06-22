@@ -727,7 +727,7 @@ def NodeToolsEnv(): dict<any>
     return cache.node_tools_env
   endif
 
-  const latest_node_version = system("asdf list nodejs | tail -n1")
+  const latest_node_version = system("newest_version nodejs")
 
   cache.node_tools_env = {
     ASDF_NODEJS_VERSION: latest_node_version,
