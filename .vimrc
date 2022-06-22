@@ -119,6 +119,10 @@ if kg8m#plugin#Register("Shougo/context_filetype.vim")
   }
 endif
 
+if kg8m#plugin#Register("gamoutatsumi/dps-ghosttext.vim", { if: $GHOST_TEXT_AVAILABLE ==# "1" })
+  kg8m#plugin#ghosttext#Configure()
+endif
+
 if kg8m#plugin#Register("spolu/dwm.vim", { if: !kg8m#util#IsGitTmpEdit() })
   kg8m#plugin#dwm#Configure()
 endif
@@ -344,10 +348,6 @@ endif
 # Use vim-go's highlightings, foldings, and commands.
 if kg8m#plugin#Register("fatih/vim-go", { if: !kg8m#util#IsGitTmpEdit() })
   kg8m#plugin#go#Configure()
-endif
-
-if kg8m#plugin#Register("gamoutatsumi/dps-ghosttext.vim", { if: $GHOST_TEXT_AVAILABLE ==# "1" })
-  kg8m#plugin#ghosttext#Configure()
 endif
 
 kg8m#plugin#Register("tpope/vim-haml")
