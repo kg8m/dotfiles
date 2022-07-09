@@ -22,7 +22,7 @@ def CleanUpOldLockfiles(): void
 
     if localtime() - getftime(lockpath) ># SECONDS_AS_OLDFILE
       delete(lockpath)
-      kg8m#util#logger#Info("[ctags] The lock file `${lockpath}` has been deleted because too old.")
+      kg8m#util#logger#Info($"[ctags] The lock file `{lockpath}` has been deleted because too old.")
     endif
   endfor
 enddef
