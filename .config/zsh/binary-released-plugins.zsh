@@ -113,9 +113,12 @@ function plugin:setup:binary_releaseds {
       golangci-lint)
         execute_with_echo "${command} version"
         ;;
-      golangci-lint-langserver | terraform-lsp | vim-startuptime)
+      golangci-lint-langserver | vim-startuptime)
+        execute_with_echo "${command} -h"
+        ;;
+      terraform-lsp)
         echo >&2
-        echo:info "Skip checking version because there are no ways."
+        echo:info "Skip checking version or showing help because there are no ways."
         ;;
       *)
         echo:error "Unknown plugin to detect binary: ${plugin}"
