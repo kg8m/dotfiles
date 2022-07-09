@@ -28,4 +28,5 @@ def OnSource(): void
   g:test#javascript#denotest#options = "--allow-all --no-check"
   g:test#go#gotest#options = "-race"
   g:test#ruby#bundle_exec = false
+  g:test#ruby#rspec#options = "--no-profile"
 enddef

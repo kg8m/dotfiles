@@ -52,6 +52,7 @@ options head
 	end
 
 snippet expect_to
+alias   expect
 abbr    expect(...).to ...
 options head
 	expect(${1:#:subject}).to ${0}
@@ -70,6 +71,19 @@ snippet expect_block_to_not
 abbr    expect { ... }.to_not ...
 options head
 	expect { ${1:#:subject} }.to_not ${0}
+
+snippet allow_receive_and_wrap_original
+abbr    allow(...).to receive(:...).and_wrap_original { ... }
+options head
+	allow(${1:#:target}).to receive(:${2:#:method_name}).and_wrap_original do |original_method, *args|
+		original_method.call(*args)
+		${0}
+	end
+
+snippet allow_receive_and_call_original
+abbr    allow(...).to receive(:...).and_call_original
+options head
+	allow(${1:#:target}).to receive(:${2:#:method_name}).and_call_original
 
 snippet describe
 abbr    describe ... do ... end
