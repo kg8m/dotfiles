@@ -21,6 +21,8 @@ const my_config_dirpath = $"{$XDG_CONFIG_HOME}/vim"
 kg8m#plugin#DisableDefaults()
 
 g:mapleader = ","
+
+const use_editorconfig = filereadable(".editorconfig")
 # }}}
 # }}}
 
@@ -127,7 +129,7 @@ if kg8m#plugin#Register("spolu/dwm.vim", { if: !kg8m#util#IsGitTmpEdit() })
   kg8m#plugin#dwm#Configure()
 endif
 
-if kg8m#plugin#Register("editorconfig/editorconfig-vim", { if: !kg8m#util#IsGitTmpEdit() && filereadable(".editorconfig") })
+if kg8m#plugin#Register("editorconfig/editorconfig-vim", { if: !kg8m#util#IsGitTmpEdit() && use_editorconfig })
   g:EditorConfig_preserve_formatoptions = true
 endif
 
@@ -314,6 +316,16 @@ if kg8m#plugin#Register("vim-denops/denops.vim", { lazy: true, on_start: true })
     g:denops#trace      = true
     g:denops#type_check = true
   endif
+endif
+
+if kg8m#plugin#Register("https://github.com/kg8m/vim-detect-indent", { if: !kg8m#util#IsGitTmpEdit() && !use_editorconfig })
+  g:detect_indent#detect_once      = true
+  g:detect_indent#ignore_filetypes = ["", "gitcommit", "startify"]
+  g:detect_indent#ignore_buftypes  = ["nofile", "quickfix", "terminal"]
+
+  kg8m#plugin#Configure({
+    depends: ["denops.vim"],
+  })
 endif
 
 if kg8m#plugin#Register("wsdjeg/vim-fetch")
