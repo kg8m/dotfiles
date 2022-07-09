@@ -106,7 +106,7 @@ def RegisterDeno(): void
     allowlist: TS_FILETYPES,
     extra_config: function("ExtraConfigForDeno"),
 
-    available: $DENO_AVAILABLE ==# "1",
+    available: UseDeno(),
   })
 enddef
 
@@ -155,7 +155,7 @@ def RegisterEfmLangserver(): void
     allowlist: [
       "Gemfile", "css", "eruby", "gitcommit", "html", "json", "make", "markdown", "ruby", "sql",
     ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES + (
-      $DENO_AVAILABLE ==# "1" ? [] : TS_FILETYPES
+      UseDeno() ? [] : TS_FILETYPES
     ),
 
     extra_config: function("ExtraConfigForEfmLangserver"),
@@ -421,7 +421,7 @@ def RegisterTypescriptLanguageServer(): void
     allowlist: JS_FILETYPES + TS_FILETYPES,
     extra_config: function("ExtraConfigForTypescriptLanguageServer"),
 
-    available: $DENO_AVAILABLE !=# "1",
+    available: !UseDeno(),
   })
 enddef
 
@@ -720,6 +720,31 @@ def CheckExitedServers(): void
       kg8m#util#logger#Error(messages->join(" "))
     endif
   endfor
+enddef
+
+def UseDeno(): bool
+  if has_key(cache, "use_deno")
+    return cache.use_deno
+  endif
+
+  cache.use_deno = ($DENO_AVAILABLE ==# "1") || OnDenopsPluginDir()
+  return cache.use_deno
+enddef
+
+def OnDenopsPluginDir(): bool
+  if !isdirectory("denops")
+    return false
+  endif
+
+  const common_options = "--hidden --no-ignore --max-results 1 --type file"
+  const denops_file_exists = !system($"fd {common_options} --extension ts --search-path denops")->empty()
+
+  if !denops_file_exists
+    return false
+  endif
+
+  const vim_file_exists = !system($"fd {common_options} --extension vim")->empty()
+  return vim_file_exists
 enddef
 
 def NodeToolsEnv(): dict<any>

@@ -25,6 +25,7 @@ def OnSource(): void
 
   g:test#preserve_screen = true
 
+  g:test#javascript#denotest#options = "--allow-all --no-check"
   g:test#go#gotest#options = "-race"
   g:test#ruby#bundle_exec = false
 enddef

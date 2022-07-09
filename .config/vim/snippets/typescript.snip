@@ -56,6 +56,13 @@ options head
 
 # Overwrite snippets for JavaScript
 
+snippet function
+abbr    function {function_name}(): {return_type} { ... }
+options word
+	function ${1:#:function_name}(${2:#:args}): ${3:#:return_type} {
+		${0}
+	}
+
 snippet querySelector
 abbr    querySelector<{type}>({selector})
 options word
