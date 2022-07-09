@@ -2,8 +2,9 @@ vim9script
 
 export def Configure(): void
   kg8m#plugin#Configure({
-    lazy:   true,
-    on_cmd: ["GhostStart"],
+    lazy:    true,
+    on_cmd:  ["GhostStart"],
+    depends: ["denops.vim"],
     hook_source: () => OnSource(),
   })
 enddef
