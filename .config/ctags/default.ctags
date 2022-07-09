@@ -13,7 +13,14 @@
 --exclude=node_modules
 --exclude=vendor/bundle
 
---langmap=javascript:+.js.erb
+# Use my `MyJavaScript` instead of built-in `JavaScript` because it is broken.
+# cf. https://github.com/universal-ctags/ctags/issues/900
+--langdef=MyJavaScript
+--langmap=myjavascript:.js
+--langmap=myjavascript:+.js.erb
+
+--regex-myjavascript=/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*(function\b|\([^)]*\)\s*=>)/\5/,function/
+--regex-myjavascript=/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*function\b\(/\2/,function/
 
 --regex-ruby=/\s*(class|module)\s+[a-zA-Z0-9_:]+:([a-zA-Z0-9_]+)/\2/
 --regex-ruby=/\b([A-Z0-9_]+)\s*=($|[^=>])/\1/
@@ -39,9 +46,6 @@
 
 --regex-ruby=/shared_(examples|context|examples_for)\s+["'](.*)["']\s+do/\2/
 --regex-ruby=/\bFabricator(\s+|\():([a-zA-Z0-9_]+)/\2/
-
---regex-javascript=/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*(function\b|\([^)]*\)\s*=>)/\5/,function/
---regex-javascript=/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*function\b\(/\2/,function/
 
 --regex-vim=/^\s*export def ([A-Z][a-zA-Z0-9_]+)\(/\1/
 

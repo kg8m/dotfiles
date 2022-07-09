@@ -31,7 +31,11 @@ def OnSource(): void
   g:parallel_auto_ctags#entry_points = {
     pwd: {
       path:    ".",
-      options: ["--languages=Go,JavaScript,Make,Ruby,Sh,TypeScript,Vim,Yaml"],
+
+      # Use my `MyJavaScript` instead of built-in `JavaScript` because it is broken.
+      # cf. https://github.com/universal-ctags/ctags/issues/900
+      options: ["--languages=Go,MyJavaScript,Make,Ruby,Sh,TypeScript,Vim,Yaml"],
+
       events:  ["VimEnter", "BufWritePost"],
       silent:  false,
     },
