@@ -194,14 +194,6 @@ options head
 	end
 
 snippet case
-abbr    case when ... end
-options head
-	case
-	when ${1:#:condition}
-		${0}
-	end
-
-snippet case_object
 abbr    case {object} when ... end
 options head
 	case ${1:#:object}
