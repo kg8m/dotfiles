@@ -66,6 +66,10 @@ if kg8m#plugin#Register("prabirshrestha/asyncomplete-lsp.vim")
   kg8m#plugin#asyncomplete#lsp#Configure()
 endif
 
+if kg8m#plugin#Register("kitagry/asyncomplete-tabnine.vim", { build: "./install.sh" })
+  kg8m#plugin#asyncomplete#tabnine#Configure()
+endif
+
 if kg8m#plugin#Register("Shougo/neosnippet.vim")
   kg8m#plugin#neosnippet#Configure()
 endif
