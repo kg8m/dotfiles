@@ -93,20 +93,8 @@ if kg8m#plugin#Register("tyru/caw.vim", { if: !kg8m#util#IsGitTmpEdit() })
   kg8m#plugin#caw#Configure()
 endif
 
-if kg8m#plugin#Register("rhysd/conflict-marker.vim", { if: &diff })
-  augroup vimrc-plugin-conflict_marker
-    autocmd!
-    autocmd FileType * nmap <buffer> <Leader>c <Plug>(conflict-marker-next-hunk)
-    autocmd User all_on_start_plugins_sourced kg8m#util#logger#Info("Press `<Leader>c` to move to next conflict hunk.")
-  augroup END
-
-  kg8m#plugin#Configure({
-    lazy:   true,
-    on_map: { n: "<Plug>(conflict-marker-" },
-    hook_source: () => {
-      g:conflict_marker_enable_mappings = false
-    },
-  })
+if kg8m#plugin#Register("rhysd/conflict-marker.vim")
+  kg8m#plugin#conflict_marker#Configure()
 endif
 
 if kg8m#plugin#Register("Shougo/context_filetype.vim")

@@ -10,7 +10,10 @@ const MANAGER_REPOSITORY = "Shougo/dein.vim"
 # Check remote if the repository is updated within 2 days.
 const CHECK_REMOTE_THRESHOLD = 2 * 24 * 60 * 60
 
-final on_start_queue = []
+final cache = {
+  on_start_queue: [],
+  all_on_start_plugins_sourced: false,
+}
 
 augroup vimrc-plugin
   autocmd!
@@ -107,7 +110,7 @@ export def Register(repository: string, options: dict<any> = {}): bool
 
   if get(options, "on_start", false)
     remove(options, "on_start")
-    add(on_start_queue, options.name)
+    add(cache.on_start_queue, options.name)
   endif
 
   dein#add(repository, options)
@@ -121,7 +124,7 @@ export def Configure(config: dict<any>): dict<any>
 
   if get(config, "on_start", false)
     remove(config, "on_start")
-    add(on_start_queue, g:dein#plugin.name)
+    add(cache.on_start_queue, g:dein#plugin.name)
   endif
 
   return dein#config(config)
@@ -201,10 +204,11 @@ enddef
 
 # Source lazily but early to optimize sourcing many plugins
 def DequeueOnStart(): void
-  if empty(on_start_queue)
+  if empty(cache.on_start_queue)
     doautocmd <nomodeline> User all_on_start_plugins_sourced
+    cache.all_on_start_plugins_sourced = true
   else
-    const plugin_name = remove(on_start_queue, 0)
+    const plugin_name = remove(cache.on_start_queue, 0)
     timer_start(100, (_) => SourceOnStart(plugin_name))
   endif
 enddef
@@ -212,4 +216,8 @@ enddef
 def SourceOnStart(plugin_name: string): void
   EnsureSourced(plugin_name)
   DequeueOnStart()
+enddef
+
+export def AreAllOnStartPluginsSourced(): bool
+  return cache.all_on_start_plugins_sourced
 enddef
