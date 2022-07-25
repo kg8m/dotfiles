@@ -6,7 +6,7 @@ g:kg8m#util#qf#extension = "json"
 mkdir(g:kg8m#util#qf#dirpath, "p")
 
 export def List(): list<string>
-  # Specify `--color never` because `fd` doesn't sort the result and `sort` command doesn't work with color sequences.
+  # Specify `--color always` and colorize files with `fd` instead of `ls` because `ls` needs each file's directory.
   const command = [
     "fd",
     $FD_DEFAULT_OPTIONS,
@@ -14,9 +14,8 @@ export def List(): list<string>
     "--type", "f",
     "--base-directory", shellescape(g:kg8m#util#qf#dirpath),
     "--extension", kg8m#util#qf#extension,
-    "--color", "never",
+    "--color", "always",
     "| sort -V",
-    "| xargs -I{} gls --color {}",
   ]->join(" ")
 
   return system(command)
