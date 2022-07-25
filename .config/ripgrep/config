@@ -49,14 +49,12 @@
 --glob=!**/Volumes/
 
 # Exclude files by filetype: see by `rg --type-list`
+--type-not=diff
 --type-not=lock
 --type-not=minified
 
 --type-add=dat:*.dat
 --type-not=dat
-
---type-add=diff:*.diff
---type-not=diff
 
 --type-add=railsignore:development_structure.sql
 --type-not=railsignore
