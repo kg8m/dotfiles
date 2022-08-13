@@ -53,7 +53,7 @@ TIMETRACK_PATTERN+="|\.z?sh\b"
 export TIMETRACK_IGNORE_PATTERN
 export TIMETRACK_PATTERN
 
-# inspired by http://qiita.com/hayamiz/items/d64730b61b7918fbb970
+# Inspired by http://qiita.com/hayamiz/items/d64730b61b7918fbb970
 # Don't load followings lazily because zsh doesn't track some commands, e.g., `exec zsh`
 
 autoload -U add-zsh-hook
@@ -118,8 +118,6 @@ function timetrack:end {
 
     unset __timetrack_start
     unset __timetrack_command
-
-    return
   fi
 }
 
