@@ -3,7 +3,7 @@ if ! command -v textlint > /dev/null; then
   exit 1
 fi
 
-target_filepath="$1"
+target_filepath="${1:?}"
 err_temp_filepath="$(mktemp)"
 
 # shellcheck disable=SC2064

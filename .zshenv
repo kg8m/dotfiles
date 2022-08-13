@@ -1,10 +1,5 @@
 function try_to_source {
-  if [ ! $# = 1 ]; then
-    echo "Specify only 1 filepath to source" >&2
-    return 1
-  fi
-
-  local filepath="$1"
+  local filepath="${1:?Specify a filepath to source.}"
   [ -f "${filepath}" ] && source "${filepath}"
 }
 

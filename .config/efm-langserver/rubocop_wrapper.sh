@@ -7,7 +7,7 @@ if [ ! -f .rubocop.yml ]; then
   exit 1
 fi
 
-target_filepath="$1"
+target_filepath="${1:?}"
 
 if [ "$2" = "--fix" ]; then
   is_fixing="1"

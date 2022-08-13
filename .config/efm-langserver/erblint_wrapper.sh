@@ -3,7 +3,7 @@ if ! command -v erblint > /dev/null; then
   exit 1
 fi
 
-target_filepath="$1"
+target_filepath="${1:?}"
 
 if [ -f ".erb-lint.yml" ]; then
   config=".erb-lint.yml"
