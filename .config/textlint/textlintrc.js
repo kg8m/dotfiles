@@ -7,12 +7,12 @@ const localConfigDirpath = path.join(homePath, ".config/textlint.local");
 
 const { deepmerge } = require(path.join(configDirpath, "util"));
 
-const fixableConfigPath = path.join(configDirpath, ".textlintrc.fixable.js");
+const fixableConfigPath = path.join(configDirpath, "textlintrc.fixable.js");
 const fixableConfig = fs.existsSync(fixableConfigPath)
   ? require(fixableConfigPath)
   : {};
 
-const localConfigPath = path.join(localConfigDirpath, ".textlintrc.local.js");
+const localConfigPath = path.join(localConfigDirpath, "textlintrc.local.js");
 const localConfig = fs.existsSync(localConfigPath)
   ? require(localConfigPath)
   : {};

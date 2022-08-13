@@ -26,14 +26,8 @@ if [ "${#filepaths}" = "1" ]; then
   )
 
   case "${realpath}" in
-    *Gemfile.local* | *.jb | *.pryrc | */pryrc)
+    *Gemfile.local* | *.jb | */pryrc)
       bat_options+=(--language "ruby")
-      ;;
-    *.vimrc.local)
-      bat_options+=(--language "vim")
-      ;;
-    *.zshenv.local | *.zshenv.local.* | *.zshrc.local | *.zshrc.local.*)
-      bat_options+=(--language "zsh")
       ;;
   esac
 

@@ -1,4 +1,3 @@
 --exclude=.config/tmux/plugins
 --exclude=.stylelintrc.js
---exclude=.textlintrc.js
 --exclude=markuplintrc.js

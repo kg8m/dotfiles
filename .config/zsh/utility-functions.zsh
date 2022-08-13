@@ -513,19 +513,15 @@ function zsh:plugins:update {
 
 function zsh:rcs:compile {
   local zshrc
-  for zshrc in ~/.config/zsh/*.zsh ~/.config/zsh.local/.z* ~/.zshenv* ~/.zshrc*; do
-    if [ -f "${zshrc}" ] && [[ ! "${zshrc}" =~ \.zwc$ ]]; then
-      zcompile "${zshrc}"
-    fi
+  for zshrc in ~/.config/zsh/**/*.zsh ~/.config/zsh.local/*.zsh ~/.zshenv ~/.zshrc "${KG8M_ZSH_CACHE_DIR}"/*.zsh; do
+    zcompile "${zshrc}"
   done
 }
 
 function zsh:rcs:compile:clear {
   local zwc
-  for zwc in ~/.config/zsh/*.zsh.zwc ~/.config/zsh.local/.z*.zwc ~/.zshenv*.zwc ~/.zshrc*.zwc; do
-    if [ -f "${zwc}" ]; then
-      rm -f "${zwc}"
-    fi
+  for zwc in ~/.config/zsh/**/*.zsh.zwc ~/.config/zsh.local/*.zsh.zwc ~/.{zshenv,zshrc}.zwc "${KG8M_ZSH_CACHE_DIR}"/*.zsh.zwc; do
+    rm -f "${zwc}"
   done
 }
 

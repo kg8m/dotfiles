@@ -27,8 +27,8 @@ function format_target_filepath {
   esac
 }
 
-if [ -f "${HOME}/.config/textlint.local/.textlint_wrapper_extends.sh" ]; then
-  source "${HOME}/.config/textlint.local/.textlint_wrapper_extends.sh"
+if [ -f "${HOME}/.config/textlint.local/textlint_wrapper_extends.sh" ]; then
+  source "${HOME}/.config/textlint.local/textlint_wrapper_extends.sh"
 fi
 
 options=(
@@ -45,11 +45,11 @@ if [ "${is_fixing}" = "1" ]; then
 
   # Enable only a few rules for performance and preventing unintended fixes.
   options+=(
-    --config ~/.config/textlint/.textlintrc.fixable.js
+    --config ~/.config/textlint/textlintrc.fixable.js
   )
 else
   options+=(
-    --config ~/.config/textlint/.textlintrc.js
+    --config ~/.config/textlint/textlintrc.js
   )
 fi
 

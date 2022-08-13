@@ -119,4 +119,4 @@ else
   source ~/.config/zsh/env/fzf.zsh
 fi
 
-try_to_source ~/.config/zsh.local/.zshenv.local
+try_to_source ~/.config/zsh.local/zshenv.local.zsh

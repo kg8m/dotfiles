@@ -12,7 +12,7 @@ autocmd BufNewFile,BufRead *.moin,*.trac,*.tracwiki set filetype=moin
 
 autocmd BufNewFile,BufRead Procfile,Procfile.* set filetype=conf
 
-autocmd BufNewFile,BufRead .pryrc.local,pryrc set filetype=ruby
+autocmd BufNewFile,BufRead pryrc set filetype=ruby
 
 " https://gitlab.com/kroppy/TreeTabs
 autocmd BufNewFile,BufRead *.tt_theme set filetype=json

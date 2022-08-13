@@ -135,7 +135,7 @@ fpath=(
   "${fpath[@]}"
 )
 
-try_to_source ~/.config/zsh.local/.zshrc.local
+try_to_source ~/.config/zsh.local/zshrc.local.zsh
 
 zinit ice lucid nocd wait"!0c" compinit atload"echo"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/compinit"

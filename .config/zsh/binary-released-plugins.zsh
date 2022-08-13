@@ -240,15 +240,17 @@ zinit ice lucid nocd wait"0c" has"mocword" atload"plugin:mocword:atload"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-mocword-atload"
 
 function plugin:zabrze:reset {
-  rm -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init"
+  rm -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init.zsh"
 }
 
 function plugin:zabrze:init {
-  if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init" ]; then
-    zabrze init --bind-keys > "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
-    zcompile "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
+  if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/zabrze_init.zsh" ]; then
+    zabrze init --bind-keys > "${KG8M_ZSH_CACHE_DIR}/zabrze_init.zsh"
+
+    # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
+    zcompile "${KG8M_ZSH_CACHE_DIR}/zabrze_init.zsh"
   fi
-  source "${KG8M_ZSH_CACHE_DIR}/zabrze_init"
+  source "${KG8M_ZSH_CACHE_DIR}/zabrze_init.zsh"
 }
 zinit ice lucid nocd wait"0a" has"zabrze" atload"plugin:zabrze:init"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-zabrze-init"

@@ -9,7 +9,7 @@ const { deepmerge } = require(path.join(configDirpath, "util"));
 
 const localConfigPath = path.join(
   localConfigDirpath,
-  ".textlintrc.fixable.local.js"
+  "textlintrc.fixable.local.js"
 );
 const localConfig = fs.existsSync(localConfigPath)
   ? require(localConfigPath)

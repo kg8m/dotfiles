@@ -3,7 +3,7 @@ vim9script
 final cache = {}
 
 export def SourceLocalVimrc(): void
-  const filepath = expand("~/.config/vim.local/.vimrc.local")
+  const filepath = expand("~/.config/vim.local/vimrc.local.vim")
 
   if filereadable(filepath)
     execute "source" filepath

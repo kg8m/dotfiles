@@ -1,5 +1,5 @@
 function plugin:dircolors:atload {
-  if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/dircolors_ansi-universal" ]; then
+  if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/dircolors_ansi-universal.zsh" ]; then
     local tempfile="$(mktemp)"
 
     cat dircolors.ansi-universal > "${tempfile}"
@@ -25,9 +25,7 @@ function plugin:dircolors:atload {
       ".yaml 32"
       ".yml 32"
       ".zshenv 32"
-      ".zshenv.local 32"
       ".zshrc 32"
-      ".zshrc.local 32"
     )
 
     echo "${(j:\n:)overwrites}" >> "${tempfile}"
@@ -38,12 +36,13 @@ function plugin:dircolors:atload {
       local dircolors=dircolors
     fi
 
-    "${dircolors}" "${tempfile}" > "${KG8M_ZSH_CACHE_DIR}/dircolors_ansi-universal"
+    "${dircolors}" "${tempfile}" > "${KG8M_ZSH_CACHE_DIR}/dircolors_ansi-universal.zsh"
     rm -f "${tempfile}"
 
-    zcompile "${KG8M_ZSH_CACHE_DIR}/dircolors_ansi-universal"
+    # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
+    zcompile "${KG8M_ZSH_CACHE_DIR}/dircolors_ansi-universal.zsh"
   fi
-  source "${KG8M_ZSH_CACHE_DIR}/dircolors_ansi-universal"
+  source "${KG8M_ZSH_CACHE_DIR}/dircolors_ansi-universal.zsh"
   zstyle ':completion:*:default' list-colors "${(s.:.)LS_COLORS}"
 
   unset -f plugin:dircolors:atload
@@ -51,7 +50,7 @@ function plugin:dircolors:atload {
 
 function plugin:dircolors:atclone {
   echo -e "\n$(highlight:yellow "Reset colors, so check updates and fix my overwrites if needed.")\n"
-  trash "${KG8M_ZSH_CACHE_DIR:?}/dircolors_ansi-universal"
+  trash "${KG8M_ZSH_CACHE_DIR:?}/dircolors_ansi-universal.zsh"
 }
 
 zinit ice lucid wait"0c" atclone="plugin:dircolors:atclone" atpull="%atclone" atload"plugin:dircolors:atload"
