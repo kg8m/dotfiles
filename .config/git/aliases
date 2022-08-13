@@ -321,7 +321,7 @@ function git:status:color {
   local local_branch_pattern="^${local_branch_message_prefix} ${local_branch}$"
   local local_branch_replace="${local_branch_message_prefix} $(highlight:magenta "${local_branch}")"
 
-  local remote_branch="$(git rev-parse --abbrev-ref --symbolic-full-name "@{u}")"
+  local remote_branch="$(git for-each-ref --format="%(upstream:short)" "$(git symbolic-ref -q HEAD)")"
   local remote_branch_message_prefix="Your branch is"
   local remote_branch_pattern="^(${remote_branch_message_prefix} .+) '${remote_branch}'(.+)$"
   local remote_branch_replace="\$1 '$(highlight:magenta "${remote_branch}")'\$2"
