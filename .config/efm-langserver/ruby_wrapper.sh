@@ -7,7 +7,7 @@ target_filepath="${1:?}"
 
 options=(-c)
 
-if [ -z "${DISABLE_RUBY_WARNINGS:-}" ]; then
+if [ ! "${DISABLE_RUBY_WARNINGS:-}" = "1" ]; then
   options+=(-w)
 fi
 

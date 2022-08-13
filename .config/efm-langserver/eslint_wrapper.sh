@@ -41,7 +41,7 @@ fi
 
 options=(--format json --stdin --stdin-filename "${target_filepath}")
 
-if [ -n "${is_fixing}" ]; then
+if [ "${is_fixing}" = "1" ]; then
   if [ "${executable}" = "eslint_d" ]; then
     options+=(--fix-to-stdout)
   else
@@ -58,7 +58,7 @@ out="$("${executable}" "${options[@]}" 2> "${err_temp_filepath}")"
 err="$(cat "${err_temp_filepath}")"
 
 if [ -n "${out}" ]; then
-  if [ -n "${is_fixing}" ]; then
+  if [ "${is_fixing}" = "1" ]; then
     if [ "${executable}" = "eslint_d" ]; then
       echo "${out}"
       exit 0
