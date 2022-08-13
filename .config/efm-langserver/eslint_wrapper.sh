@@ -8,14 +8,19 @@ if [ ! "${ESLINT_AVAILABLE:-}" = "1" ]; then
 fi
 
 target_filepath="${1:?}"
-err_temp_filepath="$(mktemp)"
-
-# shellcheck disable=SC2064
-trap "rm -f ${err_temp_filepath}" EXIT
 
 if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
+
+if [ "${is_fixing}" = "1" ] && [ ! "${ESLINT_AS_FORMATTER:-}" = "1" ]; then
+  exit 1
+fi
+
+err_temp_filepath="$(mktemp)"
+
+# shellcheck disable=SC2064
+trap "rm -f ${err_temp_filepath}" EXIT
 
 function is_target_file {
   echo 1
