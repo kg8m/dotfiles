@@ -86,7 +86,7 @@ tools:
     format-stdin: true
 
   stylelint: &stylelint
-    lint-command: "$HOME/.config/efm-langserver/stylelint_wrapper.sh"
+    lint-command: "$HOME/.config/efm-langserver/stylelint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %m [%t%*[a-z]]"
