@@ -21,8 +21,15 @@ fi
 
 options=(--force-exclusion --format simple --no-color --stdin "${target_filepath}")
 
-if [ -n "${is_fixing}" ]; then
-  "${executable}" "${options[@]}" --auto-correct | awk '/^=+$/,eof' | awk 'NR > 1 { print }'
+if [ "${is_fixing}" = "1" ]; then
+  result="$("${executable}" "${options[@]}" --autocorrect)"
+
+  if echo "${result}" | grep -E '^=+$' -q; then
+    echo "${result}" | awk '/^=+$/,eof' | awk 'NR > 1 { print }'
+  else
+    echo "${result}" >&2
+    exit 1
+  fi
 else
   out="$(
     "${executable}" "${options[@]}" |
