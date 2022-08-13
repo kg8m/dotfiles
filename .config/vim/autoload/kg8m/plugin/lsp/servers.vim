@@ -202,12 +202,25 @@ def ExtraConfigForGopls(): dict<any>
       analyses: {
         fillstruct: true,
       },
+      codelenses: {
+        generate: true,
+        test: true,
+      },
       completeUnimported: true,
       completionDocumentation: true,
       deepCompletion: true,
       hoverKind: "SynopsisDocumentation",
       matcher: "fuzzy",
       staticcheck: true,
+      "ui.inlayhint.hints": {
+        assignVariableTypes: true,
+        compositeLiteralFields: true,
+        compositeLiteralTypes: true,
+        constantValues: true,
+        functionTypeParameters: true,
+        parameterNames: true,
+        rangeVariableTypes: true,
+      },
       usePlaceholders: true,
     },
 
