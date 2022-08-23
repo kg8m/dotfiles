@@ -219,9 +219,9 @@ def Overwrite(): void
 
   var lsp_document_formatting_sid = ""
 
-  for scriptname in split(execute("scriptnames"), "\n")
-    if  scriptname =~# 'vim-lsp/autoload/lsp/internal/document_formatting\.vim'
-      lsp_document_formatting_sid = matchstr(scriptname, '\v^ *(\d+)')->trim()
+  for script in getscriptinfo()
+    if script.name =~# 'vim-lsp/autoload/lsp/internal/document_formatting\.vim$'
+      lsp_document_formatting_sid = string(script.sid)
       break
     endif
   endfor

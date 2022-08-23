@@ -38,9 +38,9 @@ enddef
 def SetupRefreshKeywords(): void
   var asyncomplete_buffer_sid = ""
 
-  for scriptname in split(execute("scriptnames"), "\n")
-    if scriptname =~# 'asyncomplete-buffer\.vim/autoload/asyncomplete/sources/buffer\.vim'
-      asyncomplete_buffer_sid = matchstr(scriptname, '\v^ *(\d+)')
+  for script in getscriptinfo()
+    if script.name =~# 'asyncomplete-buffer\.vim/autoload/asyncomplete/sources/buffer\.vim$'
+      asyncomplete_buffer_sid = string(script.sid)
       break
     endif
   endfor
