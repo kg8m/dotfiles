@@ -13,13 +13,18 @@ if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
 
-if command -v rubocop-daemon > /dev/null && command -v rubocop-daemon-wrapper > /dev/null; then
+options=()
+
+if rubocop --server-status > /dev/null 2>&1; then
+  executable="rubocop"
+  options+=("--server")
+elif command -v rubocop-daemon > /dev/null && command -v rubocop-daemon-wrapper > /dev/null; then
   executable="rubocop-daemon-wrapper"
 else
   executable="rubocop"
 fi
 
-options=(--force-exclusion --format simple --no-color --stdin "${target_filepath}")
+options+=(--force-exclusion --format simple --no-color --stdin "${target_filepath}")
 
 if [ "${is_fixing}" = "1" ]; then
   result="$("${executable}" "${options[@]}" --autocorrect)"
