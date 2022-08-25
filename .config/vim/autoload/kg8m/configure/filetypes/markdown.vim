@@ -15,4 +15,22 @@ export def Run(): void
   ]
   g:markdown_syntax_conceal = false
   g:markdown_minlines = g:kg8m#configure#colors#sync_minlines
+
+  augroup vimrc-configure-filetypes-markdown
+    autocmd!
+    autocmd SafeState * FixIskeyword()
+  augroup END
+enddef
+
+def FixIskeyword(): void
+  if &filetype !=# "markdown"
+    return
+  endif
+
+  if !kg8m#util#string#Includes(&iskeyword, "#")
+    return
+  endif
+
+  # Remove `#` from `iskeyword` that is set in a built-in `syntax/typescriptcommon.vim`.
+  setlocal iskeyword-=#
 enddef
