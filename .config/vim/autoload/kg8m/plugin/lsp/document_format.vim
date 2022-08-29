@@ -217,18 +217,12 @@ def Overwrite(): void
     # Do nothing
   endtry
 
-  var lsp_document_formatting_sid = ""
+  const scripts = getscriptinfo({ name: "vim-lsp/autoload/lsp/internal/document_formatting.vim" })
 
-  for script in getscriptinfo()
-    if script.name =~# 'vim-lsp/autoload/lsp/internal/document_formatting\.vim$'
-      lsp_document_formatting_sid = string(script.sid)
-      break
-    endif
-  endfor
-
-  if empty(lsp_document_formatting_sid)
+  if empty(scripts)
     kg8m#util#logger#Warn("Failed to detect vim-lsp's document_formatting.vim script.")
   else
+    const lsp_document_formatting_sid = scripts[0].sid
     const function_name = $"<SNR>{lsp_document_formatting_sid}_format_next"
     const new_definition_template =<< trim eval VIM
       function {function_name}(x) abort

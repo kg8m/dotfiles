@@ -36,18 +36,12 @@ def StopRefreshTimer(): void
 enddef
 
 def SetupRefreshKeywords(): void
-  var asyncomplete_buffer_sid = ""
+  const scripts = getscriptinfo({ name: "asyncomplete-buffer.vim/autoload/asyncomplete/sources/buffer.vim" })
 
-  for script in getscriptinfo()
-    if script.name =~# 'asyncomplete-buffer\.vim/autoload/asyncomplete/sources/buffer\.vim$'
-      asyncomplete_buffer_sid = string(script.sid)
-      break
-    endif
-  endfor
-
-  if empty(asyncomplete_buffer_sid)
+  if empty(scripts)
     cache.refresh_keywords = CannotRefreshKeywords
   else
+    const asyncomplete_buffer_sid = scripts[0].sid
     cache.refresh_keywords = function($"<SNR>{asyncomplete_buffer_sid}_refresh_keywords")
   endif
 
