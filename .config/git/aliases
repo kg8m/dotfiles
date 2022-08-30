@@ -504,9 +504,13 @@ function git:utility:diff {
 
 function git:utility:preview:log {
   local branch="${1:?Specify a branch name.}"
+  local local_timestamp="$(git show --pretty='format:%at' --no-patch "${branch}" 2>/dev/null)"
+  local remote_timestamp="$(git show --pretty='format:%at' --no-patch "origin/${branch}" 2>/dev/null)"
 
-  if ! git branch --contains "${branch}" > /dev/null 2>&1; then
-    branch="origin/${branch}"
+  if [ -n "${remote_timestamp}" ]; then
+    if [ -z "${local_timestamp}" ] || ((remote_timestamp > local_timestamp)); then
+      branch="origin/${branch}"
+    fi
   fi
 
   git log --max-count=100 --color=always "${branch}"
