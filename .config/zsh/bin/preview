@@ -39,6 +39,13 @@ if [ "${#filepaths}" = "1" ]; then
         bat "${realpath}" "${bat_options[@]}"
       fi
       ;;
+    *.diff)
+      if command -v delta > /dev/null; then
+        delta < "${realpath}"
+      else
+        bat "${realpath}" "${bat_options[@]}"
+      fi
+      ;;
     *)
       bat "${realpath}" "${bat_options[@]}"
   esac
