@@ -43,7 +43,7 @@ export def Save(name: string = ""): void
   endif
 
   const filepath = NameToFilepath(
-    empty(name) ? strftime("%Y-%m-%dT%H:%M:%S") : name
+    empty(name) ? strftime("%Y%m%dT%H%M%S") : name
   )
 
   if filereadable(filepath)
