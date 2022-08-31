@@ -43,6 +43,11 @@ abbrevs:
     snippet: install
     global: true
     context: '^bundle\s'
+  - name: bundle pristine
+    abbr: pr
+    snippet: pristine
+    global: true
+    context: '^bundle\s'
   - name: bundle update
     abbr: up
     snippet: update
