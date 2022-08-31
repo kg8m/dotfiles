@@ -96,9 +96,6 @@ def Setup(): void
       dirs:    ["config"],
       pattern: '/(routes\.rb|routes/.+\.rb)$',
     },
-    script: {
-      dirs: ["script"],
-    },
     spec: {
       dirs: ["spec", "test"],
     },
@@ -112,6 +109,7 @@ def Setup(): void
     },
   })
 
+  specs.css = specs.stylesheets
   specs.js = specs.javascripts
 
   for app_dir in globpath("app", "*", 0, 1)
