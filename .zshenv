@@ -80,13 +80,12 @@ export FD_DEFAULT_OPTIONS=(
   # Exclude files/directories
   # cf. configs for ripgrep
   --exclude "*.zwc"
+  --exclude ".bundle/cache/"
   --exclude ".cache/"
   --exclude ".git/"
   --exclude ".hg/"
   --exclude ".svn/"
   --exclude ".vim-sessions/"
-  --exclude "cache/"
-  --exclude "log/"
   --exclude "node_modules/"
   --exclude "tmp/"
   --exclude "vendor/bundle/"
