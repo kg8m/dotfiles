@@ -4,6 +4,7 @@ alias -g L="| less"
 alias -g H="| head"
 alias -g T="| tail"
 alias -g F="| filter"
+alias -g S="| sort_without_escape_sequences"
 
 if crontab -i > /dev/null 2>&1; then
   alias crontab="crontab -i"

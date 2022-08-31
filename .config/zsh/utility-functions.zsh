@@ -528,16 +528,15 @@ function zsh:rcs:compile:clear {
 function libs:go:uninstall {
   local pkg="${1:?}"
 
-  # Specify `--color never` because `fd` doesn't sort the result and `sort` command doesn't work with color sequences.
   local fd_args=(
     "${FD_DEFAULT_OPTIONS[@]}"
     --type d --type x
-    --color never
+    --color always
     "${pkg}"
     "${ASDF_DATA_DIR?:}/shims" "${ASDF_DATA_DIR?:}/installs/golang"
   )
 
-  local pkg_paths=("${(@f)$(fd "${fd_args[@]}" | sort -V | xargs -I{} gls --color {})}")
+  local pkg_paths=("${(@f)$(fd "${fd_args[@]}" | sort_without_escape_sequences)}")
 
   if [ -z "${pkg_paths[*]}" ]; then
     echo:error "No pkg files/directories found for ${pkg}."

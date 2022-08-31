@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+# https://stackoverflow.com/a/29401114
+#   h                   Copy the line to the hold space
+#   s/\x1b[[0-9;]*m//g  Remove all colour sequences
+#   G                   Append a newline and the contents of the hold space
+#   s/\n/\t/            Change the newline to a tab
+sed 'h;s/\x1b[[0-9;]*m//g;G;s/\n/\t/' | sort "$@" | cut -f2-

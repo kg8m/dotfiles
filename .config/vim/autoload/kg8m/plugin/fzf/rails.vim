@@ -13,9 +13,7 @@ final type_names = []
 
 export def Run(type: string): void
   const type_spec = specs[type]
-
-  # Specify `--color never` because `fd` doesn't sort the result and `sort` command doesn't work with color sequences.
-  var command = ["fd", $FD_DEFAULT_OPTIONS, "--full-path", "--type", "f", "--color", "never"]
+  var command = ["fd", $FD_DEFAULT_OPTIONS, "--full-path", "--type", "f", "--color", "always"]
 
   # Common excludes.
   command += ["--exclude='.keep'"]
@@ -32,8 +30,7 @@ export def Run(type: string): void
     command += [shellescape(type_spec.pattern)]
   endif
 
-  command += ["| sort -V"]
-  command += ["| xargs -I{} gls --color {}"]
+  command += ["| sort_without_escape_sequences"]
 
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
