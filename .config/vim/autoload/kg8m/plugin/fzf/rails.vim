@@ -16,7 +16,7 @@ export def Run(type: string): void
   var command = ["fd", $FD_DEFAULT_OPTIONS, "--full-path", "--type", "f", "--color", "always"]
 
   # Common excludes.
-  command += ["--exclude='.keep'"]
+  command += ["--exclude", ".keep"]
 
   if has_key(type_spec, "dirs")
     command += mapnew(type_spec.dirs, (_, dir) => $"--search-path={shellescape(dir)}")
