@@ -1,12 +1,14 @@
 function plugin:tmux:plugins {
   function plugin:tmux:plugins:atclone {
     local plugin_name="$(basename "$1")"
-    local tmux_dirpath="${XDG_CONFIG_HOME:?}/tmux"
-    local plugins_dirpath="${tmux_dirpath}/plugins"
+    local plugins_dirpath="${XDG_DATA_HOME:?}/tmux/plugins"
+    local plugin_dirpath="${plugins_dirpath}/${plugin_name}"
 
-    [ -d "${tmux_dirpath}" ] || ln -s ~/dotfiles/.config/tmux "${tmux_dirpath}"
     mkdir -p "${plugins_dirpath}"
-    [ -d "${plugins_dirpath}/${plugin_name}" ] || ln -s "${PWD}" "${plugins_dirpath}/${plugin_name}"
+
+    if [ ! -d "${plugin_dirpath}" ]; then
+      ln -s "${PWD}" "${plugin_dirpath}"
+    fi
   }
 
   local plugins=(
