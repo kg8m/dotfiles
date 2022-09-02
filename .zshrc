@@ -112,6 +112,7 @@ source ~/.config/zsh/aliases.zsh
 source ~/.config/zsh/utility-functions.zsh
 
 source ~/.config/zsh/asdf.zsh
+source ~/.config/zsh/aws.zsh
 source ~/.config/zsh/binary-released-plugins.zsh
 source ~/.config/zsh/cd-bookmark.zsh
 source ~/.config/zsh/colors.zsh
