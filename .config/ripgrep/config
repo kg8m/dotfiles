@@ -34,8 +34,6 @@
 --glob=!.bundle/cache/
 --glob=!.cache/
 --glob=!.git/
---glob=!.hg/
---glob=!.svn/
 --glob=!log/
 --glob=!node_modules/
 --glob=!tmp/

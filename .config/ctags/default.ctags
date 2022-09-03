@@ -4,7 +4,6 @@
 --sort=yes
 
 --exclude=.git
---exclude=.svn
 --exclude=*.min.js
 --exclude=jquery.js
 --exclude=jquery-ui.js
