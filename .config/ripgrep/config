@@ -36,7 +36,6 @@
 --glob=!.git/
 --glob=!.hg/
 --glob=!.svn/
---glob=!.vim-sessions/
 --glob=!log/
 --glob=!node_modules/
 --glob=!tmp/

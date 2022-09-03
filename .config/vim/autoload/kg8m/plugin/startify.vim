@@ -20,7 +20,7 @@ def Setup(): void
   set sessionoptions=buffers,folds
 
   g:startify_session_autoload    = false
-  g:startify_session_dir         = $"{getcwd()}/.vim-sessions"
+  g:startify_session_dir         = SessionsDirpath()
   g:startify_session_number      = 10
   g:startify_session_persistence = false
   g:startify_session_sort        = true
@@ -84,6 +84,11 @@ def OverwriteColors(): void
   highlight StartifyHeader guifg=#FFFFFF
   highlight StartifyPath   guifg=#777777
   highlight StartifySlash  guifg=#777777
+enddef
+
+def SessionsDirpath(): string
+  const dirname = getcwd()->substitute("/", "=+", "g")
+  return $"{$XDG_DATA_HOME}/vim/sessions/{dirname}"
 enddef
 
 def SaveSession(): void

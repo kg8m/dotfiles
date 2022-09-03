@@ -3,7 +3,6 @@
 .DS_Store
 .bundle/cache
 .bundle/config
-.vim-sessions
 node_modules
 tags
 tags.lock

@@ -5,7 +5,6 @@
 
 --exclude=.git
 --exclude=.svn
---exclude=.vim-sessions
 --exclude=*.min.js
 --exclude=jquery.js
 --exclude=jquery-ui.js

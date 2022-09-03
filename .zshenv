@@ -85,7 +85,6 @@ export FD_DEFAULT_OPTIONS=(
   --exclude ".git/"
   --exclude ".hg/"
   --exclude ".svn/"
-  --exclude ".vim-sessions/"
   --exclude "node_modules/"
   --exclude "tmp/"
   --exclude "vendor/bundle/"
