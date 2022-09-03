@@ -115,8 +115,7 @@ def SessionSavable(): bool
 enddef
 
 def SessionName(): string
-  return "%:p"
-    ->expand()
+  return kg8m#util#file#CurrentRelativePath()
     ->substitute("/", "+=", "g")
     ->substitute('^\.', "_", "")
 enddef
