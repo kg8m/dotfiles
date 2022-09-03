@@ -115,9 +115,12 @@ def SessionSavable(): bool
 enddef
 
 def SessionName(): string
-  return kg8m#util#file#CurrentRelativePath()
-    ->substitute("/", "+=", "g")
-    ->substitute('^\.', "_", "")
+  # Use a prefix for names starting with a dot (.), that is hidden from Startify session files list.
+  const prefix = "session:"
+
+  const body = kg8m#util#file#CurrentRelativePath()->substitute("/", "+=", "g")
+
+  return $"{prefix}{body}"
 enddef
 
 def DeleteLastSessionLink(): void
