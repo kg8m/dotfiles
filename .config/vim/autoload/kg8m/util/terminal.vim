@@ -2,7 +2,7 @@ vim9script
 
 export def ExecuteCommand(command: string): void
   if kg8m#util#OnTmux()
-    kg8m#plugin#vimux#RunCommand(command)
+    kg8m#util#tmux#ExecuteCommand(command)
   else
     if len(term_list()) ==# 0
       terminal

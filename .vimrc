@@ -524,10 +524,6 @@ if kg8m#plugin#Register("Shougo/vimproc")
   })
 endif
 
-if kg8m#plugin#Register("preservim/vimux", { if: kg8m#util#OnTmux() && !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#vimux#Configure()
-endif
-
 # See `kg8m#util#xxx#Vital()`.
 # Specify `merged: false` because `Vitalize` fails.
 kg8m#plugin#Register("vim-jp/vital.vim", { merged: false })

@@ -11,16 +11,11 @@ export def Configure(): void
   })
 enddef
 
-def VimuxStrategy(command: string): void
-  # Just execute the command without echo it
-  kg8m#plugin#vimux#RunCommand(command)
-enddef
-
 def OnSource(): void
   if kg8m#util#OnTmux()
     g:test#custom_strategies = get(g:, "test#custom_strategies", {})
-    g:test#custom_strategies.vimux = VimuxStrategy
-    g:test#strategy = "vimux"
+    g:test#custom_strategies.terminal = kg8m#util#terminal#ExecuteCommand
+    g:test#strategy = "terminal"
   endif
 
   g:test#preserve_screen = true
