@@ -42,10 +42,8 @@ enddef
 
 # Overwrite current register `"`
 export def Handler(yank_item: string): void
-  const index   = matchlist(yank_item, '\v^\s*(\d+)\t')[1]->str2nr()
-  const cache   = kg8m#plugin#yankround#CacheAndRegtype(index)
-  const text    = cache[0]
-  const regtype = cache[1]
+  const index = matchlist(yank_item, '\v^\s*(\d+)\t')[1]->str2nr()
+  const [text, regtype] = kg8m#plugin#yankround#CacheAndRegtype(index)
 
   setreg('"', text, regtype)
   execute 'normal! ""p'

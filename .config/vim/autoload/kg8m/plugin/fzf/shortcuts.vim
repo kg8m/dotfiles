@@ -142,8 +142,7 @@ def FormatList(): void
 enddef
 
 def FormatItem(item: list<string>): string
-  const description = item[0]
-  const command     = item[1]
+  const [description, command] = item
 
   if empty(description)
     return ""
