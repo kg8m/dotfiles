@@ -238,21 +238,9 @@ function remove_symlink {
   fi
 }
 
+# Overwrite this function if needed.
 function tmux:setup_default {
   tmux new-session -d -s default
-  tmux new-window -t default:2
-  tmux new-window -t default:3
-  tmux new-window -t default:4
-
-  tmux split-window -h -t default:1
-  tmux split-window -h -t default:1
-  tmux split-window -h -t default:1
-  tmux select-layout -t default:1 even-horizontal
-
-  tmux split-window -h -t default:2
-  tmux select-layout -t default:2 main-vertical
-
-  tmux select-window -t default:2
   tmux attach-session -t default
 }
 
