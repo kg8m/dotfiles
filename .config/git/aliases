@@ -524,7 +524,7 @@ function git:proxy:column {
   local separator="${1:?}"
   local dummy="@"
 
-  sd '^' "${dummy}" |
+  sd '^(.)' "${dummy}\$1" |
     column -t -s "${separator}" |
     sd "^${dummy}" ''
 }
