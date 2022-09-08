@@ -5,6 +5,7 @@
 	name  = kg8m
 	email = takumi.kagiyama@gmail.com
 	useConfigOnly = true
+	signingkey = 999EA51A6544E454
 
 [url "git@github.com:"]
 	pushInsteadOf = https://github.com/
@@ -58,6 +59,7 @@
 [commit]
 	verbose = true
 	cleanup = scissors
+	gpgsign = true
 
 [core]
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
