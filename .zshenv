@@ -26,6 +26,7 @@ path=(
 )
 
 export COLORTERM=truecolor
+export GPG_TTY="$(tty)"
 
 # https://github.com/asdf-vm/asdf/blob/788ccab5971cb828cf25364b0df5ed6f5e9e713d/asdf.sh#L17
 ASDF_ROOT="${XDG_DATA_HOME}/zsh/asdf"
