@@ -9,11 +9,6 @@ if [ -z "${current_remote_url}" ]; then
   exit 1
 fi
 
-default_name="$(git config --get user.name)"
-default_email="$(git config --get user.email)"
-local_name="$(git config --local --get user.name)"
-local_email="$(git config --local --get user.email)"
-
 case "${current_remote_url}" in
   *://*)
     # Normalize URL: remove leading "git+"
@@ -26,15 +21,16 @@ case "${current_remote_url}" in
     current_remote_url=$(echo "${current_remote_url}" | sd '(.*):' 'ssh://$1/')
     ;;
 esac
-if [ -z "${local_name}" ]; then
-  name="$(git config --get-urlmatch user.name "${current_remote_url}")"
-  if [ "${name}" != "${default_name}" ]; then
-    git config --local user.name "${name}"
+
+for key in name email signingkey; do
+  default_value="$(git config --get "user.${key}")"
+  local_value="$(git config --local --get "user.${key}")"
+
+  if [ -z "${local_value}" ]; then
+    value="$(git config --get-urlmatch "user.${key}" "${current_remote_url}")"
+
+    if [ "${value}" != "${default_value}" ]; then
+      git config --local "user.${key}" "${value}"
+    fi
   fi
-fi
-if [ -z "${local_email}" ]; then
-  email="$(git config --get-urlmatch user.email "${current_remote_url}")"
-  if [ "${email}" != "${default_email}" ]; then
-    git config --local user.email "${email}"
-  fi
-fi
+done
