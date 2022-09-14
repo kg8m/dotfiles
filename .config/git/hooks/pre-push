@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-if git log --format='%s' --right-only origin/HEAD... | grep -E '^fixup\b' -q; then
+current_branch="$(git branch --show-current)"
+
+if git log --format='%s' --right-only "origin/${current_branch}"... | grep -E '^fixup\b' -q; then
   printf "\e[1;38;5;1m%s\e[0;0m\n" "ERROR -- Non-pushed fixup commits exist." >&2
   exit 1
 fi
