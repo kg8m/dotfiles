@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 current_branch="$(git branch --show-current)"
 
-if git log --format='%s' --right-only "origin/${current_branch}"... | grep -E '^fixup\b' -q; then
-  printf "\e[1;38;5;1m%s\e[0;0m\n" "ERROR -- Non-pushed fixup commits exist." >&2
-  exit 1
+if git branch --remotes | grep -E "\borigin/${current_branch}" -q; then
+  if git log --format='%s' --right-only "origin/${current_branch}"... | grep -E '^fixup\b' -q; then
+    printf "\e[1;38;5;1m%s\e[0;0m\n" "ERROR -- Non-pushed fixup commits exist." >&2
+    exit 1
+  fi
+else
+  printf "\e[1;38;5;6m%s\e[0;0m\n" "INFO -- The branch \`origin/${current_branch}\` doesn't exist." >&2
 fi
 
 if [ "${GIT_LOCAL_TEMPLATE_HOOKS_AVAILABLE:-}" = "1" ] && [ -f .git_templates/hooks/pre-push ]; then
