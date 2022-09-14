@@ -101,9 +101,20 @@ HELP
   local filtering_commands=(
     "aws logs filter-log-events ${aws_logs_options[*]}"
     "jq -C '${jq_arg}'"
-    "less -o ${outpath}"
   )
-  execute_with_confirm "${(j: | :)filtering_commands}"
+
+  local start_time="$(date '+%s')"
+  execute_with_confirm "${(j: | :)filtering_commands} > ${outpath}"
+  local finish_time="$(date '+%s')"
+
+  local notify_options=(--title "aws:logs:filter_events")
+
+  if ((finish_time - start_time < 15)); then
+    notify_options+=(--nostay)
+  fi
+
+  notify "Filtering has been completed." "${notify_options[@]}"
+  execute_with_echo "less ${outpath}"
   echo
   echo "See the result in \`${outpath}\`."
 }
