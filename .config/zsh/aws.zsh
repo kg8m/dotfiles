@@ -100,7 +100,7 @@ HELP
   # shellcheck disable=SC2034
   local filtering_commands=(
     "aws logs filter-log-events ${aws_logs_options[*]}"
-    "jq -C '${jq_arg}'"
+    "jq --compact-output --monochrome-output '${jq_arg}'"
   )
 
   local start_time="$(date '+%s')"
@@ -114,7 +114,7 @@ HELP
   fi
 
   notify "Filtering has been completed." "${notify_options[@]}"
-  execute_with_echo "less ${outpath}"
+  execute_with_echo "jq --color-output . ${outpath} | less"
   echo
   echo "See the result in \`${outpath}\`."
 }
