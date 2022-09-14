@@ -83,7 +83,7 @@ HELP
     return 1
   fi
 
-  local aws_options=(
+  local aws_logs_options=(
     --log-group-name "${group_name}"
     --log-stream-names "'${(j:' ':)stream_names}'"
     --start-time "$(($(date -j -f '%F %T' "${start_time}" '+%s') * 1000))"
@@ -94,16 +94,16 @@ HELP
     --max-items "${limit}"
     --output json
   )
-  local jq_argument=".[] | [( .timestamp / 1000 | localtime | todateiso8601 ), ( .message | fromjson )]"
+  local jq_arg=".[] | [( .timestamp / 1000 | localtime | todateiso8601 ), ( .message | fromjson )]"
   local outpath="/tmp/aws:logs:filter_events:result:$(date +'%Y%m%d-%H%M%S').txt"
 
   # shellcheck disable=SC2034
-  local commands=(
-    "aws logs filter-log-events ${aws_options[*]}"
-    "jq -C '${jq_argument}'"
+  local filtering_commands=(
+    "aws logs filter-log-events ${aws_logs_options[*]}"
+    "jq -C '${jq_arg}'"
     "less -o ${outpath}"
   )
-  execute_with_confirm "${(j: | :)commands}"
+  execute_with_confirm "${(j: | :)filtering_commands}"
   echo
   echo "See the result in \`${outpath}\`."
 }
