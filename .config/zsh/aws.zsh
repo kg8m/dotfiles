@@ -95,7 +95,7 @@ HELP
     --output json
   )
   local jq_arg=".[] | [( .timestamp / 1000 | localtime | todateiso8601 ), ( .message | fromjson )]"
-  local outpath="/tmp/aws:logs:filter_events:result:$(date +'%Y%m%d-%H%M%S').txt"
+  local outpath="/tmp/aws-logs-filter_events-result-$(date '+%Y%m%d-%H%M%S').txt"
 
   # shellcheck disable=SC2034
   local filtering_commands=(
