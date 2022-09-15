@@ -96,8 +96,8 @@ def IsDefinitionSupported(): bool
 enddef
 
 def OnSource(): void
-  g:lsp_diagnostics_enabled                        = true
   g:lsp_diagnostics_echo_cursor                    = false
+  g:lsp_diagnostics_enabled                        = true
   g:lsp_diagnostics_float_cursor                   = true
   g:lsp_diagnostics_highlights_insert_mode_enabled = false
   g:lsp_diagnostics_signs_insert_mode_enabled      = false
