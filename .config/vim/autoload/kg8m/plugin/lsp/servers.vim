@@ -441,6 +441,17 @@ enddef
 def ExtraConfigForTypescriptLanguageServer(): dict<any>
   return {
     cmd: (_) => ["typescript-language-server", "--stdio"],
+    initialization_options: {
+      preferences: {
+        includeInlayEnumMemberValueHints: true,
+        includeInlayFunctionLikeReturnTypeHints: true,
+        includeInlayFunctionParameterTypeHints: true,
+        includeInlayParameterNameHints: "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName: true,
+        includeInlayPropertyDeclarationTypeHints: true,
+        includeInlayVariableTypeHints: true,
+      },
+    },
     env: NodeToolsEnv(),
 
     document_format: false,

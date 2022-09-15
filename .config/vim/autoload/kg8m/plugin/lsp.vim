@@ -102,7 +102,8 @@ def OnSource(): void
   g:lsp_diagnostics_highlights_insert_mode_enabled = false
   g:lsp_diagnostics_signs_insert_mode_enabled      = false
   g:lsp_fold_enabled                               = false
-  g:lsp_semantic_enabled                           = $LSP_SEMANTIC_ENABLED ==# "1"  # a little loud to me
+  g:lsp_inlay_hints_enabled                        = $LSP_INLAY_HINTS_ENABLED ==# "1"  # a little noisy to me
+  g:lsp_semantic_enabled                           = $LSP_SEMANTIC_ENABLED ==# "1"     # a little loud to me
 
   g:lsp_diagnostics_signs_error         = { text: g:kg8m#plugin#lsp#icons.error }
   g:lsp_diagnostics_signs_warning       = { text: g:kg8m#plugin#lsp#icons.warning }
