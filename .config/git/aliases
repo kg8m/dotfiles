@@ -197,6 +197,7 @@ function git:branch:list {
     grep -E "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
     git:proxy:column "${SEP}" |
     awk '!x[$1]++' |  # Remove duplicated branches
+    colrm "$((COLUMNS + 1))" |
     git:branch:colorize
 }
 
@@ -207,6 +208,7 @@ function git:branch:list:all {
     sd "\s*${SEP}\s*" "${SEP}" |
     grep -E -v "^\s+origin/HEAD${SEP}" |
     git:proxy:column "${SEP}" |
+    colrm "$((COLUMNS + 1))" |
     git:branch:colorize
 }
 
