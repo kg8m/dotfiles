@@ -194,7 +194,6 @@ function git:branch:list {
     sd "\s*${SEP}\s*" "${SEP}" |
     sd '^origin/' '' |
     grep -E -v "^HEAD${SEP}" |
-    grep -E "^[a-zA-Z0-9]" |  # Remove branches with illegal characters
     git:proxy:column "${SEP}" |
     awk '!x[$1]++' |  # Remove duplicated branches
     colrm "$((COLUMNS + 1))" |
