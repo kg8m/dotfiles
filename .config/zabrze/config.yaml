@@ -168,11 +168,6 @@ abbrevs:
     snippet: diff-without-space-changes HEAD
     global: true
     context: '^git\s'
-  - name: git diff-local-without-space-changes
-    abbr: dl
-    snippet: diff-local-without-space-changes
-    global: true
-    context: '^git\s'
   - name: git fetch
     abbr: f
     snippet: fetch
@@ -275,6 +270,9 @@ abbrevs:
     global: true
     context: '^tig\s'
 
+  - name: my_diff:without_spaces
+    abbr: di
+    snippet: my_diff:without_spaces
   - name: my_grep:with_filter
     abbr: gr
     snippet: my_grep:with_filter

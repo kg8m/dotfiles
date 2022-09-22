@@ -392,6 +392,27 @@ function my_grep:with_filter {
   fi
 }
 
+function my_diff {
+  local options=(
+    --unified=10
+    --recursive
+    --exclude=".git"
+  )
+
+  execute_with_echo "diff ${options[*]} $* | delta"
+}
+
+function my_diff:without_spaces {
+  local options=(
+    --ignore-tab-expansion
+    --ignore-space-change
+    --ignore-all-space
+    --ignore-blank-lines
+  )
+
+  my_diff "${options[@]}" "$@"
+}
+
 function docker:containers:delete {
   local container_names=("${(@f)$(
     docker container ls --all |
