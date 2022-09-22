@@ -133,9 +133,10 @@ function git:branch:create:with_set_upstream {
 }
 
 function git:branch:delete:bulk:local {
+  local current="$(git branch --show-current)"
   local branches=("${(@f)$(
     git:branch:list |
-      grep -E -v "${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
+      grep -E -v "^${current} |${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
       git:branch:filter
   )}")
 
