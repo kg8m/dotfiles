@@ -123,6 +123,8 @@ def OnSource(): void
   # Usually disable vim-lsp's logging because it makes Vim slower.
   # g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
+  kg8m#plugin#lsp#popup#Setup()
+
   augroup vimrc-plugin-lsp
     autocmd!
     autocmd User lsp_setup          kg8m#plugin#lsp#stream#Subscribe()
