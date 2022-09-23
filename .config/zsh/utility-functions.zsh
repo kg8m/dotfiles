@@ -396,6 +396,7 @@ function my_diff {
   local options=(
     --unified=10
     --recursive
+    --new-file
     --exclude=".git"
   )
 
