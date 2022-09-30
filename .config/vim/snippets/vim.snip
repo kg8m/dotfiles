@@ -104,3 +104,8 @@ options head
 		${0}
 	finally
 	endtry
+
+snippet reduce
+abbr    reduce({object}, {func}, {initial})
+options word
+	reduce(${1:#:object}, `getline(1) ==# "vim9script" ? "(${3:acc}, ${4:val}) => ${0}" : "{ ${3:acc}, ${4:val} -> ${0} }"`, ${2:#:initial})

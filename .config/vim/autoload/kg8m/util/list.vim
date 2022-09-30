@@ -43,25 +43,20 @@ export def Union(list1: list<any>, list2: list<any>, Callback: func(any): any = 
 enddef
 
 export def FilterMap(list: list<any>, Callback: func(any): any): list<any>
-  var result = []
-
-  for item in list
+  return reduce(list, (result, item) => {
     const new_item = Callback(item)
 
     if type(new_item) !=# type(false) || new_item !=# false
-      result += [new_item]
+      add(result, new_item)
     endif
-  endfor
 
-  return result
+    return result
+  }, [])
 enddef
 
 export def IndexBy(list: list<any>, Callback: func(any): any): dict<any>
-  final indexed = {}
-
-  for item in list
-    indexed[Callback(item)] = item
-  endfor
-
-  return indexed
+  return reduce(list, (result, item) => {
+    result[Callback(item)] = item
+    return result
+  }, {})
 enddef
