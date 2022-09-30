@@ -368,7 +368,10 @@ function git:status:filter:untracked {
 function git:status:utility:filter {
   local filter_options=(
     --prompt "Select files> "
-    --preview "git diff-or-cat {2}"
+
+    # Use `{2..}` instead of `{2}` for filepaths that contain whitespaces.
+    --preview "git diff-or-cat {2..}"
+
     --preview-window "down:75%:wrap:nohidden"
   )
 
@@ -446,6 +449,14 @@ function git:utility:chmod {
 
 function git:utility:diff_or_cat {
   local filepath="${1:?Specify a filepath.}"
+
+  # Remove quotation marks around the filepath.
+  if [[ "${filepath}" =~ ^\" ]] && [[ "${filepath}" =~ \"$ ]]; then
+    local offset="1"
+    local length="$((${#filepath} - 2))"
+    filepath="${filepath:${offset}:${length}}"
+  fi
+
   local git_status="$(git status --short -- "${filepath}")"
 
   if [[ "${git_status}" =~ ^D ]]; then
