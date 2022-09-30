@@ -113,11 +113,7 @@ if kg8m#plugin#Register("Shougo/context_filetype.vim")
   }
 endif
 
-# Follow updates while using my fork.
-kg8m#plugin#Register("gamoutatsumi/dps-ghosttext.vim", { name: "dps-ghosttext-original", if: false })
-
-# Use my fork until https://github.com/gamoutatsumi/dps-ghosttext.vim/pull/6 is merged.
-if kg8m#plugin#Register("kg8m/dps-ghosttext.vim", { if: $GHOST_TEXT_AVAILABLE ==# "1" })
+if kg8m#plugin#Register("gamoutatsumi/dps-ghosttext.vim", { if: $GHOST_TEXT_AVAILABLE ==# "1" })
   kg8m#plugin#ghosttext#Configure()
 endif
 
