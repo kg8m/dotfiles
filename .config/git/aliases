@@ -166,8 +166,8 @@ function git:branch:delete:bulk:remote {
 function git:branch:filter {
   local options=(
     --prompt="Select branches> "
-    --preview-window="down:75%:wrap:nohidden"
     --preview="git sh \"git:utility:preview:log {1}\""
+    --preview-window="down:75%:wrap:nohidden"
     "$@"
   )
 
@@ -368,8 +368,8 @@ function git:status:filter:untracked {
 function git:status:utility:filter {
   local filter_options=(
     --prompt "Select files> "
-    --preview-window "down:75%:wrap:nohidden"
     --preview "git diff-or-cat {2}"
+    --preview-window "down:75%:wrap:nohidden"
   )
 
   filter "${filter_options[@]}" | sd '^..\s' ''
