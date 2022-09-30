@@ -66,7 +66,7 @@ if kg8m#plugin#Register("prabirshrestha/asyncomplete-lsp.vim")
   kg8m#plugin#asyncomplete#lsp#Configure()
 endif
 
-if kg8m#plugin#Register("kitagry/asyncomplete-tabnine.vim", { build: "./install.sh" })
+if kg8m#plugin#Register("kitagry/asyncomplete-tabnine.vim", { if: kg8m#util#IsTabnineAvailable(), build: "./install.sh" })
   kg8m#plugin#asyncomplete#tabnine#Configure()
 endif
 

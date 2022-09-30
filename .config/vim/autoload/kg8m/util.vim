@@ -63,6 +63,20 @@ export def IsGitRebase(): bool
   return cache.is_git_rebase
 enddef
 
+export def IsTabnineAvailable(): bool
+  if has_key(cache, "is_tabnine_available")
+    return cache.is_tabnine_available
+  endif
+
+  if empty($TABNINE_AVAILABLE)
+    cache.is_tabnine_available = system("git remote -v") =~# '@github\.com:kg8m/'
+  else
+    cache.is_tabnine_available = $TABNINE_AVAILABLE ==# "1"
+  endif
+
+  return cache.is_tabnine_available
+enddef
+
 export def RubygemsPath(): string
   if has_key(cache, "rubygems_path")
     return cache.rubygems_path
