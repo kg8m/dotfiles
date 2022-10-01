@@ -1,1 +1,1 @@
-setlocal foldmethod=expr foldexpr=kg8m#fold#javascript#Expr(v:lnum)
+setlocal foldmethod=expr foldexpr=kg8m#fold#javascript#Expr()

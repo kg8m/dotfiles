@@ -1,1 +1,1 @@
-setlocal foldmethod=expr foldexpr=kg8m#fold#ruby#Expr(v:lnum)
+setlocal foldmethod=expr foldexpr=kg8m#fold#ruby#Expr()

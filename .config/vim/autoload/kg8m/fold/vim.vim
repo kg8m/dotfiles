@@ -29,8 +29,8 @@ const ONE_LINER_PATTERN     = '\v<%(endf%[unction]|enddef|endif|endfor|aug%[roup
 const START_MARKER_PATTERN = '\v["#].*\{{3}'
 const END_MARKER_PATTERN   = '\v["#].*\}{3}'
 
-export def Expr(lnum: number): string
-  const line = getline(lnum)->trim()
+export def Expr(): string
+  const line = getline(v:lnum)->trim()
 
   if IsHeredocEnd(line)
     unlet! b:vim_fold_heredoc_key

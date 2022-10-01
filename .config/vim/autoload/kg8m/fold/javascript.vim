@@ -6,13 +6,13 @@ vim9script
 const FOLD_START = '\v(\{|\[)\s*$'
 const FOLD_END   = '\v^\s*(\}|\])'
 
-export def Expr(lnum: number): string
-  const line = getline(lnum)
+export def Expr(): string
+  const line = getline(v:lnum)
 
   if line =~# FOLD_START
-    return ">" .. string(IndentLevel(lnum))
+    return ">" .. string(IndentLevel(v:lnum))
   elseif line =~# FOLD_END
-    return "<" .. string(IndentLevel(lnum))
+    return "<" .. string(IndentLevel(v:lnum))
   else
     return "="
   endif

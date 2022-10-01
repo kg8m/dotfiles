@@ -21,8 +21,8 @@ const FOLD_START_PATTERN =
 const FOLD_END_PATTERN = '\v^%(end>|\}|\])'
 const ONE_LINER_PATTERN = '\v<end>'
 
-export def Expr(lnum: number): string
-  const line = getline(lnum)->trim()
+export def Expr(): string
+  const line = getline(v:lnum)->trim()
 
   if IsHeredocEnd(line)
     const indent = b:ruby_fold_heredoc_indent
@@ -34,16 +34,16 @@ export def Expr(lnum: number): string
   elseif IsNoContent(line)
     return "="
   elseif IsFoldEnd(line)
-    return "<" .. string(IndentLevel(lnum))
+    return "<" .. string(IndentLevel(v:lnum))
   elseif IsHeredocStart(line)
     b:ruby_fold_heredoc_key    = matchstr(line, HEREDOC_START_PATTERN)
-    b:ruby_fold_heredoc_indent = IndentLevel(lnum)
+    b:ruby_fold_heredoc_indent = IndentLevel(v:lnum)
     return ">" .. string(b:ruby_fold_heredoc_indent)
   elseif IsFoldStart(line)
-    return ">" .. string(IndentLevel(lnum))
+    return ">" .. string(IndentLevel(v:lnum))
   else
     # Return stringified number because Vim9 script currenty doesn't support `string | number` return type
-    return string(IndentLevel(lnum) - 1)
+    return string(IndentLevel(v:lnum) - 1)
   endif
 enddef
 

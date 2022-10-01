@@ -1,1 +1,1 @@
-setlocal foldmethod=expr foldexpr=kg8m#fold#vim#Expr(v:lnum)
+setlocal foldmethod=expr foldexpr=kg8m#fold#vim#Expr()

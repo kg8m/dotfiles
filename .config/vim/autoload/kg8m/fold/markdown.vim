@@ -18,8 +18,8 @@ const HASH_HEADER_PATTERN = '\v^\zs#{1,}\ze'
 const EQUAL_H1_PATTERN    = '\v^\={3,}$'
 const HYPHEN_H2_PATTERN   = '\v^-{3,}$'
 
-export def Expr(lnum: number): string
-  const line = getline(lnum)->trim()
+export def Expr(): string
+  const line = getline(v:lnum)->trim()
 
   if IsCodeblockEnd(line)
     unlet! b:markdown_fold_codeblock_backticks
@@ -43,7 +43,7 @@ export def Expr(lnum: number): string
     const hashes = matchstr(line, HASH_HEADER_PATTERN)
     return ">" .. string(len(hashes))
   else
-    const nextline = getline(lnum + 1)->trim()
+    const nextline = getline(v:lnum + 1)->trim()
 
     if IsEqualH1(nextline)
       return ">1"
