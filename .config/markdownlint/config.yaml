@@ -1,0 +1,14 @@
+fenced-code-language: false
+first-line-h1: false
+header-style:
+  style: setext_with_atx
+line-length: false
+list-marker-space: false
+no-bare-urls: false
+no-blanks-blockquote: false
+no-duplicate-header: false
+no-inline-html: false
+no-multiple-blanks: false
+no-trailing-punctuation: false
+no-trailing-spaces: false
+ol-prefix: false

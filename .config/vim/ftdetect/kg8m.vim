@@ -6,8 +6,6 @@ autocmd BufNewFile,BufRead .envrc set filetype=sh
 
 autocmd BufNewFile,BufRead Gemfile.local* set filetype=Gemfile
 
-autocmd BufNewFile,BufRead */markdownlint/config set filetype=json
-
 autocmd BufNewFile,BufRead *.moin,*.trac,*.tracwiki set filetype=moin
 
 autocmd BufNewFile,BufRead Procfile,Procfile.* set filetype=conf

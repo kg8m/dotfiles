@@ -39,7 +39,7 @@ tools:
       - "%*[ ]%l:%c%*[ ]%t%*[a-z]%*[ ]%m"
 
   markdownlint: &markdownlint
-    lint-command: "markdownlint --stdin"
+    lint-command: "markdownlint --stdin --config $HOME/.config/markdownlint/config.yaml"
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c %m"
