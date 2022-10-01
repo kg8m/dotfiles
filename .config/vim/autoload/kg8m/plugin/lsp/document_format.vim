@@ -53,16 +53,16 @@ def Run(): void
 
   # Disable because organizeImports is sometimes annoying to me.
   # if IsOrganizeImportsAvailable()
-  #   if b:changedtick !=# b:lsp_document_format_cache.changedtick
+  #   if b:changedtick !=# GetBufferCache("changedtick")
   #     TemporarilyDisableOnTextChanged()
   #     LspCodeActionSync source.organizeImports
   #   endif
   # endif
 
-  b:lsp_document_format_cache.count += 1
-  b:lsp_document_format_cache.changedtick = b:changedtick
+  SetBufferCache("count", GetBufferCache("count") + 1)
+  SetBufferCache("changedtick", b:changedtick)
 
-  if b:lsp_document_format_cache.count ># 100
+  if GetBufferCache("count") ># 100
     kg8m#util#logger#Warn("Abort document formatting because of 100+ times retries.")
     Teardown()
     return
@@ -72,7 +72,7 @@ def Run(): void
 enddef
 
 def Teardown(): void
-  b:lsp_document_format_cache.count = 0
+  SetBufferCache("count", 0)
 enddef
 
 def UseBufferCache(key: string, initial_value: any): void
@@ -83,6 +83,16 @@ def UseBufferCache(key: string, initial_value: any): void
   if !has_key(b:lsp_document_format_cache, key)
     b:lsp_document_format_cache[key] = initial_value
   endif
+enddef
+
+def GetBufferCache(key: string, fallback_value: any = null): any
+  UseBufferCache(key, fallback_value)
+  return b:lsp_document_format_cache[key]
+enddef
+
+def SetBufferCache(key: string, value: any): void
+  UseBufferCache(key, value)
+  b:lsp_document_format_cache[key] = value
 enddef
 
 def OriginalFormatNext(x: any): void
@@ -192,10 +202,8 @@ def HasServerCapability(): bool
 enddef
 
 def LogSkipped(invalid_reason: string): void
-  UseBufferCache("skipped_by", "")
-
-  if b:lsp_document_format_cache.skipped_by !=# invalid_reason
-    b:lsp_document_format_cache.skipped_by = invalid_reason
+  if GetBufferCache("skipped_by", "") !=# invalid_reason
+    SetBufferCache("skipped_by", invalid_reason)
     kg8m#util#logger#Info($"Automatic document formatting is skipped because {invalid_reason}.")
   endif
 enddef
@@ -226,8 +234,7 @@ def Overwrite(): void
     const function_name = $"<SNR>{lsp_document_formatting_sid}_format_next"
     const new_definition_template =<< trim eval VIM
       function {function_name}(x) abort
-        let cache = get(b:, "lsp_document_format_cache", {{}})
-        let cached_changedtick = get(cache, "changedtick", b:changedtick)
+        let cached_changedtick = {cache.sid}GetBufferCache("changedtick", b:changedtick)
 
         if b:changedtick ==# cached_changedtick
           call {cache.sid}OriginalFormatNext(a:x)
