@@ -4,7 +4,7 @@ export def Confirm(prompt: string): bool
   var input = ""
 
   while input !~? '^[yn]'
-    input = GetNonBlank(prompt)
+    input = GetNonBlank($"{prompt} [y/n]: ")
   endwhile
 
   return input =~? '^y'

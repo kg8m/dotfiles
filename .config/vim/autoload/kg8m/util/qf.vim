@@ -47,7 +47,7 @@ export def Save(name: string = ""): void
   )
 
   if filereadable(filepath)
-    const prompt = $"`{filepath}` exists. Overwrite it? [y/n]: "
+    const prompt = $"`{filepath}` exists. Overwrite it?"
 
     if kg8m#util#input#Confirm(prompt)
       redraw
@@ -93,7 +93,7 @@ export def Delete(name: string = ""): void
     kg8m#plugin#fzf#qf#Delete()
   else
     Process(name, (filepath) => {
-      const prompt = $"Sure to delete `{filepath}`? [y/n]: "
+      const prompt = $"Sure to delete `{filepath}`?"
 
       if kg8m#util#input#Confirm(prompt)
         delete(filepath)
