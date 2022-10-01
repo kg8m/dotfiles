@@ -8,7 +8,7 @@ export ASDF_NODEJS_VERSION="$(newest_version nodejs)"
 
 target_filepath="${1:?}"
 
-# markdownlint treats config file's path as relative even if an absolute path is given
+# markuplint treats config file's path as relative even if an absolute path is given
 absolute_config_filepath="${HOME}/markuplintrc.js"
 relative_config_filepath="$(realpath --relative-to "${PWD}" "${absolute_config_filepath}")"
 
