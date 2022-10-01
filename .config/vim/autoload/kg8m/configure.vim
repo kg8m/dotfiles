@@ -32,6 +32,10 @@ export def Column(): void
   augroup END
 enddef
 
+export def Comments(): void
+  kg8m#configure#comments#Base()
+enddef
+
 export def Completion(): void
   set completeopt=menu,menuone,popup,noinsert,noselect
   set pumheight=20

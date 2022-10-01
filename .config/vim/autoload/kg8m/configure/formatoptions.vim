@@ -35,7 +35,7 @@ def Set(): void
     setlocal fo+=]
   endif
 
-  if &filetype =~# '\v^(gitcommit|markdown|moin|text)$'
+  if &filetype =~# '\v^(moin|text)$'
     setlocal fo-=r fo-=o
   endif
 enddef

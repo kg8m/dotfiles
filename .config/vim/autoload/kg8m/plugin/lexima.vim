@@ -182,64 +182,15 @@ def AddRulesForMarkdown(): void
   #   1. [ ] |
   lexima#add_rule({ char: "<Space>", at: '\v^\s*%([-*]|\d+\.)\s+\[%#\]', input: "<Space><C-g>U<Right><Space>", filetype: filetypes })
 
-  const marker_configs = [
-    { pattern: '-', input: "-" },
-    { pattern: '\*', input: "*" },
-    { pattern: '1\.', input: "1." },
-  ]
-
-  for marker_config in marker_configs
-    const pattern = marker_config.pattern
-    const input   = marker_config.input
-
+  for pattern in ['\*', '-', '\d+\.']
     # `<CR>` when
     #
-    #   - foo|
-    #
-    #   * foo|
-    #
-    #   1. foo|
-    #
-    # then
-    #
-    #   - foo
-    #   - |
-    #
-    #   * foo
     #   * |
-    #
-    #   1. foo
-    #   1. |
-    #
-    # Note: `with_submatch` option doesn't work.
-    lexima#add_rule({ char: "<CR>", at: $'\v^\s*{pattern}\s\S.*%#', input: $"<CR>{input} ", filetype: filetypes })
-
-    if input !~# '^\d'
-      # `<CR>` when
-      #
-      #   - [ ] foo|
-      #
-      #   * [ ] foo|
-      #
-      # then
-      #
-      #   - [ ] foo
-      #   - [ ] |
-      #
-      #   * [ ] foo
-      #   * [ ] |
-      #
-      # Note: `with_submatch` option doesn't work.
-      lexima#add_rule({ char: "<CR>", at: $'\v^\s*{pattern}\s\[[x ]\]\s\S.*%#', input: $"<CR>{input} [ ] ", filetype: filetypes })
-    endif
-
-    # `<CR>` when
-    #
     #   - |
-    #   * |
     #   1. |
-    #   - [ ] |
+    #   2. |
     #   * [ ] |
+    #   - [ ] |
     #
     # then
     #

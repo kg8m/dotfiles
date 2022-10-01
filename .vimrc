@@ -575,6 +575,7 @@ colorscheme molokai
 kg8m#configure#Backup()
 kg8m#configure#Colors()
 kg8m#configure#Column()
+kg8m#configure#Comments()
 kg8m#configure#Completion()
 kg8m#configure#Cursor()
 kg8m#configure#Folding()
