@@ -13,7 +13,8 @@ export def Define(options: dict<bool> = {}): void
   inoremap <buffer><expr>         . DotExpr()
 
   # <silent> for lexima#expand's echo
-  imap     <buffer><expr><silent> <CR> CrExpr()
+  inoremap <buffer><expr><silent> <CR>                   CrExpr()
+  inoremap <buffer><expr><silent> <Plug>(kg8m-i-cr-base) CrExprBase()
 
   # <silent> for lexima#expand's echo
   inoremap <buffer><expr><silent> <BS>  BsExpr()
@@ -53,13 +54,26 @@ def CrExpr(): string
   elseif vsnip#available(1)
     return "\<Plug>(vsnip-expand-or-jump)"
   else
+    const base = "\<Plug>(kg8m-i-cr-base)"
+
     if pumvisible()
+      if empty(v:completed_item)
+        # Trigger the base `<CR>` expr after closing the popup (basically for breaking the current line).
+        # Use timer because `lexima#expand()` doesn't work properly if the popup is visible.
+        # Use a silent mapping proxy `<Plug>(kg8m-i-cr-base)` in order to hide `=lexima#insmode#...` on the cmdline.
+        timer_start(10, (_) => feedkeys(base))
+      endif
+
       return asyncomplete#close_popup()
     else
-      # <C-g>u: Break undo sequence when a new line is inserted
-      return "\<C-g>u" .. lexima#expand("<CR>", "i")
+      return base
     endif
   endif
+enddef
+
+def CrExprBase(): string
+  # <C-g>u: Break undo sequence when a new line is inserted
+  return "\<C-g>u" .. lexima#expand("<CR>", "i")
 enddef
 
 def BsExpr(): string
