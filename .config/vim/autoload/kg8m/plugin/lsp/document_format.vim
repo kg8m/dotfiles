@@ -114,18 +114,6 @@ def ValidateToRun(): dict<any>
     return result
   endif
 
-  if IsAllowed()
-    if !IsTargetFilepath() && !IsForceTargetFilepath()
-      result.invalid_reason = INVALID_REASONS.non_target_filepath
-      return result
-    endif
-  else
-    if !IsForceTargetFilepath()
-      result.invalid_reason = INVALID_REASONS.not_allowed
-      return result
-    endif
-  endif
-
   if !IsTargetBufferType()
     result.invalid_reason = INVALID_REASONS.non_target_buftype
     return result
@@ -144,6 +132,27 @@ def ValidateToRun(): dict<any>
   if !HasServerCapability()
     result.invalid_reason = INVALID_REASONS.no_server_capability
     return result
+  endif
+
+  if IsAllowed()
+    if !IsTargetFilepath() && !IsForceTargetFilepath()
+      result.invalid_reason = INVALID_REASONS.non_target_filepath
+      return result
+    endif
+  else
+    if !IsForceTargetFilepath()
+      const already_confirmed = GetBufferCache("force_formatting") !=# null
+
+      if !already_confirmed
+        const do_force_formatting = kg8m#util#input#Confirm("Force format this buffer?")
+        SetBufferCache("force_formatting", do_force_formatting)
+      endif
+
+      if !GetBufferCache("force_formatting")
+        result.invalid_reason = INVALID_REASONS.not_allowed
+        return result
+      endif
+    endif
   endif
 
   result.valid = true
