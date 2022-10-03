@@ -16,6 +16,16 @@ export def Configure(): void
   endif
 enddef
 
+export def AddToSessionSavevar(varname: string): void
+  if !has_key(g:, "startify_session_savevars")
+    g:startify_session_savevars = []
+  endif
+
+  if !kg8m#util#list#Includes(g:startify_session_savevars, varname)
+    add(g:startify_session_savevars, varname)
+  endif
+enddef
+
 def Setup(): void
   set sessionoptions=buffers,folds
 

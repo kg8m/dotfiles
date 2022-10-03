@@ -18,6 +18,8 @@ final cache = {
   },
 }
 
+kg8m#plugin#startify#AddToSessionSavevar("b:lsp_document_format_cache")
+
 export def OnInsertLeave(): void
   LazyRun(200)
 enddef
