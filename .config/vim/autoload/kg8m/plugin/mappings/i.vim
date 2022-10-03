@@ -140,7 +140,7 @@ enddef
 def TabExpr(): string
   if pumvisible()
     return "\<C-n>"
-  elseif IsMarkdownListItem()
+  elseif !IsOnIndentation()
     # <C-t>: increase indentation
     return "\<C-t>"
   else
@@ -151,7 +151,7 @@ enddef
 def ShiftTabExpr(): string
   if pumvisible()
     return "\<C-p>"
-  elseif IsMarkdownListItem()
+  elseif !IsOnIndentation()
     # <C-d>: decrease indentation
     return "\<C-d>"
   else
@@ -159,6 +159,10 @@ def ShiftTabExpr(): string
   endif
 enddef
 
-def IsMarkdownListItem(): bool
-  return !!(&filetype =~# '\v^(gitcommit|markdown)$' && getline(".")->trim() =~# '\v^([-*+]|[0-9]+\.)')
+def IsOnIndentation(): bool
+  # :h search()
+  #   b: search Backward instead of forward
+  #   c: accept a match at the Cursor position
+  #   n: do Not move the cursor
+  return col(".") ==# 1 || search('\S', "bcn", line(".")) ==# 0
 enddef
