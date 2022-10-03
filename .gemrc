@@ -1,1 +1,1 @@
-gem: --no-ri --no-rdoc --document=yri
+gem: --no-document
