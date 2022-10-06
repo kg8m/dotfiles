@@ -16,11 +16,6 @@
 [init]
 	defaultBranch = main
 
-[add.interactive]
-	# Prevent "could not parse colored hunk header" error with Git v2.37.
-	# cf. https://github.com/dandavison/delta/issues/1114
-	useBuiltin = false
-
 [branch]
 	autosetupmerge = true
 	sort = -authordate
