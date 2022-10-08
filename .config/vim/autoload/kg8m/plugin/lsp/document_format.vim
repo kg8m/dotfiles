@@ -187,6 +187,12 @@ def IsTargetBufferType(): bool
 enddef
 
 def IsTargetFiletype(): bool
+  const global_ignore_filetypes = get(g:, "lsp#document_format_ignore_filetypes", [])
+
+  if kg8m#util#list#Includes(global_ignore_filetypes, &filetype)
+    return false
+  endif
+
   const configs            = kg8m#plugin#lsp#servers#Configs(&filetype)
   const ShouldNotBeIgnored = (config) => {
     const ignore_filetypes = get(config, "document_format_ignore_filetypes", [])
