@@ -44,7 +44,7 @@ export def Run(args: string): void
 enddef
 
 export def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
-  if empty(arglead) || arglead =~# '^-'
+  if empty(arglead) || kg8m#util#string#StartsWith(arglead, "-")
     if !has_key(cache, "grep_option_candidates")
       cache.grep_option_candidates = system(CommandToShowGrepOptionCandidates())->split("\n")
     endif
