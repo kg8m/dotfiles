@@ -71,7 +71,7 @@ export def Complete(arglead: string, _cmdline: string, _curpos: number): list<st
     endif
 
     const prefix = strpart(arglead, 0, len(arglead) - len(pattern))
-    return getcompletion(pattern, "file")->map((_, item) => prefix .. item)
+    return getcompletion(pattern, "file")->map((_, item) => $"{prefix}{item}")
   endif
 enddef
 
