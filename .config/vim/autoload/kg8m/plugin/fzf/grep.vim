@@ -51,6 +51,10 @@ export def Complete(arglead: string, _cmdline: string, _curpos: number): list<st
 
     const pattern = $"^{arglead}"
     return cache.grep_option_candidates->copy()->filter((_, item) => item =~# pattern)
+  elseif kg8m#util#string#StartsWith(arglead, "$")
+    const pattern = arglead[1 : -1]
+    const prefix = "$"
+    return getcompletion(pattern, "environment")->map((_, item) => $"{prefix}{item}")
   else
     var pattern = arglead
 
