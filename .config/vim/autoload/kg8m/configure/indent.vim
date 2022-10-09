@@ -21,7 +21,9 @@ export def Filetypes(): void
   g:html_indent_style1  = "inc"
 
   # :h ft-vim-indent
-  g:vim_indent_cont = 0
+  g:vim_indent = {
+    line_continuation: 0,
+  }
 
   augroup vimrc-configure-indent-filetypes
     autocmd!
