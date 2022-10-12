@@ -20,10 +20,10 @@ export def Run(): void
 enddef
 
 export def List(options: dict<any> = {}): list<string>
-  const sorter = get(options, "sorter") ?? DefaultSorter
+  const Sorter = get(options, "sorter") ?? DefaultSorter
 
   const current = CurrentList()->map((_, filepath) => FormatBufname(filepath, &modified))
-  const buffers = BufinfoList()->sort(sorter)->mapnew((_, bufinfo) => FormatBufname(bufinfo.name, bufinfo.changed))
+  const buffers = BufinfoList()->sort(Sorter)->mapnew((_, bufinfo) => FormatBufname(bufinfo.name, bufinfo.changed))
 
   return kg8m#util#list#Union(current, buffers, RemoveExtraInfo)
 enddef
