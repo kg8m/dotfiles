@@ -241,6 +241,8 @@ def AddRulesForMarkdown(): void
 enddef
 
 def AddRulesForVim(): void
+  const filetypes = ["vim"]
+
   # `"` when
   #
   #   ...|
@@ -258,8 +260,49 @@ def AddRulesForVim(): void
   #   ..."|
   #
   # NOTE: Always write comments at the beginning of line (indentation is allowed).
-  lexima#add_rule({ char: '"', at: '\S.*\%#\%([^"]\|$\)', except: '\%#"', input_after: '"', filetype: "vim" })
-  lexima#add_rule({ char: '"', at: '\%#"', leave: 1, filetype: "vim" })
+  lexima#add_rule({ char: '"', at: '\S.*\%#\%([^"]\|$\)', except: '\%#"', input_after: '"', filetype: filetypes })
+  lexima#add_rule({ char: '"', at: '\%#"', leave: 1, filetype: filetypes })
+
+  # `<` when
+  #
+  #   foo|
+  #
+  # then
+  #
+  #   foo<|>
+  lexima#add_rule({ char: "<", at: '\w\%#', input_after: ">", filetype: filetypes })
+
+  # `<` when
+  #
+  #   foo|<
+  #
+  # then
+  #
+  #   foo<|
+  #
+  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
+  lexima#add_rule({ char: "<", at: '\w\%#<', input: "<C-g>U<Right>", filetype: filetypes })
+
+  # `>` when
+  #
+  #   <foo|>
+  #
+  # then
+  #
+  #   <foo>|
+  #
+  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
+  lexima#add_rule({ char: ">", at: '\%#>', input: "<C-g>U<Right>", filetype: filetypes })
+
+  # `<BS>` when
+  #
+  #   <|>
+  #
+  # then
+  #
+  #   |
+  #
+  lexima#add_rule({ char: "<BS>", at: '<\%#>', delete: 1, filetype: filetypes })
 enddef
 
 def DequeueOnPostSource(): void
