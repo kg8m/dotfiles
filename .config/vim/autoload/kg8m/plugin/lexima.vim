@@ -164,6 +164,16 @@ def AddRulesForTs(): void
   #
   # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
   lexima#add_rule({ char: ">", at: '\%#>', input: "<C-g>U<Right>", filetype: filetypes })
+
+  # `<BS>` when
+  #
+  #   <|>
+  #
+  # then
+  #
+  #   |
+  #
+  lexima#add_rule({ char: "<BS>", at: '<\%#>', delete: 1, filetype: filetypes })
 enddef
 
 def AddRulesForMarkdown(): void
