@@ -20,7 +20,7 @@ export def Run(): void
 enddef
 
 export def List(options: dict<any> = {}): list<string>
-  const Sorter = get(options, "sorter") ?? NameSorter
+  const Sorter = get(options, "sorter", NameSorter)
 
   const current = CurrentList()->map((_, filepath) => FormatBufname(filepath, &modified))
   const buffers = BufinfoList()->sort(Sorter)->mapnew((_, bufinfo) => FormatBufname(bufinfo.name, bufinfo.changed))
