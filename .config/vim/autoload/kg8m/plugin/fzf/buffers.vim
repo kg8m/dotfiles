@@ -20,7 +20,7 @@ export def Run(): void
 enddef
 
 export def List(options: dict<any> = {}): list<string>
-  const Sorter = get(options, "sorter") ?? DefaultSorter
+  const Sorter = get(options, "sorter") ?? NameSorter
 
   const current = CurrentList()->map((_, filepath) => FormatBufname(filepath, &modified))
   const buffers = BufinfoList()->sort(Sorter)->mapnew((_, bufinfo) => FormatBufname(bufinfo.name, bufinfo.changed))
@@ -49,7 +49,7 @@ export def RemoveExtraInfo(bufname: string): string
   return substitute(bufname, EXTRA_INFO_PATTERN, "", "")
 enddef
 
-def DefaultSorter(lhs: dict<any>, rhs: dict<any>): number
+def NameSorter(lhs: dict<any>, rhs: dict<any>): number
   return lhs.name <# rhs.name ? -1 : 1
 enddef
 
