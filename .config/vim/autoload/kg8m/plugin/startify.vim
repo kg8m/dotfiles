@@ -1,5 +1,10 @@
 vim9script
 
+const SESSIONS_BASEDIR_PATH = $"{$XDG_DATA_HOME}/vim/sessions"
+
+# Use a prefix for names starting with a dot (.), that is hidden from Startify session files list.
+const SESSION_FILENAME_FORMAT = "session:%s"
+
 export def Configure(): void
   if argc() ># 0
     # `on_event: "BufWritePre"` for `SaveSession()`: Load startify before writing buffer (on `BufWritePre`) and
@@ -80,6 +85,10 @@ def Setup(): void
     "",
   ]
 
+  g:startify_skiplist = [
+    $'\V\^{SESSIONS_BASEDIR_PATH}/\.\+/{SessionFilename("")}',
+  ]
+
   augroup vimrc-plugin-startify
     autocmd!
     autocmd FileType startify setlocal cursorline cursorlineopt=both
@@ -97,8 +106,8 @@ def OverwriteColors(): void
 enddef
 
 def SessionsDirpath(): string
-  const dirname = getcwd()->substitute("/", "=+", "g")
-  return $"{$XDG_DATA_HOME}/vim/sessions/{dirname}"
+  const sanitized_dirname = getcwd()->substitute("/", "=+", "g")
+  return $"{SESSIONS_BASEDIR_PATH}/{sanitized_dirname}"
 enddef
 
 def SaveSession(): void
@@ -106,7 +115,7 @@ def SaveSession(): void
 
   if SessionSavable()
     mkdir(g:startify_session_dir, "p")
-    execute "silent SSave!" SessionName()
+    execute "silent SSave!" SessionFilename()
   endif
 enddef
 
@@ -124,13 +133,9 @@ def SessionSavable(): bool
   endif
 enddef
 
-def SessionName(): string
-  # Use a prefix for names starting with a dot (.), that is hidden from Startify session files list.
-  const prefix = "session:"
-
-  const body = kg8m#util#file#CurrentRelativePath()->substitute("/", "+=", "g")
-
-  return $"{prefix}{body}"
+def SessionFilename(target_filepath: string = kg8m#util#file#CurrentRelativePath()): string
+  const sanitized_filepath = target_filepath->substitute("/", "+=", "g")
+  return printf(SESSION_FILENAME_FORMAT, sanitized_filepath)
 enddef
 
 def DeleteLastSessionLink(): void
