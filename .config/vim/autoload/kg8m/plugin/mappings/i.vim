@@ -160,9 +160,25 @@ def ShiftTabExpr(): string
 enddef
 
 def IsOnIndentation(): bool
-  # :h search()
-  #   b: search Backward instead of forward
-  #   c: accept a match at the Cursor position
-  #   n: do Not move the cursor
-  return col(".") ==# 1 || search('\S', "bcn", line(".")) ==# 0
+  if col(".") ==# 1
+    return true
+  endif
+
+  const leading_trimmed_text = getline(".")->strpart(0, col(".") - 1)->trim()
+
+  if leading_trimmed_text ==# ""
+    return true
+  endif
+
+  const syntax_name = synIDattr(synID(line("."), col(".") - 1, true), "name")
+
+  if syntax_name =~? 'comment'
+    const comment_symbol = substitute(&commentstring, '%s', "", "")
+
+    if leading_trimmed_text ==# comment_symbol
+      return true
+    endif
+  endif
+
+  return false
 enddef
