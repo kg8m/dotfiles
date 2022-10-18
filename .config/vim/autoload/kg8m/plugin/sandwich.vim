@@ -15,12 +15,6 @@ export def Configure(): void
   nnoremap <expr> <Leader>sd <SID>OperatorDeleteExpr()
   nnoremap <expr> <Leader>sr <SID>OperatorReplaceExpr()
 
-  # Textobjects to select a text surrounded by braket or same characters user input
-  xmap iS <Plug>(textobj-sandwich-query-i)
-  xmap aS <Plug>(textobj-sandwich-query-a)
-  omap iS <Plug>(textobj-sandwich-query-i)
-  omap aS <Plug>(textobj-sandwich-query-a)
-
   # Textobjects that automatically detect matching pairs where some same type symbols are mixed up:
   #
   #                            <--------- i( --------->
@@ -50,7 +44,7 @@ export def Configure(): void
 
   kg8m#plugin#Configure({
     lazy:   true,
-    on_map: { nx: "<Plug>(operator-sandwich-", xo: "<Plug>(textobj-sandwich-" },
+    on_map: { nx: "<Plug>(operator-sandwich-", o: "<Plug>(textobj-sandwich-" },
     hook_source:      () => OnSource(),
     hook_post_source: () => OnPostSource(),
   })
