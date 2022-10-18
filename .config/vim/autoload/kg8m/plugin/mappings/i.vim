@@ -1,5 +1,24 @@
 vim9script
 
+final cache = {
+  insert_entered_from_blockwise_visual: false,
+}
+
+augroup vimrc-plugin-mappings-i
+  autocmd!
+  # \x16 = <C-v> = blockwise Visual mode
+  autocmd ModeChanged [\x16]:i OnInsertEnterFromBlockwiseVisual()
+  autocmd InsertLeave *        OnInsertLeave()
+augroup END
+
+def OnInsertEnterFromBlockwiseVisual(): void
+  cache.insert_entered_from_blockwise_visual = true
+enddef
+
+def OnInsertLeave(): void
+  cache.insert_entered_from_blockwise_visual = false
+enddef
+
 # This function can be called multiple times in order to overwrite plugins' mappings.
 export def Define(options: dict<bool> = {}): void
   if has_key(b:, "is_defined") && get(options, "force", false)
@@ -104,10 +123,8 @@ def GtExpr(): string
   endif
 
   if &filetype =~# '\v^(gitcommit|markdown)$'
-    # Don't overwrite while writing blockquote markers.
-    const leading_text = getline(".")->strpart(0, col(".") - 1)
-
-    if leading_text =~# '^\s*$'
+    # g:closetag_shortcut doesn't work for blockquote markers with blockwise Visual mode.
+    if cache.insert_entered_from_blockwise_visual
       return ">"
     else
       return g:closetag_shortcut
