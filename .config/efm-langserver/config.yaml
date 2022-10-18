@@ -182,9 +182,8 @@ languages:
     - <<: *lit-analyzer
     - <<: *prettier
 
-  # Disable because modern syntaxes are not supported
-  # vim:
-  #   - <<: *vint
+  vim:
+    - <<: *vint
 
   yaml:
     - <<: *actionlint
