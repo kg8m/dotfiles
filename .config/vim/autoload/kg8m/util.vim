@@ -131,22 +131,6 @@ export def RemoveTrailingWhitespaces()
   setpos(".", position)
 enddef
 
-export def JapaneseMatchpairs(): list<list<string>>
-  return [
-    ["（", "）"],
-    ["「", "」"],
-    ["『", "』"],
-    ["｛", "｝"],
-    ["［", "］"],
-    ["〈", "〉"],
-    ["《", "》"],
-    ["【", "】"],
-    ["〔", "〕"],
-    ["“", "”"],
-    ["‘", "’"],
-  ]
-enddef
-
 export def ConvertToVim9script(): void
   if getline(1) !=# "vim9script"
     append(0, ["vim9script", ""])

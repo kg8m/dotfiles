@@ -22,7 +22,7 @@ export def Match(): void
   set showmatch
   set matchtime=1
 
-  const japanese_matchpairs = kg8m#util#JapaneseMatchpairs()->mapnew((_, pair) => join(pair, ":"))->join(",")
+  const japanese_matchpairs = kg8m#util#matchpairs#JapanesePairs()->mapnew((_, pair) => join(pair, ":"))->join(",")
 
   if has_key(cache, "original_matchpairs")
     &matchpairs = $"{cache.original_matchpairs},{japanese_matchpairs}"

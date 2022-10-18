@@ -13,7 +13,7 @@ export def Configure(): void
 enddef
 
 def AddCommonRules(): void
-  for pair in kg8m#util#JapaneseMatchpairs()
+  for pair in kg8m#util#matchpairs#JapanesePairs()
     # `「` when
     #
     #   |
