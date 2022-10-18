@@ -5,6 +5,8 @@ const SESSIONS_BASEDIR_PATH = $"{$XDG_DATA_HOME}/vim/sessions"
 # Use a prefix for names starting with a dot (.), that is hidden from Startify session files list.
 const SESSION_FILENAME_FORMAT = "session:%s"
 
+g:kg8m#plugin#startify#sessions_basedir_path = SESSIONS_BASEDIR_PATH
+
 export def Configure(): void
   if argc() ># 0
     # `on_event: "BufWritePre"` for `SaveSession()`: Load startify before writing buffer (on `BufWritePre`) and
@@ -19,6 +21,11 @@ export def Configure(): void
   else
     Setup()
   endif
+enddef
+
+export def SessionFilename(target_filepath: string = kg8m#util#file#CurrentRelativePath()): string
+  const sanitized_filepath = target_filepath->substitute("/", "+=", "g")
+  return printf(SESSION_FILENAME_FORMAT, sanitized_filepath)
 enddef
 
 export def AddToSessionSavevar(varname: string): void
@@ -131,11 +138,6 @@ def SessionSavable(): bool
   else
     return true
   endif
-enddef
-
-def SessionFilename(target_filepath: string = kg8m#util#file#CurrentRelativePath()): string
-  const sanitized_filepath = target_filepath->substitute("/", "+=", "g")
-  return printf(SESSION_FILENAME_FORMAT, sanitized_filepath)
 enddef
 
 def DeleteLastSessionLink(): void

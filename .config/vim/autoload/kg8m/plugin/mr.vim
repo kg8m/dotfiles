@@ -1,10 +1,13 @@
 vim9script
 
 const PLUGINS_ROOT_DIRPATH = simplify($"{$VIM_PLUGINS}/..")
-const IGNORE_PATTERN = '\v' .. join([
-  '^/usr/local/share/vim/.+/doc/',
-  $'^{PLUGINS_ROOT_DIRPATH}/.+/doc/',
-], '|')
+const SESSIONS_BASEDIR_PATH = g:kg8m#plugin#startify#sessions_basedir_path
+const SESSION_NAME_PATTERN = kg8m#plugin#startify#SessionFilename("")
+const IGNORE_PATTERNS = [
+  '\v^/usr/local/share/vim/.+/doc/',
+  $'\V\^{PLUGINS_ROOT_DIRPATH}/\.\+/doc/',
+  $'\V\^{SESSIONS_BASEDIR_PATH}/\.\+/{SESSION_NAME_PATTERN}',
+]
 
 export def Configure(): void
   g:mr_mrw_disabled = true
@@ -15,5 +18,5 @@ export def Configure(): void
 enddef
 
 def Predicate(filepath: string): bool
-  return filepath !~# IGNORE_PATTERN
+  return kg8m#util#list#All(IGNORE_PATTERNS, (pattern) => filepath !~# pattern)
 enddef
