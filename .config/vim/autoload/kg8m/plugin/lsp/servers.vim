@@ -137,6 +137,28 @@ def ExtraConfigForDeno(): dict<any>
           },
         },
       },
+      inlayHints: {
+        parameterNames: {
+          enabled: "all",
+          suppressWhenArgumentMatchesName: true,
+        },
+        parameterTypes: {
+          enabled: true,
+        },
+        variableTypes: {
+          enabled: true,
+          suppressWhenTypeMatchesName: true,
+        },
+        propertyDeclarationTypes: {
+          enabled: true,
+        },
+        functionLikeReturnTypes: {
+          enabled: true,
+        },
+        enumMemberValues: {
+          enabled: true,
+        },
+      },
       config: filereadable("tsconfig.json") ? "tsconfig.json" : v:null,
       internalDebug: false,
     },
