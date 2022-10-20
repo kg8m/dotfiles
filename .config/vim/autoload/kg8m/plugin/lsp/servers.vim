@@ -1,5 +1,7 @@
 vim9script
 
+# Some server specific configurations are thanks to https://github.com/mattn/vim-lsp-settings.
+
 final named_configs: dict<dict<any>>           = {}
 final filetyped_configs: dict<list<dict<any>>> = {}
 
