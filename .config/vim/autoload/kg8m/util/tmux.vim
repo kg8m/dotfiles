@@ -20,22 +20,22 @@ export def ExecuteCommand(command: string): void
 enddef
 
 def GetPaneIndexes(): dict<number>
-  const panes_info = system("tmux list-panes -F '#{pane_active}:#{pane_left}:#{pane_right}'")->split("\n")
+  const panes_info = system("tmux list-panes -F '#{pane_active}:#{pane_top}:#{pane_left}:#{pane_bottom}'")->split("\n")
 
   final result = { active: INVALID_PANE_INDEX, next: INVALID_PANE_INDEX }
   var i = 0
 
   for pane_info in panes_info
-    const [current_active, current_left, current_right] = split(pane_info, ":")
+    const [current_active, _, current_left, current_bottom] = split(pane_info, ":")
 
     if current_active ==# "1"
       result.active = i
       const next_pane_info = get(panes_info, i + 1, null)
 
       if next_pane_info !=# null
-        const [_, next_left, next_right] = split(next_pane_info, ":")
+        const [_, next_top, next_left, _] = split(next_pane_info, ":")
 
-        if next_left ==# current_left && next_right ==# current_right
+        if next_left ==# current_left && str2nr(next_top) ># str2nr(current_bottom)
           result.next = i + 1
         endif
       endif
