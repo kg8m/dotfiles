@@ -28,6 +28,10 @@ export def OnTextChanged(): void
   LazyRun(200)
 enddef
 
+export def EnforceAutoFormatting(): void
+  SetBufferCache("force_formatting", true)
+enddef
+
 def LazyRun(delay: number): void
   timer_stop(cache.timer)
   cache.timer = timer_start(delay, (_) => TryToRun())
@@ -143,13 +147,6 @@ def ValidateToRun(): dict<any>
     endif
   else
     if !IsForceTargetFilepath()
-      const already_confirmed = GetBufferCache("force_formatting") !=# null
-
-      if !already_confirmed
-        const do_force_formatting = kg8m#util#input#Confirm("Force format this buffer?")
-        SetBufferCache("force_formatting", do_force_formatting)
-      endif
-
       if !GetBufferCache("force_formatting")
         result.invalid_reason = INVALID_REASONS.not_allowed
         return result

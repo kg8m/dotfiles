@@ -100,8 +100,9 @@ def DefineRawList(): void
     ["[SimpleAlign] \"  #=> \"",     "'<,'>SimpleAlign #=> -lpadding 2"],
     ["[SimpleAlign] \"  //=> \"",    "'<,'>SimpleAlign //=> -lpadding 2"],
 
-    ["[LSP] CodeAction",                  "LspCodeAction"],
-    ["[LSP] CodeAction: organizeImports", "LspCodeAction source.organizeImports"],
+    ["[LSP] CodeAction",                   "LspCodeAction"],
+    ["[LSP] CodeAction: organizeImports",  "LspCodeAction source.organizeImports"],
+    ["[LSP] Enforce automatic formatting", "call kg8m#plugin#lsp#document_format#EnforceAutoFormatting()"],
 
     ["[Diff] Linediff", "'<,'>Linediff"],
   ]
