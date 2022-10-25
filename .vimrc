@@ -531,7 +531,12 @@ if kg8m#plugin#Register("simeji/winresizer", { if: !kg8m#util#IsGitTmpEdit() })
 endif
 
 kg8m#plugin#Register("stephpy/vim-yaml", { if: !kg8m#util#IsGitTmpEdit() })
-kg8m#plugin#Register("pedrohdz/vim-yaml-folds", { if: !kg8m#util#IsGitTmpEdit() })
+
+# Use my fork until the PR https://github.com/pedrohdz/vim-yaml-folds/pull/7 is merged.
+kg8m#plugin#Register("pedrohdz/vim-yaml-folds", { if: false, name: "vim-yaml-folds-original" })
+if kg8m#plugin#Register("kg8m/vim-yaml-folds", { if: !kg8m#util#IsGitTmpEdit(), rev: "support_custom_foldtext" })
+  g:yamlfolds_use_yaml_fold_text = false
+endif
 
 if kg8m#plugin#Register("jonsmithers/vim-html-template-literals", { if: !kg8m#util#IsGitTmpEdit() })
   g:htl_css_templates = true
