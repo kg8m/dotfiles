@@ -46,5 +46,5 @@ export def Handler(yank_item: string): void
   const [text, regtype] = kg8m#plugin#yankround#CacheAndRegtype(index)
 
   setreg('"', text, regtype)
-  execute 'normal! ""p'
+  normal! ""p
 enddef
