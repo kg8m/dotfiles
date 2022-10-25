@@ -37,5 +37,10 @@ def Set(): void
 
     # Clear defaults.
     setlocal com-=fb:* com-=fb:- com-=fb:+ com-=n:>
+  elseif &filetype ==# "slim"
+    # Clear `comments` set by vim-ruby.
+    setlocal comments-=b:#
+
+    setlocal comments+=b:/
   endif
 enddef
