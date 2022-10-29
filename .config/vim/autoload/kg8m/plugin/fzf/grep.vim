@@ -12,8 +12,8 @@ export def EnterCommand(preset: string = "", options = {}): void
     substitute(preset, '^-', '\\-', "")
       ->escape(".?*+^$()[]{}\\")
       ->substitute("'", "'\\\\''", "g")
-  const preset_prefix = get(options, "word_boundary", false) ? '\b' : ""
-  const preset_suffix = get(options, "word_boundary", false) ? '\b' : ""
+  const preset_prefix = get(options, "word_boundary", false) && preset =~# '^\w' ? '\b' : ""
+  const preset_suffix = get(options, "word_boundary", false) && preset =~# '\w$' ? '\b' : ""
 
   const hint =<< trim HINT
     Hint:
