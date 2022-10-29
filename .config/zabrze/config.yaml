@@ -230,39 +230,45 @@ abbrevs:
     global: true
     context: '^npm\s'
 
-  - name: rails
-    abbr: r
-    snippet: rails
   - name: rails console
     abbr: c
     snippet: console
     global: true
-    context: '^(bin/|bundle exec )?rails\s'
+    context: '\brails\s'
   - name: rails dbconsole
     abbr: db
     snippet: dbconsole
     global: true
-    context: '^(bin/|bundle exec )?rails\s'
+    context: '\brails\s'
   - name: rails generate
     abbr: g
     snippet: generate
     global: true
-    context: '^(bin/|bundle exec )?rails\s'
+    context: '\brails\s'
   - name: rails runner
     abbr: r
     snippet: runner
     global: true
-    context: '^(bin/|bundle exec )?rails\s'
+    context: '\brails\s'
   - name: rails server
     abbr: s
     snippet: server
     global: true
-    context: '^(bin/|bundle exec )?rails\s'
+    context: '\brails\s'
   - name: rails test
     abbr: t
     snippet: test
     global: true
-    context: '^(bin/|bundle exec )?rails\s'
+    context: '\brails\s'
+  # Define after `rails runner` to avoid conflicts. Otherwise `rails r` will become `rails rails`.
+  - name: rails
+    abbr: r
+    snippet: rails
+    global: true
+    context: "^(bundle exec )?"
+  - name: bin/rails
+    abbr: bin/r
+    snippet: bin/rails
 
   - name: tig status
     abbr: st
