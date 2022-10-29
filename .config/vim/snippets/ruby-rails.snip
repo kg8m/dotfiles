@@ -60,6 +60,14 @@ abbr    ActiveSupport::HashWithIndifferentAccess
 options word
 	ActiveSupport::HashWithIndifferentAccess
 
+snippet ActiveSupport.on_load
+alias   ActiveSupport_on_load
+abbr    ActiveSupport.on_load(...) do ... end
+options head
+	ActiveSupport.on_load(:${1:#:name}) do
+		${0}
+	end
+
 snippet I18n_translate
 abbr    I18n.t "{key}"
 options word
