@@ -10,7 +10,7 @@ command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#Complete FzfGrep kg8
 export def EnterCommand(preset: string = "", options = {}): void
   const escaped_preset =
     substitute(preset, '^-', '\\-', "")
-      ->substitute('\v([.?*+^$()[\]{}\\])', '\\\1', "g")
+      ->escape(".?*+^$()[]{}\\")
       ->substitute("'", "'\\\\''", "g")
   const preset_prefix = get(options, "word_boundary", false) ? '\b' : ""
   const preset_suffix = get(options, "word_boundary", false) ? '\b' : ""
