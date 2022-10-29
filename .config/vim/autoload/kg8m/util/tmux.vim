@@ -2,6 +2,7 @@ vim9script
 
 const PANE_SIZE = 30
 const INVALID_PANE_INDEX = -1
+const RESET_SEQUENCE = "q C-u"
 
 augroup vimrc-util-tmux
   autocmd!
@@ -57,6 +58,7 @@ def CreatePane(): void
 enddef
 
 def SendToTmux(command: string, pane_index: number): void
+  system($"tmux send-keys -t {pane_index} {RESET_SEQUENCE}")
   system($"tmux send-keys -t {pane_index} {shellescape(command)} Enter")
 enddef
 
