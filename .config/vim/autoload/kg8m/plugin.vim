@@ -17,6 +17,7 @@ final cache = {
 
 augroup vimrc-plugin
   autocmd!
+  autocmd BufWritePost * RecachePluginsIfNeeded()
   autocmd User all_on_start_plugins_sourced ++once :
 augroup END
 
@@ -220,4 +221,13 @@ enddef
 
 export def AreAllOnStartPluginsSourced(): bool
   return cache.all_on_start_plugins_sourced
+enddef
+
+def RecachePluginsIfNeeded(): void
+  if kg8m#util#string#StartsWith(getcwd(), $VIM_PLUGINS)
+    RecacheRuntimepath()
+
+    # Use timer because synchronous messages are hidden by Vim's default written message on `BufWritePost` event.
+    timer_start(100, (_) => kg8m#util#logger#Info("Runtimepath recached!!"))
+  endif
 enddef
