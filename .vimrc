@@ -504,7 +504,9 @@ if kg8m#plugin#Register("thinca/vim-zenspace")
   kg8m#plugin#zenspace#Configure()
 endif
 
-if kg8m#plugin#Register("monkoose/vim9-stargate")
+# Use my fork until the issue https://github.com/vim/vim/issues/11490 is solved.
+kg8m#plugin#Register("monkoose/vim9-stargate", { if: false, name: "vim9-stargate-original" })
+if kg8m#plugin#Register("kg8m/vim9-stargate", { rev: "fix_E1307" })
   g:stargate_chars = "FKLASDHGUIONMREWCVTYBX,;J"
   nnoremap <C-w>f :call stargate#Galaxy()<CR>
 endif
