@@ -23,14 +23,10 @@ export def Debug(message: string, options: dict<bool> = {}): void
   Log("DEBUG", message, options)
 enddef
 
-export def PrettyPrint(target: any, options: dict<bool> = {}): void
+export def PP(target: any, options: dict<bool> = {}): void
   for line in split(prettyprint#prettyprint(target), '\n')
     Log("DEBUG", line, options)
   endfor
-enddef
-
-export def PP(target: any, options: dict<bool> = {}): void
-  PrettyPrint(target, options)
 enddef
 
 def Log(level: string, message: string, options: dict<bool> = {}): void
