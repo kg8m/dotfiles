@@ -70,7 +70,7 @@ export def IsTabnineAvailable(): bool
 
   if empty($TABNINE_AVAILABLE)
     const remotes = system("git remote -v 2> /dev/null")
-    cache.is_tabnine_available = remotes ==# "" || remotes =~# '@github\.com:kg8m/'
+    cache.is_tabnine_available = remotes ==# "" || kg8m#util#string#Includes(remotes, "@github.com:kg8m/")
   else
     cache.is_tabnine_available = $TABNINE_AVAILABLE ==# "1"
   endif
