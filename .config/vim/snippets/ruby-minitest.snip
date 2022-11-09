@@ -1,5 +1,16 @@
-snippet require_test_unit
-abbr    require "test/unit" ... class FooTest < Test::Unit::TestCase ...
+snippet require_minitest
+alias   minitest_require
+abbr    require "minitest/autorun" ... class FooTest < MiniTest::Test ...
+options head
+	require "minitest/autorun"
+	require_relative "./${1}"
+
+	class ${2} < MiniTest::Test
+		${3}
+	end
+
+snippet require_test_unit_DEPRECATED
+abbr    [DEPRECATED] require "test/unit" ... class FooTest < Test::Unit::TestCase ...
 options head
 	require "test/unit"
 	require_relative "./${1}"
