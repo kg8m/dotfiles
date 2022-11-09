@@ -345,12 +345,6 @@ if kg8m#plugin#Register("tpope/vim-git", { if: kg8m#util#IsGitCommit() })
   augroup END
 endif
 
-# Use LSP for completion, linting/formatting codes, and jumping to definition.
-# Use vim-go's highlightings, foldings, and commands.
-if kg8m#plugin#Register("fatih/vim-go", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#go#Configure()
-endif
-
 kg8m#plugin#Register("tpope/vim-haml")
 
 if kg8m#plugin#Register("itchyny/vim-histexclude")
