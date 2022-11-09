@@ -21,7 +21,7 @@ See https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyn
 HELP
   )"
 
-  while [ "${#@}" -gt 0 ]; do
+  while (("${#@}" > 0)); do
     case "$1" in
       --start-time)
         start_time="${2:?}"
@@ -45,7 +45,7 @@ HELP
         ;;
       --stream-names)
         shift 1
-        while [ "${#@}" -gt 0 ] && [[ ! "$1" =~ ^- ]]; do
+        while (("${#@}" > 0)) && [[ ! "$1" =~ ^- ]]; do
           stream_names+=("${1:?}")
           shift 1
         done

@@ -98,7 +98,7 @@ function timetrack:end {
     notifier_options=(--title "${title}")
     message="Command: ${command}"
 
-    if [ "${exec_time}" -lt "${__timetrack_threshold}" ]; then
+    if ((exec_time < __timetrack_threshold)); then
       notifier_options+=(--nostay)
     fi
 
@@ -110,7 +110,7 @@ function timetrack:end {
       title="${title//${result}/$(highlight:red "${result}")}"
     fi
 
-    if [ "${exec_time}" -ge "${__timetrack_threshold}" ]; then
+    if ((exec_time >= __timetrack_threshold)); then
       title="${title//${exec_time} seconds/$(highlight:yellow "${exec_time} seconds")}"
     fi
 

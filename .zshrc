@@ -26,8 +26,7 @@ mkdir -p "$(dirname "${HISTFILE}")"
 # https://mollifier.hatenablog.com/entry/20090728/p1
 zshaddhistory() {
   local line=${1%%$'\n'}
-
-  [[ ${#line} -ge 5 ]]
+  (("${#line}" >= 5))
 }
 
 setopt extended_history      # Record each command's timestamp and the duration

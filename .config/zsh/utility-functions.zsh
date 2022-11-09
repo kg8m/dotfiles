@@ -289,13 +289,13 @@ function my_grep:with_filter {
   local options=()
   local non_options=()
 
-  while [ "${#@}" -gt 0 ]; do
+  while (("${#@}" > 0)); do
     case "$1" in
       --*)
         options+=("$1")
 
         if ! [[ "$1" =~ = ]]; then
-          if [ "$#" -gt 1 ]; then
+          if (("${#@}" > 1)); then
             options+=("$2")
             shift 2
             continue
@@ -306,7 +306,7 @@ function my_grep:with_filter {
         options+=("$1")
 
         if [[ "$1" =~ ^-.$ ]] && [[ ! "$2" =~ ^- ]]; then
-          if [ "$#" -gt 1 ]; then
+          if (("${#@}" > 1)); then
             options+=("$2")
             shift 2
             continue
