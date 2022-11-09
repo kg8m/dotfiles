@@ -2,6 +2,8 @@ autocmd BufNewFile,BufRead credentials.yml.enc.* set filetype=yaml
 
 autocmd BufNewFile,BufRead *.crontab set filetype=crontab
 
+autocmd BufNewFile,BufRead direnvrc set filetype=sh
+
 autocmd BufNewFile,BufRead .envrc set filetype=sh
 
 autocmd BufNewFile,BufRead Gemfile.local* set filetype=Gemfile
