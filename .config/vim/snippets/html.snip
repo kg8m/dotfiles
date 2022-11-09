@@ -81,4 +81,10 @@ abbr    <ruby>{word}<rp> (</rp><rt>{ruby}</rt><rp>) </rp></ruby>
 options word
 regexp  '<\%[ruby]*'
 	ruby>${1:#:word}<rp> (</rp><rt>${2:#:ruby}</rt><rp>) </rp></ruby>${0}
+
+snippet figure_figcaption
+abbr    <figure><img ... /><figcaption>...</figcaption></figure>
+options word
+regexp  '<\%[figure]*'
+	figure>${2:#:image}<figcaption>${1:#:caption}</figcaption></figure>
 # }}}
