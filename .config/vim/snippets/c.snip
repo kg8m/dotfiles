@@ -12,6 +12,7 @@ options head
 	if (${1:#:condition}) {
 		${0}
 	} else {
+		// FIXME
 	}
 
 snippet if_else_if
@@ -20,8 +21,10 @@ abbr    if (...) { ... } else if (...) { ... } else { ... }
 options head
 	if (${1:#:condition}) {
 		${0}
-	} else if () {
+	} else if (1 /* FIXME */) {
+		// FIXME
 	} else {
+		// FIXME
 	}
 
 snippet switch_case

@@ -74,6 +74,7 @@ abbr if ... { ... } else { ... }
 	if ${1:#:condition} {
 		${0}
 	} else {
+		// FIXME
 	}
 
 snippet if_else_if
@@ -81,9 +82,10 @@ alias ifeif
 abbr if ... { ... } else if ... { ... } else { ... }
 	if ${1:#:condition} {
 		${0}
-	} else if  {
-	}
+	} else if true /* FIXME */ {
+		// FIXME
 	} else {
+		// FIXME
 	}
 
 snippet iferror

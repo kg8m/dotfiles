@@ -184,6 +184,19 @@ options head
 	if ${1:#:condition}
 		${0}
 	else
+		# FIXME
+	end
+
+snippet if_else_if
+alias   ifeif
+abbr    if ... elsif ... else ... end
+options head
+	if ${1:#:condition}
+		${0}
+	elsif true  # FIXME
+		# FIXME
+	else
+		# FIXME
 	end
 
 snippet unless

@@ -10,6 +10,7 @@ abbr    if ...; then ... else ... fi
 	if ${1:#:condition}; then
 		${0}
 	else
+		# FIXME
 	fi
 
 snippet if_else_if
@@ -18,7 +19,9 @@ abbr    if ...; then ... elif ... ... else ... fi
 	if ${1:#:condition}; then
 		${0}
 	elif echo FIXME; then
+		# FIXME
 	else
+		# FIXME
 	fi
 
 snippet for
