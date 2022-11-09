@@ -15,6 +15,6 @@ def OnPostSource(): void
     name: "file",
     allowlist: ["*"],
     completor: function("asyncomplete#sources#file#completor"),
-    priority: 2,
+    priority: 1,
   }))
 enddef
