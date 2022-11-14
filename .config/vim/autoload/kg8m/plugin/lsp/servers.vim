@@ -108,7 +108,7 @@ def RegisterDeno(): void
     allowlist: TS_FILETYPES,
     extra_config: () => ExtraConfigForDeno(),
 
-    available: UseDeno(),
+    available: ShouldUseDeno(),
   })
 enddef
 
@@ -179,7 +179,7 @@ def RegisterEfmLangserver(): void
     allowlist: [
       "Gemfile", "css", "eruby", "gitcommit", "html", "json", "make", "markdown", "ruby", "sql",
     ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES + (
-      UseDeno() ? [] : TS_FILETYPES
+      ShouldUseDeno() ? [] : TS_FILETYPES
     ),
 
     extra_config: () => ExtraConfigForEfmLangserver(),
@@ -458,7 +458,7 @@ def RegisterTypescriptLanguageServer(): void
     allowlist: JS_FILETYPES + TS_FILETYPES,
     extra_config: () => ExtraConfigForTypescriptLanguageServer(),
 
-    available: !UseDeno(),
+    available: !ShouldUseDeno(),
   })
 enddef
 
@@ -770,7 +770,7 @@ def CheckExitedServers(): void
   endfor
 enddef
 
-def UseDeno(): bool
+def ShouldUseDeno(): bool
   if has_key(cache, "use_deno")
     return cache.use_deno
   endif
