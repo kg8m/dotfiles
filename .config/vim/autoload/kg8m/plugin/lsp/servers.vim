@@ -53,7 +53,7 @@ def RegisterBashLanguageServer(): void
   RegisterServer({
     name: "bash-language-server",
     allowlist: SH_FILETYPES,
-    extra_config: function("ExtraConfigForBashLanguageServer"),
+    extra_config: () => ExtraConfigForBashLanguageServer(),
   })
 enddef
 
@@ -68,7 +68,7 @@ def RegisterClangd(): void
   RegisterServer({
     name: "clangd",
     allowlist: ["c"],
-    extra_config: function("ExtraConfigForClangd"),
+    extra_config: () => ExtraConfigForClangd(),
   })
 enddef
 
@@ -84,7 +84,7 @@ def RegisterCssLanguageServer(): void
     name: "css-language-server",
     allowlist: ["css", "less", "scss"],
     executable: "vscode-css-language-server",
-    extra_config: function("ExtraConfigForCssLanguageServer"),
+    extra_config: () => ExtraConfigForCssLanguageServer(),
   })
 enddef
 
@@ -106,7 +106,7 @@ def RegisterDeno(): void
   RegisterServer({
     name: "deno",
     allowlist: TS_FILETYPES,
-    extra_config: function("ExtraConfigForDeno"),
+    extra_config: () => ExtraConfigForDeno(),
 
     available: UseDeno(),
   })
@@ -182,7 +182,7 @@ def RegisterEfmLangserver(): void
       UseDeno() ? [] : TS_FILETYPES
     ),
 
-    extra_config: function("ExtraConfigForEfmLangserver"),
+    extra_config: () => ExtraConfigForEfmLangserver(),
   })
 enddef
 
@@ -197,7 +197,7 @@ def RegisterGolangciLintLangserver(): void
   RegisterServer({
     name: "golangci-lint-langserver",
     allowlist: ["go"],
-    extra_config: function("ExtraConfigForGolangciLintLangserver"),
+    extra_config: () => ExtraConfigForGolangciLintLangserver(),
   })
 enddef
 
@@ -215,7 +215,7 @@ def RegisterGopls(): void
   RegisterServer({
     name: "gopls",
     allowlist: ["go"],
-    extra_config: function("ExtraConfigForGopls"),
+    extra_config: () => ExtraConfigForGopls(),
   })
 enddef
 
@@ -258,7 +258,7 @@ def RegisterHtmlLanguageServer(): void
     name: "html-language-server",
     allowlist: ["eruby", "html"],
     executable: "vscode-html-language-server",
-    extra_config: function("ExtraConfigForHtmlLanguageServer"),
+    extra_config: () => ExtraConfigForHtmlLanguageServer(),
   })
 enddef
 
@@ -277,7 +277,7 @@ def RegisterJsonLanguageServer(): void
     name: "json-language-server",
     allowlist: ["json"],
     executable: "vscode-json-language-server",
-    extra_config: function("ExtraConfigForJsonLanguageServer"),
+    extra_config: () => ExtraConfigForJsonLanguageServer(),
   })
 enddef
 
@@ -300,7 +300,7 @@ def RegisterRubyLanguageServer(): void
   RegisterServer({
     name: "ruby_language_server",
     allowlist: ["ruby"],
-    extra_config: function("ExtraConfigForRubyLanguageServer"),
+    extra_config: () => ExtraConfigForRubyLanguageServer(),
 
     available: $RUBY_LANGUAGE_SERVER_AVAILABLE ==# "1",
   })
@@ -322,7 +322,7 @@ def RegisterRubyLsp(): void
   RegisterServer({
     name: "ruby-lsp",
     allowlist: ["ruby"],
-    extra_config: function("ExtraConfigForRubyLsp"),
+    extra_config: () => ExtraConfigForRubyLsp(),
 
     available: $RUBY_LSP_AVAILABLE ==# "1",
   })
@@ -342,7 +342,7 @@ def RegisterSolargraph(): void
   RegisterServer({
     name: "solargraph",
     allowlist: ["ruby"],
-    extra_config: function("ExtraConfigForSolargraph"),
+    extra_config: () => ExtraConfigForSolargraph(),
 
     available: $SOLARGRAPH_AVAILABLE !=# "0",
   })
@@ -377,7 +377,7 @@ def RegisterSqls(): void
   RegisterServer({
     name: "sqls",
     allowlist: ["sql"],
-    extra_config: function("ExtraConfigForSqls"),
+    extra_config: () => ExtraConfigForSqls(),
   })
 enddef
 
@@ -401,7 +401,7 @@ def RegisterSteep(): void
   RegisterServer({
     name: "steep",
     allowlist: ["ruby"],
-    extra_config: function("ExtraConfigForSteep"),
+    extra_config: () => ExtraConfigForSteep(),
 
     available: $STEEP_AVAILABLE ==# "1",
   })
@@ -421,7 +421,7 @@ def RegisterTerraformLsp(): void
   RegisterServer({
     name: "terraform-lsp",
     allowlist: ["terraform"],
-    extra_config: function("ExtraConfigForTerraformLsp"),
+    extra_config: () => ExtraConfigForTerraformLsp(),
   })
 enddef
 
@@ -436,7 +436,7 @@ def RegisterTypeprof(): void
   RegisterServer({
     name: "typeprof",
     allowlist: ["ruby"],
-    extra_config: function("ExtraConfigForTypeprof"),
+    extra_config: () => ExtraConfigForTypeprof(),
 
     available: $TYPEPROF_AVAILABLE !=# "0",
   })
@@ -456,7 +456,7 @@ def RegisterTypescriptLanguageServer(): void
   RegisterServer({
     name: "typescript-language-server",
     allowlist: JS_FILETYPES + TS_FILETYPES,
-    extra_config: function("ExtraConfigForTypescriptLanguageServer"),
+    extra_config: () => ExtraConfigForTypescriptLanguageServer(),
 
     available: !UseDeno(),
   })
@@ -488,7 +488,7 @@ def RegisterVimLanguageServer(): void
   RegisterServer({
     name: "vim-language-server",
     allowlist: ["vim"],
-    extra_config: function("ExtraConfigForVimLanguageServer"),
+    extra_config: () => ExtraConfigForVimLanguageServer(),
   })
 enddef
 
@@ -522,7 +522,7 @@ def RegisterVueLanguageServer(): void
   RegisterServer({
     name: "vls",
     allowlist: ["vue"],
-    extra_config: function("ExtraConfigForVueLanguageServer"),
+    extra_config: () => ExtraConfigForVueLanguageServer(),
   })
 enddef
 
@@ -573,7 +573,7 @@ def RegisterYamlLanguageServer(): void
   RegisterServer({
     name: "yaml-language-server",
     allowlist: YAML_FILETYPES,
-    extra_config: function("ExtraConfigForYamlLanguageServer"),
+    extra_config: () => ExtraConfigForYamlLanguageServer(),
   })
 enddef
 
