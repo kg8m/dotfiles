@@ -17,11 +17,11 @@ export def Run(): void
 enddef
 
 def GetCwd(): string
+  # Footer = the last slash and dirname
   const full_cwd      = getcwd()
   const dirname_width = fnamemodify(full_cwd, ":t")->strdisplaywidth()
   const max_width     = min([dirname_width + 10, 30])
   const footer_width  = dirname_width + 1
-  const separator     = "..."
 
-  return kg8m#util#string#Vital().truncate_skipping(full_cwd, max_width, footer_width, separator)
+  return kg8m#util#string#Truncate(full_cwd, max_width, { footer_width: footer_width })
 enddef

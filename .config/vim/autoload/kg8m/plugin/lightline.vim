@@ -82,9 +82,7 @@ def TruncateFilepath(filepath: string): string
   else
     # Footer = the last slash and filename
     const footer_width = length - strridx(filepath, "/")
-    const separator    = "..."
-
-    return kg8m#util#string#Vital().truncate_skipping(filepath, max, footer_width, separator)
+    return kg8m#util#string#Truncate(filepath, max, { footer_width: footer_width })
   endif
 enddef
 

@@ -27,3 +27,30 @@ enddef
 export def Includes(string: string, query: string): bool
   return stridx(string, query) >=# 0
 enddef
+
+# vital.vim's `truncate()` and `truncate_skipping()` is a little slow.
+# So use `printf()` with `%.*S` unless `footer_width` of `truncate_skipping()` is unnecessary.
+export def Truncate(string: string, max_width: number, options: dict<any> = {}): string
+  const skipper = get(options, "skipper", "...")
+  const skipper_width = strdisplaywidth(skipper)
+
+  if skipper_width ># max_width
+    const prefix = "[kg8m#util#string#Truncate()]"
+    const message = $"Skipper width ({skipper_width}) is greater than max width ({max_width})."
+
+    kg8m#util#logger#Error($"{prefix} {message}")
+    return string
+  endif
+
+  if strdisplaywidth(string) <=# max_width
+    return string
+  else
+    const footer_width = get(options, "footer_width", 0)
+
+    if !!footer_width
+      return Vital().truncate_skipping(string, max_width, footer_width, skipper)
+    else
+      return printf($"%.{max_width - skipper_width}S%s", string, skipper)
+    endif
+  endif
+enddef

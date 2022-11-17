@@ -117,10 +117,7 @@ export def RemoteCopy(original_text: string): void
   const max_width = v:echospace - 60
 
   if max_width ># 10
-    # Pass partial text to Vital's `truncate()` because the function is too heavy if the text is large.
-    const truncated = kg8m#util#string#Vital().truncate(text[0 : max_width], max_width)->trim()
-
-    message ..= printf(": %s", truncated .. (truncated ==# trim(text) ? "" : "..."))
+    message ..= kg8m#util#string#Truncate(text, max_width)->trim()
   endif
 
   kg8m#util#logger#Info(message)
