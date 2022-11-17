@@ -107,6 +107,8 @@ autoload -U _zinit
 # shellcheck disable=SC2034,SC2154
 ((${+_comps})) && _comps[zinit]=_zinit
 
+try_to_source ~/.config/zsh.local/zshrc.local.prepare.zsh
+
 source ~/.config/zsh/aliases.zsh
 source ~/.config/zsh/utility-functions.zsh
 
