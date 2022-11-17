@@ -10,7 +10,13 @@ function plugin:asdf:atclone {
   local plugins=(deno golang nodejs python ruby)
   local plugin
   for plugin in "${plugins[@]}"; do
+    if asdf plugin-list | grep -E "^${plugin}$" -q; then
+      continue
+    fi
+
     execute_with_echo "asdf plugin add ${plugin}"
+    execute_with_echo "asdf install ${plugin} latest"
+    execute_with_echo "asdf global ${plugin} latest"
 
     case "${plugin}" in
       python)
@@ -21,7 +27,7 @@ function plugin:asdf:atclone {
     esac
   done
 
-  execute_with_echo "asdf plugin-list"
+  execute_with_echo "asdf list"
 }
 
 function plugin:asdf:atload {
