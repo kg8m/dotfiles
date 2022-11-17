@@ -7,7 +7,7 @@ function plugin:asdf:atclone {
     ln -s "${PWD}" "${ASDF_DIR}"
   fi
 
-  local plugins=(golang nodejs python ruby)
+  local plugins=(deno golang nodejs python ruby)
   local plugin
   for plugin in "${plugins[@]}"; do
     execute_with_echo "asdf plugin add ${plugin}"
