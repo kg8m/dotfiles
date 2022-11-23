@@ -355,6 +355,7 @@ function my_grep:with_filter {
     grep_args+=("${non_options[@]}")
   fi
 
+  echo "Searching..." >&2
   local results=("${(@f)$(my_grep "${grep_args[@]}" | filter "${filter_args[@]}")}")
 
   if [ -z "${results[*]}" ]; then
