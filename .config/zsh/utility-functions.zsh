@@ -376,7 +376,7 @@ function my_grep:with_filter {
 
     if [[ "${response}" =~ ^y ]]; then
       if [ "${options[(I)--files]}" = "0" ]; then
-        local tempfile="$(mktemp --suffix .grep)"
+        local tempfile="$(mktemp "${TMPDIR%/}/grep.XXXXXXXXXX")"
 
         # Don't execute `echo ... | vim ... -` because current command remains as zsh if so. So tmux's
         # `pane_current_command` always returns "zsh" and automatic refreshing zsh prompt will be influenced.

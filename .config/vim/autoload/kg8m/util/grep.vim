@@ -4,7 +4,7 @@ vim9script
 export def BuildQflistFromBuffer(): void
   const filename = expand("%:t")
 
-  if !empty(filename) && filename !~# '\v^tmp\.\w+\.grep$'
+  if !empty(filename) && filename !~# '\v^grep\.\w{10}$'
     kg8m#util#logger#Error($"The buffer may not be for grep: {filename}")
     return
   endif
