@@ -20,7 +20,7 @@ export def Expr(): string
   const line = getline(v:lnum)->trim()
 
   if IsHeredocEnd(line)
-    unlet! b:sh_fold_heredoc_key
+    unlet! w:sh_fold_heredoc_key
     return "s1"
   elseif IsInHeredoc(line)
     return "="
@@ -29,7 +29,7 @@ export def Expr(): string
   elseif IsFoldEnd(line)
     return "s1"
   elseif IsHeredocStart(line)
-    b:sh_fold_heredoc_key = matchstr(line, HEREDOC_START_PATTERN)
+    w:sh_fold_heredoc_key = matchstr(line, HEREDOC_START_PATTERN)
     return "a1"
   elseif IsFoldStart(line)
     return "a1"
@@ -55,10 +55,10 @@ def IsHeredocStart(line: string): bool
 enddef
 
 def IsHeredocEnd(line: string): bool
-  return !!has_key(b:, "sh_fold_heredoc_key") && line ==# b:sh_fold_heredoc_key
+  return !!has_key(w:, "sh_fold_heredoc_key") && line ==# w:sh_fold_heredoc_key
 enddef
 
 # Call this only if `IsHeredocEnd()` returns `false`
 def IsInHeredoc(line: string): bool
-  return !!has_key(b:, "sh_fold_heredoc_key")
+  return !!has_key(w:, "sh_fold_heredoc_key")
 enddef

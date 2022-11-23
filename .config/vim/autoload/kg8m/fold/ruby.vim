@@ -25,9 +25,9 @@ export def Expr(): string
   const line = getline(v:lnum)->trim()
 
   if IsHeredocEnd(line)
-    const indent = b:ruby_fold_heredoc_indent
-    unlet! b:ruby_fold_heredoc_key
-    unlet! b:ruby_fold_heredoc_indent
+    const indent = w:ruby_fold_heredoc_indent
+    unlet! w:ruby_fold_heredoc_key
+    unlet! w:ruby_fold_heredoc_indent
     return "<" .. string(indent)
   elseif IsInHeredoc(line)
     return "="
@@ -36,9 +36,9 @@ export def Expr(): string
   elseif IsFoldEnd(line)
     return "<" .. string(IndentLevel(v:lnum))
   elseif IsHeredocStart(line)
-    b:ruby_fold_heredoc_key    = matchstr(line, HEREDOC_START_PATTERN)
-    b:ruby_fold_heredoc_indent = IndentLevel(v:lnum)
-    return ">" .. string(b:ruby_fold_heredoc_indent)
+    w:ruby_fold_heredoc_key    = matchstr(line, HEREDOC_START_PATTERN)
+    w:ruby_fold_heredoc_indent = IndentLevel(v:lnum)
+    return ">" .. string(w:ruby_fold_heredoc_indent)
   elseif IsFoldStart(line)
     return ">" .. string(IndentLevel(v:lnum))
   else
@@ -68,10 +68,10 @@ def IsHeredocStart(line: string): bool
 enddef
 
 def IsHeredocEnd(line: string): bool
-  return !!has_key(b:, "ruby_fold_heredoc_key") && line ==# b:ruby_fold_heredoc_key
+  return !!has_key(w:, "ruby_fold_heredoc_key") && line ==# w:ruby_fold_heredoc_key
 enddef
 
 # Call this only if `IsHeredocEnd()` returns `false`
 def IsInHeredoc(line: string): bool
-  return !!has_key(b:, "ruby_fold_heredoc_key")
+  return !!has_key(w:, "ruby_fold_heredoc_key")
 enddef

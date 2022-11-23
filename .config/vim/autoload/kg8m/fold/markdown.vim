@@ -22,22 +22,22 @@ export def Expr(): string
   const line = getline(v:lnum)->trim()
 
   if IsCodeblockEnd(line)
-    unlet! b:markdown_fold_codeblock_backticks
+    unlet! w:markdown_fold_codeblock_backticks
     return "s1"
   elseif IsInCodeblock(line)
     return "="
   elseif IsNoContent(line)
     return "="
   elseif IsCodeblockStart(line)
-    b:markdown_fold_codeblock_backticks = matchstr(line, CODEBLOCK_START_PATTERN)
+    w:markdown_fold_codeblock_backticks = matchstr(line, CODEBLOCK_START_PATTERN)
     return "a1"
   elseif IsSummaryEnd(line)
     return "a1"
   elseif IsDetailsEnd(line)
-    unlet! b:markdown_fold_details
+    unlet! w:markdown_fold_details
     return "s1"
   elseif IsDetailsStart(line)
-    b:markdown_fold_details = true
+    w:markdown_fold_details = true
     return "="
   elseif IsHashHeader(line)
     const hashes = matchstr(line, HASH_HEADER_PATTERN)
@@ -72,16 +72,16 @@ def IsHyphenH2(line: string): bool
 enddef
 
 def IsCodeblockStart(line: string): bool
-  return !has_key(b:, "markdown_fold_codeblock_backticks") && !!(line =~# CODEBLOCK_START_PATTERN)
+  return !has_key(w:, "markdown_fold_codeblock_backticks") && !!(line =~# CODEBLOCK_START_PATTERN)
 enddef
 
 def IsCodeblockEnd(line: string): bool
-  return !!has_key(b:, "markdown_fold_codeblock_backticks") && line ==# b:markdown_fold_codeblock_backticks
+  return !!has_key(w:, "markdown_fold_codeblock_backticks") && line ==# w:markdown_fold_codeblock_backticks
 enddef
 
 # Call this only if `IsCodeblockEnd()` returns `false`
 def IsInCodeblock(line: string): bool
-  return !!has_key(b:, "markdown_fold_codeblock_backticks")
+  return !!has_key(w:, "markdown_fold_codeblock_backticks")
 enddef
 
 def IsDetailsStart(line: string): bool
@@ -89,9 +89,9 @@ def IsDetailsStart(line: string): bool
 enddef
 
 def IsDetailsEnd(line: string): bool
-  return !!has_key(b:, "markdown_fold_details") && !!(line =~# DETAILS_END_PATTERN)
+  return !!has_key(w:, "markdown_fold_details") && !!(line =~# DETAILS_END_PATTERN)
 enddef
 
 def IsSummaryEnd(line: string): bool
-  return !!has_key(b:, "markdown_fold_details") && !!(line =~# SUMMARY_END_PATTERN)
+  return !!has_key(w:, "markdown_fold_details") && !!(line =~# SUMMARY_END_PATTERN)
 enddef
