@@ -67,6 +67,15 @@ unset DIFF_HIGHLIGHT_DIRPATH_CACHE
 
 mkdir -p "${VIM_PLUGINS}"
 
+# Don't use exa's `--ignore-glob` option for `--tree` option because `--ignore-glob` doesn't work for subdirectories.
+export EXA_DEFAULT_OPTIONS=(
+  # Always colorize
+  --color "always"
+
+  # Show hidden and "dot" files
+  --all
+)
+
 export FD_DEFAULT_OPTIONS=(
   # Include hidden files and directories
   --hidden

@@ -12,8 +12,6 @@ fi
 
 # shellcheck disable=SC2154
 alias fd="fd \${FD_DEFAULT_OPTIONS:?[@]}"
-alias ls="ls --color --almost-all"
-alias ll="ls -l --time-style=long-iso"
 alias rm="rm -i"
 
 # Don't inherit `$TERM` to remote servers.

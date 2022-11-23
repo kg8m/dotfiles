@@ -209,6 +209,13 @@ abbrevs:
     global: true
     context: '^git\s'
 
+  - name: ls to exa
+    abbr: ls
+    snippet: exa "${EXA_DEFAULT_OPTIONS[@]}"
+  - name: ll to exa -l
+    abbr: ll
+    snippet: exa "${EXA_DEFAULT_OPTIONS[@]}" --long
+
   - name: npm install
     abbr: i
     snippet: install
