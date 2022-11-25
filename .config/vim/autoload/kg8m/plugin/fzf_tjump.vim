@@ -10,7 +10,7 @@ export def Configure(): void
     lazy:    true,
     on_cmd:  "FzfTjump",
     on_map:  { nx: "<Plug>(fzf-tjump)" },
-    depends: "fzf.vim",
+    depends: ["fzf.vim", "vim-parallel-auto-ctags"],
     hook_source: () => OnSource(),
   })
 enddef
