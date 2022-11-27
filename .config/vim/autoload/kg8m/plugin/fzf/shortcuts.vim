@@ -77,7 +77,7 @@ def DefineRawList(): void
     ["[Ruby] Hash Syntax: Old to new", "'<,'>s/\\v([^:]):([a-zA-Z0-9_\"']+)( *)\\=\\> /\\1\\2:\\3/g"],
     ["[Ruby] Hash Syntax: New to old", "'<,'>s/\\v([a-zA-Z0-9_\"']+):( *) /:\\1\\2 => /g"],
 
-    ["[Outline][Ruby][RSpec] Show Outline", "call kg8m#plugin#fzf#rspec#Outline()"],
+    ["[Outline][Ruby][RSpec] Show Outline", "call kg8m#plugin#fzf#outline#Rspec()"],
 
     ["[Vim] Get syntax group name", "PP synIDattr(synID(line('.'), col('.'), 1), 'name')"],
 

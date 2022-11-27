@@ -2,7 +2,7 @@ vim9script
 
 const PATTERN = '^\s*\(context\|describe\|it\)\>'
 
-export def Outline(): void
+export def Run(): void
   if expand("%") !~# '\w_spec\.rb$'
     kg8m#util#logger#Error("Not an RSpec file.")
     return
