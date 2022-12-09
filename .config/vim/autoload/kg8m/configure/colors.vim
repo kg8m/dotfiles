@@ -31,5 +31,4 @@ export def Performance(): void
   set redrawtime=5000
 
   set lazyredraw
-  set ttyfast
 enddef
