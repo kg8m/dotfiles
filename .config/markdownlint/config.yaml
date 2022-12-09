@@ -45,3 +45,13 @@ no-trailing-punctuation:
 # MD029 - Ordered list item prefix
 # Disable because I usually want to use only `1.` but sometimes want to use other numbers.
 ol-prefix: false
+
+# https://github.com/updownpress/markdown-lint/blob/master/rules/009-no-trailing-spaces.md
+# MD009 - Trailing spaces
+# Disable because trailing whitespaces are checked by textlint.
+no-trailing-spaces: false
+
+# https://github.com/updownpress/markdown-lint/blob/master/rules/007-ul-indent.md
+# MD007 - Unordered list indentation
+# Disable because some Markdown parsers use 4 spaces for lists.
+ul-indent: false
