@@ -703,6 +703,16 @@ export def IsAvailable(server_name: string): bool
   endif
 enddef
 
+export def IsRubyServerAvailable(): bool
+  return (
+    IsAvailable("ruby_language_server") ||
+    IsAvailable("ruby-lsp") ||
+    IsAvailable("solargraph") ||
+    IsAvailable("steep") ||
+    IsAvailable("typeprof")
+  )
+enddef
+
 def Schemas(): list<any>
   if !has_key(cache, "lsp_schemas_json")
     const filepath = printf("%s/data/catalog.json", kg8m#plugin#GetInfo("vim-lsp-settings").path)

@@ -9,7 +9,7 @@ enddef
 export def RefreshPattern(filetype: string): string
   if !has_key(cache, "completion_refresh_patterns")
     const css_pattern  = '\v([.#a-zA-Z0-9_-]+)$'
-    const ruby_pattern = kg8m#plugin#lsp#servers#IsAvailable("solargraph") ? '\v(\@?\@\k*|(:)@<!:\k*|\k+)$' : '\v(\k+)$'
+    const ruby_pattern = kg8m#plugin#lsp#servers#IsRubyServerAvailable() ? '\v(\@?\@\k*|(:)@<!:\k*|\k+)$' : '\v(\k+)$'
     const sh_pattern   = '\v((\k|-)+)$'
 
     cache.completion_refresh_patterns = {
