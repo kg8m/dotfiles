@@ -162,12 +162,21 @@ def BuildPattern(): string
   return cache.pattern
 enddef
 
-def InputToSmartcasePattern(input: string): string
-  return printf(
-    '\V%s%s\m',
-    input[0] =~# '\l' ? printf('\[%s%s]', input[0], toupper(input[0])) : input[0],
-    input[1] =~# '\l' ? printf('\[%s%s]', input[1], toupper(input[1])) : input[1]
-  )
+def InputToSmartcasePattern(original_full_input: string): string
+  const BuildFullPattern =
+    (input1: string, input2: string) => printf('\V%s%s\m', escape(input1, "\\"), escape(input2, "\\"))
+
+  if original_full_input =~# '\u'
+    return BuildFullPattern(original_full_input[0], original_full_input[1])
+  else
+    const BuildCaseInsensitivePattern =
+      (input: string) => input =~# '\l' ? printf('\[%s%s]', input, toupper(input)) : input
+
+    return BuildFullPattern(
+      BuildCaseInsensitivePattern(original_full_input[0]),
+      BuildCaseInsensitivePattern(original_full_input[1])
+    )
+  endif
 enddef
 
 def SetupMigemo(): void
