@@ -83,9 +83,9 @@ options head
 # Enumerable  {{{
 snippet array_reduce
 alias   reduce
-abbr    reduce((accumulator, currentValue) => ..., initialValue)
+abbr    reduce((previousValue, currentValue) => ..., initialValue)
 options word
-	reduce((${2:#:accumulator}, ${3:#:currentValue}) => ${0}, ${1:#:initialValue})
+	reduce((${2:#:previousValue}, ${3:#:currentValue}) => ${0}, ${1:#:initialValue})
 # }}}
 
 # Try-Catch  {{{
