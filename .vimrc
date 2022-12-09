@@ -308,7 +308,7 @@ if kg8m#plugin#Register("vim-denops/denops.vim", { lazy: true, on_start: true })
 endif
 
 if kg8m#plugin#Register("kg8m/vim-detect-indent", { if: !kg8m#util#IsGitTmpEdit() && !use_editorconfig })
-  g:detect_indent#detect_once      = true
+  g:detect_indent#detect_once      = false
   g:detect_indent#ignore_filetypes = ["", "gitcommit", "startify"]
   g:detect_indent#ignore_buftypes  = ["nofile", "quickfix", "terminal"]
 
