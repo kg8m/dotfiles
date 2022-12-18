@@ -99,6 +99,18 @@
 	# Disable because some tools to apply patches don't work
 	noprefix = false
 
+[diff "gitconfig"]
+	xfuncname = "^\\[.+\\]$"
+
+[diff "rspec"]
+	xfuncname = "^[ \t]*((RSpec|describe|context|it|before|after|around|feature|scenario)[ \t].+)$"
+
+[diff "vim"]
+	xfuncname = "^^[ \t]*((export[ \t])?(class|def|function|interface)[ \t].+)$$"
+
+[diff "vimsnippet"]
+	xfuncname = "^snippet .+$"
+
 [fetch]
 	prune = true
 

@@ -11,5 +11,10 @@
 *.pm diff=perl
 *.py diff=python
 *.rb diff=ruby
+*.snip diff=vimsnippet
 *.t diff=perl
 *.ts diff=java
+*.vim diff=vim
+*_spec.rb diff=rspec
+.config/git/config diff=gitconfig
+.vimrc diff=vim
