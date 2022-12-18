@@ -1,8 +1,9 @@
 # https://github.com/updownpress/markdown-lint/blob/master/rules/003-header-style.md
 # MD003 - Header style
 # Specify `setext_with_atx` that means h1 and h2 with underline and others with hashes.
-header-style:
-  style: setext_with_atx
+# Disable because some formatters use atx (`#`) style but I usually want to use setext (`=====`) style if any formatters
+# aren't available.
+header-style: false
 
 # https://github.com/updownpress/markdown-lint/blob/master/rules/007-ul-indent.md
 # MD007 - Unordered list indentation
@@ -35,6 +36,12 @@ no-trailing-punctuation:
 # MD029 - Ordered list item prefix
 # Disable because I usually want to use only `1.` but sometimes want to use other numbers.
 ol-prefix: false
+
+# https://github.com/updownpress/markdown-lint/blob/master/rules/031-blanks-around-fences.md
+# MD031 - Fenced code blocks should be surrounded by blank lines
+# Disable because some Markdown parsers support fenced code blocks without surrounding blank lines and GitHub markdown
+# adds extra whitespaces if list items contain fenced code blocks with surrounding blank lines.
+blanks-around-fences: false
 
 # https://github.com/updownpress/markdown-lint/blob/master/rules/033-no-inline-html.md
 # MD033 - Inline HTML
