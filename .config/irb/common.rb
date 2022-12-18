@@ -13,9 +13,10 @@ module Kg8m
 
   module Benchmark
     def self.bm(number_of_trials, **cases_map)
-      cases_map.tap do
-        require "benchmark"
+      Kg8m.try_to_require("benchmark")
+      return unless benchmarkable_by?(:bm)
 
+      cases_map.tap do
         max_label_width = cases_map.keys.map(&:to_s).map(&:length).max
 
         @last_result =
@@ -31,9 +32,10 @@ module Kg8m
     end
 
     def self.ips(**cases_map)
-      cases_map.tap do
-        require "benchmark/ips"
+      Kg8m.try_to_require("benchmark/ips")
+      return unless benchmarkable_by?(:ips)
 
+      cases_map.tap do
         @last_result =
           ::Benchmark.ips {|x|
             cases_map.each do |label, procedure|
@@ -52,6 +54,10 @@ module Kg8m
 
     class << self
       private
+
+      def benchmarkable_by?(method_name)
+        defined?(::Benchmark) && ::Benchmark.respond_to?(method_name)
+      end
 
       def show_note
         puts "NOTE: The last benchmark result can be seen with `#{name}.last_result`.\n\n"
