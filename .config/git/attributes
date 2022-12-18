@@ -12,3 +12,4 @@
 *.py diff=python
 *.rb diff=ruby
 *.t diff=perl
+*.ts diff=java
