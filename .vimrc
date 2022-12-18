@@ -130,11 +130,7 @@ if kg8m#plugin#Register("junegunn/fzf.vim", { if: executable("fzf") })
 endif
 
 if kg8m#plugin#Register("lambdalisue/gin.vim", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#Configure({
-    lazy:    true,
-    on_cmd:  "GinPatch",
-    depends: ["denops.vim"],
-  })
+  kg8m#plugin#gin#Configure()
 endif
 
 if kg8m#plugin#Register("tweekmonster/helpful.vim")
