@@ -328,7 +328,10 @@ endif
 
 kg8m#plugin#Register("thinca/vim-ft-diff_fold")
 kg8m#plugin#Register("thinca/vim-ft-help_fold")
-kg8m#plugin#Register("muz/vim-gemfile")
+
+if kg8m#plugin#Register("muz/vim-gemfile")
+  kg8m#plugin#gemfile#Configure()
+endif
 
 if kg8m#plugin#Register("kana/vim-gf-user")
   kg8m#plugin#gf_user#Configure()
