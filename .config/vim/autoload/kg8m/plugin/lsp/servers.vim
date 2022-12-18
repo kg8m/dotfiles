@@ -785,8 +785,16 @@ def ShouldUseDeno(): bool
     return cache.use_deno
   endif
 
-  cache.use_deno = ($DENO_AVAILABLE ==# "1") || OnDenopsPluginDir()
+  cache.use_deno = ($DENO_AVAILABLE ==# "1") || OnDenoAppDir() || OnDenopsPluginDir()
   return cache.use_deno
+enddef
+
+def OnDenoAppDir(): bool
+  return (
+    filereadable("deno.json") ||
+    filereadable("deno.jsonc") ||
+    filereadable("deno.lock")
+  )
 enddef
 
 def OnDenopsPluginDir(): bool
