@@ -5,6 +5,11 @@ kg8m#plugin#EnsureSourced("fzf.vim")
 command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#Complete FzfRails kg8m#plugin#fzf#rails#Run(<q-args>)
 
 export def EnterCommand(): void
+  if !kg8m#util#OnRailsDir()
+    kg8m#util#logger#Error("Not a Rails directory!!")
+    return
+  endif
+
   feedkeys(":FzfRails\<Space>", "t")
 enddef
 

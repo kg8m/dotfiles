@@ -17,10 +17,7 @@ export def Configure(): void
   noremap  <silent> <Leader><Leader>a <Cmd>call kg8m#plugin#fzf#shortcuts#Run("SimpleAlign ")<CR>
   nnoremap <silent> <Leader><Leader>[ :call kg8m#plugin#fzf#jumplist#Back()<CR>
   nnoremap <silent> <Leader><Leader>] :call kg8m#plugin#fzf#jumplist#Forward()<CR>
-
-  if kg8m#util#OnRailsDir()
-    nnoremap <silent> <Leader><Leader>r :call kg8m#plugin#fzf#rails#EnterCommand()<CR>
-  endif
+  nnoremap <silent> <Leader><Leader>r :call kg8m#plugin#fzf#rails#EnterCommand()<CR>
 
   kg8m#plugin#Configure({
     lazy:     true,
