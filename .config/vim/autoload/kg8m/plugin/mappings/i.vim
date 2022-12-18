@@ -157,22 +157,22 @@ enddef
 def TabExpr(): string
   if pumvisible()
     return "\<C-n>"
-  elseif !IsOnIndentation()
+  elseif IsOnIndentation()
+    return "\<Tab>"
+  else
     # <C-t>: increase indentation
     return "\<C-t>"
-  else
-    return "\<Tab>"
   endif
 enddef
 
 def ShiftTabExpr(): string
   if pumvisible()
     return "\<C-p>"
-  elseif !IsOnIndentation()
+  elseif IsOnIndentation()
+    return "\<S-Tab>"
+  else
     # <C-d>: decrease indentation
     return "\<C-d>"
-  else
-    return "\<S-Tab>"
   endif
 enddef
 
