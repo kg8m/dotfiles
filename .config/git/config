@@ -132,6 +132,9 @@
 [pull]
 	rebase = true
 
+[push]
+	useForceIfIncludes = true
+
 [rebase]
 	autostash = true
 	showCurrentPatch = true
