@@ -25,7 +25,7 @@ export def BuildQflistFromBuffer(): void
 
   bdelete!
 
-  edit grep://source_buffer
+  noswapfile edit grep://source_buffer
   setline(1, lines)
 
   setlocal buftype=nofile
