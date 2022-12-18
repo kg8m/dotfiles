@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 module Kg8m
+  def self.try_to_require(library, fallback: nil)
+    require library
+  rescue LoadError => e
+    if fallback
+      try_to_require(fallback)
+    else
+      warn "WARN -- #{e.class.name}: #{e.message} (#{e.backtrace.join(", ")})"
+    end
+  end
+
   module Benchmark
     def self.bm(number_of_trials, **cases_map)
       cases_map.tap do
@@ -83,16 +93,14 @@ if defined?(Rails)
   ActiveRecord::Base.logger = Rails.logger
   ActiveSupport::Deprecation.behavior = :stderr
 
-  begin
-    require "hirb"
-    require "hirb-unicode"
+  Kg8m.try_to_require("hirber", fallback: "hirb")
+  Kg8m.try_to_require("hirb-unicode")
 
+  if defined?(Hirb)
     if defined?(HirbExt)
       HirbExt.override
     end
 
     Hirb.enable
-  rescue LoadError, NameError => e
-    warn "WARN -- #{e.class.name}: #{e.message} (#{e.backtrace.join(", ")})"
   end
 end
