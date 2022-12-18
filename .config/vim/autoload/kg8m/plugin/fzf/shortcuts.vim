@@ -70,7 +70,7 @@ def DefineRawList(): void
     ["[Copy] absolute filepath",              "call kg8m#util#RemoteCopy(kg8m#util#file#CurrentAbsolutePath())"],
     ["[Copy][Ruby] nested class/module name", "call kg8m#util#filetypes#ruby#CopyNestedClassName()"],
 
-    ["[Git] GinPatch",                                   "call kg8m#plugin#gin#Patch(expand(\"%\"))"],
+    ["[Git] GinPatch",                                   "call kg8m#plugin#gin#Patch()"],
     ["[Git] Apply the patch/hunk to the another side",   "'<,'>diffput"],
     ["[Git] Apply the patch/hunk from the another side", "'<,'>diffget"],
 
