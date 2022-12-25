@@ -889,6 +889,8 @@ endif
 
 colorscheme molokai
 
+# ----------------------------------------------
+# Non-plugin Configurations  # {{{
 kg8m#configure#Backup()
 kg8m#configure#Colors()
 kg8m#configure#Column()
@@ -917,5 +919,6 @@ kg8m#configure#Others()
 if has("gui_running")
   kg8m#configure#Gui()
 endif
+# }}}
 
 kg8m#util#SourceLocalVimrc()
