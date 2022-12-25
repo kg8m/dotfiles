@@ -46,7 +46,6 @@ path=(
 # cf. data setup in .config/zsh/binary-released-plugins.zsh
 export MOCWORD_DATA="${HOME}/.local/share/mocword/mocword.sqlite"
 
-export NEXTWORD_DATA_PATH="${HOME}/.local/share/nextword/nextword-data"
 export RIPGREP_CONFIG_PATH="${HOME}/.config/ripgrep/config"
 export VIM_PLUGINS="${HOME}/.vim/plugins/repos"
 

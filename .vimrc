@@ -84,19 +84,6 @@ if kg8m#plugin#Register("prabirshrestha/asyncomplete-neosnippet.vim")
   })
 endif
 
-# TODO: Don't use deprecated nextword.
-if kg8m#plugin#Register("high-moctane/asyncomplete-nextword.vim", { if: false })
-  kg8m#plugin#Configure({
-    lazy:     true,
-    on_event: ["InsertEnter"],
-    on_start: true,
-    depends:  ["async.vim", "asyncomplete.vim"],
-    hook_post_source: function("kg8m#plugin#asyncomplete#nextword#OnPostSource"),
-  })
-
-  kg8m#plugin#Register("prabirshrestha/async.vim", { lazy: true })
-endif
-
 if kg8m#plugin#Register("prabirshrestha/asyncomplete-lsp.vim")
   kg8m#plugin#Configure({
     lazy:     true,

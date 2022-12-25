@@ -5,7 +5,6 @@ function plugin:setup:binary_releaseds {
     golangci/golangci-lint
     nametake/golangci-lint-langserver
     high-moctane/mocword
-    high-moctane/nextword
     lighttiger2505/sqls
     mvdan/sh
     juliosueiras/terraform-lsp
@@ -61,7 +60,7 @@ function plugin:setup:binary_releaseds {
       tldr)
         mv ./tealdeer* ./"${plugin}"
         ;;
-      fzf | golangci-lint-langserver | nextword | sqls | tokei)
+      fzf | golangci-lint-langserver | sqls | tokei)
         # Do nothing
         ;;
       *)
@@ -71,7 +70,7 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mocword | nextword | sd | shfmt | sqls |\
+      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mocword | sd | shfmt | sqls |\
       terraform-lsp | tldr | tokei | typos | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
@@ -104,7 +103,7 @@ function plugin:setup:binary_releaseds {
       tldr | tokei | typos | zabrze)
         execute_with_echo "${command} --version"
         ;;
-      efm-langserver | nextword)
+      efm-langserver)
         execute_with_echo "${command} -v"
         ;;
       actionlint | shfmt | sqls)
@@ -130,9 +129,6 @@ function plugin:setup:binary_releaseds {
       bat)
         execute_with_echo "mv ./bat/autocomplete/{bat.zsh,_bat}"
         ;;
-      nextword)
-        execute_with_echo "plugin:nextword:after_update"
-        ;;
       zabrze)
         execute_with_echo "plugin:zabrze:reset"
         execute_with_echo "plugin:zabrze:init"
@@ -150,29 +146,6 @@ function plugin:setup:binary_releaseds {
     # Echo empty lines because refreshing prompt by zinit clears the last few lines.
     echo >&2
     echo >&2
-  }
-
-  function plugin:nextword:after_update {
-    if command -v nextword > /dev/null; then
-      if [ ! -d "${NEXTWORD_DATA_PATH:-}" ]; then
-        local parent_dir="$(dirname "${NEXTWORD_DATA_PATH}")"
-        mkdir -p "${parent_dir}"
-
-        # Use subshell to restore pwd.
-        (
-          builtin cd "${parent_dir}"
-
-          local name=large
-
-          execute_with_echo "wget https://github.com/high-moctane/nextword-data/archive/${name}.tar.gz"
-          execute_with_echo "tar xzvf ${name}.tar.gz"
-          execute_with_echo "rm -f ${name}.tar.gz"
-          execute_with_echo "mv nextword-data-${name} '$(basename "${NEXTWORD_DATA_PATH}")'"
-        )
-      fi
-    else
-      echo:warn 'Command `nextword` not found.'
-    fi
   }
 
   local repository
