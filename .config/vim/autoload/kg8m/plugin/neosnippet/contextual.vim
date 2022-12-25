@@ -42,8 +42,22 @@ def SetupContexts(): void
   const ft_prepends  = get(all_prepends, &filetype, [])
   contexts[&filetype] = ft_prepends
 
-  if &filetype ==# "ruby"
+  if &filetype ==# "eruby"
+    contexts[&filetype] += ContextsForEruby()
+  elseif &filetype ==# "ruby"
     contexts[&filetype] += ContextsForRuby()
+  endif
+enddef
+
+def ContextsForEruby(): list<dict<any>>
+  if kg8m#util#OnRailsDir()
+    const common = ["ruby-rails.snip"]
+    return [
+      { pattern: '\.html\.erb$', snippets: common + ["html.snip", "javascript.snip"] },
+      { pattern: '\.js\.erb$',   snippets: common + ["javascript.snip"] },
+    ]
+  else
+    return []
   endif
 enddef
 
@@ -51,8 +65,6 @@ def ContextsForRuby(): list<dict<any>>
   if kg8m#util#OnRailsDir()
     const common = ["ruby-rails.snip"]
     return [
-      { pattern: '\.html\.erb$',     snippets: common + ["html.snip", "javascript.snip"] },
-      { pattern: '\.js\.erb$',       snippets: common + ["javascript.snip"] },
       { pattern: '^app/controllers', snippets: common + ["ruby-rails-controller.snip"] },
       { pattern: '^app/models',      snippets: common + ["ruby-rails-model.snip"] },
       { pattern: '^db/migrate',      snippets: common + ["ruby-rails-migration.snip"] },
