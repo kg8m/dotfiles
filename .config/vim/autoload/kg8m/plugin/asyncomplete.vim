@@ -1,16 +1,6 @@
 vim9script
 
-export def Configure(): void
-  kg8m#plugin#Configure({
-    lazy:     true,
-    on_event: ["InsertEnter"],
-    on_start: true,
-    hook_source:      () => OnSource(),
-    hook_post_source: () => OnPostSource(),
-  })
-enddef
-
-def OnSource(): void
+export def OnSource(): void
   g:asyncomplete_auto_popup = true
   g:asyncomplete_popup_delay = 50
   g:asyncomplete_auto_completeopt = false
@@ -31,7 +21,7 @@ def OnSource(): void
   augroup END
 enddef
 
-def OnPostSource(): void
+export def OnPostSource(): void
   timer_start(0, (_) => kg8m#events#NotifyInsertModePluginLoaded())
   timer_start(0, (_) => kg8m#plugin#completion#SetRefreshPattern())
 

@@ -2,14 +2,27 @@ vim9script
 
 final cache = {}
 
-export def Configure(): void
-  kg8m#plugin#Configure({
-    lazy:     true,
-    on_event: ["InsertEnter"],
-    on_start: true,
-    depends:  "asyncomplete.vim",
-    hook_post_source: () => OnPostSource(),
-  })
+export def OnPostSource(): void
+  # Call asyncomplete-buffer.vim's function to refresh keywords (`cache.refresh_keywords`) on some events not only
+  # `BufWinEnter` in order to include keywords added after `BufWinEnter` in completion candidates
+  # https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
+  const events = [
+    "BufWinEnter",
+    "TextChanged",
+    "TextChangedI",
+    "TextChangedP",
+  ]
+
+  asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    name: "buffer",
+    allowlist: ["*"],
+    completor: function("asyncomplete#sources#buffer#completor"),
+    events: events,
+    on_event: (..._) => OnEventAsync(),
+    priority: 2,
+  }))
+
+  Activate()
 enddef
 
 # https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
@@ -54,27 +67,4 @@ enddef
 
 def Activate(): void
   OnEventAsync()
-enddef
-
-def OnPostSource(): void
-  # Call asyncomplete-buffer.vim's function to refresh keywords (`cache.refresh_keywords`) on some events not only
-  # `BufWinEnter` in order to include keywords added after `BufWinEnter` in completion candidates
-  # https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
-  const events = [
-    "BufWinEnter",
-    "TextChanged",
-    "TextChangedI",
-    "TextChangedP",
-  ]
-
-  asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-    name: "buffer",
-    allowlist: ["*"],
-    completor: function("asyncomplete#sources#buffer#completor"),
-    events: events,
-    on_event: (..._) => OnEventAsync(),
-    priority: 2,
-  }))
-
-  Activate()
 enddef

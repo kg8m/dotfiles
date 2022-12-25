@@ -1,14 +1,6 @@
 vim9script
 
-export def Configure(): void
-  kg8m#plugin#Configure({
-    lazy:     true,
-    on_start: true,
-    hook_source: () => OnSource(),
-  })
-enddef
-
-def OnSource(): void
+export def OnSource(): void
   kg8m#configure#Conceal()
 
   g:indentLine_char            = "|"

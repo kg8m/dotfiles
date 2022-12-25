@@ -1,6 +1,16 @@
 vim9script
 
-export def Configure(): void
+export def OnSource(): void
+  g:sandwich_no_default_key_mappings = true
+  g:operator_sandwich_no_default_key_mappings = true
+  g:textobj_sandwich_no_default_key_mappings = true
+enddef
+
+export def OnPostSource(): void
+  g:sandwich#recipes = DefaultRecipes()
+enddef
+
+export def DefineMappings(): void
   xnoremap <Leader>sa <Plug>(operator-sandwich-add)
 
   # Operators for deleting/replacing using textobjects that automatically detect matching pairs where some same type
@@ -41,13 +51,6 @@ export def Configure(): void
   endfor
 
   nmap . <Plug>(operator-sandwich-dot)
-
-  kg8m#plugin#Configure({
-    lazy:   true,
-    on_map: { nx: "<Plug>(operator-sandwich-", o: "<Plug>(textobj-sandwich-" },
-    hook_source:      () => OnSource(),
-    hook_post_source: () => OnPostSource(),
-  })
 enddef
 
 def OperatorDeleteExpr(): string
@@ -183,14 +186,4 @@ def CommonRecipeOptionsFor(matchpair: list<string>): dict<any>
     match_syntax: 1,
     quoteescape: matchpair[0] ==# '"' || matchpair[0] ==# "'",
   }
-enddef
-
-def OnSource(): void
-  g:sandwich_no_default_key_mappings = true
-  g:operator_sandwich_no_default_key_mappings = true
-  g:textobj_sandwich_no_default_key_mappings = true
-enddef
-
-def OnPostSource(): void
-  g:sandwich#recipes = DefaultRecipes()
 enddef

@@ -1,12 +1,72 @@
 vim9script
 
-export def Configure(): void
-  kg8m#plugin#Configure({
-    lazy:     true,
-    on_start: true,
-    hook_source:      () => OnSource(),
-    hook_post_source: () => OnPostSource(),
-  })
+export def OnSource(): void
+  # http://d.hatena.ne.jp/itchyny/20130828/1377653592
+  set laststatus=2
+
+  const elements = {
+    left: [
+      ["mode", "paste"],
+      ["warning_filepath"], ["normal_filepath"],
+      ["separator"],
+      ["filetype"],
+      ["warning_fileencoding"], ["normal_fileencoding"],
+      ["fileformat"],
+      ["separator"],
+      ["cursor_position"],
+    ],
+    right: [
+      ["lsp_status"],
+    ],
+  }
+
+  g:lightline = {
+    active: elements,
+    inactive: elements,
+    component: {
+      separator: "|",
+      cursor_position: "%l/%L:%v",
+    },
+    component_function: {
+      normal_filepath:     "kg8m#plugin#lightline#NormalFilepath",
+      normal_fileencoding: "kg8m#plugin#lightline#NormalFileencoding",
+      lsp_status:          "kg8m#plugin#lightline#LspStatus",
+    },
+    component_expand: {
+      warning_filepath:     "kg8m#plugin#lightline#WarningFilepath",
+      warning_fileencoding: "kg8m#plugin#lightline#WarningFileencoding",
+    },
+    component_type: {
+      warning_filepath:     "error",
+      warning_fileencoding: "error",
+    },
+    colorscheme: "kg8m",
+
+    # Use same width for all modes to prevent unstable positions.
+    # :h g:lightline.mode_map
+    mode_map: {
+      n:        " NORMAL ",
+      i:        " INSERT ",
+      R:        "REPLACE ",
+      v:        " VISUAL ",
+      V:        " V-LINE ",
+      "\<C-v>": "V-BLOCK ",
+      c:        "COMMAND ",
+      s:        " SELECT ",
+      S:        " S-LINE ",
+      "\<C-s>": "S-BLOCK ",
+      t:        "TERMINAL",
+    },
+  }
+
+  augroup vimrc-plugin-lightline
+    autocmd!
+    autocmd User after_lsp_buffer_enabled lightline#update()
+  augroup END
+enddef
+
+export def OnPostSource(): void
+  lightline#update()
 enddef
 
 export def Filepath(): string
@@ -107,73 +167,4 @@ def LspStatusAfterEnabled(): string
   else
     return join(mapped, " ")
   endif
-enddef
-
-def OnSource(): void
-  # http://d.hatena.ne.jp/itchyny/20130828/1377653592
-  set laststatus=2
-
-  const elements = {
-    left: [
-      ["mode", "paste"],
-      ["warning_filepath"], ["normal_filepath"],
-      ["separator"],
-      ["filetype"],
-      ["warning_fileencoding"], ["normal_fileencoding"],
-      ["fileformat"],
-      ["separator"],
-      ["cursor_position"],
-    ],
-    right: [
-      ["lsp_status"],
-    ],
-  }
-
-  g:lightline = {
-    active: elements,
-    inactive: elements,
-    component: {
-      separator: "|",
-      cursor_position: "%l/%L:%v",
-    },
-    component_function: {
-      normal_filepath:     "kg8m#plugin#lightline#NormalFilepath",
-      normal_fileencoding: "kg8m#plugin#lightline#NormalFileencoding",
-      lsp_status:          "kg8m#plugin#lightline#LspStatus",
-    },
-    component_expand: {
-      warning_filepath:     "kg8m#plugin#lightline#WarningFilepath",
-      warning_fileencoding: "kg8m#plugin#lightline#WarningFileencoding",
-    },
-    component_type: {
-      warning_filepath:     "error",
-      warning_fileencoding: "error",
-    },
-    colorscheme: "kg8m",
-
-    # Use same width for all modes to prevent unstable positions.
-    # :h g:lightline.mode_map
-    mode_map: {
-      n:        " NORMAL ",
-      i:        " INSERT ",
-      R:        "REPLACE ",
-      v:        " VISUAL ",
-      V:        " V-LINE ",
-      "\<C-v>": "V-BLOCK ",
-      c:        "COMMAND ",
-      s:        " SELECT ",
-      S:        " S-LINE ",
-      "\<C-s>": "S-BLOCK ",
-      t:        "TERMINAL",
-    },
-  }
-
-  augroup vimrc-plugin-lightline
-    autocmd!
-    autocmd User after_lsp_buffer_enabled lightline#update()
-  augroup END
-enddef
-
-def OnPostSource(): void
-  lightline#update()
 enddef

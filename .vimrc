@@ -35,51 +35,135 @@ kg8m#plugin#InitManager()
 # Plugins list and settings  # {{{
 # Completion, LSP  # {{{
 if kg8m#plugin#Register("prabirshrestha/asyncomplete.vim")
-  kg8m#plugin#asyncomplete#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_start: true,
+    hook_source:      function("kg8m#plugin#asyncomplete#OnSource"),
+    hook_post_source: function("kg8m#plugin#asyncomplete#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("prabirshrestha/asyncomplete-buffer.vim")
-  kg8m#plugin#asyncomplete#buffer#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_start: true,
+    depends:  ["asyncomplete.vim"],
+    hook_post_source: function("kg8m#plugin#asyncomplete#buffer#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("prabirshrestha/asyncomplete-file.vim")
-  kg8m#plugin#asyncomplete#file#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_start: true,
+    depends:  ["asyncomplete.vim"],
+    hook_post_source: function("kg8m#plugin#asyncomplete#file#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("kg8m/asyncomplete-mocword.vim")
-  kg8m#plugin#asyncomplete#mocword#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_start: true,
+    depends:  ["asyncomplete.vim"],
+    hook_post_source: function("kg8m#plugin#asyncomplete#mocword#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("prabirshrestha/asyncomplete-neosnippet.vim")
-  kg8m#plugin#asyncomplete#neosnippet#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_start: true,
+    depends:  ["asyncomplete.vim"],
+    hook_post_source: function("kg8m#plugin#asyncomplete#neosnippet#OnPostSource"),
+  })
 endif
 
-if kg8m#plugin#Register("high-moctane/asyncomplete-nextword.vim")
-  kg8m#plugin#asyncomplete#nextword#Configure()
-endif
+# TODO: Don't use deprecated nextword.
+if kg8m#plugin#Register("high-moctane/asyncomplete-nextword.vim", { if: false })
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_start: true,
+    depends:  ["async.vim", "asyncomplete.vim"],
+    hook_post_source: function("kg8m#plugin#asyncomplete#nextword#OnPostSource"),
+  })
 
-if kg8m#plugin#Register("prabirshrestha/asyncomplete-tags.vim")
-  kg8m#plugin#asyncomplete#tags#Configure()
+  kg8m#plugin#Register("prabirshrestha/async.vim", { lazy: true })
 endif
 
 if kg8m#plugin#Register("prabirshrestha/asyncomplete-lsp.vim")
-  kg8m#plugin#asyncomplete#lsp#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_start: true,
+    depends:  ["asyncomplete.vim"],
+  })
 endif
 
 if kg8m#plugin#Register("kitagry/asyncomplete-tabnine.vim", { if: kg8m#util#IsTabnineAvailable(), build: "./install.sh" })
-  kg8m#plugin#asyncomplete#tabnine#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_start: true,
+    depends:  ["asyncomplete.vim"],
+    hook_post_source: function("kg8m#plugin#asyncomplete#tabnine#OnPostSource"),
+  })
+endif
+
+if kg8m#plugin#Register("prabirshrestha/asyncomplete-tags.vim")
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_start: true,
+    depends:  ["asyncomplete.vim"],
+    hook_post_source: function("kg8m#plugin#asyncomplete#tags#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("Shougo/neosnippet.vim")
-  kg8m#plugin#neosnippet#Configure()
+  # `on_ft` for Syntaxes
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_ft:    ["snippet", "neosnippet"],
+    on_start: true,
+    hook_source:      function("kg8m#plugin#neosnippet#OnSource"),
+    hook_post_source: function("kg8m#plugin#neosnippet#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("prabirshrestha/vim-lsp")
-  kg8m#plugin#lsp#Configure()
+  kg8m#plugin#lsp#servers#Register()
+
+  kg8m#plugin#Configure({
+    lazy:  true,
+    on_ft: kg8m#plugin#lsp#servers#Filetypes(),
+    hook_source: function("kg8m#plugin#lsp#OnSource"),
+  })
+
+  kg8m#plugin#Register("mattn/vim-lsp-settings", { if: false, merged: false })
+  kg8m#plugin#Register("tsuyoshicho/vim-efm-langserver-settings", { if: false, merged: false })
 endif
 
 if kg8m#plugin#Register("hrsh7th/vim-vsnip")
-  kg8m#plugin#vsnip#Configure()
+  kg8m#plugin#Configure({
+    lazy: true,
+    on_event: ["InsertEnter"],
+    hook_post_source: function("kg8m#plugin#vsnip#OnPostSource"),
+  })
+
+  if kg8m#plugin#Register("hrsh7th/vim-vsnip-integ")
+    kg8m#plugin#Configure({
+      lazy:      true,
+      on_source: "vim-vsnip",
+    })
+  endif
 endif
 # }}}
 
@@ -90,11 +174,26 @@ kg8m#plugin#Register("pearofducks/ansible-vim")
 kg8m#plugin#Register("hotwatermorning/auto-git-diff", { if: kg8m#util#IsGitRebase() })
 
 if kg8m#plugin#Register("tyru/caw.vim", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#caw#Configure()
+  map <expr> gc kg8m#plugin#caw#Run()
+
+  kg8m#plugin#Configure({
+    lazy: true,
+    hook_source: function("kg8m#plugin#caw#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("rhysd/conflict-marker.vim")
-  kg8m#plugin#conflict_marker#Configure()
+  augroup vimrc-plugin-conflict_marker
+    autocmd!
+    autocmd FileType * kg8m#plugin#conflict_marker#SetupBuffer()
+    autocmd User all_on_start_plugins_sourced kg8m#plugin#conflict_marker#NotifyActivated()
+  augroup END
+
+  kg8m#plugin#Configure({
+    lazy:   true,
+    on_map: { n: "<Plug>(conflict-marker-" },
+    hook_source: function("kg8m#plugin#conflict_marker#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("Shougo/context_filetype.vim")
@@ -114,11 +213,25 @@ if kg8m#plugin#Register("Shougo/context_filetype.vim")
 endif
 
 if kg8m#plugin#Register("gamoutatsumi/dps-ghosttext.vim", { if: $GHOST_TEXT_AVAILABLE ==# "1" })
-  kg8m#plugin#ghosttext#Configure()
+  kg8m#plugin#Configure({
+    lazy:    true,
+    on_cmd:  ["GhostStart"],
+    depends: ["denops.vim"],
+    hook_source: function("kg8m#plugin#ghosttext#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("spolu/dwm.vim", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#dwm#Configure()
+  nnoremap <C-w>n       :call DWM_New()<CR>
+  nnoremap <C-w><Space> :call DWM_AutoEnter()<CR>
+
+  kg8m#plugin#Configure({
+    lazy:    true,
+    on_cmd:  ["DWMOpen"],
+    on_func: ["DWM_New", "DWM_AutoEnter", "DWM_Stack"],
+    hook_source:      function("kg8m#plugin#dwm#OnSource"),
+    hook_post_source: function("kg8m#plugin#dwm#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("editorconfig/editorconfig-vim", { if: !kg8m#util#IsGitTmpEdit() && use_editorconfig })
@@ -126,11 +239,57 @@ if kg8m#plugin#Register("editorconfig/editorconfig-vim", { if: !kg8m#util#IsGitT
 endif
 
 if kg8m#plugin#Register("junegunn/fzf.vim", { if: executable("fzf") })
-  kg8m#plugin#fzf#Configure()
+  # See also vim-fzf-tjump's mappings
+  nnoremap <silent> <Leader><Leader>f :call kg8m#plugin#fzf#files#Run()<CR>
+  nnoremap <silent> <Leader><Leader>v :call kg8m#plugin#fzf#git_files#Run()<CR>
+  nnoremap <silent> <Leader><Leader>b :call kg8m#plugin#fzf#buffers#Run()<CR>
+  nnoremap <silent> <Leader><Leader>l :call kg8m#plugin#fzf#buffer_lines#Run()<CR>
+  nnoremap <silent> <Leader><Leader>m :call kg8m#plugin#fzf#marks#Run()<CR>
+  nnoremap <silent> <Leader><Leader>h :call kg8m#plugin#fzf#history#Run()<CR>
+  nnoremap <silent> <Leader><Leader>H :call kg8m#plugin#fzf#helptags#Run()<CR>
+  nnoremap <silent> <Leader><Leader>y :call kg8m#plugin#fzf#yank_history#Run()<CR>
+  nnoremap <silent> <Leader><Leader>g :call kg8m#plugin#fzf#grep#EnterCommand()<CR>
+  xnoremap <silent> <Leader><Leader>g "zy:call kg8m#plugin#fzf#grep#EnterCommand(@z)<CR>
+  xnoremap <silent> <Leader><Leader>G "zy:call kg8m#plugin#fzf#grep#EnterCommand(@z, #{ word_boundary: v:true })<CR>
+  noremap  <silent> <Leader><Leader>s <Cmd>call kg8m#plugin#fzf#shortcuts#Run("")<CR>
+  noremap  <silent> <Leader><Leader>a <Cmd>call kg8m#plugin#fzf#shortcuts#Run("SimpleAlign ")<CR>
+  nnoremap <silent> <Leader><Leader>[ :call kg8m#plugin#fzf#jumplist#Back()<CR>
+  nnoremap <silent> <Leader><Leader>] :call kg8m#plugin#fzf#jumplist#Forward()<CR>
+  nnoremap <silent> <Leader><Leader>r :call kg8m#plugin#fzf#rails#EnterCommand()<CR>
+
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_start: true,
+    depends:  ["fzf"],
+    hook_source: function("kg8m#plugin#fzf#OnSource"),
+  })
+
+  # Add to runtimepath (and use its Vim scripts) but don't use its binary.
+  # Use fzf binary already installed instead.
+  kg8m#plugin#Register("junegunn/fzf", { lazy: true })
+
+  if kg8m#plugin#Register("kg8m/vim-fzf-tjump")
+    nnoremap <Leader><Leader>t :FzfTjump<Space>
+    xnoremap <Leader><Leader>t "zy:FzfTjump<Space><C-r>z
+
+    map g] <Plug>(fzf-tjump)
+
+    kg8m#plugin#Configure({
+      lazy:    true,
+      on_cmd:  "FzfTjump",
+      on_map:  { nx: "<Plug>(fzf-tjump)" },
+      depends: ["fzf.vim", "vim-parallel-auto-ctags"],
+      hook_source: function("kg8m#plugin#fzf_tjump#OnSource"),
+    })
+  endif
 endif
 
 if kg8m#plugin#Register("lambdalisue/gin.vim", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#gin#Configure()
+  kg8m#plugin#Configure({
+    lazy:    true,
+    on_cmd:  ["GinEdit", "GinPatch"],
+    depends: ["denops.vim"],
+  })
 endif
 
 if kg8m#plugin#Register("tweekmonster/helpful.vim")
@@ -141,7 +300,11 @@ if kg8m#plugin#Register("tweekmonster/helpful.vim")
 endif
 
 if kg8m#plugin#Register("Yggdroot/indentLine", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#indent_line#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_start: true,
+    hook_source: function("kg8m#plugin#indent_line#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("othree/javascript-libraries-syntax.vim", { if: !kg8m#util#IsGitTmpEdit() })
@@ -149,15 +312,30 @@ if kg8m#plugin#Register("othree/javascript-libraries-syntax.vim", { if: !kg8m#ut
 endif
 
 if kg8m#plugin#Register("fuenor/JpFormat.vim")
-  kg8m#plugin#jpformat#Configure()
+  kg8m#plugin#Configure({
+    lazy:   true,
+    on_map: { x: "gq" },
+    hook_source: function("kg8m#plugin#jpformat#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("cohama/lexima.vim")
-  kg8m#plugin#lexima#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_event: ["InsertEnter"],
+    on_start: true,
+    hook_source:      function("kg8m#plugin#lexima#OnSource"),
+    hook_post_source: function("kg8m#plugin#lexima#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("itchyny/lightline.vim")
-  kg8m#plugin#lightline#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_start: true,
+    hook_source:      function("kg8m#plugin#lightline#OnSource"),
+    hook_post_source: function("kg8m#plugin#lightline#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("AndrewRadev/linediff.vim")
@@ -173,11 +351,21 @@ endif
 kg8m#plugin#Register("kg8m/moin.vim")
 
 if kg8m#plugin#Register("lambdalisue/mr.vim", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#mr#Configure()
+  g:mr_mrw_disabled = true
+  g:mr_mrr_disabled = true
+  g:mr#threshold = 10'000
+  g:mr#mru#filename = $"{$XDG_DATA_HOME}/vim/mr/mru"
+  g:mr#mru#predicates = [function("kg8m#plugin#mr#Predicate")]
 endif
 
 if kg8m#plugin#Register("tyru/open-browser.vim")
-  kg8m#plugin#open_browser#Configure()
+  map <Leader>o <Plug>(openbrowser-open)
+
+  kg8m#plugin#Configure({
+    lazy:   true,
+    on_map: { nx: "<Plug>(openbrowser-open)" },
+    hook_source: function("kg8m#plugin#open_browser#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("tyru/operator-camelize.vim")
@@ -191,7 +379,11 @@ if kg8m#plugin#Register("tyru/operator-camelize.vim")
 endif
 
 if kg8m#plugin#Register("yssl/QFEnter")
-  kg8m#plugin#qfenter#Configure()
+  kg8m#plugin#Configure({
+    lazy:  true,
+    on_ft: "qf",
+    hook_source: function("kg8m#plugin#qfenter#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("stefandtw/quickfix-reflector.vim")
@@ -263,7 +455,11 @@ if kg8m#plugin#Register("mbbill/undotree")
 endif
 
 if kg8m#plugin#Register("Shougo/unite.vim", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#unite#Configure()
+  kg8m#plugin#Configure({
+    lazy:   true,
+    on_cmd: "Unite",
+    hook_source: function("kg8m#plugin#unite#OnSource"),
+  })
 endif
 
 # Legacy Vim script version for my development.
@@ -276,21 +472,47 @@ if kg8m#plugin#Register("kg8m/vim-simple-align", { rev: "vim9" })
 endif
 
 if kg8m#plugin#Register("FooSoft/vim-argwrap", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#argwrap#Configure()
+  nnoremap <Leader>a :ArgWrap<CR>
+
+  kg8m#plugin#Configure({
+    lazy:   true,
+    on_cmd: "ArgWrap",
+    hook_source: function("kg8m#plugin#argwrap#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("haya14busa/vim-asterisk")
-  kg8m#plugin#asterisk#Configure()
+  map <expr> *  kg8m#plugin#asterisk#WithNotify("<Plug>(asterisk-z*)")
+  map <expr> #  kg8m#plugin#asterisk#WithNotify("<Plug>(asterisk-z#)")
+  map <expr> g* kg8m#plugin#asterisk#WithNotify("<Plug>(asterisk-gz*)")
+  map <expr> g# kg8m#plugin#asterisk#WithNotify("<Plug>(asterisk-gz#)")
+
+  kg8m#plugin#Configure({
+    lazy:   true,
+    on_map: { nx: "<Plug>(asterisk-" },
+  })
 endif
 
 kg8m#plugin#Register("h1mesuke/vim-benchmark")
 
 if kg8m#plugin#Register("jkramer/vim-checkbox", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#checkbox#Configure()
+  augroup vimrc-plugin-checkbox
+    autocmd!
+    autocmd FileType markdown,moin noremap <buffer> <Leader>c :call kg8m#plugin#checkbox#Run()<CR>
+  augroup END
+
+  kg8m#plugin#Configure({
+    lazy: true,
+  })
 endif
 
 if kg8m#plugin#Register("alvan/vim-closetag")
-  kg8m#plugin#closetag#Configure()
+  kg8m#plugin#Configure({
+    lazy:  true,
+    on_ft: g:kg8m#plugin#closetag#filetypes,
+    hook_source:      function("kg8m#plugin#closetag#OnSource"),
+    hook_post_source: function("kg8m#plugin#closetag#OnPostSource"),
+  })
 endif
 
 kg8m#plugin#Register("hail2u/vim-css3-syntax", { if: !kg8m#util#IsGitTmpEdit() })
@@ -303,7 +525,7 @@ if kg8m#plugin#Register("vim-denops/denops.vim", { lazy: true, on_start: true })
   endif
 endif
 
-if kg8m#plugin#Register("kg8m/vim-detect-indent", { if: !kg8m#util#IsGitTmpEdit() && !use_editorconfig })
+if kg8m#plugin#Register("kg8m/vim-detect-indent", { lazy: true, on_start: true, if: !kg8m#util#IsGitTmpEdit() && !use_editorconfig })
   g:detect_indent#detect_once      = false
   g:detect_indent#ignore_filetypes = ["", "gitcommit", "startify"]
 
@@ -330,11 +552,20 @@ kg8m#plugin#Register("thinca/vim-ft-diff_fold")
 kg8m#plugin#Register("thinca/vim-ft-help_fold")
 
 if kg8m#plugin#Register("muz/vim-gemfile")
-  kg8m#plugin#gemfile#Configure()
+  augroup vimrc-plugin-gemfile
+    autocmd!
+
+    # Execute lazily for overwriting default configs.
+    autocmd FileType Gemfile timer_start(100, (_) => kg8m#plugin#gemfile#SetupBuffer())
+  augroup END
 endif
 
 if kg8m#plugin#Register("kana/vim-gf-user")
-  kg8m#plugin#gf_user#Configure()
+  gf#user#extend("kg8m#plugin#gf_user#VimAutoload", 1000)
+
+  if kg8m#util#OnRailsDir()
+    gf#user#extend("kg8m#plugin#gf_user#RailsFiles", 1000)
+  endif
 endif
 
 if kg8m#plugin#Register("tpope/vim-git", { if: kg8m#util#IsGitCommit() })
@@ -349,11 +580,20 @@ endif
 kg8m#plugin#Register("tpope/vim-haml")
 
 if kg8m#plugin#Register("itchyny/vim-histexclude")
-  kg8m#plugin#histexclude#Configure()
+  nnoremap <expr> : kg8m#plugin#histexclude#Run()
+
+  kg8m#plugin#Configure({
+    lazy: true,
+    hook_source: function("kg8m#plugin#histexclude#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("obcat/vim-hitspop")
-  kg8m#plugin#hitspop#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_start: true,
+    hook_source: function("kg8m#plugin#hitspop#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("git@github.com:kg8m/vim-hz_ja-extracted")
@@ -385,17 +625,32 @@ endif
 kg8m#plugin#Register("MaxMEllon/vim-jsx-pretty")
 
 if kg8m#plugin#Register("andymass/vim-matchup")
-  kg8m#plugin#matchup#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_start: true,
+    hook_source: function("kg8m#plugin#matchup#OnSource"),
+  })
 endif
 
 if kg8m#plugin#Register("mattn/vim-molder", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#molder#Configure()
+  nnoremap <silent> <Leader>e :call kg8m#plugin#molder#Run()<CR>
+
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_start: true,
+    hook_source: function("kg8m#plugin#molder#OnSource"),
+  })
 endif
 
 kg8m#plugin#Register("kana/vim-operator-user")
 
 if kg8m#plugin#Register("kg8m/vim-parallel-auto-ctags", { if: kg8m#util#IsCtagsAvailable() && !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#parallel_auto_ctags#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_start: true,
+    hook_source:      function("kg8m#plugin#parallel_auto_ctags#OnSource"),
+    hook_post_source: function("kg8m#plugin#parallel_auto_ctags#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("thinca/vim-prettyprint", { if: !kg8m#util#IsGitTmpEdit() })
@@ -419,7 +674,20 @@ if kg8m#plugin#Register("lambdalisue/vim-protocol", { if: !kg8m#util#IsGitTmpEdi
 endif
 
 if kg8m#plugin#Register("tpope/vim-rails", { if: !kg8m#util#IsGitTmpEdit() && kg8m#util#OnRailsDir() })
-  kg8m#plugin#rails#Configure()
+  if !has_key(g:, "rails_path_additions")
+    g:rails_path_additions = []
+  endif
+
+  if isdirectory("spec/support")
+    g:rails_path_additions += [
+      "spec/support",
+    ]
+  endif
+
+  # Don't load lazily because some features don't work.
+  kg8m#plugin#Configure({
+    lazy: false,
+  })
 endif
 
 kg8m#plugin#Register("tpope/vim-repeat")
@@ -443,19 +711,42 @@ if kg8m#plugin#Register("vim-ruby/vim-ruby")
 endif
 
 if kg8m#plugin#Register("joker1007/vim-ruby-heredoc-syntax", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#ruby_heredoc_syntax#Configure()
+  kg8m#plugin#Configure({
+    lazy:  true,
+    on_ft: "ruby",
+    hook_source: function("kg8m#plugin#ruby_heredoc_syntax#OnSource"),
+  })
 endif
 
 # Text object for surrounded by a bracket-pair or same characters: S + {user input}
 if kg8m#plugin#Register("machakann/vim-sandwich")
-  kg8m#plugin#sandwich#Configure()
+  kg8m#plugin#sandwich#DefineMappings()
+
+  kg8m#plugin#Configure({
+    lazy:   true,
+    on_map: { nx: "<Plug>(operator-sandwich-", o: "<Plug>(textobj-sandwich-" },
+    hook_source:      function("kg8m#plugin#sandwich#OnSource"),
+    hook_post_source: function("kg8m#plugin#sandwich#OnPostSource"),
+  })
 endif
 
 kg8m#plugin#Register("arzg/vim-sh")
 kg8m#plugin#Register("slim-template/vim-slim")
 
 if kg8m#plugin#Register("mhinz/vim-startify", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#startify#Configure()
+  if argc() ># 0
+    # `on_event: "BufWritePre"` for `SaveSession()`: Load startify before writing buffer (on `BufWritePre`) and
+    # register autocmd for `BufWritePost`
+    kg8m#plugin#Configure({
+      lazy:     true,
+      on_cmd:   "Startify",
+      on_event: "BufWritePre",
+      hook_source:      function("kg8m#plugin#startify#OnSource"),
+      hook_post_source: function("kg8m#plugin#startify#OnPostSource"),
+    })
+  else
+    kg8m#plugin#startify#Setup()
+  endif
 endif
 
 if kg8m#plugin#Register("kopischke/vim-stay", { if: !kg8m#util#IsGitCommit() })
@@ -470,7 +761,14 @@ endif
 kg8m#plugin#Register("hashivim/vim-terraform")
 
 if kg8m#plugin#Register("janko/vim-test", { if: !kg8m#util#IsGitTmpEdit() })
-  kg8m#plugin#test#Configure()
+  nnoremap <Leader>T :write<CR>:TestFile<CR>
+  nnoremap <Leader>t :write<CR>:TestNearest<CR>
+
+  kg8m#plugin#Configure({
+    lazy:   true,
+    on_cmd: ["TestFile", "TestNearest"],
+    hook_source: function("kg8m#plugin#test#OnSource"),
+  })
 endif
 
 # Text object for indentation: i
@@ -496,7 +794,17 @@ kg8m#plugin#Register("mattn/vim-treesitter", { if: false })
 kg8m#plugin#Register("posva/vim-vue")
 
 if kg8m#plugin#Register("thinca/vim-zenspace")
-  kg8m#plugin#zenspace#Configure()
+  augroup vimrc-plugin-zenspace
+    autocmd!
+    autocmd ColorScheme * highlight ZenSpace gui=underline guibg=DarkGray guifg=DarkGray
+  augroup END
+
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_start: true,
+    hook_source:      function("kg8m#plugin#zenspace#OnSource"),
+    hook_post_source: function("kg8m#plugin#zenspace#OnPostSource"),
+  })
 endif
 
 if kg8m#plugin#Register("monkoose/vim9-stargate")
@@ -545,12 +853,21 @@ if kg8m#plugin#Register("jonsmithers/vim-html-template-literals", { if: !kg8m#ut
 endif
 
 if kg8m#plugin#Register("LeafCage/yankround.vim")
-  kg8m#plugin#yankround#Configure()
+  kg8m#plugin#Configure({
+    lazy:     true,
+    on_start: true,
+    hook_source: function("kg8m#plugin#yankround#OnSource"),
+  })
 endif
 
 # Colorschemes
 if kg8m#plugin#Register("tomasr/molokai")
-  kg8m#plugin#molokai#Configure()
+  g:molokai_original = true
+
+  augroup vimrc-plugin-molokai
+    autocmd!
+    autocmd ColorScheme molokai kg8m#plugin#molokai#Overwrite()
+  augroup END
 endif
 # }}}
 

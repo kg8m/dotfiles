@@ -1,13 +1,14 @@
 vim9script
 
-export def Configure(): void
-  nnoremap <Leader>a :ArgWrap<CR>
+export def OnSource(): void
+  g:argwrap_padded_braces = "{"
 
-  kg8m#plugin#Configure({
-    lazy:   true,
-    on_cmd: "ArgWrap",
-    hook_source: () => OnSource(),
-  })
+  augroup vimrc-plugin-argwrap
+    autocmd!
+    autocmd FileType * SetLocalOptions()
+  augroup END
+
+  SetLocalOptions()
 enddef
 
 def SetLocalOptions(): void
@@ -24,15 +25,4 @@ def SetLocalOptions(): void
       b:argwrap_line_prefix = '\ '
     endif
   endif
-enddef
-
-def OnSource(): void
-  g:argwrap_padded_braces = "{"
-
-  augroup vimrc-plugin-argwrap
-    autocmd!
-    autocmd FileType * SetLocalOptions()
-  augroup END
-
-  SetLocalOptions()
 enddef

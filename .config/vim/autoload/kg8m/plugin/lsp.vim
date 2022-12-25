@@ -10,17 +10,47 @@ g:kg8m#plugin#lsp#icons = {
   action:      "🔧",
 }
 
-export def Configure(): void
-  kg8m#plugin#lsp#servers#Register()
+export def OnSource(): void
+  g:lsp_diagnostics_echo_cursor                    = false
+  g:lsp_diagnostics_enabled                        = true
+  g:lsp_diagnostics_float_cursor                   = true
+  g:lsp_diagnostics_highlights_insert_mode_enabled = false
+  g:lsp_diagnostics_signs_insert_mode_enabled      = false
+  g:lsp_fold_enabled                               = false
+  g:lsp_inlay_hints_enabled                        = $LSP_INLAY_HINTS_ENABLED ==# "1"  # a little noisy to me
+  g:lsp_semantic_enabled                           = $LSP_SEMANTIC_ENABLED ==# "1"     # a little loud to me
 
-  kg8m#plugin#Configure({
-    lazy:  true,
-    on_ft: kg8m#plugin#lsp#servers#Filetypes(),
-    hook_source: () => OnSource(),
-  })
+  g:lsp_diagnostics_signs_error         = { text: g:kg8m#plugin#lsp#icons.error }
+  g:lsp_diagnostics_signs_warning       = { text: g:kg8m#plugin#lsp#icons.warning }
+  g:lsp_diagnostics_signs_information   = { text: g:kg8m#plugin#lsp#icons.information }
+  g:lsp_diagnostics_signs_hint          = { text: g:kg8m#plugin#lsp#icons.hint }
+  g:lsp_document_code_action_signs_hint = { text: g:kg8m#plugin#lsp#icons.action }
 
-  kg8m#plugin#Register("mattn/vim-lsp-settings", { if: false, merged: false })
-  kg8m#plugin#Register("tsuyoshicho/vim-efm-langserver-settings", { if: false, merged: false })
+  # Prevent signs for code actions from hiding error/warning signs.
+  g:lsp_diagnostics_signs_priority     = 10  # (Default)
+  g:lsp_diagnostics_signs_priority_map = {
+    LspError:   g:lsp_diagnostics_signs_priority + 2,
+    LspWarning: g:lsp_diagnostics_signs_priority + 1,
+  }
+
+  g:lsp_async_completion = true
+
+  # Usually disable vim-lsp's logging because it makes Vim slower.
+  # g:lsp_log_file = expand("~/tmp/vim-lsp.log")
+
+  kg8m#plugin#lsp#popup#Setup()
+
+  augroup vimrc-plugin-lsp
+    autocmd!
+    autocmd User lsp_setup          kg8m#plugin#lsp#stream#Subscribe()
+    autocmd User lsp_buffer_enabled OnLspBufferEnabled()
+    autocmd User lsp_server_exit    OnLspBufferEnabled()
+
+    autocmd FileType * ResetTargetBuffer()
+
+    autocmd FileType lsp-quickpick-filter kg8m#plugin#completion#Disable()
+    autocmd FileType lsp-quickpick-filter kg8m#plugin#mappings#i#Disable()
+  augroup END
 enddef
 
 export def IsTargetBuffer(): bool
@@ -93,47 +123,4 @@ def IsDefinitionSupported(): bool
   endfor
 
   return false
-enddef
-
-def OnSource(): void
-  g:lsp_diagnostics_echo_cursor                    = false
-  g:lsp_diagnostics_enabled                        = true
-  g:lsp_diagnostics_float_cursor                   = true
-  g:lsp_diagnostics_highlights_insert_mode_enabled = false
-  g:lsp_diagnostics_signs_insert_mode_enabled      = false
-  g:lsp_fold_enabled                               = false
-  g:lsp_inlay_hints_enabled                        = $LSP_INLAY_HINTS_ENABLED ==# "1"  # a little noisy to me
-  g:lsp_semantic_enabled                           = $LSP_SEMANTIC_ENABLED ==# "1"     # a little loud to me
-
-  g:lsp_diagnostics_signs_error         = { text: g:kg8m#plugin#lsp#icons.error }
-  g:lsp_diagnostics_signs_warning       = { text: g:kg8m#plugin#lsp#icons.warning }
-  g:lsp_diagnostics_signs_information   = { text: g:kg8m#plugin#lsp#icons.information }
-  g:lsp_diagnostics_signs_hint          = { text: g:kg8m#plugin#lsp#icons.hint }
-  g:lsp_document_code_action_signs_hint = { text: g:kg8m#plugin#lsp#icons.action }
-
-  # Prevent signs for code actions from hiding error/warning signs.
-  g:lsp_diagnostics_signs_priority     = 10  # (Default)
-  g:lsp_diagnostics_signs_priority_map = {
-    LspError:   g:lsp_diagnostics_signs_priority + 2,
-    LspWarning: g:lsp_diagnostics_signs_priority + 1,
-  }
-
-  g:lsp_async_completion = true
-
-  # Usually disable vim-lsp's logging because it makes Vim slower.
-  # g:lsp_log_file = expand("~/tmp/vim-lsp.log")
-
-  kg8m#plugin#lsp#popup#Setup()
-
-  augroup vimrc-plugin-lsp
-    autocmd!
-    autocmd User lsp_setup          kg8m#plugin#lsp#stream#Subscribe()
-    autocmd User lsp_buffer_enabled OnLspBufferEnabled()
-    autocmd User lsp_server_exit    OnLspBufferEnabled()
-
-    autocmd FileType * ResetTargetBuffer()
-
-    autocmd FileType lsp-quickpick-filter kg8m#plugin#completion#Disable()
-    autocmd FileType lsp-quickpick-filter kg8m#plugin#mappings#i#Disable()
-  augroup END
 enddef

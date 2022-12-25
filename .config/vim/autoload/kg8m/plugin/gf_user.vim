@@ -1,13 +1,5 @@
 vim9script
 
-export def Configure(): void
-  gf#user#extend("kg8m#plugin#gf_user#VimAutoload", 1000)
-
-  if kg8m#util#OnRailsDir()
-    gf#user#extend("kg8m#plugin#gf_user#RailsFiles", 1000)
-  endif
-enddef
-
 export def VimAutoload(): any
   if &filetype !=# "vim"
     return 0

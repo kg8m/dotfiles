@@ -9,14 +9,6 @@ const IGNORE_PATTERNS = [
   $'\V\^{SESSIONS_BASEDIR_PATH}/\.\+/{SESSION_NAME_PATTERN}',
 ]
 
-export def Configure(): void
-  g:mr_mrw_disabled = true
-  g:mr_mrr_disabled = true
-  g:mr#threshold = 10'000
-  g:mr#mru#filename = $"{$XDG_DATA_HOME}/vim/mr/mru"
-  g:mr#mru#predicates = [Predicate]
-enddef
-
-def Predicate(filepath: string): bool
+export def Predicate(filepath: string): bool
   return kg8m#util#list#All(IGNORE_PATTERNS, (pattern) => filepath !~# pattern)
 enddef

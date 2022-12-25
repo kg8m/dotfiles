@@ -1,15 +1,11 @@
 vim9script
 
-export def Configure(): void
-  map <expr> gc Run()
-
-  kg8m#plugin#Configure({
-    lazy: true,
-    hook_source: () => OnSource(),
-  })
+export def OnSource(): void
+  g:caw_no_default_keymappings = true
+  g:caw_hatpos_skip_blank_line = true
 enddef
 
-def Run(): string
+export def Run(): string
   if !kg8m#plugin#IsSourced("caw.vim")
     kg8m#plugin#Source("caw.vim")
 
@@ -100,9 +96,4 @@ export def Teardown(): void
 
     unlet b:caw_context_filetype_original_filetypes
   endif
-enddef
-
-def OnSource(): void
-  g:caw_no_default_keymappings = true
-  g:caw_hatpos_skip_blank_line = true
 enddef

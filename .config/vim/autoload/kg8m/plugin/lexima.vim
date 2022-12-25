@@ -2,14 +2,26 @@ vim9script
 
 var queue_on_post_source: list<func>
 
-export def Configure(): void
-  kg8m#plugin#Configure({
-    lazy:     true,
-    on_event: ["InsertEnter"],
-    on_start: true,
-    hook_source:      () => OnSource(),
-    hook_post_source: () => OnPostSource(),
-  })
+export def OnSource(): void
+  g:lexima_enable_endwise_rules = false
+enddef
+
+export def OnPostSource(): void
+  queue_on_post_source = [
+    # Delay for performance.
+    () => AddCommonRules(),
+    () => AddRulesForEruby(),
+    () => AddRulesForHtml(),
+    () => AddRulesForJs(),
+    () => AddRulesForTs(),
+    () => AddRulesForMarkdown(),
+    () => AddRulesForVim(),
+
+    # Overwrite lexima.vim's default mapping.
+    () => kg8m#events#NotifyInsertModePluginLoaded(),
+  ]
+
+  DequeueOnPostSource()
 enddef
 
 def AddCommonRules(): void
@@ -314,27 +326,5 @@ enddef
 
 def CallbackProxyOnPostSource(Callback: func): void
   Callback()
-  DequeueOnPostSource()
-enddef
-
-def OnSource(): void
-  g:lexima_enable_endwise_rules = false
-enddef
-
-def OnPostSource(): void
-  queue_on_post_source = [
-    # Delay for performance.
-    () => AddCommonRules(),
-    () => AddRulesForEruby(),
-    () => AddRulesForHtml(),
-    () => AddRulesForJs(),
-    () => AddRulesForTs(),
-    () => AddRulesForMarkdown(),
-    () => AddRulesForVim(),
-
-    # Overwrite lexima.vim's default mapping.
-    () => kg8m#events#NotifyInsertModePluginLoaded(),
-  ]
-
   DequeueOnPostSource()
 enddef

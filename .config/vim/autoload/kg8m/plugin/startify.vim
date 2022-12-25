@@ -7,38 +7,15 @@ const SESSION_FILENAME_FORMAT = "session:%s"
 
 g:kg8m#plugin#startify#sessions_basedir_path = SESSIONS_BASEDIR_PATH
 
-export def Configure(): void
-  if argc() ># 0
-    # `on_event: "BufWritePre"` for `SaveSession()`: Load startify before writing buffer (on `BufWritePre`) and
-    # register autocmd for `BufWritePost`
-    kg8m#plugin#Configure({
-      lazy:     true,
-      on_cmd:   "Startify",
-      on_event: "BufWritePre",
-      hook_source:      () => OnSource(),
-      hook_post_source: () => OnPostSource(),
-    })
-  else
-    Setup()
-  endif
+export def OnSource(): void
+  Setup()
 enddef
 
-export def SessionFilename(target_filepath: string = kg8m#util#file#CurrentRelativePath()): string
-  const sanitized_filepath = target_filepath->substitute("/", "+=", "g")
-  return printf(SESSION_FILENAME_FORMAT, sanitized_filepath)
+export def OnPostSource(): void
+  OverwriteColors()
 enddef
 
-export def AddToSessionSavevar(varname: string): void
-  if !has_key(g:, "startify_session_savevars")
-    g:startify_session_savevars = []
-  endif
-
-  if !kg8m#util#list#Includes(g:startify_session_savevars, varname)
-    add(g:startify_session_savevars, varname)
-  endif
-enddef
-
-def Setup(): void
+export def Setup(): void
   set sessionoptions=buffers,folds
 
   g:startify_session_autoload    = false
@@ -105,6 +82,21 @@ def Setup(): void
   augroup END
 enddef
 
+export def SessionFilename(target_filepath: string = kg8m#util#file#CurrentRelativePath()): string
+  const sanitized_filepath = target_filepath->substitute("/", "+=", "g")
+  return printf(SESSION_FILENAME_FORMAT, sanitized_filepath)
+enddef
+
+export def AddToSessionSavevar(varname: string): void
+  if !has_key(g:, "startify_session_savevars")
+    g:startify_session_savevars = []
+  endif
+
+  if !kg8m#util#list#Includes(g:startify_session_savevars, varname)
+    add(g:startify_session_savevars, varname)
+  endif
+enddef
+
 def OverwriteColors(): void
   highlight StartifyFile   guifg=#FFFFFF
   highlight StartifyHeader guifg=#FFFFFF
@@ -147,12 +139,4 @@ def DeleteLastSessionLink(): void
   if !empty(glob(filepath, false, false, true))
     delete(filepath)
   endif
-enddef
-
-def OnSource(): void
-  Setup()
-enddef
-
-def OnPostSource(): void
-  OverwriteColors()
 enddef
