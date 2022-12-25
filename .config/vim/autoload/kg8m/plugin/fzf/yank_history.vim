@@ -6,6 +6,8 @@ kg8m#plugin#EnsureSourced("fzf.vim")
 # Also see configs for yankround.vim
 
 export def Run(): void
+  const preview_height = max([10, &lines - 60])
+
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
     source:  Candidates(),
@@ -19,7 +21,7 @@ export def Run(): void
       # Use `echo -E` to show backslashes.
       "--preview", "echo -E {} | sd '^ *[0-9]+\t' '' | sd '\\\\n' '\n'",
 
-      "--preview-window", "down:10:wrap:nohidden",
+      "--preview-window", $"down:{preview_height}:wrap:nohidden",
     ],
   }
 
