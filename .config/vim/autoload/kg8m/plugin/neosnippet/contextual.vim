@@ -38,15 +38,19 @@ def SetupContexts(): void
     return
   endif
 
+  const all_prepends = get(g:, "neosnippet_contextual_prepends", {})
+  const ft_prepends  = get(all_prepends, &filetype, [])
+  contexts[&filetype] = ft_prepends
+
   if &filetype ==# "ruby"
-    SetupContextsForRuby()
+    contexts[&filetype] += ContextsForRuby()
   endif
 enddef
 
-def SetupContextsForRuby(): void
+def ContextsForRuby(): list<dict<any>>
   if kg8m#util#OnRailsDir()
     const common = ["ruby-rails.snip"]
-    contexts.ruby = [
+    return [
       { pattern: '\.html\.erb$',     snippets: common + ["html.snip", "javascript.snip"] },
       { pattern: '\.js\.erb$',       snippets: common + ["javascript.snip"] },
       { pattern: '^app/controllers', snippets: common + ["ruby-rails-controller.snip"] },
@@ -57,7 +61,7 @@ def SetupContextsForRuby(): void
       { pattern: '.',                snippets: common },
     ]
   else
-    contexts.ruby = [
+    return [
       { pattern: '_test\.rb$', snippets: ["ruby-minitest.snip"] },
       { pattern: '_spec\.rb$', snippets: ["ruby-rspec.snip"] },
     ]
