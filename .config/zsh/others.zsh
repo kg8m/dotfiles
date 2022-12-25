@@ -5,6 +5,8 @@ function plugin:others:setup {
 
   # Don't use zinit's options like `as"command" pick"bin/themis"` because it makes the `$PATH` longer and longer. Make
   # symbolic links in `${HOME}/bin` instead.
+  #
+  # shellcheck disable=SC2317
   function plugin:vim:themis:atclone {
     local binary="bin/themis"
 

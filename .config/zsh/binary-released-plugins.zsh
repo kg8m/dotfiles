@@ -41,6 +41,8 @@ function plugin:setup:binary_releaseds {
 
   # Don't use zinit's options like `as"command" mv"${plugin}* -> ${plugin}" pick"${plugin}/${plugin}"` because it
   # makes the `$PATH` longer and longer. Make symbolic links in `${HOME}/bin` instead.
+  #
+  # shellcheck disable=SC2317
   function plugin:binary_released:atclone {
     local repository="${1:?}"
     local plugin="${2:?}"
@@ -201,6 +203,7 @@ zinit ice lucid nocd wait"0c" atload"plugin:setup:binary_releaseds"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-setup-binary_releaseds"
 
 function plugin:mocword:atload {
+  # shellcheck disable=SC2317
   function plugin:mocword:data:atclone {
     # cf. exporting MOCWORD_DATA in .zshenv
     mkdir -p "$(dirname "${MOCWORD_DATA:?}")"

@@ -1,4 +1,5 @@
 function plugin:tmux:plugins {
+  # shellcheck disable=SC2317
   function plugin:tmux:plugins:atclone {
     local plugin_name="$(basename "$1")"
     local plugins_dirpath="${XDG_DATA_HOME:?}/tmux/plugins"

@@ -12,6 +12,7 @@ function plugin:direnv:atload {
     # https://github.com/direnv/direnv/blob/a4632773637ee1a6b08fa81043cacd24ea941489/shell_zsh.go#L12
     eval "$(direnv export zsh)"
   else
+    # shellcheck disable=SC2317
     function plugin:direnv:not_installed_error {
       if [ -f .envrc ]; then
         echo:warn ".envrc exists but direnv isn't installed."

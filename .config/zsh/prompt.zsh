@@ -13,6 +13,7 @@ function() {
 
   export PROMPT_HEADER_CACHE_FILEPATH="${KG8M_ZSH_CACHE_DIR:?}/prompt_header.$$"
 
+  # shellcheck disable=SC2317
   function prompt:header:render {
     if [ -f "${PROMPT_HEADER_CACHE_FILEPATH}" ]; then
       cat "${PROMPT_HEADER_CACHE_FILEPATH}"
@@ -21,6 +22,7 @@ function() {
     fi
   }
 
+  # shellcheck disable=SC2317
   function prompt:header:build {
     local timestamp="$(date +'%m/%d %H:%M')"
     local timestamp_width="${#timestamp}"
@@ -31,12 +33,15 @@ function() {
     printf "%s %s" "${(r:${line_width}::-:)}" "${timestamp}" > "${PROMPT_HEADER_CACHE_FILEPATH}"
   }
 
+  # shellcheck disable=SC2317
   function prompt:header:lazy_build {
     sleep 0.2
     prompt:header:build "$@"
   }
 
   # Refresh prompt at any widget triggered/executed
+  #
+  # shellcheck disable=SC2317
   function prompt:refresh:setup {
     export PROMPT_REFRESHER_WORKER_NAME="PROMPT_REFRESHER_$$"
     export GIT_PROMPT_REFRESHER_WORKER_NAME="GIT_PROMPT_REFRESHER_$$"
