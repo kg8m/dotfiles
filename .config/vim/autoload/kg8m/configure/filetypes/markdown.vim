@@ -18,8 +18,34 @@ export def Run(): void
 
   augroup vimrc-configure-filetypes-markdown
     autocmd!
+    autocmd Syntax markdown Syntax()
     autocmd SafeState * FixIskeyword()
   augroup END
+enddef
+
+def Syntax(): void
+  # Support highlighting fenced code blocks in quoteblocks as follows:
+  #
+  #   > ```
+  #   > something
+  #   > ```
+  #
+  # https://github.com/vim/vim/blob/e86190e7c1297da29d0fc2415fdeca5ecae8d2ba/runtime/syntax/markdown.vim#L123
+  syntax region markdownCodeBlock matchgroup=markdownCodeDelimiter start="^\z(\%(>\|\s\)\+\s*`\{3,\}\).*$" end="^\z1\s*\ze\s*$" keepend
+
+  # Support highlighting fenced code block languages in quoteblocks as follows:
+  #
+  #   > ```vim
+  #   > autocmd SomeEvent some_filetype SomeFunction()
+  #   > ```
+  #
+  for type in g:markdown_fenced_languages
+    # https://github.com/vim/vim/blob/e86190e7c1297da29d0fc2415fdeca5ecae8d2ba/runtime/syntax/markdown.vim#L134
+    execute 'syntax region markdownHighlight_' .. substitute(matchstr(type, '[^=]*$'), '\..*', '', '') .. ' matchgroup=markdownCodeDelimiter start="^\z(\%(>\|\s\)\+\s*`\{3,\}\)\s*\%({.\{-}\.\)\=' .. matchstr(type, '[^=]*') .. '}\=\S\@!.*$" end="^\s*\z1\ze\s*$" keepend contains=@markdownHighlight_' .. tr(matchstr(type, '[^=]*$'), '.', '_')
+  endfor
+
+  # Support highlighting inline codes.
+  highlight def link markdownCode String
 enddef
 
 def FixIskeyword(): void
