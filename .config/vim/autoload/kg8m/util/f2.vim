@@ -163,18 +163,19 @@ def BuildPattern(): string
 enddef
 
 def InputToSmartcasePattern(original_full_input: string): string
-  const BuildFullPattern =
-    (input1: string, input2: string) => printf('\V%s%s\m', escape(input1, "\\"), escape(input2, "\\"))
+  const input1 = escape(original_full_input[0], "\\")
+  const input2 = escape(original_full_input[1], "\\")
+  const BuildFullPattern = (pattern1: string, pattern2: string) => printf('\V%s%s\m', pattern1, pattern2)
 
   if original_full_input =~# '\u'
-    return BuildFullPattern(original_full_input[0], original_full_input[1])
+    return BuildFullPattern(input1, input2)
   else
     const BuildCaseInsensitivePattern =
       (input: string) => input =~# '\l' ? printf('\[%s%s]', input, toupper(input)) : input
 
     return BuildFullPattern(
-      BuildCaseInsensitivePattern(original_full_input[0]),
-      BuildCaseInsensitivePattern(original_full_input[1])
+      BuildCaseInsensitivePattern(input1),
+      BuildCaseInsensitivePattern(input2)
     )
   endif
 enddef
