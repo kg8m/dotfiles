@@ -54,6 +54,7 @@ def SetupContextsForRuby(): void
       { pattern: '^db/migrate',      snippets: common + ["ruby-rails-migration.snip"] },
       { pattern: '_spec\.rb$',       snippets: common + ["ruby-rspec.snip", "ruby-rails-rspec.snip"] },
       { pattern: '_test\.rb$',       snippets: common + ["ruby-minitest.snip", "ruby-rails-minitest.snip"] },
+      { pattern: '.',                snippets: common },
     ]
   else
     contexts.ruby = [
