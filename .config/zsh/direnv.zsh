@@ -1,7 +1,7 @@
 function plugin:direnv:atload {
   if command -v direnv > /dev/null; then
     if [ ! -f "${XDG_CACHE_HOME:?}/zsh/direnv_hook.zsh" ]; then
-      direnv hook zsh > "${XDG_CACHE_HOME}/zsh/direnv_hook.zsh"
+      direnv hook zsh > "$(ensure_dir "${XDG_CACHE_HOME}/zsh/direnv_hook.zsh")"
 
       # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
       zcompile "${XDG_CACHE_HOME}/zsh/direnv_hook.zsh"

@@ -3,6 +3,12 @@ function try_to_source {
   [ -f "${filepath}" ] && source "${filepath}"
 }
 
+function ensure_dir {
+  local filepath="${1:?}"
+  mkdir -p "$(dirname "${filepath}")"
+  echo "${filepath}"
+}
+
 # https://wiki.archlinux.org/index.php/XDG_Base_Directory
 export XDG_CONFIG_HOME="${HOME}/.config"     # Where user-specific configurations should be written (analogous to `/etc`).
 export XDG_CACHE_HOME="${HOME}/.cache"       # Where user-specific non-essential (cached) data should be written (analogous to `/var/cache`).
@@ -57,7 +63,7 @@ fi
 
 DIFF_HIGHLIGHT_DIRPATH_CACHE="${XDG_CACHE_HOME}/zsh/diff-highlight-dirpath"
 if [ ! -f "${DIFF_HIGHLIGHT_DIRPATH_CACHE}" ]; then
-  dirname "$(find "${HOMEBREW_PREFIX}" -type f -name diff-highlight)" > "${DIFF_HIGHLIGHT_DIRPATH_CACHE}"
+  dirname "$(find "${HOMEBREW_PREFIX}" -type f -name diff-highlight)" > "$(ensure_dir "${DIFF_HIGHLIGHT_DIRPATH_CACHE}")"
 fi
 path+=("$(cat "${DIFF_HIGHLIGHT_DIRPATH_CACHE}")"(N-/))
 unset DIFF_HIGHLIGHT_DIRPATH_CACHE

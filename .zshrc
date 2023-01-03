@@ -85,8 +85,6 @@ autoload -U zmv
 
 autoload -U add-zsh-hook
 
-mkdir -p "${XDG_CACHE_HOME:?}/zsh"
-
 # Remove duplicated paths
 typeset -U fpath
 

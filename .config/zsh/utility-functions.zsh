@@ -489,7 +489,9 @@ function docker:clear_all {
 }
 
 function zsh:plugins:update {
-  execute_with_echo "trash '${XDG_CACHE_HOME:?}/zsh'"
+  if [ -d "${XDG_CACHE_HOME:?}/zsh" ]; then
+    execute_with_echo "trash '${XDG_CACHE_HOME}/zsh'"
+  fi
   execute_with_echo "mkdir -p '${XDG_CACHE_HOME}/zsh'"
 
   execute_with_echo "zsh:rcs:compile:clear"
@@ -527,9 +529,9 @@ function zsh:rcs:compile {
   zcompile ~/.zshrc
 
   local zsh_dirs=(
-    "${XDG_CONFIG_HOME:?}/zsh"
-    "${XDG_CONFIG_HOME:?}/zsh.local"
-    "${XDG_CACHE_HOME:?}/zsh"
+    "$(ensure_dir "${XDG_CONFIG_HOME:?}/zsh")"
+    "$(ensure_dir "${XDG_CONFIG_HOME:?}/zsh.local")"
+    "$(ensure_dir "${XDG_CACHE_HOME:?}/zsh")"
   )
 
   local zshrc
@@ -543,9 +545,9 @@ function zsh:rcs:compile:clear {
   rm -f ~/.zshrc.zwc
 
   local zsh_dirs=(
-    "${XDG_CONFIG_HOME:?}/zsh"
-    "${XDG_CONFIG_HOME:?}/zsh.local"
-    "${XDG_CACHE_HOME:?}/zsh"
+    "$(ensure_dir "${XDG_CONFIG_HOME:?}/zsh")"
+    "$(ensure_dir "${XDG_CONFIG_HOME:?}/zsh.local")"
+    "$(ensure_dir "${XDG_CACHE_HOME:?}/zsh")"
   )
 
   local zwc

@@ -30,7 +30,7 @@ function() {
     local window_width="${1:-COLUMNS}"
     local line_width="$((window_width - right_margin))"
 
-    printf "%s %s" "${(r:${line_width}::-:)}" "${timestamp}" > "${PROMPT_HEADER_CACHE_FILEPATH}"
+    printf "%s %s" "${(r:${line_width}::-:)}" "${timestamp}" > "$(ensure_dir "${PROMPT_HEADER_CACHE_FILEPATH}")"
   }
 
   # shellcheck disable=SC2317

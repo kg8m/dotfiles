@@ -221,7 +221,7 @@ function plugin:zabrze:reset {
 
 function plugin:zabrze:init {
   if [ ! -f "${XDG_CACHE_HOME:?}/zsh/zabrze_init.zsh" ]; then
-    zabrze init --bind-keys > "${XDG_CACHE_HOME}/zsh/zabrze_init.zsh"
+    zabrze init --bind-keys > "$(ensure_dir "${XDG_CACHE_HOME}/zsh/zabrze_init.zsh")"
 
     # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
     zcompile "${XDG_CACHE_HOME}/zsh/zabrze_init.zsh"
