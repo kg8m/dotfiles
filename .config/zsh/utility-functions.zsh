@@ -523,15 +523,33 @@ function zsh:plugins:update {
 }
 
 function zsh:rcs:compile {
+  zcompile ~/.zshenv
+  zcompile ~/.zshrc
+
+  local zsh_dirs=(
+    "${XDG_CONFIG_HOME:?}/zsh"
+    "${XDG_CONFIG_HOME:?}/zsh.local"
+    "${KG8M_ZSH_CACHE_DIR:?}"
+  )
+
   local zshrc
-  for zshrc in ~/.config/zsh/**/*.zsh ~/.config/zsh.local/*.zsh ~/.zshenv ~/.zshrc "${KG8M_ZSH_CACHE_DIR}"/*.zsh; do
+  command fd --no-ignore --type f --follow '\.zsh$' "${zsh_dirs[@]}" | while read -r zshrc; do
     zcompile "${zshrc}"
   done
 }
 
 function zsh:rcs:compile:clear {
+  rm -f ~/.zshenv.zwc
+  rm -f ~/.zshrc.zwc
+
+  local zsh_dirs=(
+    "${XDG_CONFIG_HOME:?}/zsh"
+    "${XDG_CONFIG_HOME:?}/zsh.local"
+    "${KG8M_ZSH_CACHE_DIR:?}"
+  )
+
   local zwc
-  for zwc in ~/.config/zsh/**/*.zsh.zwc ~/.config/zsh.local/*.zsh.zwc ~/.{zshenv,zshrc}.zwc "${KG8M_ZSH_CACHE_DIR}"/*.zsh.zwc; do
+  command fd --no-ignore --type f '\.zsh\.zwc$' "${zsh_dirs[@]}" | while read -r zwc; do
     rm -f "${zwc}"
   done
 }
