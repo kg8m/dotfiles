@@ -55,9 +55,7 @@ else
   export HOMEBREW_PREFIX="/usr/local"
 fi
 
-export KG8M_ZSH_CACHE_DIR="${XDG_CACHE_HOME}/zsh"
-
-DIFF_HIGHLIGHT_DIRPATH_CACHE="${KG8M_ZSH_CACHE_DIR}/diff-highlight-dirpath"
+DIFF_HIGHLIGHT_DIRPATH_CACHE="${XDG_CACHE_HOME}/zsh/diff-highlight-dirpath"
 if [ ! -f "${DIFF_HIGHLIGHT_DIRPATH_CACHE}" ]; then
   dirname "$(find "${HOMEBREW_PREFIX}" -type f -name diff-highlight)" > "${DIFF_HIGHLIGHT_DIRPATH_CACHE}"
 fi

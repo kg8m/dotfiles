@@ -1,12 +1,12 @@
 function plugin:direnv:atload {
   if command -v direnv > /dev/null; then
-    if [ ! -f "${KG8M_ZSH_CACHE_DIR:?}/direnv_hook.zsh" ]; then
-      direnv hook zsh > "${KG8M_ZSH_CACHE_DIR}/direnv_hook.zsh"
+    if [ ! -f "${XDG_CACHE_HOME:?}/zsh/direnv_hook.zsh" ]; then
+      direnv hook zsh > "${XDG_CACHE_HOME}/zsh/direnv_hook.zsh"
 
       # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
-      zcompile "${KG8M_ZSH_CACHE_DIR}/direnv_hook.zsh"
+      zcompile "${XDG_CACHE_HOME}/zsh/direnv_hook.zsh"
     fi
-    source "${KG8M_ZSH_CACHE_DIR}/direnv_hook.zsh"
+    source "${XDG_CACHE_HOME}/zsh/direnv_hook.zsh"
 
     # Don't cache the result of `direnv export zsh` because it varies depending on each directory's `.envrc`
     # https://github.com/direnv/direnv/blob/a4632773637ee1a6b08fa81043cacd24ea941489/shell_zsh.go#L12

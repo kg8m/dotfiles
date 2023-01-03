@@ -11,7 +11,7 @@ function() {
   export PROMPT="${header}"$'\n'"%B${user} ${current_dir}%b ${git}"$'\n'"${mark}"
   export PROMPT2="%F{green}%_>%f "
 
-  export PROMPT_HEADER_CACHE_FILEPATH="${KG8M_ZSH_CACHE_DIR:?}/prompt_header.$$"
+  export PROMPT_HEADER_CACHE_FILEPATH="${XDG_CACHE_HOME:?}/zsh/prompt_header.$$"
 
   # shellcheck disable=SC2317
   function prompt:header:render {

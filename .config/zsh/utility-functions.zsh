@@ -489,8 +489,8 @@ function docker:clear_all {
 }
 
 function zsh:plugins:update {
-  execute_with_echo "trash '${KG8M_ZSH_CACHE_DIR:?}'"
-  execute_with_echo "mkdir -p '${KG8M_ZSH_CACHE_DIR}'"
+  execute_with_echo "trash '${XDG_CACHE_HOME:?}/zsh'"
+  execute_with_echo "mkdir -p '${XDG_CACHE_HOME}/zsh'"
 
   execute_with_echo "zsh:rcs:compile:clear"
 
@@ -529,7 +529,7 @@ function zsh:rcs:compile {
   local zsh_dirs=(
     "${XDG_CONFIG_HOME:?}/zsh"
     "${XDG_CONFIG_HOME:?}/zsh.local"
-    "${KG8M_ZSH_CACHE_DIR:?}"
+    "${XDG_CACHE_HOME:?}/zsh"
   )
 
   local zshrc
@@ -545,7 +545,7 @@ function zsh:rcs:compile:clear {
   local zsh_dirs=(
     "${XDG_CONFIG_HOME:?}/zsh"
     "${XDG_CONFIG_HOME:?}/zsh.local"
-    "${KG8M_ZSH_CACHE_DIR:?}"
+    "${XDG_CACHE_HOME:?}/zsh"
   )
 
   local zwc
