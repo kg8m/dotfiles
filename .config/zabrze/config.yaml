@@ -252,6 +252,11 @@ abbrevs:
     snippet: generate
     global: true
     context: '\brails\s'
+  - name: rails restart
+    abbr: re
+    snippet: restart
+    global: true
+    context: '\brails\s'
   - name: rails runner
     abbr: r
     snippet: runner
