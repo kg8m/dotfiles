@@ -71,7 +71,7 @@ def DefineRawList(): void
     ["[Copy] filename",                       "call kg8m#util#RemoteCopy(kg8m#util#file#CurrentName())"],
     ["[Copy] relative filepath",              "call kg8m#util#RemoteCopy(kg8m#util#file#CurrentRelativePath())"],
     ["[Copy] absolute filepath",              "call kg8m#util#RemoteCopy(kg8m#util#file#CurrentAbsolutePath())"],
-    ["[Copy][Ruby] nested class/module name", "call kg8m#util#filetypes#ruby#CopyNestedClassName()"],
+    ["[Copy][Ruby] nested class/module name", "call kg8m#util#filetypes#ruby#CopyNestedNamespace()"],
 
     ["[Git] GinEdit",                                    "call kg8m#plugin#gin#Edit()"],
     ["[Git] GinPatch",                                   "call kg8m#plugin#gin#Patch()"],

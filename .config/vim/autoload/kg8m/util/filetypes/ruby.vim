@@ -19,14 +19,14 @@ const PATTERN = '\v^\s*(class|module)\s+\zs(\k|[:])+'
 
 final cache = {}
 
-export def CopyNestedClassName(): void
+export def CopyNestedNamespace(): void
   cache.prev_indentation = null
-  const name = getline("'<", "'>")->reverse()->listUtil.FilterMap(Extract)->reverse()->join("::")
+  const namespace = getline("'<", "'>")->reverse()->listUtil.FilterMap(Extract)->reverse()->join("::")
 
-  if empty(name)
+  if empty(namespace)
     logger.Warn("No class/module name found in selected text.")
   else
-    util.RemoteCopy(name)
+    util.RemoteCopy(namespace)
   endif
 enddef
 
