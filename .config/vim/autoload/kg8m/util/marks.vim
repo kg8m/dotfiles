@@ -1,5 +1,6 @@
 vim9script
 
+# Create automatic incremental marks.
 # http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
 
 import autoload "kg8m/util/logger.vim"
