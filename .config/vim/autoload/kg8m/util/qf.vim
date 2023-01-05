@@ -78,8 +78,12 @@ export def Load(name: string = ""): void
       const encoded_list = readfile(filepath)
       const decoded_list = DecodeList(encoded_list)
 
+      execute "edit" fnameescape(decoded_list[0].filename)
+      cursorUtil.MoveIntoFolding(decoded_list[0].lnum, decoded_list[0].col)
+
       setqflist(decoded_list)
       copen
+      wincmd p
     })
   endif
 enddef
