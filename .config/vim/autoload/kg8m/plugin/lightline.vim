@@ -5,6 +5,8 @@ import autoload "kg8m/util/file.vim" as fileUtil
 import autoload "kg8m/util/list.vim" as listUtil
 import autoload "kg8m/util/string.vim" as stringUtil
 
+const SID = expand("<SID>")
+
 export def OnSource(): void
   const elements = {
     left: [
@@ -30,13 +32,13 @@ export def OnSource(): void
       cursor_position: "%l/%L:%v",
     },
     component_function: {
-      normal_filepath:     "kg8m#plugin#lightline#NormalFilepath",
-      normal_fileencoding: "kg8m#plugin#lightline#NormalFileencoding",
-      lsp_status:          "kg8m#plugin#lightline#LspStatus",
+      normal_filepath:     $"{SID}NormalFilepath",
+      normal_fileencoding: $"{SID}NormalFileencoding",
+      lsp_status:          $"{SID}LspStatus",
     },
     component_expand: {
-      warning_filepath:     "kg8m#plugin#lightline#WarningFilepath",
-      warning_fileencoding: "kg8m#plugin#lightline#WarningFileencoding",
+      warning_filepath:     $"{SID}WarningFilepath",
+      warning_fileencoding: $"{SID}WarningFileencoding",
     },
     component_type: {
       warning_filepath:     "error",
@@ -71,43 +73,43 @@ export def OnPostSource(): void
   lightline#update()
 enddef
 
-export def Filepath(): string
+def Filepath(): string
   return (IsReadonly() ? "X " : "")
     .. CurrentFilepath()
     .. (&modified ? " +" : (&modifiable ? "" : " -"))
 enddef
 
-export def Fileencoding(): string
+def Fileencoding(): string
   return &fileencoding
 enddef
 
-export def NormalFilepath(): string
+def NormalFilepath(): string
   return IsIrregularFilepath() ? "" : Filepath()
 enddef
 
-export def NormalFileencoding(): string
+def NormalFileencoding(): string
   return IsIrregularFileencoding() ? "" : Fileencoding()
 enddef
 
-export def WarningFilepath(): string
+def WarningFilepath(): string
   # Use `%{...}` because component-expansion result is shared with other windows/buffers
-  return "%{kg8m#plugin#lightline#IsIrregularFilepath() ? kg8m#plugin#lightline#Filepath() : ''}"
+  return $"%{{{SID}IsIrregularFilepath() ? {SID}Filepath() : ''}}"
 enddef
 
-export def WarningFileencoding(): string
+def WarningFileencoding(): string
   # Use `%{...}` because component-expansion result is shared with other windows/buffers
-  return "%{kg8m#plugin#lightline#IsIrregularFileencoding() ? kg8m#plugin#lightline#Fileencoding() : ''}"
+  return $"%{{{SID}IsIrregularFileencoding() ? {SID}Fileencoding() : ''}}"
 enddef
 
-export def IsIrregularFilepath(): bool
+def IsIrregularFilepath(): bool
   return IsReadonly() || !!(expand("%") =~# '^suda://')
 enddef
 
-export def IsIrregularFileencoding(): bool
+def IsIrregularFileencoding(): bool
   return !empty(&fileencoding) && &fileencoding !=# "utf-8"
 enddef
 
-export def LspStatus(): string
+def LspStatus(): string
   if lsp.IsTargetBuffer()
     if lsp.IsBufferEnabled()
       return LspStatusAfterEnabled()
