@@ -13,7 +13,7 @@ export const ICONS = {
   loading:     "⌛",
   ok:          "✔ ",
   error:       "❌",
-  warning:     "⚠️ ",
+  warning:     "❗",
   information: "ℹ️ ",
   hint:        "💡",
   action:      "🔧",
