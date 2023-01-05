@@ -6,9 +6,6 @@ import autoload "kg8m/util/list.vim" as listUtil
 import autoload "kg8m/util/string.vim" as stringUtil
 
 export def OnSource(): void
-  # http://d.hatena.ne.jp/itchyny/20130828/1377653592
-  set laststatus=2
-
   const elements = {
     left: [
       ["mode", "paste"],

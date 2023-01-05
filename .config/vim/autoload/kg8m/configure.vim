@@ -95,6 +95,13 @@ export def Search(): void
 enddef
 
 export def Statusline(): void
+  # Always show the status line.
+  # cf. :h 'laststatus'
+  #   0: never
+  #   1: only if there are at least two windows
+  #   2: always
+  set laststatus=2
+
   set display+=lastline
   set noshowmode
   set showcmd
