@@ -14,8 +14,8 @@ command! -nargs=+ -complete=customlist,Complete FzfGrep Run(<q-args>)
 
 export def EnterCommand(preset: string = "", options = {}): void
   const escaped_preset =
-    substitute(preset, '^-', '\\-', "")
-      ->escape(".?*+^$()[]{}\\")
+    escape(preset, ".?*+^$()[]{}\\")
+      ->substitute('^-', '\\-', "")
       ->substitute("'", "'\\\\''", "g")
   const preset_prefix = get(options, "word_boundary", false) && preset =~# '^\w' ? '\b' : ""
   const preset_suffix = get(options, "word_boundary", false) && preset =~# '\w$' ? '\b' : ""
