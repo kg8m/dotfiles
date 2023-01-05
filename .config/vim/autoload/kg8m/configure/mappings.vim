@@ -51,6 +51,12 @@ export def Define(): void
   # Don't use `nnoremap` because `gf` sometimes overwritten by plugins
   nmap gf gF
 
+  # Go to next/previous location and open its folding.
+  # zv: Show cursor even if in fold.
+  # zz: Adjust cursor at center of window.
+  nnoremap gn :cnext<CR>zvzz
+  nnoremap gp :cprevious<CR>zvzz
+
   # Increment/Decrement
   nmap + <C-a>
   nmap - <C-x>
