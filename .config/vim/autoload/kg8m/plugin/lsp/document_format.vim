@@ -1,5 +1,12 @@
 vim9script
 
+import autoload "kg8m/plugin/lsp/servers.vim"
+import autoload "kg8m/plugin/startify.vim"
+import autoload "kg8m/util/file.vim" as fileUtil
+import autoload "kg8m/util/list.vim" as listUtil
+import autoload "kg8m/util/logger.vim"
+import autoload "kg8m/util/string.vim" as stringUtil
+
 const INVALID_REASONS = {
   servers_not_enabled:  "servers aren't enabled",
   not_allowed:          "automatic formatting isn't allowed",
@@ -14,11 +21,11 @@ final cache = {
   sid: expand("<SID>"),
   timer: -1,
   original_format_next: (..._) => {
-    kg8m#util#logger#Warn("Overwrite this with original function.")
+    logger.Warn("Overwrite this with original function.")
   },
 }
 
-kg8m#plugin#startify#AddToSessionSavevar("b:lsp_document_format_cache")
+startify.AddToSessionSavevar("b:lsp_document_format_cache")
 
 export def OnInsertLeave(): void
   LazyRun(200)
@@ -69,7 +76,7 @@ def Run(): void
   SetBufferCache("changedtick", b:changedtick)
 
   if GetBufferCache("count") ># 100
-    kg8m#util#logger#Warn("Abort document formatting because of 100+ times retries.")
+    logger.Warn("Abort document formatting because of 100+ times retries.")
     Teardown()
     return
   endif
@@ -167,7 +174,7 @@ def IsAllowed(): bool
 enddef
 
 def IsTargetFilepath(): bool
-  return kg8m#util#file#IsDescendant(expand("%:p"))
+  return fileUtil.IsDescendant(expand("%:p"))
 enddef
 
 def IsForceTargetFilepath(): bool
@@ -180,53 +187,53 @@ def IsForceTargetFilepath(): bool
 enddef
 
 def IsTargetBufferType(): bool
-  return !kg8m#util#string#StartsWith(bufname(), "ginedit://")
+  return !stringUtil.StartsWith(bufname(), "ginedit://")
 enddef
 
 def IsTargetFiletype(): bool
   const global_ignore_filetypes = get(g:, "lsp#document_format_ignore_filetypes", [])
 
-  if kg8m#util#list#Includes(global_ignore_filetypes, &filetype)
+  if listUtil.Includes(global_ignore_filetypes, &filetype)
     return false
   endif
 
-  const configs            = kg8m#plugin#lsp#servers#Configs(&filetype)
+  const configs            = servers.Configs(&filetype)
   const ShouldNotBeIgnored = (config) => {
     const ignore_filetypes = get(config, "document_format_ignore_filetypes", [])
-    return !kg8m#util#list#Includes(ignore_filetypes, &filetype)
+    return !listUtil.Includes(ignore_filetypes, &filetype)
   }
 
-  return kg8m#util#list#All(configs, ShouldNotBeIgnored)
+  return listUtil.All(configs, ShouldNotBeIgnored)
 enddef
 
 def IsValidFilesize(): bool
   const current_byte         = wordcount().bytes
-  const configs              = kg8m#plugin#lsp#servers#Configs(&filetype)
+  const configs              = servers.Configs(&filetype)
   const IsSmallerThanMaxByte = (config) => current_byte <= get(config, "document_format_max_byte", 9'999'999)
 
-  return kg8m#util#list#All(configs, IsSmallerThanMaxByte)
+  return listUtil.All(configs, IsSmallerThanMaxByte)
 enddef
 
 def HasServerCapability(): bool
-  const configs           = kg8m#plugin#lsp#servers#Configs(&filetype)
+  const configs           = servers.Configs(&filetype)
   const capabilities_list = configs->mapnew((_, config) => lsp#get_server_capabilities(config.name))
   const HasCapability     = (capabilities) => !!get(capabilities, "documentFormattingProvider", false)
 
-  return kg8m#util#list#Any(capabilities_list, HasCapability)
+  return listUtil.Any(capabilities_list, HasCapability)
 enddef
 
 def LogSkipped(invalid_reason: string): void
   if GetBufferCache("skipped_by", "") !=# invalid_reason
     SetBufferCache("skipped_by", invalid_reason)
-    kg8m#util#logger#Info($"Automatic document formatting is skipped because {invalid_reason}.")
+    logger.Info($"Automatic document formatting is skipped because {invalid_reason}.")
   endif
 enddef
 
 def IsOrganizeImportsAvailable(): bool
-  const configs     = kg8m#plugin#lsp#servers#Configs(&filetype)
+  const configs     = servers.Configs(&filetype)
   const IsAvailable = (config) => !!get(config, "organize_imports", false)
 
-  return kg8m#util#list#Any(configs, IsAvailable)
+  return listUtil.Any(configs, IsAvailable)
 enddef
 
 # If buffer contents change, don't apply result of `LspDocumentFormat` but try to retry.
@@ -242,7 +249,7 @@ def Overwrite(): void
   const scripts = getscriptinfo({ name: "vim-lsp/autoload/lsp/internal/document_formatting.vim" })
 
   if empty(scripts)
-    kg8m#util#logger#Warn("Failed to detect vim-lsp's document_formatting.vim script.")
+    logger.Warn("Failed to detect vim-lsp's document_formatting.vim script.")
   else
     const lsp_document_formatting_sid = scripts[0].sid
     const function_name = $"<SNR>{lsp_document_formatting_sid}_format_next"

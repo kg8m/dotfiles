@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/util.vim"
+import autoload "kg8m/util/logger.vim"
+
 const SECONDS_AS_OLDFILE = 5 * 60
 
 export def OnSource(): void
@@ -16,8 +19,8 @@ export def OnSource(): void
     },
   }
 
-  if kg8m#util#OnRailsDir()
-    const rubygems_path = kg8m#util#RubygemsPath()
+  if util.OnRailsDir()
+    const rubygems_path = util.RubygemsPath()
     &tags ..= $",{rubygems_path}/../tags"
 
     g:parallel_auto_ctags#entry_points.gems = {
@@ -46,7 +49,7 @@ def CleanUpOldLockfiles(): void
 
     if localtime() - getftime(lockpath) ># SECONDS_AS_OLDFILE
       delete(lockpath)
-      kg8m#util#logger#Info($"[ctags] The lock file `{lockpath}` has been deleted because too old.")
+      logger.Info($"[ctags] The lock file `{lockpath}` has been deleted because too old.")
     endif
   endfor
 enddef

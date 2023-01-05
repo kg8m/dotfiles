@@ -1,6 +1,15 @@
 vim9script
 
-g:kg8m#plugin#lsp#icons = {
+import autoload "kg8m/events.vim"
+import autoload "kg8m/plugin/completion.vim"
+import autoload "kg8m/plugin/lsp/document_format.vim" as documentFormat
+import autoload "kg8m/plugin/lsp/popup.vim"
+import autoload "kg8m/plugin/lsp/servers.vim"
+import autoload "kg8m/plugin/lsp/stream.vim"
+import autoload "kg8m/plugin/mappings/i.vim" as mappingsI
+import autoload "kg8m/util/list.vim" as listUtil
+
+export const ICONS = {
   loading:     "⌛",
   ok:          "✔ ",
   error:       "❌",
@@ -21,11 +30,11 @@ export def OnSource(): void
   g:lsp_inlay_hints_enabled                        = $LSP_INLAY_HINTS_ENABLED ==# "1"  # a little noisy to me
   g:lsp_semantic_enabled                           = $LSP_SEMANTIC_ENABLED ==# "1"     # a little loud to me
 
-  g:lsp_diagnostics_signs_error         = { text: g:kg8m#plugin#lsp#icons.error }
-  g:lsp_diagnostics_signs_warning       = { text: g:kg8m#plugin#lsp#icons.warning }
-  g:lsp_diagnostics_signs_information   = { text: g:kg8m#plugin#lsp#icons.information }
-  g:lsp_diagnostics_signs_hint          = { text: g:kg8m#plugin#lsp#icons.hint }
-  g:lsp_document_code_action_signs_hint = { text: g:kg8m#plugin#lsp#icons.action }
+  g:lsp_diagnostics_signs_error         = { text: ICONS.error }
+  g:lsp_diagnostics_signs_warning       = { text: ICONS.warning }
+  g:lsp_diagnostics_signs_information   = { text: ICONS.information }
+  g:lsp_diagnostics_signs_hint          = { text: ICONS.hint }
+  g:lsp_document_code_action_signs_hint = { text: ICONS.action }
 
   # Prevent signs for code actions from hiding error/warning signs.
   g:lsp_diagnostics_signs_priority     = 10  # (Default)
@@ -39,24 +48,24 @@ export def OnSource(): void
   # Usually disable vim-lsp's logging because it makes Vim slower.
   # g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
-  kg8m#plugin#lsp#popup#Setup()
+  popup.Setup()
 
   augroup vimrc-plugin-lsp
     autocmd!
-    autocmd User lsp_setup          kg8m#plugin#lsp#stream#Subscribe()
+    autocmd User lsp_setup          stream.Subscribe()
     autocmd User lsp_buffer_enabled OnLspBufferEnabled()
     autocmd User lsp_server_exit    OnLspBufferEnabled()
 
     autocmd FileType * ResetTargetBuffer()
 
-    autocmd FileType lsp-quickpick-filter kg8m#plugin#completion#Disable()
-    autocmd FileType lsp-quickpick-filter kg8m#plugin#mappings#i#Disable()
+    autocmd FileType lsp-quickpick-filter completion.Disable()
+    autocmd FileType lsp-quickpick-filter mappingsI.Disable()
   augroup END
 enddef
 
 export def IsTargetBuffer(): bool
   if !has_key(b:, "lsp_target_buffer")
-    b:lsp_target_buffer = kg8m#util#list#Includes(kg8m#plugin#lsp#servers#Filetypes(), &filetype)
+    b:lsp_target_buffer = listUtil.Includes(servers.Filetypes(), &filetype)
   endif
 
   return b:lsp_target_buffer
@@ -67,7 +76,7 @@ export def IsBufferEnabled(): bool
   if has_key(b:, "lsp_buffer_enabled")
     return true
   else
-    return kg8m#plugin#lsp#servers#AreAllRunningOrExited()
+    return servers.AreAllRunningOrExited()
   endif
 enddef
 
@@ -76,7 +85,7 @@ def OnLspBufferEnabled(): void
     return
   endif
 
-  if !kg8m#plugin#lsp#servers#AreAllRunningOrExited()
+  if !servers.AreAllRunningOrExited()
     return
   endif
 
@@ -95,10 +104,10 @@ def OnLspBufferEnabled(): void
     nmap <buffer> g] <Plug>(lsp-definition)
   endif
 
-  autocmd InsertLeave <buffer> kg8m#plugin#lsp#document_format#OnInsertLeave()
-  autocmd TextChanged <buffer> kg8m#plugin#lsp#document_format#OnTextChanged()
+  autocmd InsertLeave <buffer> documentFormat.OnInsertLeave()
+  autocmd TextChanged <buffer> documentFormat.OnTextChanged()
 
-  kg8m#events#NotifyAfterLspBufferEnabled()
+  events.NotifyAfterLspBufferEnabled()
 enddef
 
 def ResetTargetBuffer(): void
@@ -109,13 +118,13 @@ enddef
 
 def SetOmnifunc(): void
   # Check whether setup of all servers is done or not because this function can be called for a non-target buffer.
-  if &omnifunc !=# "lsp#complete" && kg8m#plugin#lsp#servers#AreAllRunningOrExited()
+  if &omnifunc !=# "lsp#complete" && servers.AreAllRunningOrExited()
     setlocal omnifunc=lsp#complete
   endif
 enddef
 
 def IsDefinitionSupported(): bool
-  for server_name in kg8m#plugin#lsp#servers#Names(&filetype)
+  for server_name in servers.Names(&filetype)
     var capabilities = lsp#get_server_capabilities(server_name)
 
     if get(capabilities, "definitionProvider", false)

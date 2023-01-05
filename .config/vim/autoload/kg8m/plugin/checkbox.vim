@@ -1,6 +1,8 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
+
 export def Run(): void
-  kg8m#plugin#EnsureSourced("vim-checkbox")
+  plugin.EnsureSourced("vim-checkbox")
   checkbox#ToggleCB()
 enddef

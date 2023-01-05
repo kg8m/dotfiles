@@ -1,9 +1,14 @@
 vim9script
 
-g:kg8m#util#qf#dirpath   = $"{$XDG_DATA_HOME}/vim/qf"
-g:kg8m#util#qf#extension = "json"
+import autoload "kg8m/plugin/fzf/qf.vim" as fzfQf
+import autoload "kg8m/util/cursor.vim" as cursorUtil
+import autoload "kg8m/util/input.vim" as inputUtil
+import autoload "kg8m/util/logger.vim"
 
-mkdir(g:kg8m#util#qf#dirpath, "p")
+export const DIRPATH = $"{$XDG_DATA_HOME}/vim/qf"
+export const EXTENSION = "json"
+
+mkdir(DIRPATH, "p")
 
 export def List(): list<string>
   const command = [
@@ -11,8 +16,8 @@ export def List(): list<string>
     $FD_DEFAULT_OPTIONS,
     "--strip-cwd-prefix",
     "--type", "f",
-    "--base-directory", shellescape(g:kg8m#util#qf#dirpath),
-    "--extension", kg8m#util#qf#extension,
+    "--base-directory", shellescape(DIRPATH),
+    "--extension", EXTENSION,
     "--color", "always",
     "| sort_without_escape_sequences",
   ]->join(" ")
@@ -23,7 +28,7 @@ export def List(): list<string>
 enddef
 
 export def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
-  const all = kg8m#util#qf#List()
+  const all = List()
 
   if empty(arglead)
     return all
@@ -38,7 +43,7 @@ export def Save(name: string = ""): void
   const raw_list = getqflist()
 
   if empty(raw_list)
-    kg8m#util#logger#Error("Quickfix list is empty. Do nothing.")
+    logger.Error("Quickfix list is empty. Do nothing.")
     return
   endif
 
@@ -49,7 +54,7 @@ export def Save(name: string = ""): void
   if filereadable(filepath)
     const prompt = $"`{filepath}` exists. Overwrite it?"
 
-    if kg8m#util#input#Confirm(prompt)
+    if inputUtil.Confirm(prompt)
       redraw
     else
       redraw
@@ -61,12 +66,12 @@ export def Save(name: string = ""): void
   const encoded_list = EncodeList(raw_list)
   writefile(encoded_list, filepath)
 
-  kg8m#util#logger#Info($"Quickfix list is saved to `{filepath}`.")
+  logger.Info($"Quickfix list is saved to `{filepath}`.")
 enddef
 
 export def Load(name: string = ""): void
   if empty(name)
-    kg8m#plugin#fzf#qf#Load()
+    fzfQf.Load()
   else
     Process(name, (filepath) => {
       const encoded_list = readfile(filepath)
@@ -80,7 +85,7 @@ enddef
 
 export def Edit(name: string = ""): void
   if empty(name)
-    kg8m#plugin#fzf#qf#Edit()
+    fzfQf.Edit()
   else
     Process(name, (filepath) => {
       execute "edit" fnameescape(filepath)
@@ -90,16 +95,16 @@ enddef
 
 export def Delete(name: string = ""): void
   if empty(name)
-    kg8m#plugin#fzf#qf#Delete()
+    fzfQf.Delete()
   else
     Process(name, (filepath) => {
       const prompt = $"Sure to delete `{filepath}`?"
 
-      if kg8m#util#input#Confirm(prompt)
+      if inputUtil.Confirm(prompt)
         delete(filepath)
-        kg8m#util#logger#Info($"`{filepath}` has been deleted.")
+        logger.Info($"`{filepath}` has been deleted.")
       else
-        kg8m#util#logger#Info($"`{filepath}` remains.")
+        logger.Info($"`{filepath}` remains.")
       endif
     })
   endif
@@ -111,12 +116,12 @@ def Process(name: string, Callback: func(string)): void
   if filereadable(filepath)
     Callback(filepath)
   else
-    kg8m#util#logger#Error($"`{filepath}` doesn't exist.")
+    logger.Error($"`{filepath}` doesn't exist.")
   endif
 enddef
 
 def NameToFilepath(name: string): string
-  return $"{g:kg8m#util#qf#dirpath}/{name}.{kg8m#util#qf#extension}"
+  return $"{DIRPATH}/{name}.{EXTENSION}"
 enddef
 
 def EncodeList(raw_list: list<dict<any>>): list<string>

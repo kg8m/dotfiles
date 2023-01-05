@@ -1,6 +1,12 @@
 vim9script
 
-kg8m#plugin#EnsureSourced("fzf.vim")
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/plugin/fzf.vim"
+import autoload "kg8m/util/file.vim" as fileUtil
+import autoload "kg8m/util/list.vim" as listUtil
+import autoload "kg8m/util/string/colors.vim"
+
+plugin.EnsureSourced("fzf.vim")
 
 const EXTRA_INFO_SEPARATOR = repeat(" ", 10)
 const EXTRA_INFO_PATTERN = $'{EXTRA_INFO_SEPARATOR}.*$'
@@ -9,14 +15,14 @@ const EXTRA_INFO_PATTERN = $'{EXTRA_INFO_SEPARATOR}.*$'
 export def Run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
-    source:  kg8m#plugin#fzf#buffers#List(),
-    "sink*": function("kg8m#plugin#fzf#buffers#Handler"),
-    options: kg8m#plugin#fzf#buffers#BaseOptions() + [
+    source:  List(),
+    "sink*": Handler,
+    options: BaseOptions() + [
       "--prompt", "Buffers> ",
     ],
   }
 
-  kg8m#plugin#fzf#Run(() => fzf#run(fzf#wrap("buffer-files", options)))
+  fzf.Run(() => fzf#run(fzf#wrap("buffer-files", options)))
 enddef
 
 export def List(options: dict<any> = {}): list<string>
@@ -25,22 +31,22 @@ export def List(options: dict<any> = {}): list<string>
   const current = CurrentList()->map((_, filepath) => FormatBufname(filepath, &modified))
   const buffers = BufinfoList()->sort(Sorter)->mapnew((_, bufinfo) => FormatBufname(bufinfo.name, bufinfo.changed))
 
-  return kg8m#util#list#Union(current, buffers, RemoveExtraInfo)
+  return listUtil.Union(current, buffers, RemoveExtraInfo)
 enddef
 
 def CurrentList(): list<string>
-  const current = kg8m#util#file#CurrentPath()
+  const current = fileUtil.CurrentPath()
   return empty(current) ? [] : [current]
 enddef
 
 def BufinfoList(): list<dict<any>>
   const MapperCallback = (bufinfo) => empty(bufinfo.name) ? false : bufinfo
-  return getbufinfo({ buflisted: true })->kg8m#util#list#FilterMap(MapperCallback)
+  return getbufinfo({ buflisted: true })->listUtil.FilterMap(MapperCallback)
 enddef
 
 def FormatBufname(bufname: string, modified: bool): string
-  const normalized_bufname = kg8m#util#file#NormalizePath(bufname)
-  const modified_symbol    = modified ? kg8m#util#string#colors#Yellow("[+]") : ""
+  const normalized_bufname = fileUtil.NormalizePath(bufname)
+  const modified_symbol    = modified ? colors.Yellow("[+]") : ""
 
   return normalized_bufname .. EXTRA_INFO_SEPARATOR .. modified_symbol
 enddef
@@ -70,7 +76,7 @@ enddef
 
 export def BaseOptions(): list<any>
   return [
-    "--header-lines", empty(kg8m#util#file#CurrentPath()) ? 0 : 1,
+    "--header-lines", empty(fileUtil.CurrentPath()) ? 0 : 1,
     "--preview", printf("preview \"$(echo {} | sd '%s' '')\"", EXTRA_INFO_PATTERN),
     "--preview-window", "down:75%:wrap:nohidden",
     "--expect", g:fzf_action->keys()->join(","),

@@ -1,6 +1,9 @@
 vim9script
 
-kg8m#plugin#EnsureSourced("fzf.vim")
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/plugin/fzf.vim"
+
+plugin.EnsureSourced("fzf.vim")
 
 # Show preview of marks (fzf's `:Marks` doesn't show preview)
 export def Run(): void
@@ -13,5 +16,5 @@ export def Run(): void
     ],
   }
 
-  kg8m#plugin#fzf#Run(() => fzf#vim#marks(options))
+  fzf.Run(() => fzf#vim#marks(options))
 enddef

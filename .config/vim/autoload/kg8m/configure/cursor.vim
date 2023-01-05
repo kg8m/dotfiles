@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/util/matchpairs.vim"
+import autoload "kg8m/util/string.vim" as stringUtil
+
 final cache = {}
 
 const vertical_line_code      = "\e[6 q"
@@ -22,7 +25,7 @@ export def Match(): void
   set showmatch
   set matchtime=1
 
-  const japanese_matchpairs = kg8m#util#matchpairs#JapanesePairs()->mapnew((_, pair) => join(pair, ":"))->join(",")
+  const japanese_matchpairs = matchpairs.JapanesePairs()->mapnew((_, pair) => join(pair, ":"))->join(",")
 
   if has_key(cache, "original_matchpairs")
     &matchpairs = $"{cache.original_matchpairs},{japanese_matchpairs}"
@@ -43,11 +46,11 @@ export def Highlight(): void
 enddef
 
 export def Shape(): void
-  if !kg8m#util#string#Includes(&t_SI, vertical_line_code)
+  if !stringUtil.Includes(&t_SI, vertical_line_code)
     &t_SI ..= vertical_line_code
   endif
 
-  if !kg8m#util#string#Includes(&t_EI, vertical_bold_line_code)
+  if !stringUtil.Includes(&t_EI, vertical_bold_line_code)
     &t_EI ..= vertical_bold_line_code
   endif
 enddef

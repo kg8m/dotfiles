@@ -1,11 +1,14 @@
 vim9script
 
-const SESSIONS_BASEDIR_PATH = $"{$XDG_DATA_HOME}/vim/sessions"
+import autoload "kg8m/configure/folding/manual.vim" as manualFolding
+import autoload "kg8m/util/file.vim" as fileUtil
+import autoload "kg8m/util/list.vim" as listUtil
+import autoload "kg8m/util/string.vim" as stringUtil
+
+export const SESSIONS_BASEDIR_PATH = $"{$XDG_DATA_HOME}/vim/sessions"
 
 # Use a prefix for names starting with a dot (.), that is hidden from Startify session files list.
 const SESSION_FILENAME_FORMAT = "session:%s"
-
-g:kg8m#plugin#startify#sessions_basedir_path = SESSIONS_BASEDIR_PATH
 
 export def OnSource(): void
   Setup()
@@ -82,7 +85,7 @@ export def Setup(): void
   augroup END
 enddef
 
-export def SessionFilename(target_filepath: string = kg8m#util#file#CurrentRelativePath()): string
+export def SessionFilename(target_filepath: string = fileUtil.CurrentRelativePath()): string
   const sanitized_filepath = target_filepath->substitute("/", "+=", "g")
   return printf(SESSION_FILENAME_FORMAT, sanitized_filepath)
 enddef
@@ -92,7 +95,7 @@ export def AddToSessionSavevar(varname: string): void
     g:startify_session_savevars = []
   endif
 
-  if !kg8m#util#list#Includes(g:startify_session_savevars, varname)
+  if !listUtil.Includes(g:startify_session_savevars, varname)
     add(g:startify_session_savevars, varname)
   endif
 enddef
@@ -110,7 +113,7 @@ def SessionsDirpath(): string
 enddef
 
 def SaveSession(): void
-  kg8m#configure#folding#manual#Restore()
+  manualFolding.Restore()
 
   if SessionSavable()
     mkdir(g:startify_session_dir, "p")
@@ -122,7 +125,7 @@ def SessionSavable(): bool
   if &filetype ==# ""
     const filename = expand("%:t")
 
-    if kg8m#util#string#StartsWith(filename, "mmv-")
+    if stringUtil.StartsWith(filename, "mmv-")
       return false
     else
       return true

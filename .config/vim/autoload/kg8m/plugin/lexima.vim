@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/events.vim"
+import autoload "kg8m/util/matchpairs.vim"
+
 var queue_on_post_source: list<func>
 
 export def OnSource(): void
@@ -18,14 +21,14 @@ export def OnPostSource(): void
     () => AddRulesForVim(),
 
     # Overwrite lexima.vim's default mapping.
-    () => kg8m#events#NotifyInsertModePluginLoaded(),
+    () => events.NotifyInsertModePluginLoaded(),
   ]
 
   DequeueOnPostSource()
 enddef
 
 def AddCommonRules(): void
-  for pair in kg8m#util#matchpairs#JapanesePairs()
+  for pair in matchpairs.JapanesePairs()
     # `「` when
     #
     #   |

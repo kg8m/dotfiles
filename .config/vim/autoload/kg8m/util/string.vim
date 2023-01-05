@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "kg8m/util/logger.vim"
+
 final cache = {}
 
 export def Vital(): dict<func>
@@ -38,7 +40,7 @@ export def Truncate(string: string, max_width: number, options: dict<any> = {}):
     const prefix = "[kg8m#util#string#Truncate()]"
     const message = $"Skipper width ({skipper_width}) is greater than max width ({max_width})."
 
-    kg8m#util#logger#Error($"{prefix} {message}")
+    logger.Error($"{prefix} {message}")
     return string
   endif
 

@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/util/file.vim" as fileUtil
+import autoload "kg8m/util/string.vim" as stringUtil
+
 final cache = {}
 
 export def CurrentName(): string
@@ -8,7 +11,7 @@ enddef
 
 export def CurrentPath(): string
   const raw_filepath = expand("%")
-  return empty(raw_filepath) ? "" : raw_filepath->kg8m#util#file#NormalizePath()
+  return empty(raw_filepath) ? "" : raw_filepath->fileUtil.NormalizePath()
 enddef
 
 export def CurrentRelativePath(): string
@@ -31,5 +34,5 @@ export def IsDescendant(filepath: string, base: string = getcwd()): bool
   const absolute_filepath = fnamemodify(filepath, ":p")
   const absolute_basepath = fnamemodify(base, ":p")
 
-  return kg8m#util#string#StartsWith(absolute_filepath, absolute_basepath)
+  return stringUtil.StartsWith(absolute_filepath, absolute_basepath)
 enddef

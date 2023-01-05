@@ -1,6 +1,9 @@
 vim9script
 
-kg8m#plugin#EnsureSourced("fzf.vim")
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/plugin/fzf.vim"
+
+plugin.EnsureSourced("fzf.vim")
 
 # Show preview in larger area (fzf's `:Helptags` doesn't)
 export def Run(): void
@@ -8,5 +11,5 @@ export def Run(): void
   final options = fzf#vim#with_preview({ placeholder: "--tag {2}:{3}:{4}" })
   options.options += ["--preview-window", "down:75%:wrap:nohidden"]
 
-  kg8m#plugin#fzf#Run(() => fzf#vim#helptags(options))
+  fzf.Run(() => fzf#vim#helptags(options))
 enddef

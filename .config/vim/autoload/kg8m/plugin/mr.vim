@@ -1,8 +1,11 @@
 vim9script
 
+import autoload "kg8m/plugin/startify.vim"
+import autoload "kg8m/util/list.vim" as listUtil
+
 const PLUGINS_ROOT_DIRPATH = simplify($"{$VIM_PLUGINS}/..")
-const SESSIONS_BASEDIR_PATH = g:kg8m#plugin#startify#sessions_basedir_path
-const SESSION_NAME_PATTERN = kg8m#plugin#startify#SessionFilename("")
+const SESSIONS_BASEDIR_PATH = startify.SESSIONS_BASEDIR_PATH
+const SESSION_NAME_PATTERN = startify.SessionFilename("")
 const IGNORE_PATTERNS = [
   '\v^/usr/local/share/vim/.+/doc/',
   $'\V\^{PLUGINS_ROOT_DIRPATH}/\.\+/doc/',
@@ -10,5 +13,5 @@ const IGNORE_PATTERNS = [
 ]
 
 export def Predicate(filepath: string): bool
-  return kg8m#util#list#All(IGNORE_PATTERNS, (pattern) => filepath !~# pattern)
+  return listUtil.All(IGNORE_PATTERNS, (pattern) => filepath !~# pattern)
 enddef

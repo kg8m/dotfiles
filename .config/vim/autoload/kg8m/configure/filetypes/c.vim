@@ -1,5 +1,9 @@
 vim9script
 
+import autoload "kg8m/util/file.vim" as fileUtil
+import autoload "kg8m/util/list.vim" as listUtil
+import autoload "kg8m/util/terminal.vim" as terminalUtil
+
 export def Run(): void
   augroup vimrc-configure-filetypes-c
     autocmd!
@@ -14,10 +18,10 @@ enddef
 def RunCurrent(): void
   write
 
-  const current    = kg8m#util#file#CurrentRelativePath()
+  const current    = fileUtil.CurrentRelativePath()
   const executable = fnamemodify(current, ":r")
 
-  const included_files = getline(1, "$")->kg8m#util#list#FilterMap((line): any => {
+  const included_files = getline(1, "$")->listUtil.FilterMap((line): any => {
     if line =~# '\v^#include ".+\.h"$'
       const filepath_without_extension = matchstr(line, '\v"\zs.+\ze"')->fnamemodify(":r")
       return $"{filepath_without_extension}.c"
@@ -33,5 +37,5 @@ def RunCurrent(): void
     shellescape(executable),
     shellescape($"./{executable}")
   )
-  kg8m#util#terminal#ExecuteCommand(command)
+  terminalUtil.ExecuteCommand(command)
 enddef

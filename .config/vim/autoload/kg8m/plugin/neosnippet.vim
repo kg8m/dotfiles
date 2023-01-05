@@ -1,11 +1,14 @@
 vim9script
 
+import autoload "kg8m/events.vim"
+import autoload "kg8m/plugin/neosnippet/contextual.vim"
+
 const script_filepath = expand("<sfile>")
 
 var snippets_dirpath: string
 
 export def OnSource(): void
-  g:neosnippet#snippets_directory = [kg8m#plugin#neosnippet#SnippetsDirpath()]
+  g:neosnippet#snippets_directory = [SnippetsDirpath()]
   g:neosnippet#disable_runtime_snippets = { _: true }
 
   augroup vimrc-plugin-neosnippet
@@ -13,12 +16,12 @@ export def OnSource(): void
     autocmd InsertLeave * NeoSnippetClearMarkers
   augroup END
 
-  kg8m#plugin#neosnippet#contextual#Setup()
+  contextual.Setup()
 enddef
 
 export def OnPostSource(): void
-  timer_start(0, (_) => kg8m#events#NotifyInsertModePluginLoaded())
-  timer_start(0, (_) => kg8m#plugin#neosnippet#contextual#Source())
+  timer_start(0, (_) => events.NotifyInsertModePluginLoaded())
+  timer_start(0, (_) => contextual.Source())
 enddef
 
 export def SnippetsDirpath(): string

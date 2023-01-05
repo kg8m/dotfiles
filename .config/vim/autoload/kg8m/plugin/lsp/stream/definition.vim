@@ -1,5 +1,9 @@
 vim9script
 
+import autoload "kg8m/plugin/fzf_tjump.vim" as fzfTjump
+import autoload "kg8m/util/cursor.vim" as cursorUtil
+import autoload "kg8m/util/filetypes/vim.vim" as vimUtil
+
 export def Subscribe(): void
   # Fallback to ctags or my special logics if definition fails.
   lsp#callbag#pipe(
@@ -25,7 +29,7 @@ def Fallback(): void
   endif
 
   if bufname() ==# original_bufname && getcurpos() ==# original_cursor_position
-    kg8m#plugin#fzf_tjump#Run()
+    fzfTjump.Run()
   endif
 enddef
 
@@ -38,7 +42,7 @@ def FallbackForVimAutoloadFunction(): void
   endif
 
   const autoload_path = printf("%s.vim", autoload_prefix)->substitute('#', "/", "g")
-  const filepath = kg8m#util#filetypes#vim#FindAutoloadFile(autoload_path)
+  const filepath = vimUtil.FindAutoloadFile(autoload_path)
 
   if empty(filepath)
     return
@@ -54,7 +58,7 @@ def FallbackForVimAutoloadFunction(): void
     const column_number = matchstrpos(result, '\v<export def \zs')[1] - len(line_number)
 
     execute "edit" fnameescape(filepath)
-    kg8m#util#cursor#Move(line_number, column_number)
+    cursorUtil.Move(line_number, column_number)
 
     # zv: Show cursor even if in fold.
     # zz: Adjust cursor at center of window.

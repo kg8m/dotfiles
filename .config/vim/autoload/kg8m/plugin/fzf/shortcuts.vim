@@ -1,6 +1,9 @@
 vim9script
 
-kg8m#plugin#EnsureSourced("fzf.vim")
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/plugin/fzf.vim"
+
+plugin.EnsureSourced("fzf.vim")
 
 var raw_list: list<list<string>>
 var list: list<string>
@@ -14,7 +17,7 @@ export def Run(query: string): void
     options: ["--no-multi", "--prompt", "Shortcuts> ", "--query", query],
   }
 
-  kg8m#plugin#fzf#Run(() => fzf#run(fzf#wrap("my-shortcuts", options)))
+  fzf.Run(() => fzf#run(fzf#wrap("my-shortcuts", options)))
 enddef
 
 def Candidates(): list<string>

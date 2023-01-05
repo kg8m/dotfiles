@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "kg8m/events.vim"
+
 export def Define(): void
   nnoremap <expr> <Leader>/ ClearHlsearch()
   nnoremap <expr> /         EnterSearch()
@@ -8,7 +10,7 @@ enddef
 
 def ClearHlsearch(): string
   const clear    = ":nohlsearch\<CR>"
-  const notify   = ":call kg8m#events#NotifyClearSearchHighlight()\<CR>"
+  const notify   = "\<ScriptCmd>events.NotifyClearSearchHighlight()\<CR>"
   const teardown = ":echo ''\<CR>"
 
   return clear .. notify .. teardown

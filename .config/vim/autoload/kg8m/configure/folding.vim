@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/util.vim"
+import autoload "kg8m/util/file.vim" as fileUtil
+
 export def GlobalOptions(): void
   set foldmethod=marker
   set foldopen=hor
@@ -50,12 +53,12 @@ def ShouldDisable(): bool
     &diff ||
 
     # For auto-git-diff
-    (&filetype ==# "diff" && kg8m#util#IsGitRebase()) ||
+    (&filetype ==# "diff" && util.IsGitRebase()) ||
 
     # For diffs of `git commit --verbose`
     &filetype ==# "gitcommit" ||
 
     # For edit mode of `git add --patch`
-    kg8m#util#file#CurrentName() ==# "addp-hunk-edit.diff"
+    fileUtil.CurrentName() ==# "addp-hunk-edit.diff"
   )
 enddef

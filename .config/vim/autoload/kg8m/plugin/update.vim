@@ -1,9 +1,12 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/util/logger.vim"
+
 export def Run(options: dict<any> = {}): void
   timer_start(   0, (_) => Main(options) )
   timer_start( 200, (_) => RemoveDisused())
-  timer_start(1000, (_) => kg8m#plugin#update#ShowLog())
+  timer_start(1000, (_) => ShowLog())
 enddef
 
 export def ShowLog(): void
@@ -43,7 +46,7 @@ def Main(options: dict<any> = {}): void
   messages clear
 
   # Re-register disabled plugins before update because dein.vim doesn't make helptags for them
-  kg8m#plugin#EnableDisabledPlugins()
+  plugin.EnableDisabledPlugins()
 
   if get(options, "bulk", true)
     const force_update = true
@@ -57,7 +60,7 @@ enddef
 
 def RemoveDisused(): void
   for dirpath in dein#check_clean()
-    kg8m#util#logger#Warn($"Remove {dirpath}")
+    logger.Warn($"Remove {dirpath}")
     delete(dirpath, "rf")
   endfor
 enddef
@@ -123,13 +126,13 @@ def Notify(message: string, options: dict<any> = {}): void
   const message_with_title = $"{title}: {message}"
 
   if level ==# "info"
-    kg8m#util#logger#Info(message_with_title)
+    logger.Info(message_with_title)
   elseif level ==# "warn"
-    kg8m#util#logger#Warn(message_with_title)
+    logger.Warn(message_with_title)
   elseif level ==# "error"
-    kg8m#util#logger#Error(message_with_title)
+    logger.Error(message_with_title)
   else
-    kg8m#util#logger#Error($"{title}: unknown level ({string(level)})")
-    kg8m#util#logger#Info(message_with_title)
+    logger.Error($"{title}: unknown level ({string(level)})")
+    logger.Info(message_with_title)
   endif
 enddef

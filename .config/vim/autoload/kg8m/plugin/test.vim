@@ -1,9 +1,12 @@
 vim9script
 
+import autoload "kg8m/util.vim"
+import autoload "kg8m/util/terminal.vim" as terminalUtil
+
 export def OnSource(): void
-  if kg8m#util#OnTmux()
+  if util.OnTmux()
     g:test#custom_strategies = get(g:, "test#custom_strategies", {})
-    g:test#custom_strategies.terminal = kg8m#util#terminal#ExecuteCommand
+    g:test#custom_strategies.terminal = terminalUtil.ExecuteCommand
     g:test#strategy = "terminal"
   endif
 

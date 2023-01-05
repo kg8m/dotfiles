@@ -2,6 +2,8 @@ vim9script
 
 # http://saihoooooooo.hatenablog.com/entry/2013/04/30/001908
 
+import autoload "kg8m/util/logger.vim"
+
 const incremental_mark_keys = [
   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
@@ -16,14 +18,14 @@ export def Increment(): void
   const incremental_mark_key = DetectKey()
 
   if incremental_mark_key =~# incremental_mark_keys_pattern
-    kg8m#util#logger#Error($"Already marked to {incremental_mark_key}")
+    logger.Error($"Already marked to {incremental_mark_key}")
     return
   endif
 
   incremental_mark_index = (incremental_mark_index + 1) % len(incremental_mark_keys)
 
   execute "mark" incremental_mark_keys[incremental_mark_index]
-  kg8m#util#logger#Info($"Marked to {incremental_mark_keys[incremental_mark_index]}")
+  logger.Info($"Marked to {incremental_mark_keys[incremental_mark_index]}")
 enddef
 
 def DetectKey(): string

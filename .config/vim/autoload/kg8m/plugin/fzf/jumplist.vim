@@ -1,12 +1,16 @@
 vim9script
 
-kg8m#plugin#EnsureSourced("fzf.vim")
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/plugin/fzf.vim"
+import autoload "kg8m/util/logger.vim"
+
+plugin.EnsureSourced("fzf.vim")
 
 export def Back(): void
   const info = JumplistInfo()
 
   if info.current_position <# 1
-    kg8m#util#logger#Warn("Cannot jump.")
+    logger.Warn("Cannot jump.")
     return
   endif
 
@@ -25,7 +29,7 @@ export def Forward(): void
   const info = JumplistInfo()
 
   if info.current_position >=# len(info.jumplist)
-    kg8m#util#logger#Warn("Cannot jump.")
+    logger.Warn("Cannot jump.")
     return
   endif
 
@@ -50,7 +54,7 @@ def Run(candidates: list<string>): void
     ],
   }
 
-  kg8m#plugin#fzf#Run(() => fzf#run(fzf#wrap("jumplist", options)))
+  fzf.Run(() => fzf#run(fzf#wrap("jumplist", options)))
 enddef
 
 def JumplistInfo(): dict<any>

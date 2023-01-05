@@ -1,18 +1,22 @@
 vim9script
 
+import autoload "kg8m/plugin/neosnippet.vim"
+import autoload "kg8m/util.vim"
+import autoload "kg8m/util/file.vim" as fileUtil
+
 final contexts: dict<list<dict<any>>> = {}
 
 export def Setup(): void
   augroup vimrc-plugin-neosnippet-contextual
     autocmd!
-    autocmd FileType * timer_start(50, (_) => kg8m#plugin#neosnippet#contextual#Source())
+    autocmd FileType * timer_start(50, (_) => Source())
   augroup END
 enddef
 
 export def Source(): void
   SetupContexts()
 
-  const current_path = kg8m#util#file#CurrentRelativePath()
+  const current_path = fileUtil.CurrentRelativePath()
 
   for context in get(contexts, &filetype, [])
     if current_path =~# context.pattern
@@ -26,7 +30,7 @@ export def Source(): void
 enddef
 
 def SourceSnippet(filename: string): void
-  const filepath = printf("%s/%s", kg8m#plugin#neosnippet#SnippetsDirpath(), filename)
+  const filepath = printf("%s/%s", neosnippet.SnippetsDirpath(), filename)
 
   if filereadable(filepath)
     execute "NeoSnippetSource" fnameescape(filepath)
@@ -50,7 +54,7 @@ def SetupContexts(): void
 enddef
 
 def ContextsForEruby(): list<dict<any>>
-  if kg8m#util#OnRailsDir()
+  if util.OnRailsDir()
     const common = ["ruby-rails.snip"]
     return [
       { pattern: '\.html\.erb$', snippets: common + ["html.snip", "javascript.snip"] },
@@ -62,7 +66,7 @@ def ContextsForEruby(): list<dict<any>>
 enddef
 
 def ContextsForRuby(): list<dict<any>>
-  if kg8m#util#OnRailsDir()
+  if util.OnRailsDir()
     const common = ["ruby-rails.snip"]
     return [
       { pattern: '^app/controllers', snippets: common + ["ruby-rails-controller.snip"] },

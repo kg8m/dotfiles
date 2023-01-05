@@ -1,5 +1,9 @@
 vim9script
 
+import autoload "kg8m/plugin/closetag.vim"
+import autoload "kg8m/util/list.vim" as listUtil
+import autoload "kg8m/util/string.vim" as stringUtil
+
 final cache = {
   insert_entered_from_blockwise_visual: false,
 }
@@ -118,7 +122,7 @@ def GtExpr(): string
     return lexima#expand(">", "i")
   endif
 
-  if !kg8m#util#list#Includes(g:kg8m#plugin#closetag#filetypes, &filetype)
+  if !listUtil.Includes(closetag.FILETYPES, &filetype)
     return ">"
   endif
 
@@ -137,7 +141,7 @@ def GtExpr(): string
     return g:closetag_shortcut
   endif
 
-  if context_filetype ==# "eruby" && kg8m#util#string#EndsWith(bufname(), ".html.erb")
+  if context_filetype ==# "eruby" && stringUtil.EndsWith(bufname(), ".html.erb")
     return g:closetag_shortcut
   endif
 

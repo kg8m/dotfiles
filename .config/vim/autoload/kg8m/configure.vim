@@ -1,5 +1,18 @@
 vim9script
 
+import autoload "kg8m/configure/colors.vim"
+import autoload "kg8m/configure/comments.vim"
+import autoload "kg8m/configure/cursor.vim"
+import autoload "kg8m/configure/folding.vim"
+import autoload "kg8m/configure/formatoptions.vim"
+import autoload "kg8m/configure/indent.vim"
+import autoload "kg8m/configure/mappings.vim"
+import autoload "kg8m/configure/filetypes.vim"
+import autoload "kg8m/util/encoding.vim" as encodingUtil
+import autoload "kg8m/util/qf.vim" as qfUtil
+import autoload "kg8m/util/string.vim" as stringUtil
+import autoload "kg8m/util/input.vim" as inputUtil
+
 final cache = {}
 
 export def Backup(): void
@@ -13,8 +26,8 @@ export def Backup(): void
 enddef
 
 export def Colors(): void
-  kg8m#configure#colors#Terminal()
-  kg8m#configure#colors#Performance()
+  colors.Terminal()
+  colors.Performance()
 enddef
 
 export def Column(): void
@@ -33,7 +46,7 @@ export def Column(): void
 enddef
 
 export def Comments(): void
-  kg8m#configure#comments#Base()
+  comments.Base()
 enddef
 
 export def Completion(): void
@@ -46,26 +59,26 @@ export def Completion(): void
 enddef
 
 export def Cursor(): void
-  kg8m#configure#cursor#Base()
-  kg8m#configure#cursor#Match()
-  kg8m#configure#cursor#Highlight()
-  kg8m#configure#cursor#Shape()
+  cursor.Base()
+  cursor.Match()
+  cursor.Highlight()
+  cursor.Shape()
 enddef
 
 export def Folding(): void
-  kg8m#configure#folding#GlobalOptions()
-  kg8m#configure#folding#LocalOptions()
-  kg8m#configure#folding#Mappings()
-  kg8m#configure#folding#manual#Setup()
+  folding.GlobalOptions()
+  folding.LocalOptions()
+  folding.Mappings()
+  folding.manual#Setup()
 enddef
 
 export def Formatoptions(): void
-  kg8m#configure#formatoptions#Base()
+  formatoptions.Base()
 enddef
 
 export def Indent(): void
-  kg8m#configure#indent#Base()
-  kg8m#configure#indent#Filetypes()
+  indent.Base()
+  indent.Filetypes()
 enddef
 
 export def Scroll(): void
@@ -108,20 +121,18 @@ export def Commands(): void
   command! -nargs=0 -range Stats feedkeys(<range> ==# 0 ? "\<S-g>$g\<C-g>\<C-o>" : "\<Esc>gvg\<C-g>")
   command! -nargs=0 -range Counts Stats
 
-  command! -nargs=? -complete=customlist,kg8m#util#qf#Complete QfSave   kg8m#util#qf#Save(<q-args>)
-  command! -nargs=? -complete=customlist,kg8m#util#qf#Complete QfLoad   kg8m#util#qf#Load(<q-args>)
-  command! -nargs=? -complete=customlist,kg8m#util#qf#Complete QfEdit   kg8m#util#qf#Edit(<q-args>)
-  command! -nargs=? -complete=customlist,kg8m#util#qf#Complete QfDelete kg8m#util#qf#Delete(<q-args>)
+  command! -nargs=? -complete=customlist,qfUtil.Complete QfSave   qfUtil.Save(<q-args>)
+  command! -nargs=? -complete=customlist,qfUtil.Complete QfLoad   qfUtil.Load(<q-args>)
+  command! -nargs=? -complete=customlist,qfUtil.Complete QfEdit   qfUtil.Edit(<q-args>)
+  command! -nargs=? -complete=customlist,qfUtil.Complete QfDelete qfUtil.Delete(<q-args>)
 enddef
 
 export def Mappings(): void
   # Time to wait for a key code or mapped key sequence
   set timeoutlen=3000
 
-  kg8m#configure#mappings#Base()
-  kg8m#configure#mappings#Utils()
-  kg8m#configure#mappings#PreventUnconsciousOperation()
-  kg8m#configure#mappings#search#Define()
+  mappings.Define()
+  mappings.PreventUnconsciousOperation()
 enddef
 
 export def Others(): void
@@ -159,17 +170,15 @@ export def Others(): void
   # s => Maximum size of an item in Kbyte.
   set viminfo='20,<20,h,s10
 
-  kg8m#configure#filetypes#c#Run()
-  kg8m#configure#filetypes#go#Run()
-  kg8m#configure#filetypes#markdown#Run()
+  filetypes.Run()
 
   augroup vimrc-configure-others
     autocmd!
     autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
     autocmd BufWritePre * MkdirUnlessExist()
 
-    autocmd BufNewFile,BufRead *.csv          kg8m#util#encoding#EditWithCP932()
-    autocmd BufNewFile,BufRead COMMIT_EDITMSG kg8m#util#encoding#EditWithUTF8()
+    autocmd BufNewFile,BufRead *.csv          encodingUtil.EditWithCP932()
+    autocmd BufNewFile,BufRead COMMIT_EDITMSG encodingUtil.EditWithUTF8()
 
     autocmd VimResized * wincmd =
   augroup END
@@ -225,14 +234,14 @@ enddef
 def MkdirUnlessExist(): void
   const dirpath = expand("%:p:h")
 
-  if kg8m#util#string#StartsWith(dirpath, "suda://")
+  if stringUtil.StartsWith(dirpath, "suda://")
     return
   endif
 
   if !isdirectory(dirpath)
     const prompt = printf("`%s` doesn't exist. Create?", dirpath)
 
-    if kg8m#util#input#Confirm(prompt)
+    if inputUtil.Confirm(prompt)
       mkdir(dirpath, "p")
     endif
   endif

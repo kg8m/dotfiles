@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/configure/colors.vim"
+import autoload "kg8m/util/string.vim" as stringUtil
+
 # https://github.com/tpope/vim-markdown
 export def Run(): void
   g:markdown_fenced_languages = [
@@ -14,7 +17,7 @@ export def Run(): void
     "vim",
   ]
   g:markdown_syntax_conceal = false
-  g:markdown_minlines = g:kg8m#configure#colors#sync_minlines
+  g:markdown_minlines = colors.SYNC_MINLINES
 
   augroup vimrc-configure-filetypes-markdown
     autocmd!
@@ -53,7 +56,7 @@ def FixIskeyword(): void
     return
   endif
 
-  if !kg8m#util#string#Includes(&iskeyword, "#")
+  if !stringUtil.Includes(&iskeyword, "#")
     return
   endif
 

@@ -1,11 +1,16 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/plugin/fzf.vim"
+import autoload "kg8m/util/list.vim" as listUtil
+import autoload "kg8m/util/string.vim" as stringUtil
+
 final cache = {}
 
-kg8m#plugin#EnsureSourced("fzf.vim")
+plugin.EnsureSourced("fzf.vim")
 
 # Respect `$RIPGREP_EXTRA_OPTIONS` (fzf's `:Rg` doesn't respect it)
-command! -nargs=+ -complete=customlist,kg8m#plugin#fzf#grep#Complete FzfGrep kg8m#plugin#fzf#grep#Run(<q-args>)
+command! -nargs=+ -complete=customlist,Complete FzfGrep Run(<q-args>)
 
 export def EnterCommand(preset: string = "", options = {}): void
   const escaped_preset =
@@ -30,7 +35,7 @@ export def EnterCommand(preset: string = "", options = {}): void
   feedkeys($":\<C-u>FzfGrep\<Space>'{preset_prefix}{escaped_preset}{preset_suffix}'\<Left>", "t")
 enddef
 
-export def Run(args: string): void
+def Run(args: string): void
   const grep_command = ["rg", GrepFullOptions(), args]->join(" ")
   const has_column   = true
   const fzf_options  = [
@@ -40,18 +45,18 @@ export def Run(args: string): void
     "--preview-window", "down:75%:wrap:nohidden:+{2}-/2",
   ]
 
-  kg8m#plugin#fzf#Run(() => fzf#vim#grep(grep_command, has_column, { options: fzf_options }))
+  fzf.Run(() => fzf#vim#grep(grep_command, has_column, { options: fzf_options }))
 enddef
 
-export def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
-  if empty(arglead) || kg8m#util#string#StartsWith(arglead, "-")
+def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
+  if empty(arglead) || stringUtil.StartsWith(arglead, "-")
     if !has_key(cache, "grep_option_candidates")
       cache.grep_option_candidates = system(CommandToShowGrepOptionCandidates())->split("\n")
     endif
 
     const pattern = $"^{arglead}"
     return cache.grep_option_candidates->copy()->filter((_, item) => item =~# pattern)
-  elseif kg8m#util#string#StartsWith(arglead, "$")
+  elseif stringUtil.StartsWith(arglead, "$")
     const pattern = arglead[1 : -1]
     const prefix = "$"
     return getcompletion(pattern, "environment")->map((_, item) => $"{prefix}{item}")
@@ -111,5 +116,5 @@ enddef
 
 def JoinPresences(list: list<string>): string
   const Mapper = (item) => empty(item) ? false : item
-  return list->kg8m#util#list#FilterMap(Mapper)->join(" ")
+  return list->listUtil.FilterMap(Mapper)->join(" ")
 enddef

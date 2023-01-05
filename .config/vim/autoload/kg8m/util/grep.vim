@@ -1,25 +1,29 @@
 vim9script
 
+import autoload "kg8m/util/cursor.vim" as cursorUtil
+import autoload "kg8m/util/list.vim" as listUtil
+import autoload "kg8m/util/logger.vim"
+
 # cf. zsh's my_grep:with_filter
 export def BuildQflistFromBuffer(): void
   const filename = expand("%:t")
 
   if !empty(filename) && filename !~# '\v^grep\.\w{10}$'
-    kg8m#util#logger#Error($"The buffer may not be for grep: {filename}")
+    logger.Error($"The buffer may not be for grep: {filename}")
     return
   endif
 
   if &filetype !=# ""
-    kg8m#util#logger#Error($"The buffer has filetype: {&filetype}")
+    logger.Error($"The buffer has filetype: {&filetype}")
     return
   endif
 
   const lines = getline(1, "$")
 
-  const contents = kg8m#util#list#FilterMap(lines, (line) => LineToQfContent(line))
+  const contents = listUtil.FilterMap(lines, (line) => LineToQfContent(line))
 
   if empty(contents)
-    kg8m#util#logger#Error("There are no contents.")
+    logger.Error("There are no contents.")
     return
   endif
 
@@ -34,7 +38,7 @@ export def BuildQflistFromBuffer(): void
   setlocal nomodified
 
   execute "edit" fnameescape(contents[0].filename)
-  kg8m#util#cursor#Move(contents[0].lnum, contents[0].col)
+  cursorUtil.Move(contents[0].lnum, contents[0].col)
 
   # zv: Show cursor even if in fold.
   # zz: Adjust cursor at center of window.
@@ -51,7 +55,7 @@ def LineToQfContent(line: string): any
   const matches = matchlist(line, '\v(.{-1,}):(\d+):(\d+):(.+)')
 
   if len(matches) <# 5
-    kg8m#util#logger#Warn($"Ignored invalid line: {string(line)}")
+    logger.Warn($"Ignored invalid line: {string(line)}")
     return false
   else
     return {

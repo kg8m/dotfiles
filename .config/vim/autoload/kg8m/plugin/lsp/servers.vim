@@ -2,6 +2,10 @@ vim9script
 
 # Some server specific configurations are thanks to https://github.com/mattn/vim-lsp-settings.
 
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/plugin/completion.vim"
+import autoload "kg8m/util/logger.vim"
+
 final named_configs: dict<dict<any>>           = {}
 final filetyped_configs: dict<list<dict<any>>> = {}
 
@@ -93,7 +97,7 @@ def ExtraConfigForCssLanguageServer(): dict<any>
   return {
     cmd: (_) => ["vscode-css-language-server", "--stdio"],
     env: NodeToolsEnv(),
-    config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("css") },
+    config: { refresh_pattern: completion.RefreshPattern("css") },
     workspace_config: {
       css:  { lint: { validProperties: [] } },
       less: { lint: { validProperties: [] } },
@@ -267,7 +271,7 @@ def ExtraConfigForHtmlLanguageServer(): dict<any>
     cmd: (_) => ["vscode-html-language-server", "--stdio"],
     env: NodeToolsEnv(),
     initialization_options: { embeddedLanguages: { css: true, javascript: true } },
-    config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("html") },
+    config: { refresh_pattern: completion.RefreshPattern("html") },
   }
 enddef
 
@@ -285,7 +289,7 @@ def ExtraConfigForJsonLanguageServer(): dict<any>
   return {
     cmd: (_) => ["vscode-json-language-server", "--stdio"],
     env: NodeToolsEnv(),
-    config: { refresh_pattern: kg8m#plugin#completion#RefreshPattern("json") },
+    config: { refresh_pattern: completion.RefreshPattern("json") },
     workspace_config: {
       json: {
         format: { enable: false },
@@ -501,7 +505,7 @@ def ExtraConfigForVimLanguageServer(): dict<any>
       iskeyword: ":",
 
       vimruntime: $VIMRUNTIME,
-      runtimepath: kg8m#plugin#AllRuntimepath(),
+      runtimepath: plugin.AllRuntimepath(),
       diagnostic: { enable: true },
       indexes: {
         runtimepath: true,
@@ -715,7 +719,7 @@ enddef
 
 def Schemas(): list<any>
   if !has_key(cache, "lsp_schemas_json")
-    const filepath = printf("%s/data/catalog.json", kg8m#plugin#GetInfo("vim-lsp-settings").path)
+    const filepath = printf("%s/data/catalog.json", plugin.GetInfo("vim-lsp-settings").path)
     const json     = filepath->readfile()->join("\n")->json_decode()
 
     cache.lsp_schemas_json = json.schemas
@@ -759,7 +763,7 @@ def OverwriteCapabilities(): void
 
     if has_key(capabilities, "documentFormattingProvider")
       capabilities.documentFormattingProvider = false
-      kg8m#util#logger#Info($"{config.name}'s documentFormattingProvider got forced to be disabled.")
+      logger.Info($"{config.name}'s documentFormattingProvider got forced to be disabled.")
     endif
   endfor
 enddef
@@ -775,7 +779,7 @@ def CheckExitedServers(): void
         add(messages, $" Check logs in `{g:lsp_log_file}`.")
       endif
 
-      kg8m#util#logger#Error(messages->join(" "))
+      logger.Error(messages->join(" "))
     endif
   endfor
 enddef

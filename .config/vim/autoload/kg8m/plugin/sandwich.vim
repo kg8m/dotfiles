@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/util/matchpairs.vim"
+
 export def OnSource(): void
   g:sandwich_no_default_key_mappings = true
   g:operator_sandwich_no_default_key_mappings = true
@@ -37,8 +40,8 @@ export def DefineMappings(): void
   #   aaaaa"bbbbb（ccccc(ddddd(eeeee“ffffffffff”eeeee)ddddd)ccccc）bbbbb"aaaaa
   const modes = ["x", "o"]
   const a_i_types = ["a", "i"]
-  for key in kg8m#util#matchpairs#GroupedJapanesePairs()->keys()
-    for key_or_another in kg8m#util#matchpairs#KeyPairFor(key)
+  for key in matchpairs.GroupedJapanesePairs()->keys()
+    for key_or_another in matchpairs.KeyPairFor(key)
       for mode in modes
         for a_or_i in a_i_types
           const lhs = $"{a_or_i}{key_or_another}"
@@ -54,7 +57,7 @@ export def DefineMappings(): void
 enddef
 
 def OperatorDeleteExpr(): string
-  kg8m#plugin#EnsureSourced("vim-sandwich")
+  plugin.EnsureSourced("vim-sandwich")
 
   const key = getcharstr()
   const recipes = DeleterRecipesFor(key)
@@ -64,7 +67,7 @@ def OperatorDeleteExpr(): string
 enddef
 
 def OperatorReplaceExpr(): string
-  kg8m#plugin#EnsureSourced("vim-sandwich")
+  plugin.EnsureSourced("vim-sandwich")
 
   const adder_recipes = DefaultRecipes()->mapnew((_, recipe) => {
     final new_recipe = copy(recipe)
@@ -80,7 +83,7 @@ def OperatorReplaceExpr(): string
 enddef
 
 def AutoTextobjExpr(key: string, mode: string, a_or_i: string): string
-  kg8m#plugin#EnsureSourced("vim-sandwich")
+  plugin.EnsureSourced("vim-sandwich")
   return textobj#sandwich#auto(mode, a_or_i, {}, AutoRecipesFor(key))
 enddef
 
@@ -114,19 +117,19 @@ def AutoRecipesFor(key: string): list<dict<any>>
 enddef
 
 def RecipesFor(raw_key: string, Build: func): list<dict<any>>
-  const key = kg8m#util#matchpairs#NormalizeKey(raw_key)
-  const japanese_pairs = get(kg8m#util#matchpairs#GroupedJapanesePairs(), key, [])
+  const key = matchpairs.NormalizeKey(raw_key)
+  const japanese_pairs = get(matchpairs.GroupedJapanesePairs(), key, [])
 
   if japanese_pairs ==# []
     return [BuildFallbackRecipe(key)]
   else
-    const key_pair = kg8m#util#matchpairs#KeyPairFor(key)
+    const key_pair = matchpairs.KeyPairFor(key)
     return Build(key_pair, japanese_pairs)
   endif
 enddef
 
 def DefaultRecipes(): list<dict<any>>
-  const keys = keys(kg8m#util#matchpairs#GroupedJapanesePairs())
+  const keys = keys(matchpairs.GroupedJapanesePairs())
   const adder_recipes   = reduce(keys, (recipes, key) => recipes + AdderRecipesFor(key), [])
   const deleter_recipes = reduce(keys, (recipes, key) => recipes + DeleterRecipesFor(key), [])
 
@@ -134,7 +137,7 @@ def DefaultRecipes(): list<dict<any>>
 enddef
 
 def BuildAdderRecipe(matchpair: list<string>, input: list<string>): dict<any>
-  const is_start_key = kg8m#util#matchpairs#IsBasicStartKey(input[0])
+  const is_start_key = matchpairs.IsBasicStartKey(input[0])
 
   return extendnew({
     # For surround.vim-like behavior:

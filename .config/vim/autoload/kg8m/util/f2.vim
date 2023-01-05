@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/util/cursor.vim" as cursorUtil
+import autoload "kg8m/util/logger.vim"
+
 final cache = {
   migemo: {
     setup_done: false,
@@ -85,20 +88,20 @@ def RunSingleline(): void
   const stopline = line(".")
 
   if cache.type ==# "t"
-    kg8m#util#cursor#Move(cursor_position[1], cursor_position[2] + 1)
+    cursorUtil.Move(cursor_position[1], cursor_position[2] + 1)
   elseif cache.type ==# "T"
-    kg8m#util#cursor#Move(cursor_position[1], cursor_position[2] - 1)
+    cursorUtil.Move(cursor_position[1], cursor_position[2] - 1)
   endif
 
   const position = searchpos(pattern, flags, stopline)
 
   if position ==# [0, 0]
     if getcurpos() !=# cursor_position
-      kg8m#util#cursor#Move(cursor_position[1], cursor_position[2])
+      cursorUtil.Move(cursor_position[1], cursor_position[2])
     endif
 
     const message = $"There are no matches for {string(cache.input)}"
-    kg8m#util#logger#Info(message, { save_history: false })
+    logger.Info(message, { save_history: false })
     Reset()
   else
     const line_number = position[0]
@@ -112,7 +115,7 @@ def RunSingleline(): void
       column_number += 1
     endif
 
-    kg8m#util#cursor#Move(line_number, column_number)
+    cursorUtil.Move(line_number, column_number)
     BlinkCursor()
   endif
 enddef
@@ -143,7 +146,7 @@ def BuildPattern(): string
 
   if empty(cache.migemo.dictionary_path)
     if !cache.migemo.warned
-      kg8m#util#logger#Warn("migemo isn't available. Check if migemo is executable and its dictionary exists.")
+      logger.Warn("migemo isn't available. Check if migemo is executable and its dictionary exists.")
       cache.migemo.warned = true
     endif
 

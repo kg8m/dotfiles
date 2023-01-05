@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/util/logger.vim"
+
 final cache = {
   active: false,
   notified: false,
@@ -15,7 +18,7 @@ export def SetupBuffer(): void
     nmap <buffer> <Leader>c <Plug>(conflict-marker-next-hunk)
     cache.active = true
 
-    if !cache.notified && kg8m#plugin#AreAllOnStartPluginsSourced()
+    if !cache.notified && plugin.AreAllOnStartPluginsSourced()
       NotifyActivated()
     endif
   endif
@@ -23,7 +26,7 @@ enddef
 
 export def NotifyActivated(): void
   if cache.active
-    kg8m#util#logger#Info("Press `<Leader>c` to move to next conflict hunk.")
+    logger.Info("Press `<Leader>c` to move to next conflict hunk.")
     cache.notified = true
   endif
 enddef

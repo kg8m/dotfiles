@@ -1,41 +1,47 @@
 vim9script
 
+import autoload "kg8m/configure/mappings/search.vim"
+import autoload "kg8m/plugin/mappings/i.vim" as mappingsI
+import autoload "kg8m/util.vim"
+import autoload "kg8m/util/f2.vim"
+import autoload "kg8m/util/marks.vim" as marksUtil
+
 augroup vimrc-configure-mappings
   autocmd!
-  autocmd InsertEnter                  * timer_start(0, (_) => kg8m#plugin#mappings#i#Define())
-  autocmd User insert_mode_plugin_loaded timer_start(0, (_) => kg8m#plugin#mappings#i#Define({ force: true }))
+  autocmd InsertEnter                  * timer_start(0, (_) => mappingsI.Define())
+  autocmd User insert_mode_plugin_loaded timer_start(0, (_) => mappingsI.Define({ force: true }))
 augroup END
 
-export def Base(): void
+export def Define(): void
   # Split window
   nnoremap <Leader>v :vsplit<CR>
   nnoremap <Leader>h :split<CR>
 
   # Overwrite default `f`/`F`/`t`/`T`.
-  nnoremap f <Cmd>call kg8m#util#f2#LowerF()<CR>
-  xnoremap f <Cmd>call kg8m#util#f2#LowerF()<CR>
-  onoremap f <Cmd>call kg8m#util#f2#LowerF()<CR>
-  nnoremap F <Cmd>call kg8m#util#f2#UpperF()<CR>
-  xnoremap F <Cmd>call kg8m#util#f2#UpperF()<CR>
-  onoremap F <Cmd>call kg8m#util#f2#UpperF()<CR>
-  nnoremap t <Cmd>call kg8m#util#f2#LowerT()<CR>
-  xnoremap t <Cmd>call kg8m#util#f2#LowerT()<CR>
-  onoremap t <Cmd>call kg8m#util#f2#LowerT()<CR>
-  nnoremap T <Cmd>call kg8m#util#f2#UpperT()<CR>
-  xnoremap T <Cmd>call kg8m#util#f2#UpperT()<CR>
-  onoremap T <Cmd>call kg8m#util#f2#UpperT()<CR>
+  nnoremap f <ScriptCmd>f2.LowerF()<CR>
+  xnoremap f <ScriptCmd>f2.LowerF()<CR>
+  onoremap f <ScriptCmd>f2.LowerF()<CR>
+  nnoremap F <ScriptCmd>f2.UpperF()<CR>
+  xnoremap F <ScriptCmd>f2.UpperF()<CR>
+  onoremap F <ScriptCmd>f2.UpperF()<CR>
+  nnoremap t <ScriptCmd>f2.LowerT()<CR>
+  xnoremap t <ScriptCmd>f2.LowerT()<CR>
+  onoremap t <ScriptCmd>f2.LowerT()<CR>
+  nnoremap T <ScriptCmd>f2.UpperT()<CR>
+  xnoremap T <ScriptCmd>f2.UpperT()<CR>
+  onoremap T <ScriptCmd>f2.UpperT()<CR>
 
-  nnoremap <Leader>f <Cmd>call kg8m#util#f2#Multiline()<CR>
-  xnoremap <Leader>f <Cmd>call kg8m#util#f2#Multiline()<CR>
-  onoremap <Leader>f <Cmd>call kg8m#util#f2#Multiline()<CR>
+  nnoremap <Leader>f <ScriptCmd>f2.Multiline()<CR>
+  xnoremap <Leader>f <ScriptCmd>f2.Multiline()<CR>
+  onoremap <Leader>f <ScriptCmd>f2.Multiline()<CR>
 
   # Overwrite default `;`/`,`.
-  nnoremap ; <Cmd>call kg8m#util#f2#Semi()<CR>
-  xnoremap ; <Cmd>call kg8m#util#f2#Semi()<CR>
-  onoremap ; <Cmd>call kg8m#util#f2#Semi()<CR>
-  nnoremap , <Cmd>call kg8m#util#f2#Comma()<CR>
-  xnoremap , <Cmd>call kg8m#util#f2#Comma()<CR>
-  onoremap , <Cmd>call kg8m#util#f2#Comma()<CR>
+  nnoremap ; <ScriptCmd>f2.Semi()<CR>
+  xnoremap ; <ScriptCmd>f2.Semi()<CR>
+  onoremap ; <ScriptCmd>f2.Semi()<CR>
+  nnoremap , <ScriptCmd>f2.Comma()<CR>
+  xnoremap , <ScriptCmd>f2.Comma()<CR>
+  onoremap , <ScriptCmd>f2.Comma()<CR>
 
   # See also settings of vim-lsp and vim-fzf-tjump
   # <C-t>: Jump back
@@ -110,13 +116,13 @@ export def Base(): void
   nnoremap <expr> A ExprToEnterIWithIndentation("A")
   nnoremap <expr> i ExprToEnterIWithIndentation("i")
   nnoremap <expr> I ExprToEnterIWithIndentation("I")
-enddef
 
-export def Utils(): void
-  xnoremap <silent> <Leader>y "zy:call kg8m#util#RemoteCopy(@z)<CR>
-  xnoremap <silent> <Leader>w :call kg8m#util#RemoveTrailingWhitespaces()<CR>
+  xnoremap <silent> <Leader>y "zy<ScriptCmd>util.RemoteCopy(@z)<CR>
+  xnoremap <silent> <Leader>w :call <SID>util.RemoveTrailingWhitespaces()<CR>
 
-  nnoremap <silent> m :call kg8m#util#marks#Increment()<CR>
+  nnoremap <silent> m <ScriptCmd>marksUtil.Increment()<CR>
+
+  search.Define()
 enddef
 
 # <Nul> == <C-Space>

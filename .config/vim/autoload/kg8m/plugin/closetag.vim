@@ -1,6 +1,8 @@
 vim9script
 
-g:kg8m#plugin#closetag#filetypes = [
+import autoload "kg8m/events.vim"
+
+export const FILETYPES = [
   "eruby",
   "html",
   "javascript",
@@ -11,10 +13,10 @@ g:kg8m#plugin#closetag#filetypes = [
 ]
 
 export def OnSource(): void
-  g:closetag_filetypes = join(g:kg8m#plugin#closetag#filetypes, ",")
+  g:closetag_filetypes = join(FILETYPES, ",")
   g:closetag_shortcut  = "\\>"
 enddef
 
 export def OnPostSource(): void
-  timer_start(0, (_) => kg8m#events#NotifyInsertModePluginLoaded())
+  timer_start(0, (_) => events.NotifyInsertModePluginLoaded())
 enddef

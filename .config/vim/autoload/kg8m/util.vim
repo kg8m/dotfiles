@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/util/logger.vim"
+import autoload "kg8m/util/string.vim" as stringUtil
+
 final cache = {}
 
 export def SourceLocalVimrc(): void
@@ -33,7 +36,7 @@ export def IsCtagsAvailable(): bool
 enddef
 
 export def IsGitTmpEdit(): bool
-  return kg8m#util#IsGitCommit() || kg8m#util#IsGitHunkEdit() || kg8m#util#IsGitRebase()
+  return IsGitCommit() || IsGitHunkEdit() || IsGitRebase()
 enddef
 
 export def IsGitCommit(): bool
@@ -70,7 +73,7 @@ export def IsTabnineAvailable(): bool
 
   if empty($TABNINE_AVAILABLE)
     const remotes = system("git remote -v 2> /dev/null")
-    cache.is_tabnine_available = remotes ==# "" || kg8m#util#string#Includes(remotes, "@github.com:kg8m/")
+    cache.is_tabnine_available = remotes ==# "" || stringUtil.Includes(remotes, "@github.com:kg8m/")
   else
     cache.is_tabnine_available = $TABNINE_AVAILABLE ==# "1"
   endif
@@ -117,10 +120,10 @@ export def RemoteCopy(original_text: string): void
   const max_width = v:echospace - 60
 
   if max_width ># 10
-    message ..= kg8m#util#string#Truncate(text, max_width)->trim()
+    message ..= stringUtil.Truncate(text, max_width)->trim()
   endif
 
-  kg8m#util#logger#Info(message)
+  logger.Info(message)
 enddef
 
 export def RemoveTrailingWhitespaces()

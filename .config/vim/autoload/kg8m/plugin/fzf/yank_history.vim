@@ -1,6 +1,10 @@
 vim9script
 
-kg8m#plugin#EnsureSourced("fzf.vim")
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/plugin/fzf.vim"
+import autoload "kg8m/plugin/yankround.vim"
+
+plugin.EnsureSourced("fzf.vim")
 
 # https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
 # Also see configs for yankround.vim
@@ -25,16 +29,16 @@ export def Run(): void
     ],
   }
 
-  kg8m#plugin#fzf#Run(() => fzf#run(fzf#wrap("yank-history", options)))
+  fzf.Run(() => fzf#run(fzf#wrap("yank-history", options)))
 enddef
 
 # https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
 def Candidates(): list<string>
-  return range(0, len(kg8m#plugin#yankround#Cache()) - 1)->mapnew((_, index) => FormatListItem(index))
+  return range(0, len(yankround.Cache()) - 1)->mapnew((_, index) => FormatListItem(index))
 enddef
 
 def FormatListItem(index: number): string
-  const text = kg8m#plugin#yankround#CacheAndRegtype(index)[0]
+  const text = yankround.CacheAndRegtype(index)[0]
 
   # Avoid shell's syntax error in fzf's preview
   const sanitized_text = substitute(text, "\n", "\\\\n", "g")
@@ -45,7 +49,7 @@ enddef
 # Overwrite current register `"`
 export def Handler(yank_item: string): void
   const index = matchlist(yank_item, '\v^\s*(\d+)\t')[1]->str2nr()
-  const [text, regtype] = kg8m#plugin#yankround#CacheAndRegtype(index)
+  const [text, regtype] = yankround.CacheAndRegtype(index)
 
   setreg('"', text, regtype)
   normal! ""p

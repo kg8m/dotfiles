@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "kg8m/plugin/lsp/stream/definition.vim"
+
 export def Subscribe(): void
-  kg8m#plugin#lsp#stream#definition#Subscribe()
+  definition.Subscribe()
 enddef

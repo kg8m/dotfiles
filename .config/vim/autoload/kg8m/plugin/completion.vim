@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/plugin/lsp.vim"
+import autoload "kg8m/plugin/lsp/servers.vim" as lspServers
+
 final cache = {}
 
 export def Disable(): void
@@ -9,7 +12,7 @@ enddef
 export def RefreshPattern(filetype: string): string
   if !has_key(cache, "completion_refresh_patterns")
     const css_pattern  = '\v([.#a-zA-Z0-9_-]+)$'
-    const ruby_pattern = kg8m#plugin#lsp#servers#IsRubyServerAvailable() ? '\v(\@?\@\k*|(:)@<!:\k*|\k+)$' : '\v(\k+)$'
+    const ruby_pattern = lspServers.IsRubyServerAvailable() ? '\v(\@?\@\k*|(:)@<!:\k*|\k+)$' : '\v(\k+)$'
     const sh_pattern   = '\v((\k|-)+)$'
 
     cache.completion_refresh_patterns = {
@@ -33,7 +36,7 @@ enddef
 
 export def SetRefreshPattern(): void
   if !has_key(b:, "asyncomplete_refresh_pattern")
-    const filetype = kg8m#plugin#lsp#IsTargetBuffer() && kg8m#plugin#lsp#IsBufferEnabled() ? &filetype : "_"
+    const filetype = lsp.IsTargetBuffer() && lsp.IsBufferEnabled() ? &filetype : "_"
     b:asyncomplete_refresh_pattern = RefreshPattern(filetype)
   endif
 enddef

@@ -1,5 +1,8 @@
 vim9script
 
+import autoload "kg8m/util/filetypes/vim.vim" as vimUtil
+import autoload "kg8m/util/logger.vim"
+
 export def VimAutoload(): any
   if &filetype !=# "vim"
     return 0
@@ -11,7 +14,7 @@ export def VimAutoload(): any
     return 0
   endif
 
-  const filepath = kg8m#util#filetypes#vim#FindAutoloadFile(autoload_path)
+  const filepath = vimUtil.FindAutoloadFile(autoload_path)
 
   if empty(filepath)
     return 0
@@ -48,6 +51,6 @@ export def RailsFiles(): any
     endif
   endif
 
-  kg8m#util#logger#Warn($"[kg8m#plugin#gf_user#RailsFiles] File not found: {string(filepath)}")
+  logger.Warn($"[kg8m#plugin#gf_user#RailsFiles] File not found: {string(filepath)}")
   return 0
 enddef

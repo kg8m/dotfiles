@@ -5,6 +5,8 @@ vim9script
 #   - markers: `{{{ ... }}}`
 #   - here-documents: `let foo =<< FOO ... FOO`
 
+import autoload "kg8m/util/string.vim" as stringUtil
+
 def SetCommentChar(): void
   b:vim_fold_comment_char = getline(1) ==# "vim9script" ? "#" : '"'
 enddef
@@ -58,7 +60,7 @@ export def Expr(): string
 enddef
 
 def IsNoContent(line: string): bool
-  return line ==# EMPTY_STRING || kg8m#util#string#StartsWith(line, b:vim_fold_comment_char)
+  return line ==# EMPTY_STRING || stringUtil.StartsWith(line, b:vim_fold_comment_char)
 enddef
 
 def ContainsStartKeywords(line: string): bool

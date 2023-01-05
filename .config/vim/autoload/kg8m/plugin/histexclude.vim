@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
+
 export def OnSource(): void
   g:histexclude = { ":": '\v^[:[:space:]]*%(\d+|b.|e|w?%[qa]?)!?\s*$' }
 
@@ -8,7 +10,7 @@ export def OnSource(): void
 enddef
 
 export def Run(): string
-  kg8m#plugin#EnsureSourced("vim-histexclude")
+  plugin.EnsureSourced("vim-histexclude")
 
   # https://github.com/itchyny/vim-histexclude/blob/69eb4467f261ed11852c36908c50fb351bafe103/plugin/histexclude.vim#L20
   return histexclude#update(":")

@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "kg8m/plugin/fzf/outline/rspec.vim"
+
 export def Rspec(): void
-  kg8m#plugin#fzf#outline#rspec#Run()
+  rspec.Run()
 enddef

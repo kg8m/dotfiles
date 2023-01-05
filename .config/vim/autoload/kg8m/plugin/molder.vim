@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
+
 final cache = {}
 
 export def OnSource(): void
@@ -12,7 +14,7 @@ export def OnSource(): void
 enddef
 
 export def Run(): void
-  kg8m#plugin#EnsureSourced("vim-molder")
+  plugin.EnsureSourced("vim-molder")
 
   if expand("%")->empty()
     edit .

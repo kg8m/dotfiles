@@ -1,5 +1,9 @@
 vim9script
 
+import autoload "kg8m/util/list.vim" as listUtil
+import autoload "kg8m/util/logger.vim"
+import autoload "kg8m/util/string.vim" as stringUtil
+
 if !isdirectory($VIM_PLUGINS)
   throw "`$VIM_PLUGINS` is not a directory."
 endif
@@ -82,7 +86,7 @@ export def Register(repository: string, options: dict<any> = {}): bool
 
   if has_key(options, "merged")
     if options.merged && has_key(options, "if")
-      kg8m#util#logger#Warn("Don't use `merged: true` with `if` option because merged plugins are always loaded")
+      logger.Warn("Don't use `merged: true` with `if` option because merged plugins are always loaded")
     endif
   else
     options.merged = !has_key(options, "if")
@@ -179,9 +183,9 @@ export def AllRuntimepath(): string
   const current = &runtimepath->split(",")
   const plugins = GetInfo()
     ->values()
-    ->kg8m#util#list#FilterMap((plugin) => empty(plugin.rtp) ? false : plugin.rtp)
+    ->listUtil.FilterMap((plugin) => empty(plugin.rtp) ? false : plugin.rtp)
 
-  return kg8m#util#list#Union(current, plugins)->join(",")
+  return listUtil.Union(current, plugins)->join(",")
 enddef
 
 export def RecacheRuntimepath(): void
@@ -224,10 +228,10 @@ export def AreAllOnStartPluginsSourced(): bool
 enddef
 
 def RecachePluginsIfNeeded(): void
-  if kg8m#util#string#StartsWith(getcwd(), $VIM_PLUGINS)
+  if stringUtil.StartsWith(getcwd(), $VIM_PLUGINS)
     RecacheRuntimepath()
 
     # Use timer because synchronous messages are hidden by Vim's default written message on `BufWritePost` event.
-    timer_start(100, (_) => kg8m#util#logger#Info("Runtimepath recached!!"))
+    timer_start(100, (_) => logger.Info("Runtimepath recached!!"))
   endif
 enddef

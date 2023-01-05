@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "kg8m/util/logger.vim"
+
 final cache = {}
 
 export def OnPostSource(): void
@@ -62,7 +64,7 @@ def SetupRefreshKeywords(): void
 enddef
 
 def CannotRefreshKeywords(): void
-  kg8m#util#logger#Error("Cannot refresh keywords because asyncomplete-buffer.vim's SID can't be detected.")
+  logger.Error("Cannot refresh keywords because asyncomplete-buffer.vim's SID can't be detected.")
 enddef
 
 def Activate(): void

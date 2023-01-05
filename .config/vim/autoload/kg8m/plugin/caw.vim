@@ -1,13 +1,17 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
+
+const SID = expand("<SID>")
+
 export def OnSource(): void
   g:caw_no_default_keymappings = true
   g:caw_hatpos_skip_blank_line = true
 enddef
 
 export def Run(): string
-  if !kg8m#plugin#IsSourced("caw.vim")
-    kg8m#plugin#Source("caw.vim")
+  if !plugin.IsSourced("caw.vim")
+    plugin.Source("caw.vim")
 
     if mode() ==? "v"
       # Retry because `line("'<")` and `line("'>")` don't work just after sourcing.
@@ -18,7 +22,7 @@ export def Run(): string
   SetupFiletype()
 
   const base         = "\<Plug>(caw:hatpos:toggle)"
-  const teardown     = ":call kg8m#plugin#caw#Teardown()\<CR>"
+  const teardown     = $":call {SID}Teardown()\<CR>"
   const clear_status = ":echo ''\<CR>"
   return base .. teardown .. clear_status
 enddef
@@ -86,7 +90,7 @@ def SetupVim(): void
   b:caw_zeropos_sp = " "
 enddef
 
-export def Teardown(): void
+def Teardown(): void
   if has_key(b:, "caw_context_filetype_original_filetypes")
     unlet b:context_filetype_filetypes
 

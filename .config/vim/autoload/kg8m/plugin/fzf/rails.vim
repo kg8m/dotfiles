@@ -1,12 +1,17 @@
 vim9script
 
-kg8m#plugin#EnsureSourced("fzf.vim")
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/plugin/fzf.vim"
+import autoload "kg8m/util.vim"
+import autoload "kg8m/util/logger.vim"
 
-command! -nargs=1 -complete=customlist,kg8m#plugin#fzf#rails#Complete FzfRails kg8m#plugin#fzf#rails#Run(<q-args>)
+plugin.EnsureSourced("fzf.vim")
+
+command! -nargs=1 -complete=customlist,Complete FzfRails Run(<q-args>)
 
 export def EnterCommand(): void
-  if !kg8m#util#OnRailsDir()
-    kg8m#util#logger#Error("Not a Rails directory!!")
+  if !util.OnRailsDir()
+    logger.Error("Not a Rails directory!!")
     return
   endif
 
@@ -16,7 +21,7 @@ enddef
 final specs: dict<dict<any>> = {}
 final type_names = []
 
-export def Run(type: string): void
+def Run(type: string): void
   const type_spec = specs[type]
   var command = ["fd", $FD_DEFAULT_OPTIONS, "--full-path", "--type", "f", "--color", "always"]
 
@@ -47,10 +52,10 @@ export def Run(type: string): void
     ],
   }
 
-  kg8m#plugin#fzf#Run(() => fzf#run(fzf#wrap("rails", options)))
+  fzf.Run(() => fzf#run(fzf#wrap("rails", options)))
 enddef
 
-export def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
+def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
   if arglead ==# ""
     return type_names
   else
@@ -77,7 +82,7 @@ def Setup(): void
       pattern: '(/environment\.rb|/environments/.+\.rb)$',
     },
     gems: {
-      dirs: [kg8m#util#RubygemsPath()],
+      dirs: [util.RubygemsPath()],
     },
     initializers: {
       dirs: ["config/initializers"],

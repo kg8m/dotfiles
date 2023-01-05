@@ -1,6 +1,9 @@
 vim9script
 
-kg8m#plugin#EnsureSourced("fzf.vim")
+import autoload "kg8m/plugin.vim"
+import autoload "kg8m/plugin/fzf.vim"
+
+plugin.EnsureSourced("fzf.vim")
 
 # Wrapper function to show preview around each line (fzf's `:BLines` doesn't)
 export def Run(query: string = ""): void
@@ -9,5 +12,5 @@ export def Run(query: string = ""): void
     "--preview-window", "down:50%:wrap:nohidden:+{1}-/2",
   ]
 
-  kg8m#plugin#fzf#Run(() => fzf#vim#buffer_lines(query, { options: options }))
+  fzf.Run(() => fzf#vim#buffer_lines(query, { options: options }))
 enddef

@@ -1,5 +1,10 @@
 vim9script
 
+import autoload "kg8m/plugin/lsp.vim"
+import autoload "kg8m/util/file.vim" as fileUtil
+import autoload "kg8m/util/list.vim" as listUtil
+import autoload "kg8m/util/string.vim" as stringUtil
+
 export def OnSource(): void
   # http://d.hatena.ne.jp/itchyny/20130828/1377653592
   set laststatus=2
@@ -80,11 +85,11 @@ export def Fileencoding(): string
 enddef
 
 export def NormalFilepath(): string
-  return kg8m#plugin#lightline#IsIrregularFilepath() ? "" : kg8m#plugin#lightline#Filepath()
+  return IsIrregularFilepath() ? "" : Filepath()
 enddef
 
 export def NormalFileencoding(): string
-  return kg8m#plugin#lightline#IsIrregularFileencoding() ? "" : kg8m#plugin#lightline#Fileencoding()
+  return IsIrregularFileencoding() ? "" : Fileencoding()
 enddef
 
 export def WarningFilepath(): string
@@ -106,11 +111,11 @@ export def IsIrregularFileencoding(): bool
 enddef
 
 export def LspStatus(): string
-  if kg8m#plugin#lsp#IsTargetBuffer()
-    if kg8m#plugin#lsp#IsBufferEnabled()
+  if lsp.IsTargetBuffer()
+    if lsp.IsBufferEnabled()
       return LspStatusAfterEnabled()
     else
-      return g:kg8m#plugin#lsp#icons.loading
+      return lsp.ICONS.loading
     endif
   else
     return ""
@@ -126,10 +131,10 @@ def CurrentFilepath(): string
     return w:quickfix_title
   endif
 
-  if kg8m#util#file#CurrentName() ==# ""
+  if fileUtil.CurrentName() ==# ""
     return "[No Name]"
   else
-    return TruncateFilepath(kg8m#util#file#CurrentPath())
+    return TruncateFilepath(fileUtil.CurrentPath())
   endif
 enddef
 
@@ -142,7 +147,7 @@ def TruncateFilepath(filepath: string): string
   else
     # Footer = the last slash and filename
     const footer_width = length - strridx(filepath, "/")
-    return kg8m#util#string#Truncate(filepath, max, { footer_width: footer_width })
+    return stringUtil.Truncate(filepath, max, { footer_width: footer_width })
   endif
 enddef
 
@@ -154,16 +159,16 @@ def LspStatusAfterEnabled(): string
   const counts = lsp#get_buffer_diagnostics_counts()
   const types  = ["error", "warning", "information", "hint"]
 
-  const mapped = kg8m#util#list#FilterMap(types, (type: string): any => {
+  const mapped = listUtil.FilterMap(types, (type: string): any => {
     if counts[type] ==# 0
       return false
     else
-      return printf("%s %d", g:kg8m#plugin#lsp#icons[type], counts[type])
+      return printf("%s %d", lsp.ICONS[type], counts[type])
     endif
   })
 
   if empty(mapped)
-    return g:kg8m#plugin#lsp#icons.ok
+    return lsp.ICONS.ok
   else
     return join(mapped, " ")
   endif

@@ -1,7 +1,9 @@
 vim9script
 
+import autoload "kg8m/configure.vim"
+
 export def OnSource(): void
-  kg8m#configure#Conceal()
+  configure.Conceal()
 
   g:indentLine_char            = "|"
   g:indentLine_faster          = true

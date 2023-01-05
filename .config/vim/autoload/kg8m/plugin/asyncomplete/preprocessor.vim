@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "kg8m/util/string.vim" as stringUtil
+
 # Sort items by their each priority and filter them that fuzzy match.
 # Omit items with lower priority.
 # Remove characters overlapping with following text.
@@ -98,7 +100,7 @@ def RemoveOverlapWithFollowingText(original_text: string, following_text: string
   while i <=# max_index
     const tail = strpart(original_text, i)
 
-    if kg8m#util#string#StartsWith(following_text, tail)
+    if stringUtil.StartsWith(following_text, tail)
       return strpart(original_text, 0, i)
     endif
 
@@ -119,13 +121,13 @@ def WordPriority(word: string, context: dict<any>): number
       context.cache[word] = 999
     elseif lower_target ==# lower_matcher
       context.cache[word] = 2
-    elseif kg8m#util#string#StartsWith(target, context.matcher)
+    elseif stringUtil.StartsWith(target, context.matcher)
       context.cache[word] = 3
-    elseif kg8m#util#string#StartsWith(lower_target, lower_matcher)
+    elseif stringUtil.StartsWith(lower_target, lower_matcher)
       context.cache[word] = 5
-    elseif kg8m#util#string#Includes(target, context.matcher)
+    elseif stringUtil.Includes(target, context.matcher)
       context.cache[word] = 8
-    elseif kg8m#util#string#Includes(lower_target, lower_matcher)
+    elseif stringUtil.Includes(lower_target, lower_matcher)
       context.cache[word] = 13
     else
       context.cache[word] = 21

@@ -7,6 +7,8 @@ vim9script
 #     - here-documents: `<< FOO ... FOO`
 #     - `{ ... }`
 
+import autoload "kg8m/util/string.vim" as stringUtil
+
 const EMPTY_STRING = ""
 const COMMENT_CHAR = "#"
 
@@ -39,7 +41,7 @@ export def Expr(): string
 enddef
 
 def IsNoContent(line: string): bool
-  return line ==# EMPTY_STRING || kg8m#util#string#StartsWith(line, COMMENT_CHAR)
+  return line ==# EMPTY_STRING || stringUtil.StartsWith(line, COMMENT_CHAR)
 enddef
 
 def IsFoldStart(line: string): bool

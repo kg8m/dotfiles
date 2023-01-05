@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "kg8m/util/terminal.vim" as terminalUtil
+
 export def Run(): void
   augroup vimrc-configure-filetypes-go
     autocmd!
@@ -15,5 +17,5 @@ def RunCurrent(): void
   write
 
   const command = printf("go run -race %s", expand("%")->shellescape())
-  kg8m#util#terminal#ExecuteCommand(command)
+  terminalUtil.ExecuteCommand(command)
 enddef

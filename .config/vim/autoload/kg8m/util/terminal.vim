@@ -1,8 +1,11 @@
 vim9script
 
+import autoload "kg8m/util.vim"
+import autoload "kg8m/util/tmux.vim" as tmuxUtil
+
 export def ExecuteCommand(command: string): void
-  if kg8m#util#OnTmux()
-    kg8m#util#tmux#ExecuteCommand(command)
+  if util.OnTmux()
+    tmuxUtil.ExecuteCommand(command)
   else
     if len(term_list()) ==# 0
       terminal

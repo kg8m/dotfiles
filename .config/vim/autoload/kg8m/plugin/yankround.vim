@@ -1,5 +1,7 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
+
 export def OnSource(): void
   g:yankround_dir           = $"{$XDG_DATA_HOME}/vim/yankround"
   g:yankround_max_history   = 500
@@ -14,11 +16,11 @@ export def OnSource(): void
 enddef
 
 export def Cache(): list<string>
-  kg8m#plugin#EnsureSourced("yankround.vim")
+  plugin.EnsureSourced("yankround.vim")
   return g:_yankround_cache
 enddef
 
 export def CacheAndRegtype(index: number): list<string>
-  kg8m#plugin#EnsureSourced("yankround.vim")
+  plugin.EnsureSourced("yankround.vim")
   return yankround#_get_cache_and_regtype(index)
 enddef
