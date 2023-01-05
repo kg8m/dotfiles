@@ -128,7 +128,7 @@ enddef
 
 export def RemoveTrailingWhitespaces()
   const position = getpos(".")
-  keeppatterns :'<,'>s/\s\+$//ge
+  keeppatterns :'<,'>s/\s\+$//e
   setpos(".", position)
 enddef
 
