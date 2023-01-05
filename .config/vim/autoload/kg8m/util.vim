@@ -120,7 +120,7 @@ export def RemoteCopy(original_text: string): void
   const max_width = v:echospace - 60
 
   if max_width ># 10
-    message ..= stringUtil.Truncate(text, max_width)->trim()
+    message ..= ": " .. stringUtil.Truncate(text, max_width)->trim()
   endif
 
   logger.Info(message)
