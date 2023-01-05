@@ -58,10 +58,6 @@ def FallbackForVimAutoloadFunction(): void
     const column_number = matchstrpos(result, '\v<export def \zs')[1] - len(line_number)
 
     execute "edit" fnameescape(filepath)
-    cursorUtil.Move(line_number, column_number)
-
-    # zv: Show cursor even if in fold.
-    # zz: Adjust cursor at center of window.
-    normal! zvzz
+    cursorUtil.MoveIntoFolding(line_number, column_number)
   endif
 enddef
