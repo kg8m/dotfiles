@@ -23,6 +23,25 @@ options word
 		${0}
 	enddef
 
+snippet class
+abbr    class ${ClassName} ... endclass
+options head
+	class ${1:#:ClassName}
+		${0}
+	endclass
+
+snippet interface
+abbr    interface {InterfaceName} ... endinterface
+options head
+	interface ${1:#:InterfaceName}
+		${0}
+	endinterface
+
+snippet type
+abbr    type ${TypeName} ...
+options head
+	type ${1:#:TypeName} ${0:#:type definition}
+
 snippet augroup
 abbr    augroup ... ... augroup END
 options head
