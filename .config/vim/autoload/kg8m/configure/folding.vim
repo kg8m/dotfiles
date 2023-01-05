@@ -1,7 +1,6 @@
 vim9script
 
 import autoload "kg8m/util.vim"
-import autoload "kg8m/util/file.vim" as fileUtil
 
 export def GlobalOptions(): void
   set foldmethod=marker
@@ -59,6 +58,6 @@ def ShouldDisable(): bool
     &filetype ==# "gitcommit" ||
 
     # For edit mode of `git add --patch`
-    fileUtil.CurrentName() ==# "addp-hunk-edit.diff"
+    util.IsGitHunkEdit()
   )
 enddef
