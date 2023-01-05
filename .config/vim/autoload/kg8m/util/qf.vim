@@ -10,7 +10,8 @@ export const EXTENSION = "json"
 
 mkdir(DIRPATH, "p")
 
-export def List(): list<string>
+export def List(options: dict<bool> = {}): list<string>
+  const colorize = get(options, "colorize", true)
   const command = [
     "fd",
     $FD_DEFAULT_OPTIONS,
@@ -18,7 +19,7 @@ export def List(): list<string>
     "--type", "f",
     "--base-directory", shellescape(DIRPATH),
     "--extension", EXTENSION,
-    "--color", "always",
+    "--color", colorize ? "always" : "never",
     "| sort_without_escape_sequences",
   ]->join(" ")
 
@@ -28,7 +29,7 @@ export def List(): list<string>
 enddef
 
 export def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
-  const all = List()
+  const all = List({ colorize: false })
 
   if empty(arglead)
     return all
