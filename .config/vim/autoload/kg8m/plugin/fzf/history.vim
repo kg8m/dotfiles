@@ -6,8 +6,6 @@ import autoload "kg8m/plugin/fzf/buffers.vim" as fzfBuffers
 import autoload "kg8m/util/file.vim" as fileUtil
 import autoload "kg8m/util/list.vim" as listUtil
 
-plugin.EnsureSourced("fzf.vim")
-
 # Ignore some files, e.g., `.git/COMMIT_EDITMSG` (fzf's `:History` doesn't ignore them)
 export def Run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
@@ -44,3 +42,5 @@ def Oldfiles(): list<string>
   const MapperCallback = (filepath) => filereadable(filepath) ? fileUtil.NormalizePath(filepath) : false
   return mr#mru#list()->listUtil.FilterMap(MapperCallback)
 enddef
+
+plugin.EnsureSourced("fzf.vim")

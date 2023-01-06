@@ -4,8 +4,6 @@ import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 import autoload "kg8m/plugin/yankround.vim"
 
-plugin.EnsureSourced("fzf.vim")
-
 # https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008
 # Also see configs for yankround.vim
 
@@ -54,3 +52,5 @@ export def Handler(yank_item: string): void
   setreg('"', text, regtype)
   normal! ""p
 enddef
+
+plugin.EnsureSourced("fzf.vim")

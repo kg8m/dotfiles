@@ -16,11 +16,11 @@ export def OnSource(): void
 enddef
 
 export def Cache(): list<string>
-  plugin.EnsureSourced("yankround.vim")
   return g:_yankround_cache
 enddef
 
 export def CacheAndRegtype(index: number): list<string>
-  plugin.EnsureSourced("yankround.vim")
   return yankround#_get_cache_and_regtype(index)
 enddef
+
+plugin.EnsureSourced("yankround.vim")

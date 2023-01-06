@@ -4,8 +4,6 @@ import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 import autoload "kg8m/util/string.vim" as stringUtil
 
-plugin.EnsureSourced("fzf.vim")
-
 # Show preview of files with my `preview` command and use my prompt (fzf's `:Files` doesn't use mine)
 export def Run(): void
   const options = {
@@ -29,3 +27,5 @@ def GetCwd(): string
 
   return stringUtil.Truncate(full_cwd, max_width, { footer_width: footer_width })
 enddef
+
+plugin.EnsureSourced("fzf.vim")

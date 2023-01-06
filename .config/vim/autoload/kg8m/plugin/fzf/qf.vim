@@ -4,8 +4,6 @@ import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 import autoload "kg8m/util/qf.vim" as qfUtil
 
-plugin.EnsureSourced("fzf.vim")
-
 const common_fzf_options = [
   "--preview", printf("preview %s/{}.%s", shellescape(qfUtil.DIRPATH), qfUtil.EXTENSION),
   "--preview-window", "down:75%:wrap:nohidden",
@@ -53,3 +51,5 @@ export def Delete(): void
 
   fzf.Run(() => fzf#run(fzf#wrap("delete-quickfix", options)))
 enddef
+
+plugin.EnsureSourced("fzf.vim")

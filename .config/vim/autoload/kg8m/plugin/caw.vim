@@ -10,15 +10,6 @@ export def OnSource(): void
 enddef
 
 export def Run(): string
-  if !plugin.IsSourced("caw.vim")
-    plugin.Source("caw.vim")
-
-    if mode() ==? "v"
-      # Retry because `line("'<")` and `line("'>")` don't work just after sourcing.
-      return "\<Esc>gvgc"
-    endif
-  endif
-
   SetupFiletype()
 
   const base         = "\<Plug>(caw:hatpos:toggle)"
@@ -101,3 +92,5 @@ def Teardown(): void
     unlet b:caw_context_filetype_original_filetypes
   endif
 enddef
+
+plugin.EnsureSourced("caw.vim")

@@ -3,8 +3,6 @@ vim9script
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 
-plugin.EnsureSourced("fzf.vim")
-
 # Wrapper function to show preview around each line (fzf's `:BLines` doesn't)
 export def Run(query: string = ""): void
   const options = [
@@ -14,3 +12,5 @@ export def Run(query: string = ""): void
 
   fzf.Run(() => fzf#vim#buffer_lines(query, { options: options }))
 enddef
+
+plugin.EnsureSourced("fzf.vim")

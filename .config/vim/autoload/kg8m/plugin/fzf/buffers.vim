@@ -6,8 +6,6 @@ import autoload "kg8m/util/file.vim" as fileUtil
 import autoload "kg8m/util/list.vim" as listUtil
 import autoload "kg8m/util/string/colors.vim"
 
-plugin.EnsureSourced("fzf.vim")
-
 const EXTRA_INFO_SEPARATOR = repeat(" ", 10)
 const EXTRA_INFO_PATTERN = $'{EXTRA_INFO_SEPARATOR}.*$'
 
@@ -82,3 +80,5 @@ export def BaseOptions(): list<any>
     "--expect", g:fzf_action->keys()->join(","),
   ]
 enddef
+
+plugin.EnsureSourced("fzf.vim")

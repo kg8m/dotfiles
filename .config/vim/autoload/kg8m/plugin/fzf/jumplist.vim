@@ -4,8 +4,6 @@ import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 import autoload "kg8m/util/logger.vim"
 
-plugin.EnsureSourced("fzf.vim")
-
 export def Back(): void
   const info = JumplistInfo()
 
@@ -95,3 +93,5 @@ def Handler(candidate: string): void
     feedkeys($"{index}\<C-i>")
   endif
 enddef
+
+plugin.EnsureSourced("fzf.vim")

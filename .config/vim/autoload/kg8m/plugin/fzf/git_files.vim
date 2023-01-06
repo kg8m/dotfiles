@@ -3,8 +3,6 @@ vim9script
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 
-plugin.EnsureSourced("fzf.vim")
-
 # Show better preview of dirty files (fzf's `:GFiles?` doesn't)
 export def Run(): void
   const options = {
@@ -18,3 +16,5 @@ export def Run(): void
 
   fzf.Run(() => fzf#vim#gitfiles("?", options))
 enddef
+
+plugin.EnsureSourced("fzf.vim")

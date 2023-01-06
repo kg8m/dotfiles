@@ -7,8 +7,6 @@ import autoload "kg8m/util/string.vim" as stringUtil
 
 final cache = {}
 
-plugin.EnsureSourced("fzf.vim")
-
 # Respect `$RIPGREP_EXTRA_OPTIONS` (fzf's `:Rg` doesn't respect it)
 command! -nargs=+ -complete=customlist,Complete FzfGrep Run(<q-args>)
 
@@ -118,3 +116,5 @@ def JoinPresences(list: list<string>): string
   const Mapper = (item) => empty(item) ? false : item
   return list->listUtil.FilterMap(Mapper)->join(" ")
 enddef
+
+plugin.EnsureSourced("fzf.vim")

@@ -9,6 +9,7 @@ export def OnSource(): void
 enddef
 
 export def Run(): void
-  plugin.EnsureSourced("vim-fzf-tjump")
   fzf.Run(() => fzf_tjump#jump())
 enddef
+
+plugin.EnsureSourced("vim-fzf-tjump")

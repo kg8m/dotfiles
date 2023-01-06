@@ -14,8 +14,6 @@ export def OnSource(): void
 enddef
 
 export def Run(): void
-  plugin.EnsureSourced("vim-molder")
-
   if expand("%")->empty()
     edit .
   else
@@ -43,3 +41,5 @@ def SetupBuffer(): void
   nnoremap <buffer> q     <C-o>
   nnoremap <buffer> <C-c> <C-o>
 enddef
+
+plugin.EnsureSourced("vim-molder")

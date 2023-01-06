@@ -13,52 +13,7 @@ export def OnPostSource(): void
   g:sandwich#recipes = DefaultRecipes()
 enddef
 
-export def DefineMappings(): void
-  xnoremap <Leader>sa <Plug>(operator-sandwich-add)
-
-  # Operators for deleting/replacing using textobjects that automatically detect matching pairs where some same type
-  # symbols are mixed up:
-  #
-  #                           *----------- ( ----------*
-  #                           *----------- ) ----------*
-  #              *---- ( ------------------------------------------*
-  #                                 *---- " ----*
-  #        *---------------------- " -------------------------------------*
-  #   aaaaa"bbbbb（ccccc(ddddd(eeeee“ffffffffff”eeeee)ddddd)ccccc）bbbbb"aaaaa
-  nnoremap <expr> <Leader>sd <SID>OperatorDeleteExpr()
-  nnoremap <expr> <Leader>sr <SID>OperatorReplaceExpr()
-
-  # Textobjects that automatically detect matching pairs where some same type symbols are mixed up:
-  #
-  #                            <--------- i( --------->
-  #                            <--------- i) --------->
-  #                           <---------- a( ---------->
-  #                      <- i( ----------------------------->
-  #                <- i( ----------------------------------------->
-  #                                   <-- i" -->
-  #         <-------------------- i" ------------------------------------>
-  #   aaaaa"bbbbb（ccccc(ddddd(eeeee“ffffffffff”eeeee)ddddd)ccccc）bbbbb"aaaaa
-  const modes = ["x", "o"]
-  const a_i_types = ["a", "i"]
-  for key in matchpairs.GroupedJapanesePairs()->keys()
-    for key_or_another in matchpairs.KeyPairFor(key)
-      for mode in modes
-        for a_or_i in a_i_types
-          const lhs = $"{a_or_i}{key_or_another}"
-          const rhs = $"<SID>AutoTextobjExpr({string(key_or_another)}, '{mode}', '{a_or_i}')"
-
-          execute $"{mode}noremap <expr><silent> {lhs} {rhs}"
-        endfor
-      endfor
-    endfor
-  endfor
-
-  nmap . <Plug>(operator-sandwich-dot)
-enddef
-
-def OperatorDeleteExpr(): string
-  plugin.EnsureSourced("vim-sandwich")
-
+export def OperatorDeleteExpr(): string
   const key = getcharstr()
   const recipes = DeleterRecipesFor(key)
   UseTemporaryRecipes(recipes)
@@ -66,9 +21,7 @@ def OperatorDeleteExpr(): string
   return "\<Plug>(operator-sandwich-delete)\<Plug>(textobj-sandwich-auto-a)"
 enddef
 
-def OperatorReplaceExpr(): string
-  plugin.EnsureSourced("vim-sandwich")
-
+export def OperatorReplaceExpr(): string
   const adder_recipes = DefaultRecipes()->mapnew((_, recipe) => {
     final new_recipe = copy(recipe)
     new_recipe.action = ["add", "replace"]
@@ -82,8 +35,7 @@ def OperatorReplaceExpr(): string
   return "\<Plug>(operator-sandwich-replace)\<Plug>(textobj-sandwich-auto-a)"
 enddef
 
-def AutoTextobjExpr(key: string, mode: string, a_or_i: string): string
-  plugin.EnsureSourced("vim-sandwich")
+export def AutoTextobjExpr(key: string, mode: string, a_or_i: string): string
   return textobj#sandwich#auto(mode, a_or_i, {}, AutoRecipesFor(key))
 enddef
 
@@ -190,3 +142,5 @@ def CommonRecipeOptionsFor(matchpair: list<string>): dict<any>
     quoteescape: matchpair[0] ==# '"' || matchpair[0] ==# "'",
   }
 enddef
+
+plugin.EnsureSourced("vim-sandwich")

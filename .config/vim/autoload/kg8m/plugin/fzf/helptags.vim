@@ -3,8 +3,6 @@ vim9script
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 
-plugin.EnsureSourced("fzf.vim")
-
 # Show preview in larger area (fzf's `:Helptags` doesn't)
 export def Run(): void
   # https://github.com/junegunn/fzf.vim/blob/d5f1f8641b24c0fd5b10a299824362a2a1b20ae0/plugin/fzf.vim#L63
@@ -13,3 +11,5 @@ export def Run(): void
 
   fzf.Run(() => fzf#vim#helptags(options))
 enddef
+
+plugin.EnsureSourced("fzf.vim")

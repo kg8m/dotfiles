@@ -5,8 +5,6 @@ import autoload "kg8m/plugin/fzf.vim"
 import autoload "kg8m/util.vim"
 import autoload "kg8m/util/logger.vim"
 
-plugin.EnsureSourced("fzf.vim")
-
 command! -nargs=1 -complete=customlist,Complete FzfRails Run(<q-args>)
 
 export def EnterCommand(): void
@@ -175,3 +173,5 @@ def Setup(): void
   extend(type_names, specs->keys()->sort())
 enddef
 Setup()
+
+plugin.EnsureSourced("fzf.vim")

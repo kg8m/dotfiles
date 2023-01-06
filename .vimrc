@@ -775,8 +775,48 @@ endif
 # Text object for surrounded by a bracket-pair or same characters: S + {user input}
 if plugin.Register("machakann/vim-sandwich")
   import autoload "kg8m/plugin/sandwich.vim"
+  import autoload "kg8m/util/matchpairs.vim"
 
-  sandwich.DefineMappings()
+  xnoremap <Leader>sa <Plug>(operator-sandwich-add)
+
+  # Operators for deleting/replacing using textobjects that automatically detect matching pairs where some same type
+  # symbols are mixed up:
+  #
+  #                           *----------- ( ----------*
+  #                           *----------- ) ----------*
+  #              *---- ( ------------------------------------------*
+  #                                 *---- " ----*
+  #        *---------------------- " -------------------------------------*
+  #   aaaaa"bbbbb（ccccc(ddddd(eeeee“ffffffffff”eeeee)ddddd)ccccc）bbbbb"aaaaa
+  nnoremap <expr> <Leader>sd sandwich.OperatorDeleteExpr()
+  nnoremap <expr> <Leader>sr sandwich.OperatorReplaceExpr()
+
+  # Textobjects that automatically detect matching pairs where some same type symbols are mixed up:
+  #
+  #                            <--------- i( --------->
+  #                            <--------- i) --------->
+  #                           <---------- a( ---------->
+  #                      <- i( ----------------------------->
+  #                <- i( ----------------------------------------->
+  #                                   <-- i" -->
+  #         <-------------------- i" ------------------------------------>
+  #   aaaaa"bbbbb（ccccc(ddddd(eeeee“ffffffffff”eeeee)ddddd)ccccc）bbbbb"aaaaa
+  const modes = ["x", "o"]
+  const a_i_types = ["a", "i"]
+  for key in matchpairs.GroupedJapanesePairs()->keys()
+    for key_or_another in matchpairs.KeyPairFor(key)
+      for mode in modes
+        for a_or_i in a_i_types
+          const lhs = $"{a_or_i}{key_or_another}"
+          const rhs = $"sandwich.AutoTextobjExpr({string(key_or_another)}, '{mode}', '{a_or_i}')"
+
+          execute $"{mode}noremap <expr><silent> {lhs} {rhs}"
+        endfor
+      endfor
+    endfor
+  endfor
+
+  nmap . <Plug>(operator-sandwich-dot)
 
   plugin.Configure({
     lazy:   true,

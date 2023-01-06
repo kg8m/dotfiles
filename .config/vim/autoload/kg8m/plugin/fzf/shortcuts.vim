@@ -3,8 +3,6 @@ vim9script
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 
-plugin.EnsureSourced("fzf.vim")
-
 var raw_list: list<list<string>>
 var list: list<string>
 var max_label_length: number
@@ -161,3 +159,5 @@ def WordPadding(item: string): string
 enddef
 
 SetupList()
+
+plugin.EnsureSourced("fzf.vim")
