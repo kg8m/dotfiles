@@ -4,6 +4,8 @@ function aws:logs:filter_events {
   local limit="1000"
   local group_name=""
   local stream_names=()
+  local executor="execute_with_confirm"
+  local pager="| less"
 
   local help="$(
     cat <<-HELP
@@ -49,6 +51,16 @@ HELP
           stream_names+=("${1:?}")
           shift 1
         done
+        ;;
+
+      # Undocumented options
+      --force | --no-confirm | --yes)
+        executor="execute_with_echo"
+        shift 1
+        ;;
+      --no-pager)
+        pager=""
+        shift 1
         ;;
       -h | --help)
         echo "${help}"
@@ -104,7 +116,7 @@ HELP
   )
 
   local start_time="$(date '+%s')"
-  execute_with_confirm "${(j: | :)filtering_commands} > ${outpath}"
+  "${executor}" "${(j: | :)filtering_commands} > ${outpath}"
   local finish_time="$(date '+%s')"
 
   local notify_options=(--title "aws:logs:filter_events")
@@ -114,7 +126,7 @@ HELP
   fi
 
   notify "Filtering has been completed." "${notify_options[@]}"
-  execute_with_echo "jq --color-output . ${outpath} | less"
+  execute_with_echo "jq --color-output . ${outpath} ${pager}"
   echo
   echo "See the result in \`${outpath}\`."
 }
