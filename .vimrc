@@ -714,12 +714,6 @@ if plugin.Register("thinca/vim-prettyprint", { if: !util.IsGitTmpEdit() })
 endif
 
 if plugin.Register("lambdalisue/vim-protocol", { if: !util.IsGitTmpEdit() })
-  # Disable netrw.vim
-  g:loaded_netrw             = true
-  g:loaded_netrwPlugin       = true
-  g:loaded_netrwSettings     = true
-  g:loaded_netrwFileHandlers = true
-
   plugin.Configure({
     lazy:    true,
     on_path: '^https\?://',
