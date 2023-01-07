@@ -20,19 +20,20 @@ export const ICONS = {
 }
 
 export def OnSource(): void
-  g:lsp_diagnostics_echo_cursor                    = false
-  g:lsp_diagnostics_enabled                        = true
-  g:lsp_diagnostics_float_cursor                   = true
-  g:lsp_diagnostics_highlights_insert_mode_enabled = false
-  g:lsp_diagnostics_signs_insert_mode_enabled      = false
-  g:lsp_diagnostics_virtual_text_align             = "after"
-  g:lsp_diagnostics_virtual_text_enabled           = true
-  g:lsp_diagnostics_virtual_text_padding_left      = 5
-  g:lsp_diagnostics_virtual_text_prefix            = ">>> "
-  g:lsp_diagnostics_virtual_text_wrap              = "truncate"
-  g:lsp_fold_enabled                               = false
-  g:lsp_inlay_hints_enabled                        = $LSP_INLAY_HINTS_ENABLED ==# "1"  # a little noisy to me
-  g:lsp_semantic_enabled                           = $LSP_SEMANTIC_ENABLED ==# "1"     # a little loud to me
+  g:lsp_diagnostics_echo_cursor                      = false
+  g:lsp_diagnostics_enabled                          = true
+  g:lsp_diagnostics_float_cursor                     = true
+  g:lsp_diagnostics_highlights_insert_mode_enabled   = true
+  g:lsp_diagnostics_signs_insert_mode_enabled        = true
+  g:lsp_diagnostics_virtual_text_align               = "after"
+  g:lsp_diagnostics_virtual_text_enabled             = true
+  g:lsp_diagnostics_virtual_text_insert_mode_enabled = true
+  g:lsp_diagnostics_virtual_text_padding_left        = 5
+  g:lsp_diagnostics_virtual_text_prefix              = ">>> "
+  g:lsp_diagnostics_virtual_text_wrap                = "truncate"
+  g:lsp_fold_enabled                                 = false
+  g:lsp_inlay_hints_enabled                          = $LSP_INLAY_HINTS_ENABLED ==# "1"  # a little noisy to me
+  g:lsp_semantic_enabled                             = $LSP_SEMANTIC_ENABLED ==# "1"     # a little loud to me
 
   g:lsp_diagnostics_signs_error         = { text: ICONS.error }
   g:lsp_diagnostics_signs_warning       = { text: ICONS.warning }
