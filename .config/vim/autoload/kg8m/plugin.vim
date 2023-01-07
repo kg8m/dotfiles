@@ -16,7 +16,6 @@ const CHECK_REMOTE_THRESHOLD = 2 * 24 * 60 * 60
 
 final cache = {
   on_start_queue: [],
-  all_on_start_plugins_sourced: false,
 }
 
 augroup vimrc-plugin
@@ -211,7 +210,6 @@ enddef
 def DequeueOnStart(): void
   if empty(cache.on_start_queue)
     doautocmd <nomodeline> User all_on_start_plugins_sourced
-    cache.all_on_start_plugins_sourced = true
   else
     const plugin_name = remove(cache.on_start_queue, 0)
     timer_start(100, (_) => SourceOnStart(plugin_name))
@@ -224,7 +222,7 @@ def SourceOnStart(plugin_name: string): void
 enddef
 
 export def AreAllOnStartPluginsSourced(): bool
-  return cache.all_on_start_plugins_sourced
+  return empty(cache.on_start_queue)
 enddef
 
 def RecachePluginsIfNeeded(): void
