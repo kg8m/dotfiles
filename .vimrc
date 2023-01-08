@@ -167,7 +167,7 @@ if plugin.Register("hrsh7th/vim-vsnip")
   if plugin.Register("hrsh7th/vim-vsnip-integ")
     plugin.Configure({
       lazy:      true,
-      on_source: "vim-vsnip",
+      on_source: ["vim-vsnip"],
     })
   endif
 endif
@@ -304,7 +304,7 @@ if plugin.Register("junegunn/fzf.vim", { if: executable("fzf") })
 
     plugin.Configure({
       lazy:    true,
-      on_cmd:  "FzfTjump",
+      on_cmd:  ["FzfTjump"],
       on_map:  { nx: "<Plug>(fzf-tjump)" },
       depends: ["fzf.vim", "vim-parallel-auto-ctags"],
       hook_source: () => fzfTjump.OnSource(),
@@ -323,7 +323,7 @@ endif
 if plugin.Register("tweekmonster/helpful.vim")
   plugin.Configure({
     lazy:   true,
-    on_cmd: "HelpfulVersion",
+    on_cmd: ["HelpfulVersion"],
   })
 endif
 
@@ -373,7 +373,7 @@ endif
 if plugin.Register("AndrewRadev/linediff.vim")
   plugin.Configure({
     lazy:   true,
-    on_cmd: "Linediff",
+    on_cmd: ["Linediff"],
     hook_source: () => {
       g:linediff_second_buffer_command = "rightbelow vertical new"
     },
@@ -418,7 +418,7 @@ if plugin.Register("yssl/QFEnter")
   import autoload "kg8m/plugin/qfenter.vim"
   plugin.Configure({
     lazy:  true,
-    on_ft: "qf",
+    on_ft: ["qf"],
     hook_source: () => qfenter.OnSource(),
   })
 endif
@@ -426,7 +426,7 @@ endif
 if plugin.Register("stefandtw/quickfix-reflector.vim")
   plugin.Configure({
     lazy:  true,
-    on_ft: "qf",
+    on_ft: ["qf"],
   })
 endif
 
@@ -438,7 +438,7 @@ if plugin.Register("mechatroner/rainbow_csv", { if: !util.IsGitTmpEdit() })
 
   plugin.Configure({
     lazy:  true,
-    on_ft: "csv",
+    on_ft: ["csv"],
   })
 endif
 
@@ -481,7 +481,7 @@ if plugin.Register("mbbill/undotree")
 
   plugin.Configure({
     lazy:   true,
-    on_cmd: "UndotreeToggle",
+    on_cmd: ["UndotreeToggle"],
     hook_source: () => {
       g:undotree_WindowLayout       = 2
       g:undotree_SplitWidth         = 50
@@ -495,7 +495,7 @@ if plugin.Register("Shougo/unite.vim", { if: !util.IsGitTmpEdit() })
   import autoload "kg8m/plugin/unite.vim"
   plugin.Configure({
     lazy:   true,
-    on_cmd: "Unite",
+    on_cmd: ["Unite"],
     hook_source: () => unite.OnSource(),
   })
 endif
@@ -516,7 +516,7 @@ if plugin.Register("FooSoft/vim-argwrap", { if: !util.IsGitTmpEdit() })
 
   plugin.Configure({
     lazy:   true,
-    on_cmd: "ArgWrap",
+    on_cmd: ["ArgWrap"],
     hook_source: () => argwrap.OnSource(),
   })
 endif
@@ -716,7 +716,7 @@ endif
 if plugin.Register("lambdalisue/vim-protocol", { if: !util.IsGitTmpEdit() })
   plugin.Configure({
     lazy:    true,
-    on_path: '^https\?://',
+    on_path: ['^https\?://'],
   })
 endif
 
@@ -761,7 +761,7 @@ if plugin.Register("joker1007/vim-ruby-heredoc-syntax", { if: !util.IsGitTmpEdit
   import autoload "kg8m/plugin/ruby_heredoc_syntax.vim" as rubyHeredocSyntax
   plugin.Configure({
     lazy:  true,
-    on_ft: "ruby",
+    on_ft: ["ruby"],
     hook_source: () => rubyHeredocSyntax.OnSource(),
   })
 endif
@@ -831,8 +831,8 @@ if plugin.Register("mhinz/vim-startify", { if: !util.IsGitTmpEdit() })
     # register autocmd for `BufWritePost`
     plugin.Configure({
       lazy:     true,
-      on_cmd:   "Startify",
-      on_event: "BufWritePre",
+      on_cmd:   ["Startify"],
+      on_event: ["BufWritePre"],
       hook_source:      () => startify.OnSource(),
       hook_post_source: () => startify.OnPostSource(),
     })
@@ -914,7 +914,7 @@ if plugin.Register("Shougo/vimproc")
   plugin.Configure({
     lazy:    true,
     build:   "make",
-    on_func: "vimproc#",
+    on_func: ["vimproc#"],
   })
 endif
 
@@ -944,7 +944,7 @@ if plugin.Register("jonsmithers/vim-html-template-literals", { if: !util.IsGitTm
   g:htl_all_templates = false
 
   plugin.Configure({
-    depends: "vim-javascript",
+    depends: ["vim-javascript"],
   })
 
   plugin.Register("pangloss/vim-javascript")
