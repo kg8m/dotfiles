@@ -218,7 +218,7 @@ enddef
 def RegisterGopls(): void
   RegisterServer({
     name: "gopls",
-    allowlist: ["go"],
+    allowlist: ["go", "gomod"],
     extra_config: () => ExtraConfigForGopls(),
   })
 enddef
