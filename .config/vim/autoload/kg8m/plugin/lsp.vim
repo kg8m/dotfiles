@@ -20,6 +20,9 @@ export const ICONS = {
 }
 
 export def OnSource(): void
+  # I want to enable vim-lsp manually.
+  g:lsp_auto_enable = false
+
   g:lsp_diagnostics_echo_cursor                      = false
   g:lsp_diagnostics_enabled                          = true
   g:lsp_diagnostics_float_cursor                     = true
