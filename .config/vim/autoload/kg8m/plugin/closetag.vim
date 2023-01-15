@@ -1,16 +1,13 @@
 vim9script
 
+import autoload "kg8m/configure/filetypes/javascript.vim" as jsConfig
 import autoload "kg8m/events.vim"
 
 export const FILETYPES = [
   "eruby",
   "html",
-  "javascript",
-  "javascriptreact",
   "markdown",
-  "typescript",
-  "typescriptreact",
-]
+] + jsConfig.JS_FILETYPES + jsConfig.TS_FILETYPES
 
 export def OnSource(): void
   g:closetag_filetypes = join(FILETYPES, ",")

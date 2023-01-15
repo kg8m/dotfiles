@@ -207,6 +207,8 @@ if plugin.Register("rhysd/conflict-marker.vim")
 endif
 
 if plugin.Register("Shougo/context_filetype.vim")
+  import autoload "kg8m/configure/filetypes/javascript.vim" as jsConfig
+
   const for_js = [
     { start: '\<html`$', end: '\v^\s*%(//|/?\*)?\s*`', filetype: "html" },
     { start: '\<css`$', end: '\v^\s*%(//|/?\*)?\s*`', filetype: "css" },
@@ -214,12 +216,10 @@ if plugin.Register("Shougo/context_filetype.vim")
   ]
 
   # For caw.vim and so on
-  g:context_filetype#filetypes = {
-    javascript: for_js,
-    typescript: for_js,
-    javascriptreact: for_js,
-    typescriptreact: for_js,
-  }
+  g:context_filetype#filetypes = {}
+  for filetype in jsConfig.JS_FILETYPES + jsConfig.TS_FILETYPES
+    g:context_filetype#filetypes[filetype] = for_js
+  endfor
 endif
 
 if plugin.Register("gamoutatsumi/dps-ghosttext.vim", { if: $GHOST_TEXT_AVAILABLE ==# "1" })

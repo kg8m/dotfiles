@@ -2,6 +2,7 @@ vim9script
 
 # Some server specific configurations are thanks to https://github.com/mattn/vim-lsp-settings.
 
+import autoload "kg8m/configure/filetypes/javascript.vim" as jsConfig
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/completion.vim"
 import autoload "kg8m/util/logger.vim"
@@ -11,8 +12,8 @@ final filetyped_configs: dict<list<dict<any>>> = {}
 
 final cache = {}
 
-const JS_FILETYPES   = ["javascript", "javascriptreact"]
-const TS_FILETYPES   = ["typescript", "typescriptreact"]
+const JS_FILETYPES   = jsConfig.JS_FILETYPES
+const TS_FILETYPES   = jsConfig.TS_FILETYPES
 const SH_FILETYPES   = ["sh", "zsh"]
 const YAML_FILETYPES = ["eruby.yaml", "yaml", "yaml.ansible"]
 

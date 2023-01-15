@@ -1,5 +1,6 @@
 vim9script
 
+import autoload "kg8m/configure/filetypes/javascript.vim" as jsConfig
 import autoload "kg8m/events.vim"
 import autoload "kg8m/util/matchpairs.vim"
 
@@ -93,13 +94,9 @@ def AddRulesForHtml(): void
   const filetypes = [
     "eruby",
     "html",
-    "javascript",
-    "javascriptreact",
     "markdown",
-    "typescript",
-    "typescriptreact",
     "vue",
-  ]
+  ] + jsConfig.JS_FILETYPES + jsConfig.TS_FILETYPES
 
   # `<CR>` when
   #
@@ -123,7 +120,7 @@ def AddRulesForHtml(): void
 enddef
 
 def AddRulesForJs(): void
-  const filetypes = ["javascript", "javascriptreact", "typescript", "typescriptreact"]
+  const filetypes = jsConfig.JS_FILETYPES + jsConfig.TS_FILETYPES
 
   # `<CR>` when
   #
