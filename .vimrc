@@ -562,7 +562,7 @@ endif
 
 plugin.Register("hail2u/vim-css3-syntax", { if: !util.IsGitTmpEdit() })
 
-if plugin.Register("vim-denops/denops.vim", { lazy: true, on_start: true })
+if plugin.Register("vim-denops/denops.vim", { lazy: true })
   if $DENOPS_DEBUG ==# "1"
     g:denops#debug      = true
     g:denops#trace      = true
@@ -570,7 +570,7 @@ if plugin.Register("vim-denops/denops.vim", { lazy: true, on_start: true })
   endif
 endif
 
-if plugin.Register("kg8m/vim-detect-indent", { lazy: true, on_start: true, if: !use_editorconfig })
+if plugin.Register("kg8m/vim-detect-indent", { if: !use_editorconfig })
   g:detect_indent#detect_once      = false
   g:detect_indent#ignore_filetypes = ["", "gitcommit", "startify"]
 
@@ -578,6 +578,9 @@ if plugin.Register("kg8m/vim-detect-indent", { lazy: true, on_start: true, if: !
   g:detect_indent#ignore_buftypes = ["quickfix", "terminal"]
 
   plugin.Configure({
+    # Don't load lazily because keystrokes are snatched on its load.
+    lazy: false,
+
     depends: ["denops.vim"],
   })
 endif
