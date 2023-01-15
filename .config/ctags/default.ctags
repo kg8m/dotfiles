@@ -17,7 +17,8 @@
 --langmap=myjavascript:.js
 --langmap=myjavascript:+.js.erb
 
---regex-myjavascript=/(,|(;|^)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*(function\b|\([^)]*\)\s*=>)/\5/,function/
+--regex-myjavascript=/(^[ \t]*|\bexport[ \t]+)function[ \t]+([A-Za-z0-9_$]+)[ \t]*\([^)]*\)/\2/,function/
+--regex-myjavascript=/(,|(;|^|^export +)[ \t]*(var|let|([A-Za-z_$][A-Za-z0-9_$.]+\.)*))[ \t]*([A-Za-z0-9_$]+)[ \t]*=[ \t]*(function\b|\([^)]*\)\s*=>)/\5/,function/
 --regex-myjavascript=/(,|^)[ \t]*([A-Za-z_$][A-Za-z0-9_$]+)[ \t]*:[ \t]*function\b\(/\2/,function/
 
 --regex-ruby=/\s*(class|module)\s+[a-zA-Z0-9_:]+:([a-zA-Z0-9_]+)/\2/
