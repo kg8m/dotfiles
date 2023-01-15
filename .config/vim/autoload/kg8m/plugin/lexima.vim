@@ -129,7 +129,7 @@ def AddRulesForJs(): void
   # then
   #
   #   `
-  #     |
+  #   |
   #   `
   lexima#add_rule({ char: "<CR>", at: '`\%#`', input_after: "<CR>", filetype: filetypes })
 enddef
