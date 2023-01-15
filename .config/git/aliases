@@ -270,6 +270,16 @@ function git:clean:bulk {
   fi
 }
 
+function git:trash:bulk {
+  local files=("${(@f)$(git:status:filter:untracked)}")
+
+  if [ -n "${files[*]}" ]; then
+    preview "${files[@]}"
+    execute_with_confirm "trash ${files[*]}"
+    execute_with_echo    "git status-with-color"
+  fi
+}
+
 function git:log:compare:branch {
   local branch1=$(git:branch:list --remote | git:branch:filter:single --prompt="Select first branch> ")
   [ -n "${branch1}" ] || exit 1

@@ -237,8 +237,10 @@
 
 	# clean
 	clean-by-select = bulk-clean
+	trash-by-select = bulk-trash
 
 	bulk-clean = sh git:clean:bulk
+	bulk-trash = sh git:trash:bulk
 
 	# log
 	lg = log-graph
