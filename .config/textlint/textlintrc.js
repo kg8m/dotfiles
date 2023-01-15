@@ -96,7 +96,7 @@ const config = {
       "sentence-length": {
         severity: "warning",
         max: 100,
-        exclusionPatterns: [
+        skipPatterns: [
           "/\\bhttps?:\\/\\/[^\\s)>]+/", // URL
           "/\\b[a-z\\d]{7,40}\\b/", // commit hash
           "/\\(.+?\\)/", // inside parentheses
