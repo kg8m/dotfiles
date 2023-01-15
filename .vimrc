@@ -710,8 +710,8 @@ if plugin.Register("kg8m/vim-parallel-auto-ctags", { if: util.IsCtagsAvailable()
 endif
 
 if plugin.Register("thinca/vim-prettyprint", { if: !util.IsGitTmpEdit() })
-  # Don't load lazily because dein.vim's `on_cmd: "PP"` doesn't work
   plugin.Configure({
+    # Don't load lazily because dein.vim's `on_cmd: "PP"` doesn't work.
     lazy: false,
   })
 endif
@@ -734,8 +734,8 @@ if plugin.Register("tpope/vim-rails", { if: !util.IsGitTmpEdit() && util.OnRails
     ]
   endif
 
-  # Don't load lazily because some features don't work.
   plugin.Configure({
+    # Don't load lazily because some features don't work.
     lazy: false,
   })
 endif
