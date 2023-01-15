@@ -62,6 +62,10 @@ const config = {
         allow: ["…", "─", "など"],
       },
 
+      // Disable because many "ten"s are sometimes needed and the "sentence-length" rule is available for avoiding too
+      // long sentences.
+      "max-ten": false,
+
       // Disable because a double negative differs from a regular affirmative.
       "no-double-negative-ja": false,
 
