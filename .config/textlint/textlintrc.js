@@ -99,12 +99,13 @@ const config = {
         skipPatterns: [
           "/\\bhttps?:\\/\\/[^\\s)>]+/", // URL
           "/\\b[a-z\\d]{7,40}\\b/", // commit hash
-          "/\\(.+?\\)/", // inside parentheses
-          '/".+?"/', // inside quotation marks
-          "/（.+?）/", // かっこ内
-          "/「.+?」/", // かぎかっこ内
-          "/『.+?』/", // 二重かぎかっこ内
-          "/“.+?”/", // 引用符内
+          "/\\([^)]+?\\)/", // inside parentheses
+          '/"[^"]+?"/', // inside quotation marks
+          "/`[^`]+?`/", // inside backticks
+          "/（[^）]+?）/", // かっこ内
+          "/「[^」]+?」/", // かぎかっこ内
+          "/『[^』]+?』/", // 二重かぎかっこ内
+          "/“[^”]+?”/", // 引用符内
         ],
       },
     },
