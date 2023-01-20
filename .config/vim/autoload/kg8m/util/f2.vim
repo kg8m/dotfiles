@@ -157,7 +157,7 @@ def BuildPattern(): string
       "cmigemo -d %s -v -w %s",
       shellescape(cache.migemo.dictionary_path),
       shellescape(input)
-    )->system()
+    )->system()->escape("~")
 
     cache.pattern = $'\C\%({smartcase_pattern}\|{migemo_pattern}\)'
   endif
