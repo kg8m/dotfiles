@@ -33,6 +33,10 @@ Lint/ConstantResolution:
   Enabled: false
 Lint/NumberConversion:
   Enabled: false
+Lint/UnusedBlockArgument:
+  AutoCorrect: false
+Lint/UnusedMethodArgument:
+  AutoCorrect: false
 
 Metrics/MethodLength:
   Max: 15
