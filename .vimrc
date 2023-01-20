@@ -179,6 +179,15 @@ plugin.Register("pearofducks/ansible-vim")
 # Show diff in Git's interactive rebase
 plugin.Register("hotwatermorning/auto-git-diff", { if: util.IsGitRebase() })
 
+if plugin.Register("kat0h/bufpreview.vim", { if: !util.IsGitTmpEdit() })
+  plugin.Configure({
+    lazy:    true,
+    on_cmd:  ["PreviewMarkdown"],
+    depends: ["denops.vim"],
+    build:   "deno task prepare",
+  })
+endif
+
 if plugin.Register("tyru/caw.vim", { if: !util.IsGitTmpEdit() })
   import autoload "kg8m/plugin/caw.vim"
 
