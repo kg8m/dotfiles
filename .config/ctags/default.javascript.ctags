@@ -1,0 +1,24 @@
+# Use my `MyJavaScript` instead of built-in `JavaScript` because it is broken.
+# cf. https://github.com/universal-ctags/ctags/issues/900
+--langdef=MyJavaScript
+--langmap=myjavascript:.js
+--langmap=myjavascript:+.js.erb
+
+# Build a tag for `foo` from:
+#
+#   function foo()
+--regex-myjavascript=/(^\s*|\bexport\s+)function\s+([A-Za-z0-9_$]+)\s*\([^)]*\)/\2/,function/
+
+# Build a tag for `foo` from:
+#
+#   const foo = function() {}
+#   const foo = () => {}
+#   bar.foo = function() {}
+#   bar.foo = () => {}
+--regex-myjavascript=/(,|(;|^|^export +)\s*((const|let|var)\s+|[A-Za-z_$][A-Za-z0-9_$.]+\.)?)([A-Za-z0-9_$]+)\s*=\s*(function\b|\([^)]*\)\s*=>)/\5/,function/
+
+# Build a tag for `foo` from:
+#
+#   foo: function() {},
+#   foo: () => {},
+--regex-myjavascript=/(,|^)\s*([A-Za-z_$][A-Za-z0-9_$]*)\s*:\s*(function\s*\(|\([^)]*\)\s*=>)/\2/,function/
