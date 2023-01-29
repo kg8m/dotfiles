@@ -19,7 +19,7 @@ export def Overwrite(): void
   highlight Search        guifg=#EAEAEA  guibg=#F92672
   highlight SignColumn                   guibg=#111111
   highlight Special                      guibg=NONE     gui=NONE  cterm=NONE
-  highlight Title                                       gui=bold  cterm=bold
+  highlight Title         guifg=#A6E22E                 gui=bold  cterm=bold
   highlight Todo                         guibg=NONE
   highlight Underlined    guifg=#AAAAAA
   highlight Visual                                      gui=bold  cterm=bold
