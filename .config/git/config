@@ -179,7 +179,15 @@
 	# clone
 	clone-with-submodules = clone --recursive
 
-	shallow-clone = "!git sh \"git:clone:shallow $*\""
+	clone-shallow = shallow-clone
+	clone-partial = partial-clone
+	clone-partial-blobless = partial-blobless-clone
+	clone-partial-treeless = partial-treeless-clone
+
+	shallow-clone          = "!git sh \"git:clone:shallow $*\""
+	partial-clone          = "!git sh \"git:clone:partial:treeless $*\""
+	partial-blobless-clone = "!git sh \"git:clone:partial:blobless $*\""
+	partial-treeless-clone = "!git sh \"git:clone:partial:treeless $*\""
 
 	# switch
 	sw  = switch

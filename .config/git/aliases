@@ -94,7 +94,7 @@ function git:update:with_log {
 }
 
 function git:update:shallow {
-  execute_with_echo "git pull --rebase --depth 1"
+  execute_with_echo "git pull --depth 100"
 }
 
 function git:update:main {
@@ -240,7 +240,15 @@ function git:branch:colorize {
 }
 
 function git:clone:shallow {
-  execute_with_echo "git clone --single-branch --depth 1 $*"
+  execute_with_echo "git clone --depth 100 $*"
+}
+
+function git:clone:partial:blobless {
+  execute_with_echo "git clone --filter blob:none $*"
+}
+
+function git:clone:partial:treeless {
+  execute_with_echo "git clone --filter tree:0 $*"
 }
 
 function git:commit:bulk {
