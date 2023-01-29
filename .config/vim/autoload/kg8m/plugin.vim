@@ -69,8 +69,9 @@ export def InitManager(): void
   g:dein#install_check_remote_threshold = CHECK_REMOTE_THRESHOLD
   g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
 
-  # Decrease max processes because too many processes sometimes get refused
-  g:dein#install_max_processes = 1
+  # Decrease max processes because too many requests sometimes get refused by GitHub.
+  # Don't use `1` because it causes busy loop.
+  g:dein#install_max_processes = 2
 
   # Default: "pull --ff --ff-only"
   g:dein#types#git#pull_command = "pull"
