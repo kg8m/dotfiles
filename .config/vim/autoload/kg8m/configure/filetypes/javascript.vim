@@ -44,13 +44,13 @@ def SyntaxForTypeScript(): void
   syntax region  jsRegexpString     start=+\%(\%(\<return\|\<typeof\|\_[^)\]'"[:blank:][:alnum:]_$]\)\s*\)\@<=/\ze[^*/]+ skip=+\\.\|\[[^]]\{1,}\]+ end=+/[gimyus]\{,6}+ contains=jsRegexpCharClass,jsRegexpGroup,@jsRegexpSpecial oneline keepend extend
   syntax cluster jsRegexpSpecial    contains=jsSpecial,jsRegexpBoundary,jsRegexpBackRef,jsRegexpQuantifier,jsRegexpOr,jsRegexpMod
 
-  highlight def link jsSpecial          Special
-  highlight def link jsRegexpString     String
-  highlight def link jsRegexpBoundary   SpecialChar
-  highlight def link jsRegexpQuantifier SpecialChar
-  highlight def link jsRegexpOr         Conditional
-  highlight def link jsRegexpMod        SpecialChar
-  highlight def link jsRegexpBackRef    SpecialChar
-  highlight def link jsRegexpGroup      jsRegexpString
-  highlight def link jsRegexpCharClass  Character
+  highlight default link jsSpecial          Special
+  highlight default link jsRegexpString     String
+  highlight default link jsRegexpBoundary   SpecialChar
+  highlight default link jsRegexpQuantifier SpecialChar
+  highlight default link jsRegexpOr         Conditional
+  highlight default link jsRegexpMod        SpecialChar
+  highlight default link jsRegexpBackRef    SpecialChar
+  highlight default link jsRegexpGroup      jsRegexpString
+  highlight default link jsRegexpCharClass  Character
 enddef

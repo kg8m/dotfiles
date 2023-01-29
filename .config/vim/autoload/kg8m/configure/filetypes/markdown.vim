@@ -48,7 +48,7 @@ def Syntax(): void
   endfor
 
   # Support highlighting inline codes.
-  highlight def link markdownCode String
+  highlight default link markdownCode String
 enddef
 
 def FixIskeyword(): void
