@@ -167,12 +167,14 @@
 	unstage = restore --staged
 
 	restore-by-select          = bulk-restore
+	restore-by-patch-by-select = bulk-restore-by-patch
 	restore-by-select-staged   = bulk-restore-staged
 	unstage-by-select          = bulk-unstage
 	unstage-by-patch-by-select = bulk-unstage-by-patch
 
 	bulk-restore          = sh git:restore:bulk
 	bulk-restore-staged   = sh git:restore:bulk:staged
+	bulk-restore-by-patch = sh git:restore:bulk:patch
 	bulk-unstage          = sh git:restore:bulk:staged
 	bulk-unstage-by-patch = sh git:restore:bulk:staged:patch
 
