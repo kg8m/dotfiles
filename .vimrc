@@ -507,15 +507,6 @@ if plugin.Register("mbbill/undotree")
   })
 endif
 
-if plugin.Register("Shougo/unite.vim", { if: !util.IsGitTmpEdit() })
-  import autoload "kg8m/plugin/unite.vim"
-  plugin.Configure({
-    lazy:   true,
-    on_cmd: ["Unite"],
-    hook_source: () => unite.OnSource(),
-  })
-endif
-
 # Legacy Vim script version for my development.
 if plugin.Register("kg8m/vim-simple-align", { name: "vim-simple-align-legacy", if: false })
   xnoremap <Leader>a :SimpleAlign<Space>
@@ -926,14 +917,6 @@ endif
 if plugin.Register("monkoose/vim9-stargate")
   g:stargate_chars = "FKLASDHGUIONMREWCVTYBX,;J"
   nnoremap <C-w>f :call stargate#Galaxy()<CR>
-endif
-
-if plugin.Register("Shougo/vimproc")
-  plugin.Configure({
-    lazy:    true,
-    build:   "make",
-    on_func: ["vimproc#"],
-  })
 endif
 
 # See `kg8m#util#xxx#Vital()`.

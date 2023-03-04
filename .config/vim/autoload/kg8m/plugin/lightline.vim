@@ -122,10 +122,6 @@ def LspStatus(): string
 enddef
 
 def CurrentFilepath(): string
-  if &filetype ==# "unite"
-    return unite#get_status_string()
-  endif
-
   if &filetype ==# "qf" && has_key(w:, "quickfix_title")
     return w:quickfix_title
   endif

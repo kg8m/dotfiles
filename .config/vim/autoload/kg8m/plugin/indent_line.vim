@@ -13,7 +13,6 @@ export def OnSource(): void
     "",
     "diff",
     "startify",
-    "unite",
   ]
   g:indentLine_bufTypeExclude = [
     "help",
