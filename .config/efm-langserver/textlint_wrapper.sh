@@ -32,7 +32,6 @@ if [ -f "${HOME}/.config/textlint.local/textlint_wrapper_extends.sh" ]; then
 fi
 
 options=(
-  --format json
   --stdin
   --stdin-filename "$(format_target_filepath "${target_filepath}")"
 )
@@ -41,6 +40,7 @@ if [ "${is_fixing}" = "1" ]; then
   options+=(
     --fix
     --dry-run
+    --format fixed-result
   )
 
   # Enable only a few rules for performance and preventing unintended fixes.
@@ -50,6 +50,7 @@ if [ "${is_fixing}" = "1" ]; then
 else
   options+=(
     --config ~/.config/textlint/textlintrc.js
+    --format json
   )
 fi
 
@@ -69,14 +70,8 @@ fi
 
 if [ -n "${out}" ]; then
   if [ "${is_fixing}" = "1" ]; then
-    result="$(echo "${out}" | jq --raw-output ".[0].output")"
-
-    if [ "${result}" = "null" ]; then
-      exit 1
-    else
-      echo "${result}"
-      exit 0
-    fi
+    echo "${out}"
+    exit 0
   else
     format="$(
       printf '%s + ":" + %s + ":" + %s + ": [textlint][" + %s + "] " + %s' \
