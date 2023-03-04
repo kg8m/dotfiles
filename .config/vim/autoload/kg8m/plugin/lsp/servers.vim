@@ -34,6 +34,7 @@ export def Register(): void
   RegisterSolargraph()
   RegisterSqls()
   RegisterSteep()
+  RegisterTerraformLs()
   RegisterTerraformLsp()
   RegisterTypeprof()
   RegisterTypescriptLanguageServer()
@@ -421,12 +422,29 @@ def ExtraConfigForSteep(): dict<any>
   }
 enddef
 
+# Install from https://github.com/hashicorp/terraform-ls/releases
+def RegisterTerraformLs(): void
+  RegisterServer({
+    name: "terraform-ls",
+    allowlist: ["terraform"],
+    extra_config: () => ExtraConfigForTerraformLs(),
+  })
+enddef
+
+def ExtraConfigForTerraformLs(): dict<any>
+  return {
+    cmd: (_) => ["terraform-ls", "serve"],
+  }
+enddef
+
 # Install from https://github.com/juliosueiras/terraform-lsp/releases
 def RegisterTerraformLsp(): void
   RegisterServer({
     name: "terraform-lsp",
     allowlist: ["terraform"],
     extra_config: () => ExtraConfigForTerraformLsp(),
+
+    available: $TERRAFORM_LSP_AVAILABLE ==# "1",
   })
 enddef
 
