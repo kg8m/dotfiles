@@ -291,6 +291,7 @@
 	status-with-color  = "!git sh \"git:status:color $*\""
 
 	# cherry-pick
+	cp   = cherry-pick
 	pick = cherry-pick
 	p    = cherry-pick
 
