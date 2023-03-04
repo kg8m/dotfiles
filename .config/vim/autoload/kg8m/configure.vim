@@ -192,7 +192,7 @@ export def Others(): void
 enddef
 
 export def Gui(): void
-  set guioptions=none
+  set guioptions=
 
   # set guifont=Osaka-Mono:h14
   set guifont=SFMono-Regular:h12
