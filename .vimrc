@@ -580,9 +580,8 @@ plugin.Register("hail2u/vim-css3-syntax", { if: !util.IsGitTmpEdit() })
 
 if plugin.Register("vim-denops/denops.vim", { lazy: true })
   if $DENOPS_DEBUG ==# "1"
-    g:denops#debug      = true
-    g:denops#trace      = true
-    g:denops#type_check = true
+    g:denops#debug = true
+    g:denops#trace = true
   endif
 endif
 
