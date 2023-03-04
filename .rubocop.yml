@@ -91,6 +91,8 @@ Style/Next:
   Enabled: false
 Style/RescueModifier:
   Enabled: false
+Style/RedundantBegin:
+  AutoCorrect: false
 Style/StringHashKeys:
   Enabled: false
 Style/StringLiterals:
