@@ -238,7 +238,7 @@ enddef
 
 # If buffer contents change, don't apply result of `LspDocumentFormat` but try to retry.
 # cf. https://github.com/prabirshrestha/vim-lsp/blob/420143420d929d6bc9e98102b5828e0bbc5c9052/autoload/lsp/internal/document_formatting.vim#L74-L76
-def Overwrite(): void
+def OverwriteFormatNext(): void
   try
     # Call a dummy function which doesn't exist in order to load target script.
     lsp#internal#document_formatting#dummy()
@@ -274,4 +274,4 @@ def Overwrite(): void
     execute new_definition
   endif
 enddef
-Overwrite()
+OverwriteFormatNext()
