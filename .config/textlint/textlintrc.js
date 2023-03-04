@@ -97,7 +97,7 @@ const config = {
 
       "sentence-length": {
         severity: "warning",
-        max: 100,
+        max: 200,
         skipPatterns: [
           "/\\bhttps?:\\/\\/[^\\s)>]+/", // URL
           "/\\b[a-z\\d]{7,40}\\b/", // commit hash
