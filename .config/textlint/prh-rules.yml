@@ -47,6 +47,9 @@ rules:
   - expected: markuplint
     options:
       wordBoundary: true
+  - expected: MeCab
+    options:
+      wordBoundary: true
   - expected: MySQL
     options:
       wordBoundary: true
