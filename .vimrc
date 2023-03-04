@@ -358,6 +358,13 @@ if plugin.Register("fuenor/JpFormat.vim")
   })
 endif
 
+if plugin.Register("lambdalisue/kensaku.vim")
+  plugin.Configure({
+    lazy: true,
+    depends: ["denops.vim"],
+  })
+endif
+
 if plugin.Register("cohama/lexima.vim")
   import autoload "kg8m/plugin/lexima.vim"
   plugin.Configure({

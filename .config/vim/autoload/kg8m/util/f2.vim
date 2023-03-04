@@ -1,14 +1,10 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
 import autoload "kg8m/util/cursor.vim" as cursorUtil
 import autoload "kg8m/util/logger.vim"
 
 final cache = {
-  migemo: {
-    setup_done: false,
-    dictionary_path: "",
-    warned: false,
-  },
   type: "",
   input: "",
   pattern: "",
@@ -142,25 +138,11 @@ def BuildPattern(): string
   # Don't check whether multibyte characters are contained in searching text. Always use migemo if available. Because
   # migemo targets are not only multibyte characters. For example, "do" matches with ".". It is too confusing if
   # searching behavior varies depending on multibyte characters existence.
-  SetupMigemo()
 
-  if empty(cache.migemo.dictionary_path)
-    if !cache.migemo.warned
-      logger.Warn("migemo isn't available. Check if migemo is executable and its dictionary exists.")
-      cache.migemo.warned = true
-    endif
+  const smartcase_pattern = InputToSmartcasePattern(input)
+  const migemo_pattern = kensaku#query(input)->escape("~")
 
-    cache.pattern = InputToSmartcasePattern(input)
-  else
-    const smartcase_pattern = InputToSmartcasePattern(input)
-    const migemo_pattern    = printf(
-      "cmigemo -d %s -v -w %s",
-      shellescape(cache.migemo.dictionary_path),
-      shellescape(input)
-    )->system()->escape("~")
-
-    cache.pattern = $'\C\%({smartcase_pattern}\|{migemo_pattern}\)'
-  endif
+  cache.pattern = $'\C\%({smartcase_pattern}\|{migemo_pattern}\)'
 
   return cache.pattern
 enddef
@@ -183,33 +165,6 @@ def InputToSmartcasePattern(original_full_input: string): string
   endif
 enddef
 
-def SetupMigemo(): void
-  if cache.migemo.setup_done
-    return
-  endif
-
-  if executable("cmigemo")
-    const directories = [
-      $"{$HOMEBREW_PREFIX}/share/migemo/",
-      $"{$HOMEBREW_PREFIX}/share/cmigemo/",
-      $"{$HOMEBREW_PREFIX}/share/",
-      "/usr/share/cmigemo/",
-      "/usr/share/",
-    ]
-
-    for directory in directories
-      const filepath = $"{directory}/utf-8/migemo-dict"
-
-      if filereadable(filepath)
-        cache.migemo.dictionary_path = filepath
-        break
-      endif
-    endfor
-  endif
-
-  cache.migemo.setup_done = true
-enddef
-
 def BlinkCursor(): void
   if &cursorcolumn
     return
@@ -220,3 +175,5 @@ def BlinkCursor(): void
     setlocal nocursorcolumn
   })
 enddef
+
+plugin.EnsureSourced("kensaku.vim")
