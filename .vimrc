@@ -730,6 +730,14 @@ if plugin.Register("lambdalisue/vim-protocol", { if: !util.IsGitTmpEdit() })
 endif
 
 if plugin.Register("tpope/vim-rails", { if: !util.IsGitTmpEdit() && util.OnRailsDir() })
+  # For Rails engines.
+  if !filereadable("config/environment.rb")
+    augroup vimrc-rails
+      autocmd!
+      autocmd BufNewFile,BufRead * b:rails_root = getcwd()
+    augroup END
+  endif
+
   if !has_key(g:, "rails_path_additions")
     g:rails_path_additions = []
   endif

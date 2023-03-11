@@ -22,7 +22,8 @@ export def OnRailsDir(): bool
     return cache.on_rails_dir
   endif
 
-  cache.on_rails_dir = isdirectory("./app") && filereadable("./config/environment.rb")
+  # Support Rails engines.
+  cache.on_rails_dir = isdirectory("./app") && (filereadable("./config/environment.rb") || filereadable("./bin/rails"))
   return cache.on_rails_dir
 enddef
 
