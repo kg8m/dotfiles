@@ -44,9 +44,9 @@ function git:restore:bulk:patch {
   local files=("${(@f)$(git:status:filter:unstaged)}")
 
   if [ -n "${files[*]}" ]; then
-    execute_with_echo    "git diff -R -- ${files[*]}"
-    execute_with_confirm "git restore --patch -- ${files[*]}"
-    execute_with_echo    "git status-with-color"
+    execute_with_echo "git diff -R -- ${files[*]}"
+    execute_with_echo "git restore --patch -- ${files[*]}"
+    execute_with_echo "git status-with-color"
   fi
 }
 
