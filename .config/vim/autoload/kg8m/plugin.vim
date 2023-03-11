@@ -76,6 +76,9 @@ export def InitManager(): void
   # Don't use `1` because it causes busy loop.
   g:dein#install_max_processes = 2
 
+  # With `--filter=blob:none`
+  g:dein#types#git#enable_partial_clone = true
+
   # Default: "pull --ff --ff-only"
   g:dein#types#git#pull_command = "pull"
 enddef
