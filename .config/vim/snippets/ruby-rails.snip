@@ -41,6 +41,48 @@ options head
 	class_methods do
 	end
 
+snippet ActiveRecord::Base
+alias   ActiveRecord_Base
+alias   concern
+abbr    ActiveRecord::Base
+options word
+	ActiveRecord::Base
+
+snippet ActiveRecord::NotFound
+alias   ActiveRecord_NotFound
+alias   concern
+abbr    ActiveRecord::NotFound
+options word
+	ActiveRecord::NotFound
+
+snippet ActiveRecord::RecordInvalid
+alias   ActiveRecord_RecordInvalid
+alias   concern
+abbr    ActiveRecord::RecordInvalid
+options word
+	ActiveRecord::RecordInvalid
+
+snippet ActiveRecord::RecordNotUnique
+alias   ActiveRecord_RecordNotUnique
+alias   concern
+abbr    ActiveRecord::RecordNotUnique
+options word
+	ActiveRecord::RecordNotUnique
+
+snippet ActiveRecord::Rollback
+alias   ActiveRecord_Rollback
+alias   concern
+abbr    ActiveRecord::Rollback
+options word
+	ActiveRecord::Rollback
+
+snippet ActiveRecord::StaleObjectError
+alias   ActiveRecord_StaleObjectError
+alias   concern
+abbr    ActiveRecord::StaleObjectError
+options word
+	ActiveRecord::StaleObjectError
+
 snippet ActiveSupport::Concern
 alias   ActiveSupport_Concern
 alias   concern
