@@ -64,6 +64,7 @@ function git:restore:bulk:staged:patch {
   local files=("${(@f)$(git:status:filter:staged)}")
 
   if [ -n "${files[*]}" ]; then
+    execute_with_echo "git diff --staged -R -- ${files[*]}"
     execute_with_echo "git restore --staged --patch -- ${files[*]}"
     execute_with_echo "git status-with-color"
   fi
