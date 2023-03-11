@@ -488,6 +488,50 @@ function docker:clear_all {
   execute_commands_with_echo "${commands[@]}" --separate
 }
 
+function rails:routes:with_filter {
+  if ! command -v rails > /dev/null; then
+    echo:error "\`rails\` command isn't available."
+    return 1
+  fi
+
+  if [ ! -f "config/routes.rb" ]; then
+    echo:error "\`config/routes.rb\` doesn't exist."
+    return 1
+  fi
+
+  local target_filepaths=("config/routes.rb")
+
+  if [ -d "config/routes" ]; then
+    local filepath
+    for filepath in config/routes/**/*.rb; do
+      if [ -f "${filepath}" ]; then
+        target_filepaths+=("${filepath}")
+      fi
+    done
+  fi
+
+  mkdir -p tmp/cache
+  local cache_filepath="tmp/cache/routes_cache"
+  local checksum_filepath="tmp/cache/routes_checksum"
+
+  if [ ! -f "${cache_filepath}" ] || [ ! -f "${checksum_filepath}" ] || ! shasum --check --quiet "${checksum_filepath}"; then
+    echo:info "Cache file for routing doesn't exist or the routing has been changed."
+    execute_with_echo "shasum '${(j:' ':)target_filepaths}' > ${checksum_filepath}"
+    execute_with_echo "rails routes > ${cache_filepath}"
+  fi
+
+  filter --header-lines 1 --preview-window "hidden" < "${cache_filepath}"
+}
+
+function rails:routes:cache:reset {
+  local filepath
+  for filepath in tmp/cache/routes_*; do
+    if [ -f "${filepath}" ]; then
+      trash "${filepath}"
+    fi
+  done
+}
+
 function zsh:plugins:update {
   if [ -d "${XDG_CACHE_HOME:?}/zsh" ]; then
     execute_with_echo "trash '${XDG_CACHE_HOME}/zsh'"
