@@ -420,6 +420,14 @@ if plugin.Register("tyru/open-browser.vim")
   })
 endif
 
+if plugin.Register("tyru/open-browser-github.vim")
+  plugin.Configure({
+    lazy:    true,
+    on_cmd:  ["OpenGithubFile", "OpenGithubIssue", "OpenGithubPullReq"],
+    depends: ["open-browser.vim"],
+  })
+endif
+
 if plugin.Register("tyru/operator-camelize.vim")
   xmap <Leader>C <Plug>(operator-camelize)
   xmap <Leader>c <Plug>(operator-decamelize)
