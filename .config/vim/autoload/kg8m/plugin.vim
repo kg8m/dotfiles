@@ -69,6 +69,9 @@ export def InitManager(): void
   g:dein#install_check_remote_threshold = CHECK_REMOTE_THRESHOLD
   g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
 
+  # Disable copying files via Vim's `readfile()` and `writefile()` because it is too slow.
+  g:dein#install_copy_vim = false
+
   # Decrease max processes because too many requests sometimes get refused by GitHub.
   # Don't use `1` because it causes busy loop.
   g:dein#install_max_processes = 2
