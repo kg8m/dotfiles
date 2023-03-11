@@ -330,7 +330,7 @@ def RegisterRubyLsp(): void
     allowlist: ["ruby"],
     extra_config: () => ExtraConfigForRubyLsp(),
 
-    available: $RUBY_LSP_AVAILABLE ==# "1",
+    available: $RUBY_LSP_AVAILABLE !=# "0",
   })
 enddef
 
@@ -461,7 +461,7 @@ def RegisterTypeprof(): void
     allowlist: ["ruby"],
     extra_config: () => ExtraConfigForTypeprof(),
 
-    available: $TYPEPROF_AVAILABLE !=# "0",
+    available: $TYPEPROF_AVAILABLE ==# "1",
   })
 enddef
 
