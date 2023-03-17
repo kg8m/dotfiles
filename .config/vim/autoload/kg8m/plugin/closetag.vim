@@ -7,6 +7,7 @@ export const FILETYPES = [
   "eruby",
   "html",
   "markdown",
+  "vue",
 ] + jsConfig.JS_FILETYPES + jsConfig.TS_FILETYPES
 
 export def OnSource(): void
