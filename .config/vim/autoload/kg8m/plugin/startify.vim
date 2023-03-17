@@ -117,7 +117,18 @@ def SaveSession(): void
 
   if SessionSavable()
     mkdir(g:startify_session_dir, "p")
-    execute "silent SSave!" SessionFilename()
+
+    try
+      execute "silent SSave!" SessionFilename()
+    # Temporary directories are sometimes deleted, e.g., after updating Vim.
+    catch /E282: Cannot read from/
+      const filepath = matchstr(v:exception, '\vE282: Cannot read from "\zs.+\ze"$')
+      const dirpath  = fnamemodify(filepath, ":h")
+
+      kg8m#util#logger#Warn(
+        $"A temporary directory `{dirpath}` isn't available now. Restarting Vim process is recommended."
+      )
+    endtry
   endif
 enddef
 
