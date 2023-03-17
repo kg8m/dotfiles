@@ -532,6 +532,48 @@ function rails:routes:cache:reset {
   done
 }
 
+function rails:assets:precompile:force {
+  if [ ! -d "app" ] || [ ! -f "config/environment.rb" ] && [ ! -f "bin/rails" ]; then
+    echo:error "Maybe non-Rails directory."
+    return 1
+  fi
+
+  local prefix=""
+
+  while (("${#@}" > 0)); do
+    case "$1" in
+      --environment | -e)
+        prefix="RAILS_ENV=${2:-} "
+        shift 2
+        ;;
+      *)
+        echo:error "Unknown argument: $1"
+        return 1
+        ;;
+    esac
+  done
+
+  rails:assets:clean:force
+  execute_with_echo "${prefix}rails assets:precompile"
+}
+
+function rails:assets:clean:force {
+  if [ ! -d "app" ] || [ ! -f "config/environment.rb" ] && [ ! -f "bin/rails" ]; then
+    echo:error "Maybe non-Rails directory."
+    return 1
+  fi
+
+  local directories=(
+    "public/assets"
+    "public/packs"
+    "public/packs-test"
+    "tmp/cache/assets"
+    "tmp/cache/webpacker"
+  )
+
+  execute_with_confirm "rm -fr ${directories[*]}"
+}
+
 function zsh:plugins:update {
   if [ -d "${XDG_CACHE_HOME:?}/zsh" ]; then
     execute_with_echo "trash '${XDG_CACHE_HOME}/zsh'"
