@@ -489,11 +489,6 @@ function docker:clear_all {
 }
 
 function rails:routes:with_filter {
-  if ! command -v rails > /dev/null; then
-    echo:error "\`rails\` command isn't available."
-    return 1
-  fi
-
   if [ ! -f "config/routes.rb" ]; then
     echo:error "\`config/routes.rb\` doesn't exist."
     return 1
