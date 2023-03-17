@@ -31,9 +31,9 @@ const LOG_SKIP_PATTERN = new RegExp(
   [
     /^$/,
     /^ +\w+\.\.\w+ +[^ ]+ +-> origin\/[^ ]+$/,
-    /^ [^ ]+ *\| \d+ [-+]+$/,
-    /^ \* \[new branch\] /,
-    /^ \* \[new tag\] /,
+    /^ - \[deleted\] +[^ ]+ +-> [^ ]+$/,
+    /^ [^ ]+ +\| +\d+ [-+]+$/,
+    /^ \* \[(new branch|new tag)\] /,
     /^Already up to date\.$/,
     /^Applied autostash\.$/,
     /^Created autostash: \w+$/,
