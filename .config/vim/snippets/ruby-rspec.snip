@@ -72,6 +72,17 @@ abbr    expect { ... }.not_to ...
 options head
 	expect { ${1:#:subject} }.not_to ${0}
 
+snippet expect_to_all
+abbr    expect(...).to all(some_matcher)
+options head
+	expect(${1:#:subject}).to all(${2:#:matcher})
+
+snippet expect_to_include
+alias   expect_to_any
+abbr    expect(...).to include(some_matcher)
+options head
+	expect(${1:#:subject}).to include(${2:#:matcher})
+
 snippet allow_receive_and_wrap_original_without_args
 abbr    allow(...).to receive(:...).and_wrap_original {|original_method| ... }
 options head
