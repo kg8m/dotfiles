@@ -1,8 +1,15 @@
-# Function  {{{
+# Function/Class  {{{
 snippet function
 abbr    function {function_name}() { ... }
 options word
 	function ${1:#:function_name}(${2:#:args}) {
+		${0}
+	}
+
+snippet class
+abbr    class {ClassName} { ... }
+options head
+	class ${1:#:ClassName} {
 		${0}
 	}
 # }}}
