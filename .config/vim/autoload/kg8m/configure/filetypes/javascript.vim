@@ -27,7 +27,7 @@ export def Run(): void
 enddef
 
 def SetupBuffer(): void
-  setlocal iskeyword+=$
+  setlocal iskeyword+=#,$
 enddef
 
 def SyntaxForTypeScript(): void
