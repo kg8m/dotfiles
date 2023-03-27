@@ -193,8 +193,8 @@ def IsOnIndentation(): bool
 
   const syntax_name = synIDattr(synID(line("."), col(".") - 1, true), "name")
 
-  if syntax_name =~? 'comment'
-    const comment_symbol = substitute(&commentstring, '%s', "", "")
+  if syntax_name->tolower()->stringUtil.Includes("comment")
+    const comment_symbol = substitute(&commentstring, '\s*%s.*$', "", "")
 
     if leading_trimmed_text ==# comment_symbol
       return true
