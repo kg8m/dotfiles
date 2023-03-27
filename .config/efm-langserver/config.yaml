@@ -130,6 +130,7 @@ languages:
   eruby:
     - <<: *erb
     - <<: *erb-lint
+    - <<: *markuplint
 
   eruby.yaml:
     - <<: *yamllint
@@ -144,11 +145,13 @@ languages:
   javascript:
     - <<: *eslint
     - <<: *lit-analyzer
+    - <<: *markuplint
     - <<: *prettier
 
   javascriptreact:
     - <<: *eslint
     - <<: *lit-analyzer
+    - <<: *markuplint
     - <<: *prettier
 
   json:
@@ -175,15 +178,20 @@ languages:
   typescript:
     - <<: *eslint
     - <<: *lit-analyzer
+    - <<: *markuplint
     - <<: *prettier
 
   typescriptreact:
     - <<: *eslint
     - <<: *lit-analyzer
+    - <<: *markuplint
     - <<: *prettier
 
   vim:
     - <<: *vint
+
+  vue:
+    - <<: *markuplint
 
   yaml:
     - <<: *actionlint

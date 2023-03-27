@@ -1,4 +1,10 @@
 module.exports = {
+  parser: {
+    ".erb$": "@markuplint/erb-parser",
+    ".[jt]sx?$": "@markuplint/jsx-parser",
+    ".vue$": "@markuplint/vue-parser",
+  },
+
   // https://markuplint.dev/rules
   rules: {
     "attr-duplication": true,
