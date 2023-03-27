@@ -97,6 +97,7 @@ export FD_DEFAULT_OPTIONS=(
   --exclude ".bundle/cache/"
   --exclude ".cache/"
   --exclude ".git/"
+  --exclude ".nuxt/"
   --exclude "node_modules/"
   --exclude "tmp/"
   --exclude "vendor/bundle/"

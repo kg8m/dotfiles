@@ -540,10 +540,10 @@ def ExtraConfigForVimLanguageServer(): dict<any>
   }
 enddef
 
-# npm install vls
+# npm install @volar/vue-language-server
 def RegisterVueLanguageServer(): void
   RegisterServer({
-    name: "vls",
+    name: "vue-language-server",
     allowlist: ["vue"],
     extra_config: () => ExtraConfigForVueLanguageServer(),
   })
@@ -551,43 +551,17 @@ enddef
 
 def ExtraConfigForVueLanguageServer(): dict<any>
   return {
-    cmd: (_) => ["vls"],
+    cmd: (_) => ["vue-language-server", "--stdio"],
     env: NodeToolsEnv(),
 
-    # cf. https://github.com/sublimelsp/LSP-vue/blob/master/LSP-vue.sublime-settings
     initialization_options: {
-      config: {
-        vetur: {
-          completion: {
-            autoImport: false,
-            tagCasing: "kebab",
-            useScaffoldSnippets: false,
-          },
-          format: {
-            defaultFormatter: {
-              js: "",
-              ts: "",
-            },
-            defaultFormatterOptions: {},
-            scriptInitialIndent: false,
-            styleInitialIndent: false,
-          },
-          useWorkspaceDependencies: false,
-          validation: {
-            script: true,
-            style: true,
-            template: true,
-          },
-          dev: { logLevel: "DEBUG" },
-        },
-        css: {},
-        emmet: {},
-        stylusSupremacy: {},
-        html: { suggest: {} },
-        javascript: { format: {} },
-        typescript: { format: {} },
+      textDocumentSync: 2,
+      typescript: {
+        tsdk: TypeScriptLibPath(),
       },
     },
+
+    document_format: false,
   }
 enddef
 
@@ -841,11 +815,30 @@ def NodeToolsEnv(): dict<any>
     return cache.node_tools_env
   endif
 
-  const latest_node_version = system("newest_version nodejs")
+  const latest_node_version = system("newest_version nodejs")->trim()
 
   cache.node_tools_env = {
     ASDF_NODEJS_VERSION: latest_node_version,
   }
 
   return cache.node_tools_env
+enddef
+
+def TypeScriptLibPath(): string
+  const suffix = "node_modules/typescript/lib"
+  const project_local_path = $"{getcwd()}/{suffix}"
+
+  if isdirectory(project_local_path)
+    return project_local_path
+  else
+    const node_version = NodeToolsEnv().ASDF_NODEJS_VERSION
+    const global_path = $"{$ASDF_DATA_DIR}/installs/nodejs/{node_version}/lib/{suffix}"
+
+    if isdirectory(global_path)
+      return global_path
+    else
+      logger.Warn("TypeScript's library directory is not found.")
+      return ""
+    endif
+  endif
 enddef

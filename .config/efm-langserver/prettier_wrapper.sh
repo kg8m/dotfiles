@@ -11,7 +11,7 @@ options=(
 
 if command -v eslint > /dev/null; then
   case "${target_filepath}" in
-    *.js | *.jsx | *.ts | *.tsx)
+    *.js | *.jsx | *.ts | *.tsx | *.vue)
       # Use ESLint as formatter.
       if [ "${ESLINT_AS_FORMATTER:-}" = "1" ]; then
         exit 1

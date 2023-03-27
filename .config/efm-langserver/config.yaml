@@ -192,6 +192,7 @@ languages:
 
   vue:
     - <<: *markuplint
+    - <<: *prettier
 
   yaml:
     - <<: *actionlint
