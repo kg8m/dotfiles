@@ -89,7 +89,7 @@ def RunSingleline(): void
     cursorUtil.Move(cursor_position[1], cursor_position[2] - 1)
   endif
 
-  const position = searchpos(pattern, flags, stopline)
+  const position = TryWithPattern(pattern, (_pattern) => searchpos(_pattern, flags, stopline))
 
   if position ==# [0, 0]
     if getcurpos() !=# cursor_position
@@ -118,13 +118,26 @@ enddef
 
 def RunMultiline(): void
   const cursor_position = getcurpos()
-
   const pattern = BuildPattern()
-  stargate#OKvim(pattern)
+
+  TryWithPattern(pattern, (_pattern) => stargate#OKvim(_pattern))
 
   if getcurpos() !=# cursor_position
     BlinkCursor()
   endif
+enddef
+
+def TryWithPattern(original_pattern: string, Callback: func(string): any): any
+  try
+    return Callback(original_pattern)
+  # Catch invalid pattern errors.
+  catch /\v:%(E554|E870):/
+    # Use a timer for overwriting other messages.
+    timer_start(200, (_) => logger.Error($"[f2] Error: {v:exception}, Pattern: {cache.pattern}"))
+  endtry
+
+  const fallback_pattern = InputToSmartcasePattern(cache.input)
+  return Callback(fallback_pattern)
 enddef
 
 def BuildPattern(): string
