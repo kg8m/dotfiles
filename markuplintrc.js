@@ -11,7 +11,7 @@ module.exports = {
     "character-reference": true,
     "deprecated-attr": true,
     "deprecated-element": true,
-    "doctype": true,
+    doctype: true,
     "id-duplication": true,
     "permitted-contents": true,
     "required-attr": true,
@@ -24,6 +24,6 @@ module.exports = {
     "attr-value-quotes": true,
     "case-sensitive-attr-name": true,
     "case-sensitive-tag-name": true,
-    "indentation": true,
+    indentation: true,
   },
 };
