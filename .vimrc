@@ -976,6 +976,8 @@ if plugin.Register("LeafCage/yankround.vim")
   })
 endif
 
+plugin.Register("noprompt/vim-yardoc")
+
 # Colorschemes
 if plugin.Register("tomasr/molokai")
   import autoload "kg8m/plugin/molokai.vim"
