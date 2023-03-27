@@ -249,7 +249,7 @@ abbrevs:
     context: '\brails\s'
   - name: rails dbconsole
     abbr: db
-    snippet: dbconsole
+    snippet: dbconsole --include-password
     global: true
     context: '\brails\s'
   - name: rails generate
