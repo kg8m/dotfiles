@@ -183,7 +183,7 @@ def RegisterEfmLangserver(): void
 
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
-      "Gemfile", "css", "eruby", "gitcommit", "html", "json", "make", "markdown", "ruby", "sql", "vue",
+      "Gemfile", "css", "eruby", "gitcommit", "html", "json", "make", "markdown", "ruby", "scss", "sql", "vue",
     ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES + (
       ShouldUseDeno() ? [] : TS_FILETYPES
     ),

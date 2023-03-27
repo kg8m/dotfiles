@@ -168,6 +168,10 @@ languages:
     - <<: *rubocop
     - <<: *ruby
 
+  scss:
+    - <<: *stylelint
+    - <<: *prettier
+
   sh:
     - <<: *shellcheck
     - <<: *shfmt
