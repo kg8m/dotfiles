@@ -99,6 +99,8 @@ export FD_DEFAULT_OPTIONS=(
   --exclude ".git/"
   --exclude ".nuxt/"
   --exclude "node_modules/"
+  --exclude "public/assets/"
+  --exclude "public/packs*/js/"
   --exclude "tmp/"
   --exclude "vendor/bundle/"
 

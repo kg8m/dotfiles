@@ -37,6 +37,8 @@
 --glob=!.nuxt/
 --glob=!log/
 --glob=!node_modules/
+--glob=!public/assets/
+--glob=!public/packs*/js/
 --glob=!tmp/
 --glob=!vendor/bundle/
 
