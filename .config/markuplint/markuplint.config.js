@@ -1,4 +1,16 @@
-module.exports = {
+const path = require("path");
+const fs = require("fs");
+
+const homePath = process.env.HOME;
+const localConfigPath = path.join(process.env.PWD, ".markuplintrc.js");
+const { deepmerge } = require(path.join(homePath, ".config/util"));
+
+const localConfig = fs.existsSync(localConfigPath)
+  ? require(localConfigPath)
+  : {};
+
+// https://markuplint.dev/ja/docs/configuration
+const config = {
   parser: {
     ".erb$": "@markuplint/erb-parser",
     ".[jt]sx?$": "@markuplint/jsx-parser",
@@ -35,3 +47,5 @@ module.exports = {
     "wai-aria": true,
   },
 };
+
+module.exports = deepmerge(config, localConfig);
