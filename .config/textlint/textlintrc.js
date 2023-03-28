@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 
-const homePath = process.env["HOME"];
+const homePath = process.env.HOME;
 const configDirpath = path.join(homePath, ".config/textlint");
 const localConfigDirpath = path.join(homePath, ".config/textlint.local");
 
