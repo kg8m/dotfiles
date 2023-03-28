@@ -16,6 +16,7 @@ options=(
   --config "${relative_config_filepath}"
   --format Simple
   --no-color
+  --problem-only
 )
 
 out="$(
