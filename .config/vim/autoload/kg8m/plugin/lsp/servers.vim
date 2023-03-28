@@ -478,10 +478,8 @@ enddef
 def RegisterTypescriptLanguageServer(): void
   RegisterServer({
     name: "typescript-language-server",
-    allowlist: JS_FILETYPES + TS_FILETYPES,
+    allowlist: JS_FILETYPES + (ShouldUseDeno() ? [] : TS_FILETYPES),
     extra_config: () => ExtraConfigForTypescriptLanguageServer(),
-
-    available: !ShouldUseDeno(),
   })
 enddef
 
