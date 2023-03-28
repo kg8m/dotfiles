@@ -30,6 +30,7 @@ const config = {
     "end-tag": true,
     "id-duplication": true,
     "ineffective-attr": true,
+    "invalid-attr": true,
     "label-has-control": true,
     "landmark-roles": true,
     "no-boolean-attr-value": true,
