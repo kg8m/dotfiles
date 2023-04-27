@@ -11,7 +11,8 @@ if crontab -i > /dev/null 2>&1; then
 fi
 
 # shellcheck disable=SC2154
-alias fd="fd \${FD_DEFAULT_OPTIONS:?[@]}"
+# $FD_EXTRA_OPTIONS is a string because direnv doesn't support arrays.
+alias fd="fd \${FD_DEFAULT_OPTIONS:?[@]} \${(s: :)FD_EXTRA_OPTIONS}"
 alias rm="rm -i"
 
 # Don't inherit `$TERM` to remote servers.

@@ -15,6 +15,7 @@ export def List(options: dict<bool> = {}): list<string>
   const command = [
     "fd",
     $FD_DEFAULT_OPTIONS,
+    $FD_EXTRA_OPTIONS,
     "--strip-cwd-prefix",
     "--type", "f",
     "--base-directory", shellescape(DIRPATH),
