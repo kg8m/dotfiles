@@ -38,9 +38,11 @@ const config = {
     terminology: {
       defaultTerms: true,
       exclude: [
+        // Use "filetype"
         // https://github.com/sapegin/textlint-rule-terminology/blob/75161dd6622ff957b3e3ea580252c7456b68b1dc/terms.jsonc#L148
         "file-?type(s)?",
 
+        // Use "styleguide"
         // https://github.com/sapegin/textlint-rule-terminology/blob/75161dd6622ff957b3e3ea580252c7456b68b1dc/terms.jsonc#L152
         "style-?guide(s)?",
       ],
