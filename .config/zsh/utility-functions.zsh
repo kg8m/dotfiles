@@ -639,7 +639,7 @@ function zsh:rcs:compile:clear {
 function libs:go:uninstall {
   local pkg="${1:?}"
 
-  local fd_args=("${FD_DEFAULT_OPTIONS[@]}")
+  local fd_args=("${FD_DEFAULT_OPTIONS:?[@]}")
 
   if [ -n "${FD_EXTRA_OPTIONS:-}" ]; then
     # $FD_EXTRA_OPTIONS is a string because direnv doesn't support arrays.
