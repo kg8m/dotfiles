@@ -27,6 +27,11 @@ fi
 options+=(--force-exclusion --format simple --no-color --stdin "${target_filepath}")
 
 if [ "${is_fixing}" = "1" ]; then
+  if [[ "${target_filepath}" =~ \.md$ ]]; then
+    echo "Formatting Markdown files from STDIN source isn't supported." >&2
+    exit 1
+  fi
+
   result="$("${executable}" "${options[@]}" --autocorrect)"
 
   if echo "${result}" | grep -E '^=+$' -q; then

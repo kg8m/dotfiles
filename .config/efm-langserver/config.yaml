@@ -162,6 +162,7 @@ languages:
 
   markdown:
     - <<: *markdownlint
+    - <<: *rubocop
     - <<: *textlint
 
   ruby:
