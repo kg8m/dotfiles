@@ -406,7 +406,6 @@ function my_diff {
 
 function my_diff:without_spaces {
   local options=(
-    --ignore-tab-expansion
     --ignore-space-change
     --ignore-all-space
     --ignore-blank-lines
