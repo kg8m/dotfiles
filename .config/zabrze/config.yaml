@@ -310,3 +310,40 @@ abbrevs:
   - name: vim2
     abbr: vi
     snippet: vim
+
+  - name: yarn add
+    abbr: a
+    snippet: add
+    global: true
+    context: '^yarn\s'
+  # Don't use `yarn install` because I use `yarn`.
+  - name: yarn add for mistaking `yarn i`
+    abbr: i
+    snippet: add
+    global: true
+    context: '^yarn\s'
+  - name: yarn list
+    abbr: li
+    snippet: list
+    global: true
+    context: '^yarn\s'
+  - name: yarn remove
+    abbr: rem
+    snippet: remove
+    global: true
+    context: '^yarn\s'
+  - name: yarn remove2
+    abbr: uni
+    snippet: remove
+    global: true
+    context: '^yarn\s'
+  - name: yarn upgrade
+    abbr: up
+    snippet: upgrade
+    global: true
+    context: '^yarn\s'
+  - name: yarn upgrade-interactive
+    abbr: upi
+    snippet: upgrade-interactive
+    global: true
+    context: '^yarn\s'
