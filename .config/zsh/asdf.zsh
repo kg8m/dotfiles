@@ -30,10 +30,5 @@ function plugin:asdf:atclone {
   execute_with_echo "asdf list"
 }
 
-function plugin:asdf:atload {
-  # https://github.com/asdf-vm/asdf/blob/788ccab5971cb828cf25364b0df5ed6f5e9e713d/asdf.sh#L35
-  source lib/asdf.sh
-}
-
-zinit ice lucid wait"0c" as"null" atclone"plugin:asdf:atclone" atload"plugin:asdf:atload"
+zinit ice lucid wait"0c" as"null" atclone"plugin:asdf:atclone"
 zinit light asdf-vm/asdf
