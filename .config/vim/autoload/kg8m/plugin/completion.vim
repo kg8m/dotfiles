@@ -11,9 +11,8 @@ enddef
 
 export def RefreshPattern(filetype: string): string
   if !has_key(cache, "completion_refresh_patterns")
-    const css_pattern  = '\v([.#a-zA-Z0-9_-]+)$'
-    const ruby_pattern = lspServers.IsRubyServerAvailable() ? '\v(\@?\@\k*|(:)@<!:\k*|\k+)$' : '\v(\k+)$'
-    const sh_pattern   = '\v((\k|-)+)$'
+    const css_pattern = '\v([.#a-zA-Z0-9_-]+)$'
+    const sh_pattern  = '\v((\k|-)+)$'
 
     cache.completion_refresh_patterns = {
       _:    '\v(\k+)$',
@@ -21,7 +20,6 @@ export def RefreshPattern(filetype: string): string
       html: '\v(/|\k+)$',
       json: '\v("\k*|\[|\k+)$',
       less: css_pattern,
-      ruby: ruby_pattern,
       sass: css_pattern,
       scss: css_pattern,
       sh:   sh_pattern,
