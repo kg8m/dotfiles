@@ -51,4 +51,15 @@ const config = {
   nodeRules: [{ selector: "slot", rules: { "end-tag": false } }],
 };
 
+if (process.env.VUEJS_AVAILABLE === "1") {
+  config.nodeRules.push({
+    selector: "script",
+    rules: {
+      "invalid-attr": {
+        options: { allowAttrs: ["setup"] },
+      },
+    },
+  });
+}
+
 module.exports = deepmerge(config, localConfig);
