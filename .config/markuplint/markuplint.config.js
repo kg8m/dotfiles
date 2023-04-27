@@ -47,6 +47,8 @@ const config = {
     "use-list": true,
     "wai-aria": true,
   },
+
+  nodeRules: [{ selector: "slot", rules: { "end-tag": false } }],
 };
 
 module.exports = deepmerge(config, localConfig);
