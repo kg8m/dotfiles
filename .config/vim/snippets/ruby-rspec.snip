@@ -34,10 +34,10 @@ abbr    it { is_expected.to ... }
 options head
 	it { is_expected.to ${0} }
 
-snippet it_is_expected_not_to
-abbr    it { is_expected.not_to ... }
+snippet it_is_expected_to_not
+abbr    it { is_expected.to_not ... }
 options head
-	it { is_expected.not_to ${0} }
+	it { is_expected.to_not ${0} }
 
 snippet xit
 abbr    xit description
@@ -57,20 +57,20 @@ abbr    expect(...).to ...
 options head
 	expect(${1:#:subject}).to ${0}
 
-snippet expect_not_to
-abbr    expect(...).not_to ...
+snippet expect_to_not
+abbr    expect(...).to_not ...
 options head
-	expect(${1:#:subject}).not_to ${0}
+	expect(${1:#:subject}).to_not ${0}
 
 snippet expect_block_to
 abbr    expect { ... }.to ...
 options head
 	expect { ${1:#:subject} }.to ${0}
 
-snippet expect_block_not_to
-abbr    expect { ... }.not_to ...
+snippet expect_block_to_not
+abbr    expect { ... }.to_not ...
 options head
-	expect { ${1:#:subject} }.not_to ${0}
+	expect { ${1:#:subject} }.to_not ${0}
 
 snippet expect_to_all
 abbr    expect(...).to all(some_matcher)
