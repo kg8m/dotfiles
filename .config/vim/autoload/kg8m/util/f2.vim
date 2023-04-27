@@ -131,7 +131,7 @@ def TryWithPattern(original_pattern: string, Callback: func(string): any): any
   try
     return Callback(original_pattern)
   # Catch invalid pattern errors.
-  catch /\v:%(E554|E870):/
+  catch /\v:%(E554|E866|E870):/
     # Use a timer for overwriting other messages.
     timer_start(200, (_) => logger.Error($"[f2] Error: {v:exception}, Pattern: {cache.pattern}"))
   endtry
