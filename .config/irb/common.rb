@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 module Kg8m
-  def self.try_to_require(library, fallback: nil)
+  def self.try_to_require(library, fallback: nil, quiet: false)
     require library
   rescue LoadError => e
     if fallback
-      try_to_require(fallback)
+      try_to_require(fallback, quiet: quiet)
     else
-      warn "WARN -- #{e.class.name}: #{e.message} (#{e.backtrace.join(", ")})"
+      unless quiet
+        warn "WARN -- #{e.class.name}: #{e.message} (#{e.backtrace.join(", ")})"
+      end
     end
   end
 
@@ -99,8 +101,8 @@ if defined?(Rails)
   ActiveRecord::Base.logger = Rails.logger
   ActiveSupport::Deprecation.behavior = :stderr
 
-  Kg8m.try_to_require("hirber", fallback: "hirb")
-  Kg8m.try_to_require("hirb-unicode")
+  Kg8m.try_to_require("hirber", fallback: "hirb", quiet: true)
+  Kg8m.try_to_require("hirb-unicode", quiet: true)
 
   if defined?(Hirb)
     if defined?(HirbExt)
