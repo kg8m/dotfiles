@@ -41,7 +41,7 @@ module Kg8m
         @last_result =
           ::Benchmark.ips {|x|
             cases_map.each do |label, procedure|
-              x.report("#{label}:", procedure)
+              x.report(label, procedure)
             end
             x.compare!
           }
