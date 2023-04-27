@@ -40,6 +40,7 @@ function() {
     "--preview-window='down:5:wrap'"
     "--scroll-off=15"
     "--select-1"
+    "--track"
   )
 
   # $FD_EXTRA_OPTIONS is a string because direnv doesn't support arrays.
