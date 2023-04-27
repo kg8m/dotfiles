@@ -478,7 +478,7 @@ enddef
 def RegisterTypescriptLanguageServer(): void
   RegisterServer({
     name: "typescript-language-server",
-    allowlist: JS_FILETYPES + (ShouldUseDeno() ? [] : TS_FILETYPES),
+    allowlist: ShouldUseVueLanguageServer() ? [] : (JS_FILETYPES + (ShouldUseDeno() ? [] : TS_FILETYPES)),
     extra_config: () => ExtraConfigForTypescriptLanguageServer(),
   })
 enddef
@@ -542,7 +542,7 @@ enddef
 def RegisterVueLanguageServer(): void
   RegisterServer({
     name: "vue-language-server",
-    allowlist: ["vue"],
+    allowlist: ["vue"] + (ShouldUseVueLanguageServer() ? (JS_FILETYPES + TS_FILETYPES) : []),
     extra_config: () => ExtraConfigForVueLanguageServer(),
   })
 enddef
@@ -773,6 +773,15 @@ def CheckExitedServers(): void
       logger.Error(messages->join(" "))
     endif
   endfor
+enddef
+
+def ShouldUseVueLanguageServer(): bool
+  if has_key(cache, "use_vue_language_server")
+    return cache.use_vue_language_server
+  endif
+
+  cache.use_vue_language_server = ($VUEJS_AVAILABLE ==# "1")
+  return cache.use_vue_language_server
 enddef
 
 def ShouldUseDeno(): bool
