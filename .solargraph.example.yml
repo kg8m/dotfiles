@@ -1,18 +1,19 @@
 ---
 include:
   - "**/*.rb"
-require:
-  - actionmailer
-  - actionpack
-  - actionview
-  - activemodel
-  - activerecord
-  - activesupport
-require_paths:
-  - test
-  - test/lib
-  - test/support
+exclude:
+  - "vendor/**/*"
+require: []
 reporters:
-  # Use other language server for rubocop
+  # Valid sources are sometimes not found by solargraph.
+  # - require_not_found
+
+  # Use an other language server for rubocop
   # - rubocop
-  - require_not_found
+
+  # https://solargraph.org/guides/type-checking
+  - typecheck:typed
+formatter: {}
+require_paths: []
+plugins: []
+max_files: 10000
