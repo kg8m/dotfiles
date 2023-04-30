@@ -6,6 +6,9 @@ autocmd BufNewFile,BufRead *.ctags set filetype=conf
 
 autocmd BufNewFile,BufRead direnvrc set filetype=sh
 
+autocmd BufNewFile,BufRead [Dd]ockerfile* set filetype=Dockerfile
+autocmd BufNewFile,BufRead *[Dd]ockerfile set filetype=Dockerfile
+
 autocmd BufNewFile,BufRead .envrc set filetype=sh
 
 autocmd BufNewFile,BufRead Gemfile.local* set filetype=Gemfile
