@@ -8,9 +8,16 @@ export ASDF_NODEJS_VERSION="$(newest_version nodejs)"
 
 target_filepath="${1:?}"
 
+# BSD `realpath` doesn't support `--relative-to`.
+if command -v grealpath > /dev/null; then
+  realpath_bin="grealpath"
+else
+  realpath_bin="realpath"
+fi
+
 # markuplint treats config file's path as relative even if an absolute path is given
 absolute_config_filepath="${XDG_CONFIG_HOME:?}/markuplint/markuplint.config.js"
-relative_config_filepath="$(realpath --relative-to "${PWD}" "${absolute_config_filepath}")"
+relative_config_filepath="$("${realpath_bin}" --relative-to "${PWD}" "${absolute_config_filepath}")"
 
 options=(
   --config "${relative_config_filepath}"
