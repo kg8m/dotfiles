@@ -104,6 +104,9 @@ def Setup(): void
       dirs:    ["config"],
       pattern: '/(routes\.rb|routes/.+\.rb)$',
     },
+    sig: {
+      dirs: ["sig"],
+    },
     spec: {
       dirs: ["spec", "test"],
     },

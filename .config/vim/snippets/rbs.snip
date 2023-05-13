@@ -1,0 +1,25 @@
+snippet class
+abbr    class ... end
+options head
+	class ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
+		${0}
+	end
+
+snippet module
+abbr    module ... end
+options head
+	module ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
+		${0}
+	end
+
+snippet interface
+abbr    interface ... end
+options head
+	interface _${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
+		${0}
+	end
+
+snippet def
+abbr    def ...
+options head
+	def ${1:#:method_name}: (${2:#:args}) -> ${3:#:return_type}

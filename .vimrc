@@ -762,6 +762,7 @@ if plugin.Register("tpope/vim-rails", { if: !util.IsGitTmpEdit() && util.OnRails
   })
 endif
 
+plugin.Register("jlcrochet/vim-rbs")
 plugin.Register("tpope/vim-repeat")
 
 if plugin.Register("vim-ruby/vim-ruby")

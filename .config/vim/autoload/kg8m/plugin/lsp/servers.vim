@@ -406,10 +406,10 @@ enddef
 def RegisterSteep(): void
   RegisterServer({
     name: "steep",
-    allowlist: ["ruby"],
+    allowlist: ["rbs", "ruby"],
     extra_config: () => ExtraConfigForSteep(),
 
-    available: $STEEP_AVAILABLE ==# "1",
+    available: filereadable("Steepfile"),
   })
 enddef
 

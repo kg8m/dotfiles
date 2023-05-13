@@ -96,6 +96,7 @@ export FD_DEFAULT_OPTIONS=(
   --exclude "*.zwc"
   --exclude ".bundle/cache/"
   --exclude ".cache/"
+  --exclude ".gem_rbs_collection/"
   --exclude ".git/"
   --exclude ".nuxt/"
   --exclude "node_modules/"
