@@ -44,7 +44,7 @@ export def Expr(): string
   elseif IsFoldStart(line)
     return ">" .. string(IndentLevel(v:lnum))
   else
-    # Return stringified number because Vim9 script currenty doesn't support `string | number` return type
+    # Return stringified number because Vim9 script currently doesn't support `string | number` return type
     return string(IndentLevel(v:lnum) - 1)
   endif
 enddef
