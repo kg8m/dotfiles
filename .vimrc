@@ -231,6 +231,13 @@ if plugin.Register("Shougo/context_filetype.vim")
   endfor
 endif
 
+if plugin.Register("vim-denops/denops.vim", { lazy: true })
+  if $DENOPS_DEBUG ==# "1"
+    g:denops#debug = true
+    g:denops#trace = true
+  endif
+endif
+
 if plugin.Register("gamoutatsumi/dps-ghosttext.vim", { if: $GHOST_TEXT_AVAILABLE ==# "1" })
   import autoload "kg8m/plugin/ghosttext.vim"
   plugin.Configure({
@@ -588,13 +595,6 @@ if plugin.Register("alvan/vim-closetag")
 endif
 
 plugin.Register("hail2u/vim-css3-syntax", { if: !util.IsGitTmpEdit() })
-
-if plugin.Register("vim-denops/denops.vim", { lazy: true })
-  if $DENOPS_DEBUG ==# "1"
-    g:denops#debug = true
-    g:denops#trace = true
-  endif
-endif
 
 if plugin.Register("kg8m/vim-detect-indent", { if: !use_editorconfig })
   g:detect_indent#detect_once      = false
