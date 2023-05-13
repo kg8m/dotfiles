@@ -56,8 +56,14 @@ def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
     return cache.grep_option_candidates->copy()->filter((_, item) => item =~# pattern)
   elseif stringUtil.StartsWith(arglead, "$")
     const pattern = arglead[1 : -1]
-    const prefix = "$"
-    return getcompletion(pattern, "environment")->map((_, item) => $"{prefix}{item}")
+    const envvar_names = getcompletion(pattern, "environment")
+
+    if empty(envvar_names)
+      return getcompletion(arglead, "file")
+    else
+      const prefix = "$"
+      return envvar_names->mapnew((_, item) => $"{prefix}{item}")
+    endif
   else
     var pattern = arglead
 
