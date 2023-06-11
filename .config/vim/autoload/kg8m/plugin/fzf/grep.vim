@@ -35,7 +35,6 @@ enddef
 
 def Run(args: string): void
   const grep_command = ["rg", GrepFullOptions(), args]->join(" ")
-  const has_column   = true
   const fzf_options  = [
     "--header",         JoinPresences(["Grep:", GrepExplicitOptions(), args]),
     "--delimiter",      ":",
@@ -43,7 +42,7 @@ def Run(args: string): void
     "--preview-window", "down:75%:wrap:nohidden:+{2}-/2",
   ]
 
-  fzf.Run(() => fzf#vim#grep(grep_command, has_column, { options: fzf_options }))
+  fzf.Run(() => fzf#vim#grep(grep_command, { options: fzf_options }))
 enddef
 
 def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
