@@ -12,6 +12,33 @@ for filepath in "${filepaths[@]}"; do
   realpaths+=("${filepath/#\~/${HOME}}")
 done
 
+bat_options=()
+unique_extensions=("${(Mu@)realpaths%.*}")
+
+for realpath in "${realpaths[@]}"; do
+  case "${realpath}" in
+    *.*)
+      # Ignore the path if it includes dot(s).
+      ;;
+    *)
+      # Add the path if it doesn’t have any dot.
+      unique_extensions+=("${realpath}")
+      ;;
+  esac
+done
+
+if [ "${#unique_extensions}" = "1" ]; then
+  case "${unique_extensions[1]}" in
+    .diff)
+      delta < "${realpaths[@]}"
+      exit
+      ;;
+    .jb | .rbs)
+      bat_options+=(--language "ruby")
+      ;;
+  esac
+fi
+
 if [ "${#filepaths}" = "1" ]; then
   parts=("${(s;:;)realpaths[1]}")
   realpath="${parts[1]}"
@@ -21,15 +48,20 @@ if [ "${#filepaths}" = "1" ]; then
     lineno="0"
   fi
 
-  bat_options=(
+  bat_options+=(
     --highlight-line "${lineno}"
   )
 
-  case "${realpath}" in
-    *Gemfile.local* | *.jb | */pryrc | *.rbs | Steepfile)
-      bat_options+=(--language "ruby")
-      ;;
-  esac
+  if (("${bat_options[(I)--language]}" == 0)); then
+    case "${realpath}" in
+      .envrc.example)
+        bat_options+=(--language "sh")
+        ;;
+      *Gemfile.local* | */pryrc | Steepfile)
+        bat_options+=(--language "ruby")
+        ;;
+    esac
+  fi
 
   case "${realpath}" in
     *.csv)
@@ -50,5 +82,5 @@ if [ "${#filepaths}" = "1" ]; then
       bat "${realpath}" "${bat_options[@]}"
   esac
 else
-  bat "${realpaths[@]}"
+  bat "${realpaths[@]}" "${bat_options[@]}"
 fi
