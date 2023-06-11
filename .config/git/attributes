@@ -16,5 +16,7 @@
 *.ts diff=java
 *.vim diff=vim
 *_spec.rb diff=rspec
+.config/git/aliases diff=shell linguist-language=Shell
 .config/git/config diff=gitconfig
 .vimrc diff=vim
+Gemfile.local.example diff=ruby linguist-language=Ruby
