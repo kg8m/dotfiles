@@ -28,7 +28,7 @@ export def RailsFiles(): any
   const filepath_in_search_path = findfile(filepath)
 
   if !empty(filepath_in_search_path)
-    return { path: filepath_in_search_path, line: 0, col:  0 }
+    return { path: filepath_in_search_path, line: 1, col: 1 }
   endif
 
   const view_filepaths = glob($"app/views/{filepath}.*")->split()
@@ -36,7 +36,7 @@ export def RailsFiles(): any
   if !empty(view_filepaths)
     for view_filepath in view_filepaths
       if filereadable(view_filepath)
-        return { path: view_filepath, line: 0, col: 0 }
+        return { path: view_filepath, line: 1, col: 1 }
       endif
     endfor
   endif
