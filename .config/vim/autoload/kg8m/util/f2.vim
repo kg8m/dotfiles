@@ -153,7 +153,7 @@ def BuildPattern(): string
   # searching behavior varies depending on multibyte characters existence.
 
   const smartcase_pattern = InputToSmartcasePattern(input)
-  const migemo_pattern = kensaku#query(input)->escape("~")
+  const migemo_pattern = InputToMimemoPattern(input)
 
   cache.pattern = $'\C\%({smartcase_pattern}\|{migemo_pattern}\)'
 
@@ -176,6 +176,24 @@ def InputToSmartcasePattern(original_full_input: string): string
       BuildCaseInsensitivePattern(input2)
     )
   endif
+enddef
+
+def InputToMimemoPattern(input: string): string
+  var left_space = ""
+  var right_space = ""
+
+  if input =~# '\s'
+    if input[0] =~# '\s'
+      left_space = input[0]
+    endif
+
+    if input[1] =~# '\s'
+      right_space = input[1]
+    endif
+  endif
+
+  # kensaku#query() removes whitespaces around its returning pattern.
+  return left_space .. kensaku#query(input)->escape("~") .. right_space
 enddef
 
 def BlinkCursor(): void
