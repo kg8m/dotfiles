@@ -48,6 +48,13 @@ if [ "${#filepaths}" = "1" ]; then
     lineno="0"
   fi
 
+  if file "${realpath}" | grep -E '\bimage data\b' -q; then
+    if command -v chafa > /dev/null; then
+      chafa --size 200x50 "${realpath}"
+      return
+    fi
+  fi
+
   bat_options+=(
     --highlight-line "${lineno}"
   )
