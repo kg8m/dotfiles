@@ -28,9 +28,7 @@ export def Setup(): void
   augroup vimrc-plugin-lsp-popup
     autocmd!
     autocmd User lsp_float_opened OnFloatOpened()
-
     autocmd CompleteChanged * OnCompleteChanged()
-    autocmd InsertEnter     * OnInsertEnter()
   augroup END
 enddef
 
@@ -40,11 +38,6 @@ enddef
 
 # Close popups on `CompleteChanged` because `lsp_float_opened` user event is not triggered if popups already exist.
 def OnCompleteChanged(): void
-  Close()
-enddef
-
-# Close popups on `InsertEnter` because I don't want to see them while editing.
-def OnInsertEnter(): void
   Close()
 enddef
 
