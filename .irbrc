@@ -26,3 +26,9 @@ if File.exist?(HISTORY_FILEPATH) && defined?(Readline::HISTORY)
     File.write(HISTORY_FILEPATH, lines.join("\n"))
   end
 end
+
+Kg8m.try_to_require("katakata_irb")
+
+if defined?(KatakataIrb::Types) && KatakataIrb::Types.respond_to?(:loader_type=)
+  KatakataIrb::Types.loader_type = :async
+end
