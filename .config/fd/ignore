@@ -5,9 +5,12 @@
 .gem_rbs_collection/
 .git/
 .nuxt/
+app/assets/builds/
+app/frontend/builds/
 node_modules/
 public/assets/
 public/packs*/
+public/vite*/
 tmp/
 vendor/bundle/
 

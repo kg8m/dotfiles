@@ -558,9 +558,14 @@ function rails:assets:clean:force {
   fi
 
   local directories=(
+    "app/assets/builds"
+    "app/frontend/builds"
     "public/assets"
     "public/packs"
     "public/packs-test"
+    "public/vite"
+    "public/vite-dev"
+    "public/vite-test"
     "tmp/cache/assets"
     "tmp/cache/webpacker"
   )

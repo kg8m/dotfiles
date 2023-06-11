@@ -36,10 +36,13 @@
 --glob=!.gem_rbs_collection/
 --glob=!.git/
 --glob=!.nuxt/
+--glob=!app/assets/builds/
+--glob=!app/frontend/builds/
 --glob=!log/
 --glob=!node_modules/
 --glob=!public/assets/
---glob=!public/packs*/js/
+--glob=!public/packs*/
+--glob=!public/vite*/
 --glob=!tmp/
 --glob=!vendor/bundle/
 

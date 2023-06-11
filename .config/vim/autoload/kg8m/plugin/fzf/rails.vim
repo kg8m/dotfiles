@@ -62,7 +62,7 @@ enddef
 def Setup(): void
   extend(specs, {
     assets: {
-      dirs: ["app/assets", "app/javascripts", "public"],
+      dirs: ["app/assets", "app/frontend", "app/javascript", "app/javascripts", "public"],
     },
     config: {
       dirs: ["config"],
