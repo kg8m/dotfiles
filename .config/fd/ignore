@@ -1,0 +1,16 @@
+# cf. .config/ripgrep/config
+*.zwc
+.bundle/cache/
+.cache/
+.gem_rbs_collection/
+.git/
+.nuxt/
+node_modules/
+public/assets/
+public/packs*/
+tmp/
+vendor/bundle/
+
+# For Mac
+/System/Volumes/
+/Volumes/

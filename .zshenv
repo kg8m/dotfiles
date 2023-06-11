@@ -91,24 +91,6 @@ export FD_DEFAULT_OPTIONS=(
   # Don't set as default because this option can't be used with paths or `--search-path` options.
   # --strip-cwd-prefix
 
-  # Exclude files/directories
-  # cf. configs for ripgrep
-  --exclude "*.zwc"
-  --exclude ".bundle/cache/"
-  --exclude ".cache/"
-  --exclude ".gem_rbs_collection/"
-  --exclude ".git/"
-  --exclude ".nuxt/"
-  --exclude "node_modules/"
-  --exclude "public/assets/"
-  --exclude "public/packs*/js/"
-  --exclude "tmp/"
-  --exclude "vendor/bundle/"
-
-  # For Mac
-  --exclude "/System/Volumes/"
-  --exclude "/Volumes/"
-
   # Sort search results
   # Comment out because `fd` doesn't sort the result even with this option.
   # --threads 1

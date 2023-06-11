@@ -30,10 +30,6 @@ def Run(type: string): void
     command += mapnew(type_spec.dirs, (_, dir) => $"--search-path={shellescape(dir)}")
   endif
 
-  if has_key(type_spec, "excludes")
-    command += mapnew(type_spec.excludes, (_, exclude) => $"--exclude={shellescape(exclude)}")
-  endif
-
   if has_key(type_spec, "pattern")
     command += [shellescape(type_spec.pattern)]
   endif
@@ -66,8 +62,7 @@ enddef
 def Setup(): void
   extend(specs, {
     assets: {
-      dirs:     ["app/assets", "app/javascripts", "public"],
-      excludes: ["public/packs*"],
+      dirs: ["app/assets", "app/javascripts", "public"],
     },
     config: {
       dirs: ["config"],
@@ -86,9 +81,8 @@ def Setup(): void
       dirs: ["config/initializers"],
     },
     javascripts: {
-      dirs:     ["app", "public"],
-      pattern:  '\.(jsx?|tsx?|vue)(\.erb)?$',
-      excludes: ["public/packs*"],
+      dirs:    ["app", "public"],
+      pattern: '\.(jsx?|tsx?|vue)(\.erb)?$',
     },
     lib: {
       dirs: ["lib"],
@@ -97,8 +91,7 @@ def Setup(): void
       dirs: ["config/locales"],
     },
     public: {
-      dirs:     ["public"],
-      excludes: ["public/packs*"],
+      dirs: ["public"],
     },
     routing: {
       dirs:    ["config"],
@@ -111,9 +104,8 @@ def Setup(): void
       dirs: ["spec", "test"],
     },
     stylesheets: {
-      dirs:     ["app", "public"],
-      pattern:  '\.(sass|s?css)$',
-      excludes: ["public/packs*"],
+      dirs:    ["app", "public"],
+      pattern: '\.(sass|s?css)$',
     },
     test: {
       dirs: ["spec", "test"],

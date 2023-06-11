@@ -30,7 +30,7 @@
 --colors=path:style:bold
 
 # Exclude directories
-# cf. $FD_DEFAULT_OPTIONS
+# cf. .config/fd/ignore
 --glob=!.bundle/cache/
 --glob=!.cache/
 --glob=!.gem_rbs_collection/
