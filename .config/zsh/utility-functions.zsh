@@ -227,6 +227,36 @@ function trash {
   done
 }
 
+function remove_empty_dirs {
+  local search_path="${1:-.}"
+
+  if (("${#@}" > 0)); then
+    shift 1
+  fi
+
+  echo "Finding empty directories..."
+  echo
+  local dirpaths=("${(@f)$(fd --full-path --type d --type e "${search_path}")}")
+
+  if [ -n "${dirpaths[*]}" ]; then
+    echo "${(j:\n:)dirpaths[@]}"
+    echo
+
+    local response
+    read -r "response?Delete them? [y/n]: "
+
+    if [[ "${response}" =~ ^y ]]; then
+      rm -fr "${dirpaths[@]}"
+      echo
+      remove_empty_dirs "${search_path}"
+    else
+      echo:info "Canceled."
+    fi
+  else
+    echo:info "There are no empty directories."
+  fi
+}
+
 function remove_symlink {
   local filepath="${1:?}"
 
