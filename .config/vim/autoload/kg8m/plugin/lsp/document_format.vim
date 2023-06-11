@@ -174,7 +174,16 @@ def IsAllowed(): bool
 enddef
 
 def IsTargetFilepath(): bool
-  return fileUtil.IsDescendant(expand("%:p"))
+  return fileUtil.IsDescendant(expand("%:p")) && !IsIgnoreeFilepath()
+enddef
+
+def IsIgnoreeFilepath(): bool
+  if !has_key(g:, "kg8m#plugin#lsp#document_format#ignoree_pattern")
+    return false
+  endif
+
+  # Use `getbufinfo()` to get the buffer's absolute path event if it isn't saved.
+  return getbufinfo("%")[0].name =~# g:kg8m#plugin#lsp#document_format#ignoree_pattern
 enddef
 
 def IsForceTargetFilepath(): bool
