@@ -157,6 +157,9 @@ languages:
   json:
     - <<: *prettier
 
+  jsonc:
+    - <<: *prettier
+
   make:
     - <<: *checkmake
 

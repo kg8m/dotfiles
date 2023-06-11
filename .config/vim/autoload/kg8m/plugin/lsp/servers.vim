@@ -183,7 +183,7 @@ def RegisterEfmLangserver(): void
 
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
-      "Gemfile", "css", "eruby", "gitcommit", "html", "json", "make", "markdown", "ruby", "scss", "sql", "vue",
+      "Gemfile", "css", "eruby", "gitcommit", "html", "json", "jsonc", "make", "markdown", "ruby", "scss", "sql", "vue",
     ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES + (
       ShouldUseDeno() ? [] : TS_FILETYPES
     ),
@@ -281,7 +281,7 @@ enddef
 def RegisterJsonLanguageServer(): void
   RegisterServer({
     name: "json-language-server",
-    allowlist: ["json"],
+    allowlist: ["json", "jsonc"],
     executable: "vscode-json-language-server",
     extra_config: () => ExtraConfigForJsonLanguageServer(),
   })
@@ -340,6 +340,8 @@ def ExtraConfigForRubyLsp(): dict<any>
     initialization_options: {
       diagnostics: true,
     },
+
+    document_format: false,
   }
 enddef
 

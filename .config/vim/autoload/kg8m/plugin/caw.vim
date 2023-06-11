@@ -21,6 +21,8 @@ enddef
 def SetupFiletype(): void
   if &filetype ==# "eruby"
     SetupEruby()
+  elseif &filetype ==# "jsonc"
+    SetupJsonc()
   elseif &filetype ==# "Gemfile"
     SetupGemfile()
   elseif &filetype ==# "vim"
@@ -69,6 +71,10 @@ def SetupEruby(): void
     b:caw_context_filetype_original_filetypes = get(b:, "context_filetype_filetypes", v:null)
     b:context_filetype_filetypes = {}
   endif
+enddef
+
+def SetupJsonc(): void
+  b:caw_oneline_comment = "//"
 enddef
 
 def SetupGemfile(): void
