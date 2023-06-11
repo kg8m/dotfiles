@@ -5,6 +5,7 @@ export def Setup(): void
     autocmd!
     autocmd BufWritePost .eslintrc.*,package.json,tsconfig.json RestartEslintD()
     autocmd BufWritePost .rubocop.yml                           RestartRubocopServer()
+    autocmd BufWritePost config/routes.rb,config/routes/*.rb    UpdateRoutingDependencies()
   augroup END
 enddef
 
@@ -32,4 +33,14 @@ enddef
 
 def IsRubocopDaemonAvailable(): bool
   return !!executable("rubocop-daemon")
+enddef
+
+def UpdateRoutingDependencies(): void
+  if executable("annotate")
+    job_start(["rails", "annotate_routes"])
+  endif
+
+  if isdirectory("sig/rbs_rails")
+    job_start(["rails", "rbs_rails:generate_rbs_for_path_helpers"])
+  endif
 enddef
