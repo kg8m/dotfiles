@@ -34,6 +34,7 @@ export def Register(): void
   RegisterSolargraph()
   RegisterSqls()
   RegisterSteep()
+  RegisterTailwindcssLanguageServer()
   RegisterTerraformLs()
   RegisterTerraformLsp()
   RegisterTypeprof()
@@ -421,6 +422,22 @@ def ExtraConfigForSteep(): dict<any>
     initialization_options: {
       diagnostics: true,
     },
+  }
+enddef
+
+# npm install @tailwindcss/language-server
+def RegisterTailwindcssLanguageServer(): void
+  RegisterServer({
+    name: "tailwindcss-language-server",
+    allowlist: ["css", "html", "slim"] + JS_FILETYPES + TS_FILETYPES,
+    extra_config: () => ExtraConfigForTailwindcssLanguageServer(),
+  })
+enddef
+
+def ExtraConfigForTailwindcssLanguageServer(): dict<any>
+  return {
+    cmd: (_) => ["tailwindcss-language-server", "--stdio"],
+    env: NodeToolsEnv(),
   }
 enddef
 
