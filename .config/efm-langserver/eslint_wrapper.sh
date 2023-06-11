@@ -13,8 +13,10 @@ if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
 
-if [ "${is_fixing}" = "1" ] && [ ! "${ESLINT_AS_FORMATTER:-}" = "1" ]; then
-  exit 1
+if [ "${is_fixing}" = "1" ]; then
+  if [ ! "${ESLINT_AS_FORMATTER:-}" = "1" ] && [ ! "${ESLINT_AND_PRETTIER_AS_FORMATTER:-}" = "1" ]; then
+    exit 1
+  fi
 fi
 
 err_temp_filepath="$(mktemp)"

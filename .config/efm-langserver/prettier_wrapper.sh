@@ -13,7 +13,7 @@ if command -v eslint > /dev/null; then
   case "${target_filepath}" in
     *.js | *.jsx | *.ts | *.tsx | *.vue)
       # Use ESLint as formatter.
-      if [ "${ESLINT_AS_FORMATTER:-}" = "1" ]; then
+      if [ "${ESLINT_AS_FORMATTER:-}" = "1" ] && [ ! "${ESLINT_AND_PRETTIER_AS_FORMATTER:-}" = "1" ]; then
         exit 1
       fi
       ;;
