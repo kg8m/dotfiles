@@ -182,7 +182,7 @@ def IsIgnoreeFilepath(): bool
     return false
   endif
 
-  # Use `getbufinfo()` to get the buffer's absolute path event if it isn't saved.
+  # Use `getbufinfo()` to get the buffer's absolute path if it isn't saved.
   return getbufinfo("%")[0].name =~# g:kg8m#plugin#lsp#document_format#ignoree_pattern
 enddef
 
@@ -191,7 +191,7 @@ def IsForceTargetFilepath(): bool
     return false
   endif
 
-  # Use `getbufinfo()` to get the buffer's absolute path event if it isn't saved.
+  # Use `getbufinfo()` to get the buffer's absolute path if it isn't saved.
   return getbufinfo("%")[0].name =~# g:kg8m#plugin#lsp#document_format#force_target_pattern
 enddef
 
