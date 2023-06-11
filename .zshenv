@@ -42,6 +42,9 @@ unset ASDF_ROOT
 
 export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
 
+# https://github.com/kennyp/asdf-golang/pull/101
+export ASDF_GOLANG_MOD_VERSION_ENABLED="true"
+
 # https://github.com/asdf-vm/asdf/blob/788ccab5971cb828cf25364b0df5ed6f5e9e713d/asdf.sh#L25-26
 path=(
   "${ASDF_DATA_DIR}/shims"
