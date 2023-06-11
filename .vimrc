@@ -232,6 +232,8 @@ if plugin.Register("Shougo/context_filetype.vim")
 endif
 
 if plugin.Register("vim-denops/denops.vim", { lazy: true })
+  g:denops_disable_version_check = true
+
   if $DENOPS_DEBUG ==# "1"
     g:denops#debug = true
     g:denops#trace = true
