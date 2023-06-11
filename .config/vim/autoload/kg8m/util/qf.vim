@@ -134,7 +134,7 @@ def EncodeList(raw_list: list<dict<any>>): list<string>
   return mapnew(raw_list, (_, original_item) => {
     final item = copy(original_item)
 
-    item.filename = bufname(item.bufnr)
+    item.filename = bufname(item.bufnr)->fnamemodify(":p")
     remove(item, "bufnr")
 
     return json_encode(item)
