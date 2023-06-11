@@ -34,6 +34,10 @@ def Run(type: string): void
     command += [shellescape(type_spec.pattern)]
   endif
 
+  # Remove `./` for current directory.
+  # Note: `fd`’s `--strip-cwd-prefix` option can’t be used with `--search-path` option(s).
+  command += ["| sd '\\./' ''"]
+
   command += ["| sort_without_escape_sequences"]
 
   # Use `final` instead of `const` because the variable will be changed by fzf
@@ -81,7 +85,7 @@ def Setup(): void
       dirs: ["config/initializers"],
     },
     javascripts: {
-      dirs:    ["app", "public"],
+      dirs:    ["."],
       pattern: '\.(jsx?|tsx?|vue)(\.erb)?$',
     },
     lib: {
