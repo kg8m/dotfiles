@@ -331,9 +331,17 @@ if plugin.Register("junegunn/fzf.vim", { if: executable("fzf") })
 endif
 
 if plugin.Register("lambdalisue/gin.vim", { if: !util.IsGitTmpEdit() })
+  g:gin_diff_default_args = ["++processor=delta"]
+
+  augroup vimrc-plugin-gin
+    autocmd!
+    # Regular `gf` doesn’t work due to some reason.
+    autocmd FileType gin-diff nnoremap <buffer> gf :execute "edit" expand("<cfile>")<CR>
+  augroup END
+
   plugin.Configure({
     lazy:    true,
-    on_cmd:  ["GinEdit", "GinPatch"],
+    on_cmd:  ["GinDiff", "GinEdit", "GinPatch"],
     depends: ["denops.vim"],
   })
 endif
