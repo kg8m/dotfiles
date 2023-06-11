@@ -108,6 +108,15 @@ def OnLspBufferEnabled(): void
   nmap <buffer> ge <Plug>(lsp-next-error)
   nmap <buffer> <S-h> <Plug>(lsp-hover)
 
+  const alt_b = "∫"
+  const alt_f = "ƒ"
+  const alt_j = "∆"
+  const alt_k = "˚"
+  execute $"nnoremap <buffer><expr> {alt_j} lsp#scroll(+1)"
+  execute $"nnoremap <buffer><expr> {alt_k} lsp#scroll(-1)"
+  execute $"nnoremap <buffer><expr> {alt_f} lsp#scroll(+5)"
+  execute $"nnoremap <buffer><expr> {alt_b} lsp#scroll(-5)"
+
   if IsDefinitionSupported()
     nmap <buffer> g] <Plug>(lsp-definition)
   endif
