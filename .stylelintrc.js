@@ -1,6 +1,7 @@
 module.exports = {
   extends: ["stylelint-config-standard"],
   rules: {
+    "at-rule-no-unknown": [true, { ignoreAtRules: ["tailwind"] }],
     "color-hex-length": "long",
     "comment-empty-line-before": null,
     "declaration-empty-line-before": null,
