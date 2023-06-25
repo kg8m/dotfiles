@@ -5,6 +5,11 @@ import autoload "kg8m/plugin/lsp/servers.vim" as lspServers
 
 final cache = {}
 
+augroup vimrc-plugin-completion
+  autocmd!
+  autocmd TextChangedI * Refresh(300)
+augroup END
+
 export def Disable(): void
   b:asyncomplete_enable = false
 enddef
@@ -50,8 +55,17 @@ export def Refresh(wait: number = 200): void
 enddef
 
 def ForceRefresh(): void
-  asyncomplete#_force_refresh()
-  StopRefreshTimer()
+  const prev_two_chars = strpart(getline("."), col(".") - 3, 2)
+
+  # Don’t add mappings for this omni-completion because they can conflict with lexima.vim’s configs.
+  if &omnifunc ==# "lsp#complete" && prev_two_chars =~# '\v^%(\w\.|[^[:blank:]]\s)$'
+    feedkeys("\<C-x>\<C-o>", "t")
+  else
+    # Forcefully refresh completion candidates after texts change because completion candidates are not refreshed after
+    # updating tags file.
+    asyncomplete#_force_refresh()
+    StopRefreshTimer()
+  endif
 enddef
 
 def StartRefreshTimer(wait: number): void

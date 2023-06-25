@@ -33,15 +33,11 @@ export def Define(options: dict<bool> = {}): void
     return
   endif
 
-  inoremap <buffer><expr>         . DotExpr()
-
   # <silent> for lexima#expand's echo
   inoremap <buffer><expr><silent> <CR>                   CrExpr()
   inoremap <buffer><expr><silent> <Plug>(kg8m-i-cr-base) CrExprBase()
 
-  # <silent> for lexima#expand's echo
-  inoremap <buffer><expr><silent> <BS>  BsExpr()
-  inoremap <buffer><expr><silent> <C-h> BsExpr()
+  imap     <buffer>               <C-h> <BS>
 
   inoremap <buffer><expr>         <Tab>   TabExpr()
   inoremap <buffer><expr>         <S-Tab> ShiftTabExpr()
@@ -61,14 +57,6 @@ enddef
 
 export def Disable(): void
   b:kg8m_custom_imaps_disabled = true
-enddef
-
-def DotExpr(): string
-  if &omnifunc ==# "lsp#complete"
-    return ".\<C-x>\<C-o>"
-  else
-    return "."
-  endif
 enddef
 
 def CrExpr(): string
@@ -97,22 +85,6 @@ enddef
 def CrExprBase(): string
   # <C-g>u: Break undo sequence when a new line is inserted
   return "\<C-g>u" .. lexima#expand("<CR>", "i")
-enddef
-
-def BsExpr(): string
-  const base = lexima#expand("<BS>", "i")
-
-  if &omnifunc ==# ""
-    return base
-  else
-    const prev_char = strpart(getline("."), col(".") - 3, 1)
-
-    if prev_char ==# "."
-      return base .. "\<C-x>\<C-o>"
-    else
-      return base
-    endif
-  endif
 enddef
 
 def GtExpr(): string
