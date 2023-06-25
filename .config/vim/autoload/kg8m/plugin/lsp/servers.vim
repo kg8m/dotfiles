@@ -102,9 +102,10 @@ def ExtraConfigForCssLanguageServer(): dict<any>
     env: NodeToolsEnv(),
     config: { refresh_pattern: completion.RefreshPattern("css") },
     workspace_config: {
-      css:  { lint: { validProperties: [] } },
-      less: { lint: { validProperties: [] } },
-      scss: { lint: { validProperties: [] } },
+      # Use Stylelint for unknown at rules.
+      css:  { lint: { unknownAtRules: "ignore" } },
+      less: { lint: { unknownAtRules: "ignore" } },
+      scss: { lint: { unknownAtRules: "ignore" } },
     },
   }
 enddef
