@@ -82,6 +82,9 @@ rules:
   - expected: ShellCheck
     options:
       wordBoundary: true
+  - expected: Stylelint
+    options:
+      wordBoundary: true
   - expected: Surfingkeys
     options:
       wordBoundary: true

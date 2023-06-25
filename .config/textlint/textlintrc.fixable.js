@@ -45,6 +45,10 @@ const config = {
         // Use "styleguide"
         // https://github.com/sapegin/textlint-rule-terminology/blob/75161dd6622ff957b3e3ea580252c7456b68b1dc/terms.jsonc#L152
         "style-?guide(s)?",
+
+        // Use a proper noun "Stylelint"
+        // https://github.com/sapegin/textlint-rule-terminology/blob/6efaca3b9ccf76d653a5052f1b57d8f2b36d723a/terms.jsonc#L178
+        "(?<=(?:\\w+[^.?!])? )stylelint\\b",
       ],
     },
   },
