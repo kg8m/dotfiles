@@ -20,7 +20,7 @@ export def Load(): void
     ],
   }
 
-  fzf.Run(() => fzf#run(fzf#wrap("load-quickfix", options)))
+  fzf#run(fzf#wrap("load-quickfix", options))
 enddef
 
 export def Edit(): void
@@ -34,7 +34,7 @@ export def Edit(): void
     ],
   }
 
-  fzf.Run(() => fzf#run(fzf#wrap("edit-quickfix", options)))
+  fzf#run(fzf#wrap("edit-quickfix", options))
 enddef
 
 export def Delete(): void
@@ -49,7 +49,7 @@ export def Delete(): void
     ],
   }
 
-  fzf.Run(() => fzf#run(fzf#wrap("delete-quickfix", options)))
+  fzf#run(fzf#wrap("delete-quickfix", options))
 enddef
 
 plugin.EnsureSourced("fzf.vim")

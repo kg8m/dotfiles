@@ -15,7 +15,7 @@ export def Run(): void
   }
 
   # https://github.com/junegunn/fzf.vim/blob/d5f1f8641b24c0fd5b10a299824362a2a1b20ae0/plugin/fzf.vim#L48
-  fzf.Run(() => fzf#vim#files("", options))
+  fzf#vim#files("", options)
 enddef
 
 def GetCwd(): string

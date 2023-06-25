@@ -14,7 +14,7 @@ export def Run(): void
     ],
   }
 
-  fzf.Run(() => fzf#vim#gitfiles("?", options))
+  fzf#vim#gitfiles("?", options)
 enddef
 
 plugin.EnsureSourced("fzf.vim")

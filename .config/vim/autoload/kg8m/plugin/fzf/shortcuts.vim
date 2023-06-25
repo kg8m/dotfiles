@@ -15,7 +15,7 @@ export def Run(query: string): void
     options: ["--no-multi", "--prompt", "Shortcuts> ", "--query", query],
   }
 
-  fzf.Run(() => fzf#run(fzf#wrap("my-shortcuts", options)))
+  fzf#run(fzf#wrap("my-shortcuts", options))
 enddef
 
 def Candidates(): list<string>

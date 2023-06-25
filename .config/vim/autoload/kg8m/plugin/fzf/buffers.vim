@@ -20,7 +20,7 @@ export def Run(): void
     ],
   }
 
-  fzf.Run(() => fzf#run(fzf#wrap("buffer-files", options)))
+  fzf#run(fzf#wrap("buffer-files", options))
 enddef
 
 export def List(options: dict<any> = {}): list<string>

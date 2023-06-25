@@ -52,7 +52,7 @@ def Run(candidates: list<string>): void
     ],
   }
 
-  fzf.Run(() => fzf#run(fzf#wrap("jumplist", options)))
+  fzf#run(fzf#wrap("jumplist", options))
 enddef
 
 def JumplistInfo(): dict<any>

@@ -18,19 +18,6 @@ export def OnSource(): void
   augroup END
 enddef
 
-# Temporarily set `ambiwidth` to `single` because fzf.vim doesn't use unicode characters for rendering borders when
-# `ambiwidth` is `double`.
-export def Run(Callback: func): void
-  const original_ambiwidth = &ambiwidth
-
-  try
-    set ambiwidth=single
-    Callback()
-  finally
-    &ambiwidth = original_ambiwidth
-  endtry
-enddef
-
 def SetupWindow(): void
   # Temporarily increase window height
   set winheight=999

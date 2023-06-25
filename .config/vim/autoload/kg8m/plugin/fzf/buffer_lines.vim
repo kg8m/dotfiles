@@ -10,7 +10,7 @@ export def Run(query: string = ""): void
     "--preview-window", "down:50%:wrap:nohidden:+{1}-/2",
   ]
 
-  fzf.Run(() => fzf#vim#buffer_lines(query, { options: options }))
+  fzf#vim#buffer_lines(query, { options: options })
 enddef
 
 plugin.EnsureSourced("fzf.vim")

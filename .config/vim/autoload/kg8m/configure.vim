@@ -152,8 +152,6 @@ export def Others(): void
 
   set fileformats=unix,dos,mac
 
-  ConfigureAmbiwidth()
-
   set belloff=all
   set diffopt+=algorithm:histogram
   set hidden
@@ -222,19 +220,6 @@ export def Conceal(): void
   g:vim_json_conceal = false
 
   cache.is_conceal_configured = true
-enddef
-
-def ConfigureAmbiwidth(): void
-  # Basically treat ambiwidth characters as double width for basic text editing especially Japanese text. Make some
-  # ambiwidth characters more readable. Prevent an ambiwidth character from being overlapped by its next character.
-  set ambiwidth=double
-
-  # Treat some ambiwidth characters as single width for tools which use ambiwidth borders.
-  # cf. https://www.ssec.wisc.edu/~tomw/java/unicode.html
-  setcellwidths([
-    [0x2500, 0x257f, 1],  # Box Drawing
-    [0x2580, 0x259f, 1],  # Block Elements
-  ])
 enddef
 
 # https://vim-jp.org/vim-users-jp/2011/02/20/Hack-202.html

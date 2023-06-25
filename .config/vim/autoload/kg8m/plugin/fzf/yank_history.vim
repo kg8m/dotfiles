@@ -27,7 +27,7 @@ export def Run(): void
     ],
   }
 
-  fzf.Run(() => fzf#run(fzf#wrap("yank-history", options)))
+  fzf#run(fzf#wrap("yank-history", options))
 enddef
 
 # https://github.com/svermeulen/vim-easyclip/issues/62#issuecomment-158275008

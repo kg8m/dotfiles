@@ -50,7 +50,7 @@ def Run(type: string): void
     ],
   }
 
-  fzf.Run(() => fzf#run(fzf#wrap("rails", options)))
+  fzf#run(fzf#wrap("rails", options))
 enddef
 
 def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>

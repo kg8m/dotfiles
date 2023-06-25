@@ -42,7 +42,7 @@ def Run(args: string): void
     "--preview-window", "down:75%:wrap:nohidden:+{2}-/2",
   ]
 
-  fzf.Run(() => fzf#vim#grep(grep_command, { options: fzf_options }))
+  fzf#vim#grep(grep_command, { options: fzf_options })
 enddef
 
 def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>

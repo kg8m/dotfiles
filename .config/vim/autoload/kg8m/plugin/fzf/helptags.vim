@@ -9,7 +9,7 @@ export def Run(): void
   final options = fzf#vim#with_preview({ placeholder: "--tag {2}:{3}:{4}" })
   options.options += ["--preview-window", "down:75%:wrap:nohidden"]
 
-  fzf.Run(() => fzf#vim#helptags(options))
+  fzf#vim#helptags(options)
 enddef
 
 plugin.EnsureSourced("fzf.vim")
