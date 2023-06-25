@@ -81,30 +81,6 @@ abbr    assert_dom_equal {expected}, {actual}
 options head
 	assert_dom_equal ${1:#:expected}, :${0:#:actual}
 
-snippet test_send_request_xhr_get
-alias   xhr_get
-abbr    xhr :get, :{action}
-options head
-	xhr :get, :${1:#:action}
-
-snippet test_send_request_xhr_post
-alias   xhr_post
-abbr    xhr :post, :{action}
-options head
-	xhr :post, :${1:#:action}
-
-snippet test_send_request_xhr_put
-alias   xhr_put
-abbr    xhr :put, :{action}
-options head
-	xhr :put, :${1:#:action}
-
-snippet test_send_request_xhr_delete
-alias   xhr_delete
-abbr    xhr :delete, :{action}
-options head
-	xhr :delete, :${1:#:action}
-
 snippet assert_response
 abbr    assert_response :{type:success|redirect|missing|error}
 options head
@@ -114,3 +90,45 @@ snippet assert_template
 abbr    assert_template {options}
 options head
 	assert_template ${1:#:options}
+
+snippet assert_emails
+abbr    assert_mails 1 do ... end
+options head
+	assert_emails ${1:#:number} do
+		${0}
+	end
+
+snippet assert_no_emails
+abbr    assert_no_emails do ... end
+options head
+	assert_no_emails do
+		${0}
+	end
+
+snippet assert_enqueued_emails
+abbr    assert_enqueued_emails 1 do ... end
+options head
+	assert_enqueued_emails ${1:#:number} do
+		${0}
+	end
+
+snippet assert_enqueued_email_with
+abbr    assert_enqueued_email_with FooMailer, :bar do ... end
+options head
+	assert_enqueued_email_with ${1:#:MailerClass}, :${2:#:method_name} do
+		${0}
+	end
+
+snippet assert_enqueued_email_with_args
+abbr    assert_enqueued_email_with FooMailer, :bar, args: [...] do ... end
+options head
+	assert_enqueued_email_with ${1:#:MailerClass}, :${2:#:method_name}, args: [${3:#:args}] do
+		${0}
+	end
+
+snippet assert_no_enqueued_emails
+abbr    assert_no_enqueued_emails do ... end
+options head
+	assert_no_enqueued_emails do
+		${0}
+	end

@@ -184,6 +184,15 @@ options head
 		${0}
 	end
 
+snippet around
+abbr    around do |example| ... example.run ... end
+options head
+	around do |example|
+	  ${1:#:do_something} do
+			example.run
+		end
+	end
+
 snippet pending
 abbr    pending "..." do ... end
 options head

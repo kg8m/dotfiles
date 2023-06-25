@@ -1,1 +1,11 @@
 extends ruby-rails-minitest
+
+snippet expect_response_to_have_http_status
+abbr    expect(response).to have_http_status(...)
+options head
+	expect(response).to have_http_status(:${1:#:status})
+
+snippet expect_response_not_to_have_http_status
+abbr    expect(response).not_to have_http_status(...)
+options head
+	expect(response).not_to have_http_status(:${1:#:status})
