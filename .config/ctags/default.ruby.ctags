@@ -18,6 +18,9 @@
 #   attr_writer :foo
 --regex-ruby=/\battr_(accessor|reader|writer)\s+:([a-zA-Z0-9_?, ]+)/\2/
 
+# Build a tag for RSpec’s `be_*` matchers.
+--regex-ruby=/\bdef\s+([a-zA-Z0-9][a-zA-Z0-9_]*)\?/be_\1/
+
 # Build a tag for `foo` from:
 #
 #   memoize def foo
