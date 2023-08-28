@@ -146,3 +146,12 @@ function aws:logs:select_streams {
     jq '.logStreams[].logStreamName' --raw-output |
     filter --preview-window "hidden" --prompt "Select log streams> "
 }
+
+# https://docs.aws.amazon.com/systems-manager/latest/userguide/install-plugin-macos-overview.html
+function plugin:aws:sessionmanager:atclone {
+  execute_with_echo "sudo installer -pkg session-manager-plugin.pkg -target /"
+  execute_with_echo "sudo ln -s /usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local/bin/session-manager-plugin"
+  execute_with_echo "session-manager-plugin"
+}
+zinit ice lucid wait"0c" as"null" atclone"plugin:aws:sessionmanager:atclone" atpull"%atclone"
+zinit snippet https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac_arm64/session-manager-plugin.pkg
