@@ -353,6 +353,7 @@ def ExtraConfigForRubyLsp(): dict<any>
     },
 
     document_format: false,
+    document_hover: false,
   }
 enddef
 
@@ -448,6 +449,8 @@ def ExtraConfigForTailwindcssLanguageServer(): dict<any>
   return {
     cmd: (_) => ["tailwindcss-language-server", "--stdio"],
     env: NodeToolsEnv(),
+
+    document_hover: false,
   }
 enddef
 
@@ -759,10 +762,9 @@ export def AreAllRunningOrExited(): bool
   return true
 enddef
 
-# Disable some language servers' document formatting because vim-lsp randomly selects only 1 language server to do
-# formatting from language servers which have capability of document formatting. I want to do formatting by
-# efm-langserver but vim-lsp sometimes doesn't select it. efm-langserver is always selected if it is the only 1
-# language server which has capability of document formatting.
+# Disable some language servers’ capabilities because vim-lsp randomly selects only 1 language server to do something
+# from language servers which have capability. For example, I want to do formatting by efm-langserver but vim-lsp
+# sometimes doesn’t select it.
 def OverwriteCapabilities(): void
   if !has_key(cache, "capabilities_overwritten")
     cache.capabilities_overwritten = {}
@@ -775,15 +777,22 @@ def OverwriteCapabilities(): void
   cache.capabilities_overwritten[&filetype] = true
 
   for config in Configs(&filetype)
-    if get(config, "document_format", true) !=# false
-      continue
+    if get(config, "document_format", true) ==# false
+      final capabilities = lsp#get_server_capabilities(config.name)
+
+      if has_key(capabilities, "documentFormattingProvider")
+        capabilities.documentFormattingProvider = false
+        logger.Info($"{config.name}’s documentFormattingProvider got forced to be disabled.")
+      endif
     endif
 
-    final capabilities = lsp#get_server_capabilities(config.name)
+    if get(config, "document_hover", true) ==# false
+      final capabilities = lsp#get_server_capabilities(config.name)
 
-    if has_key(capabilities, "documentFormattingProvider")
-      capabilities.documentFormattingProvider = false
-      logger.Info($"{config.name}'s documentFormattingProvider got forced to be disabled.")
+      if has_key(capabilities, "hoverProvider")
+        capabilities.hoverProvider = false
+        logger.Info($"{config.name}’s hoverProvider got forced to be disabled.")
+      endif
     endif
   endfor
 enddef
