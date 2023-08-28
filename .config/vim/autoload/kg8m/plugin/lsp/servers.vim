@@ -442,6 +442,8 @@ def RegisterTailwindcssLanguageServer(): void
     name: "tailwindcss-language-server",
     allowlist: ["css", "html", "slim"] + JS_FILETYPES + TS_FILETYPES,
     extra_config: () => ExtraConfigForTailwindcssLanguageServer(),
+
+    available: !ShouldUseDeno(),
   })
 enddef
 
