@@ -27,7 +27,7 @@ if File.exist?(HISTORY_FILEPATH) && defined?(Readline::HISTORY)
   end
 end
 
-Kg8m.try_to_require("katakata_irb")
+Kg8m.try_to_require("katakata_irb", quiet: true)
 
 if defined?(KatakataIrb::Types) && KatakataIrb::Types.respond_to?(:loader_type=)
   KatakataIrb::Types.loader_type = :async
