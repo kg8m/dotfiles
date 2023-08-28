@@ -9,11 +9,6 @@ import autoload "kg8m/plugin/lsp/stream.vim"
 import autoload "kg8m/plugin/mappings/i.vim" as mappingsI
 import autoload "kg8m/util/list.vim" as listUtil
 
-augroup vimrc-plugin-lsp
-  autocmd!
-  autocmd User plugin:lsp:source ++once :
-augroup END
-
 export const ICONS = {
   loading:     "⌛",
   ok:          "✔ ",
@@ -65,6 +60,8 @@ export def OnSource(): void
 
   augroup vimrc-plugin-lsp
     autocmd!
+    autocmd User plugin:lsp:source ++once :
+
     autocmd User lsp_setup          stream.Subscribe()
     autocmd User lsp_buffer_enabled OnLspBufferEnabled()
     autocmd User lsp_server_exit    OnLspBufferEnabled()
