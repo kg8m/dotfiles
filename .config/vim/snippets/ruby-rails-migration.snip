@@ -2,7 +2,7 @@ snippet create_table
 abbr    create_table :{table_name} do |t| ... end
 options head
 	create_table :${1:#:table_name} do |t|
-		t.${2:belongs_to} :${3:#:column_name}, null: false, index: { unique: true }${0}
+		t.${2:references} :${3:#:column_name}, null: false, index: { unique: true }${0}
 	end
 
 snippet change_table
