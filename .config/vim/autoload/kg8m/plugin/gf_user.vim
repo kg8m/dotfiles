@@ -1,7 +1,9 @@
 vim9script
 
+import autoload "kg8m/util/file.vim" as fileUtil
 import autoload "kg8m/util/filetypes/vim.vim" as vimUtil
 import autoload "kg8m/util/logger.vim"
+import autoload "kg8m/util/string.vim" as stringUtil
 
 export def VimAutoload(): any
   if &filetype !=# "vim"
@@ -24,6 +26,43 @@ export def VimAutoload(): any
 enddef
 
 export def RailsFiles(): any
+  const routes_result = RailsRoutes()
+  if routes_result !=# null
+    return routes_result
+  endif
+
+  const views_result = RailsViews()
+  if views_result !=# null
+    return views_result
+  endif
+
+  logger.Warn("[kg8m#plugin#gf_user#RailsFiles] File not found")
+  return 0
+enddef
+
+def RailsRoutes(): any
+  const bufname = fileUtil.CurrentRelativePath()
+
+  if bufname ==# "config/routes.rb" || stringUtil.StartsWith(bufname, "config/routes/")
+    const route = getline(".")->matchstr('\v<to: ["'']\zs[[:alnum:]_]+#\w+\ze["'']')
+
+    if route !=# ""
+      const [controller, action] = split(route, "#")
+
+      const filepath       = $"app/controllers/{controller}_controller.rb"
+      const line_pattern   = $'\bdef {action}\b'
+      const column_pattern = '\vdef \zs'
+
+      const [line_number, column_number] = fileUtil.DetectLineAndColumnInFile(filepath, line_pattern, column_pattern)
+
+      return { path: filepath, line: line_number, col: column_number }
+    endif
+  endif
+
+  return null
+enddef
+
+def RailsViews(): any
   const filepath = rails#ruby_cfile()
   const filepath_in_search_path = findfile(filepath)
 
@@ -51,6 +90,5 @@ export def RailsFiles(): any
     endif
   endif
 
-  logger.Warn($"[kg8m#plugin#gf_user#RailsFiles] File not found: {string(filepath)}")
-  return 0
+  return null
 enddef
