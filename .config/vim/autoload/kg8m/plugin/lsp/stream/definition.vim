@@ -2,6 +2,7 @@ vim9script
 
 import autoload "kg8m/plugin/fzf_tjump.vim" as fzfTjump
 import autoload "kg8m/util/cursor.vim" as cursorUtil
+import autoload "kg8m/util/file.vim" as fileUtil
 import autoload "kg8m/util/filetypes/vim.vim" as vimUtil
 
 export def Subscribe(): void
@@ -48,16 +49,11 @@ def FallbackForVimAutoloadFunction(): void
     return
   endif
 
-  const funcname = matchstr(autoload_funcname, '\v#\zs\w+\ze$')
-  const pattern  = $'export def {funcname}('
-  const command  = ["rg", "--fixed-strings", "--line-number", "--no-filename", pattern, filepath]
-  const result   = command->mapnew((_, item) => shellescape(item))->join(" ")->system()->trim()
+  const funcname       = matchstr(autoload_funcname, '\v#\zs\w+\ze$')
+  const line_pattern   = $'\bexport def {funcname}\('
+  const column_pattern = '\v<export def \zs'
 
-  if !empty(result)
-    const line_number   = matchstr(result, '\v\d+')->str2nr()
-    const column_number = matchstrpos(result, '\v<export def \zs')[1] - len(line_number)
-
-    execute "edit" fnameescape(filepath)
-    cursorUtil.MoveIntoFolding(line_number, column_number)
-  endif
+  const [line_number, column_number] = fileUtil.DetectLineAndColumnInFile(filepath, line_pattern, column_pattern)
+  execute "edit" fnameescape(filepath)
+  cursorUtil.MoveIntoFolding(line_number, column_number)
 enddef

@@ -48,3 +48,17 @@ export def IsDescendant(filepath: string, base: string = getcwd()): bool
 
   return stringUtil.StartsWith(absolute_filepath, absolute_basepath)
 enddef
+
+export def DetectLineAndColumnInFile(filepath: string, line_pattern: string, column_pattern: string): list<number>
+  const command  = ["rg", "--line-number", "--no-filename", line_pattern, filepath]
+  const result   = command->mapnew((_, item) => shellescape(item))->join(" ")->system()->trim()
+
+  if empty(result)
+    return [0, 0]
+  else
+    const line_number   = matchstr(result, '\v\d+')->str2nr()
+    const column_number = matchstrpos(result, column_pattern)[1] - len(line_number)
+
+    return [line_number, column_number]
+  endif
+enddef
