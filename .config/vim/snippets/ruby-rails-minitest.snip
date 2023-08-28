@@ -132,3 +132,45 @@ options head
 	assert_no_enqueued_emails do
 		${0}
 	end
+
+snippet assert_broadcasts
+abbr    assert_broadcasts {stream}, {count} do ... end
+options head
+	assert_broadcasts ${1:#:stream}, ${2:#:count} do
+		${0}
+	end
+
+snippet assert_no_broadcasts
+abbr    assert_no_broadcasts {stream} do ... end
+options head
+	assert_broadcasts ${1:#:stream} do
+		${0}
+	end
+
+snippet assert_broadcasts_with_broadcasting_for
+abbr    assert_broadcasts FooChannel.broadcasting_for(foo), {count} do ... end
+options head
+	assert_broadcasts ${1:#:ChannelClass}.broadcasting_for(${2:#:object}), ${3:#:count} do
+		${0}
+	end
+
+snippet assert_no_broadcasts_with_broadcasting_for
+abbr    assert_no_broadcasts FooChannel.broadcasting_for(foo) do ... end
+options head
+	assert_broadcasts ${1:#:ChannelClass}.broadcasting_for(${2:#:object}) do
+		${0}
+	end
+
+snippet assert_broadcast_on
+abbr    assert_broadcast_on {stream}, {data} do ... end
+options head
+	assert_broadcast_on ${1:#:stream}, ${2:#:data} do
+		${0}
+	end
+
+snippet assert_broadcast_on_with_broadcasting_for
+abbr    assert_broadcast_on FooChannel.broadcasting_for(foo), {data} do ... end
+options head
+	assert_broadcast_on ${1:#:ChannelClass}.broadcasting_for(${2:#:object}), ${3:#:data} do
+		${0}
+	end

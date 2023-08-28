@@ -2,3 +2,4 @@ syntax keyword rubyAssertion assert_changes assert_no_changes assert_difference 
 syntax keyword rubyAssertion assert_emails assert_no_emails
 syntax keyword rubyAssertion assert_predicate assert_not_predicate
 syntax keyword rubyAssertion assert_raises assert_nothing_raised
+syntax keyword rubyAssertion assert_broadcasts assert_no_broadcasts assert_broadcast_on
