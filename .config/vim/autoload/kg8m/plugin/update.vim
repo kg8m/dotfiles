@@ -3,13 +3,18 @@ vim9script
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/util/logger.vim"
 
-export def Run(options: dict<any> = {}): void
-  timer_start(   1, (_) => Main(options) )
+export def All(options: dict<any> = {}): void
+  timer_start(   1, (_) => AllMain(options))
   timer_start( 200, (_) => RemoveDisused())
   timer_start(1000, (_) => ShowLogs())
 enddef
 
-def Main(options: dict<any> = {}): void
+export def One(plugin_name: string): void
+  timer_start(   1, (_) => dein#update(plugin_name))
+  timer_start(1000, (_) => ShowLogs())
+enddef
+
+def AllMain(options: dict<any> = {}): void
   # Re-register disabled plugins before update because dein.vim doesn't make helptags for them
   plugin.EnableDisabledPlugins()
 

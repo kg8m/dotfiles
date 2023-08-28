@@ -38,8 +38,8 @@ export def Setup(): void
     { type: "dir",       header: ["Recently modified files in the current directory:"] },
   ]
   g:startify_commands = [
-    { p: "call kg8m#plugin#update#Run()" },
-    { P: "call kg8m#plugin#update#Run(#{ bulk: v:false })" },
+    { p: "call kg8m#plugin#update#All()" },
+    { P: "call kg8m#plugin#update#All(#{ bulk: v:false })" },
   ]
 
   # https://gist.github.com/SammysHP/5611986#file-gistfile1-txt
