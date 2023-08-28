@@ -1,15 +1,25 @@
-vim9script
+vim9script noclear
 
-def OpenDiffWindow(): void
-  if has_key(b:, "diff_window_opened")
-    return
-  endif
+if exists("*Run")
+  finish
+endif
 
-  b:diff_window_opened = true
-
-  setlocal nosplitright
+def Run(): void
+  set nowritebackup
   vnew
 
+  PutLogs()
+
+  wincmd R
+  wincmd h
+  goto 1
+  redraw!
+
+  # Enable language servers.
+  edit
+enddef
+
+def PutLogs(): void
   setlocal filetype=git
   setlocal bufhidden=delete
   setlocal nobackup
@@ -23,14 +33,6 @@ def OpenDiffWindow(): void
   setlocal nomodifiable
 
   goto 1
-  redraw!
-  wincmd R
-  wincmd p
-  goto 1
-  redraw!
 enddef
 
-set nowarn
-
-OpenDiffWindow()
-set nowritebackup
+Run()
