@@ -247,6 +247,16 @@ abbrevs:
     snippet: console
     global: true
     context: '\brails\s'
+  - name: rails console --environment
+    abbr: -e
+    snippet: --environment
+    global: true
+    context: '\brails\sconsole\s'
+  - name: rails console --sandbox
+    abbr: -s
+    snippet: --sandbox
+    global: true
+    context: '\brails\sconsole\s'
   - name: rails dbconsole
     abbr: db
     snippet: dbconsole --include-password
