@@ -202,7 +202,7 @@ function git:branch:list {
   git branch --format "$(git:branch:list_format)" "$@" |
     sd "\s*${SEP}\s*" "${SEP}" |
     sd '^origin/' '' |
-    grep -E -v "^HEAD${SEP}" |
+    grep -E -v "^(HEAD|origin)${SEP}" |
     git:proxy:column "${SEP}" |
     awk '!x[$1]++' |  # Remove duplicated branches
     colrm "$((COLUMNS + 1))" |
