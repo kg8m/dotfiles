@@ -15,8 +15,8 @@ final cache = {}
 const CSS_FILETYPES  = ["css", "scss"]
 const JSON_FILETYPES = ["json", "jsonc"]
 const JS_FILETYPES   = jsConfig.JS_FILETYPES
-const TS_FILETYPES   = jsConfig.TS_FILETYPES
 const SH_FILETYPES   = ["sh", "zsh"]
+const TS_FILETYPES   = jsConfig.TS_FILETYPES
 const YAML_FILETYPES = ["eruby.yaml", "yaml", "yaml.ansible"]
 
 var is_ready = false
