@@ -82,6 +82,10 @@ rules:
   - expected: ShellCheck
     options:
       wordBoundary: true
+  - expected: Slim-Lint
+    pattern: /slim[- ]?lint/i
+    options:
+      wordBoundary: true
   - expected: Stylelint
     options:
       wordBoundary: true
@@ -130,6 +134,10 @@ rules:
     options:
       wordBoundary: true
   - expected: Webpacker
+    options:
+      wordBoundary: true
+  - expected: WEBrick
+    pattern: /web[- ]?rick/i
     options:
       wordBoundary: true
   - expected: Xcode
