@@ -392,137 +392,137 @@ options head
 
 # each  {{{
 snippet each
-abbr    each {|var| ... }
+abbr    each {|item| ... }
 options word
-	each {|${1:#:var}| ${0} }
+	each {|${1:#:item}| ${0} }
 
 snippet each_do
-abbr    each do |var| ... end
+abbr    each do |item| ... end
 options word
-	each do |${1:#:var}|
+	each do |${1:#:item}|
 		${0}
 	end
 
 snippet each_byte
-abbr    each_byte {|var| ... }
+abbr    each_byte {|item| ... }
 options word
-	each_byte {|${1:#:var}| ${0} }
+	each_byte {|${1:#:item}| ${0} }
 
 snippet each_char
-abbr    each_char {|var| ... }
+abbr    each_char {|item| ... }
 options word
-	each_char {|${1:#:var}| ${0} }
+	each_char {|${1:#:item}| ${0} }
 
 snippet each_index
-abbr    each_index {|var| ... }
+abbr    each_index {|item| ... }
 options word
-	each_index {|${1:#:var}| ${0} }
+	each_index {|${1:#:item}| ${0} }
 
 snippet each_key
-abbr    each_key {|var| ... }
+abbr    each_key {|item| ... }
 options word
-	each_key {|${1:#:var}| ${0} }
+	each_key {|${1:#:item}| ${0} }
 
 snippet each_value
-abbr    each_value {|var| ... }
+abbr    each_value {|item| ... }
 options word
-	each_value {|${1:#:var}| ${0} }
+	each_value {|${1:#:item}| ${0} }
 
 snippet each_line
-abbr    each_line {|var| ... }
+abbr    each_line {|item| ... }
 options word
-	each_line {|${1:#:var}| ${0} }
+	each_line {|${1:#:item}| ${0} }
 
 snippet each_pair
-abbr    each_pair {|var| ... }
+abbr    each_pair {|item| ... }
 options word
-	each_pair {|${1:#:var}| ${0} }
+	each_pair {|${1:#:item}| ${0} }
 
 snippet each_slice
-abbr    each_slice {|var| ... }
+abbr    each_slice {|item| ... }
 options word
-	each_slice {|${1:#:var}| ${0} }
+	each_slice {|${1:#:item}| ${0} }
 
 snippet each_with_index
-abbr    each_with_index {|var, i| ... }
+abbr    each_with_index {|item, i| ... }
 options word
-	each_with_index {|${1:#:var}, ${2:i}| ${0} }
+	each_with_index {|${1:#:item}, ${2:i}| ${0} }
 
 snippet each_with_index_do
-abbr    each_with_index do |var, i| ... end
+abbr    each_with_index do |item, i| ... end
 options word
-	each_with_index do |${1:#:var}, ${2:i}|
+	each_with_index do |${1:#:item}, ${2:i}|
 		${0}
 	end
 
 snippet each_with_object
-abbr    each_with_object(init) {|var, memo| ... }
+abbr    each_with_object(init) {|item, memo| ... }
 options word
-	each_with_object(${1:#:initial_value}) {|${2:#:var}, ${3:memo}|
+	each_with_object(${1:#:initial_value}) {|${2:#:item}, ${3:memo}|
 		${0}
 	}
 
 snippet inject
-abbr    inject(init) {|memo, var| ... }
+abbr    inject(init) {|memo, item| ... }
 options word
-	inject(${1:#:initial_value}) {|${2:memo}, ${3:#:var}|
+	inject(${1:#:initial_value}) {|${2:memo}, ${3:#:item}|
 		${0}
 	}
 
 snippet all?
-abbr    all? {|var| ... }
+abbr    all? {|item| ... }
 options word
-	all? {|${1:#:var}| ${0} }
+	all? {|${1:#:item}| ${0} }
 
 snippet any?
-abbr    any? {|var| ... }
+abbr    any? {|item| ... }
 options word
-	any? {|${1:#:var}| ${0} }
+	any? {|${1:#:item}| ${0} }
 
 snippet one?
-abbr    one? {|var| ... }
+abbr    one? {|item| ... }
 options word
-	one? {|${1:#:var}| ${0} }
+	one? {|${1:#:item}| ${0} }
 
 snippet none?
-abbr    none? {|var| ... }
+abbr    none? {|item| ... }
 options word
-	none? {|${1:#:var}| ${0} }
+	none? {|${1:#:item}| ${0} }
 
 snippet map
-abbr    map {|var| ... }
+abbr    map {|item| ... }
 options word
-	map {|${1:#:var}| ${0} }
+	map {|${1:#:item}| ${0} }
 
 snippet map!
-abbr    map! {|var| ... }
+abbr    map! {|item| ... }
 options word
-	map! {|${1:#:var}| ${0} }
+	map! {|${1:#:item}| ${0} }
 
 snippet detect
-abbr    detect {|var| ... }
+abbr    detect {|item| ... }
 options word
-	detect {|${1:#:var}| ${0} }
+	detect {|${1:#:item}| ${0} }
 
 snippet select
-abbr    select {|var| ... }
+abbr    select {|item| ... }
 options word
-	select {|${1:#:var}| ${0} }
+	select {|${1:#:item}| ${0} }
 
 snippet select!
-abbr    select! {|var| ... }
+abbr    select! {|item| ... }
 options word
-	select {|${1:#:var}| ${0} }
+	select {|${1:#:item}| ${0} }
 
 snippet reject
-abbr    reject {|var| ... }
+abbr    reject {|item| ... }
 options word
-	reject {|${1:#:var}| ${0} }
+	reject {|${1:#:item}| ${0} }
 
 snippet reject!
-abbr    reject! {|var| ... }
+abbr    reject! {|item| ... }
 options word
-	reject! {|${1:#:var}| ${0} }
+	reject! {|${1:#:item}| ${0} }
 
 snippet sort
 abbr    sort {|a, b| ... }
@@ -530,19 +530,19 @@ options word
 	sort {|a, b| ${0} }
 
 snippet sort_by
-abbr    sort_by {|var| ... }
+abbr    sort_by {|item| ... }
 options word
-	sort_by {|${1:#:var}| ${0} }
+	sort_by {|${1:#:item}| ${0} }
 
 snippet group_by
-abbr    group_by {|var| ... }
+abbr    group_by {|item| ... }
 options word
-	group_by {|${1:#:var}| ${0} }
+	group_by {|${1:#:item}| ${0} }
 
 snippet partition
-abbr    partition {|var| ... }
+abbr    partition {|item| ... }
 options word
-	partition {|${1:#:var}| ${0} }
+	partition {|${1:#:item}| ${0} }
 # }}}
 
 # File, Dir  {{{
