@@ -60,9 +60,6 @@
 --type-add=dat:*.dat
 --type-not=dat
 
---type-add=railsignore:development_structure.sql
---type-not=railsignore
-
 --type-add=macos:.DS_Store
 --type-not=macos
 
