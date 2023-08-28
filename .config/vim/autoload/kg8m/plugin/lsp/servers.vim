@@ -12,6 +12,8 @@ final filetyped_configs: dict<list<dict<any>>> = {}
 
 final cache = {}
 
+const CSS_FILETYPES  = ["css", "scss"]
+const JSON_FILETYPES = ["json", "jsonc"]
 const JS_FILETYPES   = jsConfig.JS_FILETYPES
 const TS_FILETYPES   = jsConfig.TS_FILETYPES
 const SH_FILETYPES   = ["sh", "zsh"]
@@ -185,8 +187,8 @@ def RegisterEfmLangserver(): void
 
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
-      "Gemfile", "css", "eruby", "gitcommit", "html", "json", "jsonc", "make", "markdown", "ruby", "scss", "slim", "sql", "vue",
-    ] + JS_FILETYPES + SH_FILETYPES + YAML_FILETYPES + (
+      "Gemfile", "eruby", "gitcommit", "html", "make", "markdown", "ruby", "slim", "sql", "vue",
+    ] + CSS_FILETYPES + JS_FILETYPES + JSON_FILETYPES + SH_FILETYPES + YAML_FILETYPES + (
       ShouldUseDeno() ? [] : TS_FILETYPES
     ),
 
