@@ -9,6 +9,11 @@ import autoload "kg8m/plugin/lsp/stream.vim"
 import autoload "kg8m/plugin/mappings/i.vim" as mappingsI
 import autoload "kg8m/util/list.vim" as listUtil
 
+augroup vimrc-plugin-lsp
+  autocmd!
+  autocmd User plugin:lsp:source ++once :
+augroup END
+
 export const ICONS = {
   loading:     "⌛",
   ok:          "✔ ",
@@ -69,6 +74,8 @@ export def OnSource(): void
     autocmd FileType lsp-quickpick-filter completion.Disable()
     autocmd FileType lsp-quickpick-filter mappingsI.Disable()
   augroup END
+
+  doautocmd <nomodeline> User plugin:lsp:source
 enddef
 
 export def IsTargetBuffer(): bool
