@@ -257,6 +257,13 @@ def ExtraConfigForGopls(): dict<any>
       },
       usePlaceholders: true,
     },
+    capabilities: {
+      textDocument: {
+        documentSymbol: {
+          hierarchicalDocumentSymbolSupport: true,
+        },
+      }
+    },
 
     organize_imports: true,
   }
