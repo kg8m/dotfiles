@@ -629,7 +629,7 @@ function rails:routes:with_filter {
     execute_with_echo "rails routes > ${cache_filepath}"
   fi
 
-  filter --header-lines 1 --preview-window "hidden" < "${cache_filepath}"
+  filter --header-lines 1 --preview-window "hidden" "$@" < "${cache_filepath}"
 }
 
 function rails:routes:cache:reset {
