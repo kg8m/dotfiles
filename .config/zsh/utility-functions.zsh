@@ -227,6 +227,29 @@ function trash {
   done
 }
 
+function trash:bulk {
+  local dirpath="${1:-.}"
+
+  if [ ! -d "${dirpath}" ]; then
+    echo:error "${dirpath} doesn’t exist."
+    return 1
+  fi
+
+  local filepaths=("${(@f)$(
+    fd --type f . "${dirpath}" |
+      filter \
+        --prompt "Select files> " \
+        --preview "preview {}" \
+        --preview-window "down:75%:wrap:nohidden"
+  )}")
+
+  if [ -n "${filepaths[*]}" ]; then
+    execute_with_confirm "trash '${(j:' ':)filepaths}'"
+  else
+    echo:info "Canceled."
+  fi
+}
+
 function remove_empty_dirs {
   local search_path="${1:-.}"
 
