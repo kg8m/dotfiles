@@ -38,6 +38,9 @@ plugin.InitManager()
 # }}}
 
 # Plugins list and settings  # {{{
+# Watching
+plugin.Register("Shougo/dpp.vim", { if: false })
+
 # Completion, LSP  # {{{
 if plugin.Register("prabirshrestha/asyncomplete.vim")
   import autoload "kg8m/plugin/asyncomplete.vim"
