@@ -12,6 +12,12 @@ tools:
     lint-command: "checkmake"
     lint-stdin: true
 
+  cspell: &cspell
+    lint-command: "cspell 'stdin://${INPUT}'"
+    lint-stdin: true
+    lint-formats:
+      - "%f:%l:%c - %m"
+
   erb: &erb
     lint-command: "$HOME/.config/efm-langserver/erb_wrapper.sh"
     lint-ignore-exit-code: true
@@ -123,6 +129,7 @@ tools:
 
 languages:
   =:
+    - <<: *cspell
     - <<: *typos
 
   Gemfile:
