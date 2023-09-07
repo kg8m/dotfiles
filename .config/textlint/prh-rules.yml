@@ -11,7 +11,7 @@ rules:
     options:
       wordBoundary: true
   - expected: ERB Lint
-    pattern: /erb ?lint/i
+    pattern: /erb.?lint/i
     options:
       wordBoundary: true
   - expected: ESLint
@@ -37,7 +37,7 @@ rules:
     options:
       wordBoundary: true
   - expected: MacVim
-    pattern: /mac ?vim/i
+    pattern: /mac.?vim/i
     options:
       wordBoundary: true
   - expected: MACアドレス
@@ -54,7 +54,7 @@ rules:
     options:
       wordBoundary: true
   - expected: Neovim
-    pattern: /neo ?vim/i
+    pattern: /neo.?vim/i
     options:
       wordBoundary: true
   - expected: ngrok
@@ -73,7 +73,7 @@ rules:
     options:
       wordBoundary: true
   - expected: RuboCop
-    pattern: /rubo ?cop/i
+    pattern: /rubo.?cop/i
     options:
       wordBoundary: true
   - expected: sh
@@ -83,7 +83,7 @@ rules:
     options:
       wordBoundary: true
   - expected: Slim-Lint
-    pattern: /slim[- ]?lint/i
+    pattern: /slim.?lint/i
     options:
       wordBoundary: true
   - expected: Stylelint
@@ -108,7 +108,7 @@ rules:
     options:
       wordBoundary: true
   - expected: vanilla-extract
-    pattern: /vanilla[- ]?extract/i
+    pattern: /vanilla.?extract/i
     options:
       wordBoundary: true
   - expected: Vim
@@ -116,18 +116,18 @@ rules:
     options:
       wordBoundary: true
   - expected: Vim script
-    pattern: /vim ?script/i
+    pattern: /vim.?script/i
     options:
       wordBoundary: true
   - expected: Vim9 script
-    pattern: /vim9 ?script/i
+    pattern: /vim9.?script/i
     options:
       wordBoundary: true
   - expected: VMware
     options:
       wordBoundary: true
   - expected: VS Code
-    pattern: /vs ?code/i
+    pattern: /vs.?code/i
     options:
       wordBoundary: true
   - expected: webpack
@@ -137,7 +137,7 @@ rules:
     options:
       wordBoundary: true
   - expected: WEBrick
-    pattern: /web[- ]?rick/i
+    pattern: /web.?rick/i
     options:
       wordBoundary: true
   - expected: Xcode
