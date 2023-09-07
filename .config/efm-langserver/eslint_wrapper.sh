@@ -80,15 +80,12 @@ if [ -n "${out}" ]; then
       fi
     fi
   else
-    format="$(
-      printf '%s + ":" + %s + ":" + %s + ": [eslint][" + %s + "] " + %s' \
-        '(.line | tostring)' \
-        '(if .column == null then "1" else .column | tostring end)' \
-        '(if .severity == 1 then "Warning" else "Error" end)' \
-        '.ruleId' \
-        '(.message | gsub("\n"; " "))'
-    )"
-    echo "${out}" | jq --raw-output ".[0].messages[] | ${format}"
+    jq_options=(
+      --raw-output
+      --from-file "${XDG_CONFIG_HOME:?}/efm-langserver/eslint_wrapper.jq"
+    )
+
+    echo "${out}" | jq "${jq_options[@]}"
     exit 1
   fi
 fi

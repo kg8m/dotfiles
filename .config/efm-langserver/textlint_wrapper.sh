@@ -73,15 +73,13 @@ if [ -n "${out}" ]; then
     echo "${out}"
     exit 0
   else
-    format="$(
-      printf '%s + ":" + %s + ":" + %s + ": [textlint][" + %s + "] " + %s' \
-        '(.line | tostring)' \
-        '(.column | tostring)' \
-        '(if .severity == 1 then "Warning" else "Error" end)' \
-        '.ruleId' \
-        '(.message | gsub("\n"; " "))'
-    )"
-    result="$(echo "${out}" | jq --raw-output ".[0].messages[] | ${format}")"
+    jq_options=(
+      --raw-output
+      --from-file "${XDG_CONFIG_HOME:?}/efm-langserver/textlint_wrapper.jq"
+    )
+
+    result="$(echo "${out}" | jq "${jq_options[@]}")"
+
     echo "${result}"
     [ -n "${result}" ] && exit 1 || exit 0
   fi

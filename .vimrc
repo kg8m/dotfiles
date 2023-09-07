@@ -709,6 +709,8 @@ if plugin.Register("deton/jasentence.vim")
   })
 endif
 
+plugin.Register("bfrg/vim-jq")
+
 if plugin.Register("elzr/vim-json")
   g:vim_json_syntax_conceal = false
 endif
