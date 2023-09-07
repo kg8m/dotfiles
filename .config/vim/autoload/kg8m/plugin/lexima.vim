@@ -19,6 +19,7 @@ export def OnPostSource(): void
     () => AddRulesForJs(),
     () => AddRulesForTs(),
     () => AddRulesForMarkdown(),
+    () => AddRulesForShell(),
     () => AddRulesForVim(),
 
     # Overwrite lexima.vim's default mapping.
@@ -252,6 +253,32 @@ def AddRulesForMarkdown(): void
   lexima#add_rule({ char: "`", except: '\%#`\|``\%#', syntax: ["mkdCode", "mkdInlineCodeDelimiter"] })
 enddef
 
+def AddRulesForShell(): void
+  const filetypes = ["sh", "zsh"]
+
+  # `<CR>` when
+  #
+  #   (|)
+  #
+  # then
+  #
+  #   (
+  #     |
+  #   )
+  lexima#add_rule({ char: "<CR>", at: '(\%#)', input: '<CR><C-h><C-o><S-o>', filetype: filetypes })
+
+  # `<CR>` when
+  #
+  #   $(|)
+  #
+  # then
+  #
+  #   $(
+  #     |
+  #   )
+  lexima#add_rule({ char: "<CR>", at: '\$(\%#)', input: '<CR><C-o><S-o><Tab>', filetype: filetypes })
+enddef
+
 def AddRulesForVim(): void
   const filetypes = ["vim"]
 
@@ -315,6 +342,62 @@ def AddRulesForVim(): void
   #   |
   #
   lexima#add_rule({ char: "<BS>", at: '<\%#>', delete: 1, filetype: filetypes })
+
+  for pair in [['(', ')'], ['[', ']'], ['{', '}']]
+    # `<CR>` when
+    #
+    #   (|)
+    #   [|]
+    #   {|}
+    #
+    # or
+    #
+    #   vim9script
+    #
+    #   (|)
+    #   [|]
+    #   {|}
+    #
+    # then
+    #
+    #   (
+    #   \   |
+    #   \ )
+    #
+    #   [
+    #   \   |
+    #   \ ]
+    #
+    #   {
+    #   \   |
+    #   \ }
+    #
+    # or
+    #
+    #   vim9script
+    #
+    #   (
+    #     |
+    #   )
+    #
+    #   [
+    #     |
+    #   ]
+    #
+    #   {
+    #     |
+    #   }
+    lexima#add_rule({ char: "<CR>", at: $'\V{pair[0]}\%#{pair[1]}', input: '<C-r>=kg8m#plugin#lexima#ExprOnCrInEmptyParenthesesForVimScript()<CR>', filetype: filetypes })
+  endfor
+enddef
+
+export def ExprOnCrInEmptyParenthesesForVimScript(): string
+  if search('^vim9s\%[cript]\>', "bnW")
+    return "\<CR>\<C-o>\<S-o>"
+  else
+    const pseudo_indentation = matchstr(getline("."), '\v^\s*\\ \zs +\ze')
+    return $"\<CR>\\ {pseudo_indentation}\<C-o>\<S-o>\\ {pseudo_indentation}  "
+  endif
 enddef
 
 def DequeueOnPostSource(): void
