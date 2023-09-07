@@ -1,0 +1,19 @@
+version: 2
+provide-definition: false
+
+tools:
+  brakeman: &brakeman
+    lint-command: "$HOME/.config/efm-langserver/brakeman_wrapper.sh '${INPUT}'"
+    lint-stdin: false
+    lint-formats:
+      - "%f:%l: %m"
+
+languages:
+  eruby:
+    - <<: *brakeman
+
+  ruby:
+    - <<: *brakeman
+
+  slim:
+    - <<: *brakeman

@@ -27,6 +27,7 @@ export def Register(): void
   RegisterCssLanguageServer()
   RegisterDeno()
   RegisterEfmLangserver()
+  RegisterEfmLangserverForHeavyTools()
   RegisterGolangciLintLangserver()
   RegisterGopls()
   RegisterHtmlLanguageServer()
@@ -199,6 +200,24 @@ enddef
 def ExtraConfigForEfmLangserver(): dict<any>
   return {
     cmd: (_) => ["efm-langserver"],
+  }
+enddef
+
+def RegisterEfmLangserverForHeavyTools(): void
+  RegisterServer({
+    name: "efm-langserver-for-heavy-tools",
+
+    # cf. .config/efm-langserver/config-heavy.yaml
+    allowlist: ["eruby", "ruby", "slim"],
+
+    executable: "efm-langserver",
+    extra_config: () => ExtraConfigForEfmLangserverForHeavyTools(),
+  })
+enddef
+
+def ExtraConfigForEfmLangserverForHeavyTools(): dict<any>
+  return {
+    cmd: (_) => ["efm-langserver", "-c", $"{$XDG_CONFIG_HOME}/efm-langserver/config-heavy.yaml"],
   }
 enddef
 
