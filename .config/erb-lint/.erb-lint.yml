@@ -1,5 +1,7 @@
 EnableDefaultLinters: true
 linters:
+  # https://github.com/Shopify/erb-lint#finalnewline
+  # Disable because check this rule with other tools.
   FinalNewline:
     enabled: false
   # https://github.com/Shopify/erb-lint#selfclosingtag
