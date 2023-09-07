@@ -17,7 +17,7 @@ if command -v eslint > /dev/null; then
 fi
 
 options=(
-  --stdin-filepath "${target_filepath}"
+  --stdin-filepath "$("${XDG_CONFIG_HOME:?}/efm-langserver/format_filepath" "${target_filepath}")"
 )
 
 prettier "${options[@]}"

@@ -1,0 +1,16 @@
+#!/usr/bin/env zsh
+original_target_filepath="${1:?}"
+
+case "${original_target_filepath}" in
+  */COMMIT_EDITMSG)
+    # Remove `.git/` because it causes `Not found available plugin for .git/COMMIT_EDITMSG.md` error
+    basename "${original_target_filepath}.md"
+    ;;
+  # For GhostText
+  */github.com | */gitlab.com | */sentry.io)
+    echo "${original_target_filepath}.md"
+    ;;
+  *)
+    echo "${original_target_filepath}"
+    ;;
+esac

@@ -13,27 +13,9 @@ if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
 
-function format_target_filepath {
-  local original_target_filepath="$1"
-
-  case "${original_target_filepath}" in
-    */COMMIT_EDITMSG)
-      # Remove `.git/` because it causes `Not found available plugin for .git/COMMIT_EDITMSG.md` error
-      basename "${original_target_filepath}.md"
-      ;;
-    *)
-      echo "${original_target_filepath}"
-      ;;
-  esac
-}
-
-if [ -f "${HOME}/.config/textlint.local/textlint_wrapper_extends.sh" ]; then
-  source "${HOME}/.config/textlint.local/textlint_wrapper_extends.sh"
-fi
-
 options=(
   --stdin
-  --stdin-filename "$(format_target_filepath "${target_filepath}")"
+  --stdin-filename "$("${XDG_CONFIG_HOME:?}/efm-langserver/format_filepath" "${target_filepath}")"
 )
 
 if [ "${is_fixing}" = "1" ]; then
