@@ -1,6 +1,5 @@
 function plugin:others:setup {
-  # For exa
-  # https://the.exa.website/docs/environment-variables
+  # For eza
   export TIME_STYLE="long-iso"
 
   # Don't use zinit's options like `as"command" pick"bin/themis"` because it makes the `$PATH` longer and longer. Make
