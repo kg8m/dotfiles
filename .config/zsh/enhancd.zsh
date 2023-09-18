@@ -15,5 +15,5 @@ function plugin:enhancd:atload {
 export ENHANCD_DIR="${XDG_DATA_HOME:?}/enhancd"
 export ENHANCD_FILTER=filter
 
-zinit ice lucid wait"0c" atload"plugin:enhancd:atload"
+zinit ice lucid trigger-load!"cd" atload"plugin:enhancd:atload"
 zinit light b4b4r07/enhancd
