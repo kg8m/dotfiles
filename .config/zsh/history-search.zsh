@@ -10,3 +10,11 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^P" up-line-or-beginning-search
 bindkey "^N" down-line-or-beginning-search
+
+function plugin:fzf_history_search:atload {
+  export ZSH_FZF_HISTORY_SEARCH_FZF_EXTRA_ARGS="--preview-window down:5:wrap:nohidden"
+}
+zinit ice lucid trigger-load!"fzf_history_search" atload"plugin:fzf_history_search:atload"
+zinit light joshskidmore/zsh-fzf-history-search
+zle -N fzf_history_search
+bindkey "^R" fzf_history_search

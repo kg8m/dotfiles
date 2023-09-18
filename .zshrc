@@ -107,6 +107,7 @@ autoload -U _zinit
 
 try_to_source ~/.config/zsh.local/zshrc.local.prepare.zsh
 
+source ~/.config/zsh/env/fzf.zsh
 source ~/.config/zsh/aliases.zsh
 source ~/.config/zsh/utility-functions.zsh
 
@@ -118,7 +119,6 @@ source ~/.config/zsh/colors.zsh
 source ~/.config/zsh/completion.zsh
 source ~/.config/zsh/direnv.zsh
 source ~/.config/zsh/enhancd.zsh
-source ~/.config/zsh/filter.zsh
 source ~/.config/zsh/git.zsh
 source ~/.config/zsh/history-search.zsh
 source ~/.config/zsh/prompt.zsh

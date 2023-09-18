@@ -1,4 +1,3 @@
-# See also `.config/zsh/filter.zsh`
 function() {
   local alt_a="å"
   local alt_b="∫"

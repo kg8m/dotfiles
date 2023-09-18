@@ -16,6 +16,9 @@ zinit light zsh-users/zsh-completions
 zinit ice lucid wait"0c" blockf atclone"zinit creinstall \${PWD}" atpull"%atclone"
 zinit light greymd/docker-zsh-completion
 
+zinit ice lucid wait"0c" pick"shell/completion.zsh"
+zinit light junegunn/fzf
+
 # https://blog.n-z.jp/blog/2019-05-03-docker-zsh-completion.html
 # Enable completion after 1-char option without spaces, e.g., `docker run -i[TAB]`.
 zstyle ':completion:*:*:docker:*' option-stacking yes
