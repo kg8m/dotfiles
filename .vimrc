@@ -910,8 +910,8 @@ plugin.Register("hashivim/vim-terraform")
 if plugin.Register("janko/vim-test", { if: !util.IsGitTmpEdit() })
   import autoload "kg8m/plugin/test.vim"
 
-  nnoremap <Leader>T :write<CR>:TestFile<CR>
-  nnoremap <Leader>t :write<CR>:TestNearest<CR>
+  nnoremap <Leader>T :write<CR><ScriptCmd>test.RunFileTest()<CR>
+  nnoremap <Leader>t :write<CR><ScriptCmd>test.RunNearestTest()<CR>
 
   plugin.Configure({
     lazy:   true,
