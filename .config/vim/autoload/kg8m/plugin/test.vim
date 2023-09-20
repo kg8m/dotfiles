@@ -9,11 +9,9 @@ augroup vimrc-plugin-test
 augroup END
 
 export def OnSource(): void
-  if util.OnTmux()
-    g:test#custom_strategies = get(g:, "test#custom_strategies", {})
-    g:test#custom_strategies.terminal = terminalUtil.ExecuteCommand
-    g:test#strategy = "terminal"
-  endif
+  g:test#custom_strategies = get(g:, "test#custom_strategies", {})
+  g:test#custom_strategies.tmux_or_vim_terminal = terminalUtil.ExecuteCommand
+  g:test#strategy = "tmux_or_vim_terminal"
 
   g:test#preserve_screen = true
 
