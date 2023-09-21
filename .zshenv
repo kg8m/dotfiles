@@ -75,7 +75,7 @@ unset DIFF_HIGHLIGHT_DIRPATH_CACHE
 mkdir -p "${VIM_PLUGINS}"
 
 # Don't use eza's `--ignore-glob` option for `--tree` option because `--ignore-glob` doesn't work for subdirectories.
-export EXA_DEFAULT_OPTIONS=(
+export EZA_DEFAULT_OPTIONS=(
   # Always colorize
   --color "always"
 
