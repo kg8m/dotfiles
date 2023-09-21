@@ -45,7 +45,7 @@ const LOG_SKIP_PATTERN = new RegExp(
     /^Updating \w+\.\.\w+$/,
     /^Your configuration specifies to merge with the ref '[^ ]+'$/,
     /^[^ ]+: pushed_time=\d+, repo_time=\d+, rollback_time=\d+$/,
-    /^[^ ]+: remote=\w+, local=\w+$/,
+    /^[^ ]+: remote=\w*, local=\w+$/,
     /^\( *\d+\/\d+\) \[[-+]+\] ([^ ]+|compare plugin|send query)$/,
     /^\( *\d+\/\d+\) \|[^ ]+ *\| Same revision$/,
     /^from the remote, but no such ref was fetched\.$/,
