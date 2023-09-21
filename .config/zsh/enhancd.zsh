@@ -17,3 +17,4 @@ export ENHANCD_FILTER="filter --preview-window='hidden'"
 
 zinit ice lucid trigger-load!"cd" atload"plugin:enhancd:atload"
 zinit light b4b4r07/enhancd
+PLUGINS_FOR_TRIGGER_LOAD+=("b4b4r07/enhancd")

@@ -6,3 +6,4 @@ function plugin:cdbookmark:atinit {
 }
 zinit ice lucid trigger-load!"cd-bookmark" blockf atclone"zinit creinstall \${PWD}" atpull"%atclone" atinit="plugin:cdbookmark:atinit"
 zinit light mollifier/cd-bookmark
+PLUGINS_FOR_TRIGGER_LOAD+=("mollifier/cd-bookmark")

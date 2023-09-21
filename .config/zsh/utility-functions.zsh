@@ -696,6 +696,12 @@ function zsh:plugins:update {
 
   execute_with_echo "zsh:rcs:compile:clear"
 
+  # Load plugins with `trigger-load` option, because they may not be loaded and may be deleted by `zinit delete --clean`.
+  local plugin_for_trigger_load
+  for plugin_for_trigger_load in "${PLUGINS_FOR_TRIGGER_LOAD[@]:?}"; do
+    execute_with_echo "zinit load ${plugin_for_trigger_load}"
+  done
+
   execute_with_echo "zinit delete --clean --yes"
   execute_with_echo "zinit cclear"
   execute_with_echo "find ${ZINIT[SNIPPETS_DIR]:?} -type d -empty -delete"

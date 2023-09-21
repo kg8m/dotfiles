@@ -16,5 +16,7 @@ function plugin:fzf_history_search:atload {
 }
 zinit ice lucid trigger-load!"fzf_history_search" atload"plugin:fzf_history_search:atload"
 zinit light joshskidmore/zsh-fzf-history-search
+PLUGINS_FOR_TRIGGER_LOAD+=("joshskidmore/zsh-fzf-history-search")
+
 zle -N fzf_history_search
 bindkey "^R" fzf_history_search
