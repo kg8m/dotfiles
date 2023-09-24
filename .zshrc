@@ -25,6 +25,12 @@ mkdir -p "$(dirname "${HISTFILE}")"
 
 # https://mollifier.hatenablog.com/entry/20090728/p1
 zshaddhistory() {
+  # Ignore unknown command (maybe it is typo).
+  if [ "$?" = 127 ]; then
+    return 0
+  fi
+
+  # Ignore if length is shorter than 5-character.
   local line=${1%%$'\n'}
   (("${#line}" >= 5))
 }
