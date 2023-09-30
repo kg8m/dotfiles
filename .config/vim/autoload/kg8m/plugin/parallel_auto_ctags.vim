@@ -26,7 +26,7 @@ export def OnSource(): void
     g:parallel_auto_ctags#entry_points.pwd.options += ["--exclude=log", "--exclude=storage", "--exclude=tmp"]
     g:parallel_auto_ctags#entry_points.gems = {
       path:    $"{rubygems_path}/..",
-      options: ["--exclude=test", "--exclude=spec", "--languages=Ruby"],
+      options: ["--exclude=spec", "--exclude=test", "--languages=Ruby"],
       events:  ["VimEnter"],
       silent:  false,
     }
