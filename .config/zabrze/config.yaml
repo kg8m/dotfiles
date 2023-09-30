@@ -314,10 +314,10 @@ abbrevs:
     abbr: t
     snippet: tmux:attach_or_new
 
-  - name: vim
+  - name: v to vim
     abbr: v
     snippet: vim
-  - name: vim2
+  - name: vi to vim
     abbr: vi
     snippet: vim
 
