@@ -8,9 +8,6 @@
 --exclude=.gem_rbs_collection
 --exclude=.git
 --exclude=app/frontend/builds
---exclude=jquery-ui.js
---exclude=jquery.js
---exclude=jrails.js
 --exclude=node_modules
 --exclude=package-lock.json
 --exclude=public/assets
