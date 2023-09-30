@@ -30,7 +30,9 @@
 --colors=path:style:bold
 
 # Exclude directories
+# cf. .config/ctags/default.ctags
 # cf. .config/fd/ignore
+# cf. rails:assets:clean:force in rails:assets:clean:force
 --glob=!.bundle/cache/
 --glob=!.cache/
 --glob=!.gem_rbs_collection/

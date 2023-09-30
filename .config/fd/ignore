@@ -1,4 +1,6 @@
+# cf. .config/ctags/default.ctags
 # cf. .config/ripgrep/config
+# cf. rails:assets:clean:force in rails:assets:clean:force
 *.zwc
 .bundle/cache/
 .cache/

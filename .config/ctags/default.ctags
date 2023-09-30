@@ -3,6 +3,9 @@
 --recurse=yes
 --sort=yes
 
+# cf. .config/fd/ignore
+# cf. .config/ripgrep/config
+# cf. rails:assets:clean:force in rails:assets:clean:force
 --exclude=*.min.*
 --exclude=.cspell.json
 --exclude=.gem_rbs_collection

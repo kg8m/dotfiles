@@ -672,6 +672,9 @@ function rails:assets:clean:force {
     return 1
   fi
 
+  # cf. .config/ctags/default.ctags
+  # cf. .config/fd/ignore
+  # cf. .config/ripgrep/config
   local directories=(
     "app/assets/builds"
     "app/frontend/builds"
