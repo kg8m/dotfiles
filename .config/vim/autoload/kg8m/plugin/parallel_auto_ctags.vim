@@ -12,7 +12,7 @@ export def OnSource(): void
 
       # Use my `MyJavaScript` instead of built-in `JavaScript` because it is broken.
       # cf. https://github.com/universal-ctags/ctags/issues/900
-      options: ["--languages=Go,MyJavaScript,Make,Ruby,Sh,TypeScript,Vim,Yaml"],
+      options: ["--languages=CSS,Go,JSON,Make,Markdown,MyJavaScript,Rake,RDoc,RSpec,Ruby,Rust,SCSS,Sh,SQL,Terraform,TerraformVariables,TypeScript,Vim,Yaml,Zsh"],
 
       events:  ["VimEnter", "BufWritePost"],
       silent:  false,
@@ -23,6 +23,7 @@ export def OnSource(): void
     const rubygems_path = util.RubygemsPath()
     &tags ..= $",{rubygems_path}/../tags"
 
+    g:parallel_auto_ctags#entry_points.pwd.options += ["--exclude=log", "--exclude=storage", "--exclude=tmp"]
     g:parallel_auto_ctags#entry_points.gems = {
       path:    $"{rubygems_path}/..",
       options: ["--exclude=test", "--exclude=spec", "--languages=Ruby"],

@@ -3,12 +3,22 @@
 --recurse=yes
 --sort=yes
 
+--exclude=*.min.*
+--exclude=.cspell.json
+--exclude=.gem_rbs_collection
 --exclude=.git
---exclude=*.min.js
---exclude=jquery.js
+--exclude=app/frontend/builds
 --exclude=jquery-ui.js
+--exclude=jquery.js
 --exclude=jrails.js
 --exclude=node_modules
+--exclude=package-lock.json
+--exclude=public/assets
+--exclude=public/packs
+--exclude=public/packs-test
+--exclude=public/vite
+--exclude=public/vite-dev
+--exclude=public/vite-test
 --exclude=vendor/bundle
 
 --options-maybe=.ctags
