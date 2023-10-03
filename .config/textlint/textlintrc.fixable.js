@@ -20,6 +20,7 @@ const localPrhConfigPaths = fs.existsSync(localPrhConfigPath)
   ? [localPrhConfigPath]
   : [];
 
+const localTerminologyExclude = localConfig?.rules?.terminology?.exclude;
 const config = {
   filters: {
     comments: true,
@@ -49,9 +50,15 @@ const config = {
         // Use a proper noun "Stylelint"
         // https://github.com/sapegin/textlint-rule-terminology/blob/v4.0.0/terms.jsonc#L180
         "(?<=(?:\\w+[^.?!])? )stylelint\\b",
+
+        ...(localTerminologyExclude ?? []),
       ],
     },
   },
 };
+
+if (localTerminologyExclude != null) {
+  delete localConfig.rules.terminology.exclude;
+}
 
 module.exports = deepmerge(config, localConfig);
