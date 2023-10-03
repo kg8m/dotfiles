@@ -43,6 +43,10 @@ const config = {
         // https://github.com/sapegin/textlint-rule-terminology/blob/v4.0.0/terms.jsonc#L149
         "file-?type(s)?",
 
+        // Sometimes `id` is valid.
+        // https://github.com/sapegin/textlint-rule-terminology/blob/v4.0.0/terms.jsonc#L89
+        "ID",
+
         // Use "styleguide"
         // https://github.com/sapegin/textlint-rule-terminology/blob/v4.0.0/terms.jsonc#L153
         "style-?guide(s)?",
