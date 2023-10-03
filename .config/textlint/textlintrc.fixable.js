@@ -9,7 +9,7 @@ const { deepmerge } = require(path.join(homePath, ".config/util"));
 
 const localConfigPath = path.join(
   localConfigDirpath,
-  "textlintrc.fixable.local.js"
+  "textlintrc.fixable.local.js",
 );
 const localConfig = fs.existsSync(localConfigPath)
   ? require(localConfigPath)
@@ -31,7 +31,7 @@ const config = {
     // For Japanese contents. Terminology doesn't work for Japanese.
     prh: {
       rulePaths: ["~/.config/textlint/prh-rules.yml"].concat(
-        localPrhConfigPaths
+        localPrhConfigPaths,
       ),
     },
 
