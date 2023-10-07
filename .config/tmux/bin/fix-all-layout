@@ -1,0 +1,46 @@
+#!/usr/bin/env zsh
+set -e  # Stop on error
+set -u  # Error for unknown variables
+
+if [ -z "${TMUX:-}" ]; then
+  echo "Not in a tmux session." >&2
+  exit 1
+fi
+
+# Store the original session name and window index to restore the state.
+# Switch each session and window before fixing the layout because `tmux select-layout` won’t work otherwise.
+original_active_session_name="$(tmux display-message -p "#{session_name}")"
+original_active_window_index="$(tmux display-message -p "#{window_index}")"
+
+window_info_set=("${(@f)$(tmux list-windows -a -F '#{session_name} #{window_index} #{window_panes}')}")
+
+if [ -z "${window_info_set[*]}" ]; then
+  echo "There are no tmux sessions."
+  exit
+fi
+
+current_session=""
+
+# shellcheck disable=SC2034
+for window_info in "${window_info_set[@]}"; do
+  window_info_array=("${(s: :)window_info}")
+
+  session_name="${window_info_array[1]}"
+  window_index="${window_info_array[2]}"
+  panes_count="${window_info_array[3]}"
+
+  if [ ! "${session_name}" = "${current_session}" ]; then
+    tmux switch-client -t "${session_name}"
+    current_session="${session_name}"
+  fi
+
+  if ((panes_count != 2)); then
+    continue
+  fi
+
+  tmux select-window -t "${window_index}"
+  tmux select-layout -t "${session_name}:${window_index}" main-vertical
+done
+
+tmux switch-client -t "${original_active_session_name}"
+tmux select-window -t "${original_active_window_index}"
