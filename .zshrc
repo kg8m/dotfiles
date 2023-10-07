@@ -1,3 +1,9 @@
+# Profile:
+#   1. Enable the following `zmodload` line
+#   2. Enable the `zprof` line at the end of this file
+#   3. Execute zsh
+# zmodload zsh/zprof
+
 export LANG=en_US.UTF-8
 
 export VISUAL=vim
@@ -147,6 +153,8 @@ try_to_source ~/.config/zsh.local/zshrc.local.zsh
 
 zinit ice lucid nocd wait"!0c" compinit atload"echo"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/compinit"
+
+# zprof
 
 # Notes
 #
