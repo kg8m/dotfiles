@@ -1,43 +1,32 @@
 function plugin:setup:binary_releaseds {
   local repositories=(
+    rhysd/actionlint
+    sharkdp/bat
     mrtazz/checkmake
+    cli/cli
+    dandavison/delta
+    direnv/direnv
     mattn/efm-langserver
+    sharkdp/fd
+    junegunn/fzf
+    profclems/glab
     golangci/golangci-lint
     nametake/golangci-lint-langserver
+    sharkdp/hyperfine
+    itchyny/mmv
     high-moctane/mocword
-    lighttiger2505/sqls
+    BurntSushi/ripgrep
+    chmln/sd
     mvdan/sh
+    koalaman/shellcheck
+    lighttiger2505/sqls
+    dbrgn/tealdeer
     juliosueiras/terraform-lsp
+    XAMPPRocky/tokei
     crate-ci/typos
     rhysd/vim-startuptime
     Ryooooooga/zabrze
   )
-
-  # Use `brew` command if available to detect that zinit gets broken or something is wrong
-  if ! command -v brew > /dev/null; then
-    repositories+=(
-      rhysd/actionlint
-      sharkdp/bat
-      cli/cli
-      dandavison/delta
-      direnv/direnv
-      sharkdp/fd
-      junegunn/fzf
-      profclems/glab
-      sharkdp/hyperfine
-      itchyny/mmv
-      BurntSushi/ripgrep
-      koalaman/shellcheck
-      dbrgn/tealdeer
-      XAMPPRocky/tokei
-    )
-
-    if [ -z "${SD_UNAVAILABLE}" ]; then
-      repositories+=(
-        chmln/sd
-      )
-    fi
-  fi
 
   # Don't use zinit's options like `as"command" mv"${plugin}* -> ${plugin}" pick"${plugin}/${plugin}"` because it
   # makes the `$PATH` longer and longer. Make symbolic links in `${HOME}/bin` instead.
@@ -46,6 +35,7 @@ function plugin:setup:binary_releaseds {
   function plugin:binary_released:atclone {
     local repository="${1:?}"
     local plugin="${2:?}"
+    local plugin_id="${3:?}"
 
     echo >&2
     echo:info "URL: https://github.com/${repository}"
@@ -140,7 +130,7 @@ function plugin:setup:binary_releaseds {
         ;;
     esac
 
-    [ -n "$(find . -type f -name '_*')" ] && execute_with_echo "zinit creinstall ${repository}"
+    [ -n "$(find . -type f -name '_*')" ] && execute_with_echo "zinit creinstall ${plugin_id}"
 
     echo >&2
     echo:info "Done."
@@ -170,28 +160,14 @@ function plugin:setup:binary_releaseds {
         ;;
     esac
 
+    local plugin_id="$(dirname "${repository}")---${plugin}-bin"
     local options=(
       from"gh-r"
       as"null"
-      id-as"$(dirname "${repository}")---${plugin}-bin"
-      atclone"plugin:binary_released:atclone ${repository} ${plugin}"
+      id-as"${plugin_id}"
+      atclone"plugin:binary_released:atclone ${repository} ${plugin} ${plugin_id}"
       atpull"%atclone"
     )
-
-    case "${plugin}" in
-      bat | delta | fd | hyperfine | rg | sd | tldr | tokei)
-        # Choose musl for legacy environments
-        options+=(bpick"*musl*")
-        ;;
-      gh | glab | golangci-lint)
-        options+=(bpick"*.tar.gz")
-        ;;
-      sqls)
-        if [ -n "${SQLS_VERSION}" ]; then
-          options+=(ver"${SQLS_VERSION}")
-        fi
-        ;;
-    esac
 
     zinit ice lucid "${options[@]}"
     zinit light "${repository}"
