@@ -16,13 +16,15 @@ function plugin:asdf:atclone {
 
     execute_with_echo "asdf plugin add ${plugin}"
     execute_with_echo "asdf install ${plugin} latest"
-    execute_with_echo "asdf global ${plugin} latest"
 
     case "${plugin}" in
       python)
-        if ! command -v python2 > /dev/null; then
-          echo:info 'Install Python 2.x.y and setup with `asdf global latest 2.x.y`'
-        fi
+        local older_latest="$(asdf list all python | grep -E '^2\.' | tail -n1)"
+        execute_with_echo "asdf install ${plugin} ${older_latest}"
+        execute_with_echo "asdf global ${plugin} latest ${older_latest}"
+        ;;
+      *)
+        execute_with_echo "asdf global ${plugin} latest"
         ;;
     esac
   done
