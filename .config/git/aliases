@@ -568,11 +568,3 @@ function git:proxy:column {
     column -t -s "${separator}" |
     sd "^${dummy}" ''
 }
-
-function git:proxy:wc {
-  if command -v gwc > /dev/null; then
-    gwc "$@"
-  else
-    wc "$@"
-  fi
-}
