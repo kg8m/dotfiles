@@ -30,7 +30,7 @@ function plugin:dircolors:atload {
 
     echo "${(j:\n:)overwrites}" >> "${tempfile}"
 
-    if command -v gdircolors > /dev/null; then
+    if ((${+commands[gdircolors]})); then
       local dircolors=gdircolors
     else
       local dircolors=dircolors

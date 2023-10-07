@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-if command -v delta > /dev/null; then
+if ((${+commands[delta]})); then
   delta "$@"
 else
   diff-highlight "$@" | less --LINE-NUMBERS

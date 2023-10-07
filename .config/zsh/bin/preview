@@ -49,7 +49,7 @@ if [ "${#filepaths}" = "1" ]; then
   fi
 
   if file "${realpath}" | grep -E '\bimage data\b' -q; then
-    if command -v chafa > /dev/null; then
+    if ((${+commands[chafa]})); then
       chafa --size 200x50 "${realpath}"
       return
     fi
@@ -72,14 +72,14 @@ if [ "${#filepaths}" = "1" ]; then
 
   case "${realpath}" in
     *.csv)
-      if command -v nkf > /dev/null; then
+      if ((${+commands[nkf]})); then
         nkf "${realpath}" | bat "${bat_options[@]}" --file-name "${realpath}"
       else
         bat "${realpath}" "${bat_options[@]}"
       fi
       ;;
     *.diff)
-      if command -v delta > /dev/null; then
+      if ((${+commands[delta]})); then
         delta < "${realpath}"
       else
         bat "${realpath}" "${bat_options[@]}"
