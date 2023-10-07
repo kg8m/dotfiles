@@ -4,7 +4,7 @@ EXTRA_TEXT="# <!-- textlint-disable -->"
 
 sd "${SCISSORS_PATTERN}" "\$1\n${EXTRA_TEXT}" "$1"
 
-if [ "${GIT_LOCAL_TEMPLATE_HOOKS_AVAILABLE:-}" = "1" ] && [ -f .git_templates/hooks/prepare-commit-msg ]; then
+if [ "${USE_GIT_LOCAL_TEMPLATE_HOOKS:-}" = "1" ] && [ -f .git_templates/hooks/prepare-commit-msg ]; then
   source .git_templates/hooks/prepare-commit-msg
 else
   exit 0

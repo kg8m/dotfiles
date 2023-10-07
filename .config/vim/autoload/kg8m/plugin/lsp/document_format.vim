@@ -170,7 +170,7 @@ def AreServersEnabled(): bool
 enddef
 
 def IsAllowed(): bool
-  return $AUTO_FORMATTING_AVAILABLE ==# "1"
+  return $USE_AUTO_FORMATTING ==# "1"
 enddef
 
 def IsTargetFilepath(): bool

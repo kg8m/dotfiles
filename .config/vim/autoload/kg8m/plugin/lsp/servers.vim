@@ -338,7 +338,7 @@ def RegisterRubyLanguageServer(): void
     allowlist: ["ruby"],
     extra_config: () => ExtraConfigForRubyLanguageServer(),
 
-    available: $RUBY_LANGUAGE_SERVER_AVAILABLE ==# "1",
+    available: $USE_RUBY_LANGUAGE_SERVER ==# "1",
   })
 enddef
 
@@ -360,7 +360,7 @@ def RegisterRubyLsp(): void
     allowlist: ["ruby"],
     extra_config: () => ExtraConfigForRubyLsp(),
 
-    available: $RUBY_LSP_AVAILABLE !=# "0",
+    available: $USE_RUBY_LSP !=# "0",
   })
 enddef
 
@@ -383,7 +383,7 @@ def RegisterSolargraph(): void
     allowlist: ["ruby"],
     extra_config: () => ExtraConfigForSolargraph(),
 
-    available: $SOLARGRAPH_AVAILABLE !=# "0",
+    available: $USE_SOLARGRAPH !=# "0",
   })
 enddef
 
@@ -497,7 +497,7 @@ def RegisterTerraformLsp(): void
     allowlist: ["terraform"],
     extra_config: () => ExtraConfigForTerraformLsp(),
 
-    available: $TERRAFORM_LSP_AVAILABLE ==# "1",
+    available: $USE_TERRAFORM_LSP ==# "1",
   })
 enddef
 
@@ -514,7 +514,7 @@ def RegisterTypeprof(): void
     allowlist: ["ruby"],
     extra_config: () => ExtraConfigForTypeprof(),
 
-    available: $TYPEPROF_AVAILABLE ==# "1",
+    available: $USE_TYPEPROF ==# "1",
   })
 enddef
 
@@ -839,7 +839,7 @@ def ShouldUseVueLanguageServer(): bool
     return cache.use_vue_language_server
   endif
 
-  cache.use_vue_language_server = ($VUEJS_AVAILABLE ==# "1")
+  cache.use_vue_language_server = ($USE_VUEJS ==# "1")
   return cache.use_vue_language_server
 enddef
 
@@ -848,7 +848,7 @@ def ShouldUseDeno(): bool
     return cache.use_deno
   endif
 
-  cache.use_deno = ($DENO_AVAILABLE ==# "1") || OnDenoAppDir() || OnDenopsPluginDir()
+  cache.use_deno = ($USE_DENO ==# "1") || OnDenoAppDir() || OnDenopsPluginDir()
   return cache.use_deno
 enddef
 

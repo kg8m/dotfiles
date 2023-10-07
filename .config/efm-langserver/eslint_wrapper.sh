@@ -3,7 +3,7 @@ if ! command -v eslint > /dev/null; then
   exit 1
 fi
 
-if [ ! "${ESLINT_AVAILABLE:-}" = "1" ]; then
+if [ ! "${USE_ESLINT:-}" = "1" ]; then
   exit 1
 fi
 

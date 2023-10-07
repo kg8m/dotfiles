@@ -32,7 +32,7 @@ export def IsCtagsAvailable(): bool
     return cache.is_ctags_available
   endif
 
-  cache.is_ctags_available = ($CTAGS_AVAILABLE ==# "1")
+  cache.is_ctags_available = ($USE_CTAGS ==# "1")
   return cache.is_ctags_available
 enddef
 
@@ -72,11 +72,11 @@ export def IsTabnineAvailable(): bool
     return cache.is_tabnine_available
   endif
 
-  if empty($TABNINE_AVAILABLE)
+  if empty($USE_TABNINE)
     const remotes = system("git remote -v 2> /dev/null")
     cache.is_tabnine_available = remotes ==# "" || stringUtil.Includes(remotes, "@github.com:kg8m/")
   else
-    cache.is_tabnine_available = $TABNINE_AVAILABLE ==# "1"
+    cache.is_tabnine_available = $USE_TABNINE ==# "1"
   endif
 
   return cache.is_tabnine_available

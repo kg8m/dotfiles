@@ -3,7 +3,7 @@ if ! command -v lit-analyzer > /dev/null; then
   exit 1
 fi
 
-if [ ! "${LIT_ANALYZER_AVAILABLE:-}" = "1" ]; then
+if [ ! "${USE_LIT_ANALYZER:-}" = "1" ]; then
   exit 1
 fi
 

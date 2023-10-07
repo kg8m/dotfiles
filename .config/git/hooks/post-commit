@@ -13,7 +13,7 @@ if [ -f "Gemfile.lock" ]; then
   fi
 fi
 
-if [ "${GIT_LOCAL_TEMPLATE_HOOKS_AVAILABLE:-}" = "1" ] && [ -f .git_templates/hooks/post-commit ]; then
+if [ "${USE_GIT_LOCAL_TEMPLATE_HOOKS:-}" = "1" ] && [ -f .git_templates/hooks/post-commit ]; then
   source .git_templates/hooks/post-commit
 else
   exit 0

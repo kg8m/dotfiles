@@ -243,7 +243,7 @@ if plugin.Register("vim-denops/denops.vim", { lazy: true })
   endif
 endif
 
-if plugin.Register("gamoutatsumi/dps-ghosttext.vim", { if: $GHOST_TEXT_AVAILABLE ==# "1" })
+if plugin.Register("gamoutatsumi/dps-ghosttext.vim", { if: $USE_GHOST_TEXT ==# "1" })
   import autoload "kg8m/plugin/ghosttext.vim"
   plugin.Configure({
     lazy:    true,

@@ -51,7 +51,7 @@ const config = {
   nodeRules: [{ selector: "slot", rules: { "end-tag": false } }],
 };
 
-if (process.env.VUEJS_AVAILABLE === "1") {
+if (process.env.USE_VUEJS === "1") {
   config.nodeRules.push({
     selector: "script",
     rules: {
