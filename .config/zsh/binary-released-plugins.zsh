@@ -89,6 +89,7 @@ function plugin:setup:binary_releaseds {
     rm -f "${HOME}/bin/${command}"
     execute_with_echo "ln -s '${PWD}/${binary}' '${HOME}/bin/${command}'"
     execute_with_echo "which ${command}"
+    execute_with_echo "fd --type l --type x --glob '${command}' '${(j:' ':)path}'"
 
     case "${plugin}" in
       bat | checkmake | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | mocword | rg | sd | shellcheck |\
