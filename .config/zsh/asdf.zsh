@@ -7,7 +7,7 @@ function plugin:asdf:atclone {
     ln -s "${PWD}" "${ASDF_DIR}"
   fi
 
-  local plugins=(deno golang nodejs python ruby rust)
+  local plugins=(deno golang nodejs python ruby rust terraform)
   local plugin
   for plugin in "${plugins[@]}"; do
     if asdf plugin-list | grep -E "^${plugin}$" -q; then
