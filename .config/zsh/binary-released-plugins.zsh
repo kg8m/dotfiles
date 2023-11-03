@@ -160,7 +160,7 @@ function plugin:setup:binary_releaseds {
         ;;
     esac
 
-    local plugin_id="$(dirname "${repository}")---${plugin}-bin"
+    local plugin_id="$(dirname "${repository}")/${plugin}-bin"
     local options=(
       from"gh-r"
       as"null"
