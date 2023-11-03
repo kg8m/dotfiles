@@ -65,3 +65,9 @@ function asdf:plugins:upgrade:check {
     fi
   done
 }
+
+function asdf:plugin:install:latest {
+  local plugin="${1:?}"
+  execute_with_echo "asdf install ${plugin} latest"
+  execute_with_echo "asdf global ${plugin} latest"
+}
