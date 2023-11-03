@@ -1,6 +1,6 @@
 # https://docs.aws.amazon.com/cli/latest/reference/logs/filter-log-events.html
 function aws:logs:filter_events {
-  local start_time end_time filter
+  local profile start_time end_time filter
   local limit="1000"
   local group_name=""
   local stream_names=()
@@ -12,6 +12,7 @@ function aws:logs:filter_events {
 aws:logs:filter_events {parameters}
 
   *Parameter*     *Required?*  *Default*   *Note*  *Example*
+  --profile       required                         --profile 'default'
   --start-time    required                 JST     --start-time '2022-02-02 02:00:00'
   --end-time      required                 JST     --end-time '2022-02-02 02:00:00'
   --filter        required                         --filter '{ $.demand_id = "123456" || $.params = "*123456*" }'
@@ -25,6 +26,10 @@ HELP
 
   while (("${#@}" > 0)); do
     case "$1" in
+      --profile)
+        profile="${2:?}"
+        shift 2
+        ;;
       --start-time)
         start_time="${2:?}"
         shift 2
@@ -72,13 +77,13 @@ HELP
     esac
   done
 
-  if [ -z "${start_time}" ] || [ -z "${end_time}" ] || [ -z "${filter}" ]; then
+  if [ -z "${profile}" ] || [ -z "${start_time}" ] || [ -z "${end_time}" ] || [ -z "${filter}" ]; then
     echo "${help}"
     return 1
   fi
 
   if [ -z "${group_name}" ]; then
-    group_name="$(aws:logs:select_group)"
+    group_name="$(aws:logs:select_group "${profile}")"
   fi
 
   if [ -z "${group_name}" ]; then
@@ -87,7 +92,7 @@ HELP
   fi
 
   if [ -z "${stream_names[*]}" ]; then
-    stream_names=("${(@f)$(aws:logs:select_streams "${group_name}")}")
+    stream_names=("${(@f)$(aws:logs:select_streams "${profile}" "${group_name}")}")
   fi
 
   if [ -z "${stream_names[*]}" ]; then
@@ -96,6 +101,7 @@ HELP
   fi
 
   local aws_logs_options=(
+    --profile "${profile}"
     --log-group-name "${group_name}"
     --log-stream-names "'${(j:' ':)stream_names}'"
     --start-time "$(($(date -j -f '%F %T' "${start_time}" '+%s') * 1000))"
@@ -133,16 +139,19 @@ HELP
 
 # https://docs.aws.amazon.com/cli/latest/reference/logs/describe-log-groups.html
 function aws:logs:select_group {
-  aws logs describe-log-groups --output json |
+  local profile="${1:?}"
+
+  aws logs describe-log-groups --profile "${profile}" --output json |
     jq '.logGroups[].logGroupName' --raw-output |
     filter --preview-window "hidden" --prompt "Select a log group> " --no-multi
 }
 
 # https://docs.aws.amazon.com/cli/latest/reference/logs/describe-log-streams.html
 function aws:logs:select_streams {
-  local group_name="${1:?}"
+  local profile="${1:?}"
+  local group_name="${2:?}"
 
-  aws logs describe-log-streams --log-group-name "${group_name}"  |
+  aws logs describe-log-streams --profile "${profile}" --log-group-name "${group_name}"  |
     jq '.logStreams[].logStreamName' --raw-output |
     filter --preview-window "hidden" --prompt "Select log streams> "
 }
