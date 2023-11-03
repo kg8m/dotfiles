@@ -265,7 +265,7 @@ def AddRulesForShell(): void
   #   (
   #     |
   #   )
-  lexima#add_rule({ char: "<CR>", at: '(\%#)', input: '<CR><C-h><C-o><S-o>', filetype: filetypes })
+  lexima#add_rule({ char: "<CR>", at: '(\%#)', input: '<CR><Tab><C-o><S-o><Tab>', filetype: filetypes })
 
   # `<CR>` when
   #
