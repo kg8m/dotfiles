@@ -1,7 +1,12 @@
 function plugin:others:setup {
-  # For eza
+  # eza
   export TIME_STYLE="long-iso"
 
+  # MySQL
+  mkdir -p "${XDG_DATA_HOME:?}/mysql"
+  export MYSQL_HISTFILE="${XDG_DATA_HOME:?}/mysql/history"
+
+  # themis.vim
   # Don't use zinit's options like `as"command" pick"bin/themis"` because it makes the `$PATH` longer and longer. Make
   # symbolic links in `${HOME}/bin` instead.
   #
@@ -15,9 +20,7 @@ function plugin:others:setup {
   zinit ice lucid as"null" atclone"plugin:vim:themis:atclone"
   zinit light thinca/vim-themis
 
-  mkdir -p "${XDG_DATA_HOME:?}/mysql"
-  export MYSQL_HISTFILE="${XDG_DATA_HOME:?}/mysql/history"
-
+  # Tig
   mkdir -p "${XDG_DATA_HOME:?}/tig"
 
   unset -f plugin:others:setup
