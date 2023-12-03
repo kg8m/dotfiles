@@ -24,7 +24,7 @@ else
   executable="rubocop"
 fi
 
-options+=(--force-exclusion --format simple --no-color --stdin "${target_filepath}")
+options+=(--force-exclusion --no-color --stdin "${target_filepath}")
 
 if [ "${is_fixing}" = "1" ]; then
   if [[ "${target_filepath}" =~ \.md$ ]]; then
@@ -32,16 +32,21 @@ if [ "${is_fixing}" = "1" ]; then
     exit 1
   fi
 
-  result="$("${executable}" "${options[@]}" --autocorrect)"
+  err_temp_filepath="$(mktemp)"
 
-  if echo "${result}" | grep -E '^=+$' -q; then
-    echo "${result}" | awk '/^=+$/,eof' | awk 'NR > 1 { print }'
+  # shellcheck disable=SC2064
+  trap "rm -f ${err_temp_filepath}" EXIT
+
+  out="$("${executable}" "${options[@]}" --autocorrect --stderr 2> "${err_temp_filepath}")"
+
+  if [ -n "${out}" ]; then
+    echo "${out}"
   else
-    echo "${result}" >&2
+    cat "${err_temp_filepath}" >&2
     exit 1
   fi
 else
-  out="$("${executable}" "${options[@]}" | sd '^([A-Z]): *([0-9]+): *([0-9]+): *' '$1:$2:$3: ')"
+  out="$("${executable}" "${options[@]}" --format simple | sd '^([A-Z]): *([0-9]+): *([0-9]+): *' '$1:$2:$3: ')"
 
   if echo "${out}" | grep -E -q '^[A-Z]:[0-9]+:[0-9]+:'; then
     echo "${out}"
