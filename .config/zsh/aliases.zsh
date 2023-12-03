@@ -19,9 +19,10 @@ alias rm="rm -i"
 # `xterm-256color-italic` is set in tmux.
 alias ssh="TERM=xterm-256color ssh"
 
-# Specify `-E` because sudo sometimes doesn't know my special commands/aliases.
-# End with a whitespace in order to expand my aliases via sudo.
+# - Specify `-H` (Home): set the `HOME` environment variable to root user’s one.
+# - Specify `-E` (Environment): preserve environment variables.
+# - End with a whitespace in order to expand my aliases via sudo.
 #   cf. https://qiita.com/homoluctus/items/ba1a6d03df85e65fc85a
-alias sudo="sudo -E "
+alias sudo="sudo -H -E "
 
 alias watch="watch --color"
