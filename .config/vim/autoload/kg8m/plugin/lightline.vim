@@ -21,7 +21,7 @@ export def OnSource(): void
       ["cursor_position"],
     ],
     right: [
-      ["lsp_status"],
+      ["warning_lsp_status"], ["normal_lsp_status"],
     ],
   }
 
@@ -35,15 +35,17 @@ export def OnSource(): void
     component_function: {
       normal_filepath:     $"{SID}NormalFilepath",
       normal_fileencoding: $"{SID}NormalFileencoding",
-      lsp_status:          $"{SID}LspStatus",
+      normal_lsp_status:   $"{SID}NormalLspStatus",
     },
     component_expand: {
       warning_filepath:     $"{SID}WarningFilepath",
       warning_fileencoding: $"{SID}WarningFileencoding",
+      warning_lsp_status:   $"{SID}WarningLspStatus",
     },
     component_type: {
       warning_filepath:     "error",
       warning_fileencoding: "error",
+      warning_lsp_status:   "error",
     },
     colorscheme: "kg8m",
 
@@ -87,12 +89,28 @@ def Fileencoding(): string
   return &fileencoding
 enddef
 
+def LspStatus(): string
+  if lsp.IsTargetBuffer()
+    if lsp.IsBufferEnabled()
+      return LspStatusAfterEnabled()
+    else
+      return lsp.ICONS.loading
+    endif
+  else
+    return ""
+  endif
+enddef
+
 def NormalFilepath(): string
   return IsIrregularFilepath() ? "" : Filepath()
 enddef
 
 def NormalFileencoding(): string
   return IsIrregularFileencoding() ? "" : Fileencoding()
+enddef
+
+def NormalLspStatus(): string
+  return IsIrregularLspStatus() ? "" : LspStatus()
 enddef
 
 def WarningFilepath(): string
@@ -105,6 +123,11 @@ def WarningFileencoding(): string
   return $"%{{{SID}IsIrregularFileencoding() ? {SID}Fileencoding() : ''}}"
 enddef
 
+def WarningLspStatus(): string
+  # Use `%{...}` because component-expansion result is shared with other windows/buffers
+  return $"%{{{SID}IsIrregularLspStatus() ? {SID}LspStatus() : ''}}"
+enddef
+
 def IsIrregularFilepath(): bool
   return IsReadonly() || !!(expand("%") =~# '^suda://')
 enddef
@@ -113,16 +136,11 @@ def IsIrregularFileencoding(): bool
   return !empty(&fileencoding) && &fileencoding !=# "utf-8"
 enddef
 
-def LspStatus(): string
-  if lsp.IsTargetBuffer()
-    if lsp.IsBufferEnabled()
-      return LspStatusAfterEnabled()
-    else
-      return lsp.ICONS.loading
-    endif
-  else
-    return ""
-  endif
+def IsIrregularLspStatus(): bool
+  return (
+    stringUtil.Includes(LspStatus(), lsp.ICONS.error) ||
+    stringUtil.Includes(LspStatus(), lsp.ICONS.warning)
+  )
 enddef
 
 def CurrentFilepath(): string
