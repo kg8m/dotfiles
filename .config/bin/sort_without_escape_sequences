@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # https://stackoverflow.com/a/29401114
 #   h                   Copy the line to the hold space
 #   s/\x1b[[0-9;]*m//g  Remove all colour sequences

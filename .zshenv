@@ -102,6 +102,7 @@ export FD_DEFAULT_OPTIONS=(
 path=(
   "${HOME}/.config/git/bin"
   "${HOME}/.config/zsh/bin"
+  "${HOME}/.config/bin"
   "${HOME}/bin"
   "${path[@]}"
 )

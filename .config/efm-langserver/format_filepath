@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 original_target_filepath="${1:?}"
 
 case "${original_target_filepath}" in

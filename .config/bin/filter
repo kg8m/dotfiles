@@ -1,5 +1,5 @@
-#!/usr/bin/env zsh
-if ((${+commands[fzf]})); then
+#!/usr/bin/env bash
+if command -v fzf > /dev/null; then
   if [ -n "$*" ]; then
     fzf "$@"
   else
