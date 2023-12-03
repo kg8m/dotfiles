@@ -38,6 +38,7 @@
 --glob=!.gem_rbs_collection/
 --glob=!.git/
 --glob=!.nuxt/
+--glob=!.ruby-lsp/
 --glob=!app/assets/builds/
 --glob=!app/frontend/builds/
 --glob=!log/

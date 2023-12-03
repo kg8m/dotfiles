@@ -10,6 +10,7 @@
 --exclude=.cspell.json
 --exclude=.gem_rbs_collection
 --exclude=.git
+--exclude=.ruby-lsp
 --exclude=app/frontend/builds
 --exclude=node_modules
 --exclude=package-lock.json
