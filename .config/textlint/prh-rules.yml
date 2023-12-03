@@ -4,6 +4,9 @@ rules:
   #   options:
   #     wordBoundary: true
   #   prh: (Some comments)
+  - expected: actionlint
+    options:
+      wordBoundary: true
   - expected: Bash
     options:
       wordBoundary: true
