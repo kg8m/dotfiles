@@ -32,3 +32,11 @@ Kg8m.try_to_require("katakata_irb", quiet: true)
 if defined?(KatakataIrb::Types) && KatakataIrb::Types.respond_to?(:loader_type=)
   KatakataIrb::Types.loader_type = :async
 end
+
+if defined?(Reline::Face)
+  Reline::Face.config(:completion_dialog) do |config|
+    config.define :default, background: :blue
+    config.define :enhanced, background: :magenta, style: :bold
+    config.define :scrollbar, background: :blue
+  end
+end
