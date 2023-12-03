@@ -41,17 +41,7 @@ if [ "${is_fixing}" = "1" ]; then
     exit 1
   fi
 else
-  out="$(
-    "${executable}" "${options[@]}" |
-        sd '^C:' 'Convention:' |
-        sd '^E:' 'Error:' |
-        sd '^F:' 'Fatal:' |
-        sd '^R:' 'Refactor:' |
-        sd '^W:' 'Warning:' |
-        sd '^([A-Z])([a-z]+): *([0-9]+): *([0-9]+): *' '$1:$3:$4: [$1$2] ' |
-        sd '^[CR]:' 'W:' |
-        sd '^F:' 'E:'
-  )"
+  out="$("${executable}" "${options[@]}" | sd '^([A-Z]): *([0-9]+): *([0-9]+): *' '$1:$2:$3: ')"
 
   if echo "${out}" | grep -E -q '^[A-Z]:[0-9]+:[0-9]+:'; then
     echo "${out}"

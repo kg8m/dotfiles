@@ -77,6 +77,12 @@ tools:
   rubocop: &rubocop
     prefix: RuboCop
     lint-command: "$HOME/.config/efm-langserver/rubocop_wrapper.sh '${INPUT}'"
+    lint-category-map:
+      C: W  # Convention
+      E: E  # Error
+      F: E  # Fatal
+      R: W  # Refactor
+      W: W  # Warning
     lint-stdin: true
     lint-formats:
       - "%t:%l:%c: %m"
