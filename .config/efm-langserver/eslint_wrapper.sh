@@ -98,6 +98,6 @@ if [ -n "${err}" ]; then
   fi
 
   detail="$(echo "${detail}" | tr '\n' ' ')"
-  printf "%s:%s:%s: [eslint] %s\n" "1" "1" "Error" "${detail}"
+  printf "%s:%s:%s: %s\n" "1" "1" "Error" "${detail}"
   exit 1
 fi

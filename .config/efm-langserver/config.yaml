@@ -3,22 +3,26 @@ provide-definition: false
 
 tools:
   actionlint: &actionlint
+    prefix: actionlint
     lint-command: "$HOME/.config/efm-langserver/actionlint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %m"
 
   checkmake: &checkmake
+    prefix: checkmake
     lint-command: "checkmake"
     lint-stdin: true
 
   cspell: &cspell
+    prefix: CSpell
     lint-command: "cspell 'stdin://${INPUT}'"
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c - %m"
 
   erb: &erb
+    prefix: ERB
     lint-command: "$HOME/.config/efm-langserver/erb_wrapper.sh"
     lint-ignore-exit-code: true
     lint-stdin: true
@@ -26,12 +30,14 @@ tools:
       - "%l:%m"
 
   erb-lint: &erb-lint
+    prefix: ERB Lint
     lint-command: "$HOME/.config/efm-langserver/erblint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %m"
 
   eslint: &eslint
+    prefix: ESlint
     lint-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
@@ -40,11 +46,13 @@ tools:
     format-stdin: true
 
   lit-analyzer: &lit-analyzer
+    prefix: lit-analyzer
     lint-command: "$HOME/.config/efm-langserver/lit_analyzer_wrapper.sh '${INPUT}'"
     lint-formats:
       - "%*[ ]%l:%c%*[ ]%t%*[a-z]%*[ ]%m"
 
   markdownlint: &markdownlint
+    prefix: markdownlint
     lint-command: "markdownlint --stdin --config $HOME/.config/markdownlint/config.yaml"
     lint-stdin: true
     lint-formats:
@@ -53,6 +61,7 @@ tools:
       - "%f: %l: %m"
 
   markuplint: &markuplint
+    prefix: Markuplint
     lint-command: "$HOME/.config/efm-langserver/markuplint_wrapper.sh '${INPUT}'"
     # Using stdin is supported according to markuplint's help, but it doesn't work
     # lint-stdin: true
@@ -64,6 +73,7 @@ tools:
     format-stdin: true
 
   rubocop: &rubocop
+    prefix: RuboCop
     lint-command: "$HOME/.config/efm-langserver/rubocop_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
@@ -72,12 +82,14 @@ tools:
     format-stdin: true
 
   ruby: &ruby
+    prefix: Ruby
     lint-command: "$HOME/.config/efm-langserver/ruby_wrapper.sh '${INPUT}'"
     lint-formats:
       - "%l: %tarning: %m"
       - "%l: %m"
 
   shellcheck: &shellcheck
+    prefix: ShellCheck
     lint-command: "shellcheck --shell=bash --format=gcc --external-sources --enable=all -"
     lint-stdin: true
     lint-formats:
@@ -88,6 +100,7 @@ tools:
     format-stdin: true
 
   slim-lint: &slim-lint
+    prefix: Slim-Lint
     lint-command: "slim-lint --stdin-file-path '${INPUT}'"
     lint-stdin: true
     lint-formats:
@@ -98,12 +111,14 @@ tools:
     format-stdin: true
 
   stylelint: &stylelint
+    prefix: Stylelint
     lint-command: "$HOME/.config/efm-langserver/stylelint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %m [%t%*[a-z]]"
 
   textlint: &textlint
+    prefix: textlint
     lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
@@ -112,16 +127,19 @@ tools:
     format-stdin: true
 
   typos: &typos
+    prefix: typos
     lint-command: "typos --format brief -"
     lint-stdin: true
     lint-formats:
       - "-:%l:%c: %m"
 
   vint: &vint
+    prefix: Vint
     lint-command: "vint -"
     lint-stdin: true
 
   yamllint: &yamllint
+    prefix: yamllint
     lint-command: "yamllint --format parsable --strict -"
     lint-stdin: true
     lint-formats:
