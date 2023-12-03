@@ -18,7 +18,7 @@ module Kg8m
       require "benchmark"
 
       cases_map.tap do
-        max_label_width = cases_map.keys.map(&:to_s).map(&:length).max
+        max_label_width = cases_map.keys.map {|key| key.to_s.length }.max
 
         @last_result =
           ::Benchmark.bm(max_label_width + 1) do |x|
