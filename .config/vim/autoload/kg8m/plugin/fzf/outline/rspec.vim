@@ -3,7 +3,7 @@ vim9script
 import autoload "kg8m/util/logger.vim"
 import autoload "kg8m/plugin/fzf/buffer_lines.vim" as fzfBufferLines
 
-const PATTERN = '^\s*\(context\|describe\|it\)\>'
+const QUERY = 'context\  | describe\  | example\  | it\  \ do '
 
 export def Run(): void
   if expand("%") !~# '\w_spec\.rb$'
@@ -11,5 +11,5 @@ export def Run(): void
     return
   endif
 
-  fzfBufferLines.Run(PATTERN)
+  fzfBufferLines.Run(QUERY)
 enddef
