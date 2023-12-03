@@ -23,7 +23,7 @@ line-length: false
 # https://github.com/updownpress/markdown-lint/blob/master/rules/024-no-duplicate-header.md
 # MD024 - Multiple headers with the same content
 # Disable because sometimes header texts are the same.
-no-duplicate-header: false
+no-duplicate-heading: false
 
 # https://github.com/updownpress/markdown-lint/blob/master/rules/026-no-trailing-punctuation.md
 # MD026 - Trailing punctuation in header
