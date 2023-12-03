@@ -6,10 +6,13 @@ import autoload "kg8m/util/string.vim" as stringUtil
 # https://github.com/tpope/vim-markdown
 export def Run(): void
   g:markdown_fenced_languages = [
+    "cpp",
     "css",
     "diff",
     "html",
+    "java",
     "javascript", "js=javascript",
+    "python",
     "ruby", "rb=ruby",
     "sh",
     "sql",
