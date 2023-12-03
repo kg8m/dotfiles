@@ -3,7 +3,7 @@ provide-definition: false
 
 tools:
   actionlint: &actionlint
-    lint-command: "[[ '${INPUT}' =~ \\.github/workflows/ ]] && actionlint -oneline -no-color -"
+    lint-command: "$HOME/.config/efm-langserver/actionlint_wrapper.sh '${INPUT}'"
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %m"
