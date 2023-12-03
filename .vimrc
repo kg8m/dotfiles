@@ -286,6 +286,7 @@ if plugin.Register("junegunn/fzf.vim", { if: executable("fzf") })
   import autoload "kg8m/plugin/fzf/shortcuts.vim"    as fzfShortcuts
   import autoload "kg8m/plugin/fzf/jumplist.vim"     as fzfJumplist
   import autoload "kg8m/plugin/fzf/rails.vim"        as fzfRails
+  import autoload "kg8m/plugin/fzf/rails_routes.vim" as fzfRailsRoutes
   import autoload "kg8m/plugin/fzf_tjump.vim"        as fzfTjump
 
   # See also vim-fzf-tjump's mappings
@@ -305,6 +306,7 @@ if plugin.Register("junegunn/fzf.vim", { if: executable("fzf") })
   nnoremap <silent> <Leader><Leader>[ <ScriptCmd>fzfJumplist.Back()<CR>
   nnoremap <silent> <Leader><Leader>] <ScriptCmd>fzfJumplist.Forward()<CR>
   nnoremap <silent> <Leader><Leader>r <ScriptCmd>fzfRails.EnterCommand()<CR>
+  nnoremap <silent> <Leader><Leader>R <ScriptCmd>fzfRailsRoutes.Run()<CR>
 
   plugin.Configure({
     lazy:     true,
