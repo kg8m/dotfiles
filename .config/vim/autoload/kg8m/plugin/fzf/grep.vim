@@ -101,8 +101,8 @@ def GrepExplicitOptions(): string
   if empty($RIPGREP_EXTRA_OPTIONS)
     cache.grep_explicit_options = ""
   else
-    final splitted = split($RIPGREP_EXTRA_OPTIONS, " ")
-    const escaped  = map(splitted, (_, option) => shellescape(option))
+    final split   = split($RIPGREP_EXTRA_OPTIONS, " ")
+    const escaped = map(split, (_, option) => shellescape(option))
 
     cache.grep_explicit_options = join(escaped, " ")
   endif

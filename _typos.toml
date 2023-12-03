@@ -1,3 +1,16 @@
+[default]
+extend-ignore-re = [
+  # e.g., `alias forin` in .config/vim/snippets/javascript.snip
+  '\balias\s+forin\b',
+
+  # e.g., `setlocal fo-=t` in .config/vim/autoload/kg8m/configure/formatoptions.vim
+  '\bset(local)?.+\bfo[-+]=',
+
+  # e.g., `vim9s\%[cript]` in .config/vim/autoload/kg8m/plugin/lexima.vim
+  'vim9s\\%\[cript\]',
+]
+
 [default.extend-words]
+completor = "completor"
 enhancd = "enhancd"
 iterm = "iterm"
