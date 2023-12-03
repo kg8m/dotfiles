@@ -6,6 +6,7 @@ import autoload "kg8m/util/list.vim" as listUtil
 import autoload "kg8m/util/string.vim" as stringUtil
 
 const SID = expand("<SID>")
+const NO_NAME = "[No Name]"
 
 export def OnSource(): void
   const elements = {
@@ -74,8 +75,11 @@ export def OnPostSource(): void
 enddef
 
 def Filepath(): string
+  const filepath = CurrentFilepath()
+
   return (IsReadonly() ? "X " : "")
-    .. CurrentFilepath()
+    .. (filepath ==# NO_NAME ? "" : $"{nerdfont#find(filepath)} ")
+    .. filepath
     .. (&modified ? " +" : (&modifiable ? "" : " -"))
 enddef
 
@@ -127,7 +131,7 @@ def CurrentFilepath(): string
   endif
 
   if fileUtil.CurrentName() ==# ""
-    return "[No Name]"
+    return NO_NAME
   else
     return TruncateFilepath(fileUtil.CurrentPath())
   endif

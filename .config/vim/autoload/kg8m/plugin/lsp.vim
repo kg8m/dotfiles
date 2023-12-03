@@ -9,14 +9,15 @@ import autoload "kg8m/plugin/lsp/stream.vim"
 import autoload "kg8m/plugin/mappings/i.vim" as mappingsI
 import autoload "kg8m/util/list.vim" as listUtil
 
+# https://www.nerdfonts.com/cheat-sheet
 export const ICONS = {
-  loading:     "⌛",
-  ok:          "✔ ",
-  error:       "❌",
-  warning:     "❗",
-  information: "ℹ️ ",
-  hint:        "💡",
-  action:      "🔧",
+  loading:     "󰞌",
+  ok:          "",
+  error:       "󰚌",
+  warning:     "",
+  information: "󰋽",
+  hint:        "",
+  action:      "󰖷",
 }
 
 export def OnSource(): void

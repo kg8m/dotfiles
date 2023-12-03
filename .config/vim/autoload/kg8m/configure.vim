@@ -192,13 +192,14 @@ enddef
 export def Gui(): void
   set guioptions=
 
-  # set guifont=Osaka-Mono:h14
-  set guifont=SFMono-Regular:h12
+  # SFMonoNF = My SF Mono with Nerd Font
+  set guifont=SFMonoNF-Regular:h12
 
   # Fallback to Migu 1M for Japanese characters. `guifontset` is not available because my MacVim is built without
   # `xfontset` feature. According to help, `guifontwide` is "When not empty, specifies a comma-separated list of fonts
   # to be used for double-width characters."
-  set guifontwide=migu-1m-regular:h12
+  # Migu1mNF = My Migu 1m with Nerd Font
+  set guifontwide=Migu1mNF-Regular:h12
 
   set imdisable
 

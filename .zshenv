@@ -81,6 +81,9 @@ export EZA_DEFAULT_OPTIONS=(
 
   # Show hidden and "dot" files
   --all
+
+  # Show icons
+  --icons "auto"
 )
 
 export FD_DEFAULT_OPTIONS=(

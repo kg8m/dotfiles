@@ -440,6 +440,11 @@ if plugin.Register("lambdalisue/mr.vim", { if: !util.IsGitTmpEdit() })
   g:mr#mru#predicates = [(filepath) => mr.Predicate(filepath)]
 endif
 
+if plugin.Register("lambdalisue/nerdfont.vim")
+  # Disable because it causes display misalignment on the terminal.
+  g:nerdfont#autofix_cellwidths = false
+endif
+
 if plugin.Register("tyru/open-browser.vim")
   import autoload "kg8m/plugin/open_browser.vim" as openBrowser
 
