@@ -93,7 +93,12 @@ if defined?(Rails)
   # Log to STDOUT if in Rails
   Rails.logger = Logger.new($stdout)
   ActiveRecord::Base.logger = Rails.logger
-  ActiveSupport::Deprecation.behavior = :stderr
+
+  if Rails.application.respond_to?(:deprecators)
+    Rails.application.deprecators.behavior = :stderr
+  else
+    ActiveSupport::Deprecation.behavior = :stderr
+  end
 
   Kg8m.try_to_require("hirber", fallback: "hirb", quiet: true)
   Kg8m.try_to_require("hirb-unicode", quiet: true)
