@@ -881,7 +881,10 @@ if plugin.Register("machakann/vim-sandwich")
 endif
 
 plugin.Register("arzg/vim-sh")
-plugin.Register("slim-template/vim-slim")
+
+# Don’t use slim-template/vim-slim because it has some bugs.
+# For example, highlighting is broken with quoteless attribute like `span(class=detect_span_class)`.
+plugin.Register("delphaber/vim-slim")
 
 if plugin.Register("mhinz/vim-startify", { if: !util.IsGitTmpEdit() })
   import autoload "kg8m/plugin/startify.vim"
