@@ -79,10 +79,10 @@ export def Load(name: string = ""): void
       const encoded_list = readfile(filepath)
       const decoded_list = DecodeList(encoded_list)
 
-      execute "edit" fnameescape(decoded_list[0].filename)
-      cursorUtil.MoveIntoFolding(decoded_list[0].lnum, decoded_list[0].col)
+      GoToContent(decoded_list[0])
 
       setqflist(decoded_list)
+      setqflist([], "a", { title: name })
       copen
       wincmd p
     })
@@ -114,6 +114,13 @@ export def Delete(name: string = ""): void
       endif
     })
   endif
+enddef
+
+export def GoToContent(content: dict<any>): void
+  if expand("%") !=# expand(content.filename)
+    execute "edit" fnameescape(content.filename)
+  endif
+  cursorUtil.MoveIntoFolding(content.lnum, content.col)
 enddef
 
 def Process(name: string, Callback: func(string)): void

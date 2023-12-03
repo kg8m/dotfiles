@@ -2,7 +2,9 @@ vim9script
 
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
+import autoload "kg8m/util/grep.vim" as grepUtil
 import autoload "kg8m/util/list.vim" as listUtil
+import autoload "kg8m/util/qf.vim" as qfUtil
 import autoload "kg8m/util/string.vim" as stringUtil
 
 final cache = {}
@@ -42,7 +44,7 @@ def Run(args: string): void
     "--preview-window", "down:75%:wrap:nohidden:+{2}-/2",
   ]
 
-  fzf#vim#grep(grep_command, { options: fzf_options })
+  fzf#vim#grep(grep_command, { options: fzf_options, "sink*": BuildHandler(args) })
 enddef
 
 def Complete(arglead: string, _cmdline: string, _curpos: number): list<string>
@@ -120,6 +122,15 @@ enddef
 def JoinPresences(list: list<string>): string
   const Mapper = (item) => empty(item) ? false : item
   return list->listUtil.FilterMap(Mapper)->join(" ")
+enddef
+
+def BuildHandler(args: string): func(list<string>): void
+  const query = matchstr(args, '\v^[''"]\zs.{-}\ze[''"]%($|\s)')
+  return (lines: list<string>) => {
+    grepUtil.BuildQflistFromLines(query, lines[1 :], (qfcontents) => {
+      qfUtil.GoToContent(qfcontents[0])
+    })
+  }
 enddef
 
 plugin.EnsureSourced("fzf.vim")

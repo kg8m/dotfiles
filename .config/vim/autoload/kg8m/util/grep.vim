@@ -1,11 +1,11 @@
 vim9script
 
-import autoload "kg8m/util/cursor.vim" as cursorUtil
 import autoload "kg8m/util/list.vim" as listUtil
 import autoload "kg8m/util/logger.vim"
+import autoload "kg8m/util/qf.vim" as qfUtil
 
 # cf. zsh's my_grep:with_filter
-export def BuildQflistFromBuffer(): void
+export def BuildQflistFromBuffer(query: string): void
   const filename = expand("%:t")
 
   if !empty(filename) && filename !~# '\v^grep\.\w{10}$'
@@ -20,6 +20,22 @@ export def BuildQflistFromBuffer(): void
 
   const lines = getline(1, "$")
 
+  BuildQflistFromLines(query, lines, (qfcontents) => {
+    bdelete!
+
+    noswapfile edit grep://source_buffer
+    setline(1, lines)
+
+    setlocal buftype=nofile
+    setlocal filetype=grep
+    setlocal nomodifiable
+    setlocal nomodified
+
+    qfUtil.GoToContent(qfcontents[0])
+  })
+enddef
+
+export def BuildQflistFromLines(query: string, lines: list<string>, Callback: func): void
   const contents = listUtil.FilterMap(lines, (line) => LineToQfContent(line))
 
   if empty(contents)
@@ -27,21 +43,11 @@ export def BuildQflistFromBuffer(): void
     return
   endif
 
-  bdelete!
-
-  noswapfile edit grep://source_buffer
-  setline(1, lines)
-
-  setlocal buftype=nofile
-  setlocal filetype=grep
-  setlocal nomodifiable
-  setlocal nomodified
-
-  execute "edit" fnameescape(contents[0].filename)
-  cursorUtil.MoveIntoFolding(contents[0].lnum, contents[0].col)
+  Callback(contents)
 
   if len(contents) ># 1
     setqflist(contents)
+    setqflist([], "a", { title: $"Grep: {query}" })
     copen
     wincmd p
   endif
