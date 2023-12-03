@@ -843,11 +843,13 @@ def ShouldUseVueLanguageServer(): bool
   return cache.use_vue_language_server
 enddef
 
+# cf. .config/bin/should_use_deno
 def ShouldUseDeno(): bool
   if has_key(cache, "use_deno")
     return cache.use_deno
   endif
 
+  # Don’t use my `should_use_deno` script because it has a 10-20 ms overhead.
   cache.use_deno = ($USE_DENO ==# "1") || OnDenoAppDir() || OnDenopsPluginDir()
   return cache.use_deno
 enddef

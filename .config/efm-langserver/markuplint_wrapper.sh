@@ -3,6 +3,10 @@ if ! command -v markuplint > /dev/null; then
   exit 1
 fi
 
+if [ "$(should_use_deno)" = "1" ]; then
+  exit 1
+fi
+
 # Always use the latest Node.js version for markuplint.
 export ASDF_NODEJS_VERSION="$(newest_version nodejs)"
 

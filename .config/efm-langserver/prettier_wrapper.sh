@@ -3,6 +3,10 @@ if ! command -v prettier > /dev/null; then
   exit 1
 fi
 
+if [ "$(should_use_deno)" = "1" ]; then
+  exit 1
+fi
+
 target_filepath="${1:?}"
 
 if command -v eslint > /dev/null; then

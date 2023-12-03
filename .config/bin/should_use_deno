@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# cf. ShouldUseDeno in .config/vim/autoload/kg8m/plugin/lsp/servers.vim
+
+# Check my environment variable.
+if [ "${USE_DENO:-}" = "1" ]; then
+  echo 1
+  exit
+fi
+
+# Check Deno’s config or lock files.
+if [ -f "deno.json" ] || [ -f "deno.jsonc" ] || [ -f "deno.lock" ]; then
+  echo 1
+  exit
+fi
+
+# Check if a denops directory.
+if [ -d "denops" ]; then
+  fd_common_options=(--hidden --no-ignore --max-results 1 --type file)
+  denops_file="$(fd "${fd_common_options[@]}" --extension ts --search-path denops)"
+
+  if [ -z "${denops_file}" ]; then
+    echo 0
+    exit
+  fi
+
+  vim_file="$(fd "${fd_common_options[@]}" --extension vim)"
+  [ -n "${vim_file}" ] && echo 1 || echo 0
+  exit
+fi
+
+echo 0
