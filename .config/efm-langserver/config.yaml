@@ -17,6 +17,8 @@ tools:
   cspell: &cspell
     prefix: CSpell
     lint-command: "cspell 'stdin://${INPUT}'"
+    # severity: 3 = Information
+    lint-severity: 3
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c - %m"
@@ -129,6 +131,8 @@ tools:
   typos: &typos
     prefix: typos
     lint-command: "typos --format brief -"
+    # severity: 3 = Information
+    lint-severity: 3
     lint-stdin: true
     lint-formats:
       - "-:%l:%c: %m"
