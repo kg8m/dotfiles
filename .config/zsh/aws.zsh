@@ -1,3 +1,36 @@
+# Overwrite this function for private networks.
+function aws:network:verify {
+  return 0
+}
+
+function aws:sso:verify {
+  local session_cache_filepath="$(_aws:sso:verify:cache_filepath)"
+
+  if [ -z "${session_cache_filepath}" ]; then
+    echo:error "A session file for AWS SSO not found."
+    return 1
+  fi
+
+  local raw_expires_at="$(jq --raw-output .expiresAt < "${session_cache_filepath}")"
+  local timestamp_format="%Y%m%d.%H%M%S"
+  local expires_at="$(gdate --date "${raw_expires_at} +9 hours" +"${timestamp_format}")"
+  local soon="$(gdate --date "+5 minutes" +"${timestamp_format}")"
+
+  if ((expires_at < soon)); then
+    _aws:sso:verify:expired
+  fi
+}
+
+function _aws:sso:verify:cache_filepath {
+  echo:error "Overwrite me."
+  return 1
+}
+
+function _aws:sso:verify:expired {
+  echo:error "Overwrite me."
+  return 1
+}
+
 # https://docs.aws.amazon.com/cli/latest/reference/logs/filter-log-events.html
 function aws:logs:filter_events {
   local profile start_time end_time filter
@@ -81,6 +114,9 @@ HELP
     echo "${help}"
     return 1
   fi
+
+  aws:network:verify || return 1
+  aws:sso:verify
 
   if [ -z "${group_name}" ]; then
     group_name="$(aws:logs:select_group "${profile}")"
