@@ -32,6 +32,7 @@ export def Register(): void
   RegisterGopls()
   RegisterHtmlLanguageServer()
   RegisterJsonLanguageServer()
+  RegisterLuaLanguageServer()
   RegisterRubyLanguageServer()
   RegisterRubyLsp()
   RegisterSolargraph()
@@ -188,7 +189,7 @@ def RegisterEfmLangserver(): void
 
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
-      "Gemfile", "eruby", "gitcommit", "html", "make", "markdown", "ruby", "slim", "sql", "vue",
+      "Gemfile", "eruby", "gitcommit", "html", "lua", "make", "markdown", "ruby", "slim", "sql", "vue",
     ] + CSS_FILETYPES + JS_FILETYPES + JSON_FILETYPES + SH_FILETYPES + TS_FILETYPES + YAML_FILETYPES,
 
     extra_config: () => ExtraConfigForEfmLangserver(),
@@ -324,6 +325,61 @@ def ExtraConfigForJsonLanguageServer(): dict<any>
       json: {
         format: { enable: false },
         schemas: Schemas(),
+      },
+    },
+  }
+enddef
+
+def RegisterLuaLanguageServer(): void
+  RegisterServer({
+    name: "lua-language-server",
+    allowlist: ["lua"],
+    extra_config: () => ExtraConfigForLuaLanguageServer(),
+  })
+enddef
+
+def ExtraConfigForLuaLanguageServer(): dict<any>
+  return {
+    cmd: (_) => ["lua-language-server"],
+    workspace_config: {
+      Lua: {
+        color: {
+          mode: "Semantic",
+        },
+        completion: {
+          callSnippet: "Disable",
+          enable: true,
+          keywordSnippet: "Replace",
+        },
+        develop: {
+          debuggerPort: 11412,
+          debuggerWait: false,
+          enable: false,
+        },
+        diagnostics: {
+          enable: true,
+          globals: "",
+          severity: {},
+        },
+        hover: {
+          enable: true,
+          viewNumber: true,
+          viewString: true,
+          viewStringMax: 1000,
+        },
+        runtime: {
+          # Extract `Lua 5.4` if `lua -v` shows `Lua 5.4.6  Copyright (C) 1994-2023 Lua.org, PUC-Rio`.
+          version: system("lua -v")->matchstr('\v^\zsLua \d+\.\d+\ze'),
+        },
+        signatureHelp: {
+          enable: true,
+        },
+        workspace: {
+          ignoreDir: [],
+          maxPreload: 1000,
+          preloadFileSize: 100,
+          useGitIgnore: true,
+        },
       },
     },
   }

@@ -125,6 +125,10 @@ tools:
     lint-formats:
       - "%f:%l:%c: %m [%t%*[a-z]]"
 
+  stylua: &stylua
+    format-command: "stylua --stdin-filepath '${INPUT}' -"
+    format-stdin: true
+
   textlint: &textlint
     prefix: textlint
     lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}'"
@@ -200,6 +204,9 @@ languages:
 
   jsonc:
     - <<: *prettier
+
+  lua:
+    - <<: *stylua
 
   make:
     - <<: *checkmake

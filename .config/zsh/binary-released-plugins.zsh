@@ -13,6 +13,7 @@ function plugin:setup:binary_releaseds {
     golangci/golangci-lint
     nametake/golangci-lint-langserver
     sharkdp/hyperfine
+    LuaLS/lua-language-server
     itchyny/mmv
     high-moctane/mocword
     BurntSushi/ripgrep
@@ -20,6 +21,7 @@ function plugin:setup:binary_releaseds {
     mvdan/sh
     koalaman/shellcheck
     lighttiger2505/sqls
+    JohnnyMorganz/StyLua
     dbrgn/tealdeer
     juliosueiras/terraform-lsp
     XAMPPRocky/tokei
@@ -52,7 +54,7 @@ function plugin:setup:binary_releaseds {
       tldr)
         mv ./tealdeer* ./"${plugin}"
         ;;
-      fzf | golangci-lint-langserver | sqls | tokei)
+      fzf | golangci-lint-langserver | lua-language-server | sqls | stylua | tokei)
         # Do nothing
         ;;
       *)
@@ -62,7 +64,7 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mocword | sd | shfmt | sqls |\
+      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mocword | sd | shfmt | sqls | stylua |\
       terraform-lsp | tldr | tokei | typos | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
@@ -72,7 +74,7 @@ function plugin:setup:binary_releaseds {
       gh)
         local binary="${plugin}/bin/${plugin}"
         ;;
-      glab)
+      glab | lua-language-server)
         local binary="bin/${plugin}"
         ;;
       *)
@@ -87,13 +89,25 @@ function plugin:setup:binary_releaseds {
 
     mkdir -p "${HOME}/bin"
     rm -f "${HOME}/bin/${command}"
-    execute_with_echo "ln -s '${PWD}/${binary}' '${HOME}/bin/${command}'"
+
+    case "${plugin}" in
+      lua-language-server)
+        # Don’t use a symbolic link for preventing the `lua-language-server: cannot open (bootstrap.lua): No such file
+        # or directory` error.
+        execute_with_echo "echo '${PWD}/${binary} \"\$@\"' > '${HOME}/bin/${command}'"
+        execute_with_echo "chmod +x '${HOME}/bin/${command}'"
+        ;;
+      *)
+        execute_with_echo "ln -s '${PWD}/${binary}' '${HOME}/bin/${command}'"
+        ;;
+    esac
+
     execute_with_echo "which ${command}"
     execute_with_echo "fd --type l --type x --glob '${command}' '${(j:' ':)path}'"
 
     case "${plugin}" in
-      bat | checkmake | delta | direnv | fd | fzf | gh | glab | hyperfine | mmv | mocword | rg | sd | shellcheck |\
-      tldr | tokei | typos | zabrze)
+      bat | checkmake | delta | direnv | fd | fzf | gh | glab | hyperfine | lua-language-server | mmv | mocword | rg |\
+      sd | shellcheck | stylua | tldr | tokei | typos | zabrze)
         execute_with_echo "${command} --version"
         ;;
       efm-langserver)
@@ -152,6 +166,9 @@ function plugin:setup:binary_releaseds {
         ;;
       mvdan/sh)
         local plugin="shfmt"
+        ;;
+      JohnnyMorganz/StyLua)
+        local plugin="stylua"
         ;;
       dbrgn/tealdeer)
         local plugin="tldr"
