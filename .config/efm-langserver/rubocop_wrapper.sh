@@ -29,6 +29,10 @@ else
   executable="rubocop"
 fi
 
+# --force-exclusion
+#   Any files excluded by `Exclude` in configuration files will be excluded, even if given explicitly as arguments.
+# --stdin FILE
+#   Pipe source from STDIN, using FILE in offense reports. This is useful for editor integration.
 options+=(--force-exclusion --no-color --stdin "${target_filepath}")
 
 if [ "${is_fixing}" = "1" ]; then
@@ -42,6 +46,9 @@ if [ "${is_fixing}" = "1" ]; then
   # shellcheck disable=SC2064
   trap "rm -f ${err_temp_filepath}" EXIT
 
+  # --stderr
+  #   Write all output to stderr except for the autocorrected source. This is especially useful when combined with
+  #   --autocorrect and --stdin.
   out="$("${executable}" "${options[@]}" --autocorrect --stderr 2> "${err_temp_filepath}")"
 
   if [ -n "${out}" ]; then
