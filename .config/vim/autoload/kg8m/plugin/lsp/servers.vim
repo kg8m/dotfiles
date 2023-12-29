@@ -127,54 +127,58 @@ enddef
 def ExtraConfigForDeno(): dict<any>
   return {
     cmd: (_) => ["deno", "lsp"],
-    initialization_options: {
-      enable: true,
-      lint: true,
-      unstable: true,
-      importMap: filereadable("import_map.json") ? "import_map.json" : v:null,
-      codeLens: {
-        implementations: true,
-        references: true,
-        referencesAllFunctions: true,
-        test: true,
-        testArgs: ["--allow-all"],
+    workspace_config: {
+      deno: {
+        enable: true,
+        lint: true,
+        unstable: true,
+        importMap: filereadable("import_map.json") ? "import_map.json" : v:null,
+        codeLens: {
+          implementations: true,
+          references: true,
+          referencesAllFunctions: true,
+          test: true,
+          testArgs: ["--allow-all"],
+        },
+        suggest: {
+          autoImports: true,
+          completeFunctionCalls: true,
+          names: true,
+          paths: true,
+          imports: {
+            autoDiscover: false,
+            hosts: {
+              "https://deno.land/": true,
+            },
+          },
+        },
+        config: filereadable("tsconfig.json") ? "tsconfig.json" : v:null,
+        internalDebug: false,
       },
-      suggest: {
-        autoImports: true,
-        completeFunctionCalls: true,
-        names: true,
-        paths: true,
-        imports: {
-          autoDiscover: false,
-          hosts: {
-            "https://deno.land/": true,
+      typescript: {
+        inlayHints: {
+          parameterNames: {
+            enabled: "all",
+            suppressWhenArgumentMatchesName: true,
+          },
+          parameterTypes: {
+            enabled: true,
+          },
+          variableTypes: {
+            enabled: true,
+            suppressWhenTypeMatchesName: true,
+          },
+          propertyDeclarationTypes: {
+            enabled: true,
+          },
+          functionLikeReturnTypes: {
+            enabled: true,
+          },
+          enumMemberValues: {
+            enabled: true,
           },
         },
       },
-      inlayHints: {
-        parameterNames: {
-          enabled: "all",
-          suppressWhenArgumentMatchesName: true,
-        },
-        parameterTypes: {
-          enabled: true,
-        },
-        variableTypes: {
-          enabled: true,
-          suppressWhenTypeMatchesName: true,
-        },
-        propertyDeclarationTypes: {
-          enabled: true,
-        },
-        functionLikeReturnTypes: {
-          enabled: true,
-        },
-        enumMemberValues: {
-          enabled: true,
-        },
-      },
-      config: filereadable("tsconfig.json") ? "tsconfig.json" : v:null,
-      internalDebug: false,
     },
 
     document_format: true,
