@@ -13,6 +13,11 @@ if [ "$2" = "--fix" ]; then
   is_fixing="1"
 fi
 
+if [ ! "${USE_RUBOCOP_FOR_MARKDOWN:-}" = "1" ] && [[ "${target_filepath}" =~ \.md$ ]]; then
+  echo "Running for Markdown files isn't supported." >&2
+  exit 1
+fi
+
 options=()
 
 if rubocop --server-status > /dev/null 2>&1; then
