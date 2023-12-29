@@ -6,12 +6,12 @@ endif
 
 def Run(): void
   set nowritebackup
-  vnew
+  execute &columns >=# 200 ? "vnew" : "new"
 
   PutLogs()
 
   wincmd R
-  wincmd h
+  wincmd p
   goto 1
   redraw!
 
