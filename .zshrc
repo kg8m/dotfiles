@@ -1,6 +1,6 @@
 # Profile:
 #   1. Enable the following `zmodload` line
-#   2. Enable the `zprof` line at the end of this file
+#   2. Enable the `zprof` lines at the end of this file
 #   3. Execute zsh
 # zmodload zsh/zprof
 
@@ -154,7 +154,8 @@ try_to_source ~/.config/zsh.local/zshrc.local.zsh
 zinit ice lucid nocd wait"!0c" compinit atload"echo"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/compinit"
 
-# zprof
+# zprof > /tmp/zprof.log
+# execute_with_echo "less /tmp/zprof.log"
 
 # Notes
 #
