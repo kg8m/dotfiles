@@ -35,8 +35,8 @@ end
 
 if defined?(Reline::Face)
   Reline::Face.config(:completion_dialog) do |config|
-    config.define :default, background: :blue
-    config.define :enhanced, background: :magenta, style: :bold
-    config.define :scrollbar, background: :blue
+    config.define :default, foreground: "#66d9ef", background: "#00161c"
+    config.define :enhanced, foreground: "#ffffff", background: "#808080"
+    config.define :scrollbar, foreground: "#ffffff", background: "#080808"
   end
 end
