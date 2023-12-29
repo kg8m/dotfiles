@@ -13,6 +13,9 @@ bindkey "^N" down-line-or-beginning-search
 
 function plugin:fzf_history_search:atload {
   export ZSH_FZF_HISTORY_SEARCH_FZF_EXTRA_ARGS="--preview-window down:5:wrap:nohidden"
+  export ZSH_FZF_HISTORY_SEARCH_END_OF_LINE="1"
+  export ZSH_FZF_HISTORY_SEARCH_EVENT_NUMBERS="0"
+  export ZSH_FZF_HISTORY_SEARCH_DATES_IN_SEARCH="0"
 }
 zinit ice lucid trigger-load!"fzf_history_search" atload"plugin:fzf_history_search:atload"
 zinit light joshskidmore/zsh-fzf-history-search
