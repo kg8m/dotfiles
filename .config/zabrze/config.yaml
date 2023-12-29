@@ -219,7 +219,7 @@ abbrevs:
     snippet: eza "${EZA_DEFAULT_OPTIONS[@]}"
   - name: ll to eza -l
     abbr: ll
-    snippet: eza "${EZA_DEFAULT_OPTIONS[@]}" --long
+    snippet: eza "${EZA_DEFAULT_OPTIONS[@]}" --long --header --git
 
   - name: npm install
     abbr: i
