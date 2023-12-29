@@ -21,7 +21,7 @@ export def List(options: dict<bool> = {}): list<string>
     "--base-directory", shellescape(DIRPATH),
     "--extension", EXTENSION,
     "--color", colorize ? "always" : "never",
-    "| sort_without_escape_sequences",
+    "| sort_without_escape_sequences --reverse",
   ]->join(" ")
 
   return system(command)
