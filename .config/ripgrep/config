@@ -30,6 +30,7 @@
 --colors=path:style:bold
 
 # Exclude directories
+# cf. $EZA_DEFAULT_OPTIONS in .zshenv
 # cf. .config/ctags/default.ctags
 # cf. .config/fd/ignore
 # cf. rails:assets:clean:force in rails:assets:clean:force

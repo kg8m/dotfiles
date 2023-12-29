@@ -74,7 +74,24 @@ unset DIFF_HIGHLIGHT_DIRPATH_CACHE
 
 mkdir -p "${VIM_PLUGINS}"
 
-# Don't use eza's `--ignore-glob` option for `--tree` option because `--ignore-glob` doesn't work for subdirectories.
+# cf. .config/ctags/default.ctags
+# cf. .config/fd/ignore
+# cf. .config/ripgrep/config
+# cf. rails:assets:clean:force in rails:assets:clean:force
+# Subdirectories can’t be specified.
+# shellcheck disable=SC2034
+EZA_IGNORE_GLOBS=(
+  "*.zwc"
+  ".bundle"
+  ".cache"
+  ".gem_rbs_collection"
+  ".git"
+  ".nuxt"
+  ".ruby-lsp"
+  "node_modules"
+  "tmp"
+  "vendor"
+)
 export EZA_DEFAULT_OPTIONS=(
   # Always colorize
   --color "always"
@@ -84,7 +101,11 @@ export EZA_DEFAULT_OPTIONS=(
 
   # Show icons
   --icons "auto"
+
+  # Ignore some directories/files
+  --ignore-glob "${(j:|:)EZA_IGNORE_GLOBS}"
 )
+unset EZA_IGNORE_GLOBS
 
 export FD_DEFAULT_OPTIONS=(
   # Include hidden files and directories
