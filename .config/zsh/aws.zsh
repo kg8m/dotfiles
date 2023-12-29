@@ -119,7 +119,7 @@ HELP
   aws:sso:verify
 
   if [ -z "${group_name}" ]; then
-    group_name="$(aws:logs:select_group "${profile}")"
+    group_name="$(_aws:logs:select_group "${profile}")"
   fi
 
   if [ -z "${group_name}" ]; then
@@ -128,7 +128,7 @@ HELP
   fi
 
   if [ -z "${stream_names[*]}" ]; then
-    stream_names=("${(@f)$(aws:logs:select_streams "${profile}" "${group_name}")}")
+    stream_names=("${(@f)$(_aws:logs:select_streams "${profile}" "${group_name}")}")
   fi
 
   if [ -z "${stream_names[*]}" ]; then
@@ -174,7 +174,7 @@ HELP
 }
 
 # https://docs.aws.amazon.com/cli/latest/reference/logs/describe-log-groups.html
-function aws:logs:select_group {
+function _aws:logs:select_group {
   local profile="${1:?}"
 
   aws logs describe-log-groups --profile "${profile}" --output json |
@@ -183,7 +183,7 @@ function aws:logs:select_group {
 }
 
 # https://docs.aws.amazon.com/cli/latest/reference/logs/describe-log-streams.html
-function aws:logs:select_streams {
+function _aws:logs:select_streams {
   local profile="${1:?}"
   local group_name="${2:?}"
 
