@@ -24,9 +24,9 @@ options word
 	alias_method_chain :${1:#:method_name}, :${2:#:feature}
 
 snippet index_by
-abbr    index_by {|{var}| ... }
+abbr    index_by { |{var}| ... }
 options word
-	index_by {|${1:#:var}| ${0} }
+	index_by { |${1:#:var}| ${0} }
 
 snippet extend_ActiveSupport::Concern
 alias   concern_extend

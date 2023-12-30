@@ -194,9 +194,9 @@ options word
 	named_scope :${1:#:name}, lambda { ${0} }
 
 snippet named_scope_with_argument
-abbr    named_scope :{name}, lambda {|arg| ... }
+abbr    named_scope :{name}, lambda { |arg| ... }
 options word
-	named_scope :${1:#:name}, lambda {|${2:#:argument}| ${0} }
+	named_scope :${1:#:name}, lambda { |${2:#:argument}| ${0} }
 
 snippet validates_acceptance_of
 abbr    validates_acceptance_of :{attribute}

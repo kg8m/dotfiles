@@ -116,9 +116,9 @@ options word
 	lambda { ${0} }
 
 snippet lambdav
-abbr    lambda {|var| ... }
+abbr    lambda { |var| ... }
 options word
-	lambda {|${1:#:var}| ${0} }
+	lambda { |${1:#:var}| ${0} }
 
 snippet ->
 abbr    -> { ... }
@@ -137,9 +137,9 @@ options word
 	proc { ${0} }
 
 snippet procv
-abbr    proc {|var| ... }
+abbr    proc { |var| ... }
 options word
-	proc {|${1:#:var}| ${0} }
+	proc { |${1:#:var}| ${0} }
 
 snippet proc_new
 abbr    Proc.new { ... }
@@ -147,9 +147,9 @@ options word
 	Proc.new { ${0} }
 
 snippet proc_newv
-abbr    Proc.new {|var| ... }
+abbr    Proc.new { |var| ... }
 options word
-	Proc.new {|${1:#:var}| ${0} }
+	Proc.new { |${1:#:var}| ${0} }
 # }}}
 
 # do ... end  {{{
@@ -342,21 +342,21 @@ options word
 	remove_instance_variable(:@${0})
 
 snippet tap
-abbr    tap {|object| ... }
+abbr    tap { |object| ... }
 options word
-	tap {|${1:object}|
+	tap { |${1:object}|
 		${0}
 	}
 
 snippet tap_inline
-abbr    tap {|object| ... }
+abbr    tap { |object| ... }
 options word
-	tap {|${1:object}| ${0} }
+	tap { |${1:object}| ${0} }
 
 snippet Hash_new
-abbr    Hash.new{|h, k| h[k] = ... }
+abbr    Hash.new{ |h, k| h[k] = ... }
 options word
-	Hash.new {|${1:h}, ${2:k}| $1[$2] = ${0} }
+	Hash.new { |${1:h}, ${2:k}| $1[$2] = ${0} }
 
 snippet NotImplementedError
 abbr    NotImplementedError
@@ -392,9 +392,9 @@ options head
 
 # each  {{{
 snippet each
-abbr    each {|item| ... }
+abbr    each { |item| ... }
 options word
-	each {|${1:#:item}| ${0} }
+	each { |${1:#:item}| ${0} }
 
 snippet each_do
 abbr    each do |item| ... end
@@ -404,49 +404,49 @@ options word
 	end
 
 snippet each_byte
-abbr    each_byte {|item| ... }
+abbr    each_byte { |item| ... }
 options word
-	each_byte {|${1:#:item}| ${0} }
+	each_byte { |${1:#:item}| ${0} }
 
 snippet each_char
-abbr    each_char {|item| ... }
+abbr    each_char { |item| ... }
 options word
-	each_char {|${1:#:item}| ${0} }
+	each_char { |${1:#:item}| ${0} }
 
 snippet each_index
-abbr    each_index {|item| ... }
+abbr    each_index { |item| ... }
 options word
-	each_index {|${1:#:item}| ${0} }
+	each_index { |${1:#:item}| ${0} }
 
 snippet each_key
-abbr    each_key {|item| ... }
+abbr    each_key { |item| ... }
 options word
-	each_key {|${1:#:item}| ${0} }
+	each_key { |${1:#:item}| ${0} }
 
 snippet each_value
-abbr    each_value {|item| ... }
+abbr    each_value { |item| ... }
 options word
-	each_value {|${1:#:item}| ${0} }
+	each_value { |${1:#:item}| ${0} }
 
 snippet each_line
-abbr    each_line {|item| ... }
+abbr    each_line { |item| ... }
 options word
-	each_line {|${1:#:item}| ${0} }
+	each_line { |${1:#:item}| ${0} }
 
 snippet each_pair
-abbr    each_pair {|item| ... }
+abbr    each_pair { |item| ... }
 options word
-	each_pair {|${1:#:item}| ${0} }
+	each_pair { |${1:#:item}| ${0} }
 
 snippet each_slice
-abbr    each_slice {|item| ... }
+abbr    each_slice { |item| ... }
 options word
-	each_slice {|${1:#:item}| ${0} }
+	each_slice { |${1:#:item}| ${0} }
 
 snippet each_with_index
-abbr    each_with_index {|item, i| ... }
+abbr    each_with_index { |item, i| ... }
 options word
-	each_with_index {|${1:#:item}, ${2:i}| ${0} }
+	each_with_index { |${1:#:item}, ${2:i}| ${0} }
 
 snippet each_with_index_do
 abbr    each_with_index do |item, i| ... end
@@ -456,93 +456,93 @@ options word
 	end
 
 snippet each_with_object
-abbr    each_with_object(init) {|item, memo| ... }
+abbr    each_with_object(init) { |item, memo| ... }
 options word
-	each_with_object(${1:#:initial_value}) {|${2:#:item}, ${3:memo}|
+	each_with_object(${1:#:initial_value}) { |${2:#:item}, ${3:memo}|
 		${0}
 	}
 
 snippet inject
-abbr    inject(init) {|memo, item| ... }
+abbr    inject(init) { |memo, item| ... }
 options word
-	inject(${1:#:initial_value}) {|${2:memo}, ${3:#:item}|
+	inject(${1:#:initial_value}) { |${2:memo}, ${3:#:item}|
 		${0}
 	}
 
 snippet all?
-abbr    all? {|item| ... }
+abbr    all? { |item| ... }
 options word
-	all? {|${1:#:item}| ${0} }
+	all? { |${1:#:item}| ${0} }
 
 snippet any?
-abbr    any? {|item| ... }
+abbr    any? { |item| ... }
 options word
-	any? {|${1:#:item}| ${0} }
+	any? { |${1:#:item}| ${0} }
 
 snippet one?
-abbr    one? {|item| ... }
+abbr    one? { |item| ... }
 options word
-	one? {|${1:#:item}| ${0} }
+	one? { |${1:#:item}| ${0} }
 
 snippet none?
-abbr    none? {|item| ... }
+abbr    none? { |item| ... }
 options word
-	none? {|${1:#:item}| ${0} }
+	none? { |${1:#:item}| ${0} }
 
 snippet map
-abbr    map {|item| ... }
+abbr    map { |item| ... }
 options word
-	map {|${1:#:item}| ${0} }
+	map { |${1:#:item}| ${0} }
 
 snippet map!
-abbr    map! {|item| ... }
+abbr    map! { |item| ... }
 options word
-	map! {|${1:#:item}| ${0} }
+	map! { |${1:#:item}| ${0} }
 
 snippet detect
-abbr    detect {|item| ... }
+abbr    detect { |item| ... }
 options word
-	detect {|${1:#:item}| ${0} }
+	detect { |${1:#:item}| ${0} }
 
 snippet select
-abbr    select {|item| ... }
+abbr    select { |item| ... }
 options word
-	select {|${1:#:item}| ${0} }
+	select { |${1:#:item}| ${0} }
 
 snippet select!
-abbr    select! {|item| ... }
+abbr    select! { |item| ... }
 options word
-	select {|${1:#:item}| ${0} }
+	select { |${1:#:item}| ${0} }
 
 snippet reject
-abbr    reject {|item| ... }
+abbr    reject { |item| ... }
 options word
-	reject {|${1:#:item}| ${0} }
+	reject { |${1:#:item}| ${0} }
 
 snippet reject!
-abbr    reject! {|item| ... }
+abbr    reject! { |item| ... }
 options word
-	reject! {|${1:#:item}| ${0} }
+	reject! { |${1:#:item}| ${0} }
 
 snippet sort
-abbr    sort {|a, b| ... }
+abbr    sort { |a, b| ... }
 options word
-	sort {|a, b| ${0} }
+	sort { |a, b| ${0} }
 
 snippet sort_by
-abbr    sort_by {|item| ... }
+abbr    sort_by { |item| ... }
 options word
-	sort_by {|${1:#:item}| ${0} }
+	sort_by { |${1:#:item}| ${0} }
 
 snippet group_by
-abbr    group_by {|item| ... }
+abbr    group_by { |item| ... }
 options word
-	group_by {|${1:#:item}| ${0} }
+	group_by { |${1:#:item}| ${0} }
 
 snippet partition
-abbr    partition {|item| ... }
+abbr    partition { |item| ... }
 options word
-	partition {|${1:#:item}| ${0} }
+	partition { |${1:#:item}| ${0} }
 # }}}
 
 # File, Dir  {{{

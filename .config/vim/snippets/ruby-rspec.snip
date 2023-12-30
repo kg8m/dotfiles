@@ -84,7 +84,7 @@ options head
 	expect(${1:#:subject}).to include(${2:#:matcher})
 
 snippet allow_receive_and_wrap_original_without_args
-abbr    allow(...).to receive(:...).and_wrap_original {|original_method| ... }
+abbr    allow(...).to receive(:...).and_wrap_original { |original_method| ... }
 options head
 	allow(${1:#:target}).to receive(:${2:#:method_name}).and_wrap_original do |original_method|
 		original_method.call
@@ -92,7 +92,7 @@ options head
 	end
 
 snippet allow_receive_and_wrap_original_full
-abbr    allow(...).to receive(:...).and_wrap_original {|original_method, *args, **kwargs, &block| ... }
+abbr    allow(...).to receive(:...).and_wrap_original { |original_method, *args, **kwargs, &block| ... }
 options head
 	allow(${1:#:target}).to receive(:${2:#:method_name}).and_wrap_original do |original_method, *args, **kwargs, &block|
 		original_method.call(*args, **kwargs, &block)
@@ -100,7 +100,7 @@ options head
 	end
 
 snippet allow_receive_and_wrap_original_args
-abbr    allow(...).to receive(:...).and_wrap_original {|original_method, *args| ... }
+abbr    allow(...).to receive(:...).and_wrap_original { |original_method, *args| ... }
 options head
 	allow(${1:#:target}).to receive(:${2:#:method_name}).and_wrap_original do |original_method, *args|
 		original_method.call(*args)
@@ -108,7 +108,7 @@ options head
 	end
 
 snippet allow_receive_and_wrap_original_kwargs
-abbr    allow(...).to receive(:...).and_wrap_original {|original_method, **kwargs| ... }
+abbr    allow(...).to receive(:...).and_wrap_original { |original_method, **kwargs| ... }
 options head
 	allow(${1:#:target}).to receive(:${2:#:method_name}).and_wrap_original do |original_method, **kwargs|
 		original_method.call(**kwargs)
@@ -116,7 +116,7 @@ options head
 	end
 
 snippet allow_receive_and_wrap_original_block
-abbr    allow(...).to receive(:...).and_wrap_original {|original_method, &block| ... }
+abbr    allow(...).to receive(:...).and_wrap_original { |original_method, &block| ... }
 options head
 	allow(${1:#:target}).to receive(:${2:#:method_name}).and_wrap_original do |original_method, &block|
 		original_method.call(&block)
