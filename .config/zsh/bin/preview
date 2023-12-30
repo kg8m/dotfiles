@@ -64,7 +64,7 @@ if [ "${#filepaths}" = "1" ]; then
       .envrc.example)
         bat_options+=(--language "sh")
         ;;
-      *Gemfile.local* | */pryrc | .pryrc | Steepfile)
+      *Gemfile.local* | */pryrc | .irbrc | .pryrc | Steepfile)
         bat_options+=(--language "ruby")
         ;;
     esac
