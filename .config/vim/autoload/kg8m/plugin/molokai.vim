@@ -1,6 +1,5 @@
 vim9script
 
-# Special: Disable bold/italic for balance between `DiffAdded` (=> `Identifier`) and `DiffRemoved` (=> `Special`).
 export def Overwrite(): void
   highlight Comment       guifg=#aaaaaa
   highlight ColorColumn                  guibg=#1f1e19
@@ -18,7 +17,6 @@ export def Overwrite(): void
   highlight QuickFixLine                                gui=bold  cterm=bold
   highlight Search        guifg=#eaeaea  guibg=#f92672
   highlight SignColumn                   guibg=#111111
-  highlight Special                      guibg=NONE     gui=NONE  cterm=NONE
   highlight Title         guifg=#a6e22e                 gui=bold  cterm=bold
   highlight Todo                         guibg=NONE
   highlight Underlined    guifg=#aaaaaa
