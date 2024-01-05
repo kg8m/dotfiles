@@ -2,29 +2,29 @@ vim9script
 
 # Special: Disable bold/italic for balance between `DiffAdded` (=> `Identifier`) and `DiffRemoved` (=> `Special`).
 export def Overwrite(): void
-  highlight Comment       guifg=#AAAAAA
-  highlight ColorColumn                  guibg=#1F1E19
-  highlight CursorColumn                 guibg=#4B4A46
-  highlight CursorLine                   guibg=#4B4A46
-  highlight DiffChange    guifg=#CCCCCC
-  highlight DiffFile      guifg=#EBCE00                 gui=bold  cterm=bold
-  highlight FoldColumn    guifg=#6A7678  guibg=NONE
-  highlight Folded        guifg=#6A7678  guibg=NONE
+  highlight Comment       guifg=#aaaaaa
+  highlight ColorColumn                  guibg=#1f1e19
+  highlight CursorColumn                 guibg=#4b4a46
+  highlight CursorLine                   guibg=#4b4a46
+  highlight DiffChange    guifg=#cccccc
+  highlight DiffFile      guifg=#ebce00                 gui=bold  cterm=bold
+  highlight FoldColumn    guifg=#6a7678  guibg=NONE
+  highlight Folded        guifg=#6a7678  guibg=NONE
   highlight Ignore                       guibg=NONE
-  highlight Incsearch     guifg=#EAEAEA  guibg=#F92672
+  highlight Incsearch     guifg=#eaeaea  guibg=#f92672
   highlight LineNr                       guibg=#222222
-  highlight Normal        guifg=#EAEAEA  guibg=NONE
-  highlight Pmenu                        guibg=#00161C
+  highlight Normal        guifg=#eaeaea  guibg=NONE
+  highlight Pmenu                        guibg=#00161c
   highlight QuickFixLine                                gui=bold  cterm=bold
-  highlight Search        guifg=#EAEAEA  guibg=#F92672
+  highlight Search        guifg=#eaeaea  guibg=#f92672
   highlight SignColumn                   guibg=#111111
   highlight Special                      guibg=NONE     gui=NONE  cterm=NONE
-  highlight Title         guifg=#A6E22E                 gui=bold  cterm=bold
+  highlight Title         guifg=#a6e22e                 gui=bold  cterm=bold
   highlight Todo                         guibg=NONE
-  highlight Underlined    guifg=#AAAAAA
+  highlight Underlined    guifg=#aaaaaa
   highlight Visual                                      gui=bold  cterm=bold
   highlight VisualNOS                                   gui=bold  cterm=bold
-  highlight WarningMsg    guifg=#E6DB74
+  highlight WarningMsg    guifg=#e6db74
 
   if has("gui_running")
     # `guibg=NONE` doesn't work in GUI Vim
