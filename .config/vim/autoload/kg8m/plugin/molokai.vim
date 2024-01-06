@@ -1,12 +1,24 @@
 vim9script
 
+# DiffAdd: `#002400` is delta’s plus green.
+# DiffAdded: `#002400` is delta’s plus green. `#e5e9e5` is lightened `#002400`.
+# DiffDelete: `#370001` is delta’s minus red.
+# DiffRemoved: `#370001` is delta’s minus red. `#af9999` is lightened `#370001`.
+#
+# DiffAdd/DiffChange/DiffDelete/DiffText: for patch mode with syntax highlighting, e.g., `:GinPatch`.
+# DiffAdded/DiffFile/DiffRemoved: for `diff` filetype buffer contents, e.g., `foo.diff`.
 export def Overwrite(): void
   highlight Comment       guifg=#aaaaaa
   highlight ColorColumn                  guibg=#1f1e19
   highlight CursorColumn                 guibg=#4b4a46
   highlight CursorLine                   guibg=#4b4a46
-  highlight DiffChange    guifg=#cccccc
+  highlight DiffAdd                      guibg=#002400
+  highlight DiffAdded     guifg=#e5e9e5  guibg=#002400
+  highlight DiffDelete                   guibg=#370001
+  highlight DiffChange                   guibg=#222222
   highlight DiffFile      guifg=#ebce00                 gui=bold  cterm=bold
+  highlight DiffRemoved   guifg=#af9999  guibg=#370001
+  highlight DiffText                     guibg=#222222
   highlight FoldColumn    guifg=#6a7678  guibg=NONE
   highlight Folded        guifg=#6a7678  guibg=NONE
   highlight Ignore                       guibg=NONE
