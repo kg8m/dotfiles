@@ -78,10 +78,12 @@ mkdir -p "${VIM_PLUGINS}"
 # cf. .config/fd/ignore
 # cf. .config/ripgrep/config
 # cf. rails:assets:clean:force in rails:assets:clean:force
-# Subdirectories can’t be specified.
+#
+# NOTE: Subdirectories can’t be specified.
+# NOTE: Don’t specify the `--ignore-glob` in the `$EZA_DEFAULT_OPTIONS` because the directries/files are always hidden.
+#       Use this variable in some specific cases, e.g., with `--tree` option.
 # shellcheck disable=SC2034
 EZA_IGNORE_GLOBS=(
-  "*.zwc"
   ".bundle"
   ".cache"
   ".gem_rbs_collection"
@@ -92,6 +94,10 @@ EZA_IGNORE_GLOBS=(
   "tmp"
   "vendor"
 )
+# shellcheck disable=SC2178
+export EZA_IGNORE_GLOB="${(j:|:)EZA_IGNORE_GLOBS}"
+unset EZA_IGNORE_GLOBS
+
 export EZA_DEFAULT_OPTIONS=(
   # Always colorize
   --color "always"
@@ -101,11 +107,7 @@ export EZA_DEFAULT_OPTIONS=(
 
   # Show icons
   --icons "auto"
-
-  # Ignore some directories/files
-  --ignore-glob "${(j:|:)EZA_IGNORE_GLOBS}"
 )
-unset EZA_IGNORE_GLOBS
 
 export FD_DEFAULT_OPTIONS=(
   # Include hidden files and directories

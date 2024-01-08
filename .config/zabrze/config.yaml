@@ -217,9 +217,12 @@ abbrevs:
   - name: ls to eza
     abbr: ls
     snippet: eza "${EZA_DEFAULT_OPTIONS[@]}"
-  - name: ll to eza -l
+  - name: ll to eza --long
     abbr: ll
     snippet: eza "${EZA_DEFAULT_OPTIONS[@]}" --long --header --git
+  - name: lt to eza --long --tree
+    abbr: lt
+    snippet: eza "${EZA_DEFAULT_OPTIONS[@]}" --long --header --git --tree --ignore-glob "${EZA_IGNORE_GLOB:?}"
 
   - name: npm install
     abbr: i

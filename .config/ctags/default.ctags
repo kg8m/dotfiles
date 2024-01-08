@@ -3,7 +3,7 @@
 --recurse=yes
 --sort=yes
 
-# cf. $EZA_DEFAULT_OPTIONS in .zshenv
+# cf. $EZA_IGNORE_GLOB in .zshenv
 # cf. .config/fd/ignore
 # cf. .config/ripgrep/config
 # cf. rails:assets:clean:force in rails:assets:clean:force

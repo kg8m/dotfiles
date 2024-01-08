@@ -1,4 +1,4 @@
-# cf. $EZA_DEFAULT_OPTIONS in .zshenv
+# cf. $EZA_IGNORE_GLOB in .zshenv
 # cf. .config/ctags/default.ctags
 # cf. .config/ripgrep/config
 # cf. rails:assets:clean:force in rails:assets:clean:force

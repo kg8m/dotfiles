@@ -648,7 +648,7 @@ function rails:assets:clean:force {
     return 1
   fi
 
-  # cf. $EZA_DEFAULT_OPTIONS in .zshenv
+  # cf. $EZA_IGNORE_GLOB in .zshenv
   # cf. .config/ctags/default.ctags
   # cf. .config/fd/ignore
   # cf. .config/ripgrep/config
