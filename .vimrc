@@ -358,18 +358,6 @@ if plugin.Register("tweekmonster/helpful.vim")
   })
 endif
 
-if plugin.Register("tani/hey.vim")
-  if $DENOPS_DEBUG ==# "1"
-    g:hey_verbose = true
-  endif
-
-  plugin.Configure({
-    lazy:    true,
-    on_cmd:  ["Hey"],
-    depends: ["denops.vim"],
-  })
-endif
-
 if plugin.Register("Yggdroot/indentLine", { if: !util.IsGitTmpEdit() })
   import autoload "kg8m/plugin/indent_line.vim" as indentLine
   plugin.Configure({
