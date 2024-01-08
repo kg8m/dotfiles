@@ -95,6 +95,10 @@ const config = {
       // Use exclamation marks and question marks.
       "no-exclamation-question-mark": false,
 
+      // Use this rule as a individual rule instead of one of `preset-ja-technical-writing` to enable auto-fix.
+      // cf. .config/textlint/textlintrc.fixable.js
+      "no-nfd": false,
+
       "sentence-length": {
         severity: "warning",
         max: 200,

@@ -29,6 +29,9 @@ const config = {
     },
   },
   rules: {
+    // https://github.com/textlint-ja/textlint-rule-no-nfd
+    "no-nfd": true,
+
     // For Japanese contents. Terminology doesn't work for Japanese.
     prh: {
       rulePaths: ["~/.config/textlint/prh-rules.yml"].concat(
