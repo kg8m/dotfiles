@@ -81,7 +81,7 @@ def DefineRawList(): void
 
     ["[Outline][Ruby][RSpec] Show Outline", "call kg8m#plugin#fzf#outline#Rspec()"],
 
-    ["[Vim] Get syntax group name", "PP synIDattr(synID(line('.'), col('.'), 1), 'name')"],
+    ["[Vim] Get syntax group name", "echo synIDattr(synID(line('.'), col('.'), 1), 'name')"],
 
     # Use `silent` for suppressing vim-simple-align’s messages.
     ["[SimpleAlign] \"=\"",          "'<,'>silent SimpleAlign = -count 1"],
