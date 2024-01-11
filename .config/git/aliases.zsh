@@ -1,4 +1,3 @@
-#!/usr/bin/env zsh
 source ~/.config/zsh/utility-functions.zsh
 
 function git:add:bulk {

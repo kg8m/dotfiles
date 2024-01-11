@@ -314,7 +314,7 @@
 	chmod       = "!git sh \"git:utility:chmod '$1'\""
 	diff-or-cat = "!git sh \"git:utility:diff_or_cat '$1'\""
 
-	sh = "!zsh -c \"source ~/.config/git/aliases; $1\""
+	sh = "!zsh -c \"source ~/.config/git/aliases.zsh; $1\""
 
 [include]
 	path = ~/.config/git.local/config
