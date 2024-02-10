@@ -408,6 +408,69 @@ function git:stash:all:with_message {
   execute_with_confirm "git add --all && git stash push --no-keep-index --message '$*'"
 }
 
+function git:stash:select {
+  function git:stash:select:pick:stash {
+    local stash_options=(
+      --color
+
+      # %an = author name
+      # %ci = committer date, ISO 8601-like format
+      # %gd = shortened reflog selector; same as %gD, but the refname portion is shortened for human readability (so
+      #       refs/heads/master becomes just master).
+      # %s  = subject
+      --format="%gd %C(cyan)%ci %C(green bold)%an  %C(reset)%s"
+    )
+    local filter_options=(
+      --no-multi
+      --prompt "Select a stash> "
+      --header "NOTE: You will choose an action in the next step."
+      --preview "git stash show {1} | delta"
+      --preview-window "down:75%:wrap:nohidden"
+    )
+
+    git stash list "${stash_options[@]}" | filter "${filter_options[@]}" | awk '{ print $1 }'
+  }
+
+  function git:stash:select:pick:action {
+    local stash="${1:?}"
+    local actions=(Apply Drop)
+    local filter_options=(
+      --no-multi
+      --prompt "Select an action> "
+      --preview "git stash show ${stash} | delta"
+      --preview-window "down:75%:wrap:nohidden"
+    )
+
+    printf "%s\n" "${actions[@]}" | filter "${filter_options[@]}"
+  }
+
+  local stash="$(git:stash:select:pick:stash)"
+
+  if [ -z "${stash}" ]; then
+    return
+  fi
+
+  local action="$(git:stash:select:pick:action "${stash}")"
+
+  if [ -z "${action}" ]; then
+    return
+  fi
+
+  case "${action}" in
+    Apply)
+      execute_with_echo "git stash apply ${stash}"
+      ;;
+    Drop)
+      execute_with_echo    "git stash show ${stash}"
+      execute_with_confirm "git stash drop ${stash}"
+      ;;
+    *)
+      echo:error "Unknown action: ${action}"
+      return 1
+      ;;
+  esac
+}
+
 function git:status:color {
   local local_branch="$(git branch --show-current)"
   local local_branch_message_prefix="On branch"

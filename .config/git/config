@@ -282,7 +282,10 @@
 	changed-files-from = "!git sh \"git:diff:branch:from:nameonly $*\""
 
 	# stash
+	sss = stash-by-select
+
 	stash-all-with-message = "!git sh \"git:stash:all:with_message $*\""
+	stash-by-select        = sh git:stash:select
 
 	# show
 	show-without-diff = show -s
