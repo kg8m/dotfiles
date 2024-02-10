@@ -24,20 +24,20 @@ function() {
 
   local options=(
     "--ansi"
-    "--bind=${(j:,:)binds}"
+    "--bind '${(j:,:)binds}'"
 
     # https://github.com/junegunn/fzf/wiki/Color-schemes
-    "--color='fg+:bold:230'"
+    "--color 'fg+:bold:230'"
 
     "--exact"
     "--exit-0"
-    "--info=inline"
+    "--info inline"
     "--multi"
     "--no-sort"
     "--reverse"
-    "--preview='echo {} | head -n3'"
-    "--preview-window='down:5:wrap'"
-    "--scroll-off=15"
+    "--preview 'echo {} | head -n3'"
+    "--preview-window 'down:5:wrap'"
+    "--scroll-off 15"
     "--select-1"
     "--track"
   )

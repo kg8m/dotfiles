@@ -173,9 +173,9 @@ function git:branch:delete:bulk:remote {
 
 function git:branch:filter {
   local options=(
-    --prompt="Select branches> "
-    --preview="git sh \"git:utility:preview:log {1}\""
-    --preview-window="down:75%:wrap:nohidden"
+    --prompt "Select branches> "
+    --preview "git sh \"git:utility:preview:log {1}\""
+    --preview-window "down:75%:wrap:nohidden"
     "$@"
   )
 
