@@ -212,6 +212,8 @@
 	update-main    = sh git:update:main
 	update-master  = sh git:update:main
 
+	r = rebase
+
 	# branch
 	brs = branches
 	br  = branch

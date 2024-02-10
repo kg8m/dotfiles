@@ -203,6 +203,11 @@ abbrevs:
     snippet: log-with-patch
     global: true
     context: '^git\s'
+  - name: git rebase
+    abbr: r
+    snippet: rebase
+    global: true
+    context: '^git\s'
   - name: git status-with-color
     abbr: st
     snippet: status-with-color
