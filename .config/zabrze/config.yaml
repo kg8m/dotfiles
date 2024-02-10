@@ -203,6 +203,16 @@ abbrevs:
     snippet: status-with-color
     global: true
     context: '^git\s'
+  - name: git stash
+    abbr: ss
+    snippet: stash
+    global: true
+    context: '^git\s'
+  - name: git stash-all-with-message
+    abbr: ssa
+    snippet: stash-all-with-message
+    global: true
+    context: '^git\s'
   - name: git stash-by-select
     abbr: sss
     snippet: stash-by-select
