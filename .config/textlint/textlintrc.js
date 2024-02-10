@@ -98,6 +98,17 @@ const config = {
       // Use exclamation marks and question marks.
       "no-exclamation-question-mark": false,
 
+      "no-mix-dearu-desumasu": {
+        // Allow either “である” or “ですます” but they must be consistent.
+        preferInHeader: "",
+        preferInBody: "",
+        preferInList: "",
+
+        // Check for consistency only at the end of sentences, not within the sentences, because enabling this causes
+        // too many false positives.
+        strict: false,
+      },
+
       // Use this rule as a individual rule instead of one of `preset-ja-technical-writing` to enable auto-fix.
       // cf. .config/textlint/textlintrc.fixable.js
       "no-nfd": false,
