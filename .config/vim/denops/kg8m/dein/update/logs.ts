@@ -30,7 +30,8 @@ const DURATION_THRESHOLD_SECONDS = 30;
 const LOG_SKIP_PATTERN = new RegExp(
   [
     /^$/,
-    /^ +\w+\.\.\w+ +[^ ]+ +-> origin\/[^ ]+$/,
+    /Successfully rebased and updated refs\/heads\/\w+/,
+    /^ +\w+\.\.\.\w+ +[^ ]+ +-> origin\/[^ ]+( +\(forced update\))?$/,
     /^ - \[deleted\] +[^ ]+ +-> [^ ]+$/,
     /^ [^ ]+ +\| +\d+ [-+]+$/,
     /^ \* \[(new branch|new tag)\] /,
@@ -43,6 +44,7 @@ const LOG_SKIP_PATTERN = new RegExp(
     /^From https:\/\//,
     /^Submodule path '[^ ]': checked out '\w+'$/,
     /^Updating \w+\.\.\w+$/,
+    /^Updating files:\s+\d+% \(\d+\/\d+\)(, done\.)?$/,
     /^Your configuration specifies to merge with the ref '[^ ]+'$/,
     /^[^ ]+: pushed_time=\d+, repo_time=\d+, rollback_time=\d+$/,
     /^[^ ]+: remote=\w*, local=\w+$/,
