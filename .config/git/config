@@ -67,6 +67,13 @@
 	quotepath = false
 
 [delta]
+	# Disable background color in source code area.
+	blame-code-style = "syntax"
+
+	blame-format = "{timestamp:<20} {author:<15.14} {commit:<15}"
+	blame-palette = "#330d0d #33190d #33260d #33330d #26330d #19330d #0d330d #0d3319 #0d3326 #0d3333 #0d2633 #0d1933 #0d0d33 #190d33 #260d33 #330d33 #330d26 #330d19"
+	blame-timestamp-output-format = "%Y/%m/%d %H:%M:%S"
+
 	line-numbers = true
 	line-numbers-minus-style = "red auto"
 	line-numbers-zero-style = "#999999 auto"
@@ -262,10 +269,10 @@
 
 	log-by-select = sh git:log:select
 
-	log-graph      = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%an %Creset%s\"
+	log-graph      = log --graph --abbrev=14 --pretty=format:\" %C(yellow)%h %C(cyan)%ci %C(green bold)%an %C(magenta)%d %C(reset)%s\"
 	log-with-patch = log --stat --patch
 
-	lg-branches = sh 'git:log:compare:branch --graph --pretty=format:\\\"\"%Cgreen%h %ci %Cblue[C] %cn [A] %an %Creset%s\\\"\"'
+	lg-branches = sh 'git:log:compare:branch --graph --abbrev=14 --pretty=format:\\\"\" %C(yellow)%h %C(cyan)%ci %C(green bold)[C] %cn [A] %an  %C(reset)%s\\\"\"'
 	lp-branches = sh 'git:log:compare:branch --stat --patch'
 
 	# diff
