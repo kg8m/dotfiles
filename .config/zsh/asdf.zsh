@@ -7,7 +7,7 @@ function plugin:asdf:atclone {
     ln -s "${PWD}" "${ASDF_DIR}"
   fi
 
-  local plugins=(deno golang nodejs python ruby rust terraform)
+  local plugins=(deno golang nodejs postgres python ruby rust terraform)
   local plugin
   for plugin in "${plugins[@]}"; do
     if asdf plugin-list | grep -E "^${plugin}$" -q; then
@@ -15,9 +15,20 @@ function plugin:asdf:atclone {
     fi
 
     execute_with_echo "asdf plugin add ${plugin}"
-    execute_with_echo "asdf install ${plugin} latest"
 
     case "${plugin}" in
+      postgres)
+        # Do nothing.
+        ;;
+      *)
+        execute_with_echo "asdf install ${plugin} latest"
+        ;;
+    esac
+
+    case "${plugin}" in
+      postgres)
+        # Do nothing.
+        ;;
       python)
         local older_latest="$(asdf list all python | grep -E '^2\.' | tail -n1)"
         execute_with_echo "asdf install ${plugin} ${older_latest}"
