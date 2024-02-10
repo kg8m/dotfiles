@@ -4,8 +4,12 @@ EXTRA_TEXT="# <!-- textlint-disable -->"
 
 sd "${SCISSORS_PATTERN}" "\$1\n${EXTRA_TEXT}" "$1"
 
-if [ "${USE_GIT_LOCAL_TEMPLATE_HOOKS:-}" = "1" ] && [ -f .git_templates/hooks/prepare-commit-msg ]; then
-  source .git_templates/hooks/prepare-commit-msg
+if [ -f .git_templates/hooks/prepare-commit-msg ]; then
+  if [ "${USE_GIT_LOCAL_TEMPLATE_HOOKS:-}" = "1" ]; then
+    source .git_templates/hooks/prepare-commit-msg
+  else
+    printf "\e[1;38;5;3m%s\e[0;0m\n" "WARN -- \`.git_templates/hooks/prepare-commit-msg\` exists but not allowed." >&2
+  fi
 else
   exit 0
 fi

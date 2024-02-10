@@ -10,8 +10,12 @@ else
   printf "\e[1;38;5;6m%s\e[0;0m\n" "INFO -- The branch \`origin/${current_branch}\` doesn't exist." >&2
 fi
 
-if [ "${USE_GIT_LOCAL_TEMPLATE_HOOKS:-}" = "1" ] && [ -f .git_templates/hooks/pre-push ]; then
-  source .git_templates/hooks/pre-push
+if [ -f .git_templates/hooks/pre-push ]; then
+  if [ "${USE_GIT_LOCAL_TEMPLATE_HOOKS:-}" = "1" ]; then
+    source .git_templates/hooks/pre-push
+  else
+    printf "\e[1;38;5;3m%s\e[0;0m\n" "WARN -- \`.git_templates/hooks/pre-push\` exists but not allowed." >&2
+  fi
 else
   exit 0
 fi
