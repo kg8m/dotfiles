@@ -58,8 +58,10 @@ function plugin:dircolors:atload {
 }
 
 function plugin:dircolors:atclone {
-  echo -e "\n$(highlight:yellow "Reset colors, so check updates and fix my overwrites if needed.")\n"
   rm -f "${XDG_CACHE_HOME:?}/zsh/dircolors_ansi-universal.zsh"
+  echo
+  echo:info "Dircolors have updated. So check them and fix my overwrites in \`plugin:dircolors:atload\` if needed."
+  echo
 }
 
 zinit ice lucid wait"0c" atclone="plugin:dircolors:atclone" atpull="%atclone" atload"plugin:dircolors:atload"
