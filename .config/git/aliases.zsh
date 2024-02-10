@@ -744,7 +744,7 @@ function git:utility:header {
 }
 
 function git:utility:diff {
-  git diff-without-space-changes --color=always "$@" | git pager
+  git diff-without-space-changes --color "$@" | git pager
 }
 
 function git:utility:preview:log {
@@ -758,7 +758,7 @@ function git:utility:preview:log {
     fi
   fi
 
-  git log --max-count=100 --color=always "${branch}"
+  git log --max-count=100 --color "${branch}"
 }
 
 function git:utility:filetype:guess {
