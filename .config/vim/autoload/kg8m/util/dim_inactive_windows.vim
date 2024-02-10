@@ -37,6 +37,11 @@ def Apply(options = {}): void
       continue
     endif
 
+    # Skip Git commit buffer because colorcolumn hides diff colors.
+    if getwinvar(winnr, "&filetype") ==# "gitcommit"
+      continue
+    endif
+
     if winnr !=# current_winnr
       if getbufvar(winbufnr(winnr), "original_colorcolumn", v:null) ==# v:null
         setbufvar(winbufnr(winnr), "original_colorcolumn", getwinvar(winnr, "&colorcolumn"))
