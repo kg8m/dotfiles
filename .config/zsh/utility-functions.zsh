@@ -715,9 +715,8 @@ function zsh:rcs:compile {
   zcompile ~/.zshrc
 
   local zsh_dirs=(
-    "$(ensure_dir "${XDG_CONFIG_HOME:?}/zsh")"
-    "$(ensure_dir "${XDG_CONFIG_HOME:?}/zsh.local")"
-    "$(ensure_dir "${XDG_CACHE_HOME:?}/zsh")"
+    "$(ensure_dir "${XDG_CONFIG_HOME:?}")"
+    "$(ensure_dir "${XDG_CACHE_HOME:?}")"
   )
 
   local zshrc
@@ -731,9 +730,8 @@ function zsh:rcs:compile:clear {
   rm -f ~/.zshrc.zwc
 
   local zsh_dirs=(
-    "$(ensure_dir "${XDG_CONFIG_HOME:?}/zsh")"
-    "$(ensure_dir "${XDG_CONFIG_HOME:?}/zsh.local")"
-    "$(ensure_dir "${XDG_CACHE_HOME:?}/zsh")"
+    "$(ensure_dir "${XDG_CONFIG_HOME:?}")"
+    "$(ensure_dir "${XDG_CACHE_HOME:?}")"
   )
 
   local zwc
