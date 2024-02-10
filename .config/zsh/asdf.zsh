@@ -10,7 +10,7 @@ function plugin:asdf:atclone {
   local plugins=(deno golang nodejs postgres python ruby rust terraform)
   local plugin
   for plugin in "${plugins[@]}"; do
-    if asdf plugin-list | grep -E "^${plugin}$" -q; then
+    if asdf plugin list | grep -E "^${plugin}$" -q; then
       continue
     fi
 
