@@ -35,8 +35,11 @@ const config = {
     "date-weekday-mismatch": { lang: "ja-JP" },
     "ja-hiragana-keishikimeishi": true,
 
-    // Disable because of false positive: too many proper nouns, e.g., people's names, are treated as error.
+    // Disable this rule due to false positives: it often misidentifies proper nouns, e.g., people’s names, as errors.
     "joyo-kanji": false,
+
+    // Disable this rule because it frequently mistakes kanji in people’s names for errors.
+    "ja-joyo-or-jinmeiyo-kanji": false,
 
     "no-hoso-kinshi-yogo": true,
     "prefer-tari-tari": {
