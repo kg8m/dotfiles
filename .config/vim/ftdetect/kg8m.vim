@@ -21,6 +21,8 @@ autocmd BufNewFile,BufRead pryrc set filetype=ruby
 
 autocmd BufNewFile,BufRead Steepfile set filetype=ruby
 
+autocmd BufNewFile,BufRead *.tftpl set filetype=terraform
+
 autocmd BufNewFile,BufRead tsconfig.json set filetype=jsonc
 
 " https://gitlab.com/kroppy/TreeTabs
