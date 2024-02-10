@@ -188,6 +188,11 @@ abbrevs:
     snippet: log --branches --tags --remotes
     global: true
     context: '^git\s'
+  - name: git log-by-select
+    abbr: l
+    snippet: log-by-select
+    global: true
+    context: '^git\s'
   - name: git log-with-patch
     abbr: lp
     snippet: log-with-patch

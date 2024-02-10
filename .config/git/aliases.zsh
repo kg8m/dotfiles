@@ -296,6 +296,71 @@ function git:trash:bulk {
   fi
 }
 
+function git:log:select {
+  function git:log:select:pick:hash {
+    # cf. `{commit:<15}` of `delta.blame-format`
+    # cf. `--abbrev=14` of `git log-graph`
+    # cf. `git blame --abbrev=13` in `git:blame:filter`
+    local find_hash="grep -E '[a-z0-9]{14,}' -o | head -n1"
+    local filter_options=(
+      --no-multi
+      --prompt "Select a commit> "
+      --header "NOTE: You will choose an action in the next step."
+      --preview "hash=\$(echo {} | ${find_hash}); [ -n \"\${hash}\" ] && git show --patch-with-stat \${hash} | delta"
+      --preview-window 'down:50%:wrap:nohidden'
+    )
+
+    git log-graph --color | filter "${filter_options[@]}" | eval "${find_hash}"
+  }
+
+  function git:log:select:pick:action {
+    local hash="${1:?}"
+    local actions=(Copy Rebase Show)
+    local filter_options=(
+      --no-multi
+      --prompt "Select an action> "
+      --preview "git show ${hash} | delta"
+      --preview-window "down:75%:wrap:nohidden"
+    )
+
+    printf "%s\n" "${actions[@]}" | filter "${filter_options[@]}"
+  }
+
+  local abbr_hash="$(git:log:select:pick:hash)"
+
+  if [ -n "${abbr_hash}" ]; then
+    local full_hash="$(git rev-parse "${abbr_hash}")"
+  else
+    return
+  fi
+
+  local action="$(git:log:select:pick:action "${full_hash}")"
+
+  if [ -z "${action}" ]; then
+    return
+  fi
+
+  case "${action}" in
+    Copy)
+      printf "%s" "${full_hash}" | ssh main -t pbcopy
+
+      local message="Copied: ${full_hash}"
+      notify --nostay "${message}" &
+      echo "${message}"
+      ;;
+    Rebase)
+      execute_with_confirm "git rebase --autosquash --interactive ${full_hash}"
+      ;;
+    Show)
+      execute_with_echo "git show --patch-with-stat ${full_hash}"
+      ;;
+    *)
+      echo:error "Unknown action: ${action}"
+      return 1
+      ;;
+  esac
+}
+
 function git:log:compare:branch {
   local branch1=$(git:branch:list --remote | git:branch:filter:single --prompt="Select first branch> ")
   [ -n "${branch1}" ] || exit 1

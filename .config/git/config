@@ -253,9 +253,12 @@
 	bulk-trash = sh git:trash:bulk
 
 	# log
+	l  = log-by-select
 	lg = log-graph
 	la = log --branches --tags --remotes
 	lp = log-with-patch
+
+	log-by-select = sh git:log:select
 
 	log-graph      = log --graph --pretty=format:\"%Cgreen%h %ci %Cblue%an %Creset%s\"
 	log-with-patch = log --stat --patch
