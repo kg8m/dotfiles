@@ -540,6 +540,66 @@ function git:status:utility:rename:only_removed {
   sd ' -> .+$' ''
 }
 
+# Display the results of `git blame {filepath}` via fzf filter. The filter’s preview shows the current line’s commit
+# details, e.g., the commit hash, commit messages, and diffs. Pressing `alt` + `<` triggers a rerun of `git blame` with
+# current line’s prior revision; while `alt` + `>` reverses this rerun process.
+function git:blame:filter {
+  local filepath="${1:-}"
+
+  if [ -z "${filepath}" ]; then
+    filepath="$(git:utility:pick:filepath)"
+  fi
+
+  if [ -z "${filepath}" ]; then
+    echo:error "Specify a target filepath."
+    return 1
+  elif [ ! -f "${filepath}" ]; then
+    echo:error "\"${filepath}\" doesn’t exist."
+    return 1
+  fi
+
+  local filetype="$(git:utility:filetype:guess "${filepath}")"
+  local delta="delta --default-language ${filetype}"
+
+  local alt_lt="≤"
+  local alt_gt="≥"
+
+  local revisions_queue="$(mktemp)"
+  local show_current_revision="tail -n1 '${revisions_queue}'"
+  local detect_revision="git blame -L {2},+1 -lf \$(${show_current_revision}) '${filepath}' | awk '{ print \$1 }'"
+  local init_revisions_queue=": > '${revisions_queue}'"
+  local assign_revision="revision=\$(${detect_revision})"
+  local push_revision="echo \"\$(${detect_revision})~\" >> '${revisions_queue}'"
+  local pop_revision="[ -s '${revisions_queue}' ] && sed -i '' '\$d' '${revisions_queue}'"
+
+  local go_to_prev="${assign_revision}; ${push_revision}; git blame \${revision}~ '${filepath}' | ${delta}"
+  local go_to_next="${pop_revision}; git blame \$(${show_current_revision}) '${filepath}' | ${delta}"
+
+  # shellcheck disable=SC2034
+  local binds=(
+    "${alt_lt}:reload(${go_to_prev})"
+    "${alt_gt}:reload(${go_to_next})"
+    "start:execute-silent:${init_revisions_queue}"
+  )
+
+  local is_uncommitted_revision='[[ ${revision} =~ ^0+$ ]]'
+  local diff_or_cat="echo 'Not committed' && git diff-or-cat '${filepath}'"
+
+  # ${revision#^}: Remove a leading `^` of the initial commit’s hash.
+  local show_revision_detail='git show --patch-with-stat --color ${revision#^} | delta'
+
+  local filter_options=(
+    --delimiter "│"
+    --bind "${(j:,:)binds}"
+    --preview "${assign_revision}; ${is_uncommitted_revision} && ${diff_or_cat} || ${show_revision_detail}"
+    --preview-window "down:50%:wrap:nohidden"
+    --track
+  )
+
+  git blame --abbrev=13 "${filepath}" | eval "${delta}" | filter "${filter_options[@]}"
+  rm -f "${revisions_queue}"
+}
+
 function git:submodule:update {
   execute_with_echo "git submodule update --remote --rebase"
   execute_with_echo "git status-with-color"
@@ -599,6 +659,17 @@ function git:alias:which {
 function git:utility:chmod {
   local permissions="${1:?Specify permissions.}"
   execute_with_echo "git update-index --add --chmod=${permissions}"
+}
+
+function git:utility:pick:filepath {
+  local filter_options=(
+    --prompt "Select a file> "
+    --no-multi
+    --preview "preview {}"
+    --preview-window "down:75%:wrap:nohidden"
+  )
+
+  filter "${filter_options[@]}"
 }
 
 function git:utility:diff_or_cat {
@@ -681,6 +752,26 @@ function git:utility:preview:log {
   fi
 
   git log --max-count=100 --color=always "${branch}"
+}
+
+function git:utility:filetype:guess {
+  local filepath="${1:?}"
+  local filename="${filepath:t}"
+
+  case "${filename}" in
+    .*)
+      local filetype=".${filename:e}"
+      ;;
+    *)
+      local filetype="${filename:e}"
+      ;;
+  esac
+
+  if [ -n "${filetype}" ]; then
+    echo "${filetype}"
+  else
+    echo "${filename}"
+  fi
 }
 
 # Use short options like `-t` or `-s` because BSD `column` command doesn't support long options like `--table` or

@@ -303,6 +303,11 @@
 	pick = cherry-pick
 	p    = cherry-pick
 
+	# blame
+	bl = blame-with-filter
+
+	blame-with-filter = "!git sh \"git:blame:filter '$1'\""
+
 	# submodule
 	submodule-update-all = update-submodules
 	submodule-remove     = remove-submodules

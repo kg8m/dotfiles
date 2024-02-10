@@ -113,6 +113,11 @@ abbrevs:
     snippet: aliases
     global: true
     context: '^git\s'
+  - name: git blame-with-filter
+    abbr: bl
+    snippet: blame-with-filter
+    global: true
+    context: '^git\s'
   - name: git branch
     abbr: br
     snippet: branch
