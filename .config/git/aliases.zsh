@@ -596,6 +596,13 @@ function git:blame:filter {
     --track
   )
 
+  # --abbrev=13
+  #   cf. `{commit:<15}` of `delta.blame-format`
+  #   cf. `--abbrev=14` of `git log-graph`
+  #   cf. `find_hash` in `git:log:filter:hash`
+  #
+  #   The `--abbrev={num}` option of `git blame` shows commit hashes with `{num} + 1` width.
+  #   I want 14-width commit hashes.
   git blame --abbrev=13 "${filepath}" | eval "${delta}" | filter "${filter_options[@]}"
   rm -f "${revisions_queue}"
 }

@@ -70,7 +70,12 @@
 	# Disable background color in source code area.
 	blame-code-style = "syntax"
 
+	# {commit:<15}
+	#   cf. `--abbrev=14` of `git log-graph`
+	#   cf. `find_hash` in `git:log:filter:hash`
+	#   cf. `git blame --abbrev=13` in `git:blame:filter`
 	blame-format = "{timestamp:<20} {author:<15.14} {commit:<15}"
+
 	blame-palette = "#330d0d #33190d #33260d #33330d #26330d #19330d #0d330d #0d3319 #0d3326 #0d3333 #0d2633 #0d1933 #0d0d33 #190d33 #260d33 #330d33 #330d26 #330d19"
 	blame-timestamp-output-format = "%Y/%m/%d %H:%M:%S"
 
@@ -269,6 +274,16 @@
 
 	log-by-select = sh git:log:select
 
+	# --abbrev=14
+	#   cf. `{commit:<15}` of `delta.blame-format`
+	#   cf. `find_hash` in `git:log:filter:hash`
+	#   cf. `git blame --abbrev=13` in `git:blame:filter`
+	# --pretty=format
+	#   %an = author name
+	#   %ci = committer date, ISO 8601-like format
+	#   %d  = ref names, like the --decorate option of git-log(1)
+	#   %h  = abbreviated commit hash
+	#   %s  = subject
 	log-graph      = log --graph --abbrev=14 --pretty=format:\" %C(yellow)%h %C(cyan)%ci %C(green bold)%an %C(magenta)%d %C(reset)%s\"
 	log-with-patch = log --stat --patch
 
