@@ -280,14 +280,14 @@
 	#   cf. `git blame --abbrev=13` in `git:blame:filter`
 	# --pretty=format
 	#   %an = author name
-	#   %ci = committer date, ISO 8601-like format
+	#   %ai = author date, ISO 8601-like format
 	#   %d  = ref names, like the --decorate option of git-log(1)
 	#   %h  = abbreviated commit hash
 	#   %s  = subject
-	log-graph      = log --graph --abbrev=14 --pretty=format:\" %C(yellow)%h %C(cyan)%ci %C(green bold)%an %C(magenta)%d %C(reset)%s\"
+	log-graph      = log --graph --abbrev=14 --pretty=format:\" %C(yellow)%h %C(cyan)%ai %C(green bold)%an %C(magenta)%d %C(reset)%s\"
 	log-with-patch = log --stat --patch
 
-	lg-branches = sh 'git:log:compare:branch --graph --abbrev=14 --pretty=format:\\\"\" %C(yellow)%h %C(cyan)%ci %C(green bold)[C] %cn [A] %an  %C(reset)%s\\\"\"'
+	lg-branches = sh 'git:log:compare:branch --graph --abbrev=14 --pretty=format:\\\"\" %C(yellow)%h %C(cyan)%ai %C(green bold)[C] %cn [A] %an  %C(reset)%s\\\"\"'
 	lp-branches = sh 'git:log:compare:branch --stat --patch'
 
 	# diff

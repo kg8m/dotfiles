@@ -417,11 +417,11 @@ function git:stash:select {
       --color
 
       # %an = author name
-      # %ci = committer date, ISO 8601-like format
+      # %ai = author date, ISO 8601-like format
       # %gd = shortened reflog selector; same as %gD, but the refname portion is shortened for human readability (so
       #       refs/heads/master becomes just master).
       # %s  = subject
-      --format="%gd %C(cyan)%ci %C(green bold)%an  %C(reset)%s"
+      --format="%gd %C(cyan)%ai %C(green bold)%an  %C(reset)%s"
     )
     local filter_options=(
       --no-multi
