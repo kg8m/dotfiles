@@ -42,7 +42,6 @@ export def Overwrite(): void
     highlight Folded      guibg=#000000
     highlight Ignore      guibg=#000000
     highlight Normal      guibg=#000000
-    highlight Special     guibg=#000000
     highlight Todo        guibg=#000000
   endif
 enddef
