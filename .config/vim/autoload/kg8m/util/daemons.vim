@@ -5,7 +5,7 @@ export def Setup(): void
     autocmd!
     autocmd BufWritePost .eslintrc.*,package.json,tsconfig.json RestartEslintD()
     autocmd BufWritePost .rubocop.yml                           RestartRubocopServer()
-    autocmd BufWritePost config/routes.rb,config/routes/*.rb    UpdateRoutingDependencies()
+    autocmd BufWritePost */config/routes.rb,*/config/routes/*.rb    UpdateRoutingDependencies()
   augroup END
 enddef
 
