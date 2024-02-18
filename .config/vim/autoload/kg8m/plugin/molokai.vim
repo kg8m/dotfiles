@@ -15,10 +15,10 @@ export def Overwrite(): void
   highlight DiffAdd                      guibg=#002400
   highlight DiffAdded     guifg=#e5e9e5  guibg=#002400
   highlight DiffDelete                   guibg=#370001
-  highlight DiffChange                   guibg=#222222
-  highlight DiffFile      guifg=#ebce00                 gui=bold  cterm=bold
+  highlight DiffChange    guifg=NONE     guibg=#222222
+  highlight DiffFile      guifg=#ebce00                 gui=bold         cterm=bold
   highlight DiffRemoved   guifg=#af9999  guibg=#370001
-  highlight DiffText                     guibg=#222222
+  highlight DiffText      guifg=#ffffff  guibg=#333333  gui=bold,italic  cterm=bold,italic
   highlight FoldColumn    guifg=#6a7678  guibg=NONE
   highlight Folded        guifg=#6a7678  guibg=NONE
   highlight Ignore                       guibg=NONE
@@ -26,14 +26,14 @@ export def Overwrite(): void
   highlight LineNr                       guibg=#222222
   highlight Normal        guifg=#eaeaea  guibg=NONE
   highlight Pmenu                        guibg=#00161c
-  highlight QuickFixLine                                gui=bold  cterm=bold
+  highlight QuickFixLine                                gui=bold         cterm=bold
   highlight Search        guifg=#eaeaea  guibg=#f92672
   highlight SignColumn                   guibg=#111111
-  highlight Title         guifg=#a6e22e                 gui=bold  cterm=bold
+  highlight Title         guifg=#a6e22e                 gui=bold         cterm=bold
   highlight Todo                         guibg=NONE
   highlight Underlined    guifg=#aaaaaa
-  highlight Visual                                      gui=bold  cterm=bold
-  highlight VisualNOS                                   gui=bold  cterm=bold
+  highlight Visual                                      gui=bold         cterm=bold
+  highlight VisualNOS                                   gui=bold         cterm=bold
   highlight WarningMsg    guifg=#e6db74
 
   if has("gui_running")
