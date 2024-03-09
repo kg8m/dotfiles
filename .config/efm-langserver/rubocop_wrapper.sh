@@ -20,7 +20,10 @@ fi
 
 options=()
 
-if rubocop --server-status > /dev/null 2>&1; then
+if rubocop --editor-mode > /dev/null 2>&1; then
+  executable="rubocop"
+  options+=("--editor-mode")
+elif rubocop --server-status > /dev/null 2>&1; then
   executable="rubocop"
   options+=("--server")
 elif command -v rubocop-daemon > /dev/null && command -v rubocop-daemon-wrapper > /dev/null; then
