@@ -462,6 +462,10 @@ if plugin.Register("tyru/operator-camelize.vim")
   })
 endif
 
+if plugin.Register("vim-python/python-syntax")
+  g:python_highlight_all = true
+endif
+
 if plugin.Register("yssl/QFEnter")
   import autoload "kg8m/plugin/qfenter.vim"
   plugin.Configure({
