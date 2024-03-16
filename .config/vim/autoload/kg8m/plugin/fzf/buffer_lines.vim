@@ -17,7 +17,7 @@ export def Run(query: string = ""): void
     options: [
       "--prompt", "BLines> ",
       "--preview", $"preview {shellescape(filepath)}:{{1}}",
-      "--preview-window", "down:50%:wrap:hidden:+{1}-/2",
+      "--preview-window", "down:50%:wrap:nohidden:+{1}-/2",
       "--query", query,
     ],
   }
