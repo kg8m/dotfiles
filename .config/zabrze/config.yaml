@@ -208,6 +208,11 @@ abbrevs:
     snippet: rebase
     global: true
     context: '^git\s'
+  - name: git status-by-select
+    abbr: sts
+    snippet: status-by-select
+    global: true
+    context: '^git\s'
   - name: git status-with-color
     abbr: st
     snippet: status-with-color

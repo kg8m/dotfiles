@@ -317,8 +317,10 @@
 	show-without-diff = show -s
 
 	# status
-	st = status-with-color
+	st  = status-with-color
+	sts = status-by-select
 
+	status-by-select   = status-with-filter
 	status-with-filter = "!git sh \"git:status:filter:all $*\""
 	status-with-color  = "!git sh \"git:status:color $*\""
 
