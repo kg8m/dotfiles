@@ -530,6 +530,28 @@ function my_diff:without_spaces {
   my_diff "${options[@]}" "$@"
 }
 
+# npm-diff @types/node 20.11.19 20.11.20
+# npm-diff @types/node from 20.11.19 to 20.11.20
+#
+#   ↓
+#
+# npm diff --diff=@types/node@20.11.19 --diff=@types/node@20.11.20
+function npm-diff {
+  local package="${1:?}"
+  shift 1
+
+  [ "${1:?}" = "from" ] && shift 1
+
+  local version_from="${1:?}"
+  shift 1
+
+  [ "${1:?}" = "to" ] && shift 1
+
+  local version_to="${1:?}"
+
+  execute_with_echo "npx npm diff --diff=${package}@${version_from} --diff=${package}@${version_to} | delta"
+}
+
 function docker:containers:delete {
   local container_names=("${(@f)$(
     docker container ls --all |
