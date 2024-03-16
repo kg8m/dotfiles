@@ -318,7 +318,7 @@ function git:log:select {
 
   function git:log:select:pick:action {
     local hash="${1:?}"
-    local actions=(Copy Rebase Show)
+    local actions=(Copy Fixup Fixup:instant Rebase Show)
     local filter_options=(
       --no-multi
       --prompt "Select an action> "
@@ -327,6 +327,39 @@ function git:log:select {
     )
 
     printf "%s\n" "${actions[@]}" | filter "${filter_options[@]}"
+  }
+
+  function git:log:select:action:copy {
+    local hash="${1:?}"
+
+    printf "%s" "${hash}" | ssh main -t pbcopy
+
+    local message="Copied: ${hash}"
+    notify --nostay "${message}" &
+    echo "${message}"
+  }
+
+  function git:log:select:action:fixup {
+    local hash="${1:?}"
+    execute_with_echo "git show --no-patch ${hash}"
+    execute_with_confirm "git commit --fixup ${hash}"
+  }
+
+  function git:log:select:action:fixup:instant {
+    local hash="${1:?}"
+    git:log:select:action:fixup "${hash}"
+    execute_with_confirm "git -c sequence.editor=: rebase --autosquash --interactive ${hash}~"
+  }
+
+  function git:log:select:action:rebase {
+    local hash="${1:?}"
+    execute_with_echo "git show --no-patch ${hash}"
+    execute_with_confirm "git rebase --autosquash --interactive ${hash}"
+  }
+
+  function git:log:select:action:show {
+    local hash="${1:?}"
+    execute_with_echo "git show --patch-with-stat ${hash}"
   }
 
   local abbr_hash="$(git:log:select:pick:hash)"
@@ -345,17 +378,19 @@ function git:log:select {
 
   case "${action}" in
     Copy)
-      printf "%s" "${full_hash}" | ssh main -t pbcopy
-
-      local message="Copied: ${full_hash}"
-      notify --nostay "${message}" &
-      echo "${message}"
+      git:log:select:action:copy "${full_hash}"
+      ;;
+    Fixup)
+      git:log:select:action:fixup "${full_hash}"
+      ;;
+    Fixup:instant)
+      git:log:select:action:fixup:instant "${full_hash}"
       ;;
     Rebase)
-      execute_with_confirm "git rebase --autosquash --interactive ${full_hash}"
+      git:log:select:action:rebase "${full_hash}"
       ;;
     Show)
-      execute_with_echo "git show --patch-with-stat ${full_hash}"
+      git:log:select:action:show "${full_hash}"
       ;;
     *)
       echo:error "Unknown action: ${action}"
