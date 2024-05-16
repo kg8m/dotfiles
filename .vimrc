@@ -599,7 +599,7 @@ if plugin.Register("jkramer/vim-checkbox", { if: !util.IsGitTmpEdit() })
 
   augroup vimrc-plugin-checkbox
     autocmd!
-    autocmd FileType markdown,moin noremap <buffer><silent> <Leader>c :call <SID>checkbox.Run()<CR>
+    autocmd FileType markdown,moin noremap <buffer><silent> ch :call <SID>checkbox.Run()<CR>
   augroup END
 
   plugin.Configure({
