@@ -3,9 +3,9 @@ vim9script
 export def Setup(): void
   augroup vimrc-util-daemons
     autocmd!
-    autocmd BufWritePost .eslintrc.*,package.json,tsconfig.json RestartEslintD()
-    autocmd BufWritePost .rubocop.yml                           RestartRubocopServer()
-    autocmd BufWritePost */config/routes.rb,*/config/routes/*.rb    UpdateRoutingDependencies()
+    autocmd BufWritePost .eslintrc.*,package.json,tsconfig.json  RestartEslintD()
+    autocmd BufWritePost .rubocop.yml                            RestartRubocopServer()
+    autocmd BufWritePost */config/routes.rb,*/config/routes/*.rb UpdateRoutingDependencies()
   augroup END
 enddef
 
