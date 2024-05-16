@@ -542,10 +542,6 @@ if plugin.Register("lambdalisue/vim-suda")
   })
 endif
 
-if plugin.Register("leafgarland/typescript-vim")
-  g:typescript_indent_disable = true
-endif
-
 if plugin.Register("mbbill/undotree")
   nnoremap <Leader>u :UndotreeToggle<CR>
 
