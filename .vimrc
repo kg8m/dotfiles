@@ -245,6 +245,8 @@ if plugin.Register("Shougo/context_filetype.vim")
   endfor
 endif
 
+plugin.Register("Milly/deno-protocol.vim")
+
 if plugin.Register("vim-denops/denops.vim", { lazy: true })
   g:denops_disable_version_check = true
 
