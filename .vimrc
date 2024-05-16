@@ -535,7 +535,12 @@ if plugin.Register("AndrewRadev/splitjoin.vim", { if: !util.IsGitTmpEdit() })
   })
 endif
 
-plugin.Register("lambdalisue/vim-suda")
+if plugin.Register("lambdalisue/vim-suda")
+  plugin.Configure({
+    lazy:   true,
+    on_cmd: ["SudaRead"],
+  })
+endif
 
 if plugin.Register("leafgarland/typescript-vim")
   g:typescript_indent_disable = true
