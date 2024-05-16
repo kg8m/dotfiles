@@ -207,4 +207,4 @@ def BlinkCursor(): void
   })
 enddef
 
-plugin.EnsureSourced("kensaku.vim")
+plugin.EnsureSourced("vim-kensaku")

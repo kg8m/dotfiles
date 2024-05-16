@@ -335,7 +335,7 @@ if plugin.Register("junegunn/fzf.vim", { if: executable("fzf") })
   endif
 endif
 
-if plugin.Register("lambdalisue/gin.vim", { if: !util.IsGitTmpEdit() })
+if plugin.Register("lambdalisue/vim-gin", { if: !util.IsGitTmpEdit() })
   g:gin_diff_default_args = ["++processor=delta"]
 
   augroup vimrc-plugin-gin
@@ -380,7 +380,7 @@ if plugin.Register("fuenor/JpFormat.vim")
   })
 endif
 
-if plugin.Register("lambdalisue/kensaku.vim")
+if plugin.Register("lambdalisue/vim-kensaku")
   plugin.Configure({
     lazy: true,
     depends: ["denops.vim"],
@@ -420,7 +420,7 @@ endif
 
 plugin.Register("kg8m/moin.vim")
 
-if plugin.Register("lambdalisue/mr.vim", { if: !util.IsGitTmpEdit() })
+if plugin.Register("lambdalisue/vim-mr", { if: !util.IsGitTmpEdit() })
   import autoload "kg8m/plugin/mr.vim"
 
   g:mr_mrw_disabled = true
@@ -430,7 +430,7 @@ if plugin.Register("lambdalisue/mr.vim", { if: !util.IsGitTmpEdit() })
   g:mr#mru#predicates = [(filepath) => mr.Predicate(filepath)]
 endif
 
-plugin.Register("lambdalisue/nerdfont.vim")
+plugin.Register("lambdalisue/vim-nerdfont")
 
 if plugin.Register("tyru/open-browser.vim")
   import autoload "kg8m/plugin/open_browser.vim" as openBrowser
@@ -494,7 +494,7 @@ if plugin.Register("mechatroner/rainbow_csv", { if: !util.IsGitTmpEdit() })
   })
 endif
 
-plugin.Register("lambdalisue/readablefold.vim", { if: !util.IsGitTmpEdit() })
+plugin.Register("lambdalisue/vim-readablefold", { if: !util.IsGitTmpEdit() })
 
 if plugin.Register("vim-scripts/sequence")
   map <Leader>+ <Plug>SequenceV_Increment
@@ -522,7 +522,7 @@ if plugin.Register("AndrewRadev/splitjoin.vim", { if: !util.IsGitTmpEdit() })
   })
 endif
 
-plugin.Register("lambdalisue/suda.vim")
+plugin.Register("lambdalisue/vim-suda")
 
 if plugin.Register("leafgarland/typescript-vim")
   g:typescript_indent_disable = true
