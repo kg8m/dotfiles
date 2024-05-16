@@ -1,5 +1,28 @@
 vim9script
 
+import autoload "kg8m/util/file.vim" as fileUtil
+import autoload "kg8m/util/logger.vim"
+import autoload "kg8m/util/string.vim" as stringUtil
+
+export def EditWithGuessedEncoding(options: dict<any> = {}): void
+  if !executable("nkf")
+    logger.Error("`nkf` isn’t executable.")
+    return
+  endif
+
+  const filepath = fileUtil.CurrentRelativePath()
+  const guessed_encoding = system($"nkf --guess {shellescape(filepath)}")
+
+  if stringUtil.StartsWith(guessed_encoding, "Shift_JIS")
+    EditWithCP932(options)
+  elseif stringUtil.StartsWith(guessed_encoding, "EUC-JP")
+    EditWithEUCJP(options)
+  # Support other encodings if needed.
+  else
+    EditWithUTF8(options)
+  endif
+enddef
+
 export def EditWithCP932(options: dict<any> = {}): void
   EditWith("cp932", options)
 enddef

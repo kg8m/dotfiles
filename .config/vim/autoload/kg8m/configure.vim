@@ -182,7 +182,7 @@ export def Others(): void
     autocmd BufWritePre * if &filetype ==# "" | filetype detect | endif
     autocmd BufWritePre * MkdirUnlessExist()
 
-    autocmd BufNewFile,BufRead *.csv          encodingUtil.EditWithCP932()
+    autocmd BufNewFile,BufRead *.csv          encodingUtil.EditWithGuessedEncoding()
     autocmd BufNewFile,BufRead COMMIT_EDITMSG encodingUtil.EditWithUTF8()
 
     autocmd VimResized * wincmd =
