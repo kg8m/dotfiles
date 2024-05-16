@@ -153,7 +153,7 @@ def BuildPattern(): string
   # searching behavior varies depending on multibyte characters existence.
 
   const smartcase_pattern = InputToSmartcasePattern(input)
-  const migemo_pattern = InputToMimemoPattern(input)
+  const migemo_pattern = InputToMigemoPattern(input)
 
   cache.pattern = $'\C\%({smartcase_pattern}\|{migemo_pattern}\)'
 
@@ -178,7 +178,7 @@ def InputToSmartcasePattern(original_full_input: string): string
   endif
 enddef
 
-def InputToMimemoPattern(input: string): string
+def InputToMigemoPattern(input: string): string
   var left_space = ""
   var right_space = ""
 
