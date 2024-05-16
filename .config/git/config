@@ -297,7 +297,7 @@
 	dw = diff-without-space-changes --color-words
 	dh = diff-without-space-changes HEAD
 
-	diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --ignore-space-at-eol --ignore-space-change --color-moved-ws=allow-indentation-change
+	diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --color-moved-ws=allow-indentation-change
 
 	diff-stat-branches = diff-branches --stat-width 150
 
