@@ -182,6 +182,17 @@ plugin.Register("pearofducks/ansible-vim")
 # Show diff in Git's interactive rebase
 plugin.Register("hotwatermorning/auto-git-diff", { if: util.IsGitRebase() })
 
+if plugin.Register("girishji/autosuggest.vim")
+  plugin.Configure({
+    lazy:     true,
+    on_event: ["CmdlineEnter"],
+    hook_post_source: () => {
+      # Remove the delay because it sometimes annoys my command-line operations.
+      g:AutoSuggestSetup({ cmd: { delay: 0 } })
+    },
+  })
+endif
+
 if plugin.Register("kat0h/bufpreview.vim", { if: !util.IsGitTmpEdit() })
   plugin.Configure({
     lazy:    true,
