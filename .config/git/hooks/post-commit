@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+prev_diff="$(git log --max-count=1 --patch --format= | grep -E '^\+')"
+risky_pattern='\b(ap|binding\.\w+|byebug|console|debugger|inspect|logger|p?ld|pp?|puts|save_and_open_(page|screenshot)|t?ld)\b'
+
+if echo "${prev_diff}" | grep -E "${risky_pattern}" -q; then
+  mark="❗"
+  message="The previous diff contains risky words. Check and fix them if needed."
+
+  printf "\n%s \e[1;31m%s\e[0;37m %s\n\n" "${mark}" "${message}" "${mark}"
+fi
+
 if [ -f "Gemfile.lock" ]; then
   prev_changed_files="$(git log --max-count=1 --name-only --format=)"
 
