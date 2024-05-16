@@ -43,4 +43,8 @@ def UpdateRoutingDependencies(): void
   if isdirectory("sig/rbs_rails")
     job_start(["rails", "rbs_rails:generate_rbs_for_path_helpers"])
   endif
+
+  # Recache routes.
+  # cf. .config/zsh/bin/rails-routes
+  job_start(["rails-routes"])
 enddef
