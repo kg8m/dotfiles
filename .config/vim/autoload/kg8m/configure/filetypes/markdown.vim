@@ -12,12 +12,14 @@ export def Run(): void
     "html",
     "java",
     "javascript", "js=javascript",
+    "json",
     "python",
     "ruby", "rb=ruby",
     "sh",
     "sql",
     "typescript", "ts=typescript",
     "vim",
+    "yaml", "yml=yaml",
   ]
   g:markdown_syntax_conceal = false
   g:markdown_minlines = colors.SYNC_MINLINES
