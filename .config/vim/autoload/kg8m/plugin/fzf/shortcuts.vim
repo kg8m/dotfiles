@@ -52,8 +52,7 @@ def DefineRawList(): void
     ["[Reload with Encoding] EUC-JP",      "call kg8m#util#encoding#EditWithEUCJP(#{ force: v:true })"],
     ["[Reload with Encoding] UTF-8",       "call kg8m#util#encoding#EditWithUTF8(#{ force: v:true })"],
 
-    ["[Reload by Sudo]",     "SudaRead"],
-    ["[Write/save by Sudo]", "SudaWrite"],
+    ["[Reload by Sudo]", "SudaRead"],
 
     ["[Set Encoding] latin1",      "set fileencoding=latin1"],
     ["[Set Encoding] cp932",       "set fileencoding=cp932"],
