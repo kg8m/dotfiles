@@ -20,7 +20,10 @@ mkdir -p tmp/cache
 cache_filepath="tmp/cache/routes_cache"
 checksum_filepath="tmp/cache/routes_checksum"
 
-if [ ! -f "${cache_filepath}" ] || [ ! -f "${checksum_filepath}" ] || ! shasum --check --quiet "${checksum_filepath}" >&2; then
+if [ ! -f "${cache_filepath}" ] ||
+   [ ! -f "${checksum_filepath}" ] ||
+   ! shasum --check --quiet "${checksum_filepath}" >&2; then
+
   echo:info "Cache file for routing doesn't exist or the routing has been changed."
   execute_with_echo "shasum '${(j:' ':)target_filepaths}' > ${checksum_filepath}"
   execute_with_echo "bin/rails routes > ${cache_filepath}"
