@@ -33,12 +33,15 @@ if File.exist?(HISTORY_FILEPATH) && defined?(Readline::HISTORY)
   end
 end
 
+# Setup type based completer.
 Kg8m.try_to_require("repl_type_completor", quiet: true)
 
 if defined?(ReplTypeCompletor)
+  # Load RBS definitions on other threads.
   ReplTypeCompletor.preload_rbs
 end
 
+# Customize irb’s appearance.
 if defined?(Reline::Face)
   Reline::Face.config(:completion_dialog) do |config|
     config.define :default, foreground: "#66d9ef", background: "#00161c"
