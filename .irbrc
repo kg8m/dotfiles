@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+# Load this irbrc only once.
+# For the case where `~/.irbrc` and `./.irbrc` exist.
+return if defined?(IS_KG8M_IRBRC_LOADED)
+
+IS_KG8M_IRBRC_LOADED = true
+
 load File.join(ENV.fetch("XDG_CONFIG_HOME"), "irb/common.rb")
 
 IRB.conf[:PROMPT_MODE] = :SIMPLE
