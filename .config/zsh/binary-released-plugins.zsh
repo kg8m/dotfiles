@@ -217,10 +217,6 @@ function plugin:zabrze:init {
   if [ ! -f "${XDG_CACHE_HOME:?}/zsh/zabrze_init.zsh" ]; then
     zabrze init --bind-keys > "$(ensure_dir "${XDG_CACHE_HOME}/zsh/zabrze_init.zsh")"
 
-    # Expand with `:` for my utility functions.
-    # https://github.com/Ryooooooga/zabrze/blob/84bbaf432ddaae0ee436698efb426fdf1510c4ae/src/init/zabrze-bindkey.zsh#L1
-    echo 'bindkey ":" __zabrze::expand-and-self-insert' >> "${XDG_CACHE_HOME}/zsh/zabrze_init.zsh"
-
     # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
     zcompile "${XDG_CACHE_HOME}/zsh/zabrze_init.zsh"
   fi
