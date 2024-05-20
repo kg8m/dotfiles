@@ -46,6 +46,17 @@ function completion:setup:lazy {
     # cf. .config/zsh/history-search.zsh
     bindkey "^R" fzf_history_search
   fi
+
+  # ngrok
+  if ((${+commands[ngrok]})); then
+    if [ ! -f "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh" ]; then
+      ngrok completion > "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh"
+
+      # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
+      zcompile "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh"
+    fi
+    source "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh"
+  fi
 }
 zinit ice lucid nocd wait"0c" atload"completion:setup:lazy"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/completion"

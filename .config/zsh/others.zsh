@@ -6,13 +6,6 @@ function plugin:others:setup {
   mkdir -p "${XDG_DATA_HOME:?}/mysql"
   export MYSQL_HISTFILE="${XDG_DATA_HOME:?}/mysql/history"
 
-  # ngrok
-  if ((${+commands[ngrok]})); then
-    eval "$(ngrok completion)"
-  else
-    echo:warn "\`ngrok completion\` is skipped because ngrok is not available."
-  fi
-
   # themis.vim
   # Don't use zinit's options like `as"command" pick"bin/themis"` because it makes the `$PATH` longer and longer. Make
   # symbolic links in `${HOME}/bin` instead.
