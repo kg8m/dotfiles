@@ -33,10 +33,10 @@ if File.exist?(HISTORY_FILEPATH) && defined?(Readline::HISTORY)
   end
 end
 
-Kg8m.try_to_require("katakata_irb", quiet: true)
+Kg8m.try_to_require("repl_type_completor", quiet: true)
 
-if defined?(KatakataIrb::Types) && KatakataIrb::Types.respond_to?(:loader_type=)
-  KatakataIrb::Types.loader_type = :async
+if defined?(ReplTypeCompletor)
+  ReplTypeCompletor.preload_rbs
 end
 
 if defined?(Reline::Face)
