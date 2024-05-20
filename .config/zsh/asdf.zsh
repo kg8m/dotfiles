@@ -7,7 +7,7 @@ function plugin:asdf:atclone {
     ln -s "${PWD}" "${ASDF_DIR}"
   fi
 
-  local plugins=(deno golang lua nodejs postgres python ruby rust terraform)
+  local plugins=(deno golang lua nodejs postgres python ruby rust terraform tmux)
   local plugin
   for plugin in "${plugins[@]}"; do
     if asdf plugin list | grep -E "^${plugin}$" -q; then
@@ -45,6 +45,11 @@ function plugin:asdf:atclone {
 
 zinit ice lucid wait"0c" as"null" atclone"plugin:asdf:atclone"
 zinit light asdf-vm/asdf
+
+# https://github.com/tmux/tmux/wiki/Installing
+# https://github.com/orgs/tmux/discussions/3565
+# https://github.com/aphecetche/asdf-tmux/blob/eb8deee3db212dc48fba01cd93f093a011bc0a5d/bin/install#L10
+export TMUX_EXTRA_CONFIGURE_OPTIONS="--enable-sixel --enable-utf8proc"
 
 function asdf:plugins:upgrade:check {
   # shellcheck disable=SC2317
