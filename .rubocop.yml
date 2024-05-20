@@ -52,6 +52,9 @@ Naming/FileName:
 Performance/ChainArrayAllocation:
   Enabled: false
 
+Style/AsciiComments:
+  AllowedChars:
+    - "’"
 Style/BlockDelimiters:
   EnforcedStyle: semantic
 Style/ClassAndModuleChildren:
