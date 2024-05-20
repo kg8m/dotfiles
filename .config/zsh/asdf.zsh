@@ -84,7 +84,16 @@ function asdf:plugins:upgrade:check {
 
 function asdf:plugin:install:latest {
   local plugin="${1:?}"
-  execute_with_echo "asdf install ${plugin} latest"
+
+  case "${plugin}" in
+    postgres)
+      execute_with_echo "PKG_CONFIG_PATH='$(brew --prefix icu4c)/lib/pkgconfig' asdf install ${plugin} latest"
+      ;;
+    *)
+      execute_with_echo "asdf install ${plugin} latest"
+      ;;
+  esac
+
   execute_with_echo "asdf global ${plugin} latest"
   execute_with_echo "asdf list ${plugin}"
 }
