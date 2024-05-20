@@ -64,11 +64,11 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mocword | sd | shfmt | sqls | stylua |\
+      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mocword | shfmt | sqls | stylua |\
       terraform-lsp | tldr | tokei | typos | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
-      bat | delta | efm-langserver | fd | golangci-lint | hyperfine | mmv | rg | shellcheck)
+      bat | delta | efm-langserver | fd | golangci-lint | hyperfine | mmv | rg | sd | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
       gh)
