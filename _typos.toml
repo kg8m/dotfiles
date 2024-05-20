@@ -3,6 +3,9 @@ extend-ignore-re = [
   # e.g., `alias forin` in .config/vim/snippets/javascript.snip
   '\balias\s+forin\b',
 
+  # e.g., `completor: function("asyncomplete#sources#buffer#completor")` in .config/vim/autoload/kg8m/plugin/asyncomplete/buffer.vim
+  '\bcompletor: function\("\basyncomplete#sources#\w+#completor\b"\)',
+
   # e.g., `setlocal fo-=t` in .config/vim/autoload/kg8m/configure/formatoptions.vim
   '\bset(local)?.+\bfo[-+]=',
 
@@ -10,7 +13,10 @@ extend-ignore-re = [
   'vim9s\\%\[cript\]',
 ]
 
+[default.extend-identifiers]
+ReplTypeCompletor   = "ReplTypeCompletor"
+repl_type_completor = "repl_type_completor"
+
 [default.extend-words]
-completor = "completor"
 enhancd = "enhancd"
-iterm = "iterm"
+iterm   = "iterm"
