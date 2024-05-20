@@ -31,6 +31,7 @@ function() {
 
     "--exact"
     "--exit-0"
+    "--highlight-line"
     "--info inline"
     "--multi"
     "--no-sort"
