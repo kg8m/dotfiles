@@ -82,6 +82,10 @@ function() {
         return
       fi
 
+      if pmset -g batt | grep "Battery Power" -q; then
+        return
+      fi
+
       local sleep="$(prompt:refresh:calculate_sleep)"
 
       if [ "${sleep}" = "-1" ]; then
