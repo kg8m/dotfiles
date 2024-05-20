@@ -229,6 +229,7 @@ function trash {
 
 function trash:bulk {
   local dirpath="${1:-.}"
+  shift 1
 
   if [ ! -d "${dirpath}" ]; then
     echo:error "${dirpath} doesn’t exist."
@@ -240,7 +241,8 @@ function trash:bulk {
       filter \
         --prompt "Select files> " \
         --preview "preview {}" \
-        --preview-window "down:75%:wrap:nohidden"
+        --preview-window "down:75%:wrap:nohidden" \
+        "$@"
   )}")
 
   if [ -n "${filepaths[*]}" ]; then
