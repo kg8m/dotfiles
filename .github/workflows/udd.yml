@@ -1,0 +1,63 @@
+name: Update Deno Dependencies
+
+on:
+  schedule:
+    # Run every Saturday at 10:00 JST.
+    - cron: "0 1 * * 6"
+
+  # For debug
+  workflow_dispatch:
+
+jobs:
+  udd:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v1
+      - name: Generate token
+        id: generate_token
+        uses: getsentry/action-github-app-token@v3
+        with:
+          app_id: ${{ secrets.KG8M_BOT_APP_ID }}
+          private_key: ${{ secrets.KG8M_BOT_PRIVATE_KEY }}
+      - name: Update Dependencies
+        run: make deno-update-deps > ../output.txt
+        env:
+          NO_COLOR: 1
+      - name: Read ../output.txt
+        id: read-output
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ../output.txt
+      # https://github.com/peter-evans/create-pull-request
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          # Use my GitHub app’s temporary token because the default `GITHUB_TOKEN` prevents other workflows from being
+          # triggered on a pull request creation.
+          # cf. https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
+          token: ${{ steps.generate_token.outputs.token }}
+
+          commit-message: |
+            Update Deno dependencies
+
+            ```sh
+            $ make deno-update-deps
+            ```
+
+            ```
+            ${{ steps.read-output.outputs.content }}
+            ```
+          branch: update-deno-dependencies
+          delete-branch: true
+          title: Update Deno Dependencies
+          body: |
+            ```sh
+            $ make deno-update-deps
+            ```
+
+            ```
+            ${{ steps.read-output.outputs.content }}
+            ```
+          assignees: kg8m
