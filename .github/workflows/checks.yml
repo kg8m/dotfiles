@@ -1,0 +1,39 @@
+name: Checks
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -eo pipefail {0}
+
+jobs:
+  deno-check:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        timeout-minutes: 1
+      - uses: denoland/setup-deno@v1
+        with:
+          # Use the latest stable version.
+          deno-version: vx.x.x
+        timeout-minutes: 1
+      - uses: actions/cache@v4
+        with:
+          path: .deno
+          key: ${{ hashFiles('**/*.ts') }}
+        timeout-minutes: 1
+      - name: Check if deno files are formatted
+        run: make deno-fmt-check
+        timeout-minutes: 1
+      - name: Lint deno files
+        run: make deno-lint
+        timeout-minutes: 1
+      - name: Type-check deno files
+        run: make deno-typecheck
+        timeout-minutes: 1
