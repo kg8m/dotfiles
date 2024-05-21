@@ -2,7 +2,7 @@ import type { Denops } from "https://deno.land/x/denops_std@v6.5.0/mod.ts";
 import { batch } from "https://deno.land/x/denops_std@v6.5.0/batch/mod.ts";
 import * as vimFuncs from "https://deno.land/x/denops_std@v6.5.0/function/mod.ts";
 import * as vimOptions from "https://deno.land/x/denops_std@v6.5.0/option/mod.ts";
-import { assertLike } from "https://deno.land/x/unknownutil@v2.1.0/mod.ts";
+import { assert, is } from "https://deno.land/x/unknownutil@v3.18.1/mod.ts";
 import { benchmarkOnce } from "../../benchmark.ts";
 import { notify } from "../../notification.ts";
 
@@ -10,9 +10,12 @@ type Log = string;
 type Logs = Log[];
 type Progress = string;
 
-const LOG_TEMPLATE: Log = "";
-const LOGS_TEMPLATE: Logs = [];
-const PROGRESS_TEMPLATE: Progress = "";
+const isLog = (maybeLog: unknown): maybeLog is Log => {
+  return is.String(maybeLog);
+};
+const isProgress = (maybeProgress: unknown): maybeProgress is Progress => {
+  return is.String(maybeProgress);
+};
 
 interface CheckOptions {
   retryCount: number;
@@ -177,14 +180,11 @@ async function getProgress(denops: Denops): Promise<Progress> {
 }
 
 function ensureLogs(maybeLogs: unknown): Logs {
-  const predicate = (maybeLog: unknown): maybeLog is Log => {
-    return typeof maybeLog === typeof LOG_TEMPLATE;
-  };
-  assertLike(LOGS_TEMPLATE, maybeLogs, predicate);
+  assert(maybeLogs, is.ArrayOf(isLog));
   return maybeLogs;
 }
 
 function ensureProgress(maybeProgress: unknown): Progress {
-  assertLike(PROGRESS_TEMPLATE, maybeProgress);
+  assert(maybeProgress, isProgress);
   return maybeProgress;
 }
