@@ -318,7 +318,7 @@ function git:log:select {
 
   function git:log:select:pick:action {
     local hash="${1:?}"
-    local actions=(Copy Fixup Fixup:instant Rebase Show)
+    local actions=(Copy Fixup Fixup:instant Rebase Revert Show)
     local filter_options=(
       --no-multi
       --prompt "Select an action> "
@@ -357,6 +357,12 @@ function git:log:select {
     execute_with_confirm "git rebase --autosquash --interactive ${hash}"
   }
 
+  function git:log:select:action:revert {
+    local hash="${1:?}"
+    execute_with_echo "git show ${hash}"
+    execute_with_confirm "git revert ${hash}"
+  }
+
   function git:log:select:action:show {
     local hash="${1:?}"
     execute_with_echo "git show --patch-with-stat ${hash}"
@@ -388,6 +394,9 @@ function git:log:select {
       ;;
     Rebase)
       git:log:select:action:rebase "${full_hash}"
+      ;;
+    Revert)
+      git:log:select:action:revert "${full_hash}"
       ;;
     Show)
       git:log:select:action:show "${full_hash}"
