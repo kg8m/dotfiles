@@ -10,4 +10,10 @@ options=(
   --config "${XDG_CONFIG_HOME:?}/sql-formatter/config.json"
 )
 
+if [ -n "${SQL_FORMATTER_LANGUAGE:-}" ]; then
+  options+=(
+    --language "${SQL_FORMATTER_LANGUAGE:?}"
+  )
+fi
+
 sql-formatter "${options[@]}"
