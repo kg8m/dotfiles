@@ -9,24 +9,23 @@ fi
 target_filepaths=("config/routes.rb")
 
 if [ -d "config/routes" ]; then
-  for filepath in config/routes/**/*.rb; do
-    if [ -f "${filepath}" ]; then
-      target_filepaths+=("${filepath}")
-    fi
+  for target_filepath in config/routes/**/*.rb; do
+    target_filepaths+=("${target_filepath}")
   done
 fi
 
 mkdir -p tmp/cache
-cache_filepath="tmp/cache/routes_cache"
+result_filepath="tmp/cache/routes_result"
 checksum_filepath="tmp/cache/routes_checksum"
 
-if [ ! -f "${cache_filepath}" ] ||
+if [ ! -f "${result_filepath}" ] ||
    [ ! -f "${checksum_filepath}" ] ||
+   [ ! "${#target_filepaths}" = "$(wc -l "${checksum_filepath}" | awk '{ print $1 }')" ] ||
    ! shasum --check --quiet "${checksum_filepath}" >&2; then
 
   echo:info "Cache file for routing doesn't exist or the routing has been changed."
   execute_with_echo "shasum '${(j:' ':)target_filepaths}' > ${checksum_filepath}"
-  execute_with_echo "bin/rails routes > ${cache_filepath}"
+  execute_with_echo "bin/rails routes > ${result_filepath}"
 fi
 
-cat "${cache_filepath}"
+cat "${result_filepath}"
