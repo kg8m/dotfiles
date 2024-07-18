@@ -67,14 +67,14 @@ export TIMETRACK_PATTERN
 autoload -U add-zsh-hook
 
 function timetrack:start {
-  local command=$1
+  local command="$1"
 
-  export __TIMETRACK_STARTED_AT=$(date +%s)
+  export __TIMETRACK_STARTED_AT="$(date +%s)"
   export __TIMETRACK_COMMAND="${command}"
 }
 
 function timetrack:end {
-  local last_status=$?
+  local last_status="$?"
   local finished_at="$(date +%s)"
 
   if [ -z "${__TIMETRACK_STARTED_AT}" ] || [ -z "${__TIMETRACK_COMMAND}" ]; then
