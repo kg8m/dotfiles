@@ -195,7 +195,7 @@ plugin.Register("pearofducks/ansible-vim")
 # Show diff in Git's interactive rebase
 plugin.Register("hotwatermorning/auto-git-diff", { if: util.IsGitRebase() })
 
-if plugin.Register("kat0h/bufpreview.vim", { if: !util.IsGitTmpEdit() })
+if plugin.Register("kat0h/bufpreview.vim")
   plugin.Configure({
     lazy:    true,
     on_cmd:  ["PreviewMarkdown"],
@@ -204,7 +204,7 @@ if plugin.Register("kat0h/bufpreview.vim", { if: !util.IsGitTmpEdit() })
   })
 endif
 
-if plugin.Register("tyru/caw.vim", { if: !util.IsGitTmpEdit() })
+if plugin.Register("tyru/caw.vim")
   import autoload "kg8m/plugin/caw.vim"
 
   map <expr> gc caw.Run()
@@ -271,7 +271,7 @@ if plugin.Register("gamoutatsumi/dps-ghosttext.vim", { if: $USE_GHOST_TEXT ==# "
   })
 endif
 
-if plugin.Register("spolu/dwm.vim", { if: !util.IsGitTmpEdit() })
+if plugin.Register("spolu/dwm.vim")
   import autoload "kg8m/plugin/dwm.vim"
 
   nnoremap <C-w>n       :call DWM_New()<CR>
@@ -287,7 +287,7 @@ if plugin.Register("spolu/dwm.vim", { if: !util.IsGitTmpEdit() })
   })
 endif
 
-if plugin.Register("editorconfig/editorconfig-vim", { if: !util.IsGitTmpEdit() && use_editorconfig })
+if plugin.Register("editorconfig/editorconfig-vim", { if: use_editorconfig })
   g:EditorConfig_preserve_formatoptions = true
 endif
 
@@ -356,7 +356,7 @@ if plugin.Register("junegunn/fzf.vim", { if: executable("fzf") })
   endif
 endif
 
-if plugin.Register("lambdalisue/vim-gin", { if: !util.IsGitTmpEdit() })
+if plugin.Register("lambdalisue/vim-gin")
   g:gin_diff_default_args = ["++processor=delta"]
 
   augroup vimrc-plugin-gin
@@ -379,7 +379,7 @@ if plugin.Register("tweekmonster/helpful.vim")
   })
 endif
 
-if plugin.Register("Yggdroot/indentLine", { if: !util.IsGitTmpEdit() })
+if plugin.Register("Yggdroot/indentLine")
   import autoload "kg8m/plugin/indent_line.vim" as indentLine
   plugin.Configure({
     lazy:     true,
@@ -389,7 +389,7 @@ if plugin.Register("Yggdroot/indentLine", { if: !util.IsGitTmpEdit() })
   })
 endif
 
-if plugin.Register("othree/javascript-libraries-syntax.vim", { if: !util.IsGitTmpEdit() })
+if plugin.Register("othree/javascript-libraries-syntax.vim")
   g:used_javascript_libs = "jquery,react,vue"
 endif
 
@@ -446,7 +446,7 @@ endif
 
 plugin.Register("kg8m/moin.vim")
 
-if plugin.Register("lambdalisue/vim-mr", { if: !util.IsGitTmpEdit() })
+if plugin.Register("lambdalisue/vim-mr")
   import autoload "kg8m/plugin/mr.vim"
 
   g:mr_mrw_disabled = true
@@ -519,7 +519,7 @@ if plugin.Register("stefandtw/quickfix-reflector.vim")
   })
 endif
 
-plugin.Register("lambdalisue/vim-readablefold", { if: !util.IsGitTmpEdit() })
+plugin.Register("lambdalisue/vim-readablefold")
 
 if plugin.Register("vim-scripts/sequence")
   map <Leader>+ <Plug>SequenceV_Increment
@@ -531,7 +531,7 @@ if plugin.Register("vim-scripts/sequence")
   })
 endif
 
-if plugin.Register("AndrewRadev/splitjoin.vim", { if: !util.IsGitTmpEdit() })
+if plugin.Register("AndrewRadev/splitjoin.vim")
   nnoremap <Leader>J :SplitjoinJoin<CR>
   nnoremap <Leader>S :SplitjoinSplit<CR>
 
@@ -580,7 +580,7 @@ if plugin.Register("kg8m/vim-simple-align", { rev: "vim9" })
   xnoremap <Leader>a :SimpleAlign<Space>
 endif
 
-if plugin.Register("FooSoft/vim-argwrap", { if: !util.IsGitTmpEdit() })
+if plugin.Register("FooSoft/vim-argwrap")
   import autoload "kg8m/plugin/argwrap.vim"
 
   nnoremap <Leader>a :ArgWrap<CR>
@@ -609,7 +609,7 @@ endif
 
 plugin.Register("h1mesuke/vim-benchmark")
 
-if plugin.Register("jkramer/vim-checkbox", { if: !util.IsGitTmpEdit() })
+if plugin.Register("jkramer/vim-checkbox")
   import autoload "kg8m/plugin/checkbox.vim"
 
   augroup vimrc-plugin-checkbox
@@ -633,7 +633,7 @@ if plugin.Register("alvan/vim-closetag")
   })
 endif
 
-plugin.Register("hail2u/vim-css3-syntax", { if: !util.IsGitTmpEdit() })
+plugin.Register("hail2u/vim-css3-syntax")
 
 if plugin.Register("kg8m/vim-detect-indent", { if: !use_editorconfig })
   g:detect_indent#detect_once      = false
@@ -757,7 +757,7 @@ if plugin.Register("andymass/vim-matchup")
   })
 endif
 
-if plugin.Register("mattn/vim-molder", { if: !util.IsGitTmpEdit() })
+if plugin.Register("mattn/vim-molder")
   import autoload "kg8m/plugin/molder.vim"
 
   nnoremap <silent> <Leader>e <ScriptCmd>molder.Run()<CR>
@@ -783,14 +783,14 @@ if plugin.Register("kg8m/vim-parallel-auto-ctags", { if: util.IsCtagsAvailable()
   })
 endif
 
-if plugin.Register("thinca/vim-prettyprint", { if: !util.IsGitTmpEdit() })
+if plugin.Register("thinca/vim-prettyprint")
   plugin.Configure({
     # Don't load lazily because dein.vim's `on_cmd: "PP"` doesn't work.
     lazy: false,
   })
 endif
 
-if plugin.Register("lambdalisue/vim-protocol", { if: !util.IsGitTmpEdit() })
+if plugin.Register("lambdalisue/vim-protocol")
   plugin.Configure({
     lazy:    true,
     on_path: ['^https\?://'],
@@ -843,7 +843,7 @@ if plugin.Register("vim-ruby/vim-ruby")
   augroup END
 endif
 
-if plugin.Register("joker1007/vim-ruby-heredoc-syntax", { if: !util.IsGitTmpEdit() })
+if plugin.Register("joker1007/vim-ruby-heredoc-syntax")
   import autoload "kg8m/plugin/ruby_heredoc_syntax.vim" as rubyHeredocSyntax
   plugin.Configure({
     lazy:  true,
@@ -946,7 +946,7 @@ endif
 
 plugin.Register("hashivim/vim-terraform")
 
-if plugin.Register("janko/vim-test", { if: !util.IsGitTmpEdit() })
+if plugin.Register("janko/vim-test")
   import autoload "kg8m/plugin/test.vim"
 
   nnoremap <Leader>T :write<CR><ScriptCmd>test.RunFileTest()<CR>
@@ -1010,7 +1010,7 @@ endif
 # Specify `merged: false` because `Vitalize` fails.
 plugin.Register("vim-jp/vital.vim", { merged: false })
 
-if plugin.Register("simeji/winresizer", { if: !util.IsGitTmpEdit() })
+if plugin.Register("simeji/winresizer")
   g:winresizer_start_key = "<C-w><C-e>"
 
   plugin.Configure({
@@ -1019,15 +1019,15 @@ if plugin.Register("simeji/winresizer", { if: !util.IsGitTmpEdit() })
   })
 endif
 
-plugin.Register("stephpy/vim-yaml", { if: !util.IsGitTmpEdit() })
+plugin.Register("stephpy/vim-yaml")
 
 # Use my fork until the PR https://github.com/pedrohdz/vim-yaml-folds/pull/7 is merged.
 plugin.Register("pedrohdz/vim-yaml-folds", { if: false, name: "vim-yaml-folds-original" })
-if plugin.Register("kg8m/vim-yaml-folds", { if: !util.IsGitTmpEdit(), rev: "support_custom_foldtext" })
+if plugin.Register("kg8m/vim-yaml-folds", { rev: "support_custom_foldtext" })
   g:yamlfolds_use_yaml_fold_text = false
 endif
 
-if plugin.Register("jonsmithers/vim-html-template-literals", { if: !util.IsGitTmpEdit() })
+if plugin.Register("jonsmithers/vim-html-template-literals")
   g:htl_css_templates = true
   g:htl_all_templates = false
 
