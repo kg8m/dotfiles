@@ -19,6 +19,7 @@ export def OnPostSource(): void
     () => AddRulesForJs(),
     () => AddRulesForTs(),
     () => AddRulesForMarkdown(),
+    () => AddRulesForPhp(),
     () => AddRulesForShell(),
     () => AddRulesForVim(),
 
@@ -251,6 +252,34 @@ def AddRulesForMarkdown(): void
   #
   #   `foo`|
   lexima#add_rule({ char: "`", except: '\%#`\|``\%#', syntax: ["mkdCode", "mkdInlineCodeDelimiter"] })
+enddef
+
+def AddRulesForPhp(): void
+  const filetypes = [
+    "html",
+    "markdown",
+    "php",
+  ]
+
+  # `p` when
+  #
+  #   <?ph|
+  #
+  # then
+  #
+  #   <?php|?>
+  lexima#add_rule({ char: "p", at: '<?ph\%#', input_after: "?>", filetype: filetypes })
+
+  # `<CR>` when
+  #
+  #   <?php|?>
+  #
+  # then
+  #
+  #   <?php
+  #     |
+  #   ?>
+  lexima#add_rule({ char: "<CR>", at: '<?php\%#?>', input_after: "<CR>", filetype: filetypes })
 enddef
 
 def AddRulesForShell(): void
