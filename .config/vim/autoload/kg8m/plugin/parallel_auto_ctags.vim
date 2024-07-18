@@ -19,7 +19,7 @@ export def OnSource(): void
     },
   }
 
-  if util.OnRailsDir()
+  if util.OnRailsDir() || $PARALLEL_AUTO_CTAGS_RUN_FOR_RUBYGEMS ==# "1"
     const rubygems_path = util.RubygemsPath()
     &tags ..= $",{rubygems_path}/../tags"
 
