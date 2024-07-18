@@ -9,3 +9,10 @@ export def OnSource(): void
     },
   ]
 enddef
+
+export def OnPostSource(): void
+  # I don’t need these commands.
+  delcommand OpenBrowser
+  delcommand OpenBrowserSearch
+  delcommand OpenBrowserSmartSearch
+enddef

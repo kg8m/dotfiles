@@ -453,15 +453,24 @@ if plugin.Register("tyru/open-browser.vim")
   plugin.Configure({
     lazy:   true,
     on_map: { nx: "<Plug>(openbrowser-open)" },
-    hook_source: () => openBrowser.OnSource(),
+    hook_source:      () => openBrowser.OnSource(),
+    hook_post_source: () => openBrowser.OnPostSource(),
   })
 endif
 
 if plugin.Register("tyru/open-browser-github.vim")
   plugin.Configure({
     lazy:    true,
-    on_cmd:  ["OpenGithubFile", "OpenGithubIssue", "OpenGithubPullReq"],
+    on_cmd:  ["OpenGithubFile"],
     depends: ["open-browser.vim"],
+
+    hook_post_source: () => {
+      # I don’t need these commands.
+      delcommand OpenGithubCommit
+      delcommand OpenGithubIssue
+      delcommand OpenGithubProject
+      delcommand OpenGithubPullReq
+    },
   })
 endif
 
