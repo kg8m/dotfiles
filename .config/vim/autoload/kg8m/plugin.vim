@@ -213,6 +213,70 @@ export def DisabledPlugins(): list<dict<any>>
   return GetInfo()->values()->filter((_, plugin) => empty(plugin.rtp))
 enddef
 
+# Check if there are renamed plugins.
+# Renamed plugins can’t be updated by `dein#check_update()`.
+export def CheckRenamedPlugins(): void
+  const Echo = (message) => {
+    echo $"[CheckRenamedPlugins] {message}"
+  }
+  const Info = (message) => logger.Info($"[CheckRenamedPlugins] {message}")
+  const Warn = (message) => logger.Warn($"[CheckRenamedPlugins] {message}")
+
+  EnableDisabledPlugins()
+
+  final results = { skipped: [], renamed: [], unknown: [] }
+  var i = 0
+  for plugin in GetInfo()->values()->sort((lhs, rhs) => tolower(lhs.repo) <# tolower(rhs.repo) ? -1 : 1)
+    redraw!
+    Echo($"Checking {plugin.repo}...")
+
+    i += 1
+
+    # Skip a plugin with `@` or `:`, e.g., `git@github.com:...`
+    if plugin.repo =~# '\v[@:]'
+      results.skipped += [plugin]
+      continue
+    endif
+
+    const response = system($"curl --silent --head --request HEAD https://github.com/{plugin.repo}")
+    const status   = matchstr(response, '\v(^|\r?\n)HTTP\S+\s+\zs\d{3}\ze')
+
+    if status =~# '^2'
+      # OK
+      continue
+    elseif status =~# '^3'
+      const new_repo = matchstr(response, '\v(^|\r?\n)location: https://github\.com/\zs[^[:space:]]+\ze')
+      results.renamed += [{ plugin: plugin, new_repo: new_repo }]
+    else
+      results.unknown += [{ plugin: plugin, status: status }]
+    endif
+
+    if i % 10 ==# 0
+      sleep 1
+    endif
+  endfor
+
+  redraw!
+
+  if !empty(results.skipped)
+    Info($"Skipped plugins: {results.skipped->mapnew((_, plugin) => plugin.repo)->join(", ")}")
+  endif
+
+  if !empty(results.renamed)
+    for result in results.renamed
+      Info($"Renamed plugin: {result.plugin.repo} => {result.new_repo}")
+    endfor
+  endif
+
+  if !empty(results.unknown)
+    for result in results.unknown
+      Warn($"Unknown response status: {result.status} (plugin: {result.plugin.repo})")
+    endfor
+  endif
+
+  Info("Done.")
+enddef
+
 # Source lazily but early to optimize sourcing many plugins
 def DequeueOnStart(): void
   if empty(cache.on_start_queue)
