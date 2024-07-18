@@ -75,17 +75,20 @@ function timetrack:start {
 
 function timetrack:end {
   local last_status=$?
-  local command="${__TIMETRACK_COMMAND//'/'\\''}"
-
   local finished_at="$(date +%s)"
 
   if [ -z "${__TIMETRACK_STARTED_AT}" ] || [ -z "${__TIMETRACK_COMMAND}" ]; then
     return
   fi
 
+  local started_at="${__TIMETRACK_STARTED_AT}"
+  local command="${__TIMETRACK_COMMAND//'/'\\''}"
+  unset __TIMETRACK_STARTED_AT
+  unset __TIMETRACK_COMMAND
+
   # Don't use `[[ "${command}" =~ ${TIMETRACK_PATTERN} ]]` because it doesn't work on Mac
   if echo "${command}" | grep -E -v "${TIMETRACK_IGNORE_PATTERN}" | grep -E -q "${TIMETRACK_PATTERN}"; then
-    local exec_time=$((finished_at - __TIMETRACK_STARTED_AT))
+    local exec_time=$((finished_at - started_at))
 
     if [ "${last_status}" = "0" ]; then
       local result="Command succeeded!!"
@@ -120,9 +123,6 @@ function timetrack:end {
     printf "\n* * *\n"
     echo "${title}"
     echo "${message}"
-
-    unset __TIMETRACK_STARTED_AT
-    unset __TIMETRACK_COMMAND
   fi
 }
 
