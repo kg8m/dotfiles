@@ -183,12 +183,13 @@ export def Others(): void
 
   # This defines what bases Vim will consider for numbers when using the `CTRL-A` and `CTRL-X` commands for adding to and
   # subtracting from a number respectively.
-  #   octal:    If included, numbers that start with a zero will be considered to be octal. Example: Using CTRL-A on "007"
-  #             results in "010".
-  #   unsigned: If included, numbers are recognized as unsigned. Thus a leading dash or negative sign won't be considered
-  #             as part of the number.
+  #   octal: If included, numbers that start with a zero will be considered to be octal. Example: Using CTRL-A on "007"
+  #          results in "010".
+  #   blank: If included, treat numbers as signed or unsigned based on preceding whitespace. If a number with a leading
+  #          dash has its dash immediately preceded by a non-whitespace character (i.e., not a tab or a " "), the
+  #          negative sign won't be considered as part of the number.
   set nrformats-=octal
-  set nrformats+=unsigned
+  set nrformats+=blank
 
   # ' => Maximum number of previously edited files for which the marks are remembered.
   # < => Maximum number of lines saved for each register.
