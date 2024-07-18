@@ -73,7 +73,7 @@ function timetrack:start {
   export __TIMETRACK_COMMAND="${command}"
 }
 
-function timetrack:end {
+function timetrack:finish {
   local last_status="$?"
   local finished_at="$(date +%s)"
 
@@ -127,4 +127,4 @@ function timetrack:end {
 }
 
 add-zsh-hook preexec timetrack:start
-add-zsh-hook precmd timetrack:end
+add-zsh-hook precmd timetrack:finish
