@@ -66,10 +66,6 @@ export TIMETRACK_PATTERN
 
 autoload -U add-zsh-hook
 
-__timetrack_threshold=30
-
-export __timetrack_threshold
-
 function timetrack:start {
   local command=$1
 
@@ -84,7 +80,7 @@ function timetrack:end {
 
   export __timetrack_end="$(date +%s)"
 
-  if [ -z "${__timetrack_start}" ] || [ -z "${__timetrack_threshold}" ]; then
+  if [ -z "${__timetrack_start}" ]; then
     return
   fi
 
@@ -103,6 +99,8 @@ function timetrack:end {
     title+=" (${exec_time} seconds)"
     notifier_options=(--title "${title}")
     message="Command: ${command}"
+
+    local __timetrack_threshold=30
 
     if ((exec_time < __timetrack_threshold)); then
       notifier_options+=(--nostay)
