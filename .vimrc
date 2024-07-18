@@ -909,7 +909,7 @@ if plugin.Register("machakann/vim-sandwich")
   })
 endif
 
-plugin.Register("arzg/vim-sh")
+plugin.Register("lunacookies/vim-sh")
 
 # Don’t use slim-template/vim-slim because it has some bugs.
 # For example, highlighting is broken with quoteless attribute like `span(class=detect_span_class)`.
@@ -934,7 +934,7 @@ if plugin.Register("mhinz/vim-startify", { if: !util.IsGitTmpEdit() })
   endif
 endif
 
-if plugin.Register("kopischke/vim-stay", { if: !util.IsGitCommit() })
+if plugin.Register("zhimsel/vim-stay", { if: !util.IsGitCommit() })
   import autoload "kg8m/configure/folding/manual.vim" as manualFolding
 
   set viewoptions=cursor,folds
@@ -947,7 +947,7 @@ endif
 
 plugin.Register("hashivim/vim-terraform")
 
-if plugin.Register("janko/vim-test")
+if plugin.Register("vim-test/vim-test")
   import autoload "kg8m/plugin/test.vim"
 
   nnoremap <Leader>T :write<CR><ScriptCmd>test.RunFileTest()<CR>
