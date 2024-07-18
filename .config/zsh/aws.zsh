@@ -148,13 +148,13 @@ HELP
   fi
 
   local finish_time="$(date '+%s')"
-  local notify_options=(--title "aws:logs:query")
+  local notifier_options=(--title "aws:logs:query")
 
   if ((finish_time - start_time < 15)); then
-    notify_options+=(--nostay)
+    notifier_options+=(--nostay)
   fi
 
-  notify "Querying has been completed." "${notify_options[@]}"
+  notify "Querying has been completed." "${notifier_options[@]}"
   execute_with_echo "jq --color-output . ${outpath} ${pager}"
   echo
   echo "See the result in \`${outpath}\`."
