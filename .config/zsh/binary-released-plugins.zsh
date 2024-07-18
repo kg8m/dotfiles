@@ -16,6 +16,7 @@ function plugin:setup:binary_releaseds {
     LuaLS/lua-language-server
     itchyny/mmv
     high-moctane/mocword
+    sorairolake/qrtool
     BurntSushi/ripgrep
     chmln/sd
     mvdan/sh
@@ -44,8 +45,15 @@ function plugin:setup:binary_releaseds {
     echo >&2
 
     case "${plugin}" in
+      qrtool)
+        execute_with_echo "tar --extract --use-compress-program unzstd --file qrtool-*.tar.zst"
+        execute_with_echo "rm -f qrtool-*.tar.zst"
+        ;;
+    esac
+
+    case "${plugin}" in
       actionlint | bat | checkmake | delta | direnv | efm-langserver | fd | gh | glab | golangci-lint | hyperfine |\
-      mmv | mocword | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
+      mmv | mocword | qrtool | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
         mv ./"${plugin}"* ./"${plugin}"
         ;;
       rg)
@@ -68,7 +76,7 @@ function plugin:setup:binary_releaseds {
       terraform-lsp | tldr | tokei | typos | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
-      bat | delta | efm-langserver | fd | golangci-lint | hyperfine | mmv | rg | sd | shellcheck)
+      bat | delta | efm-langserver | fd | golangci-lint | hyperfine | mmv | qrtool | rg | sd | shellcheck)
         local binary="${plugin}/${plugin}"
         ;;
       gh)
@@ -106,8 +114,8 @@ function plugin:setup:binary_releaseds {
     execute_with_echo "fd --type l --type x --glob '${command}' '${(j:' ':)path}'"
 
     case "${plugin}" in
-      bat | checkmake | delta | direnv | fd | fzf | gh | glab | hyperfine | lua-language-server | mmv | mocword | rg |\
-      sd | shellcheck | stylua | tldr | tokei | typos | zabrze)
+      bat | checkmake | delta | direnv | fd | fzf | gh | glab | hyperfine | lua-language-server | mmv | mocword |\
+      qrtool | rg | sd | shellcheck | stylua | tldr | tokei | typos | zabrze)
         execute_with_echo "${command} --version"
         ;;
       efm-langserver)
