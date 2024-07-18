@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
-PREVIOUS_HEAD=$1
-# NEW_HEAD=$2
-BRANCH_SWITCH=$3
-Z40="0000000000000000000000000000000000000000"
+# https://git-scm.com/docs/githooks#_post_checkout
+previous_head="$1"
+# new_head="$2"
+is_branch_checkout="$3"
+
+# https://stackoverflow.com/questions/73000182/githooks5-what-is-the-git-null-ref/73000183#73000183
+NULL_REF="0000000000000000000000000000000000000000"
+is_post_clone="$([ "${previous_head}" = "${NULL_REF}" ] && [ "${is_branch_checkout}" = "1" ] && echo "1" || echo "0")"
 
 # Continue only when "git clone" has been executed.
-if [ "${PREVIOUS_HEAD}" != "${Z40}" ] || [ "${BRANCH_SWITCH}" != "1" ]; then
+# https://www.klab.com/jp/blog/tech/2015/1033121546.html
+if [ "${is_post_clone}" = "1" ]; then
   exit 0
 fi
 
