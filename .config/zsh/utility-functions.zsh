@@ -551,7 +551,7 @@ function npm-diff {
 
   local version_to="${1:?}"
 
-  execute_with_echo "npx npm diff --diff=${package}@${version_from} --diff=${package}@${version_to} | delta"
+  execute_with_echo "npx npm diff --diff=${package}@${version_from} --diff=${package}@${version_to}"
 }
 
 function docker:containers:delete {
