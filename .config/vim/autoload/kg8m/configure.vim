@@ -151,7 +151,29 @@ export def Others(): void
 
   set fileformats=unix,dos,mac
 
-  set belloff=all
+  # :h 'belloff'
+  #   all         All events.
+  #   backspace   When hitting <BS> or <Del> and deleting results in an error.
+  #   cursor      Fail to move around using the cursor keys or <PageUp>/<PageDown> in |Insert-mode|.
+  #   complete    Error occurred when using |i_CTRL-X_CTRL-K| or |i_CTRL-X_CTRL-T|.
+  #   copy        Cannot copy char from insert mode using |i_CTRL-Y| or |i_CTRL-E|.
+  #   ctrlg       Unknown Char after <C-G> in Insert mode.
+  #   error       Other Error occurred (e.g. try to join last line) (mostly used in |Normal-mode| or |Cmdline-mode|).
+  #   esc         hitting <Esc> in |Normal-mode|.
+  #   ex          In |Visual-mode|, hitting |Q| results in an error.
+  #   hangul      Ignored.
+  #   insertmode  Pressing <Esc> in 'insertmode'.
+  #   lang        Calling the beep module for Lua/Mzscheme/TCL.
+  #   mess        No output available for |g<|.
+  #   showmatch   Error occurred for 'showmatch' function.
+  #   operator    Empty region error |cpo-E|.
+  #   register    Unknown register after <C-R> in |Insert-mode|.
+  #   shell       Bell from shell output |:!|.
+  #   spell       Error happened on spell suggest.
+  #   term        Bell from |:terminal| output.
+  #   wildmode    More matches in |cmdline-completion| available (depends on the 'wildmode' setting).
+  set belloff=backspace,cursor,esc,insertmode,shell,term,wildmode
+
   set diffopt+=algorithm:histogram
   set hidden
   set list
