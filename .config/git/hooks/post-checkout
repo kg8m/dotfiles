@@ -20,6 +20,4 @@ if [ -f .git_templates/hooks/post-checkout ]; then
   else
     printf "\e[1;38;5;3m%s\e[0;0m\n" "WARN -- \`.git_templates/hooks/post-checkout\` exists but not allowed." >&2
   fi
-else
-  exit 0
 fi
