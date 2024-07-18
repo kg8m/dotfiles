@@ -7,6 +7,19 @@ if [ ! -f "config/routes.rb" ]; then
 fi
 
 target_filepaths=("config/routes.rb")
+target_candidate_filepaths=(
+  ".env"
+  ".envrc"
+  ".ruby-version"
+  "Gemfile"
+  "Gemfile.lock"
+)
+
+for target_candidate_filepath in "${target_candidate_filepaths[@]}"; do
+  if [ -f "${target_candidate_filepath}" ]; then
+    target_filepaths+=("${target_candidate_filepath}")
+  fi
+done
 
 if [ -d "config/routes" ]; then
   for target_filepath in config/routes/**/*.rb; do
