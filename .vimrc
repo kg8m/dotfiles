@@ -451,6 +451,7 @@ if plugin.Register("lambdalisue/vim-mr")
 
   g:mr_mrw_disabled = true
   g:mr_mrr_disabled = true
+  g:mr_mrd_disabled = true
   g:mr#threshold = 10'000
   g:mr#mru#filename = $"{$XDG_DATA_HOME}/vim/mr/mru"
   g:mr#mru#predicates = [(filepath) => mr.Predicate(filepath)]
