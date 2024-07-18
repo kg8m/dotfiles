@@ -69,23 +69,23 @@ autoload -U add-zsh-hook
 function timetrack:start {
   local command=$1
 
-  export __timetrack_start=$(date +%s)
-  export __timetrack_command="${command}"
+  export __TIMETRACK_STARTED_AT=$(date +%s)
+  export __TIMETRACK_COMMAND="${command}"
 }
 
 function timetrack:end {
   local last_status=$?
-  local command="${__timetrack_command//'/'\\''}"
+  local command="${__TIMETRACK_COMMAND//'/'\\''}"
 
-  local __timetrack_end="$(date +%s)"
+  local finished_at="$(date +%s)"
 
-  if [ -z "${__timetrack_start}" ] || [ -z "${__timetrack_command}" ]; then
+  if [ -z "${__TIMETRACK_STARTED_AT}" ] || [ -z "${__TIMETRACK_COMMAND}" ]; then
     return
   fi
 
   # Don't use `[[ "${command}" =~ ${TIMETRACK_PATTERN} ]]` because it doesn't work on Mac
   if echo "${command}" | grep -E -v "${TIMETRACK_IGNORE_PATTERN}" | grep -E -q "${TIMETRACK_PATTERN}"; then
-    local exec_time=$((__timetrack_end - __timetrack_start))
+    local exec_time=$((finished_at - __TIMETRACK_STARTED_AT))
 
     if [ "${last_status}" = "0" ]; then
       local result="Command succeeded!!"
@@ -99,9 +99,9 @@ function timetrack:end {
     local notifier_options=(--title "${title}")
     local message="Command: ${command}"
 
-    local __timetrack_threshold=30
+    local long_run_threshold_seconds=30
 
-    if ((exec_time < __timetrack_threshold)); then
+    if ((exec_time < long_run_threshold_seconds)); then
       notifier_options+=(--nostay)
     fi
 
@@ -113,7 +113,7 @@ function timetrack:end {
       title="${title//${result}/$(highlight:red "${result}")}"
     fi
 
-    if ((exec_time >= __timetrack_threshold)); then
+    if ((exec_time >= long_run_threshold_seconds)); then
       title="${title//${exec_time} seconds/$(highlight:yellow "${exec_time} seconds")}"
     fi
 
@@ -121,8 +121,8 @@ function timetrack:end {
     echo "${title}"
     echo "${message}"
 
-    unset __timetrack_start
-    unset __timetrack_command
+    unset __TIMETRACK_STARTED_AT
+    unset __TIMETRACK_COMMAND
   fi
 }
 
