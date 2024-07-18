@@ -18,12 +18,14 @@ rules:
     options:
       wordBoundary: true
   - expected: ESLint
+    pattern: /(?<!-)(?<!@)eslint(?!-)/i
     options:
       wordBoundary: true
   - expected: fzf
     options:
       wordBoundary: true
   - expected: Git
+    pattern: /git(?!-)/i
     options:
       wordBoundary: true
   - expected: Homebrew
@@ -37,6 +39,7 @@ rules:
     options:
       wordBoundary: true
   - expected: jQuery
+    pattern: /jquery(?!-)/i
     options:
       wordBoundary: true
   - expected: MacVim
@@ -67,19 +70,18 @@ rules:
     options:
       wordBoundary: true
   - expected: Prettier
+    pattern: /(?<!-)prettier/i
     options:
       wordBoundary: true
   - expected: ripgrep
     options:
       wordBoundary: true
   - expected: RSpec
+    pattern: /(?<!-)rspec/i
     options:
       wordBoundary: true
   - expected: RuboCop
-    pattern: /rubo.?cop/i
-    options:
-      wordBoundary: true
-  - expected: sh
+    pattern: /rubo.?cop(?!-)/i
     options:
       wordBoundary: true
   - expected: ShellCheck
@@ -108,6 +110,7 @@ rules:
     options:
       wordBoundary: true
   - expected: TypeScript
+    pattern: /(?<!-)(?<!@)typescript(?!-)/i
     options:
       wordBoundary: true
   - expected: vanilla-extract
@@ -137,6 +140,7 @@ rules:
     options:
       wordBoundary: true
   - expected: Webpacker
+    pattern: /(?<!/)webpacker/i
     options:
       wordBoundary: true
   - expected: WEBrick
