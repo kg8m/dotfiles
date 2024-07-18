@@ -154,7 +154,11 @@ HELP
     notifier_options+=(--nostay)
   fi
 
-  notify "Querying has been completed." "${notifier_options[@]}"
+  local notifier_args="$(printf "%q " "Querying has been completed." "${notifier_options[@]}")"
+  async_stop_worker  "AWS_LOGS_QUERY_NOTIFIER_$$" 2> /dev/null
+  async_start_worker "AWS_LOGS_QUERY_NOTIFIER_$$"
+  async_job          "AWS_LOGS_QUERY_NOTIFIER_$$" "notify ${notifier_args}"
+
   execute_with_echo "jq --color-output . ${outpath} ${pager}"
   echo
   echo "See the result in \`${outpath}\`."
