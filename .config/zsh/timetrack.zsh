@@ -75,7 +75,6 @@ function timetrack:start {
 
 function timetrack:end {
   local last_status=$?
-  local exec_time result title notifier_options message
   local command="${__timetrack_command//'/'\\''}"
 
   local __timetrack_end="$(date +%s)"
@@ -86,19 +85,19 @@ function timetrack:end {
 
   # Don't use `[[ "${command}" =~ ${TIMETRACK_PATTERN} ]]` because it doesn't work on Mac
   if echo "${command}" | grep -E -v "${TIMETRACK_IGNORE_PATTERN}" | grep -E -q "${TIMETRACK_PATTERN}"; then
-    exec_time=$((__timetrack_end - __timetrack_start))
+    local exec_time=$((__timetrack_end - __timetrack_start))
 
     if [ "${last_status}" = "0" ]; then
-      result="Command succeeded!!"
-      title="👼 ${result}"
+      local result="Command succeeded!!"
+      local title="👼 ${result}"
     else
-      result="Command failed!!"
-      title="👿 ${result}"
+      local result="Command failed!!"
+      local title="👿 ${result}"
     fi
 
     title+=" (${exec_time} seconds)"
-    notifier_options=(--title "${title}")
-    message="Command: ${command}"
+    local notifier_options=(--title "${title}")
+    local message="Command: ${command}"
 
     local __timetrack_threshold=30
 
