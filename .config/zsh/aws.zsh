@@ -161,8 +161,8 @@ HELP
 
   execute_with_echo "jq --color-output . ${outpath} ${pager}"
   echo
-  echo "See the result in \`${outpath}\`."
-  echo "Stats: $(aws logs get-query-results "${result_options[@]}" --query statistics)"
+  echo:info "See the result in \`${outpath}\`."
+  echo:info "Stats: $(aws logs get-query-results "${result_options[@]}" --query statistics)"
 }
 
 # https://docs.aws.amazon.com/cli/latest/reference/logs/describe-log-groups.html
