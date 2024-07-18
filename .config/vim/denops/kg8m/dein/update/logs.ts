@@ -34,7 +34,7 @@ const LOG_SKIP_PATTERN = new RegExp(
   [
     /^$/,
     /Successfully rebased and updated refs\/heads\/\w+/,
-    /^ \+ \w+\.\.\.\w+ +[^ ]+ +-> origin\/[^ ]+( +\(forced update\))?$/,
+    /^ [ +] \w+\.\.\.?\w+ +[^ ]+ +-> origin\/[^ ]+( +\(forced update\))?$/,
     /^ - \[deleted\] +[^ ]+ +-> [^ ]+$/,
     /^ [^ ]+ +\| +\d+ [-+]+$/,
     /^ \* \[(new branch|new tag)\] /,
