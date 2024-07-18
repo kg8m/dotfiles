@@ -65,7 +65,7 @@ function() {
 
       # Restart the worker everytime because it causes high load average and it is sometimes dead in background
       async_stop_worker       "${PROMPT_REFRESHER_WORKER_NAME}"
-      async_start_worker      "${PROMPT_REFRESHER_WORKER_NAME}" -n
+      async_start_worker      "${PROMPT_REFRESHER_WORKER_NAME}"
       async_job               "${PROMPT_REFRESHER_WORKER_NAME}" "prompt:header:lazy_build ${COLUMNS}"
       async_register_callback "${PROMPT_REFRESHER_WORKER_NAME}" "prompt:refresh:finish:with_trigger"
     }
@@ -98,7 +98,7 @@ function() {
         prompt:refresh:git:trigger
       fi
 
-      async_start_worker      "${PROMPT_REFRESHER_WORKER_NAME}" -n
+      async_start_worker      "${PROMPT_REFRESHER_WORKER_NAME}"
       async_job               "${PROMPT_REFRESHER_WORKER_NAME}" "sleep \"${sleep}\""
       async_register_callback "${PROMPT_REFRESHER_WORKER_NAME}" "prompt:refresh:trigger"
     }
@@ -115,7 +115,7 @@ function() {
       fi
 
       async_stop_worker       "${GIT_PROMPT_REFRESHER_WORKER_NAME}"
-      async_start_worker      "${GIT_PROMPT_REFRESHER_WORKER_NAME}" -n
+      async_start_worker      "${GIT_PROMPT_REFRESHER_WORKER_NAME}"
       async_job               "${GIT_PROMPT_REFRESHER_WORKER_NAME}" "sleep \"$((sleep * 3))\""
       async_register_callback "${GIT_PROMPT_REFRESHER_WORKER_NAME}" "prompt:refresh:git:finish:with_trigger"
     }
