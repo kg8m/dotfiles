@@ -116,9 +116,8 @@ export def Undo(): void
 enddef
 
 export def Commands(): void
-  # http://vim-users.jp/2009/05/hack17/
-  # Execute `:edit` to record as a MRU file
-  command! -nargs=1 -complete=file Rename f <args> | delete(expand("#")) | write | edit
+  # Inspired by http://vim-users.jp/2009/05/hack17/
+  command! -nargs=1 -complete=file Rename filecopy(expand("%"), <q-args>) | edit <args> | delete(expand("#"))
 
   # Show counts
   # :h g_CTRL-G
