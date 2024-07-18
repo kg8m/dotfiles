@@ -3,29 +3,28 @@ function aws:network:verify {
   return 0
 }
 
-# https://docs.aws.amazon.com/cli/latest/reference/logs/filter-log-events.html
-function aws:logs:filter_events {
+# https://docs.aws.amazon.com/cli/latest/reference/logs/start-query.html
+# https://docs.aws.amazon.com/cli/latest/reference/logs/get-query-results.html
+function aws:logs:query {
   local profile start_time end_time filter
   local limit="1000"
   local group_name=""
-  local stream_names=()
   local executor="execute_with_confirm"
   local pager="| less"
 
   local help="$(
-    cat <<-HELP
-aws:logs:filter_events {parameters}
+    cat <<- HELP
+aws:logs:query {parameters}
 
   *Parameter*     *Required?*  *Default*   *Note*  *Example*
   --profile       required                         --profile 'default'
   --start-time    required                 JST     --start-time '2022-02-02 02:00:00'
   --end-time      required                 JST     --end-time '2022-02-02 02:00:00'
-  --filter        required                         --filter '{ $.demand_id = "123456" || $.params = "*123456*" }'
+  --filter        required                         --filter '@logStream in ["foo", "bar"]'
   --limit         optional     1000                --limit 100
   --group-name    optional     (Select)            --group-name example_group
-  --stream-names  optional     (Select)            --stream-names example_stream.1.log example_stream.2.log
 
-See https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html for filter syntaxes.
+See https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html for query syntaxes.
 HELP
   )"
 
@@ -55,13 +54,6 @@ HELP
         group_name="${2:?}"
         shift 2
         ;;
-      --stream-names)
-        shift 1
-        while (("${#@}" > 0)) && [[ ! "$1" =~ ^- ]]; do
-          stream_names+=("${1:?}")
-          shift 1
-        done
-        ;;
 
       # Undocumented options
       --force | --no-confirm | --yes)
@@ -79,6 +71,7 @@ HELP
       *)
         echo:error "Unknown option/argument: $1"
         return 1
+        ;;
     esac
   done
 
@@ -99,50 +92,73 @@ HELP
     return 1
   fi
 
-  if [ -z "${stream_names[*]}" ]; then
-    stream_names=("${(@f)$(_aws:logs:select_streams "${profile}" "${group_name}")}")
+  local query_options=(
+    --profile "${profile}"
+    --log-group-name "${group_name}"
+    --start-time "$(($(date -j -f '%F %T' "${start_time}" '+%s') * 1000))"
+    --end-time "$(($(date -j -f '%F %T' "${end_time}" '+%s') * 1000))"
+
+    # `+ 9 * 60 * 60 * 1000` converts the UTC timestamp to JST.
+    # The JST @timestamp and @message will be returned by `aws logs get-query-results` and be parsed by `jq` later.
+    --query-string "'filter ${filter} | sort @timestamp | display @timestamp + 9 * 60 * 60 * 1000, @message'"
+
+    --limit "${limit}"
+  )
+  local outpath="/tmp/aws-logs-query-result-$(date '+%Y%m%d-%H%M%S').txt"
+
+  local start_time="$(date '+%s')"
+  local query_id="$("${executor}" "aws logs start-query ${query_options[*]}" | jq --raw-output '.queryId')"
+
+  if [ -z "${query_id}" ]; then
+    # Canceled.
+    return
   fi
 
-  if [ -z "${stream_names[*]}" ]; then
-    echo:error "No log stream names specified."
+  local result_options=(
+    --profile "${profile}"
+    --query-id "${query_id}"
+  )
+
+  # shellcheck disable=SC2317
+  function _aws:logs:query:status {
+    aws logs get-query-results "$@" --query "status" | jq --raw-output
+  }
+
+  # shellcheck disable=SC2317
+  function _aws:logs:query:result {
+    # The timestamp and data were specified in the `--query-string` of `aws logs start-query`.
+    aws logs get-query-results "$@" --query "results" |
+      jq --compact-output ".[] | { timestamp: .[0].value, data: (.[1].value | fromjson) }"
+  }
+
+  sleep 1
+  while [ "$(_aws:logs:query:status "${result_options[@]}")" = "Running" ]; do
+    echo:info "Waiting..."
+    sleep 1
+  done
+
+  local fixed_status="$(_aws:logs:query:status "${result_options[@]}")"
+
+  if [ "${fixed_status}" = "Complete" ]; then
+    _aws:logs:query:result "${result_options[@]}" > "${outpath}"
+  else
+    echo:error "status: ${fixed_status}"
+    echo:error "Run \`aws logs get-query-results ${result_options[*]}\` if needed."
     return 1
   fi
 
-  local aws_logs_options=(
-    --profile "${profile}"
-    --log-group-name "${group_name}"
-    --log-stream-names "'${(j:' ':)stream_names}'"
-    --start-time "$(($(date -j -f '%F %T' "${start_time}" '+%s') * 1000))"
-    --end-time "$(($(date -j -f '%F %T' "${end_time}" '+%s') * 1000))"
-    --filter "'${filter}'"
-    --query "'events[]'"
-    --page-size "${limit}"
-    --max-items "${limit}"
-    --output json
-  )
-  local jq_arg=".[] | [( .timestamp / 1000 | localtime | todateiso8601 ), ( .message | fromjson )]"
-  local outpath="/tmp/aws-logs-filter_events-result-$(date '+%Y%m%d-%H%M%S').txt"
-
-  # shellcheck disable=SC2034
-  local filtering_commands=(
-    "aws logs filter-log-events ${aws_logs_options[*]}"
-    "jq --compact-output --monochrome-output '${jq_arg}'"
-  )
-
-  local start_time="$(date '+%s')"
-  "${executor}" "${(j: | :)filtering_commands} > ${outpath}"
   local finish_time="$(date '+%s')"
-
-  local notify_options=(--title "aws:logs:filter_events")
+  local notify_options=(--title "aws:logs:query")
 
   if ((finish_time - start_time < 15)); then
     notify_options+=(--nostay)
   fi
 
-  notify "Filtering has been completed." "${notify_options[@]}"
+  notify "Querying has been completed." "${notify_options[@]}"
   execute_with_echo "jq --color-output . ${outpath} ${pager}"
   echo
   echo "See the result in \`${outpath}\`."
+  echo "Stats: $(aws logs get-query-results "${result_options[@]}" --query statistics)"
 }
 
 # https://docs.aws.amazon.com/cli/latest/reference/logs/describe-log-groups.html
@@ -152,16 +168,6 @@ function _aws:logs:select_group {
   aws logs describe-log-groups --profile "${profile}" --output json |
     jq '.logGroups[].logGroupName' --raw-output |
     filter --preview-window "hidden" --prompt "Select a log group> " --no-multi
-}
-
-# https://docs.aws.amazon.com/cli/latest/reference/logs/describe-log-streams.html
-function _aws:logs:select_streams {
-  local profile="${1:?}"
-  local group_name="${2:?}"
-
-  aws logs describe-log-streams --profile "${profile}" --log-group-name "${group_name}"  |
-    jq '.logStreams[].logStreamName' --raw-output |
-    filter --preview-window "hidden" --prompt "Select log streams> "
 }
 
 # https://docs.aws.amazon.com/systems-manager/latest/userguide/install-plugin-macos-overview.html
