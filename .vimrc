@@ -164,8 +164,8 @@ if plugin.Register("prabirshrestha/vim-lsp")
     hook_source: () => lsp.OnSource(),
   })
 
-  plugin.Register("mattn/vim-lsp-settings", { if: false, merged: false })
-  plugin.Register("tsuyoshicho/vim-efm-langserver-settings", { if: false, merged: false })
+  plugin.Register("mattn/vim-lsp-settings", { if: false })
+  plugin.Register("tsuyoshicho/vim-efm-langserver-settings", { if: false })
 endif
 
 if plugin.Register("hrsh7th/vim-vsnip")
@@ -186,7 +186,7 @@ if plugin.Register("hrsh7th/vim-vsnip")
 endif
 # }}}
 
-plugin.Register("dense-analysis/ale", { if: false, merged: false })
+plugin.Register("dense-analysis/ale", { if: false })
 plugin.Register("pearofducks/ansible-vim")
 
 # Show diff in Git's interactive rebase
