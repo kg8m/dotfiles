@@ -128,9 +128,7 @@ function timetrack:finish {
       title="${title//${exec_time} seconds/$(highlight:yellow "${exec_time} seconds")}"
     fi
 
-    printf "\n* * *\n"
-    echo "${title}"
-    echo "${message}"
+    printf "\n* * *\n%s\n%s\n" "${title}" "${message}"
   fi
 }
 
