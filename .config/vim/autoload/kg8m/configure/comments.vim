@@ -33,10 +33,10 @@ def Set(): void
     endfor
 
     # Blockquote
-    setlocal comments+=nb:>
+    setlocal comments+=nb:\>
 
     # Clear defaults.
-    setlocal com-=fb:* com-=fb:- com-=fb:+ com-=n:>
+    setlocal com-=fb:* com-=fb:- com-=fb:+ com-=n:\>
   elseif &filetype ==# "slim"
     # Clear `comments` set by vim-ruby.
     setlocal comments-=b:#
