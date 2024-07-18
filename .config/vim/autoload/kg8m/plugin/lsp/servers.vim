@@ -72,6 +72,8 @@ def ExtraConfigForBashLanguageServer(): dict<any>
   return {
     cmd: (_) => ["bash-language-server", "start"],
     env: NodeToolsEnv(),
+
+    document_format: false,
   }
 enddef
 
