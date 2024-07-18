@@ -195,17 +195,6 @@ plugin.Register("pearofducks/ansible-vim")
 # Show diff in Git's interactive rebase
 plugin.Register("hotwatermorning/auto-git-diff", { if: util.IsGitRebase() })
 
-if plugin.Register("girishji/autosuggest.vim")
-  plugin.Configure({
-    lazy:     true,
-    on_event: ["CmdlineEnter"],
-    hook_post_source: () => {
-      # Remove the delay because it sometimes annoys my command-line operations.
-      g:AutoSuggestSetup({ cmd: { delay: 0 } })
-    },
-  })
-endif
-
 if plugin.Register("kat0h/bufpreview.vim", { if: !util.IsGitTmpEdit() })
   plugin.Configure({
     lazy:    true,
@@ -527,18 +516,6 @@ if plugin.Register("stefandtw/quickfix-reflector.vim")
   plugin.Configure({
     lazy:  true,
     on_ft: ["qf"],
-  })
-endif
-
-if plugin.Register("mechatroner/rainbow_csv", { if: !util.IsGitTmpEdit() })
-  augroup vimrc-plugin-rainbow_csv
-    autocmd!
-    autocmd BufNewFile,BufRead *.csv set filetype=csv
-  augroup END
-
-  plugin.Configure({
-    lazy:  true,
-    on_ft: ["csv"],
   })
 endif
 
