@@ -22,6 +22,9 @@ def Set(): void
     for marker in ["*", "-"]
       # Insert `* [ ]` after `* [ ] foo` or `* [x] foo`.
       &l:comments ..= (empty(&l:comments) ? "" : ",") .. $"bs:{marker} [x],bm:{marker} [ ],b:{marker}"
+
+      # Support blockquotes.
+      &l:comments ..= $",bs:> {marker} [x],bm:> {marker} [ ],b:> {marker}"
     endfor
 
     # Insert `1. ` after `1. foo`.
