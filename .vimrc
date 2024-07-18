@@ -164,6 +164,7 @@ if plugin.Register("prabirshrestha/vim-lsp")
     hook_source: () => lsp.OnSource(),
   })
 
+  # Watching
   plugin.Register("mattn/vim-lsp-settings", { if: false })
   plugin.Register("tsuyoshicho/vim-efm-langserver-settings", { if: false })
 endif
@@ -186,7 +187,9 @@ if plugin.Register("hrsh7th/vim-vsnip")
 endif
 # }}}
 
+# Watching
 plugin.Register("dense-analysis/ale", { if: false })
+
 plugin.Register("pearofducks/ansible-vim")
 
 # Show diff in Git's interactive rebase
@@ -999,7 +1002,9 @@ plugin.Register("h1mesuke/textobj-wiw", { lazy: true, on_start: true })
 # For syntaxes
 plugin.Register("thinca/vim-themis")
 
+# Watching
 plugin.Register("mattn/vim-treesitter", { if: false })
+
 plugin.Register("posva/vim-vue")
 
 if plugin.Register("thinca/vim-zenspace")
