@@ -48,6 +48,7 @@ if plugin.Register("prabirshrestha/asyncomplete.vim")
     lazy:     true,
     on_event: ["InsertEnter"],
     on_start: true,
+
     hook_source:      () => asyncomplete.OnSource(),
     hook_post_source: () => asyncomplete.OnPostSource(),
   })
@@ -60,6 +61,7 @@ if plugin.Register("prabirshrestha/asyncomplete-buffer.vim")
     on_event: ["InsertEnter"],
     on_start: true,
     depends:  ["asyncomplete.vim"],
+
     hook_post_source: () => asyncompleteBuffer.OnPostSource(),
   })
 endif
@@ -71,6 +73,7 @@ if plugin.Register("prabirshrestha/asyncomplete-file.vim")
     on_event: ["InsertEnter"],
     on_start: true,
     depends:  ["asyncomplete.vim"],
+
     hook_post_source: () => asyncompleteFile.OnPostSource(),
   })
 endif
@@ -82,6 +85,7 @@ if plugin.Register("kg8m/asyncomplete-mocword.vim")
     on_event: ["InsertEnter"],
     on_start: true,
     depends:  ["asyncomplete.vim"],
+
     hook_post_source: () => asyncompleteMocword.OnPostSource(),
   })
 endif
@@ -93,6 +97,7 @@ if plugin.Register("prabirshrestha/asyncomplete-neosnippet.vim")
     on_event: ["InsertEnter"],
     on_start: true,
     depends:  ["asyncomplete.vim"],
+
     hook_post_source: () => asyncompleteNeosnippet.OnPostSource(),
   })
 endif
@@ -113,6 +118,7 @@ if plugin.Register("kitagry/asyncomplete-tabnine.vim", { if: util.IsTabnineAvail
     on_event: ["InsertEnter"],
     on_start: true,
     depends:  ["asyncomplete.vim"],
+
     hook_post_source: () => asyncompleteTabnine.OnPostSource(),
   })
 endif
@@ -124,6 +130,7 @@ if plugin.Register("prabirshrestha/asyncomplete-tags.vim")
     on_event: ["InsertEnter"],
     on_start: true,
     depends:  ["asyncomplete.vim"],
+
     hook_post_source: () => asyncompleteTags.OnPostSource(),
   })
 endif
@@ -138,6 +145,7 @@ if plugin.Register("Shougo/neosnippet.vim")
     on_ft: ["snippet", "neosnippet"],
 
     on_start: true,
+
     hook_source:      () => neosnippet.OnSource(),
     hook_post_source: () => neosnippet.OnPostSource(),
   })
@@ -152,6 +160,7 @@ if plugin.Register("prabirshrestha/vim-lsp")
   plugin.Configure({
     lazy:  true,
     on_ft: lspServers.Filetypes(),
+
     hook_source: () => lsp.OnSource(),
   })
 
@@ -164,6 +173,7 @@ if plugin.Register("hrsh7th/vim-vsnip")
   plugin.Configure({
     lazy: true,
     on_event: ["InsertEnter"],
+
     hook_post_source: () => vsnip.OnPostSource(),
   })
 
@@ -209,6 +219,7 @@ if plugin.Register("tyru/caw.vim", { if: !util.IsGitTmpEdit() })
 
   plugin.Configure({
     lazy: true,
+
     hook_source: () => caw.OnSource(),
   })
 endif
@@ -225,6 +236,7 @@ if plugin.Register("rhysd/conflict-marker.vim")
   plugin.Configure({
     lazy:   true,
     on_map: { n: "<Plug>(conflict-marker-" },
+
     hook_source: () => conflictMarker.OnSource(),
   })
 endif
@@ -262,6 +274,7 @@ if plugin.Register("gamoutatsumi/dps-ghosttext.vim", { if: $USE_GHOST_TEXT ==# "
     lazy:    true,
     on_cmd:  ["GhostStart"],
     depends: ["denops.vim"],
+
     hook_source: () => ghosttext.OnSource(),
   })
 endif
@@ -276,6 +289,7 @@ if plugin.Register("spolu/dwm.vim", { if: !util.IsGitTmpEdit() })
     lazy:    true,
     on_cmd:  ["DWMOpen"],
     on_func: ["DWM_New", "DWM_AutoEnter", "DWM_Stack"],
+
     hook_source:      () => dwm.OnSource(),
     hook_post_source: () => dwm.OnPostSource(),
   })
@@ -325,6 +339,7 @@ if plugin.Register("junegunn/fzf.vim", { if: executable("fzf") })
     lazy:     true,
     on_start: true,
     depends:  ["fzf"],
+
     hook_source: () => fzf.OnSource(),
   })
 
@@ -343,6 +358,7 @@ if plugin.Register("junegunn/fzf.vim", { if: executable("fzf") })
       on_cmd:  ["FzfTjump"],
       on_map:  { nx: "<Plug>(fzf-tjump)" },
       depends: ["fzf.vim", "vim-parallel-auto-ctags"],
+
       hook_source: () => fzfTjump.OnSource(),
     })
   endif
@@ -376,6 +392,7 @@ if plugin.Register("Yggdroot/indentLine", { if: !util.IsGitTmpEdit() })
   plugin.Configure({
     lazy:     true,
     on_start: true,
+
     hook_source: () => indentLine.OnSource(),
   })
 endif
@@ -389,6 +406,7 @@ if plugin.Register("fuenor/JpFormat.vim")
   plugin.Configure({
     lazy:   true,
     on_map: { x: "gq" },
+
     hook_source: () => jpformat.OnSource(),
   })
 endif
@@ -406,6 +424,7 @@ if plugin.Register("cohama/lexima.vim")
     lazy:     true,
     on_event: ["InsertEnter"],
     on_start: true,
+
     hook_source:      () => lexima.OnSource(),
     hook_post_source: () => lexima.OnPostSource(),
   })
@@ -416,6 +435,7 @@ if plugin.Register("itchyny/lightline.vim")
   plugin.Configure({
     lazy:     true,
     on_start: true,
+
     hook_source:      () => lightline.OnSource(),
     hook_post_source: () => lightline.OnPostSource(),
   })
@@ -425,6 +445,7 @@ if plugin.Register("AndrewRadev/linediff.vim")
   plugin.Configure({
     lazy:   true,
     on_cmd: ["Linediff"],
+
     hook_source: () => {
       g:linediff_second_buffer_command = "rightbelow vertical new"
     },
@@ -453,6 +474,7 @@ if plugin.Register("tyru/open-browser.vim")
   plugin.Configure({
     lazy:   true,
     on_map: { nx: "<Plug>(openbrowser-open)" },
+
     hook_source:      () => openBrowser.OnSource(),
     hook_post_source: () => openBrowser.OnPostSource(),
   })
@@ -493,6 +515,7 @@ if plugin.Register("yssl/QFEnter")
   plugin.Configure({
     lazy:  true,
     on_ft: ["qf"],
+
     hook_source: () => qfenter.OnSource(),
   })
 endif
@@ -535,6 +558,7 @@ if plugin.Register("AndrewRadev/splitjoin.vim", { if: !util.IsGitTmpEdit() })
   plugin.Configure({
     lazy:   true,
     on_cmd: ["SplitjoinJoin", "SplitjoinSplit"],
+
     hook_source: () => {
       g:splitjoin_split_mapping       = ""
       g:splitjoin_join_mapping        = ""
@@ -557,6 +581,7 @@ if plugin.Register("mbbill/undotree")
   plugin.Configure({
     lazy:   true,
     on_cmd: ["UndotreeToggle"],
+
     hook_source: () => {
       g:undotree_WindowLayout       = 2
       g:undotree_SplitWidth         = 50
@@ -583,6 +608,7 @@ if plugin.Register("FooSoft/vim-argwrap", { if: !util.IsGitTmpEdit() })
   plugin.Configure({
     lazy:   true,
     on_cmd: ["ArgWrap"],
+
     hook_source: () => argwrap.OnSource(),
   })
 endif
@@ -621,6 +647,7 @@ if plugin.Register("alvan/vim-closetag")
   plugin.Configure({
     lazy:  true,
     on_ft: closetag.FILETYPES,
+
     hook_source:      () => closetag.OnSource(),
     hook_post_source: () => closetag.OnPostSource(),
   })
@@ -693,6 +720,7 @@ if plugin.Register("itchyny/vim-histexclude")
 
   plugin.Configure({
     lazy: true,
+
     hook_source: () => histexclude.OnSource(),
   })
 endif
@@ -702,6 +730,7 @@ if plugin.Register("obcat/vim-hitspop")
   plugin.Configure({
     lazy:     true,
     on_start: true,
+
     hook_source: () => hitspop.OnSource(),
   })
 endif
@@ -710,6 +739,7 @@ if plugin.Register("git@github.com:kg8m/vim-hz_ja-extracted")
   plugin.Configure({
     lazy:   true,
     on_cmd: ["Hankaku", "HzjaConvert", "Zenkaku"],
+
     hook_source: () => {
       g:hz_ja_extracted_default_commands = true
       g:hz_ja_extracted_default_mappings = false
@@ -722,6 +752,7 @@ if plugin.Register("deton/jasentence.vim")
   plugin.Configure({
     lazy:   true,
     on_map: { nv: ["(", ")"], o: "s" },
+
     hook_source: () => {
       g:jasentence_endpat = '[。．？！!?]\+'
     },
@@ -741,6 +772,7 @@ if plugin.Register("andymass/vim-matchup")
   plugin.Configure({
     lazy:     true,
     on_start: true,
+
     hook_source: () => matchup.OnSource(),
   })
 endif
@@ -753,6 +785,7 @@ if plugin.Register("mattn/vim-molder", { if: !util.IsGitTmpEdit() })
   plugin.Configure({
     lazy:     true,
     on_start: true,
+
     hook_source: () => molder.OnSource(),
   })
 endif
@@ -764,6 +797,7 @@ if plugin.Register("kg8m/vim-parallel-auto-ctags", { if: util.IsCtagsAvailable()
   plugin.Configure({
     lazy:     true,
     on_start: true,
+
     hook_source:      () => parallelAutoCtags.OnSource(),
     hook_post_source: () => parallelAutoCtags.OnPostSource(),
   })
@@ -834,6 +868,7 @@ if plugin.Register("joker1007/vim-ruby-heredoc-syntax", { if: !util.IsGitTmpEdit
   plugin.Configure({
     lazy:  true,
     on_ft: ["ruby"],
+
     hook_source: () => rubyHeredocSyntax.OnSource(),
   })
 endif
@@ -887,6 +922,7 @@ if plugin.Register("machakann/vim-sandwich")
   plugin.Configure({
     lazy:   true,
     on_map: { nx: "<Plug>(operator-sandwich-", o: "<Plug>(textobj-sandwich-" },
+
     hook_source:      () => sandwich.OnSource(),
     hook_post_source: () => sandwich.OnPostSource(),
   })
@@ -908,6 +944,7 @@ if plugin.Register("mhinz/vim-startify", { if: !util.IsGitTmpEdit() })
       lazy:     true,
       on_cmd:   ["Startify"],
       on_event: ["BufWritePre"],
+
       hook_source:      () => startify.OnSource(),
       hook_post_source: () => startify.OnPostSource(),
     })
@@ -938,6 +975,7 @@ if plugin.Register("janko/vim-test", { if: !util.IsGitTmpEdit() })
   plugin.Configure({
     lazy:   true,
     on_cmd: ["TestFile", "TestNearest"],
+
     hook_source: () => test.OnSource(),
   })
 endif
@@ -975,6 +1013,7 @@ if plugin.Register("thinca/vim-zenspace")
   plugin.Configure({
     lazy:     true,
     on_start: true,
+
     hook_source:      () => zenspace.OnSource(),
     hook_post_source: () => zenspace.OnPostSource(),
   })
@@ -1022,6 +1061,7 @@ if plugin.Register("LeafCage/yankround.vim")
   plugin.Configure({
     lazy:     true,
     on_start: true,
+
     hook_source: () => yankround.OnSource(),
   })
 endif
