@@ -1085,6 +1085,7 @@ colorscheme molokai
 # ----------------------------------------------
 # Non-plugin Configurations  # {{{
 import autoload "kg8m/configure.vim"
+import autoload "kg8m/util/check_typo.vim" as checkTypo
 import autoload "kg8m/util/dim_inactive_windows.vim" as dimInactiveWindows
 
 configure.Backup()
@@ -1100,15 +1101,14 @@ configure.Scroll()
 configure.Search()
 configure.Statusline()
 configure.Undo()
+checkTypo.Setup()
 dimInactiveWindows.Setup()
 
 if !util.IsGitTmpEdit()
   import autoload "kg8m/util/auto_reload.vim" as autoReload
-  import autoload "kg8m/util/check_typo.vim" as checkTypo
   import autoload "kg8m/util/daemons.vim"
 
   autoReload.Setup()
-  checkTypo.Setup()
   daemons.Setup()
 endif
 
