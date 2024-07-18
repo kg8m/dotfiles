@@ -165,10 +165,12 @@ def ValidateToRun(): dict<any>
   return result
 enddef
 
+# cf. b:lsp_buffer_enabled
 def AreServersEnabled(): bool
   return get(b:, "lsp_buffer_enabled", false)
 enddef
 
+# cf. $USE_AUTO_FORMATTING
 def IsAllowed(): bool
   return $USE_AUTO_FORMATTING ==# "1"
 enddef
@@ -177,6 +179,7 @@ def IsTargetFilepath(): bool
   return fileUtil.IsDescendant(expand("%:p")) && !IsIgnoreeFilepath()
 enddef
 
+# cf. g:kg8m#plugin#lsp#document_format#ignoree_pattern
 def IsIgnoreeFilepath(): bool
   if !has_key(g:, "kg8m#plugin#lsp#document_format#ignoree_pattern")
     return false
@@ -186,6 +189,7 @@ def IsIgnoreeFilepath(): bool
   return getbufinfo("%")[0].name =~# g:kg8m#plugin#lsp#document_format#ignoree_pattern
 enddef
 
+# cf. g:kg8m#plugin#lsp#document_format#force_target_pattern
 def IsForceTargetFilepath(): bool
   if !has_key(g:, "kg8m#plugin#lsp#document_format#force_target_pattern")
     return false
@@ -199,6 +203,7 @@ def IsTargetBufferType(): bool
   return !stringUtil.StartsWith(bufname(), "ginedit://")
 enddef
 
+# cf. g:lsp#document_format_ignore_filetypes
 def IsTargetFiletype(): bool
   const global_ignore_filetypes = get(g:, "lsp#document_format_ignore_filetypes", [])
 
