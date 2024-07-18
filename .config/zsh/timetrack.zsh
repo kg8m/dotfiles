@@ -80,7 +80,7 @@ function timetrack:end {
 
   export __timetrack_end="$(date +%s)"
 
-  if [ -z "${__timetrack_start}" ]; then
+  if [ -z "${__timetrack_start}" ] || [ -z "${__timetrack_command}" ]; then
     return
   fi
 
