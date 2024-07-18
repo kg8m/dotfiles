@@ -8,13 +8,11 @@ is_branch_checkout="$3"
 NULL_REF="0000000000000000000000000000000000000000"
 is_post_clone="$([ "${previous_head}" = "${NULL_REF}" ] && [ "${is_branch_checkout}" = "1" ] && echo "1" || echo "0")"
 
-# Continue only when "git clone" has been executed.
+# Set user info depending the repository URL only when "git clone" has been executed.
 # https://www.klab.com/jp/blog/tech/2015/1033121546.html
 if [ "${is_post_clone}" = "1" ]; then
-  exit 0
+  source ~/.config/git/bin/set_user_info_depending_on_repository_url || exit 1
 fi
-
-source ~/.config/git/bin/set_user_info_depending_on_repository_url || exit 1
 
 if [ -f .git_templates/hooks/post-checkout ]; then
   if [ "${USE_GIT_LOCAL_TEMPLATE_HOOKS:-}" = "1" ]; then
