@@ -432,7 +432,6 @@ def ExtraConfigForRubyLsp(): dict<any>
     },
 
     document_format: false,
-    document_hover: false,
   }
 enddef
 
