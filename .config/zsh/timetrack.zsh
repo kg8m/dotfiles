@@ -82,7 +82,7 @@ function timetrack:finish {
   fi
 
   local started_at="${__TIMETRACK_STARTED_AT}"
-  local command="${__TIMETRACK_COMMAND//'/'\\''}"
+  local command="${__TIMETRACK_COMMAND}"
   unset __TIMETRACK_STARTED_AT
   unset __TIMETRACK_COMMAND
 
@@ -108,7 +108,15 @@ function timetrack:finish {
       notifier_options+=(--nostay)
     fi
 
-    notify "${message}" "${notifier_options[@]}"
+    # Sometimes `async_*` aren’t available, e.g., just after `exec zsh`.
+    if command -v async_stop_worker > /dev/null; then
+      local notifier_args="$(printf "%q " "${message}" "${notifier_options[@]}")"
+      async_stop_worker  "TIMETRACK_NOTIFIER_$$" 2> /dev/null
+      async_start_worker "TIMETRACK_NOTIFIER_$$"
+      async_job          "TIMETRACK_NOTIFIER_$$" "notify ${notifier_args}"
+    else
+      notify "${message}" "${notifier_options[@]}"
+    fi
 
     if [ "${last_status}" = "0" ]; then
       title="${title//${result}/$(highlight:green "${result}")}"
