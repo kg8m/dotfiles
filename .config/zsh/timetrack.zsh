@@ -78,7 +78,7 @@ function timetrack:end {
   local exec_time result title notifier_options message
   local command="${__timetrack_command//'/'\\''}"
 
-  export __timetrack_end="$(date +%s)"
+  local __timetrack_end="$(date +%s)"
 
   if [ -z "${__timetrack_start}" ] || [ -z "${__timetrack_command}" ]; then
     return
