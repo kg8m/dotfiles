@@ -33,6 +33,7 @@ export def Register(): void
   RegisterHtmlLanguageServer()
   RegisterJsonLanguageServer()
   RegisterLuaLanguageServer()
+  RegisterRubocop()
   RegisterRubyLanguageServer()
   RegisterRubyLsp()
   RegisterSolargraph()
@@ -388,6 +389,28 @@ def ExtraConfigForLuaLanguageServer(): dict<any>
         },
       },
     },
+  }
+enddef
+
+# gem install rubocop
+def RegisterRubocop(): void
+  if $USE_RUBOCOP_LSP !=# "0" && filereadable(".rubocop.yml")
+    RegisterServer({
+      name: "rubocop",
+
+      # Don’t use LSP mode RuboCop for Markdown files because formatting them from STDIN source isn’t supported.
+      # Use RuboCop via efm-langserver for Markdown files.
+      # cf. .config/efm-langserver/rubocop_wrapper.sh
+      allowlist: ["Gemfile", "ruby"],
+
+      extra_config: () => ExtraConfigForRubocop(),
+    })
+  endif
+enddef
+
+def ExtraConfigForRubocop(): dict<any>
+  return {
+    cmd: (_) => ["rubocop", "--lsp"],
   }
 enddef
 
