@@ -150,6 +150,3 @@ rules:
   - expected: Xcode
     options:
       wordBoundary: true
-  - expected: zsh
-    options:
-      wordBoundary: true
