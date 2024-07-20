@@ -196,6 +196,8 @@ plugin.Register("pearofducks/ansible-vim")
 plugin.Register("hotwatermorning/auto-git-diff", { if: util.IsGitRebase() })
 
 if plugin.Register("kat0h/bufpreview.vim")
+  g:bufpreview_browser = "vivaldi"
+
   plugin.Configure({
     lazy:    true,
     on_cmd:  ["PreviewMarkdown"],
