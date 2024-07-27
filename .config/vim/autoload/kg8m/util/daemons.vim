@@ -1,10 +1,12 @@
 vim9script
 
+import autoload "kg8m/plugin/lsp/servers.vim" as lspServers
+
 export def Setup(): void
   augroup vimrc-util-daemons
     autocmd!
     autocmd BufWritePost .eslintrc.*,package.json,tsconfig.json  RestartEslintD()
-    autocmd BufWritePost .rubocop.yml                            RestartRubocopServer()
+    autocmd BufWritePost .rubocop.yml                            RestartRubocopDaemon()
     autocmd BufWritePost */config/routes.rb,*/config/routes/*.rb UpdateRoutingDependencies()
   augroup END
 enddef
@@ -15,9 +17,9 @@ export def RestartEslintD(): void
   endif
 enddef
 
-export def RestartRubocopServer(): void
-  if IsRubocopServerAvailable()
-    job_start(["rubocop", "--restart-server"])
+export def RestartRubocopDaemon(): void
+  if IsRubocopLspAvailable()
+    LspStopServer rubocop
   elseif IsRubocopDaemonAvailable()
     job_start(["rubocop-daemon", "restart"])
   endif
@@ -27,8 +29,8 @@ def IsEslintDAvailable(): bool
   return !!executable("eslint_d")
 enddef
 
-def IsRubocopServerAvailable(): bool
-  return !!executable("rubocop") && !!(system("rubocop --server-status") =~# '^RuboCop server')
+def IsRubocopLspAvailable(): bool
+  return lspServers.IsAvailable("rubocop")
 enddef
 
 def IsRubocopDaemonAvailable(): bool

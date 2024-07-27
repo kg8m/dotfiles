@@ -399,6 +399,7 @@ def ExtraConfigForLuaLanguageServer(): dict<any>
 enddef
 
 # gem install rubocop
+# cf. .config/vim/autoload/kg8m/util/daemons.vim
 def RegisterRubocop(): void
   if $USE_RUBOCOP_LSP !=# "0" && filereadable(".rubocop.yml")
     RegisterServer({
