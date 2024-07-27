@@ -5,6 +5,7 @@ vim9script
 import autoload "kg8m/configure/filetypes/javascript.vim" as jsConfig
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/completion.vim"
+import autoload "kg8m/plugin/lsp/document_format.vim"
 import autoload "kg8m/util/logger.vim"
 
 final named_configs: dict<dict<any>>           = {}
@@ -74,7 +75,7 @@ def ExtraConfigForBashLanguageServer(): dict<any>
     cmd: (_) => ["bash-language-server", "start"],
     env: NodeToolsEnv(),
 
-    document_format: false,
+    document_format_priority: document_format.MIN_PRIORITY,
   }
 enddef
 
@@ -184,7 +185,9 @@ def ExtraConfigForDeno(): dict<any>
       },
     },
 
-    document_format: true,
+    # I want to use Deno as a formatter for Deno files.
+    document_format_priority: document_format.MAX_PRIORITY,
+
     organize_imports: true,
   }
 enddef
@@ -206,6 +209,9 @@ enddef
 def ExtraConfigForEfmLangserver(): dict<any>
   return {
     cmd: (_) => ["efm-langserver"],
+
+    # I want to use efm-langserver as a formatter in most cases.
+    document_format_priority: document_format.HIGH_PRIORITY,
   }
 enddef
 
@@ -411,6 +417,9 @@ enddef
 def ExtraConfigForRubocop(): dict<any>
   return {
     cmd: (_) => ["rubocop", "--lsp"],
+
+    # I want to use RuboCop as a formatter for Ruby files.
+    document_format_priority: document_format.MAX_PRIORITY,
   }
 enddef
 
@@ -432,7 +441,7 @@ def ExtraConfigForRubyLanguageServer(): dict<any>
       diagnostics: "false",
     },
 
-    document_format: false,
+    document_format_priority: document_format.MIN_PRIORITY,
   }
 enddef
 
@@ -454,7 +463,7 @@ def ExtraConfigForRubyLsp(): dict<any>
       diagnostics: true,
     },
 
-    document_format: false,
+    document_format_priority: document_format.MIN_PRIORITY,
   }
 enddef
 
@@ -489,7 +498,7 @@ def ExtraConfigForSolargraph(): dict<any>
       useBundler: filereadable("Gemfile.lock"),
     },
 
-    document_format: false,
+    document_format_priority: document_format.MIN_PRIORITY,
   }
 enddef
 
@@ -512,7 +521,7 @@ def ExtraConfigForSqls(): dict<any>
     },
 
     # sqls' document formatting is buggy.
-    document_format: false,
+    document_format_priority: document_format.MIN_PRIORITY,
   }
 enddef
 
@@ -634,7 +643,7 @@ def ExtraConfigForTypescriptLanguageServer(): dict<any>
     },
     env: NodeToolsEnv(),
 
-    document_format: false,
+    document_format_priority: document_format.MIN_PRIORITY,
     organize_imports: true,
   }
 enddef
@@ -694,7 +703,7 @@ def ExtraConfigForVueLanguageServer(): dict<any>
       },
     },
 
-    document_format: false,
+    document_format_priority: document_format.MIN_PRIORITY,
   }
 enddef
 
@@ -866,8 +875,7 @@ export def AreAllRunningOrExited(): bool
 enddef
 
 # Disable some language servers’ capabilities because vim-lsp randomly selects only 1 language server to do something
-# from language servers which have capability. For example, I want to do formatting by efm-langserver but vim-lsp
-# sometimes doesn’t select it.
+# from language servers which have capability.
 def OverwriteCapabilities(): void
   if !has_key(cache, "capabilities_overwritten")
     cache.capabilities_overwritten = {}
@@ -880,15 +888,6 @@ def OverwriteCapabilities(): void
   cache.capabilities_overwritten[&filetype] = true
 
   for config in Configs(&filetype)
-    if get(config, "document_format", true) ==# false
-      final capabilities = lsp#get_server_capabilities(config.name)
-
-      if has_key(capabilities, "documentFormattingProvider")
-        capabilities.documentFormattingProvider = false
-        logger.Info($"{config.name}’s documentFormattingProvider got forced to be disabled.")
-      endif
-    endif
-
     if get(config, "document_hover", true) ==# false
       final capabilities = lsp#get_server_capabilities(config.name)
 

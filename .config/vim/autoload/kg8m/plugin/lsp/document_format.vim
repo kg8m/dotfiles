@@ -7,6 +7,11 @@ import autoload "kg8m/util/list.vim" as listUtil
 import autoload "kg8m/util/logger.vim"
 import autoload "kg8m/util/string.vim" as stringUtil
 
+export const MAX_PRIORITY  = 99
+export const HIGH_PRIORITY = 75
+export const BASE_PRIORITY = 50
+export const MIN_PRIORITY  = 00
+
 const INVALID_REASONS = {
   servers_not_enabled:  "servers aren't enabled",
   not_allowed:          "automatic formatting isn't allowed",
@@ -81,7 +86,10 @@ def Run(): void
     return
   endif
 
-  LspDocumentFormat
+  # cf. :LspDocumentFormat
+  #   - https://github.com/prabirshrestha/vim-lsp/blob/6b7aabde99c409a3c04e1a7d80bbd1b0000c4158/plugin/lsp.vim#L139
+  #   - https://github.com/prabirshrestha/vim-lsp/blob/6b7aabde99c409a3c04e1a7d80bbd1b0000c4158/autoload/lsp/internal/document_formatting.vim#L12-L13
+  lsp#internal#document_formatting#format({ bufnr: bufnr("%"), server: DetectFormatterServer() })
 enddef
 
 def Teardown(): void
@@ -248,6 +256,17 @@ def IsOrganizeImportsAvailable(): bool
   const IsAvailable = (config) => !!get(config, "organize_imports", false)
 
   return listUtil.Any(configs, IsAvailable)
+enddef
+
+def DetectFormatterServer(): string
+  final configs = servers.Configs(&filetype)->copy()
+
+  filter(configs, (_, config) => config.activated)
+  sort(configs, (lhs, rhs) => {
+    return get(rhs, "document_format_priority", BASE_PRIORITY) - get(lhs, "document_format_priority", BASE_PRIORITY)
+  })
+
+  return configs[0].name
 enddef
 
 # If buffer contents change, don't apply result of `LspDocumentFormat` but try to retry.
