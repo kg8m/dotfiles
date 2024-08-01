@@ -33,7 +33,7 @@ deno-cache:  ## Cache deno dependencies
 
 .PHONY: deno-update-deps
 deno-update-deps:  ## Update deno dependencies
-	deno run --allow-all https://deno.land/x/udd/main.ts ${ALL_DENO_FILES}
+	deno run --allow-all jsr:@molt/cli --write ${ALL_DENO_FILES}
 	make deno-cache
 	make deno-fmt
 

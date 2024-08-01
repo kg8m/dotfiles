@@ -1,8 +1,8 @@
-import type { Denops } from "https://deno.land/x/denops_std@v6.5.1/mod.ts";
-import { batch } from "https://deno.land/x/denops_std@v6.5.1/batch/mod.ts";
-import * as vimFuncs from "https://deno.land/x/denops_std@v6.5.1/function/mod.ts";
-import * as vimOptions from "https://deno.land/x/denops_std@v6.5.1/option/mod.ts";
-import { assert, is } from "https://deno.land/x/unknownutil@v3.18.1/mod.ts";
+import type { Denops } from "jsr:@denops/std@7.0.1";
+import { batch } from "jsr:@denops/std@7.0.1/batch";
+import * as vimFuncs from "jsr:@denops/std@7.0.1/function";
+import * as vimOptions from "jsr:@denops/std@7.0.1/option";
+import { assert, is } from "jsr:@core/unknownutil@3.18.1";
 import { benchmarkOnce } from "../../benchmark.ts";
 import { notify } from "../../notification.ts";
 
