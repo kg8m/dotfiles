@@ -11,6 +11,7 @@ rules:
     options:
       wordBoundary: true
   - expected: Deno
+    pattern: /deno(?!\.)/i
     options:
       wordBoundary: true
   - expected: ERB Lint
