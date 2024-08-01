@@ -50,6 +50,10 @@ const config = {
         // https://github.com/sapegin/textlint-rule-terminology/blob/v4.0.0/terms.jsonc#L89
         "ID",
 
+        // Use "README"
+        // https://github.com/sapegin/textlint-rule-terminology/blob/v5.2.3/terms.jsonc#L167
+        "readme(s)?",
+
         // Use "styleguide"
         // https://github.com/sapegin/textlint-rule-terminology/blob/v4.0.0/terms.jsonc#L153
         "style-?guide(s)?",
