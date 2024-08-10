@@ -732,6 +732,11 @@ function zsh:plugins:update {
 
   execute_with_echo "zsh:rcs:compile"
 
+  # Avoid errors like `(eval):1: command not found: _some_command`.
+  # cf. https://github.com/ohmyzsh/ohmyzsh/wiki/FAQ/f5b8f5502228f94ed43435895c526449df3a103b#how-do-i-reset-the-completion-cache
+  # cf. https://github.com/sharkdp/bat/issues/503
+  execute_with_echo "trash ${HOME:?}/.zcompdump"
+
   execute_with_echo "exec zsh"
 }
 
