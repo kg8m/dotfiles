@@ -419,7 +419,11 @@ endif
 
 if plugin.Register("lambdalisue/vim-kensaku")
   plugin.Configure({
+    # vim-kensaku is sourced when `.config/vim/autoload/kg8m/util/f2.vim` is sourced.
+    # The `f2.vim` is sourced when my `f2` mapping is triggered.
+    # cf. .config/vim/autoload/kg8m/configure/mappings.vim
     lazy: true,
+
     depends: ["denops.vim"],
   })
 endif
