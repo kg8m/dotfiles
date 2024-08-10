@@ -932,7 +932,12 @@ def ShouldUseDeno(): bool
   endif
 
   # Don’t use my `should_use_deno` script because it has a 10-20 ms overhead.
-  cache.use_deno = ($USE_DENO ==# "1") || OnDenoAppDir() || OnDenopsPluginDir()
+  if empty($USE_DENO)
+    cache.use_deno = OnDenoAppDir() || OnDenopsPluginDir()
+  else
+    cache.use_deno = ($USE_DENO ==# "1")
+  endif
+
   return cache.use_deno
 enddef
 
