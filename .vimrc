@@ -253,13 +253,25 @@ endif
 
 plugin.Register("Milly/deno-protocol.vim")
 
-if plugin.Register("vim-denops/denops.vim", { lazy: true })
+if plugin.Register("vim-denops/denops.vim")
   g:denops_disable_version_check = true
 
   if $DENOPS_DEBUG ==# "1"
     g:denops#debug = true
     g:denops#trace = true
   endif
+
+  plugin.Configure({
+    # denops.vim is sourced when a plugin depending on denops.vim is sourced via the `depends` option.
+    lazy: true,
+
+    hook_post_source: () => {
+      # Interrupt the process of plugins via <C-c>
+      noremap  <silent> <C-c> <Cmd>call denops#interrupt()<CR><C-c>
+      inoremap <silent> <C-c> <Cmd>call denops#interrupt()<CR><C-c>
+      cnoremap <silent> <C-c> <Cmd>call denops#interrupt()<CR><C-c>
+    },
+  })
 endif
 
 if plugin.Register("gamoutatsumi/dps-ghosttext.vim", { if: $USE_GHOST_TEXT ==# "1" })
