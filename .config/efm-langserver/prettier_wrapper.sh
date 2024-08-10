@@ -6,7 +6,7 @@ fi
 target_filepath="${1:?}"
 
 case "${target_filepath}" in
-  *.js | *.jsx | *.ts | *.tsx | *.vue)
+  *.js | *.jsx | *.mjs | *.mts | *.ts | *.tsx | *.vue)
     if command -v eslint > /dev/null; then
       # Use ESLint as formatter.
       if [ "${ESLINT_AS_FORMATTER:-}" = "1" ] && [ ! "${ESLINT_AND_PRETTIER_AS_FORMATTER:-}" = "1" ]; then
