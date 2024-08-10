@@ -49,7 +49,7 @@ if [ "${is_fixing}" = "1" ]; then
   err_temp_filepath="$(mktemp)"
 
   # shellcheck disable=SC2064
-  trap "rm -f ${err_temp_filepath}" EXIT
+  trap "rm -f '${err_temp_filepath}'" EXIT
 
   if [ -n "${RUBOCOP_WRAPPER_FIX_OPTIONS:-}" ]; then
     read -r -a local_options <<< "${RUBOCOP_WRAPPER_FIX_OPTIONS}"

@@ -22,7 +22,7 @@ fi
 err_temp_filepath="$(mktemp)"
 
 # shellcheck disable=SC2064
-trap "rm -f ${err_temp_filepath}" EXIT
+trap "rm -f '${err_temp_filepath}'" EXIT
 
 function is_target_file {
   echo 1
