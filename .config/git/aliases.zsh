@@ -612,6 +612,10 @@ function git:blame:filter {
   local alt_gt="≥"
 
   local revisions_queue="$(mktemp)"
+
+  # shellcheck disable=SC2064
+  trap "rm -f '${revisions_queue}'" EXIT
+
   local show_current_revision="tail -n1 '${revisions_queue}'"
   local detect_revision="git blame -L {2},+1 -lf \$(${show_current_revision}) '${filepath}' | awk '{ print \$1 }'"
   local init_revisions_queue=": > '${revisions_queue}'"
@@ -651,7 +655,6 @@ function git:blame:filter {
   #   The `--abbrev={num}` option of `git blame` shows commit hashes with `{num} + 1` width.
   #   I want 14-width commit hashes.
   git blame --abbrev=13 "${filepath}" | eval "${delta}" | filter "${filter_options[@]}"
-  rm -f "${revisions_queue}"
 }
 
 function git:submodule:update {

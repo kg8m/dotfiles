@@ -2,6 +2,9 @@ function plugin:dircolors:atload {
   if [ ! -f "${XDG_CACHE_HOME:?}/zsh/dircolors_ansi-universal.zsh" ]; then
     local tempfile="$(mktemp)"
 
+    # shellcheck disable=SC2064
+    trap "rm -f '${tempfile}'" EXIT
+
     cat dircolors.ansi-universal > "${tempfile}"
 
     # shellcheck disable=SC2034
@@ -46,7 +49,6 @@ function plugin:dircolors:atload {
     fi
 
     "${dircolors}" "${tempfile}" > "$(ensure_dir "${XDG_CACHE_HOME}/zsh/dircolors_ansi-universal.zsh")"
-    rm -f "${tempfile}"
 
     # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
     zcompile "${XDG_CACHE_HOME}/zsh/dircolors_ansi-universal.zsh"
