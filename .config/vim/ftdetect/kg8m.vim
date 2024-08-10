@@ -10,6 +10,8 @@ autocmd BufNewFile,BufRead [Dd]ockerfile*,*[Dd]ockerfile set filetype=Dockerfile
 
 autocmd BufNewFile,BufRead Gemfile.local* set filetype=Gemfile
 
+autocmd BufNewFile,BufRead *git*/info/exclude,*git*/ignore set filetype=gitignore
+
 autocmd BufNewFile,BufRead *.moin,*.trac,*.tracwiki set filetype=moin
 
 autocmd BufNewFile,BufRead Procfile,Procfile.* set filetype=conf
@@ -17,6 +19,8 @@ autocmd BufNewFile,BufRead Procfile,Procfile.* set filetype=conf
 autocmd BufNewFile,BufRead pryrc set filetype=ruby
 
 autocmd BufNewFile,BufRead Steepfile set filetype=ruby
+
+autocmd BufNewFile,BufRead */.ssh/config,*/.ssh/config.* set filetype=sshconfig
 
 autocmd BufNewFile,BufRead *.tftpl set filetype=terraform
 
