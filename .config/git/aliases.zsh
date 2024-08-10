@@ -480,11 +480,20 @@ function git:stash:select {
 
   function git:stash:select:pick:action {
     local stash="${1:?}"
+
+    # Store the result of `git stash show` to a temporary file because fzf’s `--preview` option treats `{1}` of
+    # `stash@{1}` as the first argument, e.g., `Apply` or `Drop`.
+    local preview_result_filepath="$(mktemp)"
+    git stash show "${stash}" > "${preview_result_filepath}"
+
+    # shellcheck disable=SC2064
+    trap "rm -f '${preview_result_filepath}'" EXIT
+
     local actions=(Apply Drop)
     local filter_options=(
       --no-multi
       --prompt "Select an action> "
-      --preview "git stash show ${stash} | delta"
+      --preview "cat '${preview_result_filepath}' | delta"
       --preview-window "down:75%:wrap:nohidden"
     )
 
