@@ -35,7 +35,7 @@ function() {
 
   # shellcheck disable=SC2317
   function prompt:header:lazy_build {
-    sleep 0.2
+    sleep 0.5
     prompt:header:build "$@"
   }
 
