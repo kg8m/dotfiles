@@ -50,7 +50,7 @@ function() {
       case "${LASTWIDGET:-}" in
         fzf-completion | autosuggest-suggest)
           case "${_lastcomp[insert]:-}" in
-            # Don't refresh prompt when a completion candidate is selected because refreshing prompt hides candidates
+            # Don’t refresh prompt when a completion candidate is selected because refreshing prompt hides candidates
             automenu | automenu-unambiguous)
               return
               ;;
