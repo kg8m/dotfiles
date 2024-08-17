@@ -15,16 +15,14 @@ fi
 
 # Check if a denops directory.
 if [ -d "denops" ]; then
-  fd_common_options=(--hidden --no-ignore --max-results 1 --type file)
-  denops_file="$(fd "${fd_common_options[@]}" --extension ts --search-path denops)"
+  fd_common_options=(--has-results --hidden --no-ignore --type file)
 
-  if [ -z "${denops_file}" ]; then
+  if ! fd "${fd_common_options[@]}" --extension ts --search-path denops; then
     echo 0
     exit
   fi
 
-  vim_file="$(fd "${fd_common_options[@]}" --extension vim)"
-  [ -n "${vim_file}" ] && echo 1 || echo 0
+  fd "${fd_common_options[@]}" --extension vim && echo 1 || echo 0
   exit
 fi
 

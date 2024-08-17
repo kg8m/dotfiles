@@ -954,15 +954,15 @@ def OnDenopsPluginDir(): bool
     return false
   endif
 
-  const common_options = "--hidden --no-ignore --max-results 1 --type file"
-  const denops_file_exists = !system($"fd {common_options} --extension ts --search-path denops")->empty()
+  const fd_common_options = "--has-results --hidden --no-ignore --type file"
+  system($"fd {fd_common_options} --extension ts --search-path denops")
 
-  if !denops_file_exists
+  if v:shell_error ==# 1
     return false
   endif
 
-  const vim_file_exists = !system($"fd {common_options} --extension vim")->empty()
-  return vim_file_exists
+  system($"fd {fd_common_options} --extension vim")
+  return v:shell_error ==# 0
 enddef
 
 def NodeToolsEnv(): dict<any>
