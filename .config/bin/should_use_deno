@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# cf. ShouldUseDeno in .config/vim/autoload/kg8m/plugin/lsp/servers.vim
+# cf. ShouldUseDeno() in .config/vim/autoload/kg8m/util/filetypes/javascript.vim
 
 # Check my environment variable.
 if [ "${USE_DENO:-}" = "1" ]; then

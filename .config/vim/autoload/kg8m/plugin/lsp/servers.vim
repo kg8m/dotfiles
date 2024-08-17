@@ -6,6 +6,7 @@ import autoload "kg8m/configure/filetypes/javascript.vim" as jsConfig
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/completion.vim"
 import autoload "kg8m/plugin/lsp/document_format.vim"
+import autoload "kg8m/util/filetypes/javascript.vim" as jsUtil
 import autoload "kg8m/util/logger.vim"
 
 final named_configs: dict<dict<any>>           = {}
@@ -124,7 +125,7 @@ def RegisterDeno(): void
     allowlist: TS_FILETYPES,
     extra_config: () => ExtraConfigForDeno(),
 
-    available: ShouldUseDeno(),
+    available: jsUtil.ShouldUseDeno(),
   })
 enddef
 
@@ -554,7 +555,7 @@ def RegisterTailwindcssLanguageServer(): void
     allowlist: ["css", "html", "slim"] + JS_FILETYPES + TS_FILETYPES,
     extra_config: () => ExtraConfigForTailwindcssLanguageServer(),
 
-    available: !ShouldUseDeno(),
+    available: !jsUtil.ShouldUseDeno(),
   })
 enddef
 
@@ -623,7 +624,7 @@ enddef
 def RegisterTypescriptLanguageServer(): void
   RegisterServer({
     name: "typescript-language-server",
-    allowlist: ShouldUseVueLanguageServer() ? [] : (JS_FILETYPES + (ShouldUseDeno() ? [] : TS_FILETYPES)),
+    allowlist: ShouldUseVueLanguageServer() ? [] : (JS_FILETYPES + (jsUtil.ShouldUseDeno() ? [] : TS_FILETYPES)),
     extra_config: () => ExtraConfigForTypescriptLanguageServer(),
   })
 enddef
@@ -923,46 +924,6 @@ def ShouldUseVueLanguageServer(): bool
 
   cache.use_vue_language_server = ($USE_VUEJS ==# "1")
   return cache.use_vue_language_server
-enddef
-
-# cf. .config/bin/should_use_deno
-def ShouldUseDeno(): bool
-  if has_key(cache, "use_deno")
-    return cache.use_deno
-  endif
-
-  # Don’t use my `should_use_deno` script because it has a 10-20 ms overhead.
-  if empty($USE_DENO)
-    cache.use_deno = OnDenoAppDir() || OnDenopsPluginDir()
-  else
-    cache.use_deno = ($USE_DENO ==# "1")
-  endif
-
-  return cache.use_deno
-enddef
-
-def OnDenoAppDir(): bool
-  return (
-    filereadable("deno.json") ||
-    filereadable("deno.jsonc") ||
-    filereadable("deno.lock")
-  )
-enddef
-
-def OnDenopsPluginDir(): bool
-  if !isdirectory("denops")
-    return false
-  endif
-
-  const fd_common_options = "--has-results --hidden --no-ignore --type file"
-  system($"fd {fd_common_options} --extension ts --search-path denops")
-
-  if v:shell_error ==# 1
-    return false
-  endif
-
-  system($"fd {fd_common_options} --extension vim")
-  return v:shell_error ==# 0
 enddef
 
 def NodeToolsEnv(): dict<any>
