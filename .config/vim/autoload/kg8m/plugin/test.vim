@@ -1,6 +1,6 @@
 vim9script
 
-import autoload "kg8m/util.vim"
+import autoload "kg8m/util/filetypes/javascript.vim" as jsUtil
 import autoload "kg8m/util/terminal.vim" as terminalUtil
 
 augroup vimrc-plugin-test
@@ -15,6 +15,10 @@ export def OnSource(): void
   g:test#strategy = "tmux_or_vim_terminal"
 
   g:test#preserve_screen = true
+
+  if jsUtil.ShouldUseDeno()
+    g:test#javascript#runner = "denotest"
+  endif
 
   g:test#javascript#denotest#options = "--allow-all --no-check"
   g:test#go#gotest#options = "-race"
