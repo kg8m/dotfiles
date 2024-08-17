@@ -6,10 +6,6 @@ alias -g T="| tail"
 alias -g F="| filter"
 alias -g S="| sort_without_escape_sequences"
 
-if crontab -i > /dev/null 2>&1; then
-  alias crontab="crontab -i"
-fi
-
 # shellcheck disable=SC2154
 # $FD_EXTRA_OPTIONS is a string because direnv doesn't support arrays.
 alias fd="fd \${FD_DEFAULT_OPTIONS:?[@]} \${(s: :)FD_EXTRA_OPTIONS}"
