@@ -199,23 +199,29 @@ function plugin:setup:binary_releaseds {
     zinit light "${repository}"
   done
 
+  # Mockword
+  # shellcheck disable=SC2317
+  function plugin:mocword:atload {
+    # shellcheck disable=SC2317
+    function plugin:mocword:data:atclone {
+      # cf. exporting MOCWORD_DATA in .zshenv
+      mkdir -p "$(dirname "${MOCWORD_DATA:?}")"
+      execute_with_echo "ln -fs '${PWD}/mocword.sqlite' '${MOCWORD_DATA}'"
+    }
+    zinit ice lucid from"gh-r" as"null" bpick"mocword.sqlite.gz" atclone"plugin:mocword:data:atclone"
+    zinit light high-moctane/mocword-data
+  }
+  zinit ice lucid nocd has"mocword" atload"plugin:mocword:atload"
+  zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-mocword-atload"
+
+  # tealdeer
+  zinit ice lucid as"completion" mv"zsh_tealdeer -> _tldr"
+  zinit snippet https://github.com/dbrgn/tealdeer/blob/main/completion/zsh_tealdeer
+
   unset -f plugin:setup:binary_releaseds
 }
 zinit ice lucid nocd wait"0c" atload"plugin:setup:binary_releaseds"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-setup-binary_releaseds"
-
-function plugin:mocword:atload {
-  # shellcheck disable=SC2317
-  function plugin:mocword:data:atclone {
-    # cf. exporting MOCWORD_DATA in .zshenv
-    mkdir -p "$(dirname "${MOCWORD_DATA:?}")"
-    execute_with_echo "ln -fs '${PWD}/mocword.sqlite' '${MOCWORD_DATA}'"
-  }
-  zinit ice lucid from"gh-r" as"null" bpick"mocword.sqlite.gz" atclone"plugin:mocword:data:atclone"
-  zinit light high-moctane/mocword-data
-}
-zinit ice lucid nocd wait"0c" has"mocword" atload"plugin:mocword:atload"
-zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-mocword-atload"
 
 function plugin:zabrze:reset {
   rm -f "${XDG_CACHE_HOME:?}/zsh/zabrze_init.zsh"
@@ -232,6 +238,3 @@ function plugin:zabrze:init {
 }
 zinit ice lucid nocd wait"0a" has"zabrze" atload"plugin:zabrze:init"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-zabrze-init"
-
-zinit ice lucid as"completion" mv"zsh_tealdeer -> _tldr"
-zinit snippet https://github.com/dbrgn/tealdeer/blob/main/completion/zsh_tealdeer

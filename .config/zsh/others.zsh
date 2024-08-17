@@ -23,11 +23,12 @@ function plugin:others:setup {
   # Tig
   mkdir -p "${XDG_DATA_HOME:?}/tig"
 
+  # zsh-async
+  # cf. async_start_worker, async_stop_worker, async_job, and so on
+  zinit ice lucid
+  zinit light mafredri/zsh-async
+
   unset -f plugin:others:setup
 }
 zinit ice lucid wait"0c" atload"plugin:others:setup"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/plugin-others-setup"
-
-# cf. async_start_worker, async_stop_worker, async_job, and so on
-zinit ice lucid wait"0c"
-zinit light mafredri/zsh-async
