@@ -261,5 +261,4 @@ languages:
 
   zsh:
     - <<: *shellcheck
-    # Disable because shfmt sometimes fails to parse or freezes.
-    # - <<: *shfmt
+    - <<: *shfmt
