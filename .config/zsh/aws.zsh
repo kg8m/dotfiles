@@ -106,7 +106,7 @@ HELP
   )
   local outpath="/tmp/aws-logs-query-result-$(date '+%Y%m%d-%H%M%S').txt"
 
-  local start_time="$(date '+%s')"
+  local started_at="$(date '+%s')"
   local query_id="$("${executor}" "aws logs start-query ${query_options[*]}" | jq --raw-output '.queryId')"
 
   if [ -z "${query_id}" ]; then
@@ -147,10 +147,10 @@ HELP
     return 1
   fi
 
-  local finish_time="$(date '+%s')"
+  local finished_at="$(date '+%s')"
   local notifier_options=(--title "aws:logs:query")
 
-  if ((finish_time - start_time < 15)); then
+  if ((finished_at - started_at < 15)); then
     notifier_options+=(--nostay)
   fi
 
