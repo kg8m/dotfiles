@@ -512,14 +512,26 @@ function my_grep:with_filter {
 }
 
 function my_diff {
-  local options=(
+  local diff_args=(
     --unified=10
     --recursive
     --new-file
     --exclude=".git"
   )
 
-  execute_with_echo "diff ${options[*]} $* | delta"
+  if [ -n "${MY_DIFF_EXCLUDES}" ]; then
+    local exclude
+    # shellcheck disable="SC2066"
+    for exclude in "${=MY_DIFF_EXCLUDES}"; do
+      diff_args+=(--exclude="${exclude}")
+    done
+  fi
+
+  if [ -n "$*" ]; then
+    diff_args+=("$@")
+  fi
+
+  execute_with_echo "diff ${(@q)diff_args} | delta"
 }
 
 function my_diff:without_spaces {
