@@ -36,7 +36,6 @@ export def Register(): void
   RegisterJsonLanguageServer()
   RegisterLuaLanguageServer()
   RegisterRubocop()
-  RegisterRubyLanguageServer()
   RegisterRubyLsp()
   RegisterSolargraph()
   RegisterSqls()
@@ -423,28 +422,6 @@ def ExtraConfigForRubocop(): dict<any>
 
     # I want to use RuboCop as a formatter for Ruby files.
     document_format_priority: document_format.MAX_PRIORITY,
-  }
-enddef
-
-# gem install ruby_language_server
-def RegisterRubyLanguageServer(): void
-  RegisterServer({
-    name: "ruby_language_server",
-    allowlist: ["ruby"],
-    extra_config: () => ExtraConfigForRubyLanguageServer(),
-
-    available: $USE_RUBY_LANGUAGE_SERVER ==# "1",
-  })
-enddef
-
-def ExtraConfigForRubyLanguageServer(): dict<any>
-  return {
-    cmd: (_) => ["ruby_language_server"],
-    initialization_options: {
-      diagnostics: "false",
-    },
-
-    document_format_priority: document_format.MIN_PRIORITY,
   }
 enddef
 
