@@ -644,66 +644,6 @@ function rails:routes:with_filter {
   rails-routes | filter --header-lines 1 --preview-window "hidden" "$@"
 }
 
-function rails:routes:cache:reset {
-  local filepath
-  for filepath in tmp/cache/routes_*; do
-    if [ -f "${filepath}" ]; then
-      trash "${filepath}"
-    fi
-  done
-}
-
-function rails:assets:precompile:force {
-  if [ ! -d "app" ] || [ ! -f "config/environment.rb" ] && [ ! -f "bin/rails" ]; then
-    echo:error "Maybe non-Rails directory."
-    return 1
-  fi
-
-  local prefix=""
-
-  while (("${#@}" > 0)); do
-    case "$1" in
-      --environment | -e)
-        prefix="RAILS_ENV=${2:-} "
-        shift 2
-        ;;
-      *)
-        echo:error "Unknown argument: $1"
-        return 1
-        ;;
-    esac
-  done
-
-  rails:assets:clean:force
-  execute_with_echo "${prefix}rails assets:precompile"
-}
-
-function rails:assets:clean:force {
-  if [ ! -d "app" ] || [ ! -f "config/environment.rb" ] && [ ! -f "bin/rails" ]; then
-    echo:error "Maybe non-Rails directory."
-    return 1
-  fi
-
-  # cf. $EZA_IGNORE_GLOB in .zshenv
-  # cf. .config/ctags/default.ctags
-  # cf. .config/fd/ignore
-  # cf. .config/ripgrep/config
-  local directories=(
-    "app/assets/builds"
-    "app/frontend/builds"
-    "public/assets"
-    "public/packs"
-    "public/packs-test"
-    "public/vite"
-    "public/vite-dev"
-    "public/vite-test"
-    "tmp/cache/assets"
-    "tmp/cache/webpacker"
-  )
-
-  execute_with_confirm "rm -fr ${directories[*]}"
-}
-
 function zsh:plugins:update {
   if [ -d "${XDG_CACHE_HOME:?}/zsh" ]; then
     execute_with_echo "trash '${XDG_CACHE_HOME}/zsh'"
