@@ -90,14 +90,13 @@ function retriable_execute_with_confirm {
   local result=$?
 
   if [ ! "${result}" = "255" ]; then
-    local message response
-
     if [ "${result}" = "0" ]; then
-      message="👼 Succeeded."
+      local message="👼 Succeeded."
     else
-      message="👿 Failed."
+      local message="👿 Failed."
     fi
 
+    local response
     printf "\n%s\n\n" "${message}" >&2
     read -r "response?Retry? [y/n]: "
 
@@ -205,21 +204,21 @@ function batch_move {
 }
 
 function trash {
-  local source filename new_filename
   local timestamp=$(date +%H.%M.%S)
   local trash_path=${TRASH_PATH:-/tmp}
 
+  local source
   for source in "$@"; do
-    filename=$(basename "${source}")
+    local filename=$(basename "${source}")
 
     if [ -f "${trash_path}/${filename}" ] || [ -d "${trash_path}/${filename}" ]; then
       # Rename to preventing duplication.
       #   - foo         => foo 12.34.56.7890
       #   - foo.bar     => foo 12.34.56.7890.bar
       #   - foo.bar.baz => foo 12.34.56.7890.bar.baz
-      new_filename="$(echo "${filename}" | tr -d "\n" | sd '^(\.?[^.]+)(\.?)' "\$1 ${timestamp}.${RANDOM}\$2")"
+      local new_filename="$(echo "${filename}" | tr -d "\n" | sd '^(\.?[^.]+)(\.?)' "\$1 ${timestamp}.${RANDOM}\$2")"
     else
-      new_filename="${filename}"
+      local new_filename="${filename}"
     fi
 
     touch "${source}"
