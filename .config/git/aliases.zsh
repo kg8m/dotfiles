@@ -435,7 +435,7 @@ function git:diff:branch:from {
 
   local item
   for item in "${@[2,-1]}"; do
-    if [ "${item}" = "--" ] || [ "${#pathspecs}" -gt 0 ]; then
+    if [ "${item}" = "--" ] || (($#pathspecs > 0)); then
       pathspecs+=("${item}")
     else
       options+=("${item}")
