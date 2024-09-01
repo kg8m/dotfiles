@@ -43,7 +43,7 @@ pkill -f ".*textlint.* ${options[*]}"
 export ASDF_NODEJS_VERSION="$(newest_version nodejs)"
 
 out="$(textlint "${options[@]}" 2> "${err_temp_filepath}")"
-err="$(cat "${err_temp_filepath}")"
+err="$(< "${err_temp_filepath}")"
 
 if [[ "${out}" =~ No\ rules\ found, ]]; then
   err="${out}"

@@ -62,7 +62,7 @@ options+=("$(eslint_wrapper_options "${target_filepath}")")
 pkill -f ".*${executable} .* ${options[*]}"
 
 out="$("${executable}" "${options[@]}" 2> "${err_temp_filepath}")"
-err="$(cat "${err_temp_filepath}")"
+err="$(< "${err_temp_filepath}")"
 
 if [ -n "${out}" ]; then
   if [ "${is_fixing}" = "1" ]; then
