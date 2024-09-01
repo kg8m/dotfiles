@@ -548,31 +548,37 @@ function git:status:color {
     sd "${ok_pattern}" "${ok_replace}"
 }
 
+function git:status:list {
+  git status --short "$@" |
+    sd '^(...)"' '$1' |  # Remove a quotation mark before the filepath.
+    sd '"$' ''           # Remove a quotation mark after the filepath.
+}
+
 # SC2120: references arguments, but none are ever passed.
 # shellcheck disable=SC2120
 function git:status:filter:all {
-  git status --short "$@" | git:status:utility:filter
+  git:status:list "$@" | git:status:utility:filter
 }
 
 function git:status:filter:staged {
   # `^ A` for intent-to-add
-  git status --short | rg '^[^ ?]|^ A' | git:status:utility:filter | git:status:utility:rename:only_removed
+  git:status:list | rg '^[^ ?]|^ A' | git:status:utility:filter | git:status:utility:rename:only_removed
 }
 
 function git:status:filter:unstaged {
-  git status --short | rg '^[^?][^ A]' | git:status:utility:filter | git:status:utility:rename:only_added
+  git:status:list | rg '^[^?][^ A]' | git:status:utility:filter | git:status:utility:rename:only_added
 }
 
 function git:status:filter:unstaged:with_intended_to_add {
-  git status --short | rg '^[^?][^ ]' | git:status:utility:filter | git:status:utility:rename:only_added
+  git:status:list | rg '^[^?][^ ]' | git:status:utility:filter | git:status:utility:rename:only_added
 }
 
 function git:status:filter:unstaged:with_untracked {
-  git status --short | rg '^.[^ ]' | git:status:utility:filter | git:status:utility:rename:only_added
+  git:status:list | rg '^.[^ ]' | git:status:utility:filter | git:status:utility:rename:only_added
 }
 
 function git:status:filter:untracked {
-  git status --short | rg '^\?\?' | git:status:utility:filter
+  git:status:list | rg '^\?\?' | git:status:utility:filter
 }
 
 function git:status:utility:filter {
@@ -748,10 +754,10 @@ function git:utility:diff_or_cat {
     filepath="${filepath:${offset}:${length}}"
   fi
 
-  local git_status="$(git status --short -- "${filepath}")"
+  local git_status="$(git:status:list -- "${filepath}")"
 
   if [[ "${git_status}" =~ ^D ]]; then
-    local renamed_status="$(git status --short | rg '^R' | rg --fixed-strings " ${filepath} ->")"
+    local renamed_status="$(git:status:list | rg '^R' | rg --fixed-strings " ${filepath} ->")"
 
     if [ -n "${renamed_status}" ]; then
       git_status="${renamed_status}"
