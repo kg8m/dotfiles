@@ -6,7 +6,6 @@ function aws:network:verify {
 # https://docs.aws.amazon.com/cli/latest/reference/logs/start-query.html
 # https://docs.aws.amazon.com/cli/latest/reference/logs/get-query-results.html
 function aws:logs:query {
-  local profile start_time end_time filter
   local limit="1000"
   local group_name=""
   local executor="execute_with_confirm"
@@ -31,19 +30,19 @@ HELP
   while (("${#@}" > 0)); do
     case "$1" in
       --profile)
-        profile="${2:?}"
+        local profile="${2:?}"
         shift 2
         ;;
       --start-time)
-        start_time="${2:?}"
+        local start_time="${2:?}"
         shift 2
         ;;
       --end-time)
-        end_time="${2:?}"
+        local end_time="${2:?}"
         shift 2
         ;;
       --filter)
-        filter="${2:?}"
+        local filter="${2:?}"
         shift 2
         ;;
       --limit)
