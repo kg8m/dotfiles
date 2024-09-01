@@ -1,4 +1,4 @@
-alias -g G="| rg --color auto"
+alias -g G="| rg"
 alias -g V="| vim -R -"
 alias -g L="| less"
 alias -g H="| head"
