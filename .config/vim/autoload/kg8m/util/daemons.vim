@@ -13,7 +13,7 @@ enddef
 
 export def RestartEslintD(): void
   if IsEslintDAvailable()
-    job_start(["eslint_d", "restart"])
+    JobStart(["eslint_d", "restart"])
   endif
 enddef
 
@@ -21,7 +21,7 @@ export def RestartRubocopDaemon(): void
   if IsRubocopLspAvailable()
     LspStopServer rubocop
   elseif IsRubocopDaemonAvailable()
-    job_start(["rubocop-daemon", "restart"])
+    JobStart(["rubocop-daemon", "restart"])
   endif
 enddef
 
@@ -39,14 +39,19 @@ enddef
 
 def UpdateRoutingDependencies(): void
   if executable("annotate")
-    job_start(["rails", "annotate_routes"])
+    JobStart(["rails", "annotate_routes"])
   endif
 
   if isdirectory("sig/rbs_rails")
-    job_start(["rails", "rbs_rails:generate_rbs_for_path_helpers"])
+    JobStart(["rails", "rbs_rails:generate_rbs_for_path_helpers"])
   endif
 
   # Recache routes.
   # cf. .config/zsh/bin/rails-routes
-  job_start(["rails-routes"])
+  JobStart(["rails-routes"])
+enddef
+
+def JobStart(command: list<string>): void
+  # Specify a noop `close_cb` callback because sometimes the job could be killed without it.
+  job_start(command, { close_cb: (_) => "noop" })
 enddef
