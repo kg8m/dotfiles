@@ -1,3 +1,4 @@
+# cf. .config/zabrze/config.yaml
 alias -g G="| rg"
 alias -g V="| vim -R -"
 alias -g L="| less"

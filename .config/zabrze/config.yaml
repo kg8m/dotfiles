@@ -1,4 +1,34 @@
 abbrevs:
+  # cf. .config/zsh/aliases.zsh
+  - name: "| rg"
+    abbr: G
+    snippet: "| rg"
+    global: true
+  - name: "| vim -R -"
+    abbr: V
+    snippet: "| vim -R -"
+    global: true
+  - name: "| less"
+    abbr: L
+    snippet: "| less"
+    global: true
+  - name: "| head"
+    abbr: H
+    snippet: "| head"
+    global: true
+  - name: "| tail"
+    abbr: T
+    snippet: "| tail"
+    global: true
+  - name: "| filter"
+    abbr: F
+    snippet: "| filter"
+    global: true
+  - name: "| sort_without_escape_sequences"
+    abbr: S
+    snippet: "| sort_without_escape_sequences"
+    global: true
+
   - name: asdf install
     abbr: i
     snippet: install
