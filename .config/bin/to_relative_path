@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# BSD `realpath` doesn’t support `--relative-to`.
+if command -v grealpath > /dev/null; then
+  realpath="grealpath"
+else
+  realpath="realpath"
+fi
+
+"${realpath}" --relative-to "${PWD:?}" "${1:?}"
