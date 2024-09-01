@@ -38,12 +38,15 @@ def IsRubocopDaemonAvailable(): bool
 enddef
 
 def UpdateRoutingDependencies(): void
+  # https://github.com/drwl/annotaterb
   if executable("annotaterb")
     JobStart(["annotaterb", "routes"])
+  # https://github.com/ctran/annotate_models
   elseif executable("annotate")
     JobStart(["rails", "annotate_routes"])
   endif
 
+  # https://github.com/pocke/rbs_rails
   if isdirectory("sig/rbs_rails")
     JobStart(["rails", "rbs_rails:generate_rbs_for_path_helpers"])
   endif
