@@ -1,3 +1,5 @@
+setopt no_global_rcs
+
 function try_to_source {
   local filepath="${1:?Specify a filepath to source.}"
   [ -f "${filepath}" ] && source "${filepath}"
