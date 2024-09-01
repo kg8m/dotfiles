@@ -721,7 +721,7 @@ function git:alias:which {
   else
     local original="$(echo "${result}" | rg -o '=> [-a-z]+' | sd '=> ' '')"
 
-    if git:alias:list | rg -q "^${original}\s+"; then
+    if git:alias:list | rg -q "^${original}\s"; then
       echo
       git:alias:which "${original}"
     fi
