@@ -335,12 +335,6 @@ abbrevs:
     abbr: bin/r
     snippet: bin/rails
 
-  - name: tig status
-    abbr: st
-    snippet: status
-    global: true
-    context: '^tig\s'
-
   - name: my_diff:without_spaces
     abbr: di
     snippet: my_diff:without_spaces
