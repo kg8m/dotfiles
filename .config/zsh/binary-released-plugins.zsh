@@ -25,6 +25,7 @@ function plugin:setup:binary_releaseds {
     JohnnyMorganz/StyLua
     dbrgn/tealdeer
     juliosueiras/terraform-lsp
+    terraform-linters/tflint
     XAMPPRocky/tokei
     crate-ci/typos
     rhysd/vim-startuptime
@@ -62,7 +63,7 @@ function plugin:setup:binary_releaseds {
       tldr)
         mv ./tealdeer* ./"${plugin}"
         ;;
-      fzf | golangci-lint-langserver | lua-language-server | sqls | stylua | tokei)
+      fzf | golangci-lint-langserver | lua-language-server | sqls | stylua | tflint | tokei)
         # Do nothing
         ;;
       *)
@@ -73,7 +74,7 @@ function plugin:setup:binary_releaseds {
 
     case "${plugin}" in
       actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mocword | shfmt | sqls | stylua |\
-      terraform-lsp | tldr | tokei | typos | vim-startuptime | zabrze)
+      terraform-lsp | tflint | tldr | tokei | typos | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
       bat | delta | efm-langserver | fd | golangci-lint | hyperfine | mmv | qrtool | rg | sd | shellcheck)
@@ -115,7 +116,7 @@ function plugin:setup:binary_releaseds {
 
     case "${plugin}" in
       bat | checkmake | delta | direnv | fd | fzf | gh | glab | hyperfine | lua-language-server | mmv | mocword |\
-      qrtool | rg | sd | shellcheck | stylua | tldr | tokei | typos | zabrze)
+      qrtool | rg | sd | shellcheck | stylua | tflint | tldr | tokei | typos | zabrze)
         execute_with_echo "${command} --version"
         ;;
       efm-langserver)

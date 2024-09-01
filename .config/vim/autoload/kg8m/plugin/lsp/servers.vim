@@ -44,6 +44,7 @@ export def Register(): void
   RegisterTailwindcssLanguageServer()
   RegisterTerraformLs()
   RegisterTerraformLsp()
+  RegisterTflint()
   RegisterTypeprof()
   RegisterTypescriptLanguageServer()
   RegisterVimLanguageServer()
@@ -597,6 +598,21 @@ enddef
 def ExtraConfigForTerraformLsp(): dict<any>
   return {
     cmd: (_) => ["terraform-lsp"],
+  }
+enddef
+
+# Install from https://github.com/terraform-linters/tflint/releases
+def RegisterTflint(): void
+  RegisterServer({
+    name: "tflint",
+    allowlist: ["terraform"],
+    extra_config: () => ExtraConfigForTflint(),
+  })
+enddef
+
+def ExtraConfigForTflint(): dict<any>
+  return {
+    cmd: (_) => ["tflint", "--langserver"],
   }
 enddef
 
