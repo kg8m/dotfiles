@@ -4,7 +4,7 @@ import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 import autoload "kg8m/util/string.vim" as stringUtil
 
-# Show preview of files with my `preview` command and use my prompt (fzf's `:Files` doesn't use mine)
+# Show preview of files with my `preview` command and use my prompt (fzf’s `:Files` doesn’t use mine)
 export def Run(): void
   const options = {
     options: [

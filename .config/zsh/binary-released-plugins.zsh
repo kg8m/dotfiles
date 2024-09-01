@@ -31,7 +31,7 @@ function plugin:setup:binary_releaseds {
     Ryooooooga/zabrze
   )
 
-  # Don't use zinit's options like `as"command" mv"${plugin}* -> ${plugin}" pick"${plugin}/${plugin}"` because it
+  # Don’t use zinit’s options like `as"command" mv"${plugin}* -> ${plugin}" pick"${plugin}/${plugin}"` because it
   # makes the `$PATH` longer and longer. Make symbolic links in `${HOME}/bin` instead.
   #
   # shellcheck disable=SC2317

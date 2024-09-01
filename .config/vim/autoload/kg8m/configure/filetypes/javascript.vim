@@ -31,7 +31,7 @@ def SetupBuffer(): void
 enddef
 
 def SyntaxForTypeScript(): void
-  # Extend regular expressions syntax highlighting for TypeScript by vim-javascript's syntax for JavaScript.
+  # Extend regular expressions syntax highlighting for TypeScript by vim-javascript’s syntax for JavaScript.
   # https://github.com/pangloss/vim-javascript/blob/c470ce1399a544fe587eab950f571c83cccfbbdc/syntax/javascript.vim#L64-L74
   syntax match   jsSpecial          contained "\v\\%(x\x\x|u%(\x{4}|\{\x{4,5}})|c\u|.)"
   syntax region  jsRegexpCharClass  contained start=+\[+ skip=+\\.+ end=+\]+ contains=jsSpecial extend

@@ -14,11 +14,11 @@ fi
 if [ -f "Gemfile.lock" ]; then
   prev_changed_files="$(git log --max-count=1 --name-only --format=)"
 
-  # If a Rails engine's version is bumped but the `Gemfile.lock` isn't updated.
+  # If a Rails engine’s version is bumped but the `Gemfile.lock` isn’t updated.
   if echo "${prev_changed_files}" | grep -E '^lib/[^/]+/version\.rb$' -q; then
     if ! echo "${prev_changed_files}" | grep -E '^Gemfile\.lock$' -q; then
       mark="❗"
-      message="Gem's version has been updated but Gemfile.lock hasn't. Check if there is missing update."
+      message="Gem’s version has been updated but Gemfile.lock hasn’t. Check if there is missing update."
 
       printf "\n%s \e[1;31m%s\e[0;37m %s\n\n" "${mark}" "${message}" "${mark}"
     fi

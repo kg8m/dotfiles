@@ -56,7 +56,7 @@ def SetupEruby(): void
   endfor
 
   if eruby_tag_exists && !are_all_default_comments
-    # `<%# ... %>` doesn't work if other `<% ... %>` markers exist. For example, commented out `<%# <%= foo %> %>` for
+    # `<%# ... %>` doesn’t work if other `<% ... %>` markers exist. For example, commented out `<%# <%= foo %> %>` for
     # `<%= foo %>` is invalid.
     b:caw_wrap_oneline_comment = ["<% if false %>", "<% end %>"]
     b:caw_wrap_sp_left  = ""
@@ -81,7 +81,7 @@ def SetupGemfile(): void
   caw#load_ftplugin("ruby")
 enddef
 
-# Overwrite caw.vim's default: https://github.com/tyru/caw.vim/blob/41be34ca231c97d6be6c05e7ecb5b020f79cd37f/after/ftplugin/vim/caw.vim#L5-L9
+# Overwrite caw.vim’s default: https://github.com/tyru/caw.vim/blob/41be34ca231c97d6be6c05e7ecb5b020f79cd37f/after/ftplugin/vim/caw.vim#L5-L9
 def SetupVim(): void
   b:caw_hatpos_sp  = " "
   b:caw_zeropos_sp = " "

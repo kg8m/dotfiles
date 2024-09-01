@@ -9,7 +9,7 @@ import autoload "kg8m/util/string/colors.vim"
 const EXTRA_INFO_SEPARATOR = repeat(" ", 10)
 const EXTRA_INFO_PATTERN = $'{EXTRA_INFO_SEPARATOR}.*$'
 
-# Sort buffers in dictionary order (fzf's `:Buffers` doesn't sort them)
+# Sort buffers in dictionary order (fzf’s `:Buffers` doesn’t sort them)
 export def Run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
@@ -57,7 +57,7 @@ def NameSorter(lhs: dict<any>, rhs: dict<any>): number
   return lhs.name <# rhs.name ? -1 : 1
 enddef
 
-# Don't use fzf.vim's default handler because it can't open non-persisted, e.g., `buftype=nofile` set, buffers.
+# Don’t use fzf.vim’s default handler because it can’t open non-persisted, e.g., `buftype=nofile` set, buffers.
 export def Handler(lines: list<string>): void
   if empty(lines)
     return

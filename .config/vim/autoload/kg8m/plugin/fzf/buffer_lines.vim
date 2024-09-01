@@ -6,7 +6,7 @@ import autoload "kg8m/util/list.vim" as listUtil
 import autoload "kg8m/util/logger.vim"
 import autoload "kg8m/util/qf.vim" as qfUtil
 
-# Wrapper function to colorize lines and show preview around each line (fzf's `:BLines` doesn't)
+# Wrapper function to colorize lines and show preview around each line (fzf’s `:BLines` doesn’t)
 export def Run(query: string = ""): void
   const filepath = expand("%")
 

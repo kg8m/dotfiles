@@ -126,7 +126,7 @@ def SaveSession(): void
       const dirpath  = fnamemodify(filepath, ":h")
 
       kg8m#util#logger#Warn(
-        $"A temporary directory `{dirpath}` isn't available now. Restarting Vim process is recommended."
+        $"A temporary directory `{dirpath}` isn’t available now. Restarting Vim process is recommended."
       )
     endtry
   endif
@@ -149,7 +149,7 @@ enddef
 def DeleteLastSessionLink(): void
   const filepath = $"{g:startify_session_dir}/__LAST__"
 
-  # Don't use `filereadable(filepath)` because it returns FALSE if the symlink is broken.
+  # Don’t use `filereadable(filepath)` because it returns FALSE if the symlink is broken.
   if !empty(glob(filepath, false, false, true))
     delete(filepath)
   endif

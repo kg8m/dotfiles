@@ -8,7 +8,7 @@ fi
 realpaths=()
 
 for filepath in "${filepaths[@]}"; do
-  # Expand `~` because bat can't expand it.
+  # Expand `~` because bat can’t expand it.
   realpaths+=("${filepath/#\~/${HOME}}")
 done
 

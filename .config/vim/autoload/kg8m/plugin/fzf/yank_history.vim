@@ -38,7 +38,7 @@ enddef
 def FormatListItem(index: number): string
   const text = yankround.CacheAndRegtype(index)[0]
 
-  # Avoid shell's syntax error in fzf's preview
+  # Avoid shell’s syntax error in fzf’s preview
   const sanitized_text = substitute(text, "\n", "\\\\n", "g")
 
   return printf("%3d\t%s", index, sanitized_text)

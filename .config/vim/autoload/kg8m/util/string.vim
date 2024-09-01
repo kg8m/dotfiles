@@ -14,7 +14,7 @@ export def Vital(): dict<func>
 enddef
 
 # https://github.com/vim-jp/vital.vim/blob/5828301d6bae0858e9ea21012913544f5ef8e375/autoload/vital/__vital__/Data/String.vim#L48-L50
-# Re-implement because vital.vim's `Vital.Data.String.starts_with()` is 5-6 times slower.
+# Re-implement because vital.vim’s `Vital.Data.String.starts_with()` is 5-6 times slower.
 # (fast) direct `stridx()` >> `kg8m#util#string#StartsWith()` > regexp (`=~#`) >>>>> `Vital.Data.String.starts_with()` (slow)
 export def StartsWith(string: string, prefix: string): bool
   return stridx(string, prefix) ==# 0
@@ -30,7 +30,7 @@ export def Includes(string: string, query: string): bool
   return stridx(string, query) >=# 0
 enddef
 
-# vital.vim's `truncate()` and `truncate_skipping()` is a little slow.
+# vital.vim’s `truncate()` and `truncate_skipping()` is a little slow.
 # So use `printf()` with `%.*S` unless `footer_width` of `truncate_skipping()` is unnecessary.
 export def Truncate(string: string, max_width: number, options: dict<any> = {}): string
   const skipper = get(options, "skipper", "...")

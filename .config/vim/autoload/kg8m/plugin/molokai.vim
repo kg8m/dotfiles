@@ -37,7 +37,7 @@ export def Overwrite(): void
   highlight WarningMsg    guifg=#e6db74
 
   if has("gui_running")
-    # `guibg=NONE` doesn't work in GUI Vim
+    # `guibg=NONE` doesn’t work in GUI Vim
     highlight FoldColumn  guibg=#000000
     highlight Folded      guibg=#000000
     highlight Ignore      guibg=#000000

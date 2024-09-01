@@ -8,7 +8,7 @@ export def OnSource(): void
 enddef
 
 export def OnPostSource(): void
-  # Disable DWM's default behavior on buffer loaded
+  # Disable DWM’s default behavior on buffer loaded
   augroup dwm
     autocmd!
   augroup END

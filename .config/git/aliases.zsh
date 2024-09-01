@@ -451,7 +451,7 @@ function git:diff:branch:from:nameonly {
 
 function git:stash:all:with_message {
   # Make all changes staged before `git stash` instead of using `--include-untracked` option. Untracked files stashed
-  # with `--include-untracked` aren't shown in diffs, i.e., `git diff ...stash@{0}` doesn't contain the untracked files.
+  # with `--include-untracked` aren’t shown in diffs, i.e., `git diff ...stash@{0}` doesn’t contain the untracked files.
   execute_with_confirm "git add --all && git stash push --no-keep-index --message '$*'"
 }
 
@@ -840,7 +840,7 @@ function git:utility:filetype:guess {
   fi
 }
 
-# Use short options like `-t` or `-s` because BSD `column` command doesn't support long options like `--table` or
+# Use short options like `-t` or `-s` because BSD `column` command doesn’t support long options like `--table` or
 # `--separator`.
 # The local variable `dummy` is for newer `column` command. Newer `column` command removes leading whitespaces. So
 # prevent it by putting a dummy text on the top of each line.

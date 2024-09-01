@@ -1,4 +1,4 @@
-# Don't use zinit's options like `as"command" pick"bin/rubocop-daemon-wrapper"` because it makes the `$PATH` longer and
+# Don’t use zinit’s options like `as"command" pick"bin/rubocop-daemon-wrapper"` because it makes the `$PATH` longer and
 # longer. Make symbolic links in `${HOME}/bin` instead.
 function plugin:rubocop:daemon:atclone {
   local binary="bin/rubocop-daemon-wrapper"

@@ -29,7 +29,7 @@ def Set(): void
   #      line-break-prohibition rules make this impossible. Mainly for CJK scripts and works only if 'encoding' is
   #      utf-8".
   setlocal fo+=roq2lMj
-  setlocal fo-=t fo-=c fo-=a fo-=b  # `fo-=tcab` doesn't work
+  setlocal fo-=t fo-=c fo-=a fo-=b  # `fo-=tcab` doesn’t work
 
   if &encoding ==# "utf-8"
     setlocal fo+=]

@@ -62,7 +62,7 @@ export TIMETRACK_IGNORE_PATTERN
 export TIMETRACK_PATTERN
 
 # Inspired by http://qiita.com/hayamiz/items/d64730b61b7918fbb970
-# Don't load followings lazily because zsh doesn't track some commands, e.g., `exec zsh`
+# Don’t load followings lazily because zsh doesn’t track some commands, e.g., `exec zsh`
 
 autoload -U add-zsh-hook
 
@@ -86,7 +86,7 @@ function timetrack:finish {
   unset __TIMETRACK_STARTED_AT
   unset __TIMETRACK_COMMAND
 
-  # Don't use `[[ "${command}" =~ ${TIMETRACK_PATTERN} ]]` because it doesn't work on Mac
+  # Don’t use `[[ "${command}" =~ ${TIMETRACK_PATTERN} ]]` because it doesn’t work on Mac
   if echo "${command}" | grep -E -v "${TIMETRACK_IGNORE_PATTERN}" | grep -E -q "${TIMETRACK_PATTERN}"; then
     local exec_time=$((finished_at - started_at))
 

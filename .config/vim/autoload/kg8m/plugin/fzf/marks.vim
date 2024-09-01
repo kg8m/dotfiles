@@ -3,7 +3,7 @@ vim9script
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 
-# Show preview of marks (fzf's `:Marks` doesn't show preview)
+# Show preview of marks (fzf’s `:Marks` doesn’t show preview)
 export def Run(): void
   const options = {
     options: [

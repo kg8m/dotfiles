@@ -12,7 +12,7 @@ export def OnSource(): void
   augroup vimrc-plugin-jpformat
     autocmd!
 
-    # Overwrite default/plugins' `formatexpr` especially configured when multiple files are opened same time
+    # Overwrite default/plugins’ `formatexpr` especially configured when multiple files are opened same time
     autocmd BufEnter * timer_start(200, (_) => SetFormatexpr())
   augroup END
 enddef

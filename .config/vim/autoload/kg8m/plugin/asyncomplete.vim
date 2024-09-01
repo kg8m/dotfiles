@@ -9,7 +9,7 @@ export def OnSource(): void
   g:asyncomplete_popup_delay = 50
   g:asyncomplete_auto_completeopt = false
 
-  # Usually disable asyncomplete.vim's logging because it makes Vim slower.
+  # Usually disable asyncomplete.vim’s logging because it makes Vim slower.
   # g:asyncomplete_log_file = expand("~/tmp/vim-asyncomplete.log")
 
   # Hide messages like "Pattern not found" or "Match 1 of <N>"

@@ -117,11 +117,11 @@ export FD_DEFAULT_OPTIONS=(
   --no-ignore-vcs
 
   # Remove './' prefixes of relative paths
-  # Don't set as default because this option can't be used with paths or `--search-path` options.
+  # Don’t set as default because this option can’t be used with paths or `--search-path` options.
   # --strip-cwd-prefix
 
   # Sort search results
-  # Comment out because `fd` doesn't sort the result even with this option.
+  # Comment out because `fd` doesn’t sort the result even with this option.
   # --threads 1
 )
 

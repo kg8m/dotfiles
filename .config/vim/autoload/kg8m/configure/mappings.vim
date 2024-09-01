@@ -48,7 +48,7 @@ export def Define(): void
   nnoremap g[ <C-t>
 
   # gF: Same as "gf", except if a number follows the file name, then the cursor is positioned on that line in the file.
-  # Don't use `nnoremap` because `gf` sometimes overwritten by plugins
+  # Don’t use `nnoremap` because `gf` sometimes overwritten by plugins
   nmap gf gF
 
   # Go to next/previous location and open its folding.
@@ -68,7 +68,7 @@ export def Define(): void
   cnoremap <Up>   <C-p>
   cnoremap <Down> <C-n>
 
-  # For Cmdline popupmenu (`set wildoptions=pum`). Don't do `cnoremap <expr> <Esc> pumvisible() ? "<C-e> : ...`
+  # For Cmdline popupmenu (`set wildoptions=pum`). Don’t do `cnoremap <expr> <Esc> pumvisible() ? "<C-e> : ...`
   # because the mapping to `<Esc>` breaks some operations in Cmdline mode, e.g., pasting from clipboard.
   cnoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
 
@@ -80,7 +80,7 @@ export def Define(): void
   # nnoremap ]<S-p> <S-p>
 
   # Moving in INSERT mode
-  # <C-g>U: don't break undo with next left/right cursor movement, if the cursor stays within the same line
+  # <C-g>U: don’t break undo with next left/right cursor movement, if the cursor stays within the same line
   inoremap <C-k> <Up>
   inoremap <C-f> <C-g>U<Right>
   inoremap <C-j> <Down>

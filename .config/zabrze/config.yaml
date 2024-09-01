@@ -364,7 +364,7 @@ abbrevs:
     snippet: add
     global: true
     context: '^yarn\s'
-  # Don't use `yarn install` because I use `yarn`.
+  # Don’t use `yarn install` because I use `yarn`.
   - name: yarn add for mistaking `yarn i`
     abbr: i
     snippet: add

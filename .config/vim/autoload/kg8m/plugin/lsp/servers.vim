@@ -105,7 +105,7 @@ def RegisterCssLanguageServer(): void
 enddef
 
 def ExtraConfigForCssLanguageServer(): dict<any>
-  # css-language-server doesn't work when editing `.sass` file.
+  # css-language-server doesn’t work when editing `.sass` file.
   return {
     cmd: (_) => ["vscode-css-language-server", "--stdio"],
     env: NodeToolsEnv(),
@@ -522,7 +522,7 @@ def ExtraConfigForSqls(): dict<any>
       },
     },
 
-    # sqls' document formatting is buggy.
+    # sqls’ document formatting is buggy.
     document_format_priority: document_format.MIN_PRIORITY,
   }
 enddef
@@ -768,7 +768,7 @@ def ActivateServers(filetype: string): void
     # https://github.com/prabirshrestha/vim-lsp/blob/e2a052acce38bd0ae25e57fff734a14a9e2c9ef7/plugin/lsp.vim#L52
     lsp#enable()
 
-    # Clear vim-lsp's `CompleteDone` autocommand because it inserts characters like "<SNR>123_on_complete_done_after()".
+    # Clear vim-lsp’s `CompleteDone` autocommand because it inserts characters like "<SNR>123_on_complete_done_after()".
     # https://github.com/prabirshrestha/vim-lsp/blob/3d0fc4072bef08b578d4a4aa4a6f91de571e99e4/autoload/lsp.vim#L63
     # https://github.com/prabirshrestha/vim-lsp/blob/3d0fc4072bef08b578d4a4aa4a6f91de571e99e4/autoload/lsp/ui/vim/completion.vim#L5-L10
     autocmd! lsp_ui_vim_completion
@@ -805,7 +805,7 @@ def Activate(name: string, extra_config: dict<any>): void
     extend(config, { workspace_folders: config.root_uri })
   endif
 
-  # Delay because some servers don't work just after Vim starts with editing files. For example, no completion
+  # Delay because some servers don’t work just after Vim starts with editing files. For example, no completion
   # candidates are provided.
   const delay = is_ready ? 0 : 1000
 
@@ -953,7 +953,7 @@ def TypeScriptLibPath(): string
     if isdirectory(global_path)
       return global_path
     else
-      logger.Warn("TypeScript's library directory is not found.")
+      logger.Warn("TypeScript’s library directory is not found.")
       return ""
     endif
   endif

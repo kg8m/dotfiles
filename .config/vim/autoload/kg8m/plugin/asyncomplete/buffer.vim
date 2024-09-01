@@ -5,7 +5,7 @@ import autoload "kg8m/util/logger.vim"
 final cache = {}
 
 export def OnPostSource(): void
-  # Call asyncomplete-buffer.vim's function to refresh keywords (`cache.refresh_keywords`) on some events not only
+  # Call asyncomplete-buffer.vim’s function to refresh keywords (`cache.refresh_keywords`) on some events not only
   # `BufWinEnter` in order to include keywords added after `BufWinEnter` in completion candidates
   # https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L29
   const events = [
@@ -64,7 +64,7 @@ def SetupRefreshKeywords(): void
 enddef
 
 def CannotRefreshKeywords(): void
-  logger.Error("Cannot refresh keywords because asyncomplete-buffer.vim's SID can't be detected.")
+  logger.Error("Cannot refresh keywords because asyncomplete-buffer.vim’s SID can’t be detected.")
 enddef
 
 def Activate(): void

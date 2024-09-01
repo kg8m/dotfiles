@@ -37,8 +37,8 @@
 	old  = red
 	new  = green
 
-	# #2c0001 is 25% darker than #370001 (delta's original minus red).
-	# #001d00 is 25% darker than #002400 (delta's original plus green).
+	# #2c0001 is 25% darker than #370001 (delta’s original minus red).
+	# #001d00 is 25% darker than #002400 (delta’s original plus green).
 	oldMoved = "white #2c0001 italic"
 	newMoved = "white #001d00 italic"
 
@@ -108,7 +108,7 @@
 	renames = true
 	submodule = diff
 
-	# Disable because some tools to apply patches don't work
+	# Disable because some tools to apply patches don’t work
 	noprefix = false
 
 [diff "gitconfig"]

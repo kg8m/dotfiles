@@ -254,7 +254,7 @@ def MkdirUnlessExist(): void
   endif
 
   if !isdirectory(dirpath)
-    const prompt = printf("`%s` doesn't exist. Create?", dirpath)
+    const prompt = printf("`%s` doesn’t exist. Create?", dirpath)
 
     if inputUtil.Confirm(prompt)
       mkdir(dirpath, "p")

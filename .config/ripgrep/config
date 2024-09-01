@@ -1,4 +1,4 @@
-# Use UTF-8 as default because ripgrep's automatic encoding detection sometimes causes errors against other encodings
+# Use UTF-8 as default because ripgrep’s automatic encoding detection sometimes causes errors against other encodings
 --encoding=utf-8
 
 # Dynamically choose between supported regex engines depending on the features used in the pattern
@@ -51,7 +51,7 @@
 --glob=!vendor/bundle/
 
 # For Mac
-# Use `**` because ripgrep doesn't support absolute paths for `--glob`.
+# Use `**` because ripgrep doesn’t support absolute paths for `--glob`.
 # cf. https://github.com/BurntSushi/ripgrep/issues/973
 --glob=!**/System/Volumes/
 --glob=!**/Volumes/

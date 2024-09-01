@@ -8,7 +8,7 @@ export def GlobalOptions(): void
   set foldminlines=1
   set foldcolumn=5
 
-  # Don't use `set fillchars=vert:\|` because it raises an error in Vim9 script
+  # Don’t use `set fillchars=vert:\|` because it raises an error in Vim9 script
   &fillchars = "vert:|"
 
   set fillchars+=diff:/

@@ -143,7 +143,7 @@ function highlight:gray {
   highlight:base "245" "$@"
 }
 
-# cf. Vim's `kg8m#util#string#colors#Red()` and so on
+# cf. Vim’s `kg8m#util#string#colors#Red()` and so on
 function highlight:base {
   local color="${1:?}"
   shift 1
@@ -398,7 +398,7 @@ function my_grep {
   rg "${args[@]}"
 }
 
-# cf. Vim's kg8m#util#grep#BuildQflistFromBuffer()
+# cf. Vim’s kg8m#util#grep#BuildQflistFromBuffer()
 function my_grep:with_filter {
   local query="${1:?}"
   shift 1
@@ -499,7 +499,7 @@ function my_grep:with_filter {
         # shellcheck disable=SC2064
         trap "rm -f '${tempfile}'" EXIT
 
-        # Don't execute `echo ... | vim ... -` because current command remains as zsh if so. So tmux's
+        # Don’t execute `echo ... | vim ... -` because current command remains as zsh if so. So tmux’s
         # `pane_current_command` always returns "zsh" and automatic refreshing zsh prompt will be influenced.
         echo "${(j:\n:)results}" | grep -E '^.+?:[0-9]+:[0-9]+:.' > "${tempfile}"
         local query_for_vim="$(echo "${query}" | sd '"' '\\"' | sd "'" "'\\\\'\\\\''")"
@@ -776,7 +776,7 @@ function libs:go:uninstall {
   local fd_args=("${FD_DEFAULT_OPTIONS:?[@]}")
 
   if [ -n "${FD_EXTRA_OPTIONS:-}" ]; then
-    # $FD_EXTRA_OPTIONS is a string because direnv doesn't support arrays.
+    # $FD_EXTRA_OPTIONS is a string because direnv doesn’t support arrays.
     fd_args+=("${(s: :)FD_EXTRA_OPTIONS}")
   fi
 

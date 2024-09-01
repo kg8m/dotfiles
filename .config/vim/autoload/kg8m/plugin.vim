@@ -44,7 +44,7 @@ export def DisableDefaults(): void
   g:skip_loading_mswin       = true
   g:did_install_syntax_menu  = true
 
-  # MacVim's features, e.g., `Command` + `v` to paste, are broken if setting this
+  # MacVim’s features, e.g., `Command` + `v` to paste, are broken if setting this
   # g:did_install_default_menus = true
 enddef
 
@@ -69,11 +69,11 @@ export def InitManager(): void
   g:dein#install_check_remote_threshold = CHECK_REMOTE_THRESHOLD
   g:dein#install_github_api_token = $DEIN_INSTALL_GITHUB_API_TOKEN
 
-  # Disable copying files via Vim's `readfile()` and `writefile()` because it is too slow.
+  # Disable copying files via Vim’s `readfile()` and `writefile()` because it is too slow.
   g:dein#install_copy_vim = false
 
   # Decrease max processes because too many requests sometimes get refused by GitHub.
-  # Don't use `1` because it causes busy loop.
+  # Don’t use `1` because it causes busy loop.
   g:dein#install_max_processes = 2
 
   # With `--filter=blob:none`
@@ -92,20 +92,20 @@ export def Register(repository: string, options: dict<any> = {}): bool
 
   if has_key(options, "merged")
     if options.merged && has_key(options, "if")
-      logger.Warn("Don't use `merged: true` with `if` option because merged plugins are always loaded")
+      logger.Warn("Don’t use `merged: true` with `if` option because merged plugins are always loaded")
     endif
   else
     options.merged = !has_key(options, "if")
   endif
 
   if !get(options, "if", true)
-    # Don't load but fetch the plugin
+    # Don’t load but fetch the plugin
     options.rtp = ""
     remove(options, "if")
     enabled = false
   endif
 
-  # Skip dein.vim's unnecessary parsing
+  # Skip dein.vim’s unnecessary parsing
 
   if !has_key(options, "name")
     options.name = fnamemodify(repository, ":t")
@@ -177,8 +177,8 @@ export def IsSourced(plugin_name: string): bool
   return !!dein#is_sourced(plugin_name)
 enddef
 
-# Manually source a plugin because of some reasons, e.g., dein.vim's `on_func` feature is not available in Vim9 script.
-# Vim9 script doesn't support `FuncUndefined` event: https://github.com/vim/vim/issues/7501
+# Manually source a plugin because of some reasons, e.g., dein.vim’s `on_func` feature is not available in Vim9 script.
+# Vim9 script doesn’t support `FuncUndefined` event: https://github.com/vim/vim/issues/7501
 export def EnsureSourced(plugin_name: string): void
   if !IsSourced(plugin_name)
     Source(plugin_name)
@@ -300,7 +300,7 @@ def RecachePluginsIfNeeded(): void
   if stringUtil.StartsWith(getcwd(), $VIM_PLUGINS)
     RecacheRuntimepath()
 
-    # Use timer because synchronous messages are hidden by Vim's default written message on `BufWritePost` event.
+    # Use timer because synchronous messages are hidden by Vim’s default written message on `BufWritePost` event.
     timer_start(100, (_) => logger.Info("Runtimepath recached!!"))
   endif
 enddef

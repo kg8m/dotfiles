@@ -7,11 +7,11 @@ alias -g F="| filter"
 alias -g S="| sort_without_escape_sequences"
 
 # shellcheck disable=SC2154
-# $FD_EXTRA_OPTIONS is a string because direnv doesn't support arrays.
+# $FD_EXTRA_OPTIONS is a string because direnv doesn’t support arrays.
 alias fd="fd \${FD_DEFAULT_OPTIONS:?[@]} \${(s: :)FD_EXTRA_OPTIONS}"
 alias rm="rm -i"
 
-# Don't inherit `$TERM` to remote servers.
+# Don’t inherit `$TERM` to remote servers.
 # `xterm-256color-italic` is set in tmux.
 alias ssh="TERM=xterm-256color ssh"
 

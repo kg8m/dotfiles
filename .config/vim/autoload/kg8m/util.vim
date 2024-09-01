@@ -143,7 +143,7 @@ export def ConvertToVim9script(): void
   :%s/\v^(\s*)endfunction>/\1enddef/Ie
   :%s/\v\) abort>/)/Ie
 
-  # Add function's return type and argument's type
+  # Add function’s return type and argument’s type
   :%s/\v^(\s*)def ([a-zA-Z&:#_.]+)\((\w+)(.*)\)$/\1def \2(\3: FIXME\4): void/Ie
   :%s/\v^(\s*)def ([a-zA-Z&:#_.]+)\(\)$/\1def \2(): void/Ie
 

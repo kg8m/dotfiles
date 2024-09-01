@@ -23,7 +23,7 @@ export def OnPostSource(): void
     () => AddRulesForShell(),
     () => AddRulesForVim(),
 
-    # Overwrite lexima.vim's default mapping.
+    # Overwrite lexima.vim’s default mapping.
     () => events.NotifyInsertModePluginLoaded(),
   ]
 
@@ -156,7 +156,7 @@ def AddRulesForTs(): void
   #
   #   Foo<|
   #
-  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
+  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn’t work.
   lexima#add_rule({ char: "<", at: '\w\%#<', input: "<C-g>U<Right>", filetype: filetypes })
 
   # `<` when
@@ -176,7 +176,7 @@ def AddRulesForTs(): void
   #
   #   <foo>|
   #
-  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
+  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn’t work.
   lexima#add_rule({ char: ">", at: '\%#>', input: "<C-g>U<Right>", filetype: filetypes })
 
   # `<BS>` when
@@ -362,7 +362,7 @@ def AddRulesForVim(): void
   #
   #   foo<|
   #
-  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
+  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn’t work.
   lexima#add_rule({ char: "<", at: '\w\%#<', input: "<C-g>U<Right>", filetype: filetypes })
 
   # `>` when
@@ -373,7 +373,7 @@ def AddRulesForVim(): void
   #
   #   <foo>|
   #
-  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn't work.
+  # NOTE: Use `input: "<Right>"` because `leave: 1` doesn’t work.
   lexima#add_rule({ char: ">", at: '\%#>', input: "<C-g>U<Right>", filetype: filetypes })
 
   # `<BS>` when

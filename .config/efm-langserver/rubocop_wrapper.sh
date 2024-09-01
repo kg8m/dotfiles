@@ -21,7 +21,7 @@ if [ ! "${USE_RUBOCOP_LSP:-}" = "0" ] && [[ ! "${target_filepath}" =~ \.md$ ]]; 
 fi
 
 if [ ! "${USE_RUBOCOP_FOR_MARKDOWN:-}" = "1" ] && [[ "${target_filepath}" =~ \.md$ ]]; then
-  echo "Running for Markdown files isn't supported." >&2
+  echo "Running for Markdown files isn’t supported." >&2
   exit 1
 fi
 
@@ -42,7 +42,7 @@ options+=(--force-exclusion --no-color --stdin "${target_filepath}")
 
 if [ "${is_fixing}" = "1" ]; then
   if [[ "${target_filepath}" =~ \.md$ ]]; then
-    echo "Formatting Markdown files from STDIN source isn't supported." >&2
+    echo "Formatting Markdown files from STDIN source isn’t supported." >&2
     exit 1
   fi
 

@@ -15,7 +15,7 @@ export def One(plugin_name: string): void
 enddef
 
 def AllMain(options: dict<any> = {}): void
-  # Re-register disabled plugins before update because dein.vim doesn't make helptags for them
+  # Re-register disabled plugins before update because dein.vim doesn’t make helptags for them
   plugin.EnableDisabledPlugins()
 
   if get(options, "bulk", true)

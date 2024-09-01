@@ -54,7 +54,7 @@ export def OnSource(): void
 
   g:lsp_async_completion = true
 
-  # Usually disable vim-lsp's logging because it makes Vim slower.
+  # Usually disable vim-lsp’s logging because it makes Vim slower.
   # g:lsp_log_file = expand("~/tmp/vim-lsp.log")
 
   popup.Setup()
@@ -105,7 +105,7 @@ def OnLspBufferEnabled(): void
   # cf. IsBufferEnabled()
   b:lsp_buffer_enabled = true
 
-  # Lazily set omnifunc to overwrite plugins' configurations.
+  # Lazily set omnifunc to overwrite plugins’ configurations.
   SetOmnifunc()
   autocmd InsertEnter <buffer> timer_start(100, (_) => SetOmnifunc())
 

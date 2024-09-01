@@ -29,7 +29,7 @@ else
   realpath_bin="realpath"
 fi
 
-# markuplint treats config file's path as relative even if an absolute path is given
+# markuplint treats config file’s path as relative even if an absolute path is given
 absolute_config_filepath="${XDG_CONFIG_HOME:?}/markuplint/markuplint.config.js"
 relative_config_filepath="$("${realpath_bin}" --relative-to "${PWD}" "${absolute_config_filepath}")"
 

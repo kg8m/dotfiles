@@ -23,7 +23,7 @@ def OnInsertLeave(): void
   cache.insert_entered_from_blockwise_visual = false
 enddef
 
-# This function can be called multiple times in order to overwrite plugins' mappings.
+# This function can be called multiple times in order to overwrite plugins’ mappings.
 export def Define(options: dict<bool> = {}): void
   if has_key(b:, "is_defined") && get(options, "force", false)
     return
@@ -33,7 +33,7 @@ export def Define(options: dict<bool> = {}): void
     return
   endif
 
-  # <silent> for lexima#expand's echo
+  # <silent> for lexima#expand’s echo
   inoremap <buffer><expr><silent> <CR>                   CrExpr()
   inoremap <buffer><expr><silent> <Plug>(kg8m-i-cr-base) CrExprBase()
 
@@ -43,13 +43,13 @@ export def Define(options: dict<bool> = {}): void
   inoremap <buffer><expr>         <S-Tab> ShiftTabExpr()
 
   # Insert selected completion candidate word via `<Up>`/`<Down>` keys like `<C-p>`/`<C-n>` keys.
-  # <Up>:   Select the previous match, as if CTRL-P was used, but don't insert it.
-  # <Down>: Select the next match, as if CTRL-N was used, but don't insert it.
+  # <Up>:   Select the previous match, as if CTRL-P was used, but don’t insert it.
+  # <Down>: Select the next match, as if CTRL-N was used, but don’t insert it.
   # :h popupmenu-keys
   inoremap <buffer><expr>         <Up>   pumvisible() ? "<C-p>" : "<Up>"
   inoremap <buffer><expr>         <Down> pumvisible() ? "<C-n>" : "<Down>"
 
-  # <silent> for lexima#expand's echo
+  # <silent> for lexima#expand’s echo
   imap     <buffer><expr><silent> > GtExpr()
 
   b:is_defined = true
@@ -70,7 +70,7 @@ def CrExpr(): string
     if pumvisible()
       if empty(v:completed_item)
         # Trigger the base `<CR>` expr after closing the popup (basically for breaking the current line).
-        # Use timer because `lexima#expand()` doesn't work properly if the popup is visible.
+        # Use timer because `lexima#expand()` doesn’t work properly if the popup is visible.
         # Use a silent mapping proxy `<Plug>(kg8m-i-cr-base)` in order to hide `=lexima#insmode#...` on the cmdline.
         timer_start(10, (_) => feedkeys(base))
       endif
@@ -99,7 +99,7 @@ def GtExpr(): string
   endif
 
   if &filetype =~# '\v^(gitcommit|markdown)$'
-    # g:closetag_shortcut doesn't work for blockquote markers with blockwise Visual mode.
+    # g:closetag_shortcut doesn’t work for blockquote markers with blockwise Visual mode.
     if cache.insert_entered_from_blockwise_visual
       return ">"
     else

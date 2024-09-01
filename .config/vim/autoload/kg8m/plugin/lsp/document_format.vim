@@ -13,13 +13,13 @@ export const BASE_PRIORITY = 50
 export const MIN_PRIORITY  = 00
 
 const INVALID_REASONS = {
-  servers_not_enabled:  "servers aren't enabled",
-  not_allowed:          "automatic formatting isn't allowed",
-  non_target_filepath:  "the filepath isn't target",
-  non_target_buftype:   "the buffer type isn't target",
-  non_target_filetype:  "the filetype isn't target",
+  servers_not_enabled:  "servers aren’t enabled",
+  not_allowed:          "automatic formatting isn’t allowed",
+  non_target_filepath:  "the filepath isn’t target",
+  non_target_buftype:   "the buffer type isn’t target",
+  non_target_filetype:  "the filetype isn’t target",
   too_large_filesize:   "the buffer is too large",
-  no_server_capability: "servers don't have capability",
+  no_server_capability: "servers don’t have capability",
 }
 
 final cache = {
@@ -193,7 +193,7 @@ def IsIgnoreeFilepath(): bool
     return false
   endif
 
-  # Use `getbufinfo()` to get the buffer's absolute path if it isn't saved.
+  # Use `getbufinfo()` to get the buffer’s absolute path if it isn’t saved.
   return getbufinfo("%")[0].name =~# g:kg8m#plugin#lsp#document_format#ignoree_pattern
 enddef
 
@@ -203,7 +203,7 @@ def IsForceTargetFilepath(): bool
     return false
   endif
 
-  # Use `getbufinfo()` to get the buffer's absolute path if it isn't saved.
+  # Use `getbufinfo()` to get the buffer’s absolute path if it isn’t saved.
   return getbufinfo("%")[0].name =~# g:kg8m#plugin#lsp#document_format#force_target_pattern
 enddef
 
@@ -269,11 +269,11 @@ def DetectFormatterServer(): string
   return configs[0].name
 enddef
 
-# If buffer contents change, don't apply result of `LspDocumentFormat` but try to retry.
+# If buffer contents change, don’t apply result of `LspDocumentFormat` but try to retry.
 # cf. https://github.com/prabirshrestha/vim-lsp/blob/420143420d929d6bc9e98102b5828e0bbc5c9052/autoload/lsp/internal/document_formatting.vim#L74-L76
 def OverwriteFormatNext(): void
   try
-    # Call a dummy function which doesn't exist in order to load target script.
+    # Call a dummy function which doesn’t exist in order to load target script.
     lsp#internal#document_formatting#dummy()
   catch /^Vim:E117: Unknown function:/
     # Do nothing
@@ -282,7 +282,7 @@ def OverwriteFormatNext(): void
   const scripts = getscriptinfo({ name: "vim-lsp/autoload/lsp/internal/document_formatting.vim" })
 
   if empty(scripts)
-    logger.Warn("Failed to detect vim-lsp's document_formatting.vim script.")
+    logger.Warn("Failed to detect vim-lsp’s document_formatting.vim script.")
   else
     const lsp_document_formatting_sid = scripts[0].sid
     const function_name = $"<SNR>{lsp_document_formatting_sid}_format_next"

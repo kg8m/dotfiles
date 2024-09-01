@@ -4,7 +4,7 @@ import autoload "kg8m/util/list.vim" as listUtil
 import autoload "kg8m/util/logger.vim"
 import autoload "kg8m/util/qf.vim" as qfUtil
 
-# cf. zsh's my_grep:with_filter
+# cf. zsh’s my_grep:with_filter
 export def BuildQflistFromBuffer(query: string): void
   const filename = expand("%:t")
 

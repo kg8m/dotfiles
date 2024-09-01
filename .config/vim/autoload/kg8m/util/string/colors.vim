@@ -1,6 +1,6 @@
 vim9script
 
-# cf. zsh's `highlight:red` and so on
+# cf. zsh’s `highlight:red` and so on
 const COLOR_CODES = {
   red:     1,
   green:   2,

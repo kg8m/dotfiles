@@ -25,7 +25,7 @@ enddef
 def Handler(item: string): void
   const command = substitute(item, '\v.*--\s+`(.+)`$', '\1', "")
 
-  # Use `feedkeys` instead of `execute` because `execute` doesn't work if the command uses fzf.
+  # Use `feedkeys` instead of `execute` because `execute` doesn’t work if the command uses fzf.
   feedkeys($":{command}\<CR>")
 enddef
 

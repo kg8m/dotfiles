@@ -72,7 +72,7 @@ enddef
 
 def OverwriteHandleSignatureHelp(): void
   try
-    # Call a dummy function which doesn't exist in order to load target script.
+    # Call a dummy function which doesn’t exist in order to load target script.
     lsp#ui#vim#signature_help#dummy()
   catch /^Vim:E117: Unknown function:/
     # Do nothing
@@ -81,7 +81,7 @@ def OverwriteHandleSignatureHelp(): void
   const scripts = getscriptinfo({ name: "vim-lsp/autoload/lsp/ui/vim/signature_help.vim" })
 
   if empty(scripts)
-    logger.Warn("Failed to detect vim-lsp's signature_help.vim script.")
+    logger.Warn("Failed to detect vim-lsp’s signature_help.vim script.")
   else
     const lsp_signature_help_sid = scripts[0].sid
     const function_name = $"<SNR>{lsp_signature_help_sid}_handle_signature_help"

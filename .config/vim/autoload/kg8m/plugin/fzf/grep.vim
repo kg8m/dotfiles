@@ -9,7 +9,7 @@ import autoload "kg8m/util/string.vim" as stringUtil
 
 final cache = {}
 
-# Respect `$RIPGREP_EXTRA_OPTIONS` (fzf's `:Rg` doesn't respect it)
+# Respect `$RIPGREP_EXTRA_OPTIONS` (fzf’s `:Rg` doesn’t respect it)
 command! -nargs=+ -complete=customlist,Complete FzfGrep Run(<q-args>)
 
 export def EnterCommand(preset: string = "", options = {}): void

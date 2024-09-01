@@ -1,5 +1,5 @@
 # [SC1036] '(' is invalid here. Did you forget to escape it?
-# This rule is invalid in zsh's `path=("/path/to/something"(N-/) ...)`.
+# This rule is invalid in zsh’s `path=("/path/to/something"(N-/) ...)`.
 disable=SC1036
 
 # [SC1090] Can't follow non-constant source. Use a directive to specify location.
@@ -11,23 +11,23 @@ disable=SC1090
 disable=SC1091
 
 # [SC2016] Expressions don't expand in single quotes, use double quotes for that.
-# This rule doesn't allow codes like `echo 'Foo `bar` baz'`.
+# This rule doesn’t allow codes like `echo 'Foo `bar` baz'`.
 disable=SC2016
 
 # [SC2148] Tips depend on target shell and yours is unknown. Add a shebang or a 'shell' directive.
-# I don't care about it.
+# I don’t care about it.
 disable=SC2148
 
 # [SC2155] Declare and assign separately to avoid masking return values.
-# This rule doesn't allow codes like `local foo="$(bar)"`.
+# This rule doesn’t allow codes like `local foo="$(bar)"`.
 disable=SC2155
 
 # [SC2164] Use 'cd ... || exit' or 'cd ... || return' in case cd fails.
-# I don't care about it.
+# I don’t care about it.
 disable=SC2164
 
 # [SC2249] Consider adding a default *) case, even if it just exits with error.
-# I don't care about it.
+# I don’t care about it.
 disable=SC2249
 
 # [SC2292] Prefer [[ ]] over [ ] for tests in Bash/Ksh.
@@ -35,9 +35,9 @@ disable=SC2249
 disable=SC2292
 
 # [SC2296] Parameter expansions can't start with (. Double check syntax.
-# This rule is invalid in zsh's `"${(j:x:)foo}"`, `"${(s:y:)bar}"`, and so on.
+# This rule is invalid in zsh’s `"${(j:x:)foo}"`, `"${(s:y:)bar}"`, and so on.
 disable=SC2296
 
 # [SC2312] Consider invoking this command separately to avoid masking its return value (or use '|| true' to ignore).
-# This rule doesn't allow codes like `if foo | bar > /dev/null; then ...; fi`.
+# This rule doesn’t allow codes like `if foo | bar > /dev/null; then ...; fi`.
 disable=SC2312

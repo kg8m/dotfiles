@@ -41,7 +41,7 @@ zshaddhistory() {
   (("${#line}" >= 5))
 }
 
-setopt extended_history      # Record each command's timestamp and the duration
+setopt extended_history      # Record each command’s timestamp and the duration
 setopt hist_ignore_all_dups  # Remove duplicated older commands from history
 setopt hist_ignore_space     # Remove history when the first character is a space
 setopt hist_no_store         # Ignore the `history` (`fc -l`) command

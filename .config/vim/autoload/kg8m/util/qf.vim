@@ -129,7 +129,7 @@ def Process(name: string, Callback: func(string)): void
   if filereadable(filepath)
     Callback(filepath)
   else
-    logger.Error($"`{filepath}` doesn't exist.")
+    logger.Error($"`{filepath}` doesn’t exist.")
   endif
 enddef
 

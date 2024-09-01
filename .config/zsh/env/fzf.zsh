@@ -43,7 +43,7 @@ function() {
     "--track"
   )
 
-  # $FD_EXTRA_OPTIONS is a string because direnv doesn't support arrays.
+  # $FD_EXTRA_OPTIONS is a string because direnv doesn’t support arrays.
   export FZF_DEFAULT_OPTS="${options[*]}"
   export FZF_DEFAULT_COMMAND="fd \${FD_DEFAULT_OPTIONS:?[@]} \${(s: :)FD_EXTRA_OPTIONS} --strip-cwd-prefix --type file --color always | sort_without_escape_sequences"
 

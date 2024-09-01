@@ -2,7 +2,7 @@
 source ~/.config/zsh/utility-functions.zsh
 
 if [ ! -f "config/routes.rb" ]; then
-  echo:error "\`config/routes.rb\` doesn't exist."
+  echo:error "\`config/routes.rb\` doesn’t exist."
   return 1
 fi
 
@@ -36,7 +36,7 @@ if [ ! -f "${result_filepath}" ] ||
    [ ! "${#target_filepaths}" = "$(wc -l "${checksum_filepath}" | awk '{ print $1 }')" ] ||
    ! shasum --check --quiet "${checksum_filepath}" >&2; then
 
-  echo:info "Cache file for routing doesn't exist or the routing has been changed."
+  echo:info "Cache file for routing doesn’t exist or the routing has been changed."
   execute_with_echo "shasum '${(j:' ':)target_filepaths}' > ${checksum_filepath}"
   execute_with_echo "bin/rails routes > ${result_filepath}"
 fi

@@ -7,7 +7,7 @@ if git branch --remotes | grep -E "\borigin/${current_branch}" -q; then
     exit 1
   fi
 else
-  printf "\e[1;38;5;6m%s\e[0;0m\n" "INFO -- The branch \`origin/${current_branch}\` doesn't exist." >&2
+  printf "\e[1;38;5;6m%s\e[0;0m\n" "INFO -- The branch \`origin/${current_branch}\` doesn’t exist." >&2
 fi
 
 if [ -f .git_templates/hooks/pre-push ]; then

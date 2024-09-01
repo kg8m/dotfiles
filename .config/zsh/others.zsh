@@ -7,7 +7,7 @@ function plugin:others:setup {
   export MYSQL_HISTFILE="${XDG_DATA_HOME:?}/mysql/history"
 
   # themis.vim
-  # Don't use zinit's options like `as"command" pick"bin/themis"` because it makes the `$PATH` longer and longer. Make
+  # Don’t use zinit’s options like `as"command" pick"bin/themis"` because it makes the `$PATH` longer and longer. Make
   # symbolic links in `${HOME}/bin` instead.
   #
   # shellcheck disable=SC2317
