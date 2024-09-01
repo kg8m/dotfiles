@@ -501,7 +501,7 @@ function my_grep:with_filter {
 
         # Don’t execute `echo ... | vim ... -` because current command remains as zsh if so. So tmux’s
         # `pane_current_command` always returns "zsh" and automatic refreshing zsh prompt will be influenced.
-        echo "${(j:\n:)results}" | grep -E '^.+?:[0-9]+:[0-9]+:.' > "${tempfile}"
+        echo "${(j:\n:)results}" | rg '^.+?:[0-9]+:[0-9]+:.' > "${tempfile}"
         local query_for_vim="$(echo "${query}" | sd '"' '\\"' | sd "'" "'\\\\'\\\\''")"
         execute_with_echo "vim -c 'call kg8m#util#grep#BuildQflistFromBuffer('\\''${query_for_vim}'\\'')' '${tempfile}'"
       else

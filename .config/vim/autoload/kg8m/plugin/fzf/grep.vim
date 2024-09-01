@@ -112,8 +112,8 @@ enddef
 
 def CommandToShowGrepOptionCandidates(): string
   const show_help           = "rg --help"
-  const filter_option_lines = "grep -E '^\\s*-'"
-  const extract_options     = "grep -E '\\-[.0-9a-zA-Z]\\b|--[-0-9a-zA-Z]+' -o"
+  const filter_option_lines = "rg '^\\s*-'"
+  const extract_options     = "rg '\\-[.0-9a-zA-Z]\\b|--[-0-9a-zA-Z]+' -o"
   const sort_and_uniquify   = "sort -u"
 
   return [show_help, filter_option_lines, extract_options, sort_and_uniquify]->join(" | ")

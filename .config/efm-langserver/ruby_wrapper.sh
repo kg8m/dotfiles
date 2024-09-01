@@ -13,7 +13,7 @@ fi
 
 out="$(
   ruby "${options[@]}" "${target_filepath}" 2>&1 1> /dev/null |
-    grep -E -o '[0-9]+: (warning:)?.*$' |
+    rg -o '[0-9]+: (warning:)?.*$' |
     sd '^([0-9]+): *' '$1: '
 )"
 

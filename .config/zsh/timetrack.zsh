@@ -87,7 +87,7 @@ function timetrack:finish {
   unset __TIMETRACK_COMMAND
 
   # Don’t use `[[ "${command}" =~ ${TIMETRACK_PATTERN} ]]` because it doesn’t work on Mac
-  if echo "${command}" | grep -E -v "${TIMETRACK_IGNORE_PATTERN}" | grep -E -q "${TIMETRACK_PATTERN}"; then
+  if echo "${command}" | rg -v "${TIMETRACK_IGNORE_PATTERN}" | rg -q "${TIMETRACK_PATTERN}"; then
     local exec_time=$((finished_at - started_at))
 
     if [ "${last_status}" = "0" ]; then

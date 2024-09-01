@@ -82,7 +82,7 @@ function() {
         return
       fi
 
-      if pmset -g batt | grep "Battery Power" -q; then
+      if pmset -g batt | rg "Battery Power" -q; then
         return
       fi
 

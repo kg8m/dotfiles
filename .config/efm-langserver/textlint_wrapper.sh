@@ -68,7 +68,7 @@ if [ -n "${out}" ]; then
 fi
 
 if [ -n "${err}" ]; then
-  detail="$(echo "${err}" | grep -E '✖ Stack trace' -A2 | tail -n2)"
+  detail="$(echo "${err}" | rg '✖ Stack trace' -A2 | tail -n2)"
 
   if [ -z "${detail}" ]; then
     detail="${err}"

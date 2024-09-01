@@ -10,7 +10,7 @@ function plugin:asdf:atclone {
   local plugins=(deno golang lua nodejs postgres python ruby rust terraform tmux)
   local plugin
   for plugin in "${plugins[@]}"; do
-    if asdf plugin list | grep -E "^${plugin}$" -q; then
+    if asdf plugin list | rg "^${plugin}$" -q; then
       continue
     fi
 
@@ -30,7 +30,7 @@ function plugin:asdf:atclone {
         # Do nothing.
         ;;
       python)
-        local older_latest="$(asdf list all python | grep -E '^2\.' | tail -n1)"
+        local older_latest="$(asdf list all python | rg '^2\.' | tail -n1)"
         execute_with_echo "asdf install ${plugin} ${older_latest}"
         execute_with_echo "asdf global ${plugin} latest ${older_latest}"
         ;;

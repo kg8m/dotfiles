@@ -48,7 +48,7 @@ if [ "${#filepaths}" = "1" ]; then
     lineno="0"
   fi
 
-  if file "${realpath}" | grep -E '\bimage data\b' -q; then
+  if file "${realpath}" | rg '\bimage data\b' -q; then
     if ((${+commands[img2sixel]})); then
       img2sixel "${realpath}"
       return

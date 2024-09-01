@@ -7,7 +7,7 @@ verification_output="$(aws sts get-caller-identity --profile "${profile}" 2>&1)"
 verification_status="$?"
 
 if [ ! "${verification_status}" = "0" ]; then
-  if echo "${verification_output}" | grep -E 'profile.+found' -q; then
+  if echo "${verification_output}" | rg 'profile.+found' -q; then
     printf "\e[1;38;5;1m%s\e[0;0m\n" "ERROR -- Profile not found: ${profile}" >&2
     return 1
   else

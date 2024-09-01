@@ -91,7 +91,7 @@ if [ -n "${out}" ]; then
 fi
 
 if [ -n "${err}" ]; then
-  detail="$(echo "${err}" | grep -E -v '^Oops!|^ESLint:|^[ ]|^$')"
+  detail="$(echo "${err}" | rg -v '^Oops!|^ESLint:|^[ ]|^$')"
 
   if [ -z "${detail}" ]; then
     detail="${err}"

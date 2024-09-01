@@ -71,7 +71,7 @@ function git:switch:select {
   local current="$(git branch --show-current)"
   local branch="$(
     git:branch:list --all |
-      grep -E -v "^${current} " |
+      rg -v "^${current} " |
       git:branch:filter:single
   )"
 
@@ -121,7 +121,7 @@ function git:update:main {
 }
 
 function git:branch:create:with_set_upstream {
-  if git status --porcelain | grep -E '^[^ ?]' -q; then
+  if git status --porcelain | rg '^[^ ?]' -q; then
     echo:error "Staged changes exist. Unstage them before creating a branch."
     return 1
   fi
@@ -144,7 +144,7 @@ function git:branch:delete:bulk:local {
   local current="$(git branch --show-current)"
   local branches=("${(@f)$(
     git:branch:list |
-      grep -E -v "^${current} |${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
+      rg -v "^${current} |${GIT_PROTECTED_LOCAL_BRANCH_PATTERN}" |
       git:branch:filter
   )}")
 
@@ -159,7 +159,7 @@ function git:branch:delete:bulk:local {
 function git:branch:delete:bulk:remote {
   local branches=("${(@f)$(
     git:branch:list --remote |
-      grep -E -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
+      rg -v "${GIT_PROTECTED_REMOTE_BRANCH_PATTERN}" |
       git:branch:filter
   )}")
 
@@ -201,7 +201,7 @@ function git:branch:list {
   git branch --format "$(git:branch:list_format)" "$@" |
     sd "\s*${SEP}\s*" "${SEP}" |
     sd '^origin/' '' |
-    grep -E -v "^(HEAD|origin)${SEP}" |
+    rg -v "^(HEAD|origin)${SEP}" |
     git:proxy:column "${SEP}" |
     awk '!x[$1]++' |  # Remove duplicated branches
     colrm "$((COLUMNS + 1))" |
@@ -213,7 +213,7 @@ function git:branch:list:all {
 
   git branch --all --format "%(HEAD) $(git:branch:list_format)" "$@" |
     sd "\s*${SEP}\s*" "${SEP}" |
-    grep -E -v "^\s+origin/HEAD${SEP}" |
+    rg -v "^\s+origin/HEAD${SEP}" |
     git:proxy:column "${SEP}" |
     colrm "$((COLUMNS + 1))" |
     git:branch:colorize
@@ -304,7 +304,7 @@ function git:log:select {
     # cf. `{commit:<15}` of `delta.blame-format`
     # cf. `--abbrev=14` of `git log-graph`
     # cf. `git blame --abbrev=13` in `git:blame:filter`
-    local find_hash="grep -E '[a-z0-9]{14,}' -o | head -n1"
+    local find_hash="rg '[a-z0-9]{14,}' -o | head -n1"
     local filter_options=(
       --no-multi
       --prompt "Select a commit> "
@@ -556,23 +556,23 @@ function git:status:filter:all {
 
 function git:status:filter:staged {
   # `^ A` for intent-to-add
-  git status --short | grep -E '^[^ ?]|^ A' | git:status:utility:filter | git:status:utility:rename:only_removed
+  git status --short | rg '^[^ ?]|^ A' | git:status:utility:filter | git:status:utility:rename:only_removed
 }
 
 function git:status:filter:unstaged {
-  git status --short | grep -E '^[^?][^ A]' | git:status:utility:filter | git:status:utility:rename:only_added
+  git status --short | rg '^[^?][^ A]' | git:status:utility:filter | git:status:utility:rename:only_added
 }
 
 function git:status:filter:unstaged:with_intended_to_add {
-  git status --short | grep -E '^[^?][^ ]' | git:status:utility:filter | git:status:utility:rename:only_added
+  git status --short | rg '^[^?][^ ]' | git:status:utility:filter | git:status:utility:rename:only_added
 }
 
 function git:status:filter:unstaged:with_untracked {
-  git status --short | grep -E '^.[^ ]' | git:status:utility:filter | git:status:utility:rename:only_added
+  git status --short | rg '^.[^ ]' | git:status:utility:filter | git:status:utility:rename:only_added
 }
 
 function git:status:filter:untracked {
-  git status --short | grep -E '^\?\?' | git:status:utility:filter
+  git status --short | rg '^\?\?' | git:status:utility:filter
 }
 
 function git:status:utility:filter {
@@ -705,17 +705,17 @@ function git:alias:list {
 
 function git:alias:which {
   local command="${1:?Specify a command name.}"
-  local result="$(git:alias:list | grep -E "^${command}\s+" | sd '\s+' ' ')"
+  local result="$(git:alias:list | rg "^${command}\s+" | sd '\s+' ' ')"
   echo "${result}"
 
   if [[ "${result}" =~ \ sh\ [\"\']?git:[a-z_:]+ ]]; then
     echo
     # shellcheck disable=SC2230
-    which "$(echo "${result}" | grep -E -o '\bgit:[a-z_:]+')"
+    which "$(echo "${result}" | rg -o '\bgit:[a-z_:]+')"
   else
-    local original="$(echo "${result}" | grep -E -o '=> [-a-z]+' | sd '=> ' '')"
+    local original="$(echo "${result}" | rg -o '=> [-a-z]+' | sd '=> ' '')"
 
-    if git:alias:list | grep -q -E "^${original}\s+"; then
+    if git:alias:list | rg -q "^${original}\s+"; then
       echo
       git:alias:which "${original}"
     fi
@@ -751,7 +751,7 @@ function git:utility:diff_or_cat {
   local git_status="$(git status --short -- "${filepath}")"
 
   if [[ "${git_status}" =~ ^D ]]; then
-    local renamed_status="$(git status --short | grep -E '^R' | grep -F " ${filepath} ->")"
+    local renamed_status="$(git status --short | rg '^R' | rg --fixed-strings " ${filepath} ->")"
 
     if [ -n "${renamed_status}" ]; then
       git_status="${renamed_status}"

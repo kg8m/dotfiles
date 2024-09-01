@@ -83,7 +83,7 @@ if [ "${is_fixing}" = "1" ]; then
 else
   out="$("${executable}" "${options[@]}" --format simple | sd '^([A-Z]): *([0-9]+): *([0-9]+): *' '$1:$2:$3: ')"
 
-  if echo "${out}" | grep -E -q '^[A-Z]:[0-9]+:[0-9]+:'; then
+  if echo "${out}" | rg -q '^[A-Z]:[0-9]+:[0-9]+:'; then
     echo "${out}"
     exit 1
   else

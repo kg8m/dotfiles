@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-prev_diff="$(git log --max-count=1 --patch --format= | grep -E '^\+')"
+prev_diff="$(git log --max-count=1 --patch --format= | rg '^\+')"
 risky_pattern='(^|(?<=\s)|(?<=;))(ap|binding\.\w+|byebug|console(?=\.)|debugger|logger(?=\.)|p?ld|pp?|puts|save_and_open_(page|screenshot)|t?ld)\b|(?<=\.)inspect\b'
 
 if echo "${prev_diff}" | rg "${risky_pattern}" -q; then
@@ -15,8 +15,8 @@ if [ -f "Gemfile.lock" ]; then
   prev_changed_files="$(git log --max-count=1 --name-only --format=)"
 
   # If a Rails engine’s version is bumped but the `Gemfile.lock` isn’t updated.
-  if echo "${prev_changed_files}" | grep -E '^lib/[^/]+/version\.rb$' -q; then
-    if ! echo "${prev_changed_files}" | grep -E '^Gemfile\.lock$' -q; then
+  if echo "${prev_changed_files}" | rg '^lib/[^/]+/version\.rb$' -q; then
+    if ! echo "${prev_changed_files}" | rg '^Gemfile\.lock$' -q; then
       mark="❗"
       message="Gem’s version has been updated but Gemfile.lock hasn’t. Check if there is missing update."
 
