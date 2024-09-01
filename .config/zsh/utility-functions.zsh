@@ -192,7 +192,7 @@ function batch_move {
     return 1
   fi
 
-  echo "${(j:\n:)dryrun_result}" | less
+  printf "%s\n" "${dryrun_result[@]}" | less
 
   local response
   read -r "response?Execute? [y/n]: "
@@ -264,7 +264,7 @@ function remove_empty_dirs {
   local dirpaths=("${(@f)$(fd --full-path --type d --type e "${search_path}")}")
 
   if [ -n "${dirpaths[*]}" ]; then
-    echo "${(j:\n:)dirpaths}"
+    printf "%s\n" "${dirpaths[@]}"
     echo
 
     local response
@@ -480,9 +480,9 @@ function my_grep:with_filter {
   fi
 
   if [ "${options[(I)--files]}" = "0" ]; then
-    echo "${(j:\n:)results}" | my_grep "${query}" "${options[@]}" 2> /dev/null
+    printf "%s\n" "${results[@]}" | my_grep "${query}" "${options[@]}" 2> /dev/null
   else
-    echo "${(j:\n:)results}" 2> /dev/null
+    printf "%s\n" "${results[@]}" 2> /dev/null
   fi
 
   # Check whether the output is on a terminal
@@ -501,7 +501,7 @@ function my_grep:with_filter {
 
         # Don’t execute `echo ... | vim ... -` because current command remains as zsh if so. So tmux’s
         # `pane_current_command` always returns "zsh" and automatic refreshing zsh prompt will be influenced.
-        echo "${(j:\n:)results}" | rg '^.+?:[0-9]+:[0-9]+:.' > "${tempfile}"
+        printf "%s\n" "${results[@]}" | rg '^.+?:[0-9]+:[0-9]+:.' > "${tempfile}"
         local query_for_vim="$(echo "${query}" | sd '"' '\\"' | sd "'" "'\\\\'\\\\''")"
         execute_with_echo "vim -c 'call kg8m#util#grep#BuildQflistFromBuffer('\\''${query_for_vim}'\\'')' '${tempfile}'"
       else
@@ -794,14 +794,14 @@ function libs:go:uninstall {
     return 1
   fi
 
-  # shellcheck disable=SC2145
-  echo -e "${(j:\n:)pkg_paths}\n"
+  printf "%s\n" "${pkg_paths[@]}"
+  echo
 
   local response
   read -r "response?Remove found files/directories? [y/n]: "
 
   if [[ "${response}" =~ ^y ]]; then
-    echo "${(j:\n:)pkg_paths}" | while read -r libpath; do
+    printf "%s\n" "${pkg_paths[@]}" | while read -r libpath; do
       trash "${libpath}"
     done
   else

@@ -40,7 +40,7 @@ function plugin:dircolors:atload {
       ".zshrc 32"
     )
 
-    echo "${(j:\n:)overwrites}" >> "${tempfile}"
+    printf "%s\n" "${overwrites[@]}" >> "${tempfile}"
 
     if command -v gdircolors > /dev/null; then
       local dircolors=gdircolors
