@@ -1,4 +1,4 @@
-if ((${+commands[direnv]})); then
+if command -v direnv > /dev/null; then
   if [ ! -f "${XDG_CACHE_HOME:?}/zsh/direnv_hook.zsh" ]; then
     direnv hook zsh > "$(ensure_dir "${XDG_CACHE_HOME}/zsh/direnv_hook.zsh")"
 

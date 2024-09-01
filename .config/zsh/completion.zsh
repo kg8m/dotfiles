@@ -29,7 +29,7 @@ function completion:setup:lazy {
   zinit light zsh-users/zsh-autosuggestions
 
   # fzf
-  if ((${+commands[fzf]})); then
+  if command -v fzf > /dev/null; then
     # https://github.com/junegunn/fzf/releases/tag/0.48.0
     # Disable fzf’s listing files/directories feature.
     if [ ! -f "${XDG_CACHE_HOME:?}/zsh/fzf_key_bindings.zsh" ]; then
@@ -46,7 +46,7 @@ function completion:setup:lazy {
   fi
 
   # ngrok
-  if ((${+commands[ngrok]})); then
+  if command -v ngrok > /dev/null; then
     if [ ! -f "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh" ]; then
       ngrok completion > "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh"
 
