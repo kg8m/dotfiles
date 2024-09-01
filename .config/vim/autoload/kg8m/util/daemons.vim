@@ -38,7 +38,9 @@ def IsRubocopDaemonAvailable(): bool
 enddef
 
 def UpdateRoutingDependencies(): void
-  if executable("annotate")
+  if executable("annotaterb")
+    JobStart(["annotaterb", "routes"])
+  elseif executable("annotate")
     JobStart(["rails", "annotate_routes"])
   endif
 
