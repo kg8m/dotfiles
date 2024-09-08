@@ -1,6 +1,6 @@
 function plugin:asdf:atclone {
-  execute_with_echo "mkdir -p '$(dirname "${ASDF_DIR:?}")'"
-  execute_with_echo "mkdir -p '${ASDF_DATA_DIR:?}'"
+  execute_with_echo mkdir -p "$(dirname "${ASDF_DIR:?}")"
+  execute_with_echo mkdir -p "${ASDF_DATA_DIR:?}"
 
   if [ ! -f "${ASDF_DIR}" ]; then
     [ -d "${ASDF_DIR}" ] && trash "${ASDF_DIR}"
@@ -14,14 +14,14 @@ function plugin:asdf:atclone {
       continue
     fi
 
-    execute_with_echo "asdf plugin add ${plugin}"
+    execute_with_echo asdf plugin add "${plugin}"
 
     case "${plugin}" in
       postgres)
         # Do nothing.
         ;;
       *)
-        execute_with_echo "asdf install ${plugin} latest"
+        execute_with_echo asdf install "${plugin}" latest
         ;;
     esac
 
@@ -31,16 +31,16 @@ function plugin:asdf:atclone {
         ;;
       python)
         local older_latest="$(asdf list all python | rg '^2\.' | tail -n1)"
-        execute_with_echo "asdf install ${plugin} ${older_latest}"
-        execute_with_echo "asdf global ${plugin} latest ${older_latest}"
+        execute_with_echo asdf install "${plugin}" "${older_latest}"
+        execute_with_echo asdf global "${plugin}" latest "${older_latest}"
         ;;
       *)
-        execute_with_echo "asdf global ${plugin} latest"
+        execute_with_echo asdf global "${plugin}" latest
         ;;
     esac
   done
 
-  execute_with_echo "asdf list"
+  execute_with_echo asdf list
 }
 
 zinit ice lucid wait"0c" as"null" atclone"plugin:asdf:atclone"
@@ -87,13 +87,13 @@ function asdf:plugin:install:latest {
 
   case "${plugin}" in
     postgres)
-      execute_with_echo "PKG_CONFIG_PATH='$(brew --prefix icu4c)/lib/pkgconfig' asdf install ${plugin} latest"
+      execute_with_echo PKG_CONFIG_PATH="$(brew --prefix icu4c)/lib/pkgconfig" asdf install "${plugin}" latest
       ;;
     *)
-      execute_with_echo "asdf install ${plugin} latest"
+      execute_with_echo asdf install "${plugin}" latest
       ;;
   esac
 
-  execute_with_echo "asdf global ${plugin} latest"
-  execute_with_echo "asdf list ${plugin}"
+  execute_with_echo asdf global "${plugin}" latest
+  execute_with_echo asdf list "${plugin}"
 }

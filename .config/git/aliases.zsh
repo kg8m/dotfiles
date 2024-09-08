@@ -4,10 +4,10 @@ function git:add:bulk {
   local files=("${(@f)$(git:status:filter:unstaged:with_untracked)}")
 
   if [ -n "${files[*]}" ]; then
-    execute_with_echo    "git add --intent-to-add -- ${files[*]}"
-    execute_with_echo    "git diff -- ${files[*]}"
-    execute_with_confirm "git add -- ${files[*]}"
-    execute_with_echo    "git status-with-color"
+    execute_with_echo    git add --intent-to-add -- "${files[@]}"
+    execute_with_echo    git diff -- "${files[@]}"
+    execute_with_confirm git add -- "${files[@]}"
+    execute_with_echo    git status-with-color
   fi
 }
 
@@ -15,8 +15,8 @@ function git:add:bulk:intent {
   local files=("${(@f)$(git:status:filter:untracked)}")
 
   if [ -n "${files[*]}" ]; then
-    execute_with_echo "git add --intent-to-add -- ${files[*]}"
-    execute_with_echo "git status-with-color"
+    execute_with_echo git add --intent-to-add -- "${files[@]}"
+    execute_with_echo git status-with-color
   fi
 }
 
@@ -24,8 +24,8 @@ function git:add:bulk:patch {
   local files=("${(@f)$(git:status:filter:unstaged:with_intended_to_add)}")
 
   if [ -n "${files[*]}" ]; then
-    execute_with_echo "git add --patch -- ${files[*]}"
-    execute_with_echo "git status-with-color"
+    execute_with_echo git add --patch -- "${files[@]}"
+    execute_with_echo git status-with-color
   fi
 }
 
@@ -33,9 +33,9 @@ function git:restore:bulk {
   local files=("${(@f)$(git:status:filter:unstaged)}")
 
   if [ -n "${files[*]}" ]; then
-    execute_with_echo    "git diff -R -- ${files[*]}"
-    execute_with_confirm "git restore -- ${files[*]}"
-    execute_with_echo    "git status-with-color"
+    execute_with_echo    git diff -R -- "${files[@]}"
+    execute_with_confirm git restore -- "${files[@]}"
+    execute_with_echo    git status-with-color
   fi
 }
 
@@ -43,8 +43,8 @@ function git:restore:bulk:patch {
   local files=("${(@f)$(git:status:filter:unstaged)}")
 
   if [ -n "${files[*]}" ]; then
-    execute_with_echo "git restore --patch -- ${files[*]}"
-    execute_with_echo "git status-with-color"
+    execute_with_echo git restore --patch -- "${files[@]}"
+    execute_with_echo git status-with-color
   fi
 }
 
@@ -52,9 +52,9 @@ function git:restore:bulk:staged {
   local files=("${(@f)$(git:status:filter:staged)}")
 
   if [ -n "${files[*]}" ]; then
-    execute_with_echo    "git diff --staged -R -- ${files[*]}"
-    execute_with_confirm "git restore --staged -- ${files[*]}"
-    execute_with_echo    "git status-with-color"
+    execute_with_echo    git diff --staged -R -- "${files[@]}"
+    execute_with_confirm git restore --staged -- "${files[@]}"
+    execute_with_echo    git status-with-color
   fi
 }
 
@@ -62,8 +62,8 @@ function git:restore:bulk:staged:patch {
   local files=("${(@f)$(git:status:filter:staged)}")
 
   if [ -n "${files[*]}" ]; then
-    execute_with_echo "git restore --staged --patch -- ${files[*]}"
-    execute_with_echo "git status-with-color"
+    execute_with_echo git restore --staged --patch -- "${files[@]}"
+    execute_with_echo git status-with-color
   fi
 }
 
@@ -75,7 +75,7 @@ function git:switch:select {
       git:branch:filter:single
   )"
 
-  [ -n "${branch}" ] && execute_with_echo "git switch ${branch}"
+  [ -n "${branch}" ] && execute_with_echo git switch "${branch}"
 }
 
 function git:switch:main {
@@ -89,31 +89,31 @@ function git:switch:main {
 function git:update:with_log {
   local remote_branch="$(git rev-parse --abbrev-ref '@{upstream}')"
 
-  execute_with_echo "git --no-pager show --no-patch"
-  execute_with_echo "git fetch"
+  execute_with_echo git --no-pager show --no-patch
+  execute_with_echo git fetch
 
   if [ "$(git rev-parse HEAD)" = "$(git rev-parse '@{upstream}')" ]; then
     echo "Up to date."
   else
-    execute_with_echo "git --no-pager log --reverse HEAD... ${remote_branch}"
-    execute_with_echo "git pull --stat"
-    execute_with_echo "git status-with-color"
+    execute_with_echo git --no-pager log --reverse HEAD... "${remote_branch}"
+    execute_with_echo git pull --stat
+    execute_with_echo git status-with-color
   fi
 }
 
 function git:update:shallow {
-  execute_with_echo "git pull --depth 100"
+  execute_with_echo git pull --depth 100
 }
 
 function git:update:main {
   local current_branch="$(git branch --show-current)"
 
-  execute_with_echo "git switch-to-main"
+  execute_with_echo git switch-to-main
 
   if [[ "$(git branch --show-current)" =~ ^(main|master)$ ]]; then
-    execute_with_echo "git update"
-    execute_with_echo "git switch ${current_branch}"
-    execute_with_echo "git branches | head -n15"
+    execute_with_echo git update
+    execute_with_echo git switch "${current_branch}"
+    eval_with_echo    git branches \| head -n15
   else
     echo:error "Switching branch failed."
     return 1
@@ -126,18 +126,21 @@ function git:branch:create:with_set_upstream {
     return 1
   fi
 
+  # shellcheck disable=SC2034
   local original_branch="${1:?Specify the original branch name.}"
+  # shellcheck disable=SC2034
   local branch_name="${2:?Specify a new branch name.}"
+  # shellcheck disable=SC2034
   local commit_message="${3:-create branch}"
 
   # shellcheck disable=SC2034
   local commands=(
-    "execute_with_echo 'git switch --create ${branch_name} ${original_branch}'"
-    "execute_with_echo 'git commit --allow-empty --message=\"${commit_message}\"'"
-    "execute_with_echo 'git push --set-upstream origin ${branch_name}'"
+    "execute_with_echo git switch --create ${(q)branch_name} ${(q)original_branch}"
+    "execute_with_echo git commit --allow-empty --message ${(q)commit_message}"
+    "execute_with_echo git push --set-upstream origin ${(q)branch_name}"
   )
 
-  execute_with_confirm "${(j: && :)commands}; execute_with_echo 'git branches | head -n15'"
+  eval_with_confirm "${(j: && :)commands}; eval_with_echo 'git branches | head -n15'"
 }
 
 function git:branch:delete:bulk:local {
@@ -149,8 +152,8 @@ function git:branch:delete:bulk:local {
   )}")
 
   if [ -n "${branches[*]}" ]; then
-    execute_with_confirm "git branch --delete --force ${branches[*]}"
-    execute_with_echo    "git branches | head -n15"
+    execute_with_confirm git branch --delete --force "${branches[@]}"
+    eval_with_echo       git branches \| head -n15
   else
     echo "No target branches."
   fi
@@ -164,8 +167,8 @@ function git:branch:delete:bulk:remote {
   )}")
 
   if [ -n "${branches[*]}" ]; then
-    execute_with_confirm "git push --delete origin ${branches[*]}"
-    execute_with_echo    "git branches | head -n15"
+    execute_with_confirm git push --delete origin "${branches[@]}"
+    eval_with_echo       git branches \| head -n15
   else
     echo "No target branches."
   fi
@@ -174,7 +177,7 @@ function git:branch:delete:bulk:remote {
 function git:branch:filter {
   local options=(
     --prompt "Select branches> "
-    --preview "git sh \"git:utility:preview:log {1}\""
+    --preview "git sh git:utility:preview:log {1}"
     --preview-window "down:75%:wrap:nohidden"
     "$@"
   )
@@ -251,24 +254,24 @@ function git:branch:colorize {
 }
 
 function git:clone:shallow {
-  execute_with_echo "git clone --depth 100 $*"
+  execute_with_echo git clone --depth 100 "$@"
 }
 
 function git:clone:partial:blobless {
-  execute_with_echo "git clone --filter blob:none $*"
+  execute_with_echo git clone --filter blob:none "$@"
 }
 
 function git:clone:partial:treeless {
-  execute_with_echo "git clone --filter tree:0 $*"
+  execute_with_echo git clone --filter tree:0 "$@"
 }
 
 function git:commit:bulk {
   local files=("${(@f)$(git:status:filter:all)}")
 
   if [ -n "${files[*]}" ]; then
-    execute_with_echo    "git commit --dry-run -- ${files[*]} | git pager"
-    execute_with_confirm "git commit -- ${files[*]}"
-    execute_with_echo    "git status-with-color"
+    eval_with_echo       git commit --dry-run -- "${(@q)files}" \| git pager
+    execute_with_confirm git commit -- "${files[@]}"
+    execute_with_echo    git status-with-color
   fi
 }
 
@@ -284,8 +287,8 @@ function git:clean:bulk {
 
   if [ -n "${files[*]}" ]; then
     preview "${files[@]}"
-    execute_with_confirm "git clean --force -- ${files[*]}"
-    execute_with_echo    "git status-with-color"
+    execute_with_confirm git clean --force -- "${files[@]}"
+    execute_with_echo    git status-with-color
   fi
 }
 
@@ -294,8 +297,8 @@ function git:trash:bulk {
 
   if [ -n "${files[*]}" ]; then
     preview "${files[@]}"
-    execute_with_confirm "trash ${files[*]}"
-    execute_with_echo    "git status-with-color"
+    execute_with_confirm trash "${files[@]}"
+    execute_with_echo    git status-with-color
   fi
 }
 
@@ -341,31 +344,31 @@ function git:log:select {
 
   function git:log:select:action:fixup {
     local hash="${1:?}"
-    execute_with_echo "git show --no-patch ${hash}"
-    execute_with_confirm "git commit --fixup ${hash}"
+    execute_with_echo    git show --no-patch "${hash}"
+    execute_with_confirm git commit --fixup "${hash}"
   }
 
   function git:log:select:action:fixup:instant {
     local hash="${1:?}"
     git:log:select:action:fixup "${hash}"
-    execute_with_confirm "git -c sequence.editor=: rebase --autosquash --interactive ${hash}~"
+    execute_with_confirm git -c sequence.editor=: rebase --autosquash --interactive "${hash}~"
   }
 
   function git:log:select:action:rebase {
     local hash="${1:?}"
-    execute_with_echo "git show --no-patch ${hash}"
-    execute_with_confirm "git rebase --autosquash --interactive ${hash}"
+    execute_with_echo    git show --no-patch "${hash}"
+    execute_with_confirm git rebase --autosquash --interactive "${hash}"
   }
 
   function git:log:select:action:revert {
     local hash="${1:?}"
-    execute_with_echo "git show ${hash}"
-    execute_with_confirm "git revert ${hash}"
+    execute_with_echo    git show "${hash}"
+    execute_with_confirm git revert "${hash}"
   }
 
   function git:log:select:action:show {
     local hash="${1:?}"
-    execute_with_echo "git show --patch-with-stat ${hash}"
+    execute_with_echo git show --patch-with-stat "${hash}"
   }
 
   local abbr_hash="$(git:log:select:pick:hash)"
@@ -415,7 +418,7 @@ function git:log:compare:branch {
   local branch2=$(git:branch:list --remote | git:branch:filter:single --prompt="Select another branch> ")
   [ -n "${branch2}" ] || exit 1
 
-  execute_with_confirm "git log $* origin/${branch1}...origin/${branch2}"
+  execute_with_confirm git log "$@" "origin/${(q)branch1}...origin/${(q)branch2}"
 }
 
 function git:diff:branch {
@@ -425,7 +428,7 @@ function git:diff:branch {
   local branch2=$(git:branch:list --remote | git:branch:filter:single --prompt="Select another branch> ")
   [ -n "${branch2}" ] || exit 1
 
-  execute_with_confirm "git diff-without-space-changes $* origin/${branch1}...origin/${branch2}"
+  execute_with_confirm git diff-without-space-changes "$@" "origin/${(q)branch1}...origin/${(q)branch2}"
 }
 
 function git:diff:branch:from {
@@ -442,7 +445,7 @@ function git:diff:branch:from {
     fi
   done
 
-  execute_with_confirm "git diff-without-space-changes ${options[*]} origin/${target}... ${pathspecs[*]}"
+  execute_with_confirm git diff-without-space-changes "${options[@]}" "origin/${(q)target}..." "${pathspecs[@]}"
 }
 
 function git:diff:branch:from:nameonly {
@@ -452,7 +455,7 @@ function git:diff:branch:from:nameonly {
 function git:stash:all:with_message {
   # Make all changes staged before `git stash` instead of using `--include-untracked` option. Untracked files stashed
   # with `--include-untracked` aren’t shown in diffs, i.e., `git diff ...stash@{0}` doesn’t contain the untracked files.
-  execute_with_confirm "git add --all && git stash push --no-keep-index --message '$*'"
+  eval_with_confirm "git add --all && git stash push --no-keep-index --message ${(q)*}"
 }
 
 function git:stash:select {
@@ -514,11 +517,11 @@ function git:stash:select {
 
   case "${action}" in
     Apply)
-      execute_with_echo "git stash apply ${stash}"
+      execute_with_echo git stash apply "${stash}"
       ;;
     Drop)
-      execute_with_echo    "git stash show ${stash}"
-      execute_with_confirm "git stash drop ${stash}"
+      execute_with_echo    git stash show "${stash}"
+      execute_with_confirm git stash drop "${stash}"
       ;;
     *)
       echo:error "Unknown action: ${action}"
@@ -673,8 +676,8 @@ function git:blame:filter {
 }
 
 function git:submodule:update {
-  execute_with_echo "git submodule update --remote --rebase"
-  execute_with_echo "git status-with-color"
+  execute_with_echo git submodule update --remote --rebase
+  execute_with_echo git status-with-color
 }
 
 function git:submodule:remove:bulk {
@@ -683,9 +686,9 @@ function git:submodule:remove:bulk {
 
   if [ -n "${targets[*]}" ]; then
     for target in "${targets[@]}"; do
-      execute_with_confirm "git submodule deinit ${target}"
-      execute_with_confirm "git rm ${target}"
-      execute_with_confirm "trash ${target}"
+      execute_with_confirm git submodule deinit "${target}"
+      execute_with_confirm git rm "${target}"
+      execute_with_confirm trash "${target}"
     done
   fi
 }
@@ -696,10 +699,10 @@ function git:submodule:deinit:bulk {
 
   if [ -n "${targets[*]}" ]; then
     for target in "${targets[@]}"; do
-      execute_with_confirm "git submodule deinit -f ${target}"
-      execute_with_confirm "rm -r ./git/modules/${target}"
-      execute_with_confirm "trash ${target}/*"
-      execute_with_confirm "trash ${target}/.*"
+      execute_with_confirm git submodule deinit -f "${target}"
+      execute_with_confirm rm -r "./git/modules/${target}"
+      execute_with_confirm trash "${target}"/*
+      execute_with_confirm trash "${target}"/.*
     done
   fi
 }
@@ -730,7 +733,7 @@ function git:alias:which {
 
 function git:utility:chmod {
   local permissions="${1:?Specify permissions.}"
-  execute_with_echo "git update-index --add --chmod=${permissions}"
+  execute_with_echo git update-index --add --chmod "${permissions}"
 }
 
 function git:utility:pick:filepath {
@@ -746,6 +749,10 @@ function git:utility:pick:filepath {
 
 function git:utility:diff_or_cat {
   local filepath="${1:?Specify a filepath.}"
+
+  if echo "${filepath}" | rg '\w -> \w' -q; then
+    filepath="${filepath% -> *}"
+  fi
 
   # Remove quotation marks around the filepath.
   if [[ "${filepath}" =~ ^\" ]] && [[ "${filepath}" =~ \"$ ]]; then

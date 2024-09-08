@@ -47,8 +47,8 @@ function plugin:setup:binary_releaseds {
 
     case "${plugin}" in
       qrtool)
-        execute_with_echo "tar --extract --use-compress-program unzstd --file qrtool-*.tar.zst"
-        execute_with_echo "rm -f qrtool-*.tar.zst"
+        execute_with_echo tar --extract --use-compress-program unzstd --file qrtool-*.tar.zst
+        execute_with_echo rm -f qrtool-*.tar.zst
         ;;
     esac
 
@@ -103,33 +103,33 @@ function plugin:setup:binary_releaseds {
       lua-language-server)
         # Don’t use a symbolic link for preventing the `lua-language-server: cannot open (bootstrap.lua): No such file
         # or directory` error.
-        execute_with_echo "echo '${PWD}/${binary} \"\$@\"' > '${HOME}/bin/${command}'"
-        execute_with_echo "chmod +x '${HOME}/bin/${command}'"
+        eval_with_echo "echo '${PWD}/${binary} \"\$@\"' > '${HOME}/bin/${command}'"
+        execute_with_echo chmod +x "${HOME}/bin/${command}"
         ;;
       *)
-        execute_with_echo "ln -s '${PWD}/${binary}' '${HOME}/bin/${command}'"
+        execute_with_echo ln -s "${PWD}/${binary}" "${HOME}/bin/${command}"
         ;;
     esac
 
-    execute_with_echo "which ${command}"
-    execute_with_echo "fd --type l --type x --glob '${command}' '${(j:' ':)path}'"
+    execute_with_echo which "${command}"
+    execute_with_echo fd --type l --type x --glob "${command}" "${path[@]:?}"
 
     case "${plugin}" in
       bat | checkmake | delta | direnv | fd | fzf | gh | glab | hyperfine | lua-language-server | mmv | mocword |\
       qrtool | rg | sd | shellcheck | stylua | tflint | tldr | tokei | typos | zabrze)
-        execute_with_echo "${command} --version"
+        execute_with_echo "${command}" --version
         ;;
       efm-langserver)
-        execute_with_echo "${command} -v"
+        execute_with_echo "${command}" -v
         ;;
       actionlint | shfmt | sqls)
-        execute_with_echo "${command} -version"
+        execute_with_echo "${command}" -version
         ;;
       golangci-lint)
-        execute_with_echo "${command} version"
+        execute_with_echo "${command}" version
         ;;
       golangci-lint-langserver | vim-startuptime)
-        execute_with_echo "${command} -h"
+        execute_with_echo "${command}" -h
         ;;
       terraform-lsp)
         echo >&2
@@ -143,18 +143,18 @@ function plugin:setup:binary_releaseds {
 
     case "${plugin}" in
       bat)
-        execute_with_echo "mv ./bat/autocomplete/{bat.zsh,_bat}"
+        execute_with_echo mv ./bat/autocomplete/{bat.zsh,_bat}
         ;;
       zabrze)
-        execute_with_echo "plugin:zabrze:reset"
-        execute_with_echo "plugin:zabrze:init"
+        execute_with_echo plugin:zabrze:reset
+        execute_with_echo plugin:zabrze:init
         ;;
       *)
         # Do nothing.
         ;;
     esac
 
-    [ -n "$(find . -type f -name '_*')" ] && execute_with_echo "zinit creinstall ${plugin_id}"
+    [ -n "$(find . -type f -name '_*')" ] && execute_with_echo zinit creinstall "${plugin_id}"
 
     echo >&2
     echo:info "Done."
@@ -207,7 +207,7 @@ function plugin:setup:binary_releaseds {
     function plugin:mocword:data:atclone {
       # cf. exporting MOCWORD_DATA in .zshenv
       mkdir -p "$(dirname "${MOCWORD_DATA:?}")"
-      execute_with_echo "ln -fs '${PWD}/mocword.sqlite' '${MOCWORD_DATA}'"
+      execute_with_echo ln -fs "${PWD}/mocword.sqlite" "${MOCWORD_DATA}"
     }
     zinit ice lucid from"gh-r" as"null" bpick"mocword.sqlite.gz" atclone"plugin:mocword:data:atclone"
     zinit light high-moctane/mocword-data

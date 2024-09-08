@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+# This file is a proxy file for my Git aliases.
+#
+# Usage example:
+#
+#   git sh git:branchlist
+#   git sh git:blame:filter .vimrc
+
+# Read my alias functions.
+source ~/.config/git/aliases.zsh
+
+# Execute the given script.
+eval "${(@q)@}"

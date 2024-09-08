@@ -106,7 +106,7 @@ HELP
   local outpath="/tmp/aws-logs-query-result-$(date '+%Y%m%d-%H%M%S').txt"
 
   local started_at="$(date '+%s')"
-  local query_id="$("${executor}" "aws logs start-query ${query_options[*]}" | jq --raw-output '.queryId')"
+  local query_id="$("${executor}" aws logs start-query "${query_options[@]}" | jq --raw-output '.queryId')"
 
   if [ -z "${query_id}" ]; then
     # Canceled.
@@ -158,7 +158,7 @@ HELP
   async_start_worker "AWS_LOGS_QUERY_NOTIFIER_$$"
   async_job          "AWS_LOGS_QUERY_NOTIFIER_$$" "notify ${notifier_args}"
 
-  execute_with_echo "jq --color-output . ${outpath} ${pager}"
+  execute_with_echo jq --color-output . "${outpath}" "${pager}"
   echo
   echo:info "See the result in \`${outpath}\`."
   echo:info "Stats: $(aws logs get-query-results "${result_options[@]}" --query statistics)"
@@ -175,9 +175,9 @@ function _aws:logs:select_group {
 
 # https://docs.aws.amazon.com/systems-manager/latest/userguide/install-plugin-macos-overview.html
 function plugin:aws:sessionmanager:atclone {
-  execute_with_echo "sudo installer -pkg session-manager-plugin.pkg -target /"
-  execute_with_echo "sudo ln -s /usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local/bin/session-manager-plugin"
-  execute_with_echo "session-manager-plugin"
+  execute_with_echo sudo installer -pkg session-manager-plugin.pkg -target /
+  execute_with_echo sudo ln -s /usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local/bin/session-manager-plugin
+  execute_with_echo session-manager-plugin
 }
 zinit ice lucid wait"0c" as"null" atclone"plugin:aws:sessionmanager:atclone" atpull"%atclone"
 zinit snippet https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac_arm64/session-manager-plugin.pkg

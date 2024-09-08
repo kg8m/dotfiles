@@ -51,4 +51,4 @@ done
 
 # Reload the current pane.
 echo
-execute_with_confirm "tmux respawn-pane -k"
+execute_with_confirm tmux respawn-pane -k

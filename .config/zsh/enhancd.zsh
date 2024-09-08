@@ -1,7 +1,7 @@
 function plugin:enhancd:with_mkdir {
   if [ "$#" = "1" ] && [[ ! "$1" =~ ^$\|^-$ ]] && [ ! -d "$1" ]; then
     echo:info "\"$1\" doesn’t exist."
-    execute_with_confirm "mkdir -p \"$1\""
+    execute_with_confirm mkdir -p "$1"
   fi
 
   __enhancd::cd "$@"

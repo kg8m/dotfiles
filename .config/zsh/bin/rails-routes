@@ -23,8 +23,8 @@ if [ ! -f "${result_filepath}" ] ||
    ! shasum --check --quiet "${checksum_filepath}" >&2; then
 
   echo:info "Cache file for routing doesn’t exist or the routing has been changed."
-  execute_with_echo "shasum '${(j:' ':)target_filepaths}' > ${checksum_filepath}"
-  execute_with_echo "bin/rails routes > ${result_filepath}"
+  eval_with_echo "shasum ${(@q)target_filepaths} > ${(q)checksum_filepath}"
+  eval_with_echo "bin/rails routes > ${(q)result_filepath}"
 fi
 
 cat "${result_filepath}"

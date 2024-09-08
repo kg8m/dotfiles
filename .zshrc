@@ -155,7 +155,7 @@ zinit ice lucid nocd wait"!0c" compinit atload"echo"
 zinit snippet "${XDG_CONFIG_HOME:?}/zsh/null/compinit"
 
 # zprof > /tmp/zprof.log
-# execute_with_echo "less /tmp/zprof.log"
+# execute_with_echo less /tmp/zprof.log
 
 # Notes
 #

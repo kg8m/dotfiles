@@ -4,19 +4,43 @@ function execute_with_echo {
     local dryrun="1"
   fi
 
-  local cmd=("${(R)@:#--dryrun}")
+  # shellcheck disable=SC2034
+  local command_array=("${(R)@:#--dryrun}")
+  local command_string="${(@q)command_array}"
 
-  if [ -z "${cmd[*]}" ]; then
+  if [ -z "${command_string}" ]; then
     echo:warn "Specify command."
     return 1
   fi
 
   printf "\n$(highlight:cyan "Execute%s:")\e[0;1m \`%s\`\e[0m\n\n" \
     "$([ "${dryrun}" = "1" ] && echo " (dryrun)")" \
-    "${cmd[*]}" >&2
+    "${command_string}" >&2
 
   if [ ! "${dryrun}" = "1" ]; then
-    eval "${cmd[*]}"
+    eval "${command_string}"
+  fi
+}
+
+function eval_with_echo {
+  # shellcheck disable=SC2198
+  if [ ! "${@[(I)--dryrun]}" = "0" ]; then
+    local dryrun="1"
+  fi
+
+  local command_array=("${(R)@:#--dryrun}")
+
+  if [ -z "${command_array[*]}" ]; then
+    echo:warn "Specify command."
+    return 1
+  fi
+
+  printf "\n$(highlight:cyan "Execute%s:")\e[0;1m \`%s\`\e[0m\n\n" \
+    "$([ "${dryrun}" = "1" ] && echo " (dryrun)")" \
+    "${command_array[*]}" >&2
+
+  if [ ! "${dryrun}" = "1" ]; then
+    eval "${command_array[*]}"
   fi
 }
 
@@ -36,22 +60,22 @@ function execute_commands_with_echo {
     local ignore_failure="1"
   fi
 
-  local cmd
-  local result=0
+  local command_string
+  local result="0"
 
-  for cmd in "${@:#-*}"; do
+  for command_string in "${@:#-*}"; do
     if [ "${separate}" = "1" ]; then
       echo
       horizontal_line
     fi
 
-    cmd=("${cmd}")
+    local command_array=("${command_string}")
 
     if [ "${dryrun}" = "1" ]; then
-      cmd+=(--dryrun)
+      command_array+=(--dryrun)
     fi
 
-    execute_with_echo "${cmd[@]}" || result=$?
+    eval_with_echo "${command_array[@]}" || result="$?"
 
     if [ ! "${ignore_failure}" = "1" ] && [ ! "${result}" = "0" ]; then
       return 1
@@ -72,13 +96,37 @@ function execute_with_confirm {
     return 1
   fi
 
-  local response
+  # shellcheck disable=SC2178
+  local command_string="${(@q)@}"
 
-  printf "\n$(highlight:cyan "Execute:")\e[0;1m \`%s\`\e[0m\n\n" "$*" >&2
+  local response
+  # shellcheck disable=SC2128
+  printf "\n$(highlight:cyan "Execute:")\e[0;1m \`%s\`\e[0m\n\n" "${command_string}" >&2
   read -r "response?Are you sure? [y/n]: "
 
   if [[ ${response} =~ ^y ]]; then
-    eval "$*"
+    # shellcheck disable=SC2128
+    eval "${command_string}"
+  else
+    echo "Canceled." >&2
+    return 255
+  fi
+}
+
+function eval_with_confirm {
+  if [ -z "$*" ]; then
+    echo:warn "Specify command."
+    return 1
+  fi
+
+  local command_array=("$@")
+
+  local response
+  printf "\n$(highlight:cyan "Execute:")\e[0;1m \`%s\`\e[0m\n\n" "${command_array[*]}" >&2
+  read -r "response?Are you sure? [y/n]: "
+
+  if [[ ${response} =~ ^y ]]; then
+    eval "${command_array[*]}"
   else
     echo "Canceled." >&2
     return 255
@@ -222,7 +270,7 @@ function trash {
     fi
 
     touch "${source}"
-    execute_with_echo "mv '${source}' '${trash_path}/${new_filename}'"
+    execute_with_echo mv "${source}" "${trash_path}/${new_filename}"
   done
 }
 
@@ -245,7 +293,7 @@ function trash:bulk {
   )}")
 
   if [ -n "${filepaths[*]}" ]; then
-    execute_with_confirm "trash '${(j:' ':)filepaths}'"
+    execute_with_confirm trash "${filepaths[@]}"
   else
     echo:info "Canceled."
   fi
@@ -502,10 +550,9 @@ function my_grep:with_filter {
         # `pane_current_command` always returns "zsh" and automatic refreshing zsh prompt will be influenced.
         printf "%s\n" "${results[@]}" | rg '^.+?:[0-9]+:[0-9]+:.' > "${tempfile}"
         local query_for_vim="$(echo "${query}" | sd '"' '\\"' | sd "'" "'\\\\'\\\\''")"
-        execute_with_echo "vim -c 'call kg8m#util#grep#BuildQflistFromBuffer('\\''${query_for_vim}'\\'')' '${tempfile}'"
+        execute_with_echo vim -c "call kg8m#util#grep#BuildQflistFromBuffer('${query_for_vim}')" "${tempfile}"
       else
-        # shellcheck disable=SC2145
-        execute_with_echo "vim '${(j:' ':)results}'"
+        execute_with_echo vim "${results[@]}"
       fi
     fi
   fi
@@ -531,7 +578,7 @@ function my_diff {
     diff_args+=("$@")
   fi
 
-  execute_with_echo "diff ${(@q)diff_args} | delta"
+  eval_with_echo "diff ${(@q)diff_args} | delta"
 }
 
 function my_diff:without_spaces {
@@ -563,7 +610,7 @@ function npm-diff {
 
   local version_to="${1:?}"
 
-  execute_with_echo "npx npm diff --diff=${package}@${version_from} --diff=${package}@${version_to}"
+  execute_with_echo npx npm diff --diff="${package}@${version_from}" --diff="${package}@${version_to}"
 }
 
 function docker:containers:delete {
@@ -576,13 +623,13 @@ function docker:containers:delete {
   if [ -n "${container_names[*]}" ]; then
     local container_name
     for container_name in "${container_names[@]}"; do
-      execute_with_confirm "docker container rm ${container_name}"
+      execute_with_confirm docker container rm "${container_name}"
     done
   else
     echo:info "There are no containers."
   fi
 
-  execute_with_echo "docker container ls --all"
+  execute_with_echo docker container ls --all
 }
 
 function docker:images:delete {
@@ -600,13 +647,13 @@ function docker:images:delete {
   if [ -n "${image_names[*]}" ]; then
     local image_name
     for image_name in "${image_names[@]}"; do
-      execute_with_confirm "docker rmi ${image_name}"
+      execute_with_confirm docker rmi "${image_name}"
     done
   else
     echo:info "There are no images."
   fi
 
-  execute_with_echo "docker images --all"
+  execute_with_echo docker images --all
 }
 
 function docker:volumes:delete {
@@ -619,13 +666,13 @@ function docker:volumes:delete {
   if [ -n "${volume_names[*]}" ]; then
     local volume_name
     for volume_name in "${volume_names[@]}"; do
-      execute_with_confirm "docker volume rm ${volume_name}"
+      execute_with_confirm docker volume rm "${volume_name}"
     done
   else
     echo:info "There are no volumes."
   fi
 
-  execute_with_echo "docker volume ls"
+  execute_with_echo docker volume ls
 }
 
 function docker:clear_all {
@@ -646,49 +693,49 @@ function rails:routes:with_filter {
 
 function zsh:plugins:update {
   if [ -d "${XDG_CACHE_HOME:?}/zsh" ]; then
-    execute_with_echo "trash '${XDG_CACHE_HOME}/zsh'"
+    execute_with_echo trash "${XDG_CACHE_HOME}/zsh"
   fi
-  execute_with_echo "mkdir -p '${XDG_CACHE_HOME}/zsh'"
+  execute_with_echo mkdir -p "${XDG_CACHE_HOME}/zsh"
 
-  execute_with_echo "zsh:rcs:compile:clear"
+  execute_with_echo zsh:rcs:compile:clear
 
   # Load plugins with `trigger-load` option, because they may not be loaded and may be deleted by `zinit delete --clean`.
   local plugin_for_trigger_load
   for plugin_for_trigger_load in "${PLUGINS_FOR_TRIGGER_LOAD[@]:?}"; do
-    execute_with_echo "zinit load ${plugin_for_trigger_load}"
+    execute_with_echo zinit load "${plugin_for_trigger_load}"
   done
 
-  execute_with_echo "zinit delete --clean --yes"
-  execute_with_echo "zinit cclear"
-  execute_with_echo "find ${ZINIT[SNIPPETS_DIR]:?} -type d -empty -delete"
+  execute_with_echo zinit delete --clean --yes
+  execute_with_echo zinit cclear
+  execute_with_echo find "${ZINIT[SNIPPETS_DIR]:?}" -type d -empty -delete
 
   # Use subshell to restore pwd.
   (
     # Clean up the directory because enhancd makes it dirty when loaded.
-    execute_with_echo "builtin cd ${ENHANCD_ROOT:?}"
-    execute_with_echo "git restore ."
+    execute_with_echo builtin cd "${ENHANCD_ROOT:?}"
+    execute_with_echo git restore .
   )
 
-  execute_with_echo "zinit update --all --parallel --quiet"
+  execute_with_echo zinit update --all --parallel --quiet
 
   # Use subshell to restore pwd.
   (
     # Remove `_*.fish` files because they are treated as completions by zinit.
-    execute_with_echo "builtin cd ${ENHANCD_ROOT:?}"
-    execute_with_echo "rm -f ./**/_*.fish"
+    execute_with_echo builtin cd "${ENHANCD_ROOT:?}"
+    execute_with_echo rm -f ./**/_*.fish
   )
 
-  execute_with_echo "zinit creinstall ${ZINIT[BIN_DIR]}"
-  execute_with_echo "zinit csearch"
+  execute_with_echo zinit creinstall "${ZINIT[BIN_DIR]}"
+  execute_with_echo zinit csearch
 
-  execute_with_echo "zsh:rcs:compile"
+  execute_with_echo zsh:rcs:compile
 
   # Avoid errors like `(eval):1: command not found: _some_command`.
   # cf. https://github.com/ohmyzsh/ohmyzsh/wiki/FAQ/f5b8f5502228f94ed43435895c526449df3a103b#how-do-i-reset-the-completion-cache
   # cf. https://github.com/sharkdp/bat/issues/503
-  execute_with_echo "trash ${HOME:?}/.zcompdump"
+  execute_with_echo trash "${HOME:?}/.zcompdump"
 
-  execute_with_echo "exec zsh"
+  execute_with_echo exec zsh
 }
 
 function zsh:rcs:compile {
@@ -763,8 +810,8 @@ function libs:go:uninstall {
 function benchmark:vim {
   local vim=${1:-vim}
 
-  execute_with_echo "${vim} --version | awk '/^VIM - Vi IMproved/,/Features included \\(\\+\\) or not \\(-\\):$/'"
-  execute_with_echo "${vim} -c 'call kg8m#plugin#RecacheRuntimepath() | q'"
+  eval_with_echo "${vim} --version | awk '/^VIM - Vi IMproved/,/Features included \\(\\+\\) or not \\(-\\):$/'"
+  execute_with_echo "${vim}" -c "call kg8m#plugin#RecacheRuntimepath() | q"
 
   local base_command="vim-startuptime -count 50 -warmup 1"
 
@@ -791,14 +838,14 @@ function benchmark:vim {
 
     command+=" | head -n15"
 
-    execute_with_echo "${command}"
+    eval_with_echo "${command}"
   done
 }
 
 function benchmark:zsh {
-  execute_with_echo "zsh:rcs:compile:clear"
-  execute_with_echo "zsh:rcs:compile"
-  execute_with_echo "hyperfine --warmup=1 'zsh --no-rcs -i -c exit' 'zsh -i -c exit'"
+  execute_with_echo zsh:rcs:compile:clear
+  execute_with_echo zsh:rcs:compile
+  execute_with_echo hyperfine --warmup=1 "zsh --no-rcs -i -c exit" "zsh -i -c exit"
 }
 
 # https://stackoverflow.com/a/28044986

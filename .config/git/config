@@ -198,10 +198,10 @@
 	clone-partial-blobless = partial-blobless-clone
 	clone-partial-treeless = partial-treeless-clone
 
-	shallow-clone          = "!git sh \"git:clone:shallow $*\""
-	partial-clone          = "!git sh \"git:clone:partial:treeless $*\""
-	partial-blobless-clone = "!git sh \"git:clone:partial:blobless $*\""
-	partial-treeless-clone = "!git sh \"git:clone:partial:treeless $*\""
+	shallow-clone          = sh git:clone:shallow
+	partial-clone          = sh git:clone:partial:treeless
+	partial-blobless-clone = sh git:clone:partial:blobless
+	partial-treeless-clone = sh git:clone:partial:treeless
 
 	# switch
 	sw  = switch
@@ -232,7 +232,7 @@
 
 	branches = sh git:branch:list:all
 
-	create-branch-with-set-upstream = "!git sh \"git:branch:create:with_set_upstream '$1' '$2' '$3'\""
+	create-branch-with-set-upstream = sh git:branch:create:with_set_upstream
 
 	delete-fully-merged-local-branch = branch --delete
 	delete-local-branches            = bulk-delete-local-branches
@@ -252,7 +252,7 @@
 	bulk-commit = sh git:commit:bulk
 
 	# push
-	push-with-revision = "!git sh \"git:push:revision $1\""
+	push-with-revision = sh git:push:revision
 
 	# reset/revert
 	edit-commits      = rebase --interactive
@@ -287,8 +287,8 @@
 	log-graph      = log --graph --abbrev=14 --pretty=format:\" %C(yellow)%h %C(cyan)%ai %C(green bold)%an %C(magenta)%d %C(reset)%s\"
 	log-with-patch = log --stat --patch
 
-	lg-branches = sh 'git:log:compare:branch --graph --abbrev=14 --pretty=format:\\\"\" %C(yellow)%h %C(cyan)%ai %C(green bold)[C] %cn [A] %an  %C(reset)%s\\\"\"'
-	lp-branches = sh 'git:log:compare:branch --stat --patch'
+	lg-branches = sh git:log:compare:branch --graph --abbrev=14 --pretty='format: %C(yellow)%h %C(cyan)%ai %C(green bold)[C] %cn [A] %an  %C(reset)%s'
+	lp-branches = sh git:log:compare:branch --stat --patch
 
 	# diff
 	di = diff-without-space-changes
@@ -301,16 +301,16 @@
 
 	diff-stat-branches = diff-branches --stat-width 150
 
-	diff-branches      = "!git sh \"git:diff:branch $*\""
-	diff-branch-from   = "!git sh \"git:diff:branch:from $*\""
-	changed-files-from = "!git sh \"git:diff:branch:from:nameonly $*\""
+	diff-branches      = sh git:diff:branch
+	diff-branch-from   = sh git:diff:branch:from
+	changed-files-from = sh git:diff:branch:from:nameonly
 
 	# stash
 	ss  = stash
 	ssa = stash-all-with-message
 	sss = stash-by-select
 
-	stash-all-with-message = "!git sh \"git:stash:all:with_message $*\""
+	stash-all-with-message = sh git:stash:all:with_message
 	stash-by-select        = sh git:stash:select
 
 	# show
@@ -321,8 +321,8 @@
 	sts = status-by-select
 
 	status-by-select   = status-with-filter
-	status-with-filter = "!git sh \"git:status:filter:all $*\""
-	status-with-color  = "!git sh \"git:status:color $*\""
+	status-with-filter = sh git:status:filter:all
+	status-with-color  = sh git:status:color
 
 	# cherry-pick
 	cp   = cherry-pick
@@ -332,7 +332,7 @@
 	# blame
 	bl = blame-with-filter
 
-	blame-with-filter = "!git sh \"git:blame:filter '$1'\""
+	blame-with-filter = sh git:blame:filter
 
 	# submodule
 	submodule-update-all = update-submodules
@@ -346,14 +346,12 @@
 	# utility
 	aliases = alias
 	alias   = sh git:alias:list
-	which   = "!git sh \"git:alias:which '$1'\""
+	which   = sh git:alias:which
 
 	info = remote show origin
 
-	chmod       = "!git sh \"git:utility:chmod '$1'\""
-	diff-or-cat = "!git sh \"git:utility:diff_or_cat '$1'\""
-
-	sh = "!zsh -c \"source ~/.config/git/aliases.zsh; $1\""
+	chmod       = sh git:utility:chmod
+	diff-or-cat = sh git:utility:diff_or_cat
 
 [include]
 	path = ~/.config/git.local/config
