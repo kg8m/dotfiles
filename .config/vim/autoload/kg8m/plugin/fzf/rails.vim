@@ -21,7 +21,10 @@ final type_names = []
 
 def Run(type: string): void
   const type_spec = specs[type]
-  var command = ["fd", $FD_DEFAULT_OPTIONS, $FD_EXTRA_OPTIONS, "--full-path", "--type", "f", "--color", "always"]
+
+  # `$FD_DEFAULT_OPTIONS` is always an empty string when evaluated in Vim because it is a array in shell.
+  # So don’t evaluate it in Vim but evaluate it in shell.
+  var command = ["fd", "${FD_DEFAULT_OPTIONS}", "${FD_EXTRA_OPTIONS}", "--full-path", "--type", "f", "--color", "always"]
 
   # Common excludes.
   command += ["--exclude", ".keep"]

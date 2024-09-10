@@ -14,8 +14,12 @@ export def List(options: dict<bool> = {}): list<string>
   const colorize = get(options, "colorize", true)
   const command = [
     "fd",
-    $FD_DEFAULT_OPTIONS,
-    $FD_EXTRA_OPTIONS,
+
+    # `$FD_DEFAULT_OPTIONS` is always an empty string when evaluated in Vim because it is a array in shell.
+    # So don’t evaluate it in Vim but evaluate it in shell.
+    "${FD_DEFAULT_OPTIONS}",
+    "${FD_EXTRA_OPTIONS}",
+
     "--strip-cwd-prefix",
     "--type", "f",
     "--base-directory", shellescape(DIRPATH),

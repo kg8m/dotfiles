@@ -6,7 +6,9 @@ final cache = {
 }
 
 export def FindAutoloadFile(autoload_filepath: string): string
-  final base_command = ["fd", $FD_DEFAULT_OPTIONS, $FD_EXTRA_OPTIONS, "--fixed-strings", "--full-path", "--max-results", "1"]
+  # `$FD_DEFAULT_OPTIONS` is always an empty string when evaluated in Vim because it is a array in shell.
+  # So don’t evaluate it in Vim but evaluate it in shell.
+  final base_command = ["fd", "${FD_DEFAULT_OPTIONS}", "${FD_EXTRA_OPTIONS}", "--fixed-strings", "--full-path", "--max-results", "1"]
 
   if &runtimepath !=# cache.runtimepath
     cache.runtimepath = &runtimepath
