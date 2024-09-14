@@ -25,7 +25,7 @@ fi
 for pane_info in "${pane_info_set[@]}"; do
   printf .
 
-  pane_info_array=("${(s: :)pane_info}")
+  pane_info_array=("${=pane_info}")
 
   session_name="${pane_info_array[1]}"
   window_index="${pane_info_array[2]}"

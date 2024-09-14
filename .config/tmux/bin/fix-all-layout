@@ -23,7 +23,7 @@ current_session=""
 
 # shellcheck disable=SC2034
 for window_info in "${window_info_set[@]}"; do
-  window_info_array=("${(s: :)window_info}")
+  window_info_array=("${=window_info}")
 
   session_name="${window_info_array[1]}"
   window_index="${window_info_array[2]}"

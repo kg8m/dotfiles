@@ -775,7 +775,7 @@ function libs:go:uninstall {
 
   if [ -n "${FD_EXTRA_OPTIONS:-}" ]; then
     # $FD_EXTRA_OPTIONS is a string because direnv doesn’t support arrays.
-    fd_args+=("${(s: :)FD_EXTRA_OPTIONS}")
+    fd_args+=("${=FD_EXTRA_OPTIONS}")
   fi
 
   fd_args+=(
