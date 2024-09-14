@@ -777,7 +777,8 @@ function libs:go:uninstall {
   fi
 
   fd_args+=(
-    --type d --type x
+    --type d
+    --type x
     --color always
     "${pkg}"
     "${ASDF_DATA_DIR?:}/shims" "${ASDF_DATA_DIR?:}/installs/golang"
