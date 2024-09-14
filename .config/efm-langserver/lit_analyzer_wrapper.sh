@@ -16,7 +16,10 @@ args=(
   --format list
   --noColor
   --strict
-  "${=LIT_ANALYZER_EXTRA_OPTIONS}"
 )
+
+if [ -n "${LIT_ANALYZER_EXTRA_OPTIONS:-}" ]; then
+  args+=("${=LIT_ANALYZER_EXTRA_OPTIONS}")
+fi
 
 lit-analyzer "${args[@]}"
