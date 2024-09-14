@@ -434,12 +434,10 @@ function tmux:attach_or_new {
 }
 
 function my_grep {
-  local args
-
   if [ -n "${RIPGREP_EXTRA_OPTIONS:-}" ]; then
-    args=("${=RIPGREP_EXTRA_OPTIONS}" "$@")
+    local args=("${=RIPGREP_EXTRA_OPTIONS}" "$@")
   else
-    args=("$@")
+    local args=("$@")
   fi
 
   rg "${args[@]}"
