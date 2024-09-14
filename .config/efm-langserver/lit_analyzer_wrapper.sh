@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 if ! command -v lit-analyzer > /dev/null; then
   exit 1
 fi
