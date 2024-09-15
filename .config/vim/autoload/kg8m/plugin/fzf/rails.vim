@@ -3,6 +3,7 @@ vim9script
 import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/fzf.vim"
 import autoload "kg8m/util.vim"
+import autoload "kg8m/util/list.vim" as listUtil
 import autoload "kg8m/util/logger.vim"
 
 command! -nargs=1 -complete=customlist,Complete FzfRails Run(<q-args>)
@@ -30,7 +31,9 @@ def Run(type: string): void
   command += ["--exclude", ".keep"]
 
   if has_key(type_spec, "dirs")
-    command += mapnew(type_spec.dirs, (_, dir) => $"--search-path={shellescape(dir)}")
+    command += listUtil.FilterMap(type_spec.dirs, (dir) => {
+      return isdirectory(dir) ? $"--search-path={shellescape(dir)}" : false
+    })
   endif
 
   if has_key(type_spec, "pattern")
