@@ -765,8 +765,8 @@ function git:utility:diff_or_cat {
 
   local git_status="$(git:status:list -- "${filepath}")"
 
-  if [[ "${git_status}" =~ ^D ]]; then
-    local renamed_status="$(git:status:list | rg '^R' | rg --fixed-strings " ${filepath} ->")"
+  if [[ "${git_status}" =~ ^D ]] || [[ "${git_status}" =~ ^\ D ]]; then
+    local renamed_status="$(git:status:list | rg '^R|^ R' | rg --fixed-strings " ${filepath} ->")"
 
     if [ -n "${renamed_status}" ]; then
       git_status="${renamed_status}"
@@ -776,7 +776,7 @@ function git:utility:diff_or_cat {
   # Untracked files
   if [[ "${git_status}" =~ '^\?\?' ]]; then
     preview "${filepath}"
-  # Renamed files
+  # Staged renamed files
   elif [[ "${git_status}" =~ ^R ]]; then
     local removed="${filepath}"
     local added="${git_status#* -> }"
@@ -791,6 +791,13 @@ function git:utility:diff_or_cat {
     else
       echo "${renamed_diff}"
     fi
+  # Renamed but non-staged files
+  elif [[ "${git_status}" =~ ^\ R ]]; then
+    local removed="${filepath}"
+    local added="${git_status#* -> }"
+    local renamed_diff="$(git:utility:diff -- "${removed}" "${added}")"
+
+    echo "${renamed_diff}"
   # Partially staged files
   elif [[ "${git_status}" =~ ^[A-Z]{2} ]]; then
     git:utility:header "Not Staged"
