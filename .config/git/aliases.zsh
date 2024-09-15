@@ -733,7 +733,9 @@ function git:alias:which {
 
 function git:utility:chmod {
   local permissions="${1:?Specify permissions.}"
-  execute_with_echo git update-index --add --chmod "${permissions}"
+  local filepath="${2:?Specify a filepath.}"
+
+  execute_with_echo git update-index --add --chmod="${permissions}" "${filepath}"
 }
 
 function git:utility:pick:filepath {
