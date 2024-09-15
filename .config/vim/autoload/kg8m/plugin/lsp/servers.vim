@@ -600,7 +600,8 @@ def RegisterTypeprof(): void
     allowlist: ["ruby"],
     extra_config: () => ExtraConfigForTypeprof(),
 
-    available: $USE_TYPEPROF ==# "1",
+    # https://github.com/ruby/typeprof/blob/master/typeprof.conf.json
+    available: filereadable("typeprof.conf.json"),
   })
 enddef
 
