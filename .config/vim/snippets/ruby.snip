@@ -53,6 +53,25 @@ options head
 		${0}
 	end
 
+snippet class_with_equality_methods
+abbr    class ...; def ==; def hash; def eql?; ... end
+options head
+	class ${1:`substitute(vim_snippets#Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
+		${0}
+		
+		def ==(other)
+			other.instance_of?(self.class) && other.name == name
+		end
+		
+		def hash
+			name.hash
+		end
+		
+		def eql?(other)
+			self == other
+		end
+	end
+
 snippet class_inherit
 abbr    class ... < {ParentClass} end
 options head
