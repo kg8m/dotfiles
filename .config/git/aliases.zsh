@@ -191,10 +191,10 @@ function git:branch:filter:single {
     git:branch:filter --no-multi --prompt="Select a branch> " "${options[@]}"
   )}")
 
-  if [ ${#branches} -ne 1 ] || [ -z "${branches[1]}" ]; then
+  if [ -z "${branches[*]}" ]; then
     echo:error "Select a branch."; exit 1
   else
-    echo "${branches[1]}"
+    echo "${branches[*]}"
   fi
 }
 
