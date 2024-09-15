@@ -118,12 +118,10 @@ HELP
     --query-id "${query_id}"
   )
 
-  # shellcheck disable=SC2317
   function _aws:logs:query:status {
     aws logs get-query-results "$@" --query "status" | jq --raw-output
   }
 
-  # shellcheck disable=SC2317
   function _aws:logs:query:result {
     # The timestamp and data were specified in the `--query-string` of `aws logs start-query`.
     aws logs get-query-results "$@" --query "results" |

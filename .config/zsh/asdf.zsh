@@ -52,7 +52,6 @@ zinit light asdf-vm/asdf
 export TMUX_EXTRA_CONFIGURE_OPTIONS="--enable-sixel --enable-utf8proc"
 
 function asdf:plugins:upgrade:check {
-  # shellcheck disable=SC2317
   function asdf:plugins:upgrade:check:do {
     local plugin="${1:?}"
     shift 1

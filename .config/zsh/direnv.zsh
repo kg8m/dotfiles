@@ -11,7 +11,6 @@ if command -v direnv > /dev/null; then
   # https://github.com/direnv/direnv/blob/93cd37820c29a1f96a0e64ff1557a7a912866d4f/internal/cmd/shell_zsh.go#L12
   eval "$(direnv export zsh)"
 else
-  # shellcheck disable=SC2317
   function plugin:direnv:not_installed_error {
     if [ -f .envrc ]; then
       echo:warn ".envrc exists but direnv isn’t installed."
