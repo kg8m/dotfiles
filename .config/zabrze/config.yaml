@@ -29,17 +29,6 @@ abbrevs:
     snippet: "| sort_without_escape_sequences"
     global: true
 
-  - name: asdf install
-    abbr: i
-    snippet: install
-    global: true
-    context: '^asdf\s'
-  - name: asdf list
-    abbr: li
-    snippet: list
-    global: true
-    context: '^asdf\s'
-
   - name: batch_move
     abbr: bmv
     snippet: batch_move
@@ -288,6 +277,22 @@ abbrevs:
   - name: lt to eza --long --tree
     abbr: lt
     snippet: eza "${EZA_DEFAULT_OPTIONS[@]}" --long --header --git --tree --ignore-glob "${EZA_IGNORE_GLOB:?}"
+
+  - name: mise --global
+    abbr: -g
+    snippet: --global
+    global: true
+    context: '^mise\s'
+  - name: mise install
+    abbr: i
+    snippet: install
+    global: true
+    context: '^mise\s'
+  - name: mise uninstall
+    abbr: uni
+    snippet: uninstall
+    global: true
+    context: '^mise\s'
 
   - name: npm --global
     abbr: -g

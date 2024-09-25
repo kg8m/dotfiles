@@ -125,7 +125,6 @@ source ~/.config/zsh/env/fzf.zsh
 source ~/.config/zsh/aliases.zsh
 source ~/.config/zsh/utility-functions.zsh
 
-source ~/.config/zsh/asdf.zsh
 source ~/.config/zsh/aws.zsh
 source ~/.config/zsh/binary-released-plugins.zsh
 source ~/.config/zsh/cd-bookmark.zsh
@@ -140,6 +139,7 @@ source ~/.config/zsh/rubocop.zsh
 source ~/.config/zsh/syntax-highlighting.zsh
 source ~/.config/zsh/timetrack.zsh
 source ~/.config/zsh/tmux.zsh
+source ~/.config/zsh/tools.zsh
 
 source ~/.config/zsh/others.zsh
 

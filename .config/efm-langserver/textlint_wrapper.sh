@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Always use the latest Node.js version for textlint.
+export MISE_NODE_VERSION="latest"
+
 if ! command -v textlint > /dev/null; then
   exit 1
 fi
@@ -38,9 +41,6 @@ fi
 
 # Kill existing processes because too many processes run and they cause high CPU usage.
 pkill -f ".*textlint.* ${options[*]}"
-
-# Prevent "text.matchAll(...) is not a function or its return value is not iterable" error caused by older Node.js.
-export ASDF_NODEJS_VERSION="$(newest_version nodejs)"
 
 out="$(textlint "${options[@]}" 2> "${err_temp_filepath}")"
 err="$(< "${err_temp_filepath}")"

@@ -1,4 +1,7 @@
 #!/usr/bin/env zsh
+# Always use the latest Node.js version for lit-analyzer.
+export MISE_NODE_VERSION="latest"
+
 if ! command -v lit-analyzer > /dev/null; then
   exit 1
 fi
@@ -6,9 +9,6 @@ fi
 if [ ! "${USE_LIT_ANALYZER:-}" = "1" ]; then
   exit 1
 fi
-
-# Always use the latest Node.js version for lit-analyzer.
-export ASDF_NODEJS_VERSION="$(newest_version nodejs)"
 
 filepath="${1:?}"
 args=(

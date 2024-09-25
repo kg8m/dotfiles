@@ -14,6 +14,7 @@ function plugin:setup:binary_releaseds {
     nametake/golangci-lint-langserver
     sharkdp/hyperfine
     LuaLS/lua-language-server
+    jdx/mise
     itchyny/mmv
     high-moctane/mocword
     sorairolake/qrtool
@@ -54,7 +55,7 @@ function plugin:setup:binary_releaseds {
 
     case "${plugin}" in
       actionlint | bat | checkmake | delta | direnv | efm-langserver | fd | gh | glab | golangci-lint | hyperfine |\
-      mmv | mocword | qrtool | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
+      mise | mmv | mocword | qrtool | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
         mv ./"${plugin}"* ./"${plugin}"
         ;;
       rg)
@@ -73,7 +74,7 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mocword | shfmt | sqls | stylua |\
+      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mise | mocword | shfmt | sqls | stylua |\
       terraform-lsp | tflint | tldr | tokei | typos | vim-startuptime | zabrze)
         local binary="${plugin}"
         ;;
@@ -125,7 +126,7 @@ function plugin:setup:binary_releaseds {
       actionlint | shfmt | sqls)
         execute_with_echo "${command}" -version
         ;;
-      golangci-lint)
+      golangci-lint | mise)
         execute_with_echo "${command}" version
         ;;
       golangci-lint-langserver | vim-startuptime)
@@ -144,6 +145,9 @@ function plugin:setup:binary_releaseds {
     case "${plugin}" in
       bat)
         execute_with_echo mv ./bat/autocomplete/{bat.zsh,_bat}
+        ;;
+      mise)
+        execute_with_echo mise completion zsh > _mise
         ;;
       zabrze)
         execute_with_echo plugin:zabrze:reset

@@ -1,0 +1,10 @@
+[tools]
+deno = "latest"
+go = "latest"
+node = "latest"
+python = ["latest", "2"]
+ruby = "latest"
+usage = "latest"
+rust = "latest"
+terraform = "latest"
+postgres = "latest"

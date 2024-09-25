@@ -783,7 +783,7 @@ function libs:go:uninstall {
     --type x
     --color always
     "${pkg}"
-    "${ASDF_DATA_DIR?:}/shims" "${ASDF_DATA_DIR?:}/installs/golang"
+    "${XDG_DATA_HOME:?}/mise/installs/go"
   )
 
   local pkg_paths=("${(@f)$(fd "${fd_args[@]}" | sort_without_escape_sequences)}")

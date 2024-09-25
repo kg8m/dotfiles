@@ -921,17 +921,9 @@ def ShouldUseVueLanguageServer(): bool
 enddef
 
 def NodeToolsEnv(): dict<any>
-  if has_key(cache, "node_tools_env")
-    return cache.node_tools_env
-  endif
-
-  const latest_node_version = system("newest_version nodejs")->trim()
-
-  cache.node_tools_env = {
-    ASDF_NODEJS_VERSION: latest_node_version,
+  return {
+    MISE_NODE_VERSION: "latest",
   }
-
-  return cache.node_tools_env
 enddef
 
 def TypeScriptLibPath(): string
@@ -941,8 +933,8 @@ def TypeScriptLibPath(): string
   if isdirectory(project_local_path)
     return project_local_path
   else
-    const node_version = NodeToolsEnv().ASDF_NODEJS_VERSION
-    const global_path = $"{$ASDF_DATA_DIR}/installs/nodejs/{node_version}/lib/{suffix}"
+    const node_version = system("newest_version node")->trim()
+    const global_path = $"{$XDG_DATA_HOME}/mise/installs/node/{node_version}/lib/{suffix}"
 
     if isdirectory(global_path)
       return global_path

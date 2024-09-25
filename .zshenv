@@ -36,24 +36,6 @@ path=(
 export COLORTERM=truecolor
 export GPG_TTY="$(tty)"
 
-# https://github.com/asdf-vm/asdf/blob/788ccab5971cb828cf25364b0df5ed6f5e9e713d/asdf.sh#L17
-ASDF_ROOT="${XDG_DATA_HOME}/zsh/asdf"
-export ASDF_DIR="${ASDF_ROOT}/src"
-export ASDF_DATA_DIR="${ASDF_ROOT}/data"
-unset ASDF_ROOT
-
-export ASDF_CONFIG_FILE="${XDG_CONFIG_HOME}/asdf/asdfrc"
-
-# https://github.com/kennyp/asdf-golang/pull/101
-export ASDF_GOLANG_MOD_VERSION_ENABLED="true"
-
-# https://github.com/asdf-vm/asdf/blob/788ccab5971cb828cf25364b0df5ed6f5e9e713d/asdf.sh#L25-26
-path=(
-  "${ASDF_DATA_DIR}/shims"
-  "${ASDF_DIR}/bin"
-  "${path[@]}"
-)
-
 # cf. data setup in .config/zsh/binary-released-plugins.zsh
 export MOCWORD_DATA="${HOME}/.local/share/mocword/mocword.sqlite"
 
@@ -65,6 +47,13 @@ if [ -d "/opt/homebrew" ]; then
 else
   export HOMEBREW_PREFIX="/usr/local"
 fi
+
+path=(
+  # Required for tools used outside of the interactive shell.
+  "${XDG_DATA_HOME:?}/mise/shims"
+
+  "${path[@]}"
+)
 
 DIFF_HIGHLIGHT_DIRPATH_CACHE="${XDG_CACHE_HOME}/zsh/diff-highlight-dirpath"
 if [ ! -f "${DIFF_HIGHLIGHT_DIRPATH_CACHE}" ]; then

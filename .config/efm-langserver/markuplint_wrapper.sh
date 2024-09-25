@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Always use the latest Node.js version for markuplint.
+export MISE_NODE_VERSION="latest"
+
 if ! command -v markuplint > /dev/null; then
   exit 1
 fi
@@ -6,9 +9,6 @@ fi
 if [ "$(should_use_deno)" = "1" ]; then
   exit 1
 fi
-
-# Always use the latest Node.js version for markuplint.
-export ASDF_NODEJS_VERSION="$(newest_version nodejs)"
 
 target_filepath="${1:?}"
 
