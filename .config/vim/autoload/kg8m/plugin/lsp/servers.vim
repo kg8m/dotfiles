@@ -41,7 +41,6 @@ export def Register(): void
   RegisterSqls()
   RegisterSteep()
   RegisterTailwindcssLanguageServer()
-  RegisterTerraformLs()
   RegisterTerraformLsp()
   RegisterTflint()
   RegisterTypeprof()
@@ -543,21 +542,6 @@ def ExtraConfigForTailwindcssLanguageServer(): dict<any>
     env: NodeToolsEnv(),
 
     document_hover: false,
-  }
-enddef
-
-# Install from https://github.com/hashicorp/terraform-ls/releases
-def RegisterTerraformLs(): void
-  RegisterServer({
-    name: "terraform-ls",
-    allowlist: ["terraform"],
-    extra_config: () => ExtraConfigForTerraformLs(),
-  })
-enddef
-
-def ExtraConfigForTerraformLs(): dict<any>
-  return {
-    cmd: (_) => ["terraform-ls", "serve"],
   }
 enddef
 

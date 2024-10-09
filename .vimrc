@@ -687,9 +687,7 @@ if plugin.Register("muz/vim-gemfile")
   import autoload "kg8m/plugin/gemfile.vim"
   augroup vimrc-plugin-gemfile
     autocmd!
-
-    # Execute lazily for overwriting default configs.
-    autocmd FileType Gemfile timer_start(100, (_) => gemfile.SetupBuffer())
+    autocmd FileType Gemfile runtime! ftplugin/ruby.vim indent/ruby.vim
   augroup END
 endif
 

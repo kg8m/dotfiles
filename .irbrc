@@ -20,7 +20,7 @@ FileUtils.mkdir_p(HISTORY_DIRPATH)
 
 IRB.conf[:HISTORY_FILE] = HISTORY_FILEPATH
 
-# Save history at exit and restore it at start because irb doesn’t automatically save/restore history.
+# Save history at exit and restore it at start because old Ruby’s irb doesn’t automatically save/restore history.
 if File.exist?(HISTORY_FILEPATH) && defined?(Readline::HISTORY)
   File.foreach(HISTORY_FILEPATH) do |line|
     Readline::HISTORY.push(line.chomp)
@@ -31,14 +31,6 @@ if File.exist?(HISTORY_FILEPATH) && defined?(Readline::HISTORY)
     lines.slice!(MAX_HISTORY_SIZE, lines.size)
     File.write(HISTORY_FILEPATH, lines.join("\n"))
   end
-end
-
-# Setup type based completer.
-Kg8m.try_to_require("repl_type_completor", quiet: true)
-
-if defined?(ReplTypeCompletor)
-  # Load RBS definitions on other threads.
-  ReplTypeCompletor.preload_rbs
 end
 
 # Customize irb’s appearance.

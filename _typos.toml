@@ -13,10 +13,6 @@ extend-ignore-re = [
   'vim9s\\%\[cript\]',
 ]
 
-[default.extend-identifiers]
-ReplTypeCompletor   = "ReplTypeCompletor"
-repl_type_completor = "repl_type_completor"
-
 [default.extend-words]
 enhancd = "enhancd"
 iterm   = "iterm"
