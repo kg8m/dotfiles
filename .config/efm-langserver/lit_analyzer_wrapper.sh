@@ -2,11 +2,11 @@
 # Always use the latest Node.js version for lit-analyzer.
 export MISE_NODE_VERSION="latest"
 
-if ! command -v lit-analyzer > /dev/null; then
+if [ ! "${USE_LIT_ANALYZER:-}" = "1" ]; then
   exit 1
 fi
 
-if [ ! "${USE_LIT_ANALYZER:-}" = "1" ]; then
+if ! is_executable lit-analyzer; then
   exit 1
 fi
 

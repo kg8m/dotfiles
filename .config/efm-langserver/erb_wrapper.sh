@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if ! command -v erb > /dev/null; then
+if ! is_executable erb; then
   exit 1
 fi
 

@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-if ! command -v rubocop > /dev/null; then
-  exit 1
-fi
-
 if [ ! -f .rubocop.yml ]; then
   exit 1
 fi
@@ -32,6 +28,10 @@ if [ -n "${RUBOCOP_WRAPPER_COMMAND:-}" ]; then
   executable="${RUBOCOP_WRAPPER_COMMAND:?}"
 else
   executable="rubocop-daemon-wrapper"
+fi
+
+if ! is_executable "${executable}"; then
+  exit 1
 fi
 
 # --force-exclusion

@@ -1,6 +1,7 @@
 vim9script
 
 import autoload "kg8m/plugin/lsp/servers.vim" as lspServers
+import autoload "kg8m/util.vim"
 
 export def Setup(): void
   augroup vimrc-util-daemons
@@ -26,7 +27,7 @@ export def RestartRubocopDaemon(): void
 enddef
 
 def IsEslintDAvailable(): bool
-  return !!executable("eslint_d")
+  return !!util.IsExecutable("eslint_d")
 enddef
 
 def IsRubocopLspAvailable(): bool
@@ -34,15 +35,15 @@ def IsRubocopLspAvailable(): bool
 enddef
 
 def IsRubocopDaemonAvailable(): bool
-  return !!executable("rubocop-daemon")
+  return !!util.IsExecutable("rubocop-daemon")
 enddef
 
 def UpdateRoutingDependencies(): void
   # https://github.com/drwl/annotaterb
-  if executable("annotaterb")
+  if util.IsExecutable("annotaterb")
     JobStart(["annotaterb", "routes"])
   # https://github.com/ctran/annotate_models
-  elseif executable("annotate")
+  elseif util.IsExecutable("annotate")
     JobStart(["rails", "annotate_routes"])
   endif
 

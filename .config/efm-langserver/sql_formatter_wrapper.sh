@@ -2,7 +2,7 @@
 # Always use the latest Node.js version for sql-formatter.
 export MISE_NODE_VERSION="latest"
 
-if ! command -v sql-formatter > /dev/null; then
+if ! is_executable sql-formatter; then
   exit 1
 fi
 

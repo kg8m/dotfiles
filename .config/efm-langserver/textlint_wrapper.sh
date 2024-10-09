@@ -2,7 +2,7 @@
 # Always use the latest Node.js version for textlint.
 export MISE_NODE_VERSION="latest"
 
-if ! command -v textlint > /dev/null; then
+if ! is_executable textlint; then
   exit 1
 fi
 

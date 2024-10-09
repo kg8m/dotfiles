@@ -40,7 +40,7 @@ if [ ! "$(is_target_file "${target_filepath}")" = "1" ]; then
   exit 1
 fi
 
-if command -v eslint_d > /dev/null; then
+if is_executable eslint_d; then
   executable=eslint_d
 else
   executable=eslint

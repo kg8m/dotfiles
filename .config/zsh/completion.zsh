@@ -29,32 +29,28 @@ function completion:setup:lazy {
   zinit light zsh-users/zsh-autosuggestions
 
   # fzf
-  if command -v fzf > /dev/null; then
-    # https://github.com/junegunn/fzf/releases/tag/0.48.0
-    # Disable fzf’s listing files/directories feature.
-    if [ ! -f "${XDG_CACHE_HOME:?}/zsh/fzf_key_bindings.zsh" ]; then
-      fzf --zsh > "${XDG_CACHE_HOME:?}/zsh/fzf_key_bindings.zsh"
+  # https://github.com/junegunn/fzf/releases/tag/0.48.0
+  # Disable fzf’s listing files/directories feature.
+  if [ ! -f "${XDG_CACHE_HOME:?}/zsh/fzf_key_bindings.zsh" ]; then
+    fzf --zsh > "${XDG_CACHE_HOME:?}/zsh/fzf_key_bindings.zsh"
 
-      # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
-      zcompile "${XDG_CACHE_HOME:?}/zsh/fzf_key_bindings.zsh"
-    fi
-    FZF_CTRL_T_COMMAND="" FZF_ALT_C_COMMAND="" source "${XDG_CACHE_HOME:?}/zsh/fzf_key_bindings.zsh"
-
-    # Don’t use fzf’s default history widget.
-    # cf. .config/zsh/history-search.zsh
-    bindkey "^R" fzf_history_search
+    # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
+    zcompile "${XDG_CACHE_HOME:?}/zsh/fzf_key_bindings.zsh"
   fi
+  FZF_CTRL_T_COMMAND="" FZF_ALT_C_COMMAND="" source "${XDG_CACHE_HOME:?}/zsh/fzf_key_bindings.zsh"
+
+  # Don’t use fzf’s default history widget.
+  # cf. .config/zsh/history-search.zsh
+  bindkey "^R" fzf_history_search
 
   # ngrok
-  if command -v ngrok > /dev/null; then
-    if [ ! -f "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh" ]; then
-      ngrok completion > "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh"
+  if [ ! -f "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh" ]; then
+    ngrok completion > "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh"
 
-      # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
-      zcompile "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh"
-    fi
-    source "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh"
+    # cf. zsh:rcs:compile() and zsh:rcs:compile:clear()
+    zcompile "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh"
   fi
+  source "${XDG_CACHE_HOME:?}/zsh/ngrok_completion.zsh"
 
   # zsh-completions
   # https://zdharma.org/zinit/wiki/Example-Minimal-Setup/

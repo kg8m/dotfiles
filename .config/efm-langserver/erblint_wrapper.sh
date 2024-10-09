@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if ! command -v erblint > /dev/null; then
+if ! is_executable erblint; then
   exit 1
 fi
 

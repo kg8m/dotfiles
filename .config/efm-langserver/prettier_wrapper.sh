@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if ! command -v prettier > /dev/null; then
+if ! is_executable prettier; then
   exit 1
 fi
 

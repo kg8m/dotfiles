@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if ! command -v stylelint > /dev/null; then
+if ! is_executable stylelint; then
   exit 1
 fi
 

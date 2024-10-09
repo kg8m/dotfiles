@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# cf. IsExecutable() in .config/vim/autoload/kg8m/util.vim
+# NOTE: This command may be a bit slow, so be careful when using it.
+
+target_command="${1:?Specify a command.}"
+command_binpath="$(command -v "${target_command}")"
+
+if [ -z "${command_binpath}" ]; then
+  exit 1
+fi
+
+if [[ "${command_binpath}" == */mise/shims/* ]]; then
+  mise which "${target_command}" > /dev/null 2>&1
+else
+  exit 0
+fi

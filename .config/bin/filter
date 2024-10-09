@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
-if command -v fzf > /dev/null; then
-  if [ -n "$*" ]; then
-    fzf "$@"
-  else
-    fzf --preview "preview {}" --preview-window "down:75%:wrap:nohidden"
-  fi
+if [ -n "$*" ]; then
+  fzf "$@"
 else
-  echo "Any filter is not found." >&2
-  cat
+  fzf --preview "preview {}" --preview-window "down:75%:wrap:nohidden"
 fi

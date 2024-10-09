@@ -1,6 +1,2 @@
 #!/usr/bin/env bash
-if command -v delta > /dev/null; then
-  delta "$@"
-else
-  diff-highlight "$@" | less --LINE-NUMBERS
-fi
+delta "$@"

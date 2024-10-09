@@ -1,15 +1,11 @@
 vim9script
 
+import autoload "kg8m/util.vim"
 import autoload "kg8m/util/file.vim" as fileUtil
 import autoload "kg8m/util/logger.vim"
 import autoload "kg8m/util/string.vim" as stringUtil
 
 export def EditWithGuessedEncoding(options: dict<any> = {}): void
-  if !executable("nkf")
-    logger.Error("`nkf` isn’t executable.")
-    return
-  endif
-
   const filepath = fileUtil.CurrentRelativePath()
   const guessed_encoding = system($"nkf --guess {shellescape(filepath)}")
 

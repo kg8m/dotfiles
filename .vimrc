@@ -305,7 +305,7 @@ if plugin.Register("editorconfig/editorconfig-vim", { if: use_editorconfig })
   g:EditorConfig_preserve_formatoptions = true
 endif
 
-if plugin.Register("junegunn/fzf.vim", { if: executable("fzf") })
+if plugin.Register("junegunn/fzf.vim")
   import autoload "kg8m/plugin/fzf.vim"
   import autoload "kg8m/plugin/fzf/files.vim"        as fzfFiles
   import autoload "kg8m/plugin/fzf/git_files.vim"    as fzfGitFiles

@@ -1,6 +1,2 @@
 #!/usr/bin/env bash
-if command -v delta > /dev/null; then
-  delta --keep-plus-minus-markers --color-only "$@"
-else
-  diff-highlight "$@"
-fi
+delta --keep-plus-minus-markers --color-only "$@"

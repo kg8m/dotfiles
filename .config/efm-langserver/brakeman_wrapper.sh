@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if ! command -v brakeman > /dev/null; then
+if ! is_executable brakeman; then
   exit 1
 fi
 

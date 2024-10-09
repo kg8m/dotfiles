@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-if ! command -v ruby > /dev/null; then
-  exit 1
-fi
-
 target_filepath="${1:?}"
 
 options=(-c)

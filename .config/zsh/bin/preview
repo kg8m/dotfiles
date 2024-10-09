@@ -49,10 +49,8 @@ if [ "${#filepaths}" = "1" ]; then
   fi
 
   if file "${realpath}" | rg '\bimage data\b' -q; then
-    if command -v img2sixel > /dev/null; then
-      img2sixel "${realpath}"
-      return
-    fi
+    img2sixel "${realpath}"
+    return
   fi
 
   bat_options+=(
@@ -72,18 +70,10 @@ if [ "${#filepaths}" = "1" ]; then
 
   case "${realpath}" in
     *.csv)
-      if command -v nkf > /dev/null; then
-        nkf "${realpath}" | bat "${bat_options[@]}" --file-name "${realpath}"
-      else
-        bat "${realpath}" "${bat_options[@]}"
-      fi
+      nkf "${realpath}" | bat "${bat_options[@]}" --file-name "${realpath}"
       ;;
     *.diff)
-      if command -v delta > /dev/null; then
-        delta < "${realpath}"
-      else
-        bat "${realpath}" "${bat_options[@]}"
-      fi
+      delta < "${realpath}"
       ;;
     *)
       bat "${realpath}" "${bat_options[@]}"

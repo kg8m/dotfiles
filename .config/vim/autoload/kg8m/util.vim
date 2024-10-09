@@ -36,6 +36,23 @@ export def IsCtagsAvailable(): bool
   return cache.is_ctags_available
 enddef
 
+# cf. .config/bin/is_executable
+# NOTE: This function may be a bit slow, so be careful when using it.
+export def IsExecutable(command: string): bool
+  const binpath = exepath(command)
+
+  if empty(binpath)
+    return false
+  endif
+
+  if stringUtil.Includes(binpath, "/mise/shims/")
+    system($"mise which {command} > /dev/null 2>&1")
+    return !v:shell_error
+  else
+    return false
+  endif
+enddef
+
 export def IsGitTmpEdit(): bool
   return IsGitCommit() || IsGitHunkEdit() || IsGitRebase()
 enddef

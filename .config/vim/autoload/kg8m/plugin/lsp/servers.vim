@@ -734,7 +734,7 @@ def RegisterServer(config: dict<any>): void
 
   named_configs[config.name] = config
 
-  if get(config, "available", true) && executable(executable)
+  if get(config, "available", true)
     for filetype in config.allowlist
       if !has_key(filetyped_configs, filetype)
         filetyped_configs[filetype] = []
