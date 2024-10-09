@@ -97,18 +97,19 @@ function plugin:setup:binary_releaseds {
 
     local command="$(basename "${binary}")"
 
-    mkdir -p "${HOME}/bin"
-    rm -f "${HOME}/bin/${command}"
+    local symlink="${HOME}/bin/${command}"
+    mkdir -p "$(dirname "${symlink}")"
+    rm -f "${symlink}"
 
     case "${plugin}" in
       lua-language-server)
         # Don’t use a symbolic link for preventing the `lua-language-server: cannot open (bootstrap.lua): No such file
         # or directory` error.
-        eval_with_echo "echo '${PWD}/${binary} \"\$@\"' > '${HOME}/bin/${command}'"
-        execute_with_echo chmod +x "${HOME}/bin/${command}"
+        eval_with_echo "echo '${PWD}/${binary} \"\$@\"' > ${(q)symlink}"
+        execute_with_echo chmod +x "${symlink}"
         ;;
       *)
-        execute_with_echo ln -s "${PWD}/${binary}" "${HOME}/bin/${command}"
+        execute_with_echo ln -s "${PWD}/${binary}" "${symlink}"
         ;;
     esac
 
