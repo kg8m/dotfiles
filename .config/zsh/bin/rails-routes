@@ -26,7 +26,7 @@ if [ ! -f "${result_filepath}" ] ||
 
   # Build the cache before executing `rails routes` to avoid a race condition between cache building and `rails routes`.
   # Building the cache is fast, but `rails routes` is a slow command.
-  eval_with_echo "shasum ${(@q)target_filepaths} > ${(q)checksum_filepath}"
+  eval_with_echo "shasum ${(@q-)target_filepaths} > ${(q)checksum_filepath}"
   eval_with_echo "bin/rails routes > ${(q)result_filepath}"
 fi
 

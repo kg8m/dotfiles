@@ -269,7 +269,7 @@ function git:commit:bulk {
   local files=("${(@f)$(git:status:filter:all)}")
 
   if [ -n "${files[*]}" ]; then
-    eval_with_echo       git commit --dry-run -- "${(@q)files}" \| git pager
+    eval_with_echo       git commit --dry-run -- "${(@q-)files}" \| git pager
     execute_with_confirm git commit -- "${files[@]}"
     execute_with_echo    git status-with-color
   fi
@@ -455,7 +455,7 @@ function git:diff:branch:from:nameonly {
 function git:stash:all:with_message {
   # Make all changes staged before `git stash` instead of using `--include-untracked` option. Untracked files stashed
   # with `--include-untracked` aren’t shown in diffs, i.e., `git diff ...stash@{0}` doesn’t contain the untracked files.
-  eval_with_confirm "git add --all && git stash push --no-keep-index --message ${(q)*}"
+  eval_with_confirm "git add --all && git stash push --no-keep-index --message ${(q-)*}"
 }
 
 function git:stash:select {

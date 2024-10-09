@@ -10,4 +10,4 @@
 source ~/.config/git/aliases.zsh
 
 # Execute the given script.
-eval "${(@q)@}"
+eval "${(@q-)@}"

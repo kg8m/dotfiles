@@ -63,4 +63,4 @@ if [ "${is_stay}" = "1" ]; then
 fi
 
 # `> /dev/null` for ignoring "Removing previously sent notification" message
-ssh main -t "${(@q)command}" > /dev/null
+ssh main -t "${(@q-)command}" > /dev/null

@@ -6,7 +6,7 @@ function execute_with_echo {
 
   # shellcheck disable=SC2034
   local command_array=("${(R)@:#--dryrun}")
-  local command_string="${(@q)command_array}"
+  local command_string="${(@q-)command_array}"
 
   if [ -z "${command_string}" ]; then
     echo:warn "Specify command."
@@ -97,7 +97,7 @@ function execute_with_confirm {
   fi
 
   # shellcheck disable=SC2178
-  local command_string="${(@q)@}"
+  local command_string="${(@q-)@}"
 
   local response
   # shellcheck disable=SC2128
@@ -578,7 +578,7 @@ function my_diff {
     diff_args+=("$@")
   fi
 
-  eval_with_echo "diff ${(@q)diff_args} | delta"
+  eval_with_echo "diff ${(@q-)diff_args} | delta"
 }
 
 function my_diff:without_spaces {

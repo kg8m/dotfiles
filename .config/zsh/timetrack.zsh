@@ -110,10 +110,9 @@ function timetrack:finish {
 
     # Sometimes `async_*` aren’t available, e.g., just after `exec zsh`.
     if command -v async_stop_worker > /dev/null; then
-      local notifier_args="$(printf "%q " "${message}" "${notifier_options[@]}")"
       async_stop_worker  "TIMETRACK_NOTIFIER_$$" 2> /dev/null
       async_start_worker "TIMETRACK_NOTIFIER_$$"
-      async_job          "TIMETRACK_NOTIFIER_$$" "notify ${notifier_args}"
+      async_job          "TIMETRACK_NOTIFIER_$$" "notify ${(q)message} ${(@q-)notifier_options}"
     else
       notify "${message}" "${notifier_options[@]}"
     fi
