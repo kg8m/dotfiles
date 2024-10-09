@@ -112,7 +112,7 @@ function plugin:setup:binary_releaseds {
         ;;
     esac
 
-    execute_with_echo which "${command}"
+    execute_with_echo command -v "${command}"
     execute_with_echo fd --type l --type x --glob "${command}" "${path[@]:?}"
 
     case "${plugin}" in
