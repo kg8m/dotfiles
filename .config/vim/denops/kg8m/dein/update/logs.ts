@@ -45,6 +45,7 @@ const LOG_SKIP_PATTERN = new RegExp(
     /^Fetching submodule [^ ]+$/,
     /^From github\.com:/,
     /^From https:\/\//,
+    /^From ssh:\/\//,
     /^Submodule path '[^ ]': checked out '\w+'$/,
     /^Updating \w+\.\.\w+$/,
     /^Updating files:\s+\d+% \(\d+\/\d+\)(, done\.)?$/,
