@@ -21,7 +21,6 @@ typeset -U path
 
 # (N-/): Ignore unless exists
 path=(
-  "${HOME}/.local/bin"
   "/opt/homebrew/bin"(N-/)
   "/usr/local/bin"(N-/)
   "/usr/bin"(N-/)
@@ -54,14 +53,6 @@ path=(
 
   "${path[@]}"
 )
-
-DIFF_HIGHLIGHT_DIRPATH_CACHE="${XDG_CACHE_HOME}/zsh/diff-highlight-dirpath"
-if [ ! -f "${DIFF_HIGHLIGHT_DIRPATH_CACHE}" ]; then
-  dirname "$(command fd --no-ignore --type x --max-results 1 '^diff-highlight$' "${HOMEBREW_PREFIX}")" \
-    > "$(ensure_dir "${DIFF_HIGHLIGHT_DIRPATH_CACHE}")"
-fi
-path+=("$(< "${DIFF_HIGHLIGHT_DIRPATH_CACHE}")"(N-/))
-unset DIFF_HIGHLIGHT_DIRPATH_CACHE
 
 mkdir -p "${VIM_PLUGINS}"
 
