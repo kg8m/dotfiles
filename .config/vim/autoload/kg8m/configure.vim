@@ -8,6 +8,7 @@ import autoload "kg8m/configure/formatoptions.vim"
 import autoload "kg8m/configure/indent.vim"
 import autoload "kg8m/configure/mappings.vim"
 import autoload "kg8m/configure/filetypes.vim"
+import autoload "kg8m/util.vim"
 import autoload "kg8m/util/encoding.vim" as encodingUtil
 import autoload "kg8m/util/qf.vim" as qfUtil
 import autoload "kg8m/util/string.vim" as stringUtil
@@ -23,6 +24,14 @@ export def Backup(): void
   const swapdir = expand("~/tmp/.vimswap//")
   mkdir(swapdir, "p")
   &directory = swapdir
+
+  if util.IsGitCommit()
+    # To avoid losing the commit message if `git commit` fails, store a backup here.
+    augroup vimrc-configure-backup-git-commit
+      autocmd!
+      autocmd BufWritePre COMMIT_EDITMSG execute $"write! {expand("%")}.bak"
+    augroup END
+  endif
 enddef
 
 export def Colors(): void
