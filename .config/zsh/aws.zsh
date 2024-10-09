@@ -6,12 +6,7 @@ function aws:network:verify {
 # https://docs.aws.amazon.com/cli/latest/reference/logs/start-query.html
 # https://docs.aws.amazon.com/cli/latest/reference/logs/get-query-results.html
 function aws:logs:query {
-  local limit="1000"
-  local group_name=""
-  local executor="execute_with_confirm"
-  local pager="| less"
-
-  local help="$(
+  function _aws:logs:query:help {
     cat <<- HELP
 aws:logs:query {parameters}
 
@@ -25,7 +20,12 @@ aws:logs:query {parameters}
 
 See https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html for query syntaxes.
 HELP
-  )"
+  }
+
+  local limit="1000"
+  local group_name=""
+  local executor="execute_with_confirm"
+  local pager="| less"
 
   while (("${#@}" > 0)); do
     case "$1" in
@@ -64,7 +64,7 @@ HELP
         shift 1
         ;;
       -h | --help)
-        echo "${help}"
+        _aws:logs:query:help
         return 0
         ;;
       *)
@@ -75,7 +75,7 @@ HELP
   done
 
   if [ -z "${profile}" ] || [ -z "${start_time}" ] || [ -z "${end_time}" ] || [ -z "${filter}" ]; then
-    echo "${help}"
+    _aws:logs:query:help
     return 1
   fi
 
