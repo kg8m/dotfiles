@@ -69,6 +69,7 @@ HELP
         ;;
       *)
         echo:error "Unknown option/argument: $1"
+        _aws:logs:query:help
         return 1
         ;;
     esac
