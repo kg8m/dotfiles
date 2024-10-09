@@ -100,7 +100,7 @@ HELP
 
     # `+ 9 * 60 * 60 * 1000` converts the UTC timestamp to JST.
     # The JST @timestamp and @message will be returned by `aws logs get-query-results` and be parsed by `jq` later.
-    --query-string "'filter ${filter} | sort @timestamp | display @timestamp + 9 * 60 * 60 * 1000, @message'"
+    --query-string "filter ${filter} | sort @timestamp | display @timestamp + 9 * 60 * 60 * 1000, @message"
 
     --limit "${limit}"
   )
@@ -157,7 +157,7 @@ HELP
   async_start_worker "AWS_LOGS_QUERY_NOTIFIER_$$"
   async_job          "AWS_LOGS_QUERY_NOTIFIER_$$" "notify ${notifier_args}"
 
-  execute_with_echo jq --color-output . "${outpath}" "${pager}"
+  eval_with_echo jq --color-output . "${(q)outpath}" "${pager}"
   echo
   echo:info "See the result in \`${outpath}\`."
   echo:info "Stats: $(aws logs get-query-results "${result_options[@]}" --query statistics)"
