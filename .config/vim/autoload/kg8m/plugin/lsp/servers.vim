@@ -453,7 +453,7 @@ def RegisterSolargraph(): void
     allowlist: ["ruby"],
     extra_config: () => ExtraConfigForSolargraph(),
 
-    available: $USE_SOLARGRAPH !=# "0",
+    available: $USE_SOLARGRAPH ==# "1",
   })
 enddef
 
