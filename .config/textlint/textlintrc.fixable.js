@@ -42,6 +42,10 @@ const config = {
     terminology: {
       defaultTerms: true,
       exclude: [
+        // Use "bug fix"
+        // https://github.com/sapegin/textlint-rule-terminology/blob/v5.2.12/terms.jsonc#L183
+        "bug[- ]fix(es)?",
+
         // Use "filetype"
         // https://github.com/sapegin/textlint-rule-terminology/blob/v4.0.0/terms.jsonc#L149
         "file-?type(s)?",
