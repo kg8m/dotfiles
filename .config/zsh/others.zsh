@@ -17,7 +17,12 @@ function plugin:others:setup {
     mkdir -p "${HOME}/bin"
     ln -fs "${PWD}/${binary}" "${HOME}/bin/$(basename "${binary}")"
   }
-  zinit ice lucid as"null" atclone"plugin:vim:themis:atclone"
+  # shellcheck disable=SC2317
+  function plugin:vim:themis:atload {
+    # For zsh:plugins:update
+    export THEMIS_HOME="${PWD}"
+  }
+  zinit ice lucid as"null" atclone"plugin:vim:themis:atclone" atload"plugin:vim:themis:atload"
   zinit light thinca/vim-themis
 
   # Tig
