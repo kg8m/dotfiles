@@ -19,10 +19,11 @@ checksum_filepath="tmp/cache/routes_checksum"
 
 if [ ! -f "${result_filepath}" ] ||
    [ ! -f "${checksum_filepath}" ] ||
+   [ ! -s "${result_filepath}" ] ||
    [ ! "${#target_filepaths}" = "$(wc -l "${checksum_filepath}" | awk '{ print $1 }')" ] ||
    ! shasum --check --quiet "${checksum_filepath}" >&2; then
 
-  echo:info "Cache file for routing doesn’t exist or the routing has been changed."
+  echo:info "The cache for routing is not available."
 
   # Build the cache before executing `rails routes` to avoid a race condition between cache building and `rails routes`.
   # Building the cache is fast, but `rails routes` is a slow command.
