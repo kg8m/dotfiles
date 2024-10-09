@@ -583,123 +583,143 @@ options head
 # YARD  {{{
 # https://rubydoc.info/gems/yard/file/docs/Tags.md
 
-snippet abstract
+snippet abstract_yard_tag
+alias   yard_tag_abstract
 abbr    @abstract ...
 options word
 regexp  '^\s*#\s*@a\%[bstract]*'
 	abstract ${1:#:description}
 
-snippet api
+snippet api_yard_tag
+alias   yard_tag_api
 abbr    @api ...
 options word
 regexp  '^\s*#\s*@a\%[pi]*'
 	api ${1:private}
 
-snippet deprecated
+snippet deprecated_yard_tag
+alias   yard_tag_deprecated
 abbr    @deprecated ...
 options word
 regexp  '^\s*#\s*@d\%[eprecated]*'
 	deprecated Use ${1:#:description} instead.
 
-snippet example
+snippet example_yard_tag
+alias   yard_tag_example
 abbr    @example ...
 options word
 regexp  '^\s*#\s*@e\%[xample]*'
 	example
 	#   ${1:#:sample_code}
 
-snippet example_with_title
+snippet example_with_title_yard_tag
+alias   yard_tag_example_with_title
 abbr    @example Title ...
 options word
 regexp  '^\s*#\s*@e\%[xample]*'
 	example ${1:#:title}
 	#   ${2:#:sample_code}
 
-snippet note
+snippet note_yard_tag
+alias   yard_tag_note
 abbr    @note ...
 options word
 regexp  '^\s*#\s*@n\%[ote]*'
 	note ${1:#:description}
 
-snippet option
+snippet option_yard_tag
+alias   yard_tag_option
 abbr    @option var_name [Types] :key_name ...
 options word
 regexp  '^\s*#\s*@o\%[ption]*'
 	option ${1:#:var_name} [${2:#:Types}] :${3:#:key_name} ${4:#:description}
 
-snippet overload
+snippet overload_yard_tag
+alias   yard_tag_overload
 abbr    @overload ...
 options word
 regexp  '^\s*#\s*@o\%[verload]*'
 	overload ${1:#:method_name(arguments)}
 
-snippet param
+snippet param_yard_tag
+alias   yard_tag_param
 abbr    @param name [Types] ...
 options word
 regexp  '^\s*#\s*@p\%[aram]*'
 	param ${1:#:name} [${2:#:Types}] ${3:#:description}
 
-snippet raise
+snippet raise_yard_tag
+alias   yard_tag_raise
 abbr    @raise [ExceptionClasses] ...
 options word
 regexp  '^\s*#\s*@r\%[aise]*'
 	raise [${1:#:ExceptionClasses}] ${2:#:description}
 
-snippet return
+snippet return_yard_tag
+alias   yard_tag_return
 abbr    @return [Types] ...
 options word
 regexp  '^\s*#\s*@r\%[eturn]*'
 	return [${1:#:Types}] ${2:#:description}
 
-snippet see_urls
+snippet see_urls_yard_tag
+alias   yard_tag_see_urls
 abbr    @see https://example.com/ Example
 options word
 regexp  '^\s*#\s*@s\%[ee]*'
 	see ${1:#:URL} ${2:#:title}
 
-snippet see_objects
+snippet see_objects_yard_tag
+alias   yard_tag_see_objects
 abbr    @see OtherObjects
 options word
 regexp  '^\s*#\s*@s\%[ee]*'
 	see ${1:#:OtherObjects}
 
-snippet since
+snippet since_yard_tag
+alias   yard_tag_since
 abbr    @since ...
 options word
 regexp  '^\s*#\s*@s\%[ince]*'
 	since ${1:#:version}
 
-snippet todo
+snippet todo_yard_tag
+alias   yard_tag_todo
 abbr    @todo ...
 options word
 regexp  '^\s*#\s*@t\%[odo]*'
 	todo ${1:#:description}
 
-snippet yieldparam
+snippet yieldparam_yard_tag
+alias   yard_tag_yieldparam
 abbr    @yieldparam name [Types] ...
 options word
 regexp  '^\s*#\s*@y\%[ieldparam]*'
 	yieldparam ${1:#:name} [${2:#:Types}] ${3:#:description}
 
-snippet yieldreturn
+snippet yieldreturn_yard_tag
+alias   yard_tag_yieldreturn
 abbr    @yieldreturn [Types] ...
 options word
 regexp  '^\s*#\s*@y\%[ieldreturn]*'
 	yieldreturn [${1:#:Types}] ${2:#:description}
 
-snippet attribute
+snippet attribute_yard_tag
+alias   yard_tag_attribute
 abbr    @!attribute [rw] ...
 options word
 regexp  '^\s*#\s*@!a\%[ttribute]*'
 	attribute [${1:rw}] ${2:#:name}
 
-snippet method
+snippet method_yard_tag
+alias   yard_tag_method
 abbr    @!method ...
 options word
 regexp  '^\s*#\s*@!m\%[ethod]*'
 	method ${1:#:method_name(arguments)}
 
-snippet scope
+snippet scope_yard_tag
+alias   yard_tag_scope
 abbr    @!scope ...
 options word
 regexp  '^\s*#\s*@!s\%[cope]*'
