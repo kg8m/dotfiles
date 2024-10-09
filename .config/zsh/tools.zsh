@@ -1,4 +1,5 @@
 function tools:upgrade:check {
+  execute_with_echo mise ls
   execute_with_echo mise outdated
 }
 
