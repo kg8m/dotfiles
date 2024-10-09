@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-if ! command -v eslint > /dev/null; then
-  exit 1
-fi
-
 if [ ! "${USE_ESLINT:-}" = "1" ]; then
   exit 1
 fi
@@ -17,6 +13,10 @@ if [ "${is_fixing}" = "1" ]; then
   if [ ! "${ESLINT_AS_FORMATTER:-}" = "1" ] && [ ! "${ESLINT_AND_PRETTIER_AS_FORMATTER:-}" = "1" ]; then
     exit 1
   fi
+fi
+
+if ! is_executable eslint; then
+  exit 1
 fi
 
 err_temp_filepath="$(mktemp)"

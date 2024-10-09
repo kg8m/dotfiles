@@ -42,7 +42,7 @@ function plugin:dircolors:atload {
 
     printf "%s\n" "${overwrites[@]}" >> "${tempfile}"
 
-    if command -v gdircolors > /dev/null; then
+    if is_executable gdircolors; then
       local dircolors=gdircolors
     else
       local dircolors=dircolors

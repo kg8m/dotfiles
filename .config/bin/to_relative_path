@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # BSD `realpath` doesn’t support `--relative-to`.
-if command -v grealpath > /dev/null; then
+if is_executable grealpath; then
   realpath="grealpath"
 else
   realpath="realpath"
