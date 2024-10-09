@@ -5,13 +5,22 @@ import autoload "kg8m/util/logger.vim"
 import autoload "kg8m/util/qf.vim" as qfUtil
 
 # cf. zsh’s my_grep:with_filter
-export def BuildQflistFromBuffer(query: string): void
-  const filename = expand("%:t")
-
-  if !empty(filename) && filename !~# '\v^grep\.\w{10}$'
-    logger.Error($"The buffer may not be for grep: {filename}")
+export def BuildQflistFromBuffer(query_fpath: string, result_fpath: string): void
+  if fnamemodify(query_fpath, ":t") !~# '\v^grep\.query\.\w{10}$'
+    logger.Error($"The query filepath may not be for grep: {query_fpath}")
     return
   endif
+
+  execute "edit" fnameescape(query_fpath)
+  const query = getline(1)
+  bdelete
+
+  if fnamemodify(result_fpath, ":t") !~# '\v^grep\.result\.\w{10}$'
+    logger.Error($"The result filepath may not be for grep: {result_fpath}")
+    return
+  endif
+
+  execute "edit" fnameescape(result_fpath)
 
   if &filetype !=# ""
     logger.Error($"The buffer has filetype: {&filetype}")

@@ -539,18 +539,20 @@ function my_grep:with_filter {
 
     if [[ "${response}" =~ ^y ]]; then
       if [ "${options[(I)--files]}" = "0" ]; then
-        local tempfile="$(mktemp "${TMPDIR%/}/grep.XXXXXXXXXX")"
+        local query_fpath="$(mktemp "${TMPDIR%/}/grep.query.XXXXXXXXXX")"
+        local result_fpath="$(mktemp "${TMPDIR%/}/grep.result.XXXXXXXXXX")"
 
         # shellcheck disable=SC2064
-        trap "rm -f '${tempfile}'" EXIT
+        trap "rm -f ${(q)query_fpath} ${(q)result_fpath}" EXIT
+
+        # Don’t execute `echo "${query}" ...` because it unconsciously removes some backslashes.
+        printf "%s" "${query}" > "${query_fpath}"
 
         # Don’t execute `echo ... | vim ... -` because current command remains as zsh if so. So tmux’s
         # `pane_current_command` always returns "zsh" and automatic refreshing zsh prompt will be influenced.
-        #
-        # Don’t execute `echo "${query}" | ...` because it unconsciously removes some backslashes.
-        printf "%s\n" "${results[@]}" | rg '^.+?:[0-9]+:[0-9]+:.' > "${tempfile}"
-        local query_for_vim="$(printf "%s" "${query}" | sd '"' '\\"' | sd "'" "'\\\\'\\\\''")"
-        execute_with_echo vim -c "call kg8m#util#grep#BuildQflistFromBuffer('${query_for_vim}')" "${tempfile}"
+        printf "%s\n" "${results[@]}" | rg '^.+?:[0-9]+:[0-9]+:.' > "${result_fpath}"
+
+        execute_with_echo vim -c "call kg8m#util#grep#BuildQflistFromBuffer(\"${query_fpath}\", \"${result_fpath}\")"
       else
         execute_with_echo vim "${results[@]}"
       fi
