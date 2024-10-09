@@ -8,7 +8,8 @@ autocmd BufNewFile,BufRead direnvrc set filetype=sh
 
 autocmd BufNewFile,BufRead [Dd]ockerfile*,*[Dd]ockerfile set filetype=Dockerfile
 
-autocmd BufNewFile,BufRead Gemfile.local* set filetype=Gemfile
+autocmd BufNewFile,BufRead Gemfile.local set filetype=Gemfile
+autocmd BufNewFile,BufRead Gemfile.lock,Gemfile.local.lock set filetype=Gemfilelock
 
 autocmd BufNewFile,BufRead *git*/info/exclude,*git*/ignore set filetype=gitignore
 
