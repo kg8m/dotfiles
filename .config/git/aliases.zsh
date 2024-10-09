@@ -719,6 +719,7 @@ function git:alias:which {
 
   if [[ "${result}" =~ \ sh\ [\"\']?git:[a-z_:]+ ]]; then
     echo
+    # Use `which` instead of `command -v` because the latter doesn’t show the details of a function.
     # shellcheck disable=SC2230
     which "$(echo "${result}" | rg -o '\bgit:[a-z_:]+')"
   else
