@@ -707,7 +707,7 @@ function zsh:plugins:update {
 
   execute_with_echo zinit delete --clean --yes
   execute_with_echo zinit cclear
-  execute_with_echo find "${ZINIT[SNIPPETS_DIR]:?}" -type d -empty -delete
+  yes | execute_with_echo remove_empty_dirs "${ZINIT[SNIPPETS_DIR]:?}"
 
   # Use subshell to restore pwd.
   (
