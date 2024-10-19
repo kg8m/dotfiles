@@ -21,6 +21,12 @@ case "${target_filepath}" in
       fi
     fi
     ;;
+  *.md)
+    # Use Deno as formatter.
+    if [ "${USE_DENO_FOR_MARKDOWN:-}" = "1" ]; then
+      exit 1
+    fi
+    ;;
 esac
 
 formatted_filepath="$("${XDG_CONFIG_HOME:?}/efm-langserver/format_filepath" "${target_filepath}")"

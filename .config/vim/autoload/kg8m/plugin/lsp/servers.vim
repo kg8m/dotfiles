@@ -121,7 +121,7 @@ enddef
 def RegisterDeno(): void
   RegisterServer({
     name: "deno",
-    allowlist: TS_FILETYPES,
+    allowlist: TS_FILETYPES + ($USE_DENO_FOR_MARKDOWN ==# "1" ? ["markdown"] : []),
     extra_config: () => ExtraConfigForDeno(),
 
     available: jsUtil.ShouldUseDeno(),
