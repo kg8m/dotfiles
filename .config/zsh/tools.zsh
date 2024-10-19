@@ -1,6 +1,7 @@
 function tools:upgrade:check {
-  execute_with_echo mise ls
+  # Execute `mise outdated` before `mise ls` to show “(outdated)” annotations on the result of `mise ls`.
   execute_with_echo mise outdated
+  execute_with_echo mise ls
 }
 
 function tools:install:latest {
