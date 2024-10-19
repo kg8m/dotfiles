@@ -11,12 +11,12 @@ fi
 
 # Use LSP mode RuboCop for non-Markdown files as default.
 # cf. .config/vim/autoload/kg8m/plugin/lsp/servers.vim
-if [ ! "${USE_RUBOCOP_LSP:-}" = "0" ] && [[ ! "${target_filepath}" =~ \.md$ ]]; then
+if [ ! "${USE_RUBOCOP_LSP:-}" = "0" ] && [[ ! "${target_filepath}" == *.md ]]; then
   echo "Use LSP mode RuboCop for ${target_filepath}." >&2
   exit 1
 fi
 
-if [ ! "${USE_RUBOCOP_FOR_MARKDOWN:-}" = "1" ] && [[ "${target_filepath}" =~ \.md$ ]]; then
+if [ ! "${USE_RUBOCOP_FOR_MARKDOWN:-}" = "1" ] && [[ "${target_filepath}" == *.md ]]; then
   echo "Running for Markdown files isn’t supported." >&2
   exit 1
 fi
@@ -41,7 +41,7 @@ fi
 options+=(--force-exclusion --no-color --stdin "${target_filepath}")
 
 if [ "${is_fixing}" = "1" ]; then
-  if [[ "${target_filepath}" =~ \.md$ ]]; then
+  if [[ "${target_filepath}" == *.md ]]; then
     echo "Formatting Markdown files from STDIN source isn’t supported." >&2
     exit 1
   fi

@@ -45,7 +45,7 @@ pkill -f ".*textlint.* ${options[*]}"
 out="$(textlint "${options[@]}" 2> "${err_temp_filepath}")"
 err="$(< "${err_temp_filepath}")"
 
-if [[ "${out}" =~ No\ rules\ found, ]]; then
+if [[ "${out}" == *No\ rules\ found,* ]]; then
   err="${out}"
   out=""
 fi

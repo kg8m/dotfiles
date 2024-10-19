@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 target_filepath="${1:?}"
 
-if [[ ! "${target_filepath}" =~ \.github/workflows/ ]]; then
+if [[ ! "${target_filepath}" == *.github/workflows/* ]]; then
   exit 1
 fi
 

@@ -13,7 +13,7 @@ case "${target_filepath}" in
         exit 1
       fi
     else
-      if [[ "${target_filepath}" =~ \.ts$ ]]; then
+      if [[ "${target_filepath}" == *.ts ]]; then
         # Use Deno as formatter.
         if [ "$(should_use_deno)" = "1" ]; then
           exit 1

@@ -104,7 +104,7 @@ function execute_with_confirm {
   printf "\n$(highlight:cyan "Execute:")\e[0;1m \`%s\`\e[0m\n\n" "${command_string}" >&2
   read -r "response?Are you sure? [y/n]: "
 
-  if [[ ${response} =~ ^y ]]; then
+  if [[ ${response} == y* ]]; then
     # shellcheck disable=SC2128
     eval "${command_string}"
   else
@@ -125,7 +125,7 @@ function eval_with_confirm {
   printf "\n$(highlight:cyan "Execute:")\e[0;1m \`%s\`\e[0m\n\n" "${command_array[*]}" >&2
   read -r "response?Are you sure? [y/n]: "
 
-  if [[ ${response} =~ ^y ]]; then
+  if [[ ${response} == y* ]]; then
     eval "${command_array[*]}"
   else
     echo "Canceled." >&2
@@ -148,7 +148,7 @@ function retriable_execute_with_confirm {
     printf "\n%s\n\n" "${message}" >&2
     read -r "response?Retry? [y/n]: "
 
-    if [[ "${response}" =~ ^y ]]; then
+    if [[ "${response}" == y* ]]; then
       retriable_execute_with_confirm "$@"
     fi
   fi
@@ -244,7 +244,7 @@ function batch_move {
   local response
   read -r "response?Execute? [y/n]: "
 
-  if [[ "${response}" =~ ^y ]]; then
+  if [[ "${response}" == y* ]]; then
     zmv "$@"
   else
     echo:info "Canceled."
@@ -317,7 +317,7 @@ function remove_empty_dirs {
     local response
     read -r "response?Delete them? [y/n]: "
 
-    if [[ "${response}" =~ ^y ]]; then
+    if [[ "${response}" == y* ]]; then
       rm -fr "${dirpaths[@]}"
       echo
       remove_empty_dirs "${search_path}"
@@ -415,7 +415,7 @@ function tmux:attach_or_new {
     local response
     read -r "response?Create new session in directory \`${PWD}\` with session name \`${session_name}\`? [y/n]: "
 
-    if [[ "${response}" =~ ^y ]]; then
+    if [[ "${response}" == y* ]]; then
       if [ "${session_name}" = "default" ]; then
         tmux:setup_default
       else
@@ -456,7 +456,7 @@ function my_grep:with_filter {
       --*)
         options+=("$1")
 
-        if ! [[ "$1" =~ = ]]; then
+        if ! [[ "$1" == *=* ]]; then
           if (("${#@}" > 1)); then
             options+=("$2")
             shift 2
@@ -467,7 +467,7 @@ function my_grep:with_filter {
       -*)
         options+=("$1")
 
-        if [[ "$1" =~ ^-.$ ]] && [[ ! "$2" =~ ^- ]]; then
+        if [[ "$1" =~ ^-.$ ]] && [[ ! "$2" == -* ]]; then
           if (("${#@}" > 1)); then
             options+=("$2")
             shift 2
@@ -537,7 +537,7 @@ function my_grep:with_filter {
     echo >&2
     read -r "response?Open found files? [y/n]: "
 
-    if [[ "${response}" =~ ^y ]]; then
+    if [[ "${response}" == y* ]]; then
       if [ "${options[(I)--files]}" = "0" ]; then
         local query_fpath="$(mktemp "${TMPDIR%/}/grep.query.XXXXXXXXXX")"
         local result_fpath="$(mktemp "${TMPDIR%/}/grep.result.XXXXXXXXXX")"
@@ -801,7 +801,7 @@ function libs:go:uninstall {
   local response
   read -r "response?Remove found files/directories? [y/n]: "
 
-  if [[ "${response}" =~ ^y ]]; then
+  if [[ "${response}" == y* ]]; then
     printf "%s\n" "${pkg_paths[@]}" | while read -r libpath; do
       trash "${libpath}"
     done
@@ -877,7 +877,7 @@ function progressbar {
 function is_m1_mac {
   local uname="$(uname -a)"
 
-  if [[ "${uname}" =~ ^Darwin ]] && [[ "${uname}" =~ arm64$ ]]; then
+  if [[ "${uname}" == Darwin* ]] && [[ "${uname}" == *arm64 ]]; then
     echo 1
   else
     echo 0
