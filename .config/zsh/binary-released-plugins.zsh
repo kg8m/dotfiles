@@ -105,7 +105,7 @@ function plugin:setup:binary_releaseds {
       lua-language-server)
         # Don’t use a symbolic link for preventing the `lua-language-server: cannot open (bootstrap.lua): No such file
         # or directory` error.
-        eval_with_echo "echo '${PWD}/${binary} \"\$@\"' > ${(q)symlink}"
+        eval_with_echo "echo '${PWD}/${binary} \"\$@\"' > ${symlink}"
         execute_with_echo chmod +x "${symlink}"
         ;;
       *)

@@ -418,7 +418,7 @@ function git:log:compare:branch {
   local branch2=$(git:branch:list --remote | git:branch:filter:single --prompt="Select another branch> ")
   [ -n "${branch2}" ] || exit 1
 
-  execute_with_confirm git log "$@" "origin/${(q)branch1}...origin/${(q)branch2}"
+  execute_with_confirm git log "$@" "origin/${branch1}...origin/${branch2}"
 }
 
 function git:diff:branch {
@@ -428,7 +428,7 @@ function git:diff:branch {
   local branch2=$(git:branch:list --remote | git:branch:filter:single --prompt="Select another branch> ")
   [ -n "${branch2}" ] || exit 1
 
-  execute_with_confirm git diff-without-space-changes "$@" "origin/${(q)branch1}...origin/${(q)branch2}"
+  execute_with_confirm git diff-without-space-changes "$@" "origin/${branch1}...origin/${branch2}"
 }
 
 function git:diff:branch:from {
@@ -445,7 +445,7 @@ function git:diff:branch:from {
     fi
   done
 
-  execute_with_confirm git diff-without-space-changes "${options[@]}" "origin/${(q)target}..." "${pathspecs[@]}"
+  execute_with_confirm git diff-without-space-changes "${options[@]}" "origin/${target}..." "${pathspecs[@]}"
 }
 
 function git:diff:branch:from:nameonly {
