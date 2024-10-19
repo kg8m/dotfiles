@@ -31,12 +31,5 @@ function tools:install:latest {
   execute_with_echo "${command_array[@]}"
   echo
 
-  case "${tool}" in
-    python)
-      execute_with_echo mise install "python@2"
-      echo
-      ;;
-  esac
-
   execute_with_echo mise ls "${tool}"
 }
