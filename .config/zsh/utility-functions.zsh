@@ -412,12 +412,10 @@ function my_grep:with_filter {
       -*)
         options+=("$1")
 
-        if [[ "$1" =~ ^-.$ ]] && [[ ! "$2" == -* ]]; then
-          if (("${#@}" > 1)); then
-            options+=("$2")
-            shift 2
-            continue
-          fi
+        if [[ "$1" =~ ^-.$ ]] && (("${#@}" > 1)) && [[ ! "$2" == -* ]]; then
+          options+=("$2")
+          shift 2
+          continue
         fi
         ;;
       *)
