@@ -9,7 +9,7 @@ realpaths=()
 
 for filepath in "${filepaths[@]}"; do
   # Expand `~` because bat can’t expand it.
-  realpaths+=("${filepath/#\~/${HOME}}")
+  realpaths+=("${filepath/#\~\//${HOME}/}")
 done
 
 bat_options=()
