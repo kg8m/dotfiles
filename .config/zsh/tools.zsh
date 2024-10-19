@@ -13,6 +13,13 @@ function tools:install:latest {
   local tool="${1:?}"
   local command_array=()
 
+  if [ -n "${COSTOM_LATEST_INSTALLATION_TOOLS[*]:-}" ] &&
+     [ ! "${COSTOM_LATEST_INSTALLATION_TOOLS[(I)${tool}]}" = "0" ]; then
+
+    echo:error "${tool} needs a custom installation process."
+    return 1
+  fi
+
   case "${tool}" in
     postgres)
       # https://github.com/smashedtoatoms/asdf-postgres/issues/77#issuecomment-1869649473
