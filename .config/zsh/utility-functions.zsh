@@ -679,8 +679,6 @@ function zsh:plugins:update {
   # cf. https://github.com/ohmyzsh/ohmyzsh/wiki/FAQ/f5b8f5502228f94ed43435895c526449df3a103b#how-do-i-reset-the-completion-cache
   # cf. https://github.com/sharkdp/bat/issues/503
   execute_with_echo trash "${HOME:?}/.zcompdump"
-
-  execute_with_echo exec zsh
 }
 
 function zsh:rcs:compile {
