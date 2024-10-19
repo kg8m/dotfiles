@@ -290,10 +290,12 @@ function trash:bulk {
 
   local filepaths=("${(@f)$(
     fd --type f . "${dirpath}" |
+      # --no-select-1: Always check the preview before deletion.
       filter \
         --prompt "Select files> " \
         --preview "preview {}" \
         --preview-window "down:75%:wrap:nohidden" \
+        --no-select-1 \
         "$@"
   )}")
 
