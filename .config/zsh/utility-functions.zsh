@@ -347,68 +347,6 @@ function remove_symlink {
   fi
 }
 
-function delta:select:one {
-  local dirpath="${1:-.}"
-
-  if [ ! -d "${dirpath}" ]; then
-    echo:error "${dirpath} doesn’t exist."
-    return 1
-  fi
-
-  local filepath="$(
-    fd --type f . "${dirpath}" |
-      filter \
-        --prompt "Select a file> " \
-        --no-multi --query ".diff$" \
-        --preview "preview {}" \
-        --preview-window "down:75%:wrap:nohidden"
-  )"
-
-  if [ -z "${filepath}" ]; then
-    echo:info "Canceled."
-    return
-  elif [ ! -f "${filepath}" ]; then
-    echo:error "${filepath} doesn’t exist."
-    return 1
-  fi
-
-  preview "${filepath}"
-}
-
-function delta:select:two {
-  local dirpath="${1:-.}"
-
-  if [ ! -d "${dirpath}" ]; then
-    echo:error "${dirpath} doesn’t exist."
-    return 1
-  fi
-
-  local filepaths=("${(@f)$(
-    fd --type f . "${dirpath}" |
-      filter \
-        --prompt "Select 2 files> " \
-        --multi \
-        --preview "preview {}" \
-        --preview-window "down:75%:wrap:nohidden"
-  )}")
-
-  if [ -z "${filepaths[*]}" ]; then
-    echo:info "Canceled."
-    return
-  elif (("${#filepaths}" != 2)); then
-    echo:error "Select just 2 files. Selected files: ${(j:, :)filepaths}"
-    return 1
-  elif [ ! -f "${filepaths[1]}" ]; then
-    echo:error "${filepaths[1]} doesn’t exist."
-    return 1
-  elif [ ! -f "${filepaths[2]}" ]; then
-    echo:error "${filepaths[2]} doesn’t exist."
-    return 1
-  fi
-
-  delta "${filepaths[@]}"
-}
-
 # Overwrite this function if needed.
 function tmux:setup_default {
   tmux new-session -d -s default
