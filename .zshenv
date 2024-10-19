@@ -89,6 +89,9 @@ export EZA_DEFAULT_OPTIONS=(
 
   # Show icons
   --icons "auto"
+
+  # Don’t quote file names with spaces
+  --no-quotes
 )
 
 export FD_DEFAULT_OPTIONS=(
