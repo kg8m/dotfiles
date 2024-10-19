@@ -145,7 +145,8 @@ rules:
     options:
       wordBoundary: true
   - expected: WEBrick
-    pattern: /web.?rick/i
+    # Respect Dependabot’s pull request title “Bump webrick”.
+    pattern: /(?<!Bump )web.?rick/i
     options:
       wordBoundary: true
   - expected: Xcode
