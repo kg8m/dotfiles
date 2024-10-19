@@ -8,13 +8,13 @@ target_filepath="${1:?}"
 case "${target_filepath}" in
   *.js | *.jsx | *.mjs | *.mts | *.ts | *.tsx | *.vue)
     if is_executable eslint; then
-      # Use ESLint as formatter.
+      # Use ESLint as a formatter.
       if [ "${ESLINT_AS_FORMATTER:-}" = "1" ] && [ ! "${ESLINT_AND_PRETTIER_AS_FORMATTER:-}" = "1" ]; then
         exit 1
       fi
     else
       if [[ "${target_filepath}" == *.ts ]]; then
-        # Use Deno as formatter.
+        # Use Deno as a formatter.
         if [ "$(should_use_deno)" = "1" ]; then
           exit 1
         fi
@@ -22,7 +22,7 @@ case "${target_filepath}" in
     fi
     ;;
   *.md)
-    # Use Deno as formatter.
+    # Use Deno as a formatter.
     if [ "${USE_DENO_FOR_MARKDOWN:-}" = "1" ]; then
       exit 1
     fi
