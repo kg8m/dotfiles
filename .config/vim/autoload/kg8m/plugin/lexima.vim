@@ -219,7 +219,7 @@ def AddRulesForMarkdown(): void
     # then
     #
     #   |
-    lexima#add_rule({ char: "<CR>", at: $'\v^\s*{pattern}\s(\[[x ]\]\s)?%#$', input: $"<C-o>0d$", filetype: filetypes })
+    lexima#add_rule({ char: "<CR>", at: $'\v^\s*{pattern}\s(\[[x ]\]\s)?%#$', input: "<C-o>0d$", filetype: filetypes })
 
     # `<CR>` when
     #
@@ -233,7 +233,7 @@ def AddRulesForMarkdown(): void
     # then
     #
     #   > |
-    lexima#add_rule({ char: "<CR>", at: $'\v^\>\s*{pattern}\s(\[[x ]\]\s)?%#$', input: $"<C-o>0wd$", filetype: filetypes })
+    lexima#add_rule({ char: "<CR>", at: $'\v^\>\s*{pattern}\s(\[[x ]\]\s)?%#$', input: "<C-o>0wd$", filetype: filetypes })
   endfor
 
   # `<CR>` when
