@@ -249,6 +249,17 @@ def AddRulesForMarkdown(): void
 
   # `<CR>` when
   #
+  #   > ```|```
+  #
+  # then
+  #
+  #   > ```
+  #   > |
+  #   > ```
+  lexima#add_rule({ char: "<CR>", at: '^> ```\%#```', input_after: "<CR>><Space>", filetype: filetypes })
+
+  # `<CR>` when
+  #
   #   ```foo|```
   #
   # then
@@ -257,6 +268,17 @@ def AddRulesForMarkdown(): void
   #   |
   #   ```
   lexima#add_rule({ char: "<CR>", at: '```[a-z]\+\%#```', input_after: "<CR>", filetype: filetypes })
+
+  # `<CR>` when
+  #
+  #   > ```foo|```
+  #
+  # then
+  #
+  #   > ```foo
+  #   > |
+  #   > ```
+  lexima#add_rule({ char: "<CR>", at: '^> ```[a-z]\+\%#```', input_after: "<CR>><Space>", filetype: filetypes })
 
   # ``` when
   #
