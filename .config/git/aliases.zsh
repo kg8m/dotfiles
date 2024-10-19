@@ -135,9 +135,9 @@ function git:branch:create:with_set_upstream {
 
   # shellcheck disable=SC2034
   local commands=(
-    "execute_with_echo git switch --create ${(q)branch_name} ${(q)original_branch}"
-    "execute_with_echo git commit --allow-empty --message ${(q)commit_message}"
-    "execute_with_echo git push --set-upstream origin ${(q)branch_name}"
+    "execute_with_echo git switch --create ${(q-)branch_name} ${(q-)original_branch}"
+    "execute_with_echo git commit --allow-empty --message ${(q-)commit_message}"
+    "execute_with_echo git push --set-upstream origin ${(q-)branch_name}"
   )
 
   eval_with_confirm "${(j: && :)commands}; eval_with_echo 'git branches | head -n15'"
@@ -490,7 +490,7 @@ function git:stash:select {
     git stash show "${stash}" > "${preview_result_filepath}"
 
     # shellcheck disable=SC2064
-    trap "rm -f '${preview_result_filepath}'" EXIT
+    trap "rm -f ${(q-)preview_result_filepath}" EXIT
 
     local actions=(Apply Drop)
     local filter_options=(
@@ -632,7 +632,7 @@ function git:blame:filter {
   local revisions_queue="$(mktemp)"
 
   # shellcheck disable=SC2064
-  trap "rm -f '${revisions_queue}'" EXIT
+  trap "rm -f ${(q-)revisions_queue}" EXIT
 
   local show_current_revision="tail -n1 '${revisions_queue}'"
   local detect_revision="git blame -L {2},+1 -lf \$(${show_current_revision}) '${filepath}' | awk '{ print \$1 }'"

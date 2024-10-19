@@ -113,7 +113,7 @@ function timetrack:finish {
     if command -v async_stop_worker > /dev/null; then
       async_stop_worker  "TIMETRACK_NOTIFIER_$$" 2> /dev/null
       async_start_worker "TIMETRACK_NOTIFIER_$$"
-      async_job          "TIMETRACK_NOTIFIER_$$" "notify ${(q)message} ${(@q-)notifier_options}"
+      async_job          "TIMETRACK_NOTIFIER_$$" "notify ${(q-)message} ${(@q-)notifier_options}"
     else
       notify "${message}" "${notifier_options[@]}"
     fi

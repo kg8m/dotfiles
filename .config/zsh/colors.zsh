@@ -3,7 +3,7 @@ function plugin:dircolors:atload {
     local tempfile="$(mktemp)"
 
     # shellcheck disable=SC2064
-    trap "rm -f '${tempfile}'" EXIT
+    trap "rm -f ${(q-)tempfile}" EXIT
 
     cat dircolors.ansi-universal > "${tempfile}"
 

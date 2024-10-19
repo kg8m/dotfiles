@@ -543,7 +543,7 @@ function my_grep:with_filter {
         local result_fpath="$(mktemp "${TMPDIR%/}/grep.result.XXXXXXXXXX")"
 
         # shellcheck disable=SC2064
-        trap "rm -f ${(q)query_fpath} ${(q)result_fpath}" EXIT
+        trap "rm -f ${(q-)query_fpath} ${(q-)result_fpath}" EXIT
 
         # Don’t execute `echo "${query}" ...` because it unconsciously removes some backslashes.
         printf "%s" "${query}" > "${query_fpath}"
