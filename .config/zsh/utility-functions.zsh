@@ -257,6 +257,11 @@ function trash {
 
   local source
   for source in "$@"; do
+    if [ ! -f "${source}" ] && [ ! -d "${source}" ]; then
+      echo:error "${source} doesn’t exist."
+      continue
+    fi
+
     local filename=$(basename "${source}")
 
     if [ -f "${trash_path}/${filename}" ] || [ -d "${trash_path}/${filename}" ]; then
