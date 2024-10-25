@@ -159,9 +159,14 @@ HELP
   async_start_worker "AWS_LOGS_QUERY_NOTIFIER_$$"
   async_job          "AWS_LOGS_QUERY_NOTIFIER_$$" "notify ${notifier_args}"
 
-  eval_with_echo jq --color-output . "${(q-)outpath}" "${pager}"
-  echo
-  echo:info "See the result in \`${outpath}\`."
+  if [ -s "${outpath}" ]; then
+    eval_with_echo jq --color-output . "${(q-)outpath}" "${pager}"
+    echo
+    echo:info "See the result in \`${outpath}\`."
+  else
+    echo:info "Empty result."
+  fi
+
   echo:info "Stats: $(aws logs get-query-results "${result_options[@]}" --query statistics)"
 }
 
