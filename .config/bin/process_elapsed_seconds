@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+pid="${1:?}"
+
+start_time="$(ps -p "${pid}" -o lstart=)"
+
+if [ -z "${start_time}" ]; then
+  echo "Process with PID ${pid} not found." >&2
+  exit 1
+fi
+
+start_seconds="$(gdate -d "${start_time}" +%s)"
+now_seconds="$(date +%s)"
+
+echo "$((now_seconds - start_seconds))"
