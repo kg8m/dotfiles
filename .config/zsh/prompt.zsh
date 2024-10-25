@@ -98,6 +98,7 @@ function() {
         prompt:refresh:git:trigger
       fi
 
+      async_stop_worker       "${PROMPT_REFRESHER_WORKER_NAME}" 2> /dev/null
       async_start_worker      "${PROMPT_REFRESHER_WORKER_NAME}"
       async_job               "${PROMPT_REFRESHER_WORKER_NAME}" "sleep \"${sleep}\""
       async_register_callback "${PROMPT_REFRESHER_WORKER_NAME}" "prompt:refresh:trigger"
