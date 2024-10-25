@@ -57,3 +57,7 @@ abbr    set -e  # Stop on error
 snippet set_u
 abbr    set -u  # Error for unknown variables
 	set -u  # Error for unknown variables
+
+snippet trap
+abbr    trap "..." EXIT
+	trap "${0}" ${1:EXIT}
