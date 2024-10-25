@@ -222,6 +222,9 @@ if plugin.Register("haya14busa/vim-asterisk")
   })
 endif
 
+# Watching
+plugin.Register("saccarosium/awesome-vim9", { if: false })
+
 plugin.Register("h1mesuke/vim-benchmark")
 
 if plugin.Register("kat0h/bufpreview.vim")
