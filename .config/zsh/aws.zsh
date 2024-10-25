@@ -129,11 +129,13 @@ HELP
       jq --compact-output ".[] | { timestamp: .[0].value, data: (.[1].value | fromjson) }"
   }
 
+  highlight:cyan "Waiting..." --no-bold
   sleep 1
   while [ "$(_aws:logs:query:status "${result_options[@]}")" = "Running" ]; do
-    echo:info "Waiting..."
+    highlight:cyan "." --no-bold
     sleep 1
   done
+  echo
 
   local fixed_status="$(_aws:logs:query:status "${result_options[@]}")"
 
