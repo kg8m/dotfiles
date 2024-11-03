@@ -772,6 +772,13 @@ if plugin.Register("yssl/QFEnter")
   })
 endif
 
+if plugin.Register("bfrg/vim-qf-history")
+  plugin.Configure({
+    lazy:   true,
+    on_cmd: ["Chistory"],
+  })
+endif
+
 if plugin.Register("stefandtw/quickfix-reflector.vim")
   plugin.Configure({
     lazy:  true,
