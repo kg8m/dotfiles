@@ -135,6 +135,19 @@ if plugin.Register("prabirshrestha/asyncomplete-tags.vim")
   })
 endif
 
+if plugin.Register("github/copilot.vim")
+  import autoload "kg8m/plugin/copilot.vim"
+  plugin.Configure({
+    lazy:     true,
+    on_cmd:   ["Copilot"],
+    on_event: ["InsertEnter"],
+    on_start: true,
+
+    hook_source:      () => copilot.OnSource(),
+    hook_post_source: () => copilot.OnPostSource(),
+  })
+endif
+
 if plugin.Register("prabirshrestha/vim-lsp")
   import autoload "kg8m/plugin/lsp.vim"
   import autoload "kg8m/plugin/lsp/servers.vim" as lspServers
