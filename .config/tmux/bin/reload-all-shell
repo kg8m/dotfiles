@@ -9,45 +9,33 @@ if [ -z "${TMUX:-}" ]; then
   exit 1
 fi
 
-current_session_name="$(tmux display-message -p "#{session_name}")"
-current_window_index="$(tmux display-message -p "#{window_index}")"
+pane_info_format="#{session_name}:#{window_index}.#{pane_index}"
+pane_info_filter_non_active="#{||:#{==:#{window_active},0},#{==:#{pane_active},0}}"
 
-pane_info_set=("${(@f)$(
-  tmux list-panes -a -F '#{session_name} #{window_index} #{pane_index} #{pane_current_command} #{pane_active}'
+zsh_pane_info_list=("${(@f)$(
+  pane_info_filter="#{&&:${pane_info_filter_non_active},#{==:#{pane_current_command},zsh}}"
+  tmux list-panes -a -F "${pane_info_format}" -f "${pane_info_filter}"
+)}")
+non_zsh_pane_info_list=("${(@f)$(
+  pane_info_filter="#{&&:${pane_info_filter_non_active},#{!=:#{pane_current_command},zsh}}"
+  tmux list-panes -a -F "${pane_info_format} with #{pane_current_command}" -f "${pane_info_filter}"
 )}")
 
-if [ -z "${pane_info_set[*]}" ]; then
-  echo:error "There are no tmux sessions."
-  exit
+# Reload non-active zsh panes.
+if [ -n "${zsh_pane_info_list[*]}" ]; then
+  for pane_info in "${zsh_pane_info_list[@]}"; do
+    printf .
+    tmux respawn-pane -k -t "${pane_info}"
+  done
+  echo
 fi
 
-# shellcheck disable=SC2034
-for pane_info in "${pane_info_set[@]}"; do
-  printf .
-
-  pane_info_array=("${=pane_info}")
-
-  session_name="${pane_info_array[1]}"
-  window_index="${pane_info_array[2]}"
-  pane_index="${pane_info_array[3]}"
-  pane_current_command="${pane_info_array[4]}"
-  pane_active="${pane_info_array[5]}"
-
-  # Skip the current pane or non-zsh pane.
-  if {
-      [ "${session_name}" = "${current_session_name}" ] &&
-      [ "${window_index}" = "${current_window_index}" ] &&
-      [ "${pane_active}" = "1" ]
-    }; then
-
-    continue
-  elif [ ! "${pane_current_command}" = "zsh" ]; then
-    echo:warn "Non-zsh pane (${session_name}:${window_index}.${pane_index})"
-    continue
-  fi
-
-  tmux respawn-pane -k -t "${session_name}:${window_index}.${pane_index}"
-done
+# Show warnings for non-zsh panes.
+if [ -n "${non_zsh_pane_info_list[*]}" ]; then
+  for pane_info in "${non_zsh_pane_info_list[@]}"; do
+    echo:warn "Non-zsh pane (${pane_info})"
+  done
+fi
 
 # Reload the current pane.
 echo
