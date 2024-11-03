@@ -82,7 +82,9 @@ function() {
         return
       fi
 
-      if [[ "$(pmset -g batt)" == *"Battery Power"* ]]; then
+      local power_info="$(pmset -g batt)"
+
+      if [[ "${power_info}" == *"Battery Power"* ]] || [[ "${power_info}" == *"UPS Power"* ]]; then
         return
       fi
 
