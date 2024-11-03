@@ -46,7 +46,7 @@ export def FilterMap(list: list<any>, Callback: func(any): any): list<any>
   return reduce(list, (result, item) => {
     const new_item = Callback(item)
 
-    if type(new_item) !=# type(false) || new_item !=# false
+    if type(new_item) !=# v:t_bool || new_item !=# false
       add(result, new_item)
     endif
 
