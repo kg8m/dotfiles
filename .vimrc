@@ -853,24 +853,24 @@ if plugin.Register("machakann/vim-sandwich")
   # Operators for deleting/replacing using textobjects that automatically detect matching pairs where some same type
   # symbols are mixed up:
   #
-  #                           *----------- ( ----------*
-  #                           *----------- ) ----------*
-  #              *---- ( ------------------------------------------*
-  #                                 *---- " ----*
-  #        *---------------------- " -------------------------------------*
+  #                           *----------- ( --------*
+  #                           *----------- ) --------*
+  #              *---- ( -----------------------------------------*
+  #                                 *---- " ---*
+  #        *---------------------- " -----------------------------------*
   #   aaaaa"bbbbb（ccccc(ddddd(eeeee“ffffffffff”eeeee)ddddd)ccccc）bbbbb"aaaaa
   nnoremap <expr> <Leader>sd sandwich.OperatorDeleteExpr()
   nnoremap <expr> <Leader>sr sandwich.OperatorReplaceExpr()
 
   # Textobjects that automatically detect matching pairs where some same type symbols are mixed up:
   #
-  #                            <--------- i( --------->
-  #                            <--------- i) --------->
-  #                           <---------- a( ---------->
-  #                      <- i( ----------------------------->
-  #                <- i( ----------------------------------------->
-  #                                   <-- i" -->
-  #         <-------------------- i" ------------------------------------>
+  #                            <--------- i( ------->
+  #                            <--------- i) ------->
+  #                           <---------- a( -------->
+  #                      <- i( --------------------------->
+  #                <- i( --------------------------------------->
+  #                                  <-- i" -->
+  #         <-------------------- i" ---------------------------------->
   #   aaaaa"bbbbb（ccccc(ddddd(eeeee“ffffffffff”eeeee)ddddd)ccccc）bbbbb"aaaaa
   const modes = ["x", "o"]
   const a_i_types = ["a", "i"]
