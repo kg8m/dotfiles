@@ -73,6 +73,21 @@
 
 # Build a tag for `foo` from:
 #
+#   create_table :foo
+--regex-ruby=/\bcreate_table\s+[:"']([a-z0-9_]+)/\1/
+
+# Build a tag for `foo` from:
+#
+#   t.integer :foo
+--regex-ruby=/\bt\.[a-z]+\s+[:"']([a-z0-9_]+)/\1/
+
+# Build a tag for `foo` from:
+#
+#   add_column(:some_table, :foo, ...)
+--regex-ruby=/\badd_column(\s+|\s*\(\s*)[:"'][a-z]+["']?\s*,\s*[:"']([a-z0-9_]+)/\2/
+
+# Build a tag for `foo` from:
+#
 #   shared_examples "foo"
 #   shared_context "foo"
 #   shared_examples_for "foo"
