@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-mise latest "${1:?}"
+mise latest --installed "${1:?}"
