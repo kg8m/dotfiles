@@ -917,7 +917,7 @@ def TypeScriptLibPath(): string
   if isdirectory(project_local_path)
     return project_local_path
   else
-    const node_version = system("newest_version node")->trim()
+    const node_version = system("latest_version node")->trim()
     const global_path = $"{$XDG_DATA_HOME}/mise/installs/node/{node_version}/lib/{suffix}"
 
     if isdirectory(global_path)
