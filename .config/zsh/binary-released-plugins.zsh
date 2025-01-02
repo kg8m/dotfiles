@@ -24,6 +24,7 @@ function plugin:setup:binary_releaseds {
     koalaman/shellcheck
     lighttiger2505/sqls
     JohnnyMorganz/StyLua
+    tamasfe/taplo
     dbrgn/tealdeer
     juliosueiras/terraform-lsp
     terraform-linters/tflint
@@ -54,8 +55,10 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      actionlint | bat | checkmake | delta | direnv | efm-langserver | fd | gh | glab | golangci-lint | hyperfine |\
-      mise | mmv | mocword | qrtool | sd | shellcheck | shfmt | terraform-lsp | typos | vim-startuptime | zabrze)
+      actionlint | bat | checkmake | delta | direnv | efm-langserver | fd | gh | glab | golangci-lint | hyperfine | \
+        mise | mmv | mocword | qrtool | sd | shellcheck | shfmt | taplo | terraform-lsp | typos | vim-startuptime | \
+        zabrze)
+
         mv ./"${plugin}"* ./"${plugin}"
         ;;
       rg)
@@ -74,8 +77,9 @@ function plugin:setup:binary_releaseds {
     esac
 
     case "${plugin}" in
-      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mise | mocword | shfmt | sqls | stylua |\
-      terraform-lsp | tflint | tldr | tokei | typos | vim-startuptime | zabrze)
+      actionlint | checkmake | direnv | fzf | golangci-lint-langserver | mise | mocword | shfmt | sqls | stylua | \
+        taplo | terraform-lsp | tflint | tldr | tokei | typos | vim-startuptime | zabrze)
+
         local binary="${plugin}"
         ;;
       bat | delta | efm-langserver | fd | golangci-lint | hyperfine | mmv | qrtool | rg | sd | shellcheck)
@@ -117,8 +121,9 @@ function plugin:setup:binary_releaseds {
     execute_with_echo fd --type l --type x --glob "${command}" "${path[@]:?}"
 
     case "${plugin}" in
-      bat | checkmake | delta | direnv | fd | fzf | gh | glab | hyperfine | lua-language-server | mmv | mocword |\
-      qrtool | rg | sd | shellcheck | stylua | tflint | tldr | tokei | typos | zabrze)
+      bat | checkmake | delta | direnv | fd | fzf | gh | glab | hyperfine | lua-language-server | mmv | mocword | \
+        qrtool | rg | sd | shellcheck | stylua | taplo | tflint | tldr | tokei | typos | zabrze)
+
         execute_with_echo "${command}" --version
         ;;
       efm-langserver)

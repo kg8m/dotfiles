@@ -129,6 +129,10 @@ tools:
     format-command: "stylua --stdin-filepath '${INPUT}' -"
     format-stdin: true
 
+  taplo: &taplo
+    format-command: "taplo fmt -"
+    format-stdin: true
+
   textlint: &textlint
     prefix: textlint
     lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}'"
@@ -234,6 +238,9 @@ languages:
 
   sql:
     - <<: *sql-formatter
+
+  toml:
+    - <<: *taplo
 
   typescript:
     - <<: *eslint
