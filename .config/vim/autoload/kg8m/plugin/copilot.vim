@@ -11,11 +11,11 @@ export def OnSource(): void
 
   # https://github.com/github/copilot.vim/blob/87038123804796ca7af20d1b71c3428d858a9124/plugin/copilot.vim#L29
   # https://github.com/github/copilot.vim/blob/87038123804796ca7af20d1b71c3428d858a9124/plugin/copilot.vim#L78-L80
-  inoremap <expr> <Leader>c<CR>  copilot#Accept()
-  inoremap <expr> <Leader>c<Tab> copilot#Accept()
-  inoremap <expr> <Leader>cn     copilot#Next()
-  inoremap <expr> <Leader>cp     copilot#Previous()
-  inoremap <expr> <Leader>cs     copilot#Suggest()
+  inoremap <expr> <C-g><CR>  copilot#Accept()
+  inoremap <expr> <C-g><Tab> copilot#Accept()
+  inoremap <expr> <C-g>n     copilot#Next()
+  inoremap <expr> <C-g>p     copilot#Previous()
+  inoremap <expr> <C-g>s     copilot#Suggest()
 enddef
 
 export def OnPostSource(): void
