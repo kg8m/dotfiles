@@ -13,13 +13,6 @@ AllCops:
     - ".*/**/pryrc"
     - "Gemfile.local.example"
 
-Bundler/GemComment:
-  Enabled: false
-Bundler/GemVersion:
-  Enabled: false
-Bundler/OrderedGems:
-  Enabled: false
-
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 Layout/HashAlignment:
@@ -27,8 +20,6 @@ Layout/HashAlignment:
   EnforcedColonStyle: table
 Layout/SingleLineBlockChain:
   Enabled: false
-Layout/SpaceInsideBlockBraces:
-  SpaceBeforeBlockParameters: false
 
 Lint/ConstantResolution:
   Enabled: false
