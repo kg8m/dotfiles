@@ -114,6 +114,9 @@
 [diff "gitconfig"]
 	xfuncname = "^\\[.+\\]$"
 
+[diff "rails_credentials"]
+	textconv = [ "${USE_GIT_RAILS_CREDENTIALS:-}" = "1" ] && bin/rails credentials:diff "$@" || cat
+
 [diff "rspec"]
 	xfuncname = "^[ \t]*((RSpec|describe|context|it|before|after|around|feature|scenario)[ \t].+)$"
 
