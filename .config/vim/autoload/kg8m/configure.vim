@@ -104,6 +104,19 @@ export def Search(): void
 enddef
 
 export def Statusline(): void
+  # Simple default statusline (will be overwritten by lightline)
+  # cf. :h 'statusline'
+  #   f: Path to the file in the buffer, as typed or relative to current directory.
+  #   m: Modified flag, text is "[+]"; "[-]" if 'modifiable' is off.
+  #   r: Readonly flag, text is "[RO]".
+  #   y: Type of file in the buffer, e.g., "[vim]".  See 'filetype'.
+  #   l: Line number.
+  #   L: Number of lines in buffer.
+  #   c: Column number (byte index).
+  #   {: Evaluate expression between '%{' and '}' and substitute result. Note that there is no '%' before the closing
+  #      '}'. The expression cannot contain a '}' character, call a function to work around that. See |stl-%{|.
+  set statusline=%f\ %m%r%y[%{&fileencoding}][%{&fileformat}][%l/%L,%c]
+
   # Always show the status line.
   # cf. :h 'laststatus'
   #   0: never
