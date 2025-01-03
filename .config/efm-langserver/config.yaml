@@ -172,6 +172,10 @@ languages:
     - <<: *rubocop
     - <<: *ruby
 
+  bash:
+    - <<: *shellcheck
+    - <<: *shfmt
+
   css:
     - <<: *stylelint
     - <<: *prettier

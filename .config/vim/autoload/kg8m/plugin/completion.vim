@@ -21,6 +21,7 @@ export def RefreshPattern(filetype: string): string
 
     cache.completion_refresh_patterns = {
       _:    '\v(\k+)$',
+      bash: sh_pattern,
       css:  css_pattern,
       html: '\v(/|\k+)$',
       json: '\v("\k*|\[|\k+)$',

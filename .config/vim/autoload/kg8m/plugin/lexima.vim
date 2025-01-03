@@ -319,7 +319,7 @@ def AddRulesForPhp(): void
 enddef
 
 def AddRulesForShell(): void
-  const filetypes = ["sh", "zsh"]
+  const filetypes = ["bash", "sh", "zsh"]
 
   # `<CR>` when
   #
