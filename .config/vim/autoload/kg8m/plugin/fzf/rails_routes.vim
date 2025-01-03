@@ -37,13 +37,17 @@ export def Handler(lines: list<string>): void
     const column_pattern = '\vdef \zs'
 
     if !filereadable(filepath)
-      logger.Warn($"{filepath} doesn’t exist.")
+      logger.Warn($"{filepath} doesn’t exist (for {controller}#{action}).")
       continue
     endif
 
     const [line_number, column_number] = fileUtil.DetectLineAndColumnInFile(filepath, line_pattern, column_pattern)
     execute command fnameescape(filepath)
     cursorUtil.MoveIntoFolding(line_number, column_number)
+
+    if line_number ==# 0 && column_number ==# 0
+      logger.Warn($"{controller}#{action} not found in {filepath}.")
+    endif
   endfor
 enddef
 
