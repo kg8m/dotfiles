@@ -1,0 +1,5 @@
+overrides:
+  # Use 4 spaces as the default indentation for Markdown files.
+  - files: "*.md"
+    options:
+      tabWidth: 4

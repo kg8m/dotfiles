@@ -29,12 +29,23 @@ case "${target_filepath}" in
     ;;
 esac
 
-formatted_filepath="$("${XDG_CONFIG_HOME:?}/efm-langserver/format_filepath" "${target_filepath}")"
+formatted_target_filepath="$("${XDG_CONFIG_HOME:?}/efm-langserver/format_filepath" "${target_filepath}")"
 options=(
-  --stdin-filepath "${formatted_filepath}"
+  --stdin-filepath "${formatted_target_filepath}"
 )
 
-case "${formatted_filepath}" in
+# Use my own configurations if there is no editorconfig or prettierrc file.
+if [ ! -f ".editorconfig" ]; then
+  config_filepath="$(prettier --find-config-path "${formatted_target_filepath}" 2> /dev/null)"
+
+  if [ -z "${config_filepath}" ]; then
+    options+=(
+      --config "${XDG_CONFIG_HOME:?}/prettier/.prettierrc.yaml"
+    )
+  fi
+fi
+
+case "${formatted_target_filepath}" in
   *.md)
     if [ -n "${PRETTIER_EMBEDDED_LANGUAGE_FORMATTING:-}" ]; then
       options+=(
