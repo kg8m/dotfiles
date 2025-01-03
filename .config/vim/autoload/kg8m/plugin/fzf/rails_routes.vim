@@ -30,14 +30,15 @@ export def Handler(lines: list<string>): void
   const command = empty(key) ? "edit" : g:fzf_action[key]
 
   for line in lines[1 : -1]
-    const [controller, action] = line->matchstr('\v\zs\S+$')->split("#")
+    const [controller_name, action_name] = line->matchstr('\v\zs\S+$')->split("#")
+    const combined_name = $"{controller_name}#{action_name}"
 
-    const filepath = $"app/controllers/{controller}_controller.rb"
-    const line_pattern = $'\bdef {action}\b'
+    const filepath = $"app/controllers/{controller_name}_controller.rb"
+    const line_pattern = $'\bdef {action_name}\b'
     const column_pattern = '\vdef \zs'
 
     if !filereadable(filepath)
-      logger.Warn($"{filepath} doesn’t exist (for {controller}#{action}).")
+      logger.Warn($"{filepath} doesn’t exist (for {combined_name}).")
       continue
     endif
 
@@ -46,7 +47,7 @@ export def Handler(lines: list<string>): void
     cursorUtil.MoveIntoFolding(line_number, column_number)
 
     if line_number ==# 0 && column_number ==# 0
-      logger.Warn($"{controller}#{action} not found in {filepath}.")
+      logger.Warn($"{combined_name} not found in {filepath}.")
     endif
   endfor
 enddef
