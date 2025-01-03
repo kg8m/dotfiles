@@ -4,9 +4,8 @@ function tools:upgrade:check {
   # Execute `echo` because the output of `mise plugins update` lacks a trailing newline.
   echo
 
-  # Execute `mise outdated` before `mise ls` to show “(outdated)” annotations on the result of `mise ls`.
+  execute_with_echo mise ls --outdated
   execute_with_echo mise outdated
-  execute_with_echo mise ls
 }
 
 function tools:install:latest {
