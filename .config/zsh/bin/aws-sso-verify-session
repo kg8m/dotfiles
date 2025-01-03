@@ -11,10 +11,14 @@ function echo:error {
 
 profile="${1:?}"
 
+echo:info "Checking your SSO session for ${profile}..."
+
 verification_output="$(aws sts get-caller-identity --profile "${profile}" 2>&1)"
 verification_status="$?"
 
-if [ ! "${verification_status}" = "0" ]; then
+if [ "${verification_status}" = "0" ]; then
+  echo:info "Your SSO session is active."
+else
   if echo "${verification_output}" | rg 'profile.+found' -q; then
     echo:error "Profile not found: ${profile}"
     return 1
