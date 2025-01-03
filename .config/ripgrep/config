@@ -58,7 +58,6 @@
 
 # Exclude files by filetype: see by `rg --type-list`
 --type-not=diff
---type-not=lock
 --type-not=minified
 
 --type-add=dat:*.dat
@@ -70,6 +69,9 @@
 --type-add=jquery:jquery-ui.js
 --type-add=jquery:jquery.js
 --type-not=jquery
+
+--type-add=noisylock:package-lock.json
+--type-not=noisylock
 
 --type-add=tags:tags
 --type-add=tags:tags.lock
