@@ -166,7 +166,7 @@ function plugin:setup:binary_releaseds {
     [ -n "$(find . -type f -name '_*')" ] && execute_with_echo zinit creinstall "${plugin_id}"
 
     echo >&2
-    echo:info "Done."
+    echo:info "${plugin} has been installed/updated."
 
     # Echo empty lines because refreshing prompt by zinit clears the last few lines.
     echo >&2
