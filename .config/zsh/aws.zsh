@@ -168,6 +168,7 @@ HELP
   fi
 
   echo:info "Stats: $(aws logs get-query-results "${result_options[@]}" --query statistics)"
+  echo:info "$((finished_at - started_at)) seconds elapsed."
 }
 
 # https://docs.aws.amazon.com/cli/latest/reference/logs/describe-log-groups.html
