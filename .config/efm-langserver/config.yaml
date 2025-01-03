@@ -5,6 +5,7 @@ tools:
   actionlint: &actionlint
     prefix: actionlint
     lint-command: "$HOME/.config/efm-langserver/actionlint_wrapper.sh '${INPUT}'"
+    lint-after-open: true
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %m"
@@ -12,11 +13,13 @@ tools:
   checkmake: &checkmake
     prefix: checkmake
     lint-command: "checkmake"
+    lint-after-open: true
     lint-stdin: true
 
   cspell: &cspell
     prefix: CSpell
     lint-command: "cspell 'stdin://${INPUT}'"
+    lint-after-open: true
     # severity: 3 = Information
     lint-severity: 3
     lint-stdin: true
@@ -26,6 +29,7 @@ tools:
   erb: &erb
     prefix: ERB
     lint-command: "$HOME/.config/efm-langserver/erb_wrapper.sh"
+    lint-after-open: true
     lint-ignore-exit-code: true
     lint-stdin: true
     lint-formats:
@@ -34,6 +38,7 @@ tools:
   erb-lint: &erb-lint
     prefix: ERB Lint
     lint-command: "$HOME/.config/efm-langserver/erblint_wrapper.sh '${INPUT}'"
+    lint-after-open: true
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %m"
@@ -41,6 +46,7 @@ tools:
   eslint: &eslint
     prefix: ESlint
     lint-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}'"
+    lint-after-open: true
     lint-stdin: true
     lint-formats:
       - "%l:%c:%t%*[a-z]: %m"
@@ -50,12 +56,14 @@ tools:
   lit-analyzer: &lit-analyzer
     prefix: lit-analyzer
     lint-command: "$HOME/.config/efm-langserver/lit_analyzer_wrapper.sh '${INPUT}'"
+    lint-after-open: true
     lint-formats:
       - "%*[ ]%l:%c%*[ ]%t%*[a-z]%*[ ]%m"
 
   markdownlint: &markdownlint
     prefix: markdownlint
     lint-command: "markdownlint --stdin --config $HOME/.config/markdownlint/config.yaml"
+    lint-after-open: true
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c %m"
@@ -65,6 +73,7 @@ tools:
   markuplint: &markuplint
     prefix: Markuplint
     lint-command: "$HOME/.config/efm-langserver/markuplint_wrapper.sh '${INPUT}'"
+    lint-after-open: true
     # Using stdin is supported according to markuplint’s help, but it doesn’t work
     # lint-stdin: true
     lint-formats:
@@ -77,6 +86,7 @@ tools:
   rubocop: &rubocop
     prefix: RuboCop
     lint-command: "$HOME/.config/efm-langserver/rubocop_wrapper.sh '${INPUT}'"
+    lint-after-open: true
     lint-category-map:
       C: W  # Convention
       E: E  # Error
@@ -92,6 +102,7 @@ tools:
   ruby: &ruby
     prefix: Ruby
     lint-command: "$HOME/.config/efm-langserver/ruby_wrapper.sh '${INPUT}'"
+    lint-after-open: true
     lint-formats:
       - "%l: %tarning: %m"
       - "%l: %m"
@@ -99,6 +110,7 @@ tools:
   shellcheck: &shellcheck
     prefix: ShellCheck
     lint-command: "shellcheck --shell=bash --format=gcc --external-sources --enable=all -"
+    lint-after-open: true
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %t%*[a-z]: %m"
@@ -110,6 +122,7 @@ tools:
   slim-lint: &slim-lint
     prefix: Slim-Lint
     lint-command: "slim-lint --stdin-file-path '${INPUT}'"
+    lint-after-open: true
     lint-stdin: true
     lint-formats:
       - "%f:%l [%t] %m"
@@ -121,6 +134,7 @@ tools:
   stylelint: &stylelint
     prefix: Stylelint
     lint-command: "$HOME/.config/efm-langserver/stylelint_wrapper.sh '${INPUT}'"
+    lint-after-open: true
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: %m [%t%*[a-z]]"
@@ -136,6 +150,7 @@ tools:
   textlint: &textlint
     prefix: textlint
     lint-command: "$HOME/.config/efm-langserver/textlint_wrapper.sh '${INPUT}'"
+    lint-after-open: true
     lint-stdin: true
     lint-formats:
       - "%l:%c:%t%*[a-z]: %m"
@@ -145,6 +160,7 @@ tools:
   typos: &typos
     prefix: typos
     lint-command: "typos --format brief -"
+    lint-after-open: true
     # severity: 3 = Information
     lint-severity: 3
     lint-stdin: true
@@ -154,11 +170,13 @@ tools:
   vint: &vint
     prefix: Vint
     lint-command: "vint -"
+    lint-after-open: true
     lint-stdin: true
 
   yamllint: &yamllint
     prefix: yamllint
     lint-command: "yamllint --format parsable --strict -"
+    lint-after-open: true
     lint-stdin: true
     lint-formats:
       - "%f:%l:%c: [%t%*[a-z]] %m"
