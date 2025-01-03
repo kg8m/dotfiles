@@ -22,6 +22,7 @@ export def OnSource(): void
 
   g:test#javascript#denotest#options = "--allow-all --no-check"
   g:test#go#gotest#options = "-race"
+  g:test#ruby#rspec#executable = "rspec"
   g:test#ruby#bundle_exec = false
 
   doautocmd <nomodeline> User plugin:test:source
