@@ -53,6 +53,18 @@ tools:
     format-command: "$HOME/.config/efm-langserver/eslint_wrapper.sh '${INPUT}' --fix"
     format-stdin: true
 
+  gixy: &gixy
+    prefix: GIXY
+    lint-command: "$HOME/.config/efm-langserver/gixy_wrapper.sh '${INPUT}'"
+    lint-after-open: true
+    lint-stdin: false
+    lint-formats:
+      - "%f:%t%*[A-Z]: %m"
+    lint-category-map:
+      L: W # LOW
+      M: E # MEDIUM
+      H: E # HIGH
+
   lit-analyzer: &lit-analyzer
     prefix: lit-analyzer
     lint-command: "$HOME/.config/efm-langserver/lit_analyzer_wrapper.sh '${INPUT}'"
@@ -242,6 +254,9 @@ languages:
     - <<: *prettier
     - <<: *rubocop
     - <<: *textlint
+
+  nginx:
+    - <<: *gixy
 
   ruby:
     - <<: *rubocop
