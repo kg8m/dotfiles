@@ -100,11 +100,11 @@ tools:
     lint-command: "$HOME/.config/efm-langserver/rubocop_wrapper.sh '${INPUT}'"
     lint-after-open: true
     lint-category-map:
-      C: W  # Convention
-      E: E  # Error
-      F: E  # Fatal
-      R: W  # Refactor
-      W: W  # Warning
+      C: W # Convention
+      E: E # Error
+      F: E # Fatal
+      R: W # Refactor
+      W: W # Warning
     lint-stdin: true
     lint-formats:
       - "%t:%l:%c: %m"
