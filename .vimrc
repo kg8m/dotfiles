@@ -510,6 +510,9 @@ if plugin.Register("tpope/vim-git", { if: util.IsGitCommit() })
   augroup END
 endif
 
+plugin.Register("mattn/vim-godoc")
+plugin.Register("mattn/vim-gomod")
+plugin.Register("mattn/vim-gotmpl")
 plugin.Register("tpope/vim-haml")
 
 if plugin.Register("tweekmonster/helpful.vim")
