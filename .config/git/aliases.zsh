@@ -244,10 +244,10 @@ function git:branch:list_format_separator {
 function git:branch:colorize {
   local USER_NAME="$(git config user.name)"
 
-  sd "\b(${USER_NAME})"     "$(highlight:pink '$1')" |                 # Highlight my names
-  sd '^(\s+)(origin/[^ ]+)' "\$1$(highlight:green '$2' --no-bold)" |   # Highlight remote branches
-  sd '^(\s+)([^ ]+)'        "\$1$(highlight:yellow '$2' --no-bold)" |  # Highlight local branches
-  sd '^\* ([^ ]+)'          "* $(highlight:red '$1' --bg)" |           # Highlight the current branch
+  sd --flags i "\b(${USER_NAME})"     "$(highlight:pink '$1')" |                 # Highlight my names
+  sd           '^(\s+)(origin/[^ ]+)' "\$1$(highlight:green '$2' --no-bold)" |   # Highlight remote branches
+  sd           '^(\s+)([^ ]+)'        "\$1$(highlight:yellow '$2' --no-bold)" |  # Highlight local branches
+  sd           '^\* ([^ ]+)'          "* $(highlight:red '$1' --bg)" |           # Highlight the current branch
 
   # Remove unnecessary extra coloring for the current branch.
   cat
