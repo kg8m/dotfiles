@@ -1,0 +1,5 @@
+# Ignore `history` and `log` in `~/.config/pgcli/`.
+/*
+
+!/.gitignore
+!/config

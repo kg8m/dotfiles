@@ -13,7 +13,11 @@ autocmd BufNewFile,BufRead Gemfile.lock,Gemfile.local.lock set filetype=Gemfilel
 
 autocmd BufNewFile,BufRead *git*/info/exclude,*git*/ignore set filetype=gitignore
 
+autocmd BufNewFile,BufRead */litecli/config set filetype=toml
+
 autocmd BufNewFile,BufRead *.moin,*.trac,*.tracwiki set filetype=moin
+
+autocmd BufNewFile,BufRead */pgcli/config set filetype=toml
 
 autocmd BufNewFile,BufRead Procfile,Procfile.* set filetype=conf
 

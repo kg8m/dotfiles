@@ -1,0 +1,11 @@
+# https://www.pgcli.com/config
+
+[main]
+
+auto_expand = True
+syntax_style = monokai
+
+[colors]
+
+# Remove colors from the header.
+Token.Output.Header = "bold"

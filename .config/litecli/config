@@ -1,0 +1,13 @@
+# https://litecli.com/config/
+
+[main]
+
+# Maybe not working: the output is always vertical if enable this.
+# auto_vertical_output = True
+
+syntax_style = monokai
+
+[colors]
+
+# Remove colors from the header.
+output.header = "bold"
