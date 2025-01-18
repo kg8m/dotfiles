@@ -1,3 +1,8 @@
+[settings]
+# Prevent the warning “authentication required but no callback set; class=Ssh (23); code=Auth (-16)”
+# cf. https://github.com/jdx/mise/issues/3099
+libgit2 = false
+
 [tools]
 deno = "latest"
 go = "latest"
