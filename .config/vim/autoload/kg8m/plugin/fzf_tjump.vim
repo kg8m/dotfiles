@@ -8,8 +8,12 @@ export def OnSource(): void
   g:fzf_tjump_path_to_preview_bin = "preview"
 enddef
 
-export def Run(): void
-  fzf_tjump#jump()
+export def Run(tagname: string = "", options: dict<any> = {}): void
+  if tagname ==# "" && options ==# {}
+    fzf_tjump#jump()
+  else
+    fzf_tjump#jump(tagname, options)
+  endif
 enddef
 
 plugin.EnsureSourced("vim-fzf-tjump")
