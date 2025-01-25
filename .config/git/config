@@ -168,43 +168,26 @@
 
 [alias]
 	# add
-	add-by-select             = bulk-add
-	add-with-intent-by-select = bulk-add-with-intent
-	add-by-patch-by-select    = bulk-add-by-patch
-
-	bulk-intent-to-add = bulk-add-with-intent
-
-	bulk-add             = sh git:add:bulk
-	bulk-add-with-intent = sh git:add:bulk:intent
-	bulk-add-by-patch    = sh git:add:bulk:patch
+	add-by-select             = sh git:add:bulk
+	add-with-intent-by-select = sh git:add:bulk:intent
+	add-by-patch-by-select    = sh git:add:bulk:patch
 
 	# restore
 	unstage = restore --staged
 
-	restore-by-select          = bulk-restore
-	restore-by-patch-by-select = bulk-restore-by-patch
-	restore-by-select-staged   = bulk-restore-staged
-	unstage-by-select          = bulk-unstage
-	unstage-by-patch-by-select = bulk-unstage-by-patch
-
-	bulk-restore          = sh git:restore:bulk
-	bulk-restore-staged   = sh git:restore:bulk:staged
-	bulk-restore-by-patch = sh git:restore:bulk:patch
-	bulk-unstage          = sh git:restore:bulk:staged
-	bulk-unstage-by-patch = sh git:restore:bulk:staged:patch
+	restore-by-select          = sh git:restore:bulk
+	restore-by-patch-by-select = sh git:restore:bulk:patch
+	restore-by-select-staged   = sh git:restore:bulk:staged
+	unstage-by-select          = sh git:restore:bulk:staged
+	unstage-by-patch-by-select = sh git:restore:bulk:staged:patch
 
 	# clone
 	clone-with-submodules = clone --recursive
 
-	clone-shallow = shallow-clone
-	clone-partial = partial-clone
-	clone-partial-blobless = partial-blobless-clone
-	clone-partial-treeless = partial-treeless-clone
-
-	shallow-clone          = sh git:clone:shallow
-	partial-clone          = sh git:clone:partial:treeless
-	partial-blobless-clone = sh git:clone:partial:blobless
-	partial-treeless-clone = sh git:clone:partial:treeless
+	clone-shallow = sh git:clone:shallow
+	clone-partial = sh git:clone:partial:treeless
+	clone-partial-blobless = sh git:clone:partial:blobless
+	clone-partial-treeless = sh git:clone:partial:treeless
 
 	# switch
 	sw  = switch
@@ -223,11 +206,9 @@
 	f  = fetch
 
 	update         = sh git:update:with_log
-	shallow-update = sh git:update:shallow
+	update-shallow = sh git:update:shallow
 	update-main    = sh git:update:main
 	update-master  = sh git:update:main
-
-	r = rebase
 
 	# branch
 	brs = branches
@@ -237,37 +218,29 @@
 
 	create-branch-with-set-upstream = sh git:branch:create:with_set_upstream
 
+	branch-delete-fully-merged-local = branch --delete
+	branch-delete-locals             = sh git:branch:delete:bulk:local
+	branch-delete-remotes            = sh git:branch:delete:bulk:remote
+
 	delete-fully-merged-local-branch = branch --delete
-	delete-local-branches            = bulk-delete-local-branches
-	delete-remote-branches           = bulk-delete-remote-branches
-
-	branch-delete-locals  = bulk-delete-local-branches
-	branch-delete-remotes = bulk-delete-remote-branches
-
-	bulk-delete-local-branches  = sh git:branch:delete:bulk:local
-	bulk-delete-remote-branches = sh git:branch:delete:bulk:remote
+	delete-local-branches            = sh git:branch:delete:bulk:local
+	delete-remote-branches           = sh git:branch:delete:bulk:remote
 
 	# commit
 	ci = commit
 
-	commit-by-select = bulk-commit
-
-	bulk-commit = sh git:commit:bulk
+	commit-by-select = sh git:commit:bulk
 
 	# push
 	push-with-revision = sh git:push:revision
 
 	# reset/revert
-	edit-commits      = rebase --interactive
-	reset-commits     = edit-commits
+	reset-commits     = rebase --interactive
 	reset-last-commit = reset --soft HEAD~
 
 	# clean
-	clean-by-select = bulk-clean
-	trash-by-select = bulk-trash
-
-	bulk-clean = sh git:clean:bulk
-	bulk-trash = sh git:trash:bulk
+	clean-by-select = sh git:clean:bulk
+	trash-by-select = sh git:trash:bulk
 
 	# log
 	l  = log-by-select
@@ -290,23 +263,21 @@
 	log-graph      = log --graph --abbrev=14 --pretty=format:\" %C(yellow)%h %C(cyan)%ai %C(green bold)%an %C(magenta)%d %C(reset)%s\"
 	log-with-patch = log --stat --patch
 
-	lg-branches = sh git:log:compare:branch --graph --abbrev=14 --pretty='format: %C(yellow)%h %C(cyan)%ai %C(green bold)[C] %cn [A] %an  %C(reset)%s'
-	lp-branches = sh git:log:compare:branch --stat --patch
+	log-graph-branches = sh git:log:compare:branch --graph --abbrev=14 --pretty='format: %C(yellow)%h %C(cyan)%ai %C(green bold)[C] %cn [A] %an  %C(reset)%s'
+	log-with-patch-branches = sh git:log:compare:branch --stat --patch
 
 	# diff
 	di = diff-without-space-changes
-	dc = diff-without-space-changes --cached
 	ds = diff-without-space-changes --staged
-	dw = diff-without-space-changes --color-words
 	dh = diff-without-space-changes HEAD
 
 	diff-without-space-changes = diff --ignore-all-space --ignore-blank-lines --color-moved-ws=allow-indentation-change
 
 	diff-stat-branches = diff-branches --stat-width 150
 
-	diff-branches      = sh git:diff:branch
-	diff-branch-from   = sh git:diff:branch:from
-	changed-files-from = sh git:diff:branch:from:nameonly
+	diff-branches             = sh git:diff:branch
+	diff-branch-from          = sh git:diff:branch:from
+	diff-branch-from-nameonly = sh git:diff:branch:from:nameonly
 
 	# stash
 	ss  = stash
@@ -316,21 +287,16 @@
 	stash-all-with-message = sh git:stash:all:with_message
 	stash-by-select        = sh git:stash:select
 
-	# show
-	show-without-diff = show -s
-
 	# status
-	st  = status-with-color
-	sts = status-by-select
+	st = status-with-color
 
-	status-by-select   = status-with-filter
 	status-with-filter = sh git:status:filter:all
 	status-with-color  = sh git:status:color
 
 	# cherry-pick
 	cp   = cherry-pick
-	pick = cherry-pick
 	p    = cherry-pick
+	pick = cherry-pick
 
 	# blame
 	bl = blame-with-filter
@@ -338,20 +304,13 @@
 	blame-with-filter = sh git:blame:filter
 
 	# submodule
-	submodule-update-all = update-submodules
-	submodule-remove     = remove-submodules
-	submodule-deinit     = deinit-submodules
-
-	update-submodules = sh git:submodule:update
-	remove-submodules = sh git:submodule:remove:bulk
-	deinit-submodules = sh git:submodule:deinit:bulk
+	submodule-update-all = sh git:submodule:update
+	submodule-remove     = sh git:submodule:remove:bulk
+	submodule-deinit     = sh git:submodule:deinit:bulk
 
 	# utility
-	aliases = alias
-	alias   = sh git:alias:list
+	aliases = sh git:alias:list
 	which   = sh git:alias:which
-
-	info = remote show origin
 
 	chmod       = sh git:utility:chmod
 	diff-or-cat = sh git:utility:diff_or_cat

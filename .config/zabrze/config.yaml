@@ -127,11 +127,6 @@ abbrevs:
   - name: git
     abbr: g
     snippet: git
-  - name: git aliases
-    abbr: alias
-    snippet: aliases
-    global: true
-    context: '^git\s'
   - name: git blame-with-filter
     abbr: bl
     snippet: blame-with-filter
@@ -157,13 +152,13 @@ abbrevs:
     snippet: cherry-pick
     global: true
     context: '^git\s'
-  - name: git cherry-pick-pick
-    abbr: pick
+  - name: git cherry-pick-p
+    abbr: p
     snippet: cherry-pick
     global: true
     context: '^git\s'
-  - name: git cherry-pick-p
-    abbr: p
+  - name: git cherry-pick-pick
+    abbr: pick
     snippet: cherry-pick
     global: true
     context: '^git\s'
@@ -177,19 +172,9 @@ abbrevs:
     snippet: diff-without-space-changes
     global: true
     context: '^git\s'
-  - name: git diff-without-space-changes --cached
-    abbr: sc
-    snippet: diff-without-space-changes --cached
-    global: true
-    context: '^git\s'
   - name: git diff-without-space-changes --staged
     abbr: ds
     snippet: diff-without-space-changes --staged
-    global: true
-    context: '^git\s'
-  - name: git diff-without-space-changes --color-words
-    abbr: dw
-    snippet: diff-without-space-changes --color-words
     global: true
     context: '^git\s'
   - name: git diff-without-space-changes HEAD
@@ -202,6 +187,11 @@ abbrevs:
     snippet: fetch
     global: true
     context: '^git\s'
+  - name: git log-by-select
+    abbr: l
+    snippet: log-by-select
+    global: true
+    context: '^git\s'
   - name: git log-graph
     abbr: lg
     snippet: log-graph
@@ -212,24 +202,9 @@ abbrevs:
     snippet: log --branches --tags --remotes
     global: true
     context: '^git\s'
-  - name: git log-by-select
-    abbr: l
-    snippet: log-by-select
-    global: true
-    context: '^git\s'
   - name: git log-with-patch
     abbr: lp
     snippet: log-with-patch
-    global: true
-    context: '^git\s'
-  - name: git rebase
-    abbr: r
-    snippet: rebase
-    global: true
-    context: '^git\s'
-  - name: git status-by-select
-    abbr: sts
-    snippet: status-by-select
     global: true
     context: '^git\s'
   - name: git status-with-color
