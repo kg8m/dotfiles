@@ -102,9 +102,10 @@ HELP
     --query-string "filter ${filter} | sort @timestamp | display @timestamp + 9 * 60 * 60 * 1000, @message"
 
     --limit "${limit}"
+    --query "queryId"
   )
 
-  local query_id="$("${executor}" aws logs start-query "${query_options[@]}" | jq --raw-output '.queryId')"
+  local query_id="$("${executor}" aws logs start-query "${query_options[@]}" | jq --raw-output)"
   local started_at="$(date '+%s')"
 
   if [ -z "${query_id}" ]; then
