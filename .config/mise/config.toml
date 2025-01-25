@@ -6,6 +6,7 @@ libgit2 = false
 [tools]
 deno = "latest"
 go = "latest"
+mysql = "latest"
 node = "latest"
 postgres = "latest"
 python = "latest"
