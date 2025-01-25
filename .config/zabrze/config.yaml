@@ -1,405 +1,405 @@
 abbrevs:
   # cf. .config/zsh/aliases.zsh
-  - name: "| rg"
+  - name: "G => | rg"
     abbr: G
     snippet: "| rg"
     global: true
-  - name: "| vim -R -"
+  - name: "V => | vim -R -"
     abbr: V
     snippet: "| vim -R -"
     global: true
-  - name: "| less"
+  - name: "L => | less"
     abbr: L
     snippet: "| less"
     global: true
-  - name: "| head"
+  - name: "H => | head"
     abbr: H
     snippet: "| head"
     global: true
-  - name: "| tail"
+  - name: "T => | tail"
     abbr: T
     snippet: "| tail"
     global: true
-  - name: "| filter"
+  - name: "F => | filter"
     abbr: F
     snippet: "| filter"
     global: true
-  - name: "| sort_without_escape_sequences"
+  - name: "S => | sort_without_escape_sequences"
     abbr: S
     snippet: "| sort_without_escape_sequences"
     global: true
 
-  - name: batch_move
+  - name: bmv => batch_move
     abbr: bmv
     snippet: batch_move
 
-  - name: brew install
+  - name: brew i => brew install
     abbr: i
     snippet: install
     global: true
     context: '^brew\s'
-  - name: brew list
+  - name: brew li => brew list
     abbr: li
     snippet: list
     global: true
     context: '^brew\s'
-  - name: brew uninstall
+  - name: brew uni => brew uninstall
     abbr: uni
     snippet: uninstall
     global: true
     context: '^brew\s'
 
-  - name: bundle
+  - name: b => bundle
     abbr: b
     snippet: bundle
-  - name: bundle exec
+  - name: bundle e => bundle exec
     abbr: e
     snippet: exec
     global: true
     context: '^bundle\s'
-  - name: bundle install
+  - name: bundle i => bundle install
     abbr: i
     snippet: install
     global: true
     context: '^bundle\s'
-  - name: bundle pristine
+  - name: bundle pr => bundle pristine
     abbr: pr
     snippet: pristine
     global: true
     context: '^bundle\s'
-  - name: bundle update
+  - name: bundle up => bundle update
     abbr: up
     snippet: update
     global: true
     context: '^bundle\s'
 
-  - name: cd-bookmark
+  - name: cdb => cd-bookmark
     abbr: cdb
     snippet: cd-bookmark
 
-  - name: docker
+  - name: d => docker
     abbr: d
     snippet: docker
-  - name: docker-compose
+  - name: dc => docker-compose
     abbr: dc
     snippet: docker-compose
-  - name: docker compose
+  - name: docker c => docker compose
     abbr: c
     snippet: compose
     global: true
     context: '^docker\s'
-  - name: docker exec
+  - name: docker e => docker exec
     abbr: e
     snippet: exec
     global: true
     context: '^docker\s'
 
-  - name: filter
+  - name: f => filter
     abbr: f
     snippet: filter
 
-  - name: gem help
+  - name: gem h => gem help
     abbr: h
     snippet: help
     global: true
     context: '^gem\s'
-  - name: gem install
+  - name: gem i => gem install
     abbr: i
     snippet: install
     global: true
     context: '^gem\s'
-  - name: gem list
+  - name: gem li => gem list
     abbr: li
     snippet: list
     global: true
     context: '^gem\s'
-  - name: gem uninstall
+  - name: gem uni => gem uninstall
     abbr: uni
     snippet: uninstall
     global: true
     context: '^gem\s'
-  - name: gem update
+  - name: gem up => gem update
     abbr: up
     snippet: update
     global: true
     context: '^gem\s'
 
-  - name: git
+  - name: g => git
     abbr: g
     snippet: git
-  - name: git blame-with-filter
+  - name: git bl => git blame-with-filter
     abbr: bl
     snippet: blame-with-filter
     global: true
     context: '^git\s'
-  - name: git branch
+  - name: git br => git branch
     abbr: br
     snippet: branch
     global: true
     context: '^git\s'
-  - name: git branches
+  - name: git brs => git branches
     abbr: brs
     snippet: branches
     global: true
     context: '^git\s'
-  - name: git checkout
+  - name: git co => git checkout
     abbr: co
     snippet: checkout
     global: true
     context: '^git\s'
-  - name: git cherry-pick-cp
+  - name: git cp => git cherry-pick
     abbr: cp
     snippet: cherry-pick
     global: true
     context: '^git\s'
-  - name: git cherry-pick-p
+  - name: git p => git cherry-pick
     abbr: p
     snippet: cherry-pick
     global: true
     context: '^git\s'
-  - name: git cherry-pick-pick
+  - name: git pick => git cherry-pick
     abbr: pick
     snippet: cherry-pick
     global: true
     context: '^git\s'
-  - name: git commit
+  - name: git ci => git commit
     abbr: ci
     snippet: commit
     global: true
     context: '^git\s'
-  - name: git diff-without-space-changes
+  - name: git di => git diff-without-space-changes
     abbr: di
     snippet: diff-without-space-changes
     global: true
     context: '^git\s'
-  - name: git diff-without-space-changes --staged
+  - name: git ds => git diff-without-space-changes --staged
     abbr: ds
     snippet: diff-without-space-changes --staged
     global: true
     context: '^git\s'
-  - name: git diff-without-space-changes HEAD
+  - name: git dh => git diff-without-space-changes HEAD
     abbr: dh
     snippet: diff-without-space-changes HEAD
     global: true
     context: '^git\s'
-  - name: git fetch
+  - name: git f => git fetch
     abbr: f
     snippet: fetch
     global: true
     context: '^git\s'
-  - name: git log-by-select
+  - name: git l => git log-by-select
     abbr: l
     snippet: log-by-select
     global: true
     context: '^git\s'
-  - name: git log-graph
+  - name: git lg => git log-graph
     abbr: lg
     snippet: log-graph
     global: true
     context: '^git\s'
-  - name: git log --branches --tags --remotes
+  - name: git la => git log --branches --tags --remotes
     abbr: la
     snippet: log --branches --tags --remotes
     global: true
     context: '^git\s'
-  - name: git log-with-patch
+  - name: git lp => git log-with-patch
     abbr: lp
     snippet: log-with-patch
     global: true
     context: '^git\s'
-  - name: git status-with-color
+  - name: git st => git status-with-color
     abbr: st
     snippet: status-with-color
     global: true
     context: '^git\s'
-  - name: git stash
+  - name: git ss => git stash
     abbr: ss
     snippet: stash
     global: true
     context: '^git\s'
-  - name: git stash-all-with-message
+  - name: git ssa => git stash-all-with-message
     abbr: ssa
     snippet: stash-all-with-message
     global: true
     context: '^git\s'
-  - name: git stash-by-select
+  - name: git sss => git stash-by-select
     abbr: sss
     snippet: stash-by-select
     global: true
     context: '^git\s'
-  - name: git switch
+  - name: git sw => git switch
     abbr: sw
     snippet: switch
     global: true
     context: '^git\s'
-  - name: git switch-by-select
+  - name: git sws => git switch-by-select
     abbr: sws
     snippet: switch-by-select
     global: true
     context: '^git\s'
-  - name: git update
+  - name: git up => git update
     abbr: up
     snippet: update
     global: true
     context: '^git\s'
 
-  - name: ls to eza
+  - name: ls => eza
     abbr: ls
     snippet: eza "${EZA_DEFAULT_OPTIONS[@]}"
-  - name: ll to eza --long
+  - name: ll => eza --long
     abbr: ll
     snippet: eza "${EZA_DEFAULT_OPTIONS[@]}" --long --header --git
-  - name: lt to eza --long --tree
+  - name: lt => eza --long --tree
     abbr: lt
     snippet: eza "${EZA_DEFAULT_OPTIONS[@]}" --long --header --git --tree --ignore-glob "${EZA_IGNORE_GLOB:?}"
 
-  - name: mise --global
+  - name: mise -g => mise --global
     abbr: -g
     snippet: --global
     global: true
     context: '^mise\s'
-  - name: mise install
+  - name: mise i => mise install
     abbr: i
     snippet: install
     global: true
     context: '^mise\s'
-  - name: mise uninstall
+  - name: mise uni => mise uninstall
     abbr: uni
     snippet: uninstall
     global: true
     context: '^mise\s'
 
-  - name: npm --global
+  - name: npm -g => npm --global
     abbr: -g
     snippet: --global
     global: true
     context: '^npm\s'
-  - name: npm install
+  - name: npm i => npm install
     abbr: i
     snippet: install
     global: true
     context: '^npm\s'
-  - name: npm list
+  - name: npm li => npm list
     abbr: li
     snippet: list
     global: true
     context: '^npm\s'
-  - name: npm uninstall
+  - name: npm uni => npm uninstall
     abbr: uni
     snippet: uninstall
     global: true
     context: '^npm\s'
-  - name: npm update
+  - name: npm up => npm update
     abbr: up
     snippet: update
     global: true
     context: '^npm\s'
 
-  - name: rails console
+  - name: rails c => rails console
     abbr: c
     snippet: console
     global: true
     context: '\brails\s'
-  - name: rails console --environment
+  - name: rails console -e => rails console --environment
     abbr: -e
     snippet: --environment
     global: true
     context: '\brails\sconsole\s'
-  - name: rails console --sandbox
+  - name: rails console -s => rails console --sandbox
     abbr: -s
     snippet: --sandbox
     global: true
     context: '\brails\sconsole\s'
-  - name: rails dbconsole
+  - name: rails db => rails dbconsole
     abbr: db
     snippet: dbconsole --include-password
     global: true
     context: '\brails\s'
-  - name: rails generate
+  - name: rails g => rails generate
     abbr: g
     snippet: generate
     global: true
     context: '\brails\s'
-  - name: rails restart
+  - name: rails re => rails restart
     abbr: re
     snippet: restart
     global: true
     context: '\brails\s'
-  - name: rails runner
+  - name: rails r => rails runner
     abbr: r
     snippet: runner
     global: true
     context: '\brails\s'
-  - name: rails server
+  - name: rails s => rails server
     abbr: s
     snippet: server
     global: true
     context: '\brails\s'
-  - name: rails test
+  - name: rails t => rails test
     abbr: t
     snippet: test
     global: true
     context: '\brails\s'
   # Define after `rails runner` to avoid conflicts. Otherwise `rails r` will become `rails rails`.
-  - name: rails
+  - name: r => rails
     abbr: r
     snippet: rails
     global: true
     context: "^(bundle exec )?"
-  - name: bin/rails
+  - name: bin/r => bin/rails
     abbr: bin/r
     snippet: bin/rails
 
-  - name: my_diff:without_spaces
+  - name: di => my_diff:without_spaces
     abbr: di
     snippet: my_diff:without_spaces
-  - name: my_grep:with_filter
+  - name: gr => my_grep:with_filter
     abbr: gr
     snippet: my_grep:with_filter
 
-  - name: tmux:attach_or_new
+  - name: t => tmux:attach_or_new
     abbr: t
     snippet: tmux:attach_or_new
 
-  - name: v to vim
+  - name: v => vim
     abbr: v
     snippet: vim
-  - name: vi to vim
+  - name: vi => vim
     abbr: vi
     snippet: vim
 
-  - name: yarn add
+  - name: yarn a => yarn add
     abbr: a
     snippet: add
     global: true
     context: '^yarn\s'
   # Don’t use `yarn install` because I use `yarn`.
-  - name: yarn add for mistaking `yarn i`
+  - name: yarn i => yarn add
     abbr: i
     snippet: add
     global: true
     context: '^yarn\s'
-  - name: yarn list
+  - name: yarn li => yarn list
     abbr: li
     snippet: list
     global: true
     context: '^yarn\s'
-  - name: yarn remove
+  - name: yarn rem => yarn remove
     abbr: rem
     snippet: remove
     global: true
     context: '^yarn\s'
-  - name: yarn remove2
+  - name: yarn uni => yarn remove
     abbr: uni
     snippet: remove
     global: true
     context: '^yarn\s'
-  - name: yarn upgrade
+  - name: yarn up => yarn upgrade
     abbr: up
     snippet: upgrade
     global: true
     context: '^yarn\s'
-  - name: yarn upgrade-interactive
+  - name: yarn upi => yarn upgrade-interactive
     abbr: upi
     snippet: upgrade-interactive
     global: true
