@@ -522,6 +522,12 @@ if plugin.Register("tweekmonster/helpful.vim")
   })
 endif
 
+if plugin.Register("itchyny/vim-highlighturl")
+  # Enable only underline.
+  g:highlighturl_ctermfg = "NONE"
+  g:highlighturl_guifg = "NONE"
+endif
+
 if plugin.Register("itchyny/vim-histexclude")
   import autoload "kg8m/plugin/histexclude.vim"
 
