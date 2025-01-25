@@ -33,9 +33,8 @@ const DURATION_THRESHOLD_SECONDS = 30;
 const LOG_SKIP_PATTERN = new RegExp(
   [
     /^$/,
-    /Successfully rebased and updated refs\/heads\/\w+/,
-    /^ [ +] \w+\.\.\.?\w+ +[^ ]+ +-> origin\/[^ ]+( +\(forced update\))?$/,
     /^ - \[deleted\] +[^ ]+ +-> [^ ]+$/,
+    /^ [ +] \w+\.\.\.?\w+ +[^ ]+ +-> origin\/[^ ]+( +\(forced update\))?$/,
     /^ [^ ]+ +\| +\d+ [-+]+$/,
     /^ \* \[(new branch|new tag)\] /,
     /^Already up to date\.$/,
@@ -56,6 +55,7 @@ const LOG_SKIP_PATTERN = new RegExp(
     /^\( *\d+\/\d+\) \|[^ ]+ *\| Same revision$/,
     /^from the remote, but no such ref was fetched\.$/,
     /^origin\/HEAD set to [^ ]+$/,
+    /Successfully rebased and updated refs\/heads\/\w+/,
   ].map((regexp) => regexp.source).join("|"),
 );
 
