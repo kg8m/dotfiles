@@ -25,7 +25,7 @@ enddef
 
 # This function can be called multiple times in order to overwrite plugins’ mappings.
 export def Define(options: dict<bool> = {}): void
-  if has_key(b:, "is_defined") && get(options, "force", false)
+  if has_key(b:, "is_kg8m_custom_imaps_defined") && get(options, "force", false)
     return
   endif
 
@@ -52,7 +52,7 @@ export def Define(options: dict<bool> = {}): void
   # <silent> for lexima#expand’s echo
   imap     <buffer><expr><silent> > GtExpr()
 
-  b:is_defined = true
+  b:is_kg8m_custom_imaps_defined = true
 enddef
 
 export def Disable(): void
