@@ -137,7 +137,7 @@ HELP
   echo
 
   local fixed_status="$(_aws:logs:query:status "${result_options[@]}")"
-  local outpath="/tmp/aws-logs-query-result-$(date '+%Y%m%d-%H%M%S').txt"
+  local outpath="/tmp/aws-logs-query-result-$(date '+%Y%m%d-%H%M%S').json"
 
   if [ "${fixed_status}" = "Complete" ]; then
     _aws:logs:query:result "${result_options[@]}" > "${outpath}"
