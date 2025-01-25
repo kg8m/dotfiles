@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # https://www.klab.com/jp/blog/tech/2015/1033121546.html
 
-current_remote_url="$(git config --get --local "remote.origin.url")"
+current_remote_url="$(git config get --local "remote.origin.url")"
 
 if [ -z "${current_remote_url}" ]; then
   echo "No remote URL." >&2
@@ -22,14 +22,14 @@ case "${current_remote_url}" in
 esac
 
 for key in name email signingkey; do
-  default_value="$(git config --get "user.${key}")"
-  local_value="$(git config --local --get "user.${key}")"
+  default_value="$(git config get "user.${key}")"
+  local_value="$(git config get --local "user.${key}")"
 
   if [ -z "${local_value}" ]; then
-    value="$(git config --get-urlmatch "user.${key}" "${current_remote_url}")"
+    value="$(git config get --url "${current_remote_url}" "user.${key}")"
 
     if [ "${value}" != "${default_value}" ]; then
-      git config --local "user.${key}" "${value}"
+      git config set --local "user.${key}" "${value}"
     fi
   fi
 done
