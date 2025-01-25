@@ -37,6 +37,7 @@ const LOG_SKIP_PATTERN = new RegExp(
     /^ [ +] \w+\.\.\.?\w+ +[^ ]+ +-> origin\/[^ ]+( +\(forced update\))?$/,
     /^ [^ ]+ +\| +\d+ [-+]+$/,
     /^ \* \[(new branch|new tag)\] /,
+    /^'origin\/[^ ]+' is unchanged and points to '[^ ]+'$/,
     /^Already up to date\.$/,
     /^Applied autostash\.$/,
     /^Created autostash: \w+$/,
