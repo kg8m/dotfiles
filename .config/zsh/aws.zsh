@@ -80,7 +80,6 @@ HELP
     return 1
   fi
 
-  aws:network:verify || return 1
   aws-sso-verify-session "${profile}" || return 1
 
   if [ -z "${group_name}" ]; then
