@@ -99,29 +99,29 @@ def GtExpr(): string
   endif
 
   if &filetype =~# '\v^(gitcommit|markdown)$'
-    # g:closetag_shortcut doesn’t work for blockquote markers with blockwise Visual mode.
+    # closetag.SHORTCUT_KEY doesn’t work for blockquote markers with blockwise Visual mode.
     if cache.insert_entered_from_blockwise_visual
       return ">"
     else
-      return g:closetag_shortcut
+      return closetag.SHORTCUT_KEY
     endif
   endif
 
   const context_filetype = context_filetype#get_filetype()
 
   if context_filetype ==# "html"
-    return g:closetag_shortcut
+    return closetag.SHORTCUT_KEY
   endif
 
   if context_filetype ==# "eruby" && stringUtil.EndsWith(bufname(), ".html.erb")
-    return g:closetag_shortcut
+    return closetag.SHORTCUT_KEY
   endif
 
   if &filetype =~# '\v^%(javascript|typescript)'
     const syntax_name = synIDattr(synID(line("."), col(".") - 1, true), "name")
 
     if syntax_name =~# '\v^jsx%(Braces|ComponentName|String|Tag|TagName)$'
-      return g:closetag_shortcut
+      return closetag.SHORTCUT_KEY
     else
       return ">"
     endif
