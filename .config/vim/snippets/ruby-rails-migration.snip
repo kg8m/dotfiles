@@ -2,7 +2,7 @@ snippet create_table
 abbr    create_table :{table_name} do |t| ... end
 options head
 	create_table :${1:#:table_name} do |t|
-		t.${2:references} :${3:#:column_name}, null: false, index: { unique: true }, foreign_key: true${0}
+		${0}
 	end
 
 snippet change_table
@@ -36,4 +36,4 @@ alias   references
 abbr    t.references :some_column, null: false, ...
 options word
 regexp  '^\s*t\.'
-	references :${1:#:column_name}, null: ${2:false}, index: ${3:{ unique: true }}, foreign_key: ${4:true}${0}
+	references :${1:#:column_name}, null: ${2:false}, index: ${3:\{ unique: true \}}, foreign_key: ${4:true}${0}
