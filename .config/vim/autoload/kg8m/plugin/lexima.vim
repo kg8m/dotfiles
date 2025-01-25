@@ -16,8 +16,8 @@ export def OnPostSource(): void
     () => AddCommonRules(),
     () => AddRulesForEruby(),
     () => AddRulesForHtml(),
-    () => AddRulesForJs(),
-    () => AddRulesForTs(),
+    () => AddRulesForJavaScript(),
+    () => AddRulesForTypeScript(),
     () => AddRulesForMarkdown(),
     () => AddRulesForPhp(),
     () => AddRulesForShell(),
@@ -121,7 +121,7 @@ def AddRulesForHtml(): void
   lexima#add_rule({ char: "-", at: '<!-\%#', input: "-<Space>", input_after: "<Space>-->", filetype: filetypes })
 enddef
 
-def AddRulesForJs(): void
+def AddRulesForJavaScript(): void
   const filetypes = jsConfig.JS_FILETYPES + jsConfig.TS_FILETYPES
 
   # `<CR>` when
@@ -136,7 +136,7 @@ def AddRulesForJs(): void
   lexima#add_rule({ char: "<CR>", at: '`\%#`', input_after: "<CR>", filetype: filetypes })
 enddef
 
-def AddRulesForTs(): void
+def AddRulesForTypeScript(): void
   const filetypes = ["typescript"]
 
   # `<` when
