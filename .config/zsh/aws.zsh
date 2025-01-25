@@ -105,8 +105,8 @@ HELP
   )
   local outpath="/tmp/aws-logs-query-result-$(date '+%Y%m%d-%H%M%S').txt"
 
-  local started_at="$(date '+%s')"
   local query_id="$("${executor}" aws logs start-query "${query_options[@]}" | jq --raw-output '.queryId')"
+  local started_at="$(date '+%s')"
 
   if [ -z "${query_id}" ]; then
     # Canceled.
