@@ -130,7 +130,7 @@ HELP
 
   highlight:cyan "Waiting..." --no-bold
   sleep 1
-  while [ "$(_aws:logs:query:status "${result_options[@]}")" = "Running" ]; do
+  while [[ "$(_aws:logs:query:status "${result_options[@]}")" =~ (Running|Scheduled) ]]; do
     highlight:cyan "." --no-bold
     sleep 1
   done
