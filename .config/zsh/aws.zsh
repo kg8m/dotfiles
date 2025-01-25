@@ -103,7 +103,6 @@ HELP
 
     --limit "${limit}"
   )
-  local outpath="/tmp/aws-logs-query-result-$(date '+%Y%m%d-%H%M%S').txt"
 
   local query_id="$("${executor}" aws logs start-query "${query_options[@]}" | jq --raw-output '.queryId')"
   local started_at="$(date '+%s')"
@@ -137,6 +136,7 @@ HELP
   echo
 
   local fixed_status="$(_aws:logs:query:status "${result_options[@]}")"
+  local outpath="/tmp/aws-logs-query-result-$(date '+%Y%m%d-%H%M%S').txt"
 
   if [ "${fixed_status}" = "Complete" ]; then
     _aws:logs:query:result "${result_options[@]}" > "${outpath}"
