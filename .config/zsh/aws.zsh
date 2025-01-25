@@ -3,6 +3,146 @@ function aws:network:verify {
   return 0
 }
 
+# https://docs.aws.amazon.com/cli/latest/reference/athena/start-query-execution.html
+# https://docs.aws.amazon.com/cli/latest/reference/athena/get-query-results.html
+function aws:athena:query {
+  function _aws:athena:query:help {
+    cat <<- HELP
+aws:athena:query {parameters}
+
+  *Parameter*   *Required?*  *Example*
+  --profile     required     --profile 'default'
+  --work-group  required     --work-group 'some_workgroup'
+  --context     required     --context 'Database=some_database,Catalog=SomeCatalog'
+  --query       required     --query "SELECT * FROM some_table WHERE some_column = 'some_value' LIMIT 10"
+
+See https://docs.aws.amazon.com/athena/latest/ug/select.html for query syntaxes.
+HELP
+  }
+
+  local executor="execute_with_confirm"
+  local pager="| less"
+
+  while (("${#@}" > 0)); do
+    case "$1" in
+      --profile)
+        local profile="${2:?}"
+        shift 2
+        ;;
+      --work-group)
+        local work_group="${2:?}"
+        shift 2
+        ;;
+      --context)
+        local context="${2:?}"
+        shift 2
+        ;;
+      --query)
+        local query="${2:?}"
+        shift 2
+        ;;
+
+      # Undocumented options
+      --force | --no-confirm | --yes)
+        executor="execute_with_echo"
+        shift 1
+        ;;
+      --no-pager)
+        pager=""
+        shift 1
+        ;;
+      -h | --help)
+        _aws:athena:query:help
+        return 0
+        ;;
+      *)
+        echo:error "Unknown option/argument: $1"
+        _aws:athena:query:help
+        return 1
+        ;;
+    esac
+  done
+
+  if [ -z "${profile}" ] || [ -z "${work_group}" ] || [ -z "${context}" ] || [ -z "${query}" ]; then
+    _aws:logs:query:help
+    return 1
+  fi
+
+  aws-sso-verify-session "${profile}" || return 1
+
+  local query_options=(
+    --profile "${profile}"
+    --work-group "${work_group}"
+    --query-execution-context "${context}"
+    --query-string "${query}"
+    --query "QueryExecutionId"
+  )
+
+  local query_id="$("${executor}" aws athena start-query-execution "${query_options[@]}" | jq --raw-output)"
+  local started_at="$(date '+%s')"
+
+  if [ -z "${query_id}" ]; then
+    # Canceled.
+    return
+  fi
+
+  local result_options=(
+    --profile "${profile}"
+    --query-execution-id "${query_id}"
+  )
+
+  function _aws:athena:query:status {
+    aws athena get-query-execution "$@" --query "QueryExecution.Status.State" | jq --raw-output
+  }
+
+  function _aws:athena:query:result {
+    aws athena get-query-results "$@" --query "ResultSet.Rows[].Data" |
+      jq --compact-output --from-file "${XDG_CONFIG_HOME:?}/zsh/aws/athena-query-result.jq"
+  }
+
+  highlight:cyan "Waiting..." --no-bold
+  sleep 1
+  while [[ "$(_aws:athena:query:status "${result_options[@]}")" =~ (QUEUED|RUNNING) ]]; do
+    highlight:cyan "." --no-bold
+    sleep 1
+  done
+  echo
+
+  local fixed_status="$(_aws:athena:query:status "${result_options[@]}")"
+  local outpath="/tmp/aws-athena-query-result-$(date '+%Y%m%d-%H%M%S').json"
+
+  if [ "${fixed_status}" = "SUCCEEDED" ]; then
+    _aws:athena:query:result "${result_options[@]}" > "${outpath}"
+  else
+    echo:error "status: ${fixed_status}"
+    echo:error "Run \`aws athena get-query-execution ${result_options[*]}\` if needed."
+    return 1
+  fi
+
+  local finished_at="$(date '+%s')"
+  local notifier_options=(--title "aws:athena:query")
+
+  if ((finished_at - started_at < 15)); then
+    notifier_options+=(--nostay)
+  fi
+
+  local notifier_args="$(printf "%q " "Querying has been completed." "${notifier_options[@]}")"
+  async_stop_worker  "AWS_ATHENA_QUERY_NOTIFIER_$$" 2> /dev/null
+  async_start_worker "AWS_ATHENA_QUERY_NOTIFIER_$$"
+  async_job          "AWS_ATHENA_QUERY_NOTIFIER_$$" "notify ${notifier_args}"
+
+  if [ -s "${outpath}" ]; then
+    eval_with_echo jq --color-output . "${(q-)outpath}" "${pager}"
+    echo
+    echo:info "See the result in \`${outpath}\`."
+  else
+    echo:info "Empty result."
+  fi
+
+  echo:info "Stats: $(aws athena get-query-execution "${result_options[@]}" --query "QueryExecution.Statistics")"
+  echo:info "$((finished_at - started_at)) seconds elapsed."
+}
+
 # https://docs.aws.amazon.com/cli/latest/reference/logs/start-query.html
 # https://docs.aws.amazon.com/cli/latest/reference/logs/get-query-results.html
 function aws:logs:query {
