@@ -24,12 +24,10 @@ esac
 for key in name email signingkey; do
   default_value="$(git config get "user.${key}")"
   local_value="$(git config get --local "user.${key}")"
+  new_value="$(git config get --url "${current_remote_url}" "user.${key}")"
 
-  if [ -z "${local_value}" ]; then
-    value="$(git config get --url "${current_remote_url}" "user.${key}")"
-
-    if [ "${value}" != "${default_value}" ]; then
-      git config set --local "user.${key}" "${value}"
-    fi
+  if [ "${new_value}" != "${default_value}" ] && [ "${new_value}" != "${local_value}" ]; then
+    printf "\e[1;38;5;6m%s\e[0;0m\n" "INFO -- git config set --local \"user.${key}\" \"${new_value}\"" >&2
+    git config set --local "user.${key}" "${new_value}"
   fi
 done
