@@ -351,7 +351,7 @@ function git:log:select {
   function git:log:select:action:fixup:instant {
     local hash="${1:?}"
     git:log:select:action:fixup "${hash}"
-    execute_with_confirm git -c sequence.editor=: rebase --autosquash --interactive "${hash}~"
+    execute_with_confirm git -c sequence.editor=: rebase --autosquash "${hash}~"
   }
 
   function git:log:select:action:rebase {
