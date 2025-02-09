@@ -10,6 +10,7 @@ AllCops:
   TargetRubyVersion: 2.5
   EnabledByDefault: true
   Include:
+    - ".*/**/*.rb"
     - ".*/**/pryrc"
     - "Gemfile.local.example"
 
