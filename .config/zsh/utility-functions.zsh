@@ -632,8 +632,8 @@ function docker:clear_all {
 }
 
 function rails:routes:with_filter {
-  # cf. .config/zsh/bin/rails-routes
-  rails-routes | filter --header-lines 1 --preview-window "hidden" "$@"
+  # cf. .config/zsh/bin/rails_routes
+  rails_routes | filter --header-lines 1 --preview-window "hidden" "$@"
 }
 
 function zsh:plugins:update {

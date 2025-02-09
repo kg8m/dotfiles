@@ -68,7 +68,7 @@ HELP
     return 1
   fi
 
-  aws-sso-verify-session "${profile}" || return 1
+  aws_sso_verify_session "${profile}" || return 1
 
   local query_options=(
     --profile "${profile}"
@@ -220,7 +220,7 @@ HELP
     return 1
   fi
 
-  aws-sso-verify-session "${profile}" || return 1
+  aws_sso_verify_session "${profile}" || return 1
 
   if [ -z "${group_name}" ]; then
     group_name="$(_aws:logs:select_group "${profile}")"

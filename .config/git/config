@@ -61,7 +61,7 @@
 	editor = vim
 	excludesfile = ~/.config/git/ignore
 	hooksPath = ~/.config/git/hooks
-	pager = git-pager
+	pager = git pager
 
 	# Avoid broken filepaths which contain multibyte characters.
 	quotepath = false
@@ -130,7 +130,7 @@
 	prune = true
 
 [interactive]
-	diffFilter = git-diff-filter
+	diffFilter = git diff_filter
 
 [merge]
 	tool = vimdiff
@@ -140,9 +140,9 @@
 	keepBackup = false
 
 [pager]
-	log  = git-pager
-	show = git-pager
-	diff = git-pager
+	log  = git pager
+	show = git pager
+	diff = git pager
 
 [pull]
 	rebase = true

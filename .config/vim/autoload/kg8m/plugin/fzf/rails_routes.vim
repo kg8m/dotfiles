@@ -37,8 +37,8 @@ final queue_for_class_destinations = []
 export def Run(): void
   # Use `final` instead of `const` because the variable will be changed by fzf
   final options = {
-    # cf. .config/zsh/bin/rails-routes
-    source:  "rails-routes",
+    # cf. .config/zsh/bin/rails_routes
+    source:  "rails_routes",
     "sink*": Handler,
     options: [
       "--prompt", $"RailsRoutes> ",

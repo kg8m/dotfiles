@@ -53,8 +53,8 @@ def UpdateRoutingDependencies(): void
   endif
 
   # Recache routes.
-  # cf. .config/zsh/bin/rails-routes
-  JobStart(["rails-routes"])
+  # cf. .config/zsh/bin/rails_routes
+  JobStart(["rails_routes"])
 enddef
 
 def JobStart(command: list<string>): void
