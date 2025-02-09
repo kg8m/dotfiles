@@ -320,6 +320,16 @@ abbrevs:
     snippet: generate
     global: true
     context: '\brails\s+g'
+  - name: rails generate c => rails generate controller {} --skip-routes --skip-helper --skip-view-specs --skip-stylesheets
+    abbr: c
+    snippet: controller {} --skip-routes --skip-helper --skip-view-specs --skip-stylesheets
+    global: true
+    context: '\brails\s+generate\s+c'
+  - name: rails generate m => rails generate model {} --skip-migration
+    abbr: m
+    snippet: model {} --skip-migration
+    global: true
+    context: '\brails\s+generate\s+m'
   - name: rails re => rails restart
     abbr: re
     snippet: restart
