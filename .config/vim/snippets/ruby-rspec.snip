@@ -200,6 +200,13 @@ options head
 		${0}
 	end
 
+snippet shared_context
+abbr    shared_context ...
+options head
+	shared_context "${1:#:shared context name}" do
+		${0}
+	end
+
 snippet shared_examples
 abbr    shared_examples ...
 options head
@@ -207,17 +214,15 @@ options head
 		${0}
 	end
 
-snippet shared_examples_for
-abbr    shared_examples_for ...
+snippet include_context
+abbr    include_context ...
 options head
-	shared_examples_for "${1:#:shared examples name}" do
-		${0}
-	end
+	include_context "${1:#:shared context name}"
 
-snippet it_behaves_like
-abbr    it_behaves_like ...
+snippet include_examples
+abbr    include_examples ...
 options head
-	it_behaves_like "${0:#:shared examples name}"
+	include_examples "${1:#:shared examples name}"
 
 snippet contain_exactly
 abbr    contain_exactly(item1, item2, ...)
