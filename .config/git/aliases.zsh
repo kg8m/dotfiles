@@ -472,6 +472,7 @@ function git:stash:select {
     )
     local filter_options=(
       --no-multi
+      --no-select-1
       --prompt "Select a stash> "
       --header "NOTE: You will choose an action in the next step."
       --preview "git stash show {1} | delta"
