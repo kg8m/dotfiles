@@ -36,12 +36,21 @@ options=(
 
 # Use my own configurations if there is no editorconfig or prettierrc file.
 if [ ! -f ".editorconfig" ]; then
-  config_filepath="$(prettier --find-config-path "${formatted_target_filepath}" 2> /dev/null)"
+  # OPTIMIZE: Check `$PRETTIER_CONFIG_FILEPATH` first because `prettier --find-config-path` is a bit slow.
+  if [ "${PRETTIER_CONFIG_FILEPATH+x}" = "x" ]; then
+    if [ -n "${PRETTIER_CONFIG_FILEPATH:-}" ]; then
+      options+=(
+        --config "${PRETTIER_CONFIG_FILEPATH:?}"
+      )
+    fi
+  else
+    config_filepath="$(prettier --find-config-path "${formatted_target_filepath}" 2> /dev/null)"
 
-  if [ -z "${config_filepath}" ]; then
-    options+=(
-      --config "${XDG_CONFIG_HOME:?}/prettier/.prettierrc.yaml"
-    )
+    if [ -z "${config_filepath}" ]; then
+      options+=(
+        --config "${XDG_CONFIG_HOME:?}/prettier/.prettierrc.yaml"
+      )
+    fi
   fi
 fi
 
