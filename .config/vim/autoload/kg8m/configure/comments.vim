@@ -2,8 +2,9 @@ vim9script
 
 export def Base(): void
   augroup vimrc-configure-comments
+    # Lazily set `comments` to overwrite defaults.
     autocmd!
-    autocmd FileType * Set()
+    autocmd FileType * timer_start(100, (_) => Set())
   augroup END
 enddef
 
