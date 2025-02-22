@@ -164,6 +164,11 @@ def BuildPattern(): string
   const input = getcharstr() .. getcharstr()
   cache.input = input
 
+  if input ==# "\<Esc>" || input ==# "\<C-c>"
+    Reset()
+    return ""
+  endif
+
   # Don’t check whether multibyte characters are contained in searching text. Always use migemo if available. Because
   # migemo targets are not only multibyte characters. For example, "do" matches with ".". It is too confusing if
   # searching behavior varies depending on multibyte characters existence.
