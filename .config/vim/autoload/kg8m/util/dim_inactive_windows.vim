@@ -47,12 +47,8 @@ def Apply(options = {}): void
         setbufvar(winbufnr(winnr), "original_colorcolumn", getwinvar(winnr, "&colorcolumn"))
       endif
 
-      if getwinvar(winnr, "original_colorcolumn", v:null) ==# v:null
+      if get(options, "force", false)
         setwinvar(winnr, "&colorcolumn", colorcolumns)
-      else
-        if get(options, "force", false)
-          setwinvar(winnr, "&colorcolumn", colorcolumns)
-        endif
       endif
     endif
   endfor
