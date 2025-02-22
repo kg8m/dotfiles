@@ -1,5 +1,6 @@
 vim9script
 
+import autoload "kg8m/plugin.vim"
 import autoload "kg8m/plugin/lsp.vim"
 import autoload "kg8m/plugin/lsp/servers.vim" as lspServers
 
@@ -62,11 +63,20 @@ def Refresh(): void
   if &omnifunc ==# "lsp#complete" && prev_two_chars =~# '\v^%(\w\.|[^[:blank:]]\s)$'
     feedkeys("\<C-x>\<C-o>", "t")
   else
-    # Forcefully refresh completion candidates after texts change because completion candidates are not refreshed after
-    # updating tags file.
-    asyncomplete#_force_refresh()
+    RefreshTagsCandidates()
     StopRefreshTimer()
   endif
+enddef
+
+# Refresh the completion candidates from the tags using the latest context whenever the text changes, because they
+# aren’t updated automatically when the tags file is modified.
+def RefreshTagsCandidates(): void
+  if !has_key(cache, "tags_source_info")
+    plugin.EnsureSourced("asyncomplete-tags.vim")
+    cache.tags_source_info = asyncomplete#get_source_info("tags")
+  endif
+
+  cache.tags_source_info.completor(cache.tags_source_info, asyncomplete#context())
 enddef
 
 def StartRefreshTimer(wait: number): void
