@@ -27,6 +27,10 @@ def Apply(): void
 
   for winnr in range(1, last_winnr)
     if ShouldSkipWindow(winnr)
+      if IsOriginalColorcolumnStored(winnr)
+        RestoreOriginalColorcolumn(winnr)
+      endif
+
       continue
     endif
 
