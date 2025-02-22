@@ -273,27 +273,27 @@ abbrevs:
     abbr: -g
     snippet: --global
     global: true
-    context: '^npm\s+-g'
+    context: '^npm\s+(.+\s)?-g'
   - name: npm i => npm install
     abbr: i
     snippet: install
     global: true
-    context: '^npm\s+i'
+    context: '^npm\s+(.+\s)?i'
   - name: npm li => npm list
     abbr: li
     snippet: list
     global: true
-    context: '^npm\s+li'
+    context: '^npm\s+(.+\s)?li'
   - name: npm uni => npm uninstall
     abbr: uni
     snippet: uninstall
     global: true
-    context: '^npm\s+uni'
+    context: '^npm\s+(.+\s)?uni'
   - name: npm up => npm update
     abbr: up
     snippet: update
     global: true
-    context: '^npm\s+up'
+    context: '^npm\s+(.+\s)?up'
 
   - name: rails c => rails console
     abbr: c
