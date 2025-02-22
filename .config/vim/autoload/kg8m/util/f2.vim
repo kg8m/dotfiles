@@ -107,9 +107,7 @@ def RunSingleline(): void
       cursorUtil.Move(cursor_position[1], cursor_position[2])
     endif
 
-    const message = $"There are no matches for {string(cache.input)}"
-    logger.Info(message, { save_history: false })
-    Reset()
+    logger.Info($"There are no matches for {string(cache.input)}", { save_history: false })
   else
     const line_number = position[0]
     var column_number = position[1]
