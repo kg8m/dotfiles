@@ -50,7 +50,7 @@ export def ResetRefreshPattern(): void
   SetRefreshPattern()
 enddef
 
-export def RequestToRefresh(wait: number = 200): void
+def RequestToRefresh(wait: number = 200): void
   StopRefreshTimer()
   StartRefreshTimer(wait)
 enddef
