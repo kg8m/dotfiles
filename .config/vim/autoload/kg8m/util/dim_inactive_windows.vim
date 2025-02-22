@@ -25,18 +25,16 @@ def Apply(): void
   const last_winnr    = winnr("$")
   const colorcolumns  = range(1, &columns)->join(",")
 
-  if IsOriginalColorcolumnStored(current_winnr)
-    RestoreOriginalColorcolumn(current_winnr)
-  else
-    StoreOriginalColorcolumn(current_winnr)
-  endif
-
   for winnr in range(1, last_winnr)
     if ShouldSkipWindow(winnr)
       continue
     endif
 
-    if winnr !=# current_winnr
+    if winnr ==# current_winnr
+      if IsOriginalColorcolumnStored(winnr)
+        RestoreOriginalColorcolumn(winnr)
+      endif
+    else
       if !IsOriginalColorcolumnStored(winnr)
         StoreOriginalColorcolumn(winnr)
       endif
