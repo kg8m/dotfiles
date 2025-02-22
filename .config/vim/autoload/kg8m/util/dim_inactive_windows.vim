@@ -12,7 +12,7 @@ export def Setup(): void
 enddef
 
 export def Reset()
-  bufdo if IsOriginalColorcolumnStored() | RestoreOriginalColorcolumn() | endif
+  windo if IsOriginalColorcolumnStored() | RestoreOriginalColorcolumn() | endif
 enddef
 
 def Trigger(): void
