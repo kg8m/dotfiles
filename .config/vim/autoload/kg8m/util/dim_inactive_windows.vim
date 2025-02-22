@@ -7,7 +7,7 @@ export def Setup(): void
     autocmd!
     autocmd WinEnter        * Trigger()
     autocmd SessionLoadPost * Trigger()
-    autocmd VimResized      * Trigger({ force: true })
+    autocmd VimResized      * Trigger()
   augroup END
 enddef
 
@@ -15,12 +15,12 @@ export def Reset()
   bufdo if has_key(b:, "original_colorcolumn") | ResetBuffer() | endif
 enddef
 
-def Trigger(options = {}): void
+def Trigger(): void
   timer_stop(timer)
-  timer = timer_start(50, (_) => Apply(options))
+  timer = timer_start(50, (_) => Apply())
 enddef
 
-def Apply(options = {}): void
+def Apply(): void
   const current_winnr = winnr()
   const last_winnr    = winnr("$")
   const colorcolumns  = range(1, &columns)->join(",")
@@ -47,9 +47,7 @@ def Apply(options = {}): void
         setbufvar(winbufnr(winnr), "original_colorcolumn", getwinvar(winnr, "&colorcolumn"))
       endif
 
-      if get(options, "force", false)
-        setwinvar(winnr, "&colorcolumn", colorcolumns)
-      endif
+      setwinvar(winnr, "&colorcolumn", colorcolumns)
     endif
   endfor
 enddef
