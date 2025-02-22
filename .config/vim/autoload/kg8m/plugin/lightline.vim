@@ -156,7 +156,7 @@ def CurrentFilepath(): string
 enddef
 
 def TruncateFilepath(filepath: string): string
-  const max    = winwidth(0) - 50
+  const max    = winwidth(0) - 65
   const length = len(filepath)
 
   if length <= max
