@@ -57,6 +57,9 @@ export def Comma(): void
 enddef
 
 def Repeat(): void
+  # Clear the status.
+  echo ""
+
   if cache.type ==# "multiline"
     RunMultiline()
   else
@@ -65,6 +68,9 @@ def Repeat(): void
 enddef
 
 def Prepare(type: string): void
+  # Clear the status.
+  echo ""
+
   Reset()
   cache.type = type
 enddef
