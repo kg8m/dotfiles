@@ -12,7 +12,7 @@ export def Setup(): void
 enddef
 
 export def Reset()
-  bufdo if has_key(b:, "original_colorcolumn") | ResetBuffer() | endif
+  bufdo if IsOriginalColorcolumnStored() | RestoreOriginalColorcolumn() | endif
 enddef
 
 def Trigger(): void
@@ -25,33 +25,58 @@ def Apply(): void
   const last_winnr    = winnr("$")
   const colorcolumns  = range(1, &columns)->join(",")
 
-  if has_key(b:, "original_colorcolumn")
-    ResetBuffer()
+  if IsOriginalColorcolumnStored(current_winnr)
+    RestoreOriginalColorcolumn(current_winnr)
   else
-    b:original_colorcolumn = &colorcolumn
+    StoreOriginalColorcolumn(current_winnr)
   endif
 
   for winnr in range(1, last_winnr)
-    # Skip diff windows because colorcolumn hides diff colors.
-    if getwinvar(winnr, "&diff")
-      continue
-    endif
-
-    # Skip Git commit buffer because colorcolumn hides diff colors.
-    if getwinvar(winnr, "&filetype") ==# "gitcommit"
+    if ShouldSkipWindow(winnr)
       continue
     endif
 
     if winnr !=# current_winnr
-      if getbufvar(winbufnr(winnr), "original_colorcolumn", v:null) ==# v:null
-        setbufvar(winbufnr(winnr), "original_colorcolumn", getwinvar(winnr, "&colorcolumn"))
+      if !IsOriginalColorcolumnStored(winnr)
+        StoreOriginalColorcolumn(winnr)
       endif
 
-      setwinvar(winnr, "&colorcolumn", colorcolumns)
+      SetColorcolumn(winnr, colorcolumns)
     endif
   endfor
 enddef
 
-def ResetBuffer(): void
-  &l:colorcolumn = b:original_colorcolumn
+def ShouldSkipWindow(winnr: number): bool
+  return (
+    # Skip diff windows because colorcolumn hides diff colors.
+    getwinvar(winnr, "&diff") ||
+
+    # Skip Git commit buffer because colorcolumn hides diff colors.
+    getwinvar(winnr, "&filetype") ==# "gitcommit"
+  )
+enddef
+
+def SetColorcolumn(winnr: number, value: string): void
+  setwinvar(winnr, "&colorcolumn", value)
+enddef
+
+def SetOriginalColorcolumn(winnr: number, value: any): void
+  # Store original_colorcolumn value in bufvar because sometimes winvars are removed for some reason.
+  setbufvar(winbufnr(winnr), "original_colorcolumn", value)
+enddef
+
+def GetOriginalColorcolumn(winnr: number): any
+  return getbufvar(winbufnr(winnr), "original_colorcolumn", v:null)
+enddef
+
+def StoreOriginalColorcolumn(winnr: number): void
+  SetOriginalColorcolumn(winnr, getwinvar(winnr, "&colorcolumn"))
+enddef
+
+def RestoreOriginalColorcolumn(winnr: number = winnr()): void
+  SetColorcolumn(winnr, GetOriginalColorcolumn(winnr))
+enddef
+
+def IsOriginalColorcolumnStored(winnr: number = winnr()): bool
+  return GetOriginalColorcolumn(winnr) !=# v:null
 enddef
