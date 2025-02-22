@@ -1,12 +1,14 @@
 vim9script
 
+import autoload "kg8m/plugin/completion.vim"
 import autoload "kg8m/util/string.vim" as stringUtil
 
 # Sort items by their each priority and filter them that fuzzy match.
 # Omit items with lower priority.
 # Remove characters overlapping with following text.
 export def Callback(options: dict<any>, matches: dict<any>): void
-  const base_matcher = matchstr(options.base, b:asyncomplete_refresh_pattern)
+  const pattern = get(b:, "asyncomplete_refresh_pattern") ?? completion.RefreshPattern(&filetype)
+  const base_matcher = matchstr(options.base, pattern)
 
   var items     = []
   var startcols = []
