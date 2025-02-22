@@ -5,9 +5,9 @@ var timer = -1
 export def Setup(): void
   augroup vimrc-util-dim_inactive_windows
     autocmd!
-    autocmd WinEnter        * Trigger()
-    autocmd SessionLoadPost * Trigger()
-    autocmd VimResized      * Trigger()
+    autocmd SessionLoadPost * RequestToApply()
+    autocmd VimResized      * RequestToApply()
+    autocmd WinEnter        * RequestToApply()
   augroup END
 enddef
 
@@ -15,7 +15,7 @@ export def Reset()
   windo if IsOriginalColorcolumnStored() | RestoreOriginalColorcolumn() | endif
 enddef
 
-def Trigger(): void
+def RequestToApply(): void
   timer_stop(timer)
   timer = timer_start(50, (_) => Apply())
 enddef

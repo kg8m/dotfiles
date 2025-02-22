@@ -12,18 +12,18 @@ export def OnSource(): void
 
   augroup vimrc-plugin-hitspop
     autocmd!
-    autocmd CmdlineChanged /            UpdateSearchStatus()
+    autocmd CmdlineChanged /            RequestToUpdateSearchStatus()
     autocmd User search_start           hitspop#main()
     autocmd User clear_search_highlight hitspop#clean()
   augroup END
 enddef
 
-def UpdateSearchStatus(): void
+def RequestToUpdateSearchStatus(): void
   timer_stop(get(cache, "timer", -1))
-  cache.timer = timer_start(100, (_) => ForceUpdateSearchStatus())
+  cache.timer = timer_start(100, (_) => UpdateSearchStatus())
 enddef
 
-def ForceUpdateSearchStatus(): void
+def UpdateSearchStatus(): void
   if mode() !=# "c"
     return
   endif

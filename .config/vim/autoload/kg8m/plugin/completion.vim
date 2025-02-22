@@ -7,7 +7,7 @@ final cache = {}
 
 augroup vimrc-plugin-completion
   autocmd!
-  autocmd TextChangedI * Refresh(300)
+  autocmd TextChangedP * RequestToRefresh()
 augroup END
 
 export def Disable(): void
@@ -50,12 +50,12 @@ export def ResetRefreshPattern(): void
   SetRefreshPattern()
 enddef
 
-export def Refresh(wait: number = 200): void
+export def RequestToRefresh(wait: number = 200): void
   StopRefreshTimer()
   StartRefreshTimer(wait)
 enddef
 
-def ForceRefresh(): void
+def Refresh(): void
   const prev_two_chars = strpart(getline("."), col(".") - 3, 2)
 
   # Don’t add mappings for this omni-completion because they can conflict with lexima.vim’s configs.
@@ -70,7 +70,7 @@ def ForceRefresh(): void
 enddef
 
 def StartRefreshTimer(wait: number): void
-  cache.refresh_timer = timer_start(wait, (_) => ForceRefresh())
+  cache.refresh_timer = timer_start(wait, (_) => Refresh())
 enddef
 
 def StopRefreshTimer(): void

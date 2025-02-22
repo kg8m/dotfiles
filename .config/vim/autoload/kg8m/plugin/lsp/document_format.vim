@@ -33,25 +33,25 @@ final cache = {
 startify.AddToSessionSavevar("b:lsp_document_format_cache")
 
 export def OnInsertLeave(): void
-  LazyRun(200)
+  RequestToTryToRun(200)
 enddef
 
 export def OnTextChanged(): void
-  LazyRun(200)
+  RequestToTryToRun(200)
 enddef
 
 export def EnforceAutoFormatting(): void
   SetBufferCache("force_formatting", true)
 enddef
 
-def LazyRun(delay: number): void
+def RequestToTryToRun(delay: number): void
   timer_stop(cache.timer)
   cache.timer = timer_start(delay, (_) => TryToRun())
 enddef
 
 def TryToRun(): void
   if mode() !=# "n"
-    autocmd ModeChanged <buffer> ++once LazyRun(50)
+    autocmd ModeChanged <buffer> ++once RequestToTryToRun(50)
     return
   endif
 

@@ -20,7 +20,7 @@ export def OnPostSource(): void
     allowlist: ["*"],
     completor: function("asyncomplete#sources#buffer#completor"),
     events: events,
-    on_event: (..._) => OnEventAsync(),
+    on_event: (..._) => RequestToRefreshKeywords(),
     priority: 2,
   }))
 
@@ -28,7 +28,7 @@ export def OnPostSource(): void
 enddef
 
 # https://github.com/prabirshrestha/asyncomplete-buffer.vim/blob/b88179d74be97de5b2515693bcac5d31c4c207e9/autoload/asyncomplete/sources/buffer.vim#L51-L57
-def OnEvent(): void
+def RefreshKeywords(): void
   if !get(cache, "is_refresh_keywords_defined", false)
     SetupRefreshKeywords()
   endif
@@ -37,13 +37,13 @@ def OnEvent(): void
   StopRefreshTimer()
 enddef
 
-def OnEventAsync(): void
+def RequestToRefreshKeywords(): void
   StopRefreshTimer()
   StartRefreshTimer()
 enddef
 
 def StartRefreshTimer(): void
-  cache.refresh_timer = timer_start(200, (_) => OnEvent())
+  cache.refresh_timer = timer_start(200, (_) => RefreshKeywords())
 enddef
 
 def StopRefreshTimer(): void
@@ -68,5 +68,5 @@ def CannotRefreshKeywords(): void
 enddef
 
 def Activate(): void
-  OnEventAsync()
+  RequestToRefreshKeywords()
 enddef
