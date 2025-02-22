@@ -89,6 +89,11 @@ def RunSingleline(): void
   const flags    = (forward ? "" : "b") .. "n"
   const stopline = line(".")
 
+  if pattern ==# ""
+    logger.Info("Canceled.", { save_history: false })
+    return
+  endif
+
   if cache.type ==# "t"
     cursorUtil.Move(cursor_position[1], cursor_position[2] + 1)
   elseif cache.type ==# "T"
@@ -125,6 +130,11 @@ enddef
 def RunMultiline(): void
   const cursor_position = getcurpos()
   const pattern = BuildPattern()
+
+  if pattern ==# ""
+    logger.Info("Canceled.", { save_history: false })
+    return
+  endif
 
   TryWithPattern(pattern, (_pattern) => stargate#OKvim(_pattern))
 
