@@ -320,6 +320,23 @@ if plugin.Register("Shougo/context_filetype.vim")
   endfor
 endif
 
+if plugin.Register("DanBradbury/copilot-chat.vim")
+  g:copilot_chat_data_dir = $"{$XDG_DATA_HOME}/vim/copilot-chat"
+
+  cabbrev CC CopilotChat
+  cabbrev cc CopilotChat
+
+  augroup vimrc-plugin-copilot-chat
+    autocmd!
+    autocmd FileType copilot_chat setlocal colorcolumn= foldcolumn=0 nonumber showbreak=NONE
+  augroup END
+
+  plugin.Configure({
+    lazy:   true,
+    on_cmd: ["CopilotChat", "CopilotChatModels"],
+  })
+endif
+
 plugin.Register("hail2u/vim-css3-syntax")
 plugin.Register("Milly/deno-protocol.vim")
 
