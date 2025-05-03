@@ -996,8 +996,8 @@ plugin.Register("hashivim/vim-terraform")
 if plugin.Register("vim-test/vim-test")
   import autoload "kg8m/plugin/test.vim"
 
-  nnoremap <Leader>T :write<CR><ScriptCmd>test.RunFileTest()<CR>
-  nnoremap <Leader>t :write<CR><ScriptCmd>test.RunNearestTest()<CR>
+  nnoremap <Leader>T <ScriptCmd>test.SaveAndRunFileTest()<CR>
+  nnoremap <Leader>t <ScriptCmd>test.SaveAndRunNearestTest()<CR>
 
   plugin.Configure({
     lazy:   true,

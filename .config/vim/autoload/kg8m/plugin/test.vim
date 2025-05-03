@@ -28,12 +28,28 @@ export def OnSource(): void
   doautocmd <nomodeline> User plugin:test:source
 enddef
 
-export def RunFileTest(): void
+export def SaveAndRunFileTest(): void
+  SaveIfModified()
+  RunFileTest()
+enddef
+
+export def SaveAndRunNearestTest(): void
+  SaveIfModified()
+  RunNearestTest()
+enddef
+
+def SaveIfModified(): void
+  if &modified
+    write
+  endif
+enddef
+
+def RunFileTest(): void
   TestFile
   doautocmd <nomodeline> User plugin:test:run
 enddef
 
-export def RunNearestTest(): void
+def RunNearestTest(): void
   TestNearest
   doautocmd <nomodeline> User plugin:test:run
 enddef
