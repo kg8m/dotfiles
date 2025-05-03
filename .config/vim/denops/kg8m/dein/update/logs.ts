@@ -48,7 +48,7 @@ const LOG_SKIP_PATTERN = new RegExp(
     /^From ssh:\/\//,
     /^Submodule path '[^ ]': checked out '\w+'$/,
     /^Updating \w+\.\.\w+$/,
-    /^Updating files:\s+\d+% \(\d+\/\d+\)(, done\.)?$/,
+    /^Updating files:\s+\d+% \(\d+\/\d+\)/,
     /^Your configuration specifies to merge with the ref '[^ ]+'$/,
     /^[^ ]+: pushed_time=\d+, repo_time=\d+, rollback_time=\d+$/,
     /^[^ ]+: remote=\w*, local=\w+$/,
