@@ -124,6 +124,27 @@ abbrevs:
     global: true
     context: '^gem\s+up\b'
 
+  - name: gh pr c => gh pr create
+    abbr: c
+    snippet: create
+    global: true
+    context: '^gh\s+pr\s+c\b'
+  - name: gh pr co => gh pr checkout
+    abbr: co
+    snippet: checkout
+    global: true
+    context: '^gh\s+pr\s+co\b'
+  - name: gh run d => gh run download
+    abbr: d
+    snippet: download
+    global: true
+    context: '^gh\s+run\s+d\b'
+  - name: gh run w => gh run watch
+    abbr: w
+    snippet: watch
+    global: true
+    context: '^gh\s+run\s+w\b'
+
   - name: g => git
     abbr: g
     snippet: git
