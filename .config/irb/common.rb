@@ -82,10 +82,10 @@ class Object
 
   def __benchmark_with_export__(cases_map)
     output_path = "/tmp/benchmark_ips_report.#{Time.now.strftime("%Y%m%d-%H%M%S")}.txt"
-    report = __benchmark__(cases_map)
+    __benchmark__(cases_map)
+    report = Kg8m::Benchmark.last_result
     report.generate_json(output_path)
     puts "reported to #{output_path}"
-    report
   end
 end
 
