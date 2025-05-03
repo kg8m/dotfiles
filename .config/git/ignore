@@ -1,3 +1,5 @@
+# This file may be overwritten by "${XDG_CONFIG_HOME}/git.local/ignore"
+
 *.code-workspace
 *.un~
 *.zwc
