@@ -430,7 +430,7 @@ enddef
 def RegisterRubyLsp(): void
   RegisterServer({
     name: "ruby-lsp",
-    allowlist: ["ruby"],
+    allowlist: ["eruby", "ruby"],
     extra_config: () => ExtraConfigForRubyLsp(),
 
     available: $USE_RUBY_LSP !=# "0",
