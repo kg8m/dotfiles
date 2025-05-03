@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 module Kg8m
+  # @param library [String] the library to require
+  #
+  # @return [void]
   def self.try_to_require(library, fallback: nil, quiet: false)
     require library
   rescue LoadError => e
@@ -14,6 +17,10 @@ module Kg8m
   end
 
   module Benchmark
+    # @param number_of_trials [Integer] the number of trials to run
+    # @param cases_map [Hash<Symbol, Proc>] a hash of labels and procedures to benchmark
+    #
+    # @return [void]
     def self.bm(number_of_trials, **cases_map)
       require "benchmark"
 
@@ -32,6 +39,9 @@ module Kg8m
       end
     end
 
+    # @param cases_map [Hash<Symbol, Proc>] a hash of labels and procedures to benchmark
+    #
+    # @return [void]
     def self.ips(**cases_map)
       require "benchmark/ips"
 
@@ -63,6 +73,10 @@ module Kg8m
 end
 
 class Object
+  # @param number_of_trials [Integer] the number of trials to run
+  # @param cases_map [Hash<Symbol, Proc>] a hash of labels and procedures to benchmark
+  #
+  # @return [void]
   def __benchmark__(number_of_trials = nil, **cases_map)
     if defined?(Rails)
       original_log_level = Rails.logger.level
@@ -80,6 +94,9 @@ class Object
     end
   end
 
+  # @param cases_map [Hash<Symbol, Proc>] a hash of labels and procedures to benchmark
+  #
+  # @return [void]
   def __benchmark_with_export__(cases_map)
     output_path = "/tmp/benchmark_ips_report.#{Time.now.strftime("%Y%m%d-%H%M%S")}.txt"
     __benchmark__(cases_map)
