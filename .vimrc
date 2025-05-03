@@ -799,6 +799,8 @@ if plugin.Register("yssl/QFEnter")
 endif
 
 if plugin.Register("bfrg/vim-qf-history")
+  command! -nargs=0 QfHistory Chistory
+
   plugin.Configure({
     lazy:   true,
     on_cmd: ["Chistory"],
