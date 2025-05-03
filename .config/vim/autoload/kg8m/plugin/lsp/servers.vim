@@ -440,9 +440,6 @@ enddef
 def ExtraConfigForRubyLsp(): dict<any>
   return {
     cmd: (_) => ["ruby-lsp", "stdio"],
-    initialization_options: {
-      diagnostics: true,
-    },
 
     document_format_priority: document_format.MIN_PRIORITY,
   }
