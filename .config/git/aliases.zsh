@@ -266,14 +266,18 @@ function git:branch:colorize {
 }
 
 function git:clone:shallow {
+  # Create a shallow clone with a history truncated to the specified number of commits.
   execute_with_echo git clone --depth 100 "$@"
 }
 
 function git:clone:partial:blobless {
+  # Use the partial clone feature and request that the server sends a subset of reachable objects according to a given
+  # object filter: filter out all blobs (file contents) until needed by Git.
   execute_with_echo git clone --filter blob:none "$@"
 }
 
 function git:clone:partial:treeless {
+  # Like `--filter blob:none` but omits all trees in addition to blobs.
   execute_with_echo git clone --filter tree:0 "$@"
 }
 
