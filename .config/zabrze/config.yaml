@@ -37,17 +37,17 @@ abbrevs:
     abbr: i
     snippet: install
     global: true
-    context: '^brew\s+i'
+    context: '^brew\s+i\b'
   - name: brew li => brew list
     abbr: li
     snippet: list
     global: true
-    context: '^brew\s+li'
+    context: '^brew\s+li\b'
   - name: brew uni => brew uninstall
     abbr: uni
     snippet: uninstall
     global: true
-    context: '^brew\s+uni'
+    context: '^brew\s+uni\b'
 
   - name: b => bundle
     abbr: b
@@ -56,22 +56,22 @@ abbrevs:
     abbr: e
     snippet: exec
     global: true
-    context: '^bundle\s+e'
+    context: '^bundle\s+e\b'
   - name: bundle i => bundle install
     abbr: i
     snippet: install
     global: true
-    context: '^bundle\s+i'
+    context: '^bundle\s+i\b'
   - name: bundle pr => bundle pristine
     abbr: pr
     snippet: pristine
     global: true
-    context: '^bundle\s+pr'
+    context: '^bundle\s+pr\b'
   - name: bundle up => bundle update
     abbr: up
     snippet: update
     global: true
-    context: '^bundle\s+up'
+    context: '^bundle\s+up\b'
 
   - name: cdb => cd-bookmark
     abbr: cdb
@@ -87,12 +87,12 @@ abbrevs:
     abbr: c
     snippet: compose
     global: true
-    context: '^docker\s+c'
+    context: '^docker\s+c\b'
   - name: docker e => docker exec
     abbr: e
     snippet: exec
     global: true
-    context: '^docker\s+e'
+    context: '^docker\s+e\b'
 
   - name: f => filter
     abbr: f
@@ -102,27 +102,27 @@ abbrevs:
     abbr: h
     snippet: help
     global: true
-    context: '^gem\s+h'
+    context: '^gem\s+h\b'
   - name: gem i => gem install
     abbr: i
     snippet: install
     global: true
-    context: '^gem\s+i'
+    context: '^gem\s+i\b'
   - name: gem li => gem list
     abbr: li
     snippet: list
     global: true
-    context: '^gem\s+li'
+    context: '^gem\s+li\b'
   - name: gem uni => gem uninstall
     abbr: uni
     snippet: uninstall
     global: true
-    context: '^gem\s+uni'
+    context: '^gem\s+uni\b'
   - name: gem up => gem update
     abbr: up
     snippet: update
     global: true
-    context: '^gem\s+up'
+    context: '^gem\s+up\b'
 
   - name: g => git
     abbr: g
@@ -131,117 +131,117 @@ abbrevs:
     abbr: bl
     snippet: blame-with-filter
     global: true
-    context: '^git\s+bl'
+    context: '^git\s+bl\b'
   - name: git br => git branch
     abbr: br
     snippet: branch
     global: true
-    context: '^git\s+br'
+    context: '^git\s+br\b'
   - name: git brs => git branches
     abbr: brs
     snippet: branches
     global: true
-    context: '^git\s+brs'
+    context: '^git\s+brs\b'
   - name: git co => git checkout
     abbr: co
     snippet: checkout
     global: true
-    context: '^git\s+co'
+    context: '^git\s+co\b'
   - name: git cp => git cherry-pick
     abbr: cp
     snippet: cherry-pick
     global: true
-    context: '^git\s+cp'
+    context: '^git\s+cp\b'
   - name: git p => git cherry-pick
     abbr: p
     snippet: cherry-pick
     global: true
-    context: '^git\s+p'
+    context: '^git\s+p\b'
   - name: git pick => git cherry-pick
     abbr: pick
     snippet: cherry-pick
     global: true
-    context: '^git\s+pick'
+    context: '^git\s+pick\b'
   - name: git ci => git commit
     abbr: ci
     snippet: commit
     global: true
-    context: '^git\s+ci'
+    context: '^git\s+ci\b'
   - name: git di => git diff-without-space-changes
     abbr: di
     snippet: diff-without-space-changes
     global: true
-    context: '^git\s+di'
+    context: '^git\s+di\b'
   - name: git ds => git diff-without-space-changes --staged
     abbr: ds
     snippet: diff-without-space-changes --staged
     global: true
-    context: '^git\s+ds'
+    context: '^git\s+ds\b'
   - name: git dh => git diff-without-space-changes HEAD
     abbr: dh
     snippet: diff-without-space-changes HEAD
     global: true
-    context: '^git\s+dh'
+    context: '^git\s+dh\b'
   - name: git f => git fetch
     abbr: f
     snippet: fetch
     global: true
-    context: '^git\s+f'
+    context: '^git\s+f\b'
   - name: git l => git log-by-select
     abbr: l
     snippet: log-by-select
     global: true
-    context: '^git\s+l'
+    context: '^git\s+l\b'
   - name: git lg => git log-graph
     abbr: lg
     snippet: log-graph
     global: true
-    context: '^git\s+lg'
+    context: '^git\s+lg\b'
   - name: git la => git log --branches --tags --remotes
     abbr: la
     snippet: log --branches --tags --remotes
     global: true
-    context: '^git\s+la'
+    context: '^git\s+la\b'
   - name: git lp => git log-with-patch
     abbr: lp
     snippet: log-with-patch
     global: true
-    context: '^git\s+lp'
+    context: '^git\s+lp\b'
   - name: git st => git status-with-color
     abbr: st
     snippet: status-with-color
     global: true
-    context: '^git\s+st'
+    context: '^git\s+st\b'
   - name: git ss => git stash
     abbr: ss
     snippet: stash
     global: true
-    context: '^git\s+ss'
+    context: '^git\s+ss\b'
   - name: git ssa => git stash-all-with-message
     abbr: ssa
     snippet: stash-all-with-message
     global: true
-    context: '^git\s+ssa'
+    context: '^git\s+ssa\b'
   - name: git sss => git stash-by-select
     abbr: sss
     snippet: stash-by-select
     global: true
-    context: '^git\s+sss'
+    context: '^git\s+sss\b'
   - name: git sw => git switch
     abbr: sw
     snippet: switch
     global: true
-    context: '^git\s+sw'
+    context: '^git\s+sw\b'
   - name: git sws => git switch-by-select
     abbr: sws
     snippet: switch-by-select
     global: true
-    context: '^git\s+sws'
+    context: '^git\s+sws\b'
   - name: git up => git update
     abbr: up
     snippet: update
     global: true
-    context: '^git\s+up'
+    context: '^git\s+up\b'
 
   - name: ls => eza
     abbr: ls
@@ -257,105 +257,105 @@ abbrevs:
     abbr: -g
     snippet: --global
     global: true
-    context: '^mise\s+-g'
+    context: '^mise\s+-g\b'
   - name: mise i => mise install
     abbr: i
     snippet: install
     global: true
-    context: '^mise\s+i'
+    context: '^mise\s+i\b'
   - name: mise uni => mise uninstall
     abbr: uni
     snippet: uninstall
     global: true
-    context: '^mise\s+uni'
+    context: '^mise\s+uni\b'
 
   - name: npm -g => npm --global
     abbr: -g
     snippet: --global
     global: true
-    context: '^npm\s+(.+\s)?-g'
+    context: '^npm\s+(.+\s)?-g\b'
   - name: npm i => npm install
     abbr: i
     snippet: install
     global: true
-    context: '^npm\s+(.+\s)?i'
+    context: '^npm\s+(.+\s)?i\b'
   - name: npm li => npm list
     abbr: li
     snippet: list
     global: true
-    context: '^npm\s+(.+\s)?li'
+    context: '^npm\s+(.+\s)?li\b'
   - name: npm uni => npm uninstall
     abbr: uni
     snippet: uninstall
     global: true
-    context: '^npm\s+(.+\s)?uni'
+    context: '^npm\s+(.+\s)?uni\b'
   - name: npm up => npm update
     abbr: up
     snippet: update
     global: true
-    context: '^npm\s+(.+\s)?up'
+    context: '^npm\s+(.+\s)?up\b'
 
   - name: rails c => rails console
     abbr: c
     snippet: console
     global: true
-    context: '\brails\s+c'
+    context: '\brails\s+c\b'
   - name: rails console -e => rails console --environment
     abbr: -e
     snippet: --environment
     global: true
-    context: '\brails\s+console\s+(.+\s)?-e'
+    context: '\brails\s+console\s+(.+\s)?-e\b'
   - name: rails console -s => rails console --sandbox
     abbr: -s
     snippet: --sandbox
     global: true
-    context: '\brails\s+console\s+(.+\s)?-s'
+    context: '\brails\s+console\s+(.+\s)?-s\b'
   - name: rails db => rails dbconsole
     abbr: db
     snippet: dbconsole --include-password
     global: true
-    context: '\brails\s+db'
+    context: '\brails\s+db\b'
   - name: rails g => rails generate
     abbr: g
     snippet: generate
     global: true
-    context: '\brails\s+g'
+    context: '\brails\s+g\b'
   - name: rails generate c => rails generate controller {} --skip-routes --skip-helper --skip-view-specs --skip-stylesheets
     abbr: c
     snippet: controller {} --skip-routes --skip-helper --skip-view-specs --skip-stylesheets
     global: true
-    context: '\brails\s+generate\s+c'
+    context: '\brails\s+generate\s+c\b'
   - name: rails generate m => rails generate model {} --skip-migration
     abbr: m
     snippet: model {} --skip-migration
     global: true
-    context: '\brails\s+generate\s+m'
+    context: '\brails\s+generate\s+m\b'
   - name: rails re => rails restart
     abbr: re
     snippet: restart
     global: true
-    context: '\brails\s+re'
+    context: '\brails\s+re\b'
   - name: rails r => rails runner
     abbr: r
     snippet: runner
     global: true
-    context: '\brails\s+r'
+    context: '\brails\s+r\b'
   - name: rails s => rails server
     abbr: s
     snippet: server
     global: true
-    context: '\brails\s+s'
+    context: '\brails\s+s\b'
   - name: rails t => rails test
     abbr: t
     snippet: test
     global: true
-    context: '\brails\s+t'
+    context: '\brails\s+t\b'
   # Define after `rails runner` to avoid conflicts. Otherwise `rails r` will become `rails rails`.
   - name: r => rails
     abbr: r
     snippet: rails
     global: true
-    context: "^(bundle exec )?r"
+    context: "^(bundle exec )?r\\b"
   - name: bin/r => bin/rails
     abbr: bin/r
     snippet: bin/rails
@@ -382,35 +382,35 @@ abbrevs:
     abbr: a
     snippet: add
     global: true
-    context: '^yarn\s+a'
+    context: '^yarn\s+a\b'
   # Don’t use `yarn install` because I use `yarn`.
   - name: yarn i => yarn add
     abbr: i
     snippet: add
     global: true
-    context: '^yarn\s+i'
+    context: '^yarn\s+i\b'
   - name: yarn li => yarn list
     abbr: li
     snippet: list
     global: true
-    context: '^yarn\s+li'
+    context: '^yarn\s+li\b'
   - name: yarn rem => yarn remove
     abbr: rem
     snippet: remove
     global: true
-    context: '^yarn\s+rem'
+    context: '^yarn\s+rem\b'
   - name: yarn uni => yarn remove
     abbr: uni
     snippet: remove
     global: true
-    context: '^yarn\s+uni'
+    context: '^yarn\s+uni\b'
   - name: yarn up => yarn upgrade
     abbr: up
     snippet: upgrade
     global: true
-    context: '^yarn\s+up'
+    context: '^yarn\s+up\b'
   - name: yarn upi => yarn upgrade-interactive
     abbr: upi
     snippet: upgrade-interactive
     global: true
-    context: '^yarn\s+upi'
+    context: '^yarn\s+upi\b'
