@@ -120,27 +120,39 @@ function git:update:main {
   fi
 }
 
-function git:branch:create:with_set_upstream {
+function git:branch:create {
   if git status --porcelain | rg '^[^ ?]' -q; then
     echo:error "Staged changes exist. Unstage them before creating a branch."
     return 1
   fi
 
-  # shellcheck disable=SC2034
-  local original_branch="${1:?Specify the original branch name.}"
-  # shellcheck disable=SC2034
-  local branch_name="${2:?Specify a new branch name.}"
-  # shellcheck disable=SC2034
-  local commit_message="${3:-create branch}"
+  local branch_name="${1:?Specify a new branch name.}"
 
-  # shellcheck disable=SC2034
-  local commands=(
-    "execute_with_echo git switch --create ${(q-)branch_name} ${(q-)original_branch}"
-    "execute_with_echo git commit --allow-empty --message ${(q-)commit_message}"
-    "execute_with_echo git push --set-upstream origin ${(q-)branch_name}"
-  )
+  execute_with_echo    git status-with-color
+  execute_with_confirm git switch --create "${branch_name}"
+}
 
-  eval_with_confirm "${(j: && :)commands}; eval_with_echo 'git branches | head -n15'"
+function git:branch:create:hotfix {
+  local new_branch_name="${1:?Specify a new branch name.}"
+
+  case "${new_branch_name}" in
+    hotfix/*)
+      # Continue
+      ;;
+    *)
+      echo:error "The branch name must start with \"hotfix/\"."
+      return 1
+      ;;
+  esac
+
+  local current_branch_name="$(git branch --show-current)"
+
+  if [[ ! "${current_branch_name}" =~ ^(main|master)$ ]]; then
+    echo:error "A hotfix branch can’t be created from the current branch: ${current_branch_name}"
+    return 1
+  fi
+
+  git create-branch "${new_branch_name}"
 }
 
 function git:branch:delete:bulk:local {

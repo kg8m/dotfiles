@@ -216,7 +216,8 @@
 
 	branches = sh git:branch:list:all
 
-	create-branch-with-set-upstream = sh git:branch:create:with_set_upstream
+	create-branch        = sh git:branch:create
+	create-hotfix-branch = sh git:branch:create:hotfix
 
 	branch-delete-fully-merged-local = branch --delete
 	branch-delete-locals             = sh git:branch:delete:bulk:local
