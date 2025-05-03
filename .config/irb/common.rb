@@ -117,7 +117,7 @@ if defined?(Rails)
     ActiveSupport::Deprecation.behavior = :stderr
   end
 
-  Kg8m.try_to_require("hirber", fallback: "hirb", quiet: true)
+  Kg8m.try_to_require("hirber", quiet: true)
   Kg8m.try_to_require("hirb-unicode", quiet: true)
 
   if defined?(Hirb)
