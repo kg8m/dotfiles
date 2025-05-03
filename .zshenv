@@ -34,6 +34,7 @@ path=(
 
 export COLORTERM=truecolor
 export DENO_DIR="${XDG_DATA_HOME:?}/deno"
+export DOCKER_CONTENT_TRUST="1"
 export GPG_TTY="$(tty)"
 
 # cf. data setup in .config/zsh/binary-released-plugins.zsh
