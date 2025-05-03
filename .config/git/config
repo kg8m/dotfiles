@@ -148,6 +148,9 @@
 	rebase = true
 
 [push]
+	# Set up remote tracking branches manually to avoid pushing to wrong branches.
+	autoSetupRemote = false
+
 	useForceIfIncludes = true
 
 [rebase]
