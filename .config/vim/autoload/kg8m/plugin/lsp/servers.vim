@@ -200,7 +200,9 @@ def RegisterEfmLangserver(): void
     # cf. .config/efm-langserver/config.yaml
     allowlist: [
       "Gemfile", "eruby", "gitcommit", "html", "lua", "make", "markdown", "nginx", "ruby", "slim", "sql", "toml", "vue",
-    ] + CSS_FILETYPES + JS_FILETYPES + JSON_FILETYPES + SH_FILETYPES + TS_FILETYPES + YAML_FILETYPES,
+    ] + CSS_FILETYPES + JS_FILETYPES + JSON_FILETYPES + SH_FILETYPES + TS_FILETYPES + YAML_FILETYPES + (
+      $USE_RUBOCOP_FOR_RBS ==# "1" ? ["rbs"] : []
+    ),
 
     extra_config: () => ExtraConfigForEfmLangserver(),
   })
@@ -408,7 +410,7 @@ def RegisterRubocop(): void
       # Don’t use LSP mode RuboCop for Markdown files because formatting them from STDIN source isn’t supported.
       # Use RuboCop via efm-langserver for Markdown files.
       # cf. .config/efm-langserver/rubocop_wrapper.sh
-      allowlist: ["Gemfile", "ruby"],
+      allowlist: ["Gemfile", "ruby"] + ($USE_RUBOCOP_FOR_RBS ==# "1" ? ["rbs"] : []),
 
       extra_config: () => ExtraConfigForRubocop(),
     })

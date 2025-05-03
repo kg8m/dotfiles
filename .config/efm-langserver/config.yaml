@@ -258,6 +258,9 @@ languages:
   nginx:
     - <<: *gixy
 
+  rbs:
+    - <<: *rubocop
+
   ruby:
     - <<: *rubocop
     - <<: *ruby
@@ -271,6 +274,7 @@ languages:
     - <<: *shfmt
 
   slim:
+    - <<: *rubocop
     - <<: *slim-lint
 
   sql:

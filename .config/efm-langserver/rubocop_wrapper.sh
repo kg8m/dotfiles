@@ -21,6 +21,16 @@ if [ ! "${USE_RUBOCOP_FOR_MARKDOWN:-}" = "1" ] && [[ "${target_filepath}" == *.m
   exit 1
 fi
 
+if [ ! "${USE_RUBOCOP_FOR_RBS:-}" = "1" ] && [[ "${target_filepath}" == *.rbs ]]; then
+  echo "Running for RBS files isn’t supported." >&2
+  exit 1
+fi
+
+if [ ! "${USE_RUBOCOP_FOR_SLIM:-}" = "1" ] && [[ "${target_filepath}" == *.slim ]]; then
+  echo "Running for Slim files isn’t supported." >&2
+  exit 1
+fi
+
 options=()
 
 # Use rubocop-daemon as default. Overwrite the command if needed.
