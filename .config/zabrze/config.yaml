@@ -351,6 +351,11 @@ abbrevs:
     snippet: model {} --skip-migration
     global: true
     context: '\brails\s+generate\s+m\b'
+  - name: rails generate s => rails generate stimulus
+    abbr: s
+    snippet: stimulus
+    global: true
+    context: '\brails\s+generate\s+s\b'
   - name: rails re => rails restart
     abbr: re
     snippet: restart
