@@ -10,20 +10,22 @@ if [ -z "${TMUX:-}" ]; then
 fi
 
 pane_info_format="#{session_name}:#{window_index}.#{pane_index}"
-pane_info_filter_non_active="#{||:#{==:#{window_active},0},#{==:#{pane_active},0}}"
+current_pane_info="$(tmux display-message -p "${pane_info_format}")"
 
 zsh_pane_info_list=("${(@f)$(
-  pane_info_filter="#{&&:${pane_info_filter_non_active},#{==:#{pane_current_command},zsh}}"
+  pane_info_filter="#{==:#{pane_current_command},zsh}"
   tmux list-panes -a -F "${pane_info_format}" -f "${pane_info_filter}"
 )}")
 non_zsh_pane_info_list=("${(@f)$(
-  pane_info_filter="#{&&:${pane_info_filter_non_active},#{!=:#{pane_current_command},zsh}}"
+  pane_info_filter="#{!=:#{pane_current_command},zsh}"
   tmux list-panes -a -F "${pane_info_format} with #{pane_current_command}" -f "${pane_info_filter}"
 )}")
 
 # Reload non-active zsh panes.
 if [ -n "${zsh_pane_info_list[*]}" ]; then
   for pane_info in "${zsh_pane_info_list[@]}"; do
+    [ "${pane_info}" = "${current_pane_info}" ] && continue
+
     printf .
     tmux respawn-pane -k -t "${pane_info}"
   done
