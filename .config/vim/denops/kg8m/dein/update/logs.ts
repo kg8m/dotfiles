@@ -1,7 +1,7 @@
-import type { Denops } from "jsr:@denops/std@^7.0.2";
-import { batch } from "jsr:@denops/std@^7.0.2/batch";
-import * as vimFuncs from "jsr:@denops/std@^7.0.2/function";
-import * as vimOptions from "jsr:@denops/std@^7.0.2/option";
+import type { Denops } from "jsr:@denops/std@^8.0.0";
+import { batch } from "jsr:@denops/std@^8.0.0/batch";
+import * as vimFuncs from "jsr:@denops/std@^8.0.0/function";
+import * as vimOptions from "jsr:@denops/std@^8.0.0/option";
 import { assert, is } from "jsr:@core/unknownutil@^4.0.0";
 import { benchmarkOnce } from "../../benchmark.ts";
 import { notify } from "../../notification.ts";
