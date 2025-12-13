@@ -23,7 +23,7 @@ jobs:
           # Use the latest stable version.
           deno-version: vx.x.x
         timeout-minutes: 1
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: .deno
           key: ${{ hashFiles('**/*.ts') }}
