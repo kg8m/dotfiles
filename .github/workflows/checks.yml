@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         timeout-minutes: 1
       - uses: denoland/setup-deno@v2
         with:
